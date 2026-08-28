@@ -19,9 +19,6 @@ jobs:
     timeout-minutes: 20
     env:
       CI: "true"
-      NPM_CONFIG_AUDIT: "false"
-      NPM_CONFIG_FUND: "false"
-      NPM_CONFIG_IGNORE_SCRIPTS: "true"
     steps:
       - name: Checkout Portal history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -53,7 +50,7 @@ jobs:
           cache: false
 
       - name: Install lockfile dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Reproduce fixed Index and Router Eval
         run: |

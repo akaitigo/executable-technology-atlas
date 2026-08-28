@@ -36,6 +36,6 @@ node scripts/atlas-portal.mjs verify
 
 ## Continuous Integration
 
-`.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Core v1は`cf9e6e2d…`へ固定し、npm依存は`package-lock.json`だけから`npm ci`で導入します。
+`.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Core v1は`cf9e6e2d…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
 
 Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定IndexとRouter Evalの再現一致、24件以上のTest、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。
