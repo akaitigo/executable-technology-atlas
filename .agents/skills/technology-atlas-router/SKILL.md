@@ -15,6 +15,7 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 4. Releaseがある場合はURI、Digest、署名、検証状態を確認してからCoverageとEvidenceへ進む。
 5. Route可能性と完成判定を必ず分離し、`release.completion`を返す。v1 Certificateは`bounded-historical`としてのみ案内する。
 6. Subject Definitive完成を主張する場合は、公開Trust KeyとCore v2 Definitive Certificateの検証成功を要求する。Core v2確定までは常に未証明と返す。
+7. `evidence/non-regression-report.json`が`pass`であることを確認し、open required、unclassified、bounded historical、非後退違反数を省略しない。
 
 状態が関係する問いでは[状態モデル](references/state-model.md)を読む。
 
@@ -23,6 +24,7 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 - Catalog登録だけ、Version文字列だけ、`atlas audit`の終了コードだけを完成証明にしない。
 - CatalogまたはManifestのraw `complete`、公開Trust付きv1 Certificateを`subject-definitive`へ昇格しない。
 - `missing`、`planned`、`partial`、`excluded`、`infeasible`、`expired`を隠さない。
+- Subject、Target、Evidence、Failureを件数だけへ集約して個別IDを失わない。置換には`contracts/non-regression-mappings.json`の旧ID Mappingを要求する。
 - Coverage外の機能を外部記事で補完してAtlasの機能として扱わない。Gapとして返す。
 - `quarantined`または署名・Digest不一致のReleaseへRouteしない。last-known-goodがあれば明示して使う。
 - Read ModelからSubject実装を変更・公開しない。変更要求は対象Repositoryと権限を確認して停止する。

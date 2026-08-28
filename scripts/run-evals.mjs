@@ -15,6 +15,7 @@ const results = fixture.cases.map((testCase) => {
     !testCase.expect.noRelease || actual.candidates.every((item) => !item.release),
     !testCase.expect.digest || actual.candidates.some((item) => item.release?.digest?.startsWith('sha256:')),
     testCase.expect.completionDefinitive === undefined || actual.candidates.some((item) => item.release?.completion?.definitive === testCase.expect.completionDefinitive),
+    !testCase.expect.completionClass || actual.candidates.some((item) => item.completion?.classification === testCase.expect.completionClass),
   ];
   return { id:testCase.id, pass:assertions.every(Boolean), actual:{ decision:actual.decision, subjects:actual.candidates.map((item) => item.id) } };
 });

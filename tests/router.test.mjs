@@ -5,7 +5,7 @@ import test from 'node:test';
 import { route } from '../scripts/lib/router.mjs';
 
 const index=JSON.parse(await readFile(path.join(process.cwd(),'app/data/index.generated.json'),'utf8'));
-test('planned Subjectを完成扱いしない',()=>{const result=route(index,{subjectId:'programming-language-foundations'});assert.equal(result.decision,'catalog-only');assert.equal(result.candidates[0].release,null);});
+test('planned Subjectをunclassifiedの未完了として返す',()=>{const result=route(index,{subjectId:'programming-language-foundations'});assert.equal(result.decision,'catalog-only');assert.equal(result.candidates[0].release,null);assert.equal(result.candidates[0].completion.classification,'unclassified');});
 test('ReleaseをDigestへ固定する',()=>{const result=route(index,{subjectId:'zero-trust'});assert.equal(result.decision,'route');assert.match(result.candidates[0].release.digest,/^sha256:[a-f0-9]{64}$/);});
 test('Routerはroute可能性とDefinitive完成を分離する',()=>{const result=route(index,{subjectId:'zero-trust'});assert.equal(result.decision,'route');assert.equal(result.candidates[0].release.completion.definitive,false);});
 test('Coverage外をGapとして返す',()=>assert.equal(route(index,{query:'架空量子製品XYZ'}).decision,'coverage-gap'));

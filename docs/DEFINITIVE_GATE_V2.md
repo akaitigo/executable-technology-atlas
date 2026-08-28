@@ -9,6 +9,7 @@
 - 未知のCertificate Schemaは受理せず、取込全体を隔離してlast-known-good Indexを維持する。
 - 新規Subjectを自動昇格しない。
 - Certificate履歴はRelease Digestごとの固定詳細として保持し、current Releaseとは別に索引する。
+- 非後退BaselineよりSubject、Target、Evidence、Failureの粒度や可視性を下げない。`open required`と`unclassified`は未完了として明示する。
 
 ## Core確定後の受入条件
 
@@ -20,6 +21,7 @@
 4. Gap、`excluded`、`infeasible`の明示分類とfreshness
 5. 実行Evidenceに束縛されたRuntime Profile / Runtime Identity
 6. Core Definitive GateとMigration互換検証の成功
+7. 非後退Baselineの成功と、旧ID Mappingを含む同等以上の情報・Evidence
 
 フィールド名、Enum、署名形式、freshness規則はPortal側で推測しない。`reference-atlas-core`のversion、commit、Schema digestをvendor provenanceへ固定し、拒否Testを追加してから本Adapterを実装する。
 

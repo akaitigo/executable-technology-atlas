@@ -18,6 +18,7 @@ const catalog = catalogEnvelope.payload.catalog;
 if (!validators.catalog(catalog)) throw new Error(`Catalog Schema不適合: ${JSON.stringify(validators.catalog.errors)}`);
 
 const registry = JSON.parse(await readFile(path.join(fixtureRoot, 'registry.json'), 'utf8'));
+const failureScenarios = JSON.parse(await readFile(path.join(fixtureRoot, 'failure-scenarios.json'), 'utf8'));
 const releasesByRepository = new Map();
 const releaseDetailsByRepository = new Map();
 const imports = [];
@@ -56,7 +57,7 @@ for (const item of registry.releases) {
     audiences: envelope.payload.mastery?.audiences ?? [],
     outcomes: envelope.payload.mastery?.outcomes?.map((item) => item.id) ?? [],
     surfaces: envelope.payload.mastery?.surfaces?.map((item) => ({ id: item.id, applicability: item.applicability })) ?? [],
-    coverage: { required: required.length, closed: closedRequired.length, percent: required.length ? Math.round((closedRequired.length / required.length) * 100) : 0, unresolvedCoveredEvidence, states: Object.fromEntries(['missing','planned','partial','covered','excluded','infeasible','expired'].map((state) => [state, coverage.filter((target) => target.state === state).length])) },
+    coverage: { required: required.length, closed: closedRequired.length, openRequired: required.length - closedRequired.length, percent: required.length ? Math.round((closedRequired.length / required.length) * 100) : 0, unresolvedCoveredEvidence, states: Object.fromEntries(['missing','planned','partial','covered','excluded','infeasible','expired'].map((state) => [state, coverage.filter((target) => target.state === state).length])) },
     targets: coverage,
     evidence: envelope.payload.evidence ?? [],
     skill: envelope.payload.skillPackage,
@@ -86,6 +87,7 @@ for (const domain of catalog.domains) for (const subject of domain.subjects) {
     release,
     releaseHistory,
     currentReleaseDigest: release?.digest ?? null,
+    completion: release?.completion ?? { classification: 'unclassified', definitive: false, reason: 'fixed-release-absent', certificateSchemaVersion: null, corePolicyVersion: null, coverageEpoch: null, trustUsage: 'unclassified' },
     searchText: [subject.id,subject.title,subject.repository,subject.scope,subject.excludes.join(' '),domain.title,release?.atlasId,release?.skill?.router?.id,release?.outcomes?.join(' '),release?.surfaces?.map((item) => item.id).join(' ')].filter(Boolean).join(' ').toLocaleLowerCase('ja'),
   });
 }
@@ -96,6 +98,8 @@ const index = {
   generatedAt: catalogEnvelope.release.publishedAt,
   sourcePolicy: 'fixed-release-only',
   completionPolicy: { definitiveGate: 'pending-core-v2', boundedCertificateSchemaVersions: [1], autoPromotion: false, requiredForDefinitive: ['public-trust-key','core-v2-definitive-certificate'] },
+  completionSummary: { openRequired: subjects.reduce((sum, subject) => sum + (subject.release?.coverage.openRequired ?? 0), 0), unclassified: subjects.filter((subject) => subject.completion.classification === 'unclassified').length, boundedHistorical: subjects.flatMap((subject) => subject.releaseHistory).filter((release) => release.completion.classification === 'bounded-historical').length, subjectDefinitive: subjects.filter((subject) => subject.completion.definitive).length },
+  failureVisibility: { fixtureOnly: failureScenarios.fixtureOnly, scenarios: failureScenarios.scenarios },
   fallback: { strategy: 'last-known-good', message: '新規取込に失敗した場合は最後に検証済みのIndexを維持します。' },
   subjects,
   verification: { verified: imports.filter((item) => item.verification === 'verified').length, quarantined: imports.filter((item) => item.verification === 'quarantined').length, absent: subjects.filter((item) => !item.release).length },

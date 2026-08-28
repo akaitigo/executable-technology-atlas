@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import test from 'node:test';
+import { evaluateNonRegression } from '../scripts/lib/non-regression.mjs';
+
+const root = process.cwd();
+const readJson = async (file) => JSON.parse(await readFile(file, 'utf8'));
+const writeJson = async (file, value) => writeFile(file, `${JSON.stringify(value, null, 2)}\n`);
+
+test('凍結Baselineは97 Subject・246 Target・45 Evidenceを個別に保護する', async () => {
+  const result = await evaluateNonRegression(root);
+  assert.equal(result.verdict, 'pass');
+  assert.deepEqual({ subjects:result.summary.baselineSubjects, targets:result.summary.baselineTargets, evidence:result.summary.baselineEvidence, failures:result.summary.failureScenarios }, { subjects:97, targets:246, evidence:45, failures:11 });
+});
+
+test('削除・格上げ・不可視化・粒度低下を拒否する', async () => {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), 'atlas-non-regression-'));
+  try {
+    for (const directory of ['contracts','app/data','fixtures','public/data/releases']) await mkdir(path.join(temporary,directory), { recursive:true });
+    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','app/data/index.generated.json','fixtures/failure-scenarios.json','app/page.tsx']) {
+      await mkdir(path.dirname(path.join(temporary,file)), { recursive:true });
+      await cp(path.join(root,file), path.join(temporary,file));
+    }
+    await cp(path.join(root,'public/data/releases'), path.join(temporary,'public/data/releases'), { recursive:true });
+    const indexPath = path.join(temporary,'app/data/index.generated.json');
+    const failuresPath = path.join(temporary,'fixtures/failure-scenarios.json');
+    const mappingsPath = path.join(temporary,'contracts/non-regression-mappings.json');
+    const pagePath = path.join(temporary,'app/page.tsx');
+    const originalIndex = await readJson(indexPath);
+    const originalFailures = await readJson(failuresPath);
+    const originalMappings = await readJson(mappingsPath);
+    const originalPage = await readFile(pagePath,'utf8');
+    const expectViolation = async (code) => { const result=await evaluateNonRegression(temporary);assert.equal(result.verdict,'fail');assert.ok(result.violations.some((item)=>item.code===code),`${code}: ${JSON.stringify(result.violations)}`); };
+
+    const withoutSubject=structuredClone(originalIndex);withoutSubject.subjects.shift();await writeJson(indexPath,withoutSubject);await expectViolation('subject-deleted');await writeJson(indexPath,originalIndex);
+    const replacedSubject=structuredClone(originalIndex);replacedSubject.subjects[0].repository='replacement-without-old-id-mapping';await writeJson(indexPath,replacedSubject);await expectViolation('subject-identity-replaced-without-mapping');await writeJson(indexPath,originalIndex);
+    const promoted=structuredClone(originalIndex);const planned=promoted.subjects.find((subject)=>subject.status==='planned');planned.status='complete';await writeJson(indexPath,promoted);await expectViolation('catalog-status-promoted');await writeJson(indexPath,originalIndex);
+    const bounded=structuredClone(originalIndex);bounded.subjects.find((subject)=>subject.release).releaseHistory[0].completion={classification:'bounded-historical',definitive:true,certificateSchemaVersion:1};await writeJson(indexPath,bounded);await expectViolation('bounded-promoted-to-definitive');await writeJson(indexPath,originalIndex);
+    const releasePromoted=structuredClone(originalIndex);releasePromoted.subjects.find((subject)=>subject.release).releaseHistory[0].status='complete';await writeJson(indexPath,releasePromoted);await expectViolation('release-history-status-rewritten');await writeJson(indexPath,originalIndex);
+
+    const targetSubject=originalIndex.subjects.find((subject)=>subject.release?.coverage.required>0);const targetDetailPath=path.join(temporary,'public',targetSubject.release.detailUrl);const targetDetail=await readJson(targetDetailPath);const originalTargetDetail=structuredClone(targetDetail);targetDetail.targets.shift();await writeJson(targetDetailPath,targetDetail);await expectViolation('target-history-deleted');await writeJson(targetDetailPath,originalTargetDetail);
+    const targetRewritten=structuredClone(originalTargetDetail);targetRewritten.targets[0].state=targetRewritten.targets[0].state==='covered'?'planned':'covered';await writeJson(targetDetailPath,targetRewritten);await expectViolation('target-history-status-rewritten');await writeJson(targetDetailPath,originalTargetDetail);
+    const evidenceSubject=originalIndex.subjects.find((subject)=>subject.release?.evidenceCount>0);const evidenceDetailPath=path.join(temporary,'public',evidenceSubject.release.detailUrl);const evidenceDetail=await readJson(evidenceDetailPath);const originalEvidenceDetail=structuredClone(evidenceDetail);evidenceDetail.evidence.shift();await writeJson(evidenceDetailPath,evidenceDetail);await expectViolation('evidence-history-deleted');await writeJson(evidenceDetailPath,originalEvidenceDetail);
+    const evidenceRewritten=structuredClone(originalEvidenceDetail);evidenceRewritten.evidence[0].verdict=evidenceRewritten.evidence[0].verdict==='pass'?'fail':'pass';await writeJson(evidenceDetailPath,evidenceRewritten);await expectViolation('evidence-history-rewritten');await writeJson(evidenceDetailPath,originalEvidenceDetail);
+
+    const failures=structuredClone(originalFailures);failures.scenarios=failures.scenarios.filter((scenario)=>scenario.id!=='coverage-infeasible');await writeJson(failuresPath,failures);await expectViolation('failure-scenario-deleted');await writeJson(failuresPath,originalFailures);
+    await writeFile(pagePath,originalPage.replace("const [status, setStatus] = useState('')","const [status, setStatus] = useState('release:complete')"));await expectViolation('filter-default-excludes');await writeFile(pagePath,originalPage);
+    const mappings=structuredClone(originalMappings);mappings.subjectMappings.push({from:originalIndex.subjects[0].id,to:originalIndex.subjects[0].id});await writeJson(mappingsPath,mappings);await expectViolation('invalid-subject-mapping');await writeJson(mappingsPath,originalMappings);
+    assert.equal((await evaluateNonRegression(temporary)).verdict,'pass');
+  } finally {
+    await rm(temporary,{recursive:true,force:true});
+  }
+});
