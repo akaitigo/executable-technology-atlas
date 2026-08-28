@@ -1,0 +1,82 @@
+name: Publication Gate
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publication-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Clean-room verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      NPM_CONFIG_AUDIT: "false"
+      NPM_CONFIG_FUND: "false"
+      NPM_CONFIG_IGNORE_SCRIPTS: "true"
+    steps:
+      - name: Checkout Portal history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Checkout pinned Core v1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: akaitigo/reference-atlas-core
+          ref: cf9e6e2d981305c83f970c1f21a1ddc9c1109263
+          path: .ci/reference-atlas-core
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Use pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.13.0
+          check-latest: false
+
+      - name: Use pinned Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: 1.26.0
+          check-latest: false
+          cache: false
+
+      - name: Install lockfile dependencies
+        run: npm ci
+
+      - name: Reproduce fixed Index and Router Eval
+        run: |
+          npm run import
+          npm run eval
+          git diff --exit-code
+
+      - name: Test, lint, and build
+        run: |
+          npm test
+          npm run lint
+          npm run build
+
+      - name: Verify Publication Gate
+        run: npm run gate
+
+      - name: Verify with pinned Core CLI
+        working-directory: .ci/reference-atlas-core
+        run: |
+          go mod download
+          go mod verify
+          go run ./cmd/atlas audit "$GITHUB_WORKSPACE"
+          go run ./cmd/atlas certificate verify "$GITHUB_WORKSPACE"
+
+      - name: Reject tracked mutations
+        run: git diff --exit-code

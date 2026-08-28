@@ -31,5 +31,11 @@ node scripts/atlas-portal.mjs verify
 
 - Subjectは固定Releaseの署名、Digest、Core v1横断契約、Completion Certificateを検証し、公開用Trust Keyに固定された`complete`だけを公開完成と数えます。
 - `planned`、`active`、`incomplete`、Releaseなし、隔離を同じ完成状態に丸めません。Coverageの`excluded`、`infeasible`、`expired`も既定で表示します。
-- Portal自身の`evidence/completion-certificate.json`はSubjectの完成数と別軸です。UIはこのローカル証明とGitHub公開状態を分離して表示します。
+- Portal Repositoryは[GitHub PUBLICのmain](https://github.com/akaitigo/executable-technology-atlas)を正本とします。Portal自身の`evidence/completion-certificate.json`とSubjectの公開完成数は別軸です。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
+
+## Continuous Integration
+
+`.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Core v1は`cf9e6e2d…`へ固定し、npm依存は`package-lock.json`だけから`npm ci`で導入します。
+
+Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定IndexとRouter Evalの再現一致、24件以上のTest、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。
