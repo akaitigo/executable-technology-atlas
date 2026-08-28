@@ -19,11 +19,13 @@ Authority Human Reviewは明示Commitの`review-export.v1.json`、export Schema�
 
 PortalはHuman Decisionの正本を所有しない。UIが端末へ出力する候補は、手動一次資料確認と必須provenanceを検証するための提出物であり、固定Subject ReleaseのDecision Ledgerへ採用されるまで`reviewed`へ算入しない。`include | exclude | merge | split`がsemantic decisionで、`defer`はpendingを維持するworkflow holdとして分離する。
 
+Evidence Dependency Graph Adapterは`reference-atlas-core`正式main/CI成功commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のSchemaと`atlas audit . --gate evidence-dependency`結果へ固定する。Importerは署名済みsidecarのGraph digest、Core commit、Gate runtime identityを検証し、Graph自体とGate結果を分離して投影する。Portalはinput、transitive impacted output、rerun、required output、Proof/Closure構造をread-only表示し、GraphもSubject状態も書き換えない。固定ReleaseにGraphがない場合は97 Subjectすべてを個別に`missing-required-output`として残し、空集計や成功へ変換しない。
+
 現時点で組込Indexが検証できる署名済み公開Releaseは0件である。7件のSubject bundleはtest-only鍵で署名した再現可能fixture候補であり、UI・Indexとも`fixture-only`として完成証明と分離する。
 
 Core v1 Completion Certificateは固定Epochの`bounded-historical`として分類する。Releaseのraw `complete`、v1 Certificate検証、`public-release` Trustだけでは`subject-definitive`へ昇格しない。ReleaseはRepositoryごとの履歴配列とDigest固定の詳細Fileで保持し、current pointerをIndexで明示する。
 
-Core Definitive Gate v2のSchema/Migrationが正本へcommitされるまでは、`completionPolicy.definitiveGate`を`pending-core-v2`としてfail closedにする。確定後の受理条件は[DEFINITIVE_GATE_V2.md](DEFINITIVE_GATE_V2.md)で管理する。
+Evidence Dependency Graph契約の確定はSubject Definitive Gate v2確定を意味しない。Core Definitive Gate v2のSchema/Migrationが正本へcommitされるまでは、`completionPolicy.definitiveGate`を`pending-core-v2`としてfail closedにする。確定後の受理条件は[DEFINITIVE_GATE_V2.md](DEFINITIVE_GATE_V2.md)で管理する。
 
 非後退BaselineはSubject、Target、Evidence、FailureをID単位で保持し、生成Indexとは独立した固定契約として扱う。Importer後に`scripts/check-non-regression.mjs`が現行Read ModelとDigest固定詳細を照合し、Publication Gateが結果の再現一致まで検証する。置換は明示Mappingが必要で、件数集約だけでは元のID、理由、環境、Evidenceを代替できない。
 

@@ -42,10 +42,11 @@ node scripts/atlas-portal.mjs verify
 - `frontend-behavior`は`frontend-behavior-atlas` commit `4a0b2df8…`の`FE_DEPTH_REFERENCE.json`を固定取込します。18軸中1 satisfied / 17 partial、status `incomplete`を軸別の分母・Proof・Gapとともに表示し、299 E2E Test等の成功をboundedまたはDefinitive完成へ読み替えません。
 - Authority Human ReviewはFE commit `6c2cfa41…`の固定read-only exportと2 Schemaを正本入力にします。80 packet/deep-link、230 candidate projection、113 machine proposal、3 stale relock hold、human decision 0件をDigest検証し、機械proposalをHuman decisionとして表示しません。
 - Portalは一次資料本文を複製せず、URL、locator、offset、digestを表示します。Decision候補も保存・送信しません。将来の書込みはCore共通API/Schemaへ分離し、reviewer、time、reason、`manual-primary-source`、source/tool/context digest、旧→新mappingが揃わない操作を拒否します。`defer`と選択前stale relockはpendingのread-only holdです。
+- Evidence Dependency Graphは`reference-atlas-core`正式main/CI成功commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のSchemaとGate契約へ固定します。各Subjectのinput changed/current、影響output、stale/current、rerun command/result/runtime identity、missing required output、Proof/Closure structure driftをread-only表示します。GraphまたはCore Gate結果がない現在のSubjectは`missing-required-output`のままで、digest更新だけを復旧や完成へ読み替えません。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration
 
-`.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Core v1は`cf9e6e2d…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
+`.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Completion Certificate検証用Core v1は`cf9e6e2d…`、Evidence Dependency契約は正式main `072d7ca…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
 
 Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定Index、非後退結果、Router Evalの再現一致、全Test、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。

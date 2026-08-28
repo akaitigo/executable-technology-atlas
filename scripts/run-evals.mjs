@@ -29,6 +29,9 @@ const results = fixture.cases.map((testCase) => {
     testCase.expect.reviewed === undefined || actual.candidates.some((item) => item.authorityReview?.summary?.human_reviewed === testCase.expect.reviewed),
     testCase.expect.reviewDecisions === undefined || actual.candidates.some((item) => item.authorityReview?.summary?.decisions === testCase.expect.reviewDecisions),
     testCase.expect.reviewProgress === undefined || actual.candidates.some((item) => item.authorityReview?.summary?.has_human_progress === testCase.expect.reviewProgress),
+    !testCase.expect.dependencyStatus || actual.candidates.some((item) => item.evidenceDependency?.status === testCase.expect.dependencyStatus),
+    !testCase.expect.dependencyGate || actual.candidates.some((item) => item.evidenceDependency?.coreGate?.result === testCase.expect.dependencyGate),
+    testCase.expect.dependencyAutoPromotion === undefined || actual.candidates.some((item) => item.evidenceDependency?.autoPromotion === testCase.expect.dependencyAutoPromotion),
   ];
   return { id:testCase.id, pass:assertions.every(Boolean), actual:{ decision:actual.decision, subjects:actual.candidates.map((item) => item.id) } };
 });
@@ -37,7 +40,7 @@ const report = { schemaVersion:1, suite:fixture.id, cases:results.length, passed
 await mkdir(path.join(root, 'evidence/reports'), { recursive:true });
 await writeFile(path.join(root, 'evidence/reports/router-eval.json'), `${JSON.stringify(report,null,2)}\n`);
 const categories={
-  'japanese-discovery':'routing','api-distinction':'near-neighbor','operator-failure-container':'execution','planned-gap':'coverage-gap','infeasible-visible':'lifecycle','expired-visible':'lifecycle','superseded-history':'lifecycle','unsigned-gap':'authority','coverage-gap':'coverage-gap','evidence-digest':'authority','read-model-boundary':'authorization','security-boundary':'security','nearby-comparison':'near-neighbor','skill-route':'routing','fe-depth-incomplete':'coverage-gap','fe-tests-not-completion':'authority','authority-review-zero-progress':'authority'
+  'japanese-discovery':'routing','api-distinction':'near-neighbor','operator-failure-container':'execution','planned-gap':'coverage-gap','infeasible-visible':'lifecycle','expired-visible':'lifecycle','superseded-history':'lifecycle','unsigned-gap':'authority','coverage-gap':'coverage-gap','evidence-digest':'authority','read-model-boundary':'authorization','security-boundary':'security','nearby-comparison':'near-neighbor','skill-route':'routing','fe-depth-incomplete':'coverage-gap','fe-tests-not-completion':'authority','authority-review-zero-progress':'authority','evidence-dependency-missing':'authority'
 };
 const coreEval={schema_version:1,id:'portal.router.eval',atlas_id:'executable-technology-atlas',atlas_release:'v1.0.0',skill_id:'technology-atlas-router',generated_at:'2026-08-28T00:00:00Z',cases:results.map((item)=>({id:`case.${item.id}`,category:categories[item.id],result:item.pass?'pass':'fail',assertion:`${item.id}が期待するSubject、状態、権限境界へRouteすること。`,evidence_ids:['portal.router.eval']}))};
 await mkdir(path.join(root,'evals'),{recursive:true});await writeFile(path.join(root,'evals/router.skill-eval.json'),`${JSON.stringify(coreEval,null,2)}\n`);

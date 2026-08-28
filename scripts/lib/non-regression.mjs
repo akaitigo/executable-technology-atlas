@@ -6,6 +6,7 @@ import { scanNeutralLanguage } from './neutral-language.mjs';
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
 export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
 export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
+export const EVIDENCE_DEPENDENCY_LOCK_DIGEST = 'sha256:720ece5c5287b40c62d71f2eba61d9c8a366c7664afc32b817358b3035a23156';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
 
 const hasFields = (value, fields = []) => fields.every((field) => value?.[field] !== null && value?.[field] !== undefined);
@@ -14,7 +15,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -25,6 +26,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readJson('contracts/depth-reference-lock.json'),
     readFile(path.join(root, 'contracts/authority-review-lock.json')),
     readJson('contracts/authority-review-lock.json'),
+    readFile(path.join(root, 'contracts/evidence-dependency-lock.json')),
+    readJson('contracts/evidence-dependency-lock.json'),
     readJson('fixtures/registry.json'),
   ]);
   const violations = [];
@@ -36,6 +39,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('mapping-schema', mappings.schemaVersion === 1 && ['subjectMappings','targetMappings','evidenceMappings'].every((key) => Array.isArray(mappings[key])), 'mapping arrays required');
   check('depth-reference-lock-immutable', sha256(depthLockBytes) === DEPTH_REFERENCE_LOCK_DIGEST, `expected ${DEPTH_REFERENCE_LOCK_DIGEST}`);
   check('authority-review-lock-immutable',sha256(reviewLockBytes)===AUTHORITY_REVIEW_LOCK_DIGEST,`expected ${AUTHORITY_REVIEW_LOCK_DIGEST}`);
+  check('evidence-dependency-lock-immutable',sha256(dependencyLockBytes)===EVIDENCE_DEPENDENCY_LOCK_DIGEST,`expected ${EVIDENCE_DEPENDENCY_LOCK_DIGEST}`);
+  check('evidence-dependency-core-main',dependencyLock.coreRef==='main'&&dependencyLock.coreCommitStatus==='official-main-ci-passed'&&dependencyLock.coreCommit==='072d7ca77981f51754e824d70c6d4ecd55ea67e5',dependencyLock.coreCommit);
 
   const subjectMappings = mappingIndex(mappings.subjectMappings);
   const targetMappings = mappingIndex(mappings.targetMappings);
@@ -147,6 +152,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   for (const token of ['reference.axes.map(','axis.checks.map(','axis.gaps.map(','Test成功は各軸のProof','bounded={String(reference.completion.bounded)}','definitive={String(reference.completion.definitive)}']) if (!page.includes(token)) fail('depth-reference-ui-reduced', token);
   for(const token of ['Priority','Batch','Stale relock hold','pending','reviewed','include','exclude','merge','split','defer','一次資料をURL＋locatorで開く','write_decisions=false','Core共通API未接続','機械proposal / Human decisionではない','human decision 0件を進捗として扱いません'])if(!page.includes(token))fail('authority-review-ui-reduced',token);
   for(const forbidden of ['item.body','item.text','item.content','item.html','item.excerpt'])if(page.includes(forbidden))fail('authority-body-copied-to-ui',forbidden);
+  for(const token of ['Evidence Dependency Graph','Inputs — changed / current','Impacted outputs — stale / current','Missing required output','Proof / Closure structure drift','digest更新だけを「復旧済み」と表示せず','autoPromotion=false'])if(!page.includes(token))fail('evidence-dependency-ui-reduced',token);
+
+  for(const subject of index.subjects){const dependency=subject.evidenceDependency;if(!dependency){fail('evidence-dependency-subject-hidden',subject.id);continue;}if(dependency.autoPromotion!==false||dependency.readOnly!==true)fail('evidence-dependency-write-boundary-weakened',subject.id);if(dependency.status==='current'&&(dependency.availability!=='available'||dependency.coreGate?.result!=='pass'||dependency.coreGate?.coreCommit!==dependencyLock.coreCommit))fail('evidence-dependency-current-without-core-gate',subject.id);if(dependency.availability==='missing'&&(dependency.status!=='missing-required-output'||dependency.coreGate?.result!=='not-run'))fail('evidence-dependency-missing-promoted',subject.id);}
 
   const depthRegistry = (registry.depthReferences ?? []).find((item) => item.subjectId === depthLock.subjectId);
   const depthSubject = currentSubjects.get(depthLock.subjectId);
@@ -202,6 +210,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     authorityHumanReviewed: review?.summary?.human_reviewed ?? 0,
     authorityReviewDecisions: review?.summary?.decisions ?? 0,
     authorityStaleHolds: review?.summary?.stale_document_holds ?? 0,
+    evidenceDependencyCurrent: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='current').length,
+    evidenceDependencyStale: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='stale-or-incomplete').length,
+    evidenceDependencyMissing: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='missing-required-output').length,
     mappingsApplied: mappedCount,
     violations: violations.length,
   };

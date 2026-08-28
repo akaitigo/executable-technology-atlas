@@ -36,6 +36,15 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Checkout Evidence Dependency contract from official Core main commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: akaitigo/reference-atlas-core
+          ref: 072d7ca77981f51754e824d70c6d4ecd55ea67e5
+          path: .ci/reference-atlas-core-evidence
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Use pinned Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -51,6 +60,12 @@ jobs:
 
       - name: Install lockfile dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Verify vendored Evidence Dependency contract
+        run: |
+          cmp contracts/schemas/evidence-dependency-graph.schema.json .ci/reference-atlas-core-evidence/schemas/evidence-dependency-graph.schema.json
+          cmp contracts/reference/EVIDENCE_DEPENDENCY_GRAPH.md .ci/reference-atlas-core-evidence/docs/EVIDENCE_DEPENDENCY_GRAPH.md
+          test "$(git -C .ci/reference-atlas-core-evidence rev-parse HEAD)" = "072d7ca77981f51754e824d70c6d4ecd55ea67e5"
 
       - name: Reproduce fixed Index and Router Eval
         run: |

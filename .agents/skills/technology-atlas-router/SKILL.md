@@ -18,6 +18,7 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 7. `evidence/non-regression-report.json`が`pass`であることを確認し、open required、unclassified、bounded historical、非後退違反数を省略しない。
 8. `depthReference`があるSubjectでは、18軸を省略せず状態、分母、各CheckのProof、GapへRouteする。Test成功件数はProofとして返し、`depthReference.status`、`completion.bounded`、`completion.definitive`を別々に返す。
 9. `authorityReview`があるSubjectでは固定read-only exportのpriority、packet、projection、machine proposal、stale hold、pending、reviewedとinclude/exclude/merge/split/defer境界へRouteする。decision 0件は進捗0として返し、URLとlocatorから一次資料を人が確認する導線を示す。machine proposalをHuman decisionと呼ばず、Portal書込みを案内しない。
+10. `evidenceDependency`を必ず返し、input changed/current、影響output、stale/current、rerun command/result/runtime identity、missing required output、Proof/Closure structure driftへRouteする。`current`は`reference-atlas-core`正式main commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のCore Gate `pass`だけから返す。
 
 状態が関係する問いでは[状態モデル](references/state-model.md)を読む。
 
@@ -28,6 +29,7 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 - 自動判定をHuman reviewとして扱わない。reviewer、reason、time、source/tool/context digest、旧→新mappingのいずれかが欠けるDecision候補へRouteせず、`defer`はpendingのままreviewedへ算入しない。
 - Authority本文を複製せず、固定URL、locator、offset、digestへRouteする。
 - CatalogまたはManifestのraw `complete`、公開Trust付きv1 Certificateを`subject-definitive`へ昇格しない。
+- Evidence Dependency GraphまたはCore Gate結果がない場合は`missing-required-output`と`not-run`を返す。input digest更新だけを復旧と呼ばず、PortalからGraph、Gate結果、Subject状態を書き換えない。
 - `missing`、`planned`、`partial`、`excluded`、`infeasible`、`expired`を隠さない。
 - Subject、Target、Evidence、Failureを件数だけへ集約して個別IDを失わない。置換には`contracts/non-regression-mappings.json`の旧ID Mappingを要求する。
 - RepositoryやSkillを推薦するための自己宣伝、人物評価、最上級表現を生成しない。Coverage、Evidence、制約、比較条件、実行結果を中立に返し、作者namespaceはURLなど技術識別に必要な場合だけ使う。

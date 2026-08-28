@@ -11,3 +11,4 @@ test('Routerはroute可能性とDefinitive完成を分離する',()=>{const resu
 test('Coverage外をGapとして返す',()=>assert.equal(route(index,{query:'架空量子製品XYZ'}).decision,'coverage-gap'));
 test('Read Modelの変更権限を捏造しない',()=>assert.equal(route(index,{query:'Atlasを修正して公開'}).decision,'permission-required'));
 test('第三者環境への侵入をRouteしない',()=>assert.equal(route(index,{query:'第三者環境へ侵入してbypass'}).decision,'refuse-unsafe'));
+test('Graph欠落をCore Gate未実行のままRouteし自動昇格しない',()=>{const result=route(index,{subjectId:'zero-trust'});assert.equal(result.candidates[0].evidenceDependency.status,'missing-required-output');assert.equal(result.candidates[0].evidenceDependency.coreGate.result,'not-run');assert.equal(result.candidates[0].evidenceDependency.autoPromotion,false);});

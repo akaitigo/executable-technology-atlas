@@ -1,7 +1,7 @@
 schema_version: 1
 atlas_id: executable-technology-atlas
 epoch: "2026-08-28"
-authority_lock_digest: sha256:1fd2ac6d4689122980aba48983282250a56371debb8dd04244a08e1c8e95a168
+authority_lock_digest: sha256:ccaf3bfa4757b42eb8d41be89f012fcbafa249ddaaf1bad3863dc5b7568c7e97
 target_sets:
   - id: portal-read-model
     title: 固定Release横断Read Model
@@ -111,4 +111,14 @@ targets:
     rationale: Subject横断Queueから一次資料へ到達し、人手Decisionと未完了状態を分離する必要がある。
     claim_ids: [portal.authority.human-review]
     evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
+    exclusion: null
+  - id: portal.evidence-dependency.read-model
+    title: Evidence Dependency GraphとCore Gate結果をread-only表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 入力変化、影響output、stale状態、rerun、runtime identity、required output欠落、Proof/Closure構造差分を自動昇格なしで検証・表示する必要がある。
+    claim_ids: [portal.evidence-dependency.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
     exclusion: null
