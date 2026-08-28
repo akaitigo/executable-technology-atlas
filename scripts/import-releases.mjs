@@ -19,6 +19,7 @@ if (!validators.catalog(catalog)) throw new Error(`Catalog Schema不適合: ${JS
 
 const registry = JSON.parse(await readFile(path.join(fixtureRoot, 'registry.json'), 'utf8'));
 const releasesByRepository = new Map();
+const releaseDetailsByRepository = new Map();
 const imports = [];
 for (const item of registry.releases) {
   const absolute = path.join(fixtureRoot, item.file);
@@ -55,7 +56,11 @@ for (const item of registry.releases) {
     certificate: envelope.payload.certificate,
   };
   imports.push({ atlasId: release.atlasId, version: release.version, verification, errors, digest: release.digest });
-  if (verification === 'verified') releasesByRepository.set(item.repository, release);
+  if (verification === 'verified') {
+    releaseDetailsByRepository.set(item.repository, release);
+    const summary = Object.fromEntries(Object.entries(release).filter(([key]) => !['targets', 'evidence'].includes(key)));
+    releasesByRepository.set(item.repository, { ...summary, evidenceCount: release.evidence.length });
+  }
 }
 
 const subjects = [];
@@ -81,6 +86,12 @@ const index = {
 index.digest = sha256(index);
 await mkdir(path.dirname(output), { recursive: true });
 await mkdir(path.dirname(reportPath), { recursive: true });
+const detailRoot = path.join(root, 'public', 'data', 'releases');
+await mkdir(detailRoot, { recursive: true });
+for (const subject of subjects) {
+  const detail = releaseDetailsByRepository.get(subject.repository);
+  if (detail) await writeFile(path.join(detailRoot, `${subject.id}.json`), `${JSON.stringify(detail, null, 2)}\n`);
+}
 await writeFile(output, `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(reportPath, `${JSON.stringify({ schemaVersion: 1, catalog: catalogVerification, imports, index: { path: path.relative(root, output), digest: index.digest, subjects: subjects.length }, verdict: subjects.length === 97 && imports.every((item) => item.verification === 'verified') ? 'pass' : 'fail' }, null, 2)}\n`);
 console.log(`Index生成済み: ${subjects.length} subjects / verified=${index.verification.verified} / absent=${index.verification.absent} / quarantined=${index.verification.quarantined}`);

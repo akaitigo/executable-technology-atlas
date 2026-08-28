@@ -5,6 +5,7 @@ import atlasIndex from './data/index.generated.json';
 
 type Release = NonNullable<(typeof atlasIndex.subjects)[number]['release']>;
 type Subject = (typeof atlasIndex.subjects)[number];
+type EvidenceRecord = { id:string; verdict:string; kind:string; environment:{ profile:string } };
 
 const PAGE_SIZE = 12;
 const catalogLabels: Record<string, string> = { planned:'未着手', active:'活動中', existing:'既存', complete:'完了', deferred:'保留' };
@@ -128,12 +129,20 @@ function AtlasCard({ item, index, onOpen }: { item:Subject; index:number; onOpen
 
 function SubjectDetail({ subject, close }: { subject:Subject; close:()=>void }) {
   const release = subject.release; const counts = coverageCounts(release);
+  const [evidence, setEvidence] = useState<EvidenceRecord[] | null>(null);
+  const [detailError, setDetailError] = useState(false);
+  useEffect(() => {
+    if (!release) return;
+    let active=true;
+    fetch(`/data/releases/${subject.id}.json`).then((response)=>{if(!response.ok)throw new Error('detail unavailable');return response.json();}).then((detail)=>{if(active)setEvidence(detail.evidence??[]);}).catch(()=>{if(active)setDetailError(true);});
+    return ()=>{active=false;};
+  },[release,subject.id]);
   return <div className="detail"><header><div><p className="eyebrow">{subject.domain.title} / {subject.id}</p><h2 id="detail-title">{subject.title}</h2></div><button className="close" type="button" onClick={close} aria-label="詳細を閉じる">×</button></header><section><h3>Catalog境界</h3><p>{subject.scope}</p><ul>{subject.excludes.map((item) => <li key={item}>{item}</li>)}</ul></section>
     {!release ? <section className="detail-warning"><h3>固定Releaseはありません</h3><p>Catalogには存在しますが、Manifest、Mastery、Evidence、Skill、Certificateを検証できません。完成済みとしてRouteしません。</p></section> : <>
       <section><h3>固定Releaseと信頼</h3><dl><div><dt>Version</dt><dd><code>{release.version}</code> / {releaseLabels[release.status] ?? release.status}</dd></div><div><dt>URI</dt><dd><code>{release.uri}</code></dd></div><div><dt>Release digest</dt><dd><code>{release.digest}</code></dd></div><div><dt>署名</dt><dd>{release.signature.algorithm} / <code>{release.signature.keyId}</code>（fixture-only）</dd></div><div><dt>Authority Lock</dt><dd><code>{release.authorityLockDigest}</code></dd></div><div><dt>Publication</dt><dd className="fail">Certificateなし — 未完成</dd></div></dl></section>
       <section><h3>Mastery</h3><p className="token-list">{release.audiences.map((item) => <span key={item}>{audienceLabels[item] ?? item}</span>)}</p><p className="token-list">{release.outcomes.map((item) => <span key={item}>{outcomeLabels[item] ?? item}</span>)}</p><p className="token-list">{release.surfaces.map((item) => <span key={item.id}>{surfaceLabels[item.id] ?? item.id}{item.applicability === 'not-applicable' ? '（非適用）' : ''}</span>)}</p></section>
       <section><h3>Coverage状態</h3><div className="state-grid">{Object.entries(counts).map(([state,count]) => <div key={state}><strong>{count}</strong><span>{stateLabels[state] ?? state}<code>{state}</code></span></div>)}</div></section>
-      <section><h3>Evidence / 環境</h3><p>{release.evidence.length} Evidence records · Required: {release.requiredProfiles.join(', ')}</p><ul className="evidence-list">{release.evidence.slice(0,8).map((item) => <li key={item.id}><span className={`verdict verdict-${item.verdict}`}>{item.verdict}</span><code>{item.id}</code><span>{item.kind} / {item.environment.profile}</span></li>)}</ul></section>
+      <section><h3>Evidence / 環境</h3><p>{release.evidenceCount} Evidence records · Required: {release.requiredProfiles.join(', ')}</p>{detailError ? <p className="fail" role="alert">Evidence詳細を読み込めません。概要Indexをlast-known-goodとして表示しています。</p> : evidence === null ? <p role="status">Evidence詳細を読み込み中…</p> : <ul className="evidence-list">{evidence.slice(0,8).map((item) => <li key={item.id}><span className={`verdict verdict-${item.verdict}`}>{item.verdict}</span><code>{item.id}</code><span>{item.kind} / {item.environment.profile}</span></li>)}</ul>}</section>
       <section><h3>Router Skill</h3><dl><div><dt>Router</dt><dd><code>{release.skill.router.id}</code></dd></div><div><dt>固定先</dt><dd><code>{release.skill.atlas_release}</code></dd></div><div><dt>Adapters</dt><dd>{release.skill.adapters.join(', ')}</dd></div><div><dt>Eval threshold</dt><dd>{Math.round(release.skill.evals.minimum_pass_rate*100)}%</dd></div></dl></section>
     </>}
   </div>;
