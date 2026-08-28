@@ -169,13 +169,14 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   }
 
   const reviewSubject=currentSubjects.get(reviewLock.subjectId);const review=reviewSubject?.authorityReview;const expectedReview=reviewLock.expected;
-  let reviewExport=null;try{reviewExport=await readJson(path.join('public',review?.exportUrl??'(missing)'));}catch{fail('authority-review-export-hidden',reviewLock.subjectId);}
+  let reviewExport=null;let reviewExportBytes=null;try{reviewExportBytes=await readFile(path.join(root,'public',review?.exportUrl??'(missing)'));reviewExport=JSON.parse(reviewExportBytes);}catch{fail('authority-review-export-hidden',reviewLock.subjectId);}
   if(review?.source?.commit!==reviewLock.sourceCommit||review?.source?.exportDigest!==reviewLock.exportDigest||review?.source?.exportSchemaDigest!==reviewLock.exportSchemaDigest||review?.source?.packetSchemaDigest!==reviewLock.packetSchemaDigest)fail('authority-review-source-rewritten',reviewLock.subjectId);
   if(review?.status!=='incomplete-human-review-required'||review?.mode!=='read-only'||review?.capabilities?.write_decisions!==false||review?.capabilities?.promote_human_review!==false)fail('authority-review-contract-weakened',reviewLock.subjectId);
   const reviewFields={packets:expectedReview.packets,unique_anchors:expectedReview.uniqueAnchors,candidate_domain_projections:expectedReview.candidateDomainProjections,deep_links:expectedReview.deepLinks,pending_human:expectedReview.pendingHuman,human_reviewed:expectedReview.humanReviewed,proposed_clusters:expectedReview.proposedClusters,semantic_decisions_by_export:expectedReview.semanticDecisionsByExport,stale_document_holds:expectedReview.staleDocumentHolds,decisions:expectedReview.decisions};for(const[field,value]of Object.entries(reviewFields))if(review?.summary?.[field]!==value)fail('authority-review-summary-rewritten',`${field}: ${review?.summary?.[field]} != ${value}`);
-  if(review?.summary?.has_human_progress!==false||reviewExport?.decisionBoundary?.export_accepts_writes!==false)fail('zero-decision-progress-inflated',reviewLock.subjectId);
-  if(reviewExport?.packets?.length!==expectedReview.packets||reviewExport?.proposedClusters?.length!==expectedReview.proposedClusters||reviewExport?.staleHolds?.length!==expectedReview.staleDocumentHolds)fail('authority-review-export-aggregated',reviewLock.subjectId);
-  if(reviewExport?.proposedClusters?.some((item)=>item.semantic_decision!=='none-machine-proposal-only'||item.human_reviewed!==false)||reviewExport?.staleCandidateReport?.human_choices!==0)fail('authority-review-machine-promoted',reviewLock.subjectId);
+  if(review?.summary?.has_human_progress!==false||reviewExport?.decision_boundary?.export_accepts_writes!==false)fail('zero-decision-progress-inflated',reviewLock.subjectId);
+  if(sha256(reviewExportBytes)!==reviewLock.exportDigest)fail('authority-review-export-bytes-rewritten',reviewLock.subjectId);
+  if(reviewExport?.packets?.length!==expectedReview.packets||reviewExport?.proposed_clusters?.length!==expectedReview.proposedClusters||reviewExport?.stale_holds?.length!==expectedReview.staleDocumentHolds)fail('authority-review-export-aggregated',reviewLock.subjectId);
+  if(reviewExport?.proposed_clusters?.some((item)=>item.semantic_decision!=='none-machine-proposal-only'||item.human_reviewed!==false)||reviewExport?.stale_candidate_report?.human_choices!==0)fail('authority-review-machine-promoted',reviewLock.subjectId);
 
   const releases = index.subjects.flatMap((subject) => subject.release ? [subject.release] : []);
   for (const release of index.subjects.flatMap((subject) => subject.releaseHistory ?? [])) {

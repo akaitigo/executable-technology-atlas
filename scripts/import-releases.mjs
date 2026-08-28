@@ -154,7 +154,7 @@ if (verdict === 'fail') {
   process.exitCode = 1;
 } else {
   const detailRoot = path.join(root, 'public', 'data', 'releases');
-  for(const [subjectId,bundle]of authorityReviewBundles){const reviewRoot=path.join(root,'public','data','authority-reviews',subjectId);const packetRoot=path.join(reviewRoot,'packets');await rm(reviewRoot,{recursive:true,force:true});await mkdir(packetRoot,{recursive:true});const projected=authorityReviews.get(subjectId);await writeFile(path.join(reviewRoot,'review-export.v1.json'),`${JSON.stringify(projected)}\n`);for(const entry of bundle.packets)await writeFile(path.join(packetRoot,`${entry.value.packet_id}.json`),`${JSON.stringify(entry.value)}\n`);}
+  for(const [subjectId,bundle]of authorityReviewBundles){const reviewRoot=path.join(root,'public','data','authority-reviews',subjectId);const packetRoot=path.join(reviewRoot,'packets');await rm(reviewRoot,{recursive:true,force:true});await mkdir(packetRoot,{recursive:true});await writeFile(path.join(reviewRoot,'review-export.v1.json'),bundle.exportBytes);for(const entry of bundle.packets)await writeFile(path.join(packetRoot,`${entry.value.packet_id}.json`),entry.bytes);}
   for (const [repository, details] of releaseDetailsByRepository) {
     const subject = subjects.find((item) => item.repository === repository);
     if (!subject) continue;
