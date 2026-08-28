@@ -1,7 +1,7 @@
 schema_version: 1
 atlas_id: executable-technology-atlas
 epoch: "2026-08-28"
-authority_lock_digest: sha256:ea0d4e898ae1512e3dd55ec95e9f249f4457b92116ead7a2b15a12594cb19da7
+authority_lock_digest: sha256:1fd2ac6d4689122980aba48983282250a56371debb8dd04244a08e1c8e95a168
 target_sets:
   - id: portal-read-model
     title: 固定Release横断Read Model
@@ -101,4 +101,14 @@ targets:
     rationale: 依存関係、第三者素材、Evidence Set、Completion CertificateをPublication Gateで検証する必要がある。
     claim_ids: [portal.publication.signed-certificate]
     evidence_ids: [portal.publication.sbom]
+    exclusion: null
+  - id: portal.authority.human-review
+    title: Authority Human Review Queueを本文非複製で検証・表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: Subject横断Queueから一次資料へ到達し、人手Decisionと未完了状態を分離する必要がある。
+    claim_ids: [portal.authority.human-review]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
     exclusion: null

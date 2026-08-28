@@ -5,6 +5,7 @@ import { scanNeutralLanguage } from './neutral-language.mjs';
 
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
 export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
+export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
 
 const hasFields = (value, fields = []) => fields.every((field) => value?.[field] !== null && value?.[field] !== undefined);
@@ -13,7 +14,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -22,6 +23,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readFile(path.join(root, 'app/page.tsx'), 'utf8'),
     readFile(path.join(root, 'contracts/depth-reference-lock.json')),
     readJson('contracts/depth-reference-lock.json'),
+    readFile(path.join(root, 'contracts/authority-review-lock.json')),
+    readJson('contracts/authority-review-lock.json'),
     readJson('fixtures/registry.json'),
   ]);
   const violations = [];
@@ -32,6 +35,7 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('baseline-schema', baseline.schemaVersion === 1 && baseline.policy?.aggregateReplacement === 'reject', 'schemaVersion=1 / aggregateReplacement=reject');
   check('mapping-schema', mappings.schemaVersion === 1 && ['subjectMappings','targetMappings','evidenceMappings'].every((key) => Array.isArray(mappings[key])), 'mapping arrays required');
   check('depth-reference-lock-immutable', sha256(depthLockBytes) === DEPTH_REFERENCE_LOCK_DIGEST, `expected ${DEPTH_REFERENCE_LOCK_DIGEST}`);
+  check('authority-review-lock-immutable',sha256(reviewLockBytes)===AUTHORITY_REVIEW_LOCK_DIGEST,`expected ${AUTHORITY_REVIEW_LOCK_DIGEST}`);
 
   const subjectMappings = mappingIndex(mappings.subjectMappings);
   const targetMappings = mappingIndex(mappings.targetMappings);
@@ -141,6 +145,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   if (!page.includes('gaps.map(')) fail('target-gap-ui-aggregated', 'Target gaps must remain individually visible');
   if (!page.includes('atlasIndex.failureVisibility.scenarios.map(')) fail('failure-ui-aggregated', 'Failure scenarios must remain individually visible');
   for (const token of ['reference.axes.map(','axis.checks.map(','axis.gaps.map(','Test成功は各軸のProof','bounded={String(reference.completion.bounded)}','definitive={String(reference.completion.definitive)}']) if (!page.includes(token)) fail('depth-reference-ui-reduced', token);
+  for(const token of ['Priority','Batch','Stale relock hold','pending','reviewed','include','exclude','merge','split','defer','一次資料をURL＋locatorで開く','write_decisions=false','Core共通API未接続','機械proposal / Human decisionではない','human decision 0件を進捗として扱いません'])if(!page.includes(token))fail('authority-review-ui-reduced',token);
+  for(const forbidden of ['item.body','item.text','item.content','item.html','item.excerpt'])if(page.includes(forbidden))fail('authority-body-copied-to-ui',forbidden);
 
   const depthRegistry = (registry.depthReferences ?? []).find((item) => item.subjectId === depthLock.subjectId);
   const depthSubject = currentSubjects.get(depthLock.subjectId);
@@ -162,6 +168,15 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     if (axis.status !== 'satisfied' && !axis.gaps?.length) fail('depth-reference-gap-hidden', axis.id);
   }
 
+  const reviewSubject=currentSubjects.get(reviewLock.subjectId);const review=reviewSubject?.authorityReview;const expectedReview=reviewLock.expected;
+  let reviewExport=null;try{reviewExport=await readJson(path.join('public',review?.exportUrl??'(missing)'));}catch{fail('authority-review-export-hidden',reviewLock.subjectId);}
+  if(review?.source?.commit!==reviewLock.sourceCommit||review?.source?.exportDigest!==reviewLock.exportDigest||review?.source?.exportSchemaDigest!==reviewLock.exportSchemaDigest||review?.source?.packetSchemaDigest!==reviewLock.packetSchemaDigest)fail('authority-review-source-rewritten',reviewLock.subjectId);
+  if(review?.status!=='incomplete-human-review-required'||review?.mode!=='read-only'||review?.capabilities?.write_decisions!==false||review?.capabilities?.promote_human_review!==false)fail('authority-review-contract-weakened',reviewLock.subjectId);
+  const reviewFields={packets:expectedReview.packets,unique_anchors:expectedReview.uniqueAnchors,candidate_domain_projections:expectedReview.candidateDomainProjections,deep_links:expectedReview.deepLinks,pending_human:expectedReview.pendingHuman,human_reviewed:expectedReview.humanReviewed,proposed_clusters:expectedReview.proposedClusters,semantic_decisions_by_export:expectedReview.semanticDecisionsByExport,stale_document_holds:expectedReview.staleDocumentHolds,decisions:expectedReview.decisions};for(const[field,value]of Object.entries(reviewFields))if(review?.summary?.[field]!==value)fail('authority-review-summary-rewritten',`${field}: ${review?.summary?.[field]} != ${value}`);
+  if(review?.summary?.has_human_progress!==false||reviewExport?.decisionBoundary?.export_accepts_writes!==false)fail('zero-decision-progress-inflated',reviewLock.subjectId);
+  if(reviewExport?.packets?.length!==expectedReview.packets||reviewExport?.proposedClusters?.length!==expectedReview.proposedClusters||reviewExport?.staleHolds?.length!==expectedReview.staleDocumentHolds)fail('authority-review-export-aggregated',reviewLock.subjectId);
+  if(reviewExport?.proposedClusters?.some((item)=>item.semantic_decision!=='none-machine-proposal-only'||item.human_reviewed!==false)||reviewExport?.staleCandidateReport?.human_choices!==0)fail('authority-review-machine-promoted',reviewLock.subjectId);
+
   const releases = index.subjects.flatMap((subject) => subject.release ? [subject.release] : []);
   for (const release of index.subjects.flatMap((subject) => subject.releaseHistory ?? [])) {
     if (release.completion?.definitive && (release.completion.classification === 'bounded-historical' || release.completion.certificateSchemaVersion === 1)) fail('bounded-promoted-to-definitive', release.digest);
@@ -181,6 +196,11 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     depthReferenceAxes: depthDetail?.depthReference?.axes?.length ?? 0,
     depthReferenceSatisfied: depthDetail?.depthReference?.summary?.satisfied ?? 0,
     depthReferencePartial: depthDetail?.depthReference?.summary?.partial ?? 0,
+    authorityReviewPackets: review?.summary?.packets ?? 0,
+    authorityReviewPending: review?.summary?.pending_human ?? 0,
+    authorityHumanReviewed: review?.summary?.human_reviewed ?? 0,
+    authorityReviewDecisions: review?.summary?.decisions ?? 0,
+    authorityStaleHolds: review?.summary?.stale_document_holds ?? 0,
     mappingsApplied: mappedCount,
     violations: violations.length,
   };

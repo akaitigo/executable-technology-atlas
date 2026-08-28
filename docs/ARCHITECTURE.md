@@ -15,6 +15,10 @@ Runtimeは`fixtures/`のcontent-addressed bundleと生成済み`app/data/index.g
 
 `frontend-behavior`のDepth Referenceは、明示Commit `4a0b2df8e2091a963bd0e0e1bbccef9c84b49a45`の`FE_DEPTH_REFERENCE.json`をSource digestと署名付きEnvelopeへ固定する。Importerは`contracts/depth-reference-lock.json`に対して18軸、状態、分母、Proof、Gapを検証し、生成IndexとDigest固定Subject詳細へ投影する。実行時にSubject checkoutは読まない。
 
+Authority Human Reviewは明示Commitの`review-export.v1.json`、export Schema、packet Schema、packet index、80 packetをgzip固定Bundleと署名Manifestとして取込む。初期表示にはSubject横断summaryとpacket indexだけを含め、選択packetを静的JSONから遅延読込する。PacketはURL、locator、offset、digest、未review projection、machine-only proposalだけを保持し、一次資料本文をPortalへ複製しない。Portalのwrite capabilityは常にfalseで、将来のDecision書込みはCore共通API/Schemaの責務とする。
+
+PortalはHuman Decisionの正本を所有しない。UIが端末へ出力する候補は、手動一次資料確認と必須provenanceを検証するための提出物であり、固定Subject ReleaseのDecision Ledgerへ採用されるまで`reviewed`へ算入しない。`include | exclude | merge | split`がsemantic decisionで、`defer`はpendingを維持するworkflow holdとして分離する。
+
 現時点で組込Indexが検証できる署名済み公開Releaseは0件である。7件のSubject bundleはtest-only鍵で署名した再現可能fixture候補であり、UI・Indexとも`fixture-only`として完成証明と分離する。
 
 Core v1 Completion Certificateは固定Epochの`bounded-historical`として分類する。Releaseのraw `complete`、v1 Certificate検証、`public-release` Trustだけでは`subject-definitive`へ昇格しない。ReleaseはRepositoryごとの履歴配列とDigest固定の詳細Fileで保持し、current pointerをIndexで明示する。

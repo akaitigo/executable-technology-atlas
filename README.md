@@ -40,6 +40,8 @@ node scripts/atlas-portal.mjs verify
 - UI、Portal Manifest、Docs、Routerは中立な事実、Coverage、Evidence、制約、比較条件、実行結果だけを記述します。自己宣伝、人物評価、推薦を目的化する文言をGateで拒否し、作者namespaceはRepository URLなど技術的に必要な識別に限定します。
 - Core v2 Schema/Migrationは未確定です。Gap、除外・実行困難、実Runtime Profile、Authority-derived inventory closureのv2判定は推測せず、[移行境界](docs/DEFINITIVE_GATE_V2.md)に従って確定後に実装します。
 - `frontend-behavior`は`frontend-behavior-atlas` commit `4a0b2df8…`の`FE_DEPTH_REFERENCE.json`を固定取込します。18軸中1 satisfied / 17 partial、status `incomplete`を軸別の分母・Proof・Gapとともに表示し、299 E2E Test等の成功をboundedまたはDefinitive完成へ読み替えません。
+- Authority Human ReviewはFE commit `6c2cfa41…`の固定read-only exportと2 Schemaを正本入力にします。80 packet/deep-link、230 candidate projection、113 machine proposal、3 stale relock hold、human decision 0件をDigest検証し、機械proposalをHuman decisionとして表示しません。
+- Portalは一次資料本文を複製せず、URL、locator、offset、digestを表示します。Decision候補も保存・送信しません。将来の書込みはCore共通API/Schemaへ分離し、reviewer、time、reason、`manual-primary-source`、source/tool/context digest、旧→新mappingが揃わない操作を拒否します。`defer`と選択前stale relockはpendingのread-only holdです。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration

@@ -9,3 +9,4 @@ test('検索結果更新を支援技術へ通知する',()=>{assert.match(page,/
 test('Facetをlabelとselectで関連付ける',()=>{assert.match(page,/function Facet/);assert.match(page,/<label className=/);assert.match(page,/<select value=/);});
 test('Reduced Motionと可視Focusを提供する',()=>{assert.match(css,/prefers-reduced-motion/);assert.match(css,/:focus-visible/);});
 test('Portal自身のCompletion Certificateへの日本語導線を提供する',()=>{assert.match(page,/href="#portal-certificate"/);assert.match(page,/id="portal-certificate"/);assert.match(page,/Subjectの完成数と、Portal自身の完成を混ぜない/);});
+test('Authority Human Reviewはread-only label・status・alert・安全な一次資料Linkを提供する',()=>{assert.match(page,/href="#authority-review"/);assert.match(page,/id="authority-review"/);assert.match(page,/role="status"/);assert.match(page,/role="alert"/);assert.match(page,/target="_blank" rel="noopener noreferrer"/);assert.match(page,/write_decisions=false/);assert.match(page,/機械proposal \/ Human decisionではない/);assert.doesNotMatch(page,/候補を保存/);});

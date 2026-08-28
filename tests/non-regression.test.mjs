@@ -18,12 +18,13 @@ test('凍結Baselineは97 Subject・246 Target・45 Evidenceを個別に保護�
 test('削除・格上げ・不可視化・粒度低下を拒否する', async () => {
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'atlas-non-regression-'));
   try {
-    for (const directory of ['contracts','app/data','fixtures/depth-references','public/data/releases']) await mkdir(path.join(temporary,directory), { recursive:true });
-    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
+    for (const directory of ['contracts','app/data','fixtures/depth-references','public/data/releases','public/data/authority-reviews']) await mkdir(path.join(temporary,directory), { recursive:true });
+    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
       await mkdir(path.dirname(path.join(temporary,file)), { recursive:true });
       await cp(path.join(root,file), path.join(temporary,file));
     }
     await cp(path.join(root,'public/data/releases'), path.join(temporary,'public/data/releases'), { recursive:true });
+    await cp(path.join(root,'public/data/authority-reviews'), path.join(temporary,'public/data/authority-reviews'), { recursive:true });
     await cp(path.join(root,'fixtures/depth-references'), path.join(temporary,'fixtures/depth-references'), { recursive:true });
     const indexPath = path.join(temporary,'app/data/index.generated.json');
     const failuresPath = path.join(temporary,'fixtures/failure-scenarios.json');
@@ -51,6 +52,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const mappings=structuredClone(originalMappings);mappings.subjectMappings.push({from:originalIndex.subjects[0].id,to:originalIndex.subjects[0].id});await writeJson(mappingsPath,mappings);await expectViolation('invalid-subject-mapping');await writeJson(mappingsPath,originalMappings);
     const depthSubject=originalIndex.subjects.find((subject)=>subject.id==='frontend-behavior');const depthDetailPath=path.join(temporary,'public',depthSubject.release.detailUrl);const depthDetail=await readJson(depthDetailPath);const originalDepthDetail=structuredClone(depthDetail);depthDetail.depthReference.axes.shift();await writeJson(depthDetailPath,depthDetail);await expectViolation('depth-reference-axis-information-reduced');await writeJson(depthDetailPath,originalDepthDetail);
     const depthPromoted=structuredClone(originalIndex);depthPromoted.subjects.find((subject)=>subject.id==='frontend-behavior').depthReference.completion.definitive=true;await writeJson(indexPath,depthPromoted);await expectViolation('depth-reference-status-promoted');await writeJson(indexPath,originalIndex);
+    const reviewProgress=structuredClone(originalIndex);const reviewSubject=reviewProgress.subjects.find((subject)=>subject.id==='frontend-behavior');reviewSubject.authorityReview.summary.human_reviewed=1;reviewSubject.authorityReview.summary.has_human_progress=true;await writeJson(indexPath,reviewProgress);await expectViolation('authority-review-summary-rewritten');await writeJson(indexPath,originalIndex);
     assert.equal((await evaluateNonRegression(temporary,{scanLanguage:false})).verdict,'pass');
   } finally {
     await rm(temporary,{recursive:true,force:true});
