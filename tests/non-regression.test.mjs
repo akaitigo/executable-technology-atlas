@@ -32,7 +32,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const originalFailures = await readJson(failuresPath);
     const originalMappings = await readJson(mappingsPath);
     const originalPage = await readFile(pagePath,'utf8');
-    const expectViolation = async (code) => { const result=await evaluateNonRegression(temporary);assert.equal(result.verdict,'fail');assert.ok(result.violations.some((item)=>item.code===code),`${code}: ${JSON.stringify(result.violations)}`); };
+    const expectViolation = async (code) => { const result=await evaluateNonRegression(temporary,{scanLanguage:false});assert.equal(result.verdict,'fail');assert.ok(result.violations.some((item)=>item.code===code),`${code}: ${JSON.stringify(result.violations)}`); };
 
     const withoutSubject=structuredClone(originalIndex);withoutSubject.subjects.shift();await writeJson(indexPath,withoutSubject);await expectViolation('subject-deleted');await writeJson(indexPath,originalIndex);
     const replacedSubject=structuredClone(originalIndex);replacedSubject.subjects[0].repository='replacement-without-old-id-mapping';await writeJson(indexPath,replacedSubject);await expectViolation('subject-identity-replaced-without-mapping');await writeJson(indexPath,originalIndex);
@@ -48,7 +48,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const failures=structuredClone(originalFailures);failures.scenarios=failures.scenarios.filter((scenario)=>scenario.id!=='coverage-infeasible');await writeJson(failuresPath,failures);await expectViolation('failure-scenario-deleted');await writeJson(failuresPath,originalFailures);
     await writeFile(pagePath,originalPage.replace("const [status, setStatus] = useState('')","const [status, setStatus] = useState('release:complete')"));await expectViolation('filter-default-excludes');await writeFile(pagePath,originalPage);
     const mappings=structuredClone(originalMappings);mappings.subjectMappings.push({from:originalIndex.subjects[0].id,to:originalIndex.subjects[0].id});await writeJson(mappingsPath,mappings);await expectViolation('invalid-subject-mapping');await writeJson(mappingsPath,originalMappings);
-    assert.equal((await evaluateNonRegression(temporary)).verdict,'pass');
+    assert.equal((await evaluateNonRegression(temporary,{scanLanguage:false})).verdict,'pass');
   } finally {
     await rm(temporary,{recursive:true,force:true});
   }

@@ -25,6 +25,7 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 - CatalogまたはManifestのraw `complete`、公開Trust付きv1 Certificateを`subject-definitive`へ昇格しない。
 - `missing`、`planned`、`partial`、`excluded`、`infeasible`、`expired`を隠さない。
 - Subject、Target、Evidence、Failureを件数だけへ集約して個別IDを失わない。置換には`contracts/non-regression-mappings.json`の旧ID Mappingを要求する。
+- RepositoryやSkillを推薦するための自己宣伝、人物評価、最上級表現を生成しない。Coverage、Evidence、制約、比較条件、実行結果を中立に返し、作者namespaceはURLなど技術識別に必要な場合だけ使う。
 - Coverage外の機能を外部記事で補完してAtlasの機能として扱わない。Gapとして返す。
 - `quarantined`または署名・Digest不一致のReleaseへRouteしない。last-known-goodがあれば明示して使う。
 - Read ModelからSubject実装を変更・公開しない。変更要求は対象Repositoryと権限を確認して停止する。

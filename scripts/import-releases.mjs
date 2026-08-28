@@ -3,6 +3,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { classifySubjectCompletion, loadTrust, schemaValidators, verifyEnvelope, validateCompletionCertificate, validateRelease } from './lib/validate.mjs';
 import { sha256 } from './lib/crypto.mjs';
+import { neutralizeDisplayText } from './lib/neutral-language.mjs';
 
 const root = process.cwd();
 const fixtureRoot = path.resolve(process.argv[2] ?? path.join(root, 'fixtures'));
@@ -123,7 +124,10 @@ if (verdict === 'fail') {
     await mkdir(subjectDetailRoot, { recursive: true });
     for (const detail of details) {
       const contentId = detail.digest.replace(/^sha256:/, '');
-      await writeFile(path.join(subjectDetailRoot, `${contentId}.json`), `${JSON.stringify({ ...detail, detailUrl: `/data/releases/${subject.id}/${contentId}.json` }, null, 2)}\n`);
+      const sourceDetail = { ...detail, detailUrl: `/data/releases/${subject.id}/${contentId}.json` };
+      const projectedDetail = neutralizeDisplayText(sourceDetail);
+      const transformations = JSON.stringify(projectedDetail) === JSON.stringify(sourceDetail) ? [] : ['definitive-marketing-to-neutral-fact'];
+      await writeFile(path.join(subjectDetailRoot, `${contentId}.json`), `${JSON.stringify({ ...projectedDetail, displayProjection: { sourceReleaseDigest:detail.digest, transformations } }, null, 2)}\n`);
     }
   }
   await mkdir(path.dirname(output), { recursive: true });

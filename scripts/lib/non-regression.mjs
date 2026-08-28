@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { sha256 } from './crypto.mjs';
+import { scanNeutralLanguage } from './neutral-language.mjs';
 
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
@@ -9,7 +10,7 @@ const hasFields = (value, fields = []) => fields.every((field) => value?.[field]
 const mappingIndex = (items = []) => new Map(items.map((item) => [item.from, item]));
 const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.length >= 20 && mapping?.informationPreserved === true && mapping?.evidencePolicy === 'same-or-stronger');
 
-export async function evaluateNonRegression(root = process.cwd()) {
+export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
   const [baselineBytes, baseline, mappings, index, failures, page] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
@@ -139,6 +140,8 @@ export async function evaluateNonRegression(root = process.cwd()) {
   for (const release of index.subjects.flatMap((subject) => subject.releaseHistory ?? [])) {
     if (release.completion?.definitive && (release.completion.classification === 'bounded-historical' || release.completion.certificateSchemaVersion === 1)) fail('bounded-promoted-to-definitive', release.digest);
   }
+  const neutralLanguage = options.scanLanguage === false ? { verdict:'skipped', filesScanned:0, violations:[] } : await scanNeutralLanguage(root);
+  for (const violation of neutralLanguage.violations) fail(`neutral-language-${violation.code}`, `${violation.file}:${violation.line}`);
   const summary = {
     baselineSubjects: baseline.subjects.length,
     currentSubjects: index.subjects.length,
@@ -152,5 +155,5 @@ export async function evaluateNonRegression(root = process.cwd()) {
     mappingsApplied: mappedCount,
     violations: violations.length,
   };
-  return { schemaVersion: 1, baselineDigest: NON_REGRESSION_BASELINE_DIGEST, generatedAt: index.generatedAt, verdict: violations.length ? 'fail' : 'pass', summary, checks, violations };
+  return { schemaVersion: 1, baselineDigest: NON_REGRESSION_BASELINE_DIGEST, generatedAt: index.generatedAt, verdict: violations.length ? 'fail' : 'pass', summary, neutralLanguage, checks, violations };
 }

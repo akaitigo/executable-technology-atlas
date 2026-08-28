@@ -20,3 +20,5 @@ Core v1 Completion Certificateは固定Epochの`bounded-historical`として分�
 Core Definitive Gate v2のSchema/Migrationが正本へcommitされるまでは、`completionPolicy.definitiveGate`を`pending-core-v2`としてfail closedにする。確定後の受理条件は[DEFINITIVE_GATE_V2.md](DEFINITIVE_GATE_V2.md)で管理する。
 
 非後退BaselineはSubject、Target、Evidence、FailureをID単位で保持し、生成Indexとは独立した固定契約として扱う。Importer後に`scripts/check-non-regression.mjs`が現行Read ModelとDigest固定詳細を照合し、Publication Gateが結果の再現一致まで検証する。置換は明示Mappingが必要で、件数集約だけでは元のID、理由、環境、Evidenceを代替できない。
+
+公開表示Projectionは署名済み入力を信頼判定の正本として保持しつつ、画面・公開詳細・Portal文書へ自己宣伝や人物評価を複製しない。変換の有無とsource Release Digestを固定詳細へ記録し、Portalが表示する判断材料をCoverage、Evidence、制約、比較条件、実行結果に限定する。
