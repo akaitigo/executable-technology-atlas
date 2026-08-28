@@ -1,0 +1,1683 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-release",
+  "release": {
+    "atlasId": "postgresql-reference-atlas",
+    "version": "v0.0.0",
+    "commit": "edaf8129ff8349298f70438d62b8f2ef42c2ab39",
+    "uri": "urn:atlas:release:postgresql-reference-atlas:v0.0.0:edaf8129ff8349298f70438d62b8f2ef42c2ab39",
+    "digest": "sha256:e552100c5788c63f4495d735f3ea6df148e5cd04fa00ad79038128ee917d497c",
+    "publishedAt": "2026-08-28T00:00:00.000Z"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "value": "kXtwrBbxp3Cr/tNrKyiieHKhBtQQIquxFtKPlyGA08Jlao4Ss1nm0auo9tsEdwZo73MY9gbeF4THSSlbnXquAQ=="
+  },
+  "payload": {
+    "atlas": {
+      "schema_version": 1,
+      "id": "postgresql-reference-atlas",
+      "title": "PostgreSQL 技術実証アトラス",
+      "owner": {
+        "github": "akaitigo"
+      },
+      "repository": {
+        "url": "https://github.com/akaitigo/postgresql-reference-atlas",
+        "visibility": "public",
+        "default_branch": "main"
+      },
+      "archetypes": [
+        "product"
+      ],
+      "stage": 3,
+      "status": "incomplete",
+      "language": {
+        "primary": "ja",
+        "identifiers": "en"
+      },
+      "coverage": {
+        "epoch": "2026-08-28",
+        "manifest": "coverage.yaml"
+      },
+      "authority": {
+        "lockfile": "sources.lock.yaml",
+        "policy": "primary-first"
+      },
+      "mastery": {
+        "manifest": "mastery.yaml",
+        "contract_version": "1.0.0"
+      },
+      "scope": {
+        "statement": "PostgreSQL 18.6公式配布物の公開機能を対象に、設計判断、SQL実行、並行制御、性能、運用、障害、復旧、移行を再実行可能な証拠へ接続する。",
+        "exclusions": [
+          "PostgreSQL 19 Betaおよび開発中BranchはこのCoverage Epochの正式対象に含めない。",
+          "PostGISやpgvectorなど公式配布物に含まれない外部Extensionは完全性の対象に含めない。",
+          "Managed Service固有APIと外部HA・Pooler製品は別のProduct AtlasまたはInteroperability Labで扱う。"
+        ]
+      },
+      "skills": {
+        "router": {
+          "id": "postgresql-atlas",
+          "path": ".agents/skills/postgresql-atlas/SKILL.md"
+        },
+        "package_manifest": "skill.package.yaml",
+        "evals": "evals/"
+      },
+      "completion": {
+        "policy_version": "1.0.0",
+        "required_profiles": [
+          "local",
+          "container",
+          "cluster"
+        ],
+        "certificate": "evidence/completion-certificate.json"
+      },
+      "license": {
+        "default": "Apache-2.0",
+        "notice": "NOTICE",
+        "third_party_manifest": "third_party/manifest.yaml",
+        "sbom": "sbom.spdx.json"
+      },
+      "security": {
+        "disclosure": "SECURITY.md",
+        "defensive_only": true
+      }
+    },
+    "mastery": {
+      "schema_version": 1,
+      "atlas_id": "postgresql-reference-atlas",
+      "epoch": "2026-08-28",
+      "promise": "PostgreSQL 18.6について、初学者が原理と境界を理解し、実務者が方式を選んで実装し、 運用者が観測・診断・復旧し、保守者が互換性を判断して安全に移行できるまでを、 固定した一次資料、再実行可能なLab、反証可能なClaim、検証済みEvidenceへ結び付けて提供する。",
+      "audiences": [
+        "learner",
+        "practitioner",
+        "architect",
+        "operator",
+        "maintainer",
+        "reviewer",
+        "educator",
+        "agent"
+      ],
+      "outcomes": [
+        {
+          "id": "understand",
+          "title": "PostgreSQLの原理とVersion境界を説明できる",
+          "target_sets": [
+            "foundation",
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ]
+        },
+        {
+          "id": "choose",
+          "title": "条件とTrade-offから方式を選択できる",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ]
+        },
+        {
+          "id": "build",
+          "title": "Schema、Query、Clusterを構築できる",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ]
+        },
+        {
+          "id": "verify",
+          "title": "主張をTestとEvidenceで検証できる",
+          "target_sets": [
+            "foundation",
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle",
+            "publication"
+          ]
+        },
+        {
+          "id": "operate",
+          "title": "Databaseを観測し安全に運用できる",
+          "target_sets": [
+            "performance",
+            "operations"
+          ]
+        },
+        {
+          "id": "troubleshoot",
+          "title": "性能、競合、障害を診断して回復できる",
+          "target_sets": [
+            "concurrency",
+            "performance",
+            "operations"
+          ]
+        },
+        {
+          "id": "evolve",
+          "title": "互換性を守ってUpgrade・移行・廃止できる",
+          "target_sets": [
+            "foundation",
+            "lifecycle"
+          ]
+        },
+        {
+          "id": "delegate",
+          "title": "Agentへ安全に委任し証拠をReviewできる",
+          "target_sets": [
+            "skill"
+          ]
+        }
+      ],
+      "surfaces": [
+        {
+          "id": "orientation-scope",
+          "title": "定義・目的・Version境界",
+          "applicability": "required",
+          "rationale": "PostgreSQL本体、公式同梱物、外部Extension、Managed Serviceの境界を誤らず入口を選ぶために必要である。",
+          "target_sets": [
+            "foundation"
+          ],
+          "required_deliverables": [
+            "concept",
+            "decision"
+          ]
+        },
+        {
+          "id": "foundations-mechanics",
+          "title": "SQL・MVCC・Storageの原理とInvariant",
+          "applicability": "required",
+          "rationale": "構文の利用例だけでなく、Transaction、Snapshot、WAL、Catalogが結果を生む理由を説明するために必要である。",
+          "target_sets": [
+            "foundation",
+            "query",
+            "concurrency"
+          ],
+          "required_deliverables": [
+            "concept",
+            "lab"
+          ]
+        },
+        {
+          "id": "architecture-design",
+          "title": "Schema・Transaction・Cluster Architecture",
+          "applicability": "required",
+          "rationale": "整合性、権限、性能、可用性、復旧の責任境界を保守可能な構造へ分解するために必要である。",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "decision",
+            "reference-implementation"
+          ]
+        },
+        {
+          "id": "implementation-construction",
+          "title": "SQL・Extension・Clusterの実装と構築",
+          "applicability": "required",
+          "rationale": "選択した設計をSQL、設定、Client、複数Node構成として再現しObservableな結果へ結び付けるために必要である。",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "reference-implementation",
+            "lab"
+          ]
+        },
+        {
+          "id": "testing-verification",
+          "title": "正常・境界・競合・復旧の試験",
+          "applicability": "required",
+          "rationale": "Query結果、SQLSTATE、Plan、Transaction、Backup、Replication、Upgradeの主張を反復可能なOracleで確かめるために必要である。",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "test",
+            "evidence"
+          ]
+        },
+        {
+          "id": "failure-recovery",
+          "title": "障害・診断・Recovery",
+          "applicability": "required",
+          "rationale": "Lock、WAL、Storage、Replica、Backup、Migrationの失敗を隔離環境で再現し安全に回復するために必要である。",
+          "target_sets": [
+            "concurrency",
+            "operations",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "failure-catalog",
+            "runbook",
+            "evidence"
+          ]
+        },
+        {
+          "id": "operations-observability",
+          "title": "運用・Observability・Capacity",
+          "applicability": "required",
+          "rationale": "Session、Wait Event、統計、WAL、Vacuum、Replication、Diskの状態から劣化と障害を診断するために必要である。",
+          "target_sets": [
+            "performance",
+            "operations"
+          ],
+          "required_deliverables": [
+            "runbook",
+            "evidence"
+          ]
+        },
+        {
+          "id": "security-privacy-safety",
+          "title": "Role・認証・暗号化・安全境界",
+          "applicability": "required",
+          "rationale": "Role、Privilege、RLS、認証、暗号化、危険な管理Commandを最小権限と停止条件の下で扱うために必要である。",
+          "target_sets": [
+            "foundation",
+            "query",
+            "concurrency",
+            "operations"
+          ],
+          "required_deliverables": [
+            "security-review",
+            "test"
+          ]
+        },
+        {
+          "id": "performance-capacity-cost",
+          "title": "Planner・Index・容量・Cost",
+          "applicability": "required",
+          "rationale": "Data分布、統計、Plan、I/O、Memory、WAL、Storage容量を測定し採否判断へ戻すために必要である。",
+          "target_sets": [
+            "performance",
+            "operations"
+          ],
+          "required_deliverables": [
+            "benchmark",
+            "evidence"
+          ]
+        },
+        {
+          "id": "compatibility-integration",
+          "title": "Version・Client・Protocol・Extension互換性",
+          "applicability": "required",
+          "rationale": "PostgreSQL Version、Client、Protocol、Build Option、Extensionの差を検証して安全に統合するために必要である。",
+          "target_sets": [
+            "foundation",
+            "query",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "test",
+            "evidence"
+          ]
+        },
+        {
+          "id": "migration-evolution-deprecation",
+          "title": "Migration・Upgrade・廃止",
+          "applicability": "required",
+          "rationale": "Schema変更、Major Upgrade、Extension更新、廃止機能をデータと可用性を壊さず移行するために必要である。",
+          "target_sets": [
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "migration-guide",
+            "test"
+          ]
+        },
+        {
+          "id": "decision-comparison",
+          "title": "機能選択・代替案・Trade-off",
+          "applicability": "required",
+          "rationale": "類似する型、Index、Isolation、Replication、Backup、Upgrade方式を同じ条件と証拠で比較するために必要である。",
+          "target_sets": [
+            "query",
+            "concurrency",
+            "performance",
+            "operations",
+            "lifecycle"
+          ],
+          "required_deliverables": [
+            "decision",
+            "benchmark"
+          ]
+        },
+        {
+          "id": "provenance-rights",
+          "title": "一次資料・来歴・License",
+          "applicability": "required",
+          "rationale": "公式文書、Source、Runtime、生成Evidence、第三者依存のVersion、Digest、再配布条件を追跡するために必要である。",
+          "target_sets": [
+            "foundation",
+            "publication"
+          ],
+          "required_deliverables": [
+            "provenance-record",
+            "evidence"
+          ]
+        },
+        {
+          "id": "agent-skill",
+          "title": "Agent Router Skill・評価",
+          "applicability": "required",
+          "rationale": "AgentがCoverage外を捏造せず、目的に合うClaim、Lab、Runbook、Evidenceへ段階的に到達するために必要である。",
+          "target_sets": [
+            "skill"
+          ],
+          "required_deliverables": [
+            "skill-reference",
+            "skill-eval"
+          ]
+        }
+      ]
+    },
+    "coverage": {
+      "schema_version": 1,
+      "atlas_id": "postgresql-reference-atlas",
+      "epoch": "2026-08-28",
+      "authority_lock_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+      "target_sets": [
+        {
+          "id": "foundation",
+          "title": "Versionと一次資料の固定",
+          "sequence": 1,
+          "completion_required": true,
+          "exit_criteria": [
+            "PostgreSQL 18.6のSource、公式文書、Release Note、取得Digestが固定されていること。",
+            "公式文書、Runtime Catalog、Source、Binary、Release差分の未説明差異がゼロであること。"
+          ]
+        },
+        {
+          "id": "query",
+          "title": "SQL公開Surface",
+          "sequence": 2,
+          "completion_required": true,
+          "exit_criteria": [
+            "SQLコマンド、型、関数、演算子、Catalogの全対象がCapabilityへ割り当てられていること。",
+            "正常、NULL、境界、不正入力の適用可能なEvidenceが存在すること。"
+          ]
+        },
+        {
+          "id": "concurrency",
+          "title": "MVCCと並行制御",
+          "sequence": 3,
+          "completion_required": true,
+          "exit_criteria": [
+            "Transaction、Isolation、Lock、Deadlockの決定論的な複数Session Testが通ること。",
+            "期待SQLSTATEとSystem Viewによる観測証拠が存在すること。"
+          ]
+        },
+        {
+          "id": "performance",
+          "title": "PlannerとIndex",
+          "sequence": 4,
+          "completion_required": true,
+          "exit_criteria": [
+            "PlannerとIndexの判断が固定データ分布とJSON Planの意味検証へ接続されていること。",
+            "Index有無による結果集合不変性とアクセスパス差分が検証されていること。"
+          ]
+        },
+        {
+          "id": "operations",
+          "title": "Backup、Recovery、Replication",
+          "sequence": 5,
+          "completion_required": true,
+          "exit_criteria": [
+            "Backupから隔離ClusterへRestoreし論理データ整合性を検証できること。",
+            "Physical Replicationの送受信、追随、停止、再起動を再現できること。"
+          ]
+        },
+        {
+          "id": "lifecycle",
+          "title": "Upgradeと互換性",
+          "sequence": 6,
+          "completion_required": true,
+          "exit_criteria": [
+            "PostgreSQL 17.11から18.6への論理Upgradeを再実行しデータ整合性を検証できること。",
+            "14.24から18.6までの互換性差分が一次資料へ接続されていること。"
+          ]
+        },
+        {
+          "id": "skill",
+          "title": "Router Skill",
+          "sequence": 7,
+          "completion_required": true,
+          "exit_criteria": [
+            "Routerが設計、実装、診断、復旧、移行、Reviewを正しいCapabilityへ誘導すること。",
+            "Coverage外の機能を捏造せずGapを返すこと。"
+          ]
+        },
+        {
+          "id": "publication",
+          "title": "公開可能性",
+          "sequence": 8,
+          "completion_required": true,
+          "exit_criteria": [
+            "License、NOTICE、第三者Manifest、SBOM、秘密情報検査が通ること。",
+            "Completion Certificateが固定Digestと署名情報を含んで生成されること。"
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "id": "foundation.version-lock",
+          "title": "PostgreSQL 18.6 Version固定",
+          "target_set": "foundation",
+          "kind": "compatibility",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "完全性の主張を有限にし、上流更新で過去Evidenceの意味が変わらないようにする。",
+          "claim_ids": [
+            "foundation.version-lock"
+          ],
+          "evidence_ids": [
+            "foundation.authority-lock"
+          ]
+        },
+        {
+          "id": "foundation.authority-lock",
+          "title": "複数一次資料のAuthority Lock",
+          "target_set": "foundation",
+          "kind": "concept",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "単一の抽出元の欠落を網羅性と誤認しないため、文書、Source、Runtime、Binary、差分を照合する。",
+          "claim_ids": [
+            "foundation.authority-lock"
+          ],
+          "evidence_ids": [
+            "foundation.authority-lock"
+          ]
+        },
+        {
+          "id": "query.sql-surface",
+          "title": "SQL公開Surfaceと実行意味論",
+          "target_set": "query",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "SQLの構文一覧だけでなく、制約、型、戻り値、失敗時SQLSTATEを実行証拠へ接続する。",
+          "claim_ids": [
+            "query.sql-surface"
+          ],
+          "evidence_ids": [
+            "lab.sql"
+          ]
+        },
+        {
+          "id": "query.types-constraints",
+          "title": "組み込み型とConstraintの実行意味論",
+          "target_set": "query",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Domain、Enum、Array、JSONB、Range、Multirange、UUIDv7、Generated Columnと拒否境界を18.6で実行検証する。",
+          "claim_ids": [
+            "query.types-constraints"
+          ],
+          "evidence_ids": [
+            "lab.types-constraints"
+          ]
+        },
+        {
+          "id": "query.partitioning",
+          "title": "Range Partition RoutingとPruning",
+          "target_set": "query",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Range Partitionへの行Routingと固定PredicateによるPlan時PruningをJSON Planで検証する。",
+          "claim_ids": [
+            "query.partitioning"
+          ],
+          "evidence_ids": [
+            "lab.partitioning"
+          ]
+        },
+        {
+          "id": "query.extension",
+          "title": "公式同梱Extensionの導入と索引利用",
+          "target_set": "query",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "公式同梱pg_trgmの導入、Operator、Operator Class、GIN Index利用を固定Fixtureで検証する。",
+          "claim_ids": [
+            "query.extension"
+          ],
+          "evidence_ids": [
+            "lab.extension"
+          ]
+        },
+        {
+          "id": "query.security",
+          "title": "Role、RLS、SECURITY DEFINER安全境界",
+          "target_set": "query",
+          "kind": "security",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "非SuperuserのTenant Filter、WITH CHECK拒否、固定search_pathを独立Sessionから検証する。",
+          "claim_ids": [
+            "query.security"
+          ],
+          "evidence_ids": [
+            "lab.security"
+          ]
+        },
+        {
+          "id": "concurrency.mvcc",
+          "title": "MVCC、Isolation、Lock",
+          "target_set": "concurrency",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "並行処理の正しさは単一Sessionの成功例では証明できず、実行順序と観測点を固定する必要がある。",
+          "claim_ids": [
+            "concurrency.mvcc"
+          ],
+          "evidence_ids": [
+            "lab.mvcc"
+          ]
+        },
+        {
+          "id": "concurrency.locking",
+          "title": "Row Lock競合とNOWAIT拒否",
+          "target_set": "concurrency",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "独立SessionのRow Lock競合、SQLSTATE 55P03、Lock解放後の進行を決定論的に検証する。",
+          "claim_ids": [
+            "concurrency.locking"
+          ],
+          "evidence_ids": [
+            "lab.locking"
+          ]
+        },
+        {
+          "id": "concurrency.deadlock",
+          "title": "Deadlock検出とVictim Rollback",
+          "target_set": "concurrency",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "逆順Row Lockで待機Cycleを作り、SQLSTATE 40P01、Victim 1件、Survivorの整合性を検証する。",
+          "claim_ids": [
+            "concurrency.deadlock"
+          ],
+          "evidence_ids": [
+            "lab.deadlock"
+          ]
+        },
+        {
+          "id": "performance.planner",
+          "title": "Plannerと統計情報",
+          "target_set": "performance",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "実行時間の固定値ではなく、データ分布、推定行数、Plan Node、Scan Methodを意味的に評価する。",
+          "claim_ids": [
+            "performance.planner"
+          ],
+          "evidence_ids": [
+            "lab.planner"
+          ]
+        },
+        {
+          "id": "performance.statistics",
+          "title": "Extended Statisticsと行数推定",
+          "target_set": "performance",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "相関列のDependenciesとMCV統計を作成し、ANALYZE後のCatalogと行数推定を検証する。",
+          "claim_ids": [
+            "performance.statistics"
+          ],
+          "evidence_ids": [
+            "lab.statistics"
+          ]
+        },
+        {
+          "id": "performance.index",
+          "title": "Indexとアクセスパス",
+          "target_set": "performance",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "Index採用には検索結果不変性、利用条件、書込み費用、Planner判断の証拠が必要である。",
+          "claim_ids": [
+            "performance.index"
+          ],
+          "evidence_ids": [
+            "lab.index"
+          ]
+        },
+        {
+          "id": "performance.execution",
+          "title": "実行時Plan、Buffer、Relation Size証拠",
+          "target_set": "performance",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Wall-clock閾値ではなくEXPLAIN ANALYZE、Buffer、Index選択、Relation Size、結果Oracleを証拠化する。",
+          "claim_ids": [
+            "performance.execution"
+          ],
+          "evidence_ids": [
+            "lab.performance"
+          ]
+        },
+        {
+          "id": "operations.backup-recovery",
+          "title": "BackupとRecovery",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "Backupの存在ではなく、別DatabaseへのRestoreと論理整合性検証までを成功条件とする。",
+          "claim_ids": [
+            "operations.backup-recovery"
+          ],
+          "evidence_ids": [
+            "lab.backup-recovery"
+          ]
+        },
+        {
+          "id": "operations.observability",
+          "title": "Activity、Statement、Table、Lock、WAL Observability",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "pg_stat_statementsの導入条件と主要System Viewから実行、Session、Table、Lock、WALを観測できることを検証する。",
+          "claim_ids": [
+            "operations.observability"
+          ],
+          "evidence_ids": [
+            "lab.observability"
+          ]
+        },
+        {
+          "id": "operations.wal",
+          "title": "WAL生成、LSN差分、Segment切替",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "WALを抽象説明に留めず、固定Write WorkloadによるLSN進行とSegment切替を18.6で検証する。",
+          "claim_ids": [
+            "operations.wal"
+          ],
+          "evidence_ids": [
+            "lab.wal"
+          ]
+        },
+        {
+          "id": "operations.pitr-recovery",
+          "title": "Archive WALによるPoint-in-Time Recovery",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Base BackupとArchive WALから名前付き復旧点まで再生し、復旧点後の変更が除外されることを隔離Clusterで検証する。",
+          "claim_ids": [
+            "operations.pitr-recovery"
+          ],
+          "evidence_ids": [
+            "lab.pitr"
+          ]
+        },
+        {
+          "id": "operations.replication",
+          "title": "Physical Replication",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "PrimaryとStandbyのWAL追随、Read-only境界、停止と再同期を隔離Clusterで証明する。",
+          "claim_ids": [
+            "operations.replication"
+          ],
+          "evidence_ids": [
+            "lab.replication"
+          ]
+        },
+        {
+          "id": "operations.logical-replication",
+          "title": "PublicationとSubscriptionによるLogical Replication",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Publication、Replication Slot、Apply Worker、行変更の到達を独立Publisher/Subscriberで検証する。",
+          "claim_ids": [
+            "operations.logical-replication"
+          ],
+          "evidence_ids": [
+            "lab.logical-replication"
+          ]
+        },
+        {
+          "id": "operations.failure-injection",
+          "title": "Backend強制終了と未確定Transaction回収",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Backend消失時の未確定Write Rollbackと、障害後のService継続を制御されたInjectionで検証する。",
+          "claim_ids": [
+            "operations.failure-injection"
+          ],
+          "evidence_ids": [
+            "lab.failure-injection"
+          ]
+        },
+        {
+          "id": "operations.maintenance",
+          "title": "VACUUM、ANALYZE、Freezeの運用検証",
+          "target_set": "operations",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Delete後のDead Tupleを観測し、明示VACUUM FREEZE ANALYZE後の統計と50,000行の不変性を検証する。",
+          "claim_ids": [
+            "operations.maintenance"
+          ],
+          "evidence_ids": [
+            "lab.maintenance"
+          ]
+        },
+        {
+          "id": "lifecycle.schema-migration",
+          "title": "NOT VALID、VALIDATE、CONCURRENTLYによるSchema移行",
+          "target_set": "lifecycle",
+          "kind": "migration",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "既存データの修復を挟むConstraint検証とConcurrent Index構築を固定Fixtureで検証する。",
+          "claim_ids": [
+            "lifecycle.schema-migration"
+          ],
+          "evidence_ids": [
+            "lab.migration"
+          ]
+        },
+        {
+          "id": "lifecycle.upgrade",
+          "title": "Major Version Upgrade",
+          "target_set": "lifecycle",
+          "kind": "migration",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "Version間移行は手順書だけでなく、固定した旧版から新版への再実行と検証を必要とする。",
+          "claim_ids": [
+            "lifecycle.upgrade"
+          ],
+          "evidence_ids": [
+            "lab.upgrade"
+          ]
+        },
+        {
+          "id": "lifecycle.pg-upgrade",
+          "title": "pg_upgradeによる17.11から18.6へのBinary Upgrade",
+          "target_set": "lifecycle",
+          "kind": "migration",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "論理Dump経路とは独立に、固定Binary間でpg_upgrade --checkと実Upgradeを実行し論理Digestを照合する。",
+          "claim_ids": [
+            "lifecycle.pg-upgrade"
+          ],
+          "evidence_ids": [
+            "lab.pg-upgrade"
+          ]
+        },
+        {
+          "id": "skill.router-evaluation",
+          "title": "PostgreSQL Router Skill評価",
+          "target_set": "skill",
+          "kind": "skill",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "SkillがCoverage、一次資料、Evidenceへ到達し、権限外操作や存在しない機能を捏造しないことを評価する。",
+          "claim_ids": [
+            "skill.router"
+          ],
+          "evidence_ids": [
+            "skill.router-eval"
+          ]
+        },
+        {
+          "id": "publication.provenance",
+          "title": "LicenseとProvenance",
+          "target_set": "publication",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "partial",
+          "rationale": "公開前に独自成果物と第三者Sourceの権利、出典、SBOM、秘密情報を独立して確認する。",
+          "claim_ids": [
+            "publication.provenance"
+          ],
+          "evidence_ids": [
+            "publication.static-gates"
+          ]
+        }
+      ]
+    },
+    "sources": {
+      "schema_version": 1,
+      "atlas_id": "postgresql-reference-atlas",
+      "epoch": "2026-08-28",
+      "generated_at": "2026-08-28T00:00:00+09:00",
+      "sources": [
+        {
+          "id": "postgresql-docs-18.6",
+          "kind": "official-documentation",
+          "title": "PostgreSQL 18.6 Documentation",
+          "url": "https://www.postgresql.org/docs/18/",
+          "version": "18.6",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:c51c06f037afdb7563e2d98a5e59ebb380f103b13ce5b9eff5bc11128c330656",
+          "license": "PostgreSQL License",
+          "redistribution": "link-only"
+        },
+        {
+          "id": "postgresql-release-18.6",
+          "kind": "release-notes",
+          "title": "PostgreSQL 18.6 Release Notes",
+          "url": "https://www.postgresql.org/docs/release/18.6/",
+          "version": "18.6",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:4479466ad13c12bb916b83881db008f97f4905d8ee67286f5ddcf94adc9f94a7",
+          "license": "PostgreSQL License",
+          "redistribution": "link-only"
+        },
+        {
+          "id": "postgresql-source-rel-18.6",
+          "kind": "source",
+          "title": "PostgreSQL source tag REL_18_6",
+          "url": "https://github.com/postgres/postgres/tree/REL_18_6",
+          "version": "724edf9bde9d356724ad384a2e196edc3c9f80f7",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:873c03070a2e8aae0768fb75d8d6739ae9589681c6cd50839e79d787a7aed222",
+          "license": "PostgreSQL License",
+          "redistribution": "metadata-only"
+        },
+        {
+          "id": "postgresql-source-tarball-checksum-18.6",
+          "kind": "registry",
+          "title": "PostgreSQL 18.6 source tarball SHA-256",
+          "url": "https://ftp.postgresql.org/pub/source/v18.6/postgresql-18.6.tar.bz2.sha256",
+          "version": "18.6",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:92b190ded4a002654768daa8ac41db530354b9be13c7c67059592ddf5bb0c43a",
+          "license": null,
+          "redistribution": "metadata-only"
+        },
+        {
+          "id": "postgresql-license-rel-18.6",
+          "kind": "official-documentation",
+          "title": "PostgreSQL REL_18_6 COPYRIGHT",
+          "url": "https://raw.githubusercontent.com/postgres/postgres/REL_18_6/COPYRIGHT",
+          "version": "REL_18_6",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:3d6af92ff8a4c2cdf69afb1cf44edea727922f5cd0cf8b5f72b11cdecac8fdfd",
+          "license": "PostgreSQL License",
+          "redistribution": "allowed"
+        },
+        {
+          "id": "postgres-container-18.6-alpine",
+          "kind": "runtime-inventory",
+          "title": "Docker Official Image postgres 18.6 alpine",
+          "url": "https://hub.docker.com/_/postgres",
+          "version": "postgres:18.6-alpine",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:d3e1620b530c944afa6e887d22eb899824da68e19c52024bf98f5220c88a65b2",
+          "license": "PostgreSQL License and container distribution dependencies",
+          "redistribution": "metadata-only"
+        },
+        {
+          "id": "postgres-container-17.11-alpine",
+          "kind": "runtime-inventory",
+          "title": "Docker Official Image postgres 17.11 alpine",
+          "url": "https://hub.docker.com/_/postgres",
+          "version": "postgres:17.11-alpine",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:18cfe3ef5e6815560c98237d6216d1e5119702fb0f3894c8785dd58b8bbe5d73",
+          "license": "PostgreSQL License and container distribution dependencies",
+          "redistribution": "metadata-only"
+        }
+      ]
+    },
+    "skillPackage": {
+      "schema_version": 1,
+      "atlas_id": "postgresql-reference-atlas",
+      "atlas_release": "v0.0.0",
+      "router": {
+        "id": "postgresql-atlas",
+        "path": ".agents/skills/postgresql-atlas/SKILL.md",
+        "description": "PostgreSQL 18.6の設計、実装、診断、復旧、Upgradeについて、Coverageと実行証拠へ段階的に案内する。"
+      },
+      "generated_from": [
+        "mastery.yaml",
+        "coverage.yaml",
+        "atlas/capabilities/index.yaml",
+        "atlas/claims/index.yaml",
+        "operations/index.yaml"
+      ],
+      "adapters": [
+        "generic-agent-skills",
+        "codex"
+      ],
+      "evals": {
+        "path": "evals/",
+        "minimum_pass_rate": 1
+      }
+    },
+    "evidence": [
+      {
+        "schema_version": 1,
+        "id": "lab.backup-recovery",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.backup-recovery"
+        ],
+        "kind": "recovery",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=backup-recovery",
+        "created_at": "2026-08-28T06:10:51Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:db8431ec28ba330265a8407df40341034e3596f1f39ff90d96a09193a3b1ff5e",
+        "artifact": {
+          "uri": "evidence/artifacts/backup-recovery.json",
+          "digest": "sha256:b31577e18ae2d41141b97c93d23f04b108ece978183b286a3baaa578bbe8f52d",
+          "media_type": "application/json",
+          "size_bytes": 238
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.deadlock",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "concurrency.deadlock"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=deadlock",
+        "created_at": "2026-08-28T06:52:22Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:7af7d4f076a7e3af17637e2931625b10c325758f65e61762d65d83a0a4cd1a75",
+        "artifact": {
+          "uri": "evidence/artifacts/deadlock.json",
+          "digest": "sha256:8ff033c62a9ea8360237094c041c09603e342ab7f4be29e544ceadfd0e6beb0b",
+          "media_type": "application/json",
+          "size_bytes": 171
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.extension",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "query.extension"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=extension",
+        "created_at": "2026-08-28T06:33:58Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:c0dbac3e818c89f78844a834f5d5c761c78cd2a0b010b6913631f4886d407c0f",
+        "artifact": {
+          "uri": "evidence/artifacts/extension.json",
+          "digest": "sha256:fba8b0cb54d443047834079106273ce83b1f4ddf3a958b8662a47b1876e14f41",
+          "media_type": "application/json",
+          "size_bytes": 166
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.failure-injection",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.failure-injection"
+        ],
+        "kind": "attack",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=failure-injection",
+        "created_at": "2026-08-28T06:40:30Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:25951a2f8134005a849ae652784285fb1abd088383220a2728c19ae87c84b77f",
+        "artifact": {
+          "uri": "evidence/artifacts/failure-injection.json",
+          "digest": "sha256:060807b83036b3fe84bca1567be86d4e6a2ee416186422e0d15c7201738179e0",
+          "media_type": "application/json",
+          "size_bytes": 196
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "foundation.authority-lock",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "foundation.authority-lock",
+          "foundation.version-lock"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make test-static",
+        "created_at": "2026-08-28T06:11:14Z",
+        "environment": {
+          "profile": "local",
+          "manifest_digest": "sha256:56798a33c95014233b4f9465aa91ce1198673432edb9114da08dec932ab1331d"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:57b080a61dc6881207f4ebf5aeba2ed7f60f7fb083e73e5c1dcc13a695a41da0",
+        "artifact": {
+          "uri": "evidence/artifacts/foundation-authority-lock.json",
+          "digest": "sha256:f68855aac1593f7ce69680f39e95b5e37dd4c6dcff8874dfeff290c293ea9b38",
+          "media_type": "application/json",
+          "size_bytes": 204
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.index",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "performance.index"
+        ],
+        "kind": "benchmark",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=index",
+        "created_at": "2026-08-28T06:10:48Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:8380bd744de89b356f66c241f3a5b3a35f59321bad48590abbff2fffc5811219",
+        "artifact": {
+          "uri": "evidence/artifacts/index.json",
+          "digest": "sha256:ef9cba7954437c58c492b980e2da59a061f4e7c515a9c51248d99766f50dad85",
+          "media_type": "application/json",
+          "size_bytes": 115
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.locking",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "concurrency.locking"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=locking",
+        "created_at": "2026-08-28T06:33:54Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:d633ef73d0217f84d44a87e81880540b1b734c401ccbca0d212ff88f6d4a1ad9",
+        "artifact": {
+          "uri": "evidence/artifacts/locking.json",
+          "digest": "sha256:31f57f3aa29c35f347b376671dd012c48e5ce688a909d4ef6b6be3469f452cb6",
+          "media_type": "application/json",
+          "size_bytes": 149
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.logical-replication",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.logical-replication"
+        ],
+        "kind": "recovery",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=logical-replication",
+        "created_at": "2026-08-28T06:43:22Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:781e9d727707e277b21a986e1639ebc93af79a940b1ed618b75dc13a5467b17c"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:70e6e96e235d4323fa91b1dd35f4ab1fccb92f1db1e56b34b1275d32d7a93ade",
+        "artifact": {
+          "uri": "evidence/artifacts/logical-replication.json",
+          "digest": "sha256:ea72f1ea4839b9e84d3222658f5154b7a8b6b821e59a28132ab144078e9906c7",
+          "media_type": "application/json",
+          "size_bytes": 193
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.maintenance",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.maintenance"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=maintenance",
+        "created_at": "2026-08-28T06:52:28Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:7e0a06adf649e85f9062b85b00a3552ce558f6a99e8fc32c266bbf627fe61f94",
+        "artifact": {
+          "uri": "evidence/artifacts/maintenance.json",
+          "digest": "sha256:db36e8c0afcfd8a8a7fc11351cc4acf2546003e2545c02f94acd4f1b8bdc8b9a",
+          "media_type": "application/json",
+          "size_bytes": 205
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.migration",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "lifecycle.schema-migration"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=migration",
+        "created_at": "2026-08-28T06:40:34Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:97ac24ffc346bcced2ecba892d7a5e2dbff434a50116956a0668036517ee46af",
+        "artifact": {
+          "uri": "evidence/artifacts/migration.json",
+          "digest": "sha256:4ed7230db1679e677224428bebf1339b8c9a02d0b97ceb1d3944f6c5c6ad6557",
+          "media_type": "application/json",
+          "size_bytes": 198
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.mvcc",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "concurrency.mvcc"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=mvcc",
+        "created_at": "2026-08-28T06:10:43Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:ce7766b1dd5f9c323c84a2c67f19722d4ddde9cd1943c6660b218f0fdfb3f288",
+        "artifact": {
+          "uri": "evidence/artifacts/mvcc.json",
+          "digest": "sha256:e22131b26364018b3310bb5cf98a8a8c329f824ac42092d0f47d3aa9fc3a7f83",
+          "media_type": "application/json",
+          "size_bytes": 132
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.observability",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.observability"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=observability",
+        "created_at": "2026-08-28T06:34:01Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:72440b916a0bd06ee6c5230a46d794eefb076de65f98f539b1c509f5f61b4095",
+        "artifact": {
+          "uri": "evidence/artifacts/observability.json",
+          "digest": "sha256:649bca2f8fea40fb7d9e14785cc5da2c4a8913cc5dc7fb39e748d6d87e665ed7",
+          "media_type": "application/json",
+          "size_bytes": 247
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.partitioning",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "query.partitioning"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=partitioning",
+        "created_at": "2026-08-28T06:33:56Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:1f9d0e9917c26c29e13e39b5ce767c46a004d0df7687a3eea15587a7a275a0bc",
+        "artifact": {
+          "uri": "evidence/artifacts/partitioning.json",
+          "digest": "sha256:a79da652c9d347f02856e3bd5047f46c69c88ac5df982125b95317c2bd833231",
+          "media_type": "application/json",
+          "size_bytes": 150
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.performance",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "performance.execution"
+        ],
+        "kind": "benchmark",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=performance",
+        "created_at": "2026-08-28T06:34:04Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:16e1e832b71d24594f6a738239e30e508d58b0a17685ffdf0d512fe181948b29",
+        "artifact": {
+          "uri": "evidence/artifacts/performance.json",
+          "digest": "sha256:a920b70cddef92935081f1970afdab11c8fa9ca7373d21f46b47ebeb6f3928d6",
+          "media_type": "application/json",
+          "size_bytes": 250
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.pg-upgrade",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "lifecycle.pg-upgrade"
+        ],
+        "kind": "migration",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=pg-upgrade",
+        "created_at": "2026-08-28T06:48:11Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:781e9d727707e277b21a986e1639ebc93af79a940b1ed618b75dc13a5467b17c"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:bfd229622aec00be02e37d8f2a32fb9cb938cf6cf3faec3f8b81dadc6114d9c1",
+        "artifact": {
+          "uri": "evidence/artifacts/pg-upgrade.json",
+          "digest": "sha256:ade5856a457c34c0aaad66a80d48246020dc1013fbfc7f569eeb3ff207e0b0dd",
+          "media_type": "application/json",
+          "size_bytes": 205
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.pitr",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.pitr-recovery"
+        ],
+        "kind": "recovery",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=pitr",
+        "created_at": "2026-08-28T06:46:28Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:781e9d727707e277b21a986e1639ebc93af79a940b1ed618b75dc13a5467b17c"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:d43081a2328e1c3e76728881e00ae5884ed004905c0e83edf510de5f48469592",
+        "artifact": {
+          "uri": "evidence/artifacts/pitr.json",
+          "digest": "sha256:ef5ed5e1f85239a5f9e9e54b3f9bb6cff112f79c443d747cedc2cf95c8d20a9d",
+          "media_type": "application/json",
+          "size_bytes": 209
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.planner",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "performance.planner"
+        ],
+        "kind": "benchmark",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=planner",
+        "created_at": "2026-08-28T06:10:46Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:6a211c854f8e226d9ddb537ee63eae703ced8705cda720de705e5b98902e3654",
+        "artifact": {
+          "uri": "evidence/artifacts/planner.json",
+          "digest": "sha256:23996bd727c7fb1769ad10ef53f313c993b819edf65eed1dd00c0b1836f2ca15",
+          "media_type": "application/json",
+          "size_bytes": 111
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "publication.static-gates",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "publication.provenance"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make test-static",
+        "created_at": "2026-08-28T06:11:14Z",
+        "environment": {
+          "profile": "local",
+          "manifest_digest": "sha256:56798a33c95014233b4f9465aa91ce1198673432edb9114da08dec932ab1331d"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:57b080a61dc6881207f4ebf5aeba2ed7f60f7fb083e73e5c1dcc13a695a41da0",
+        "artifact": {
+          "uri": "evidence/artifacts/publication-static-gates.json",
+          "digest": "sha256:b329666dcf103149ae210611511c1331cf5d3bf9d78bff66d395c0b643837094",
+          "media_type": "application/json",
+          "size_bytes": 59
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.replication",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.replication"
+        ],
+        "kind": "recovery",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=replication",
+        "created_at": "2026-08-28T06:10:57Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:781e9d727707e277b21a986e1639ebc93af79a940b1ed618b75dc13a5467b17c"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:66e999b5b7fb4df79d5179b27886c2141f1ee217b4bc010aba8f1ec4ddddca86",
+        "artifact": {
+          "uri": "evidence/artifacts/replication.json",
+          "digest": "sha256:b57e674b1c20c8ecb25984fa6bfdaf6f9b1aa2029c13d976d1f72b9253477367",
+          "media_type": "application/json",
+          "size_bytes": 158
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.security",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "query.security"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=security",
+        "created_at": "2026-08-28T06:52:33Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:03f892d7615a83bef0bb5da66bdc3e3972516dd62f0032ae193a9c5c992601ec",
+        "artifact": {
+          "uri": "evidence/artifacts/security.json",
+          "digest": "sha256:d33a405af1a47717a703b16db2ce412a003e2549f1260cbb068f280ce2e6432b",
+          "media_type": "application/json",
+          "size_bytes": 261
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "skill.router-eval",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "skill.router"
+        ],
+        "kind": "skill-eval",
+        "producer": "postgresql-reference-atlas",
+        "command": "make eval",
+        "created_at": "2026-08-28T06:58:13Z",
+        "environment": {
+          "profile": "local",
+          "manifest_digest": "sha256:56798a33c95014233b4f9465aa91ce1198673432edb9114da08dec932ab1331d"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:657d7d76daeda2ab521589cac40a681c29bd90e2499a51494ac905cde24d7eba",
+        "artifact": {
+          "uri": "evidence/artifacts/skill-router-eval.json",
+          "digest": "sha256:80f8333c2253697d858f6841f96a65d173d98c90615ac52a18095a55fd6c5518",
+          "media_type": "application/json",
+          "size_bytes": 6622
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.sql",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "query.sql-surface"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=sql",
+        "created_at": "2026-08-28T06:10:41Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:0c09b28609bc4e37ad99f5f765e1684a4c929a24891b6e7a7921e0b68a855de6",
+        "artifact": {
+          "uri": "evidence/artifacts/sql.json",
+          "digest": "sha256:e7c5757fcff20b9de4f5256967c2ecbd595e02a9f2cdd5b70b6286a08c308191",
+          "media_type": "application/json",
+          "size_bytes": 104
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.statistics",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "performance.statistics"
+        ],
+        "kind": "benchmark",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=statistics",
+        "created_at": "2026-08-28T06:33:52Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:6261422356ca590f0accb47e3fa20a0e88508f20d007d653da1ee52ed32747a3",
+        "artifact": {
+          "uri": "evidence/artifacts/statistics.json",
+          "digest": "sha256:1a8fa8d450e2dc28a3bf88006d9c6bbc3299aaf8fdb014caf3c23659c93c0129",
+          "media_type": "application/json",
+          "size_bytes": 147
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.types-constraints",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "query.types-constraints"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=types-constraints",
+        "created_at": "2026-08-28T06:33:50Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:1c352c76ac773f5cb83d3fc400f11a89178f2af67ae3523778d81dda45a70268",
+        "artifact": {
+          "uri": "evidence/artifacts/types-constraints.json",
+          "digest": "sha256:ab534541b6eba2f13bcd5c0b918d02c9052ca1fc0a37909fbea9be9ebc086b0e",
+          "media_type": "application/json",
+          "size_bytes": 219
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.upgrade",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "lifecycle.upgrade"
+        ],
+        "kind": "migration",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=upgrade",
+        "created_at": "2026-08-28T06:11:01Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:781e9d727707e277b21a986e1639ebc93af79a940b1ed618b75dc13a5467b17c"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:66bc6dcd45b3d7c057699f5004cba66f32cce6cd94334489b04853d37f91cfeb",
+        "artifact": {
+          "uri": "evidence/artifacts/upgrade.json",
+          "digest": "sha256:77db10fbe04af0ae85f0bbe526abbbbecf9c1e3ce3f8739ef55aa72fe1608268",
+          "media_type": "application/json",
+          "size_bytes": 199
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.wal",
+        "atlas_id": "postgresql-reference-atlas",
+        "claim_ids": [
+          "operations.wal"
+        ],
+        "kind": "test-report",
+        "producer": "postgresql-reference-atlas",
+        "command": "make lab LAB=wal",
+        "created_at": "2026-08-28T06:40:28Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:3df4dbd82139e17c785348c281f26b54d7300662087baaeec3034acefedf36b9"
+        },
+        "source_digest": "sha256:89d1f94da2085fe535bf7acdd28a85f6cc251e079eb19f92d5eb1a07e8d467d0",
+        "harness_digest": "sha256:4aed77be290fb9610db2b66ed1fba74e63a9246e7428dcec7b8fe0a334bdfe34",
+        "artifact": {
+          "uri": "evidence/artifacts/wal.json",
+          "digest": "sha256:ea97afb6a4d973a728fe6cb073ad9e5c8f256b52dc1e8aa5a0f7f7f2c9a41c85",
+          "media_type": "application/json",
+          "size_bytes": 199
+        },
+        "verdict": "pass",
+        "retention": "git"
+      }
+    ],
+    "certificate": null
+  }
+}

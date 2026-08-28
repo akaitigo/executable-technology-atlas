@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "fixtureOnly": true,
+  "scenarios": [
+    { "id": "digest-mismatch", "expected": "quarantined", "mutation": "payload-after-signing" },
+    { "id": "signature-invalid", "expected": "quarantined", "mutation": "signature-byte-flip" },
+    { "id": "unknown-key", "expected": "quarantined", "mutation": "untrusted-key-id" },
+    { "id": "certificate-missing", "expected": "incomplete", "mutation": "certificate-null" },
+    { "id": "coverage-excluded", "expected": "visible", "state": "excluded", "reason": "Fixtureで除外理由と再評価日の表示を検証するため。", "reviewedAt": "2026-08-28" },
+    { "id": "coverage-infeasible", "expected": "visible", "state": "infeasible", "reason": "Fixtureで実行困難と代替証拠の非同等性を検証するため。", "reviewedAt": "2026-08-28" },
+    { "id": "coverage-expired", "expected": "visible", "state": "expired", "reason": "Authority digest更新により証拠が失効した想定。" },
+    { "id": "release-superseded", "expected": "historical-validity", "status": "superseded" },
+    { "id": "release-archived", "expected": "history-visible", "status": "archived" },
+    { "id": "evidence-fail", "expected": "not-recommended", "verdict": "fail" },
+    { "id": "evidence-inconclusive", "expected": "not-pass", "verdict": "inconclusive" }
+  ]
+}

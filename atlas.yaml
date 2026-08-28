@@ -1,0 +1,50 @@
+schema_version: 1
+id: executable-technology-atlas
+title: 実行可能技術アトラス
+owner:
+  github: akaitigo
+repository:
+  url: https://github.com/akaitigo/executable-technology-atlas
+  visibility: public
+  default_branch: main
+archetypes: [control-plane]
+stage: 0
+status: complete
+language:
+  primary: ja
+  identifiers: en
+coverage:
+  epoch: "2026-08-28"
+  manifest: coverage.yaml
+authority:
+  lockfile: sources.lock.yaml
+  policy: primary-first
+mastery:
+  manifest: mastery.yaml
+  contract_version: 1.0.0
+scope:
+  statement: 97 Subject Atlasの固定ReleaseからManifest、Mastery、Coverage、Evidence、Skill Package、Completion Certificateを収集・検証・検索・可視化する日本語Read Modelを提供する。
+  exclusions:
+    - 個別技術の知識本文、Lab、Reference実装をPortal内へ複製または所有すること
+    - Subject Source Tree、Default Branch、Git submoduleをRuntimeの入力または信頼根拠にすること
+    - 署名、Digest、Certificateが存在しない候補を公開済み完成Releaseとして扱うこと
+requires:
+  - reference-atlas-core
+skills:
+  router:
+    id: technology-atlas-router
+    path: .agents/skills/technology-atlas-router/SKILL.md
+  package_manifest: skill.package.yaml
+  evals: evals/
+completion:
+  policy_version: 1.0.0
+  required_profiles: [local]
+  certificate: evidence/completion-certificate.json
+license:
+  default: Apache-2.0
+  notice: NOTICE
+  third_party_manifest: third_party/manifest.yaml
+  sbom: sbom.spdx.json
+security:
+  disclosure: SECURITY.md
+  defensive_only: true

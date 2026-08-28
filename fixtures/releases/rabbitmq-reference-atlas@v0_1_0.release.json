@@ -1,0 +1,1436 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-release",
+  "release": {
+    "atlasId": "rabbitmq-reference-atlas",
+    "version": "v0.1.0",
+    "commit": "6d58c5f8c5efd702f30da907c757f0ad8759af9a",
+    "uri": "urn:atlas:release:rabbitmq-reference-atlas:v0.1.0:6d58c5f8c5efd702f30da907c757f0ad8759af9a",
+    "digest": "sha256:0ce5bf87fa50e7f4e4187ecd6a9a3c617990e8f29939e81491309ea6c37f1717",
+    "publishedAt": "2026-08-28T00:00:00.000Z"
+  },
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "value": "Uhw2CHyIkshNcPD+qLMUOFZuTcjDHeP1xEwDWH7Z16JziwukV9Gs/thKrLjC3fCSk9xJdmUhi8Tdy894hk4gAQ=="
+  },
+  "payload": {
+    "atlas": {
+      "schema_version": 1,
+      "id": "rabbitmq-reference-atlas",
+      "title": "RabbitMQ 技術実証アトラス",
+      "owner": {
+        "github": "akaitigo"
+      },
+      "repository": {
+        "url": "https://github.com/akaitigo/rabbitmq-reference-atlas",
+        "visibility": "public",
+        "default_branch": "main"
+      },
+      "archetypes": [
+        "product"
+      ],
+      "stage": 3,
+      "status": "incomplete",
+      "language": {
+        "primary": "ja",
+        "identifiers": "en"
+      },
+      "coverage": {
+        "epoch": "2026-08-28",
+        "manifest": "coverage.yaml"
+      },
+      "authority": {
+        "lockfile": "sources.lock.yaml",
+        "policy": "primary-first"
+      },
+      "mastery": {
+        "manifest": "mastery.yaml",
+        "contract_version": "1.0.0"
+      },
+      "scope": {
+        "statement": "RabbitMQ 4.3.5のExchange、Queue、Acknowledgement、Redelivery、Dead Lettering、Flow Control、Cluster、Failure、Recoveryを固定環境で再実行し、観測可能な証拠へ接続する。",
+        "exclusions": [
+          "Tanzu RabbitMQだけで提供される商用機能の実装と実行証拠",
+          "RabbitMQ以外のメッセージ製品との網羅的な機能比較",
+          "Community Plugin全体とManaged Service固有機能の完全閉包"
+        ]
+      },
+      "skills": {
+        "router": {
+          "id": "rabbitmq-reference-router",
+          "path": ".agents/skills/rabbitmq-reference-router/SKILL.md"
+        },
+        "package_manifest": "skill.package.yaml",
+        "evals": "evals/"
+      },
+      "completion": {
+        "policy_version": "1.0.0",
+        "required_profiles": [
+          "local",
+          "container",
+          "cluster"
+        ],
+        "certificate": "evidence/completion-certificate.json"
+      },
+      "license": {
+        "default": "Apache-2.0",
+        "notice": "NOTICE",
+        "third_party_manifest": "third_party/manifest.yaml",
+        "sbom": "sbom.spdx.json"
+      },
+      "security": {
+        "disclosure": "SECURITY.md",
+        "defensive_only": true
+      }
+    },
+    "mastery": {
+      "schema_version": 1,
+      "atlas_id": "rabbitmq-reference-atlas",
+      "epoch": "2026-08-28",
+      "promise": "RabbitMQ 4.3.5について、初学者が配送と複製の原理を理解し、実務者とArchitectが方式を選び構築し、 Operatorが観測・診断・復旧し、Maintainerが互換性を守って移行できるまでを、一次資料、再実行可能なLab、 反証可能なClaim、固定DigestのEvidenceへ接続して提供する。",
+      "audiences": [
+        "learner",
+        "practitioner",
+        "architect",
+        "operator",
+        "maintainer",
+        "reviewer",
+        "educator",
+        "agent"
+      ],
+      "outcomes": [
+        {
+          "id": "understand",
+          "title": "原理、保証境界、適用範囲を説明できる",
+          "target_sets": [
+            "foundations-design",
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience"
+          ]
+        },
+        {
+          "id": "choose",
+          "title": "要件とFailure Modelから方式を選択できる",
+          "target_sets": [
+            "foundations-design",
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "performance-capacity"
+          ]
+        },
+        {
+          "id": "build",
+          "title": "TopologyとClient処理を安全に構築できる",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "security-safety"
+          ]
+        },
+        {
+          "id": "verify",
+          "title": "主張を試験とEvidenceで検証できる",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "atlas-operation"
+          ]
+        },
+        {
+          "id": "operate",
+          "title": "BrokerとWorkloadを観測し安全に運用できる",
+          "target_sets": [
+            "operations-observability",
+            "cluster-resilience",
+            "security-safety",
+            "performance-capacity"
+          ]
+        },
+        {
+          "id": "troubleshoot",
+          "title": "配送、Cluster、依存先の失敗を診断・復旧できる",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "operations-observability"
+          ]
+        },
+        {
+          "id": "evolve",
+          "title": "互換性を守ってUpgrade、移行、廃止できる",
+          "target_sets": [
+            "compatibility-integration",
+            "migration-evolution"
+          ]
+        },
+        {
+          "id": "delegate",
+          "title": "Agentへ安全に委任しEvidenceから結果をReviewできる",
+          "target_sets": [
+            "atlas-operation"
+          ]
+        }
+      ],
+      "surfaces": [
+        {
+          "id": "orientation-scope",
+          "title": "定義・目的・境界",
+          "applicability": "required",
+          "rationale": "RabbitMQ機能、Messaging Pattern、商用機能、Community Pluginの境界を誤らず入口を選ぶために必要である。",
+          "target_sets": [
+            "foundations-design"
+          ],
+          "required_deliverables": [
+            "concept",
+            "decision"
+          ]
+        },
+        {
+          "id": "foundations-mechanics",
+          "title": "原理・内部機構・Invariant",
+          "applicability": "required",
+          "rationale": "Exchange Routing、Delivery State、Khepri、Raft多数決と保証の理由を説明するために必要である。",
+          "target_sets": [
+            "foundations-design",
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience"
+          ],
+          "required_deliverables": [
+            "concept",
+            "lab",
+            "evidence"
+          ]
+        },
+        {
+          "id": "architecture-design",
+          "title": "Architecture・設計",
+          "applicability": "required",
+          "rationale": "Queue Type、Topology、Delivery Guarantee、Cluster境界を要件とFailure Modelから設計するために必要である。",
+          "target_sets": [
+            "foundations-design",
+            "messaging-surface",
+            "cluster-resilience"
+          ],
+          "required_deliverables": [
+            "decision",
+            "reference-implementation"
+          ]
+        },
+        {
+          "id": "implementation-construction",
+          "title": "実装・構築",
+          "applicability": "required",
+          "rationale": "宣言、Publish、Consume、Ack、Retry、DLQ、Cluster設定を実行可能な形へ落とすために必要である。",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience"
+          ],
+          "required_deliverables": [
+            "reference-implementation",
+            "lab"
+          ]
+        },
+        {
+          "id": "testing-verification",
+          "title": "試験・検証",
+          "applicability": "required",
+          "rationale": "正常、拒否、再配送、Leader停止、復旧を反復可能なOracleとDigest固定Evidenceで確かめるために必要である。",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "atlas-operation"
+          ],
+          "required_deliverables": [
+            "test",
+            "evidence"
+          ]
+        },
+        {
+          "id": "failure-recovery",
+          "title": "失敗・診断・回復",
+          "applicability": "required",
+          "rationale": "Delivery境界とCluster多数派の失敗を区別し、データ安全性を壊さず回復するために必要である。",
+          "target_sets": [
+            "messaging-surface",
+            "delivery-pressure",
+            "cluster-resilience",
+            "operations-observability"
+          ],
+          "required_deliverables": [
+            "failure-catalog",
+            "runbook",
+            "evidence"
+          ]
+        },
+        {
+          "id": "operations-observability",
+          "title": "運用・Observability",
+          "applicability": "required",
+          "rationale": "Queue Backlog、未Ack、Alarm、Node、Replica、Client状態をTelemetryから診断するために必要である。",
+          "target_sets": [
+            "operations-observability",
+            "cluster-resilience"
+          ],
+          "required_deliverables": [
+            "runbook",
+            "evidence"
+          ]
+        },
+        {
+          "id": "security-privacy-safety",
+          "title": "Security・Privacy・Safety",
+          "applicability": "required",
+          "rationale": "TLS、認証、認可、Credential Lifecycle、Tenant境界とFailure Labの隔離を安全に扱うために必要である。",
+          "target_sets": [
+            "security-safety"
+          ],
+          "required_deliverables": [
+            "security-review",
+            "test",
+            "evidence"
+          ]
+        },
+        {
+          "id": "performance-capacity-cost",
+          "title": "性能・容量・Cost",
+          "applicability": "required",
+          "rationale": "Throughput、Latency、Backlog、Replica、Disk、Memoryの条件を測定し容量設計へ戻すために必要である。",
+          "target_sets": [
+            "performance-capacity"
+          ],
+          "required_deliverables": [
+            "benchmark",
+            "evidence",
+            "decision"
+          ]
+        },
+        {
+          "id": "compatibility-integration",
+          "title": "互換性・Integration",
+          "applicability": "required",
+          "rationale": "Protocol、Client、Plugin、Queue Type、Feature Flagの対応差と相互運用境界を判断するために必要である。",
+          "target_sets": [
+            "compatibility-integration"
+          ],
+          "required_deliverables": [
+            "test",
+            "evidence",
+            "decision"
+          ]
+        },
+        {
+          "id": "migration-evolution-deprecation",
+          "title": "移行・進化・廃止",
+          "applicability": "required",
+          "rationale": "Upgrade Path、削除済み機能、Queue Type変更、Blue-Green境界を安全に扱うために必要である。",
+          "target_sets": [
+            "migration-evolution"
+          ],
+          "required_deliverables": [
+            "migration-guide",
+            "test",
+            "evidence"
+          ]
+        },
+        {
+          "id": "decision-comparison",
+          "title": "選択・比較・Trade-off",
+          "applicability": "required",
+          "rationale": "Classic、Quorum、Streamと各Routing、Retry、Cross-cluster方式を同じ要件軸で比較するために必要である。",
+          "target_sets": [
+            "foundations-design",
+            "performance-capacity",
+            "compatibility-integration"
+          ],
+          "required_deliverables": [
+            "decision",
+            "benchmark"
+          ]
+        },
+        {
+          "id": "provenance-rights",
+          "title": "出典・来歴・権利",
+          "applicability": "required",
+          "rationale": "RabbitMQ本体、Docker Packaging、Client依存、文書、商標の出典と再配布条件を追跡するために必要である。",
+          "target_sets": [
+            "atlas-operation"
+          ],
+          "required_deliverables": [
+            "provenance-record",
+            "evidence"
+          ]
+        },
+        {
+          "id": "agent-skill",
+          "title": "Agent Skill・評価",
+          "applicability": "required",
+          "rationale": "AgentがCoverage外を捏造せず、設計、実装、診断、復旧、移行、Reviewへ到達するために必要である。",
+          "target_sets": [
+            "atlas-operation"
+          ],
+          "required_deliverables": [
+            "skill-reference",
+            "skill-eval"
+          ]
+        }
+      ]
+    },
+    "coverage": {
+      "schema_version": 1,
+      "atlas_id": "rabbitmq-reference-atlas",
+      "epoch": "2026-08-28",
+      "authority_lock_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+      "target_sets": [
+        {
+          "id": "messaging-surface",
+          "title": "Messaging Surface",
+          "sequence": 1,
+          "completion_required": true,
+          "exit_criteria": [
+            "ExchangeとQueueの宣言、Binding、Publish、Consumeを固定Versionで再実行できること",
+            "Acknowledgement、Redelivery、Dead Letteringの境界を自動判定できること"
+          ]
+        },
+        {
+          "id": "delivery-pressure",
+          "title": "Delivery and Pressure",
+          "sequence": 2,
+          "completion_required": true,
+          "exit_criteria": [
+            "Prefetchによる未確認配送数の制御を観測可能なOracleで検証できること",
+            "Publisher ConfirmとConsumer Acknowledgementを異なる保証境界として記録すること"
+          ]
+        },
+        {
+          "id": "cluster-resilience",
+          "title": "Cluster Resilience",
+          "sequence": 3,
+          "completion_required": true,
+          "exit_criteria": [
+            "三ノードClusterとQuorum Queueの構成を固定環境で再現できること",
+            "Leader停止後の継続配送とNode復帰を再実行可能に検証できること"
+          ]
+        },
+        {
+          "id": "atlas-operation",
+          "title": "Atlas Operation",
+          "sequence": 4,
+          "completion_required": true,
+          "exit_criteria": [
+            "EvidenceがSource、Harness、EnvironmentのDigestへ束縛されていること",
+            "Router Skillが設計、実装、診断、移行、ReviewとCoverage Gapを区別すること"
+          ]
+        },
+        {
+          "id": "foundations-design",
+          "title": "Foundations and Design",
+          "sequence": 5,
+          "completion_required": true,
+          "exit_criteria": [
+            "RabbitMQの責任範囲、配送保証、複製原理、製品境界を一次資料から説明できること",
+            "Queue Type、Routing、Retry、Cluster方式を要件とFailure Modelから選択できること"
+          ]
+        },
+        {
+          "id": "operations-observability",
+          "title": "Operations and Observability",
+          "sequence": 6,
+          "completion_required": true,
+          "exit_criteria": [
+            "Broker、Queue、Replica、Client、依存先の主要TelemetryとAlert条件を検証できること",
+            "Alertから診断、Runbook、復旧判定までを再実行可能に接続できること"
+          ]
+        },
+        {
+          "id": "security-safety",
+          "title": "Security and Safety",
+          "sequence": 7,
+          "completion_required": true,
+          "exit_criteria": [
+            "TLS、認証、認可、Credential Lifecycle、Tenant境界を実行証拠で検証できること",
+            "Failure Labと診断手順が許可された隔離環境だけへ作用すること"
+          ]
+        },
+        {
+          "id": "performance-capacity",
+          "title": "Performance and Capacity",
+          "sequence": 8,
+          "completion_required": true,
+          "exit_criteria": [
+            "固定Workloadと環境条件からThroughput、Latency、Resource使用量を再測定できること",
+            "Queue Type、Replica、Payload、Backlog、PrefetchのTrade-offを容量判断へ戻せること"
+          ]
+        },
+        {
+          "id": "compatibility-integration",
+          "title": "Compatibility and Integration",
+          "sequence": 9,
+          "completion_required": true,
+          "exit_criteria": [
+            "Protocol、Client、Plugin、Queue Type、Feature Flagの対応Matrixを固定Versionで検証できること",
+            "相互運用で保持される意味論と失われる意味論をEvidenceから説明できること"
+          ]
+        },
+        {
+          "id": "migration-evolution",
+          "title": "Migration and Evolution",
+          "sequence": 10,
+          "completion_required": true,
+          "exit_criteria": [
+            "対象Upgrade Path、削除済み機能、Feature Flag、Plugin互換性を固定できること",
+            "Workload継続中の移行、Rollback境界、Blue-Green手順を実行証拠へ接続できること"
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "id": "messaging.amqp-model",
+          "title": "AMQP 0-9-1 model boundary",
+          "target_set": "foundations-design",
+          "kind": "concept",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Exchange、Binding、Queueの役割と宣言同値性を、競合宣言の拒否を含む実行結果で境界付ける。",
+          "claim_ids": [
+            "messaging.amqp-model-boundary"
+          ],
+          "evidence_ids": [
+            "lab.amqp-model"
+          ]
+        },
+        {
+          "id": "messaging.exchange-binding-matrix",
+          "title": "Exchange, binding, and queue routing matrix",
+          "target_set": "messaging-surface",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Direct、Topic、Fanout、Headersの正Routingと非一致Routingを同一固定環境で比較する。",
+          "claim_ids": [
+            "messaging.exchange-binding-matrix"
+          ],
+          "evidence_ids": [
+            "lab.exchange-binding-matrix"
+          ]
+        },
+        {
+          "id": "messaging.exchange-routing",
+          "title": "Exchange routing",
+          "target_set": "messaging-surface",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Direct ExchangeのBindingとRouting Keyにより、意図したQueueだけへ配送されることを実行証拠で確認する。",
+          "claim_ids": [
+            "messaging.exchange-routing"
+          ],
+          "evidence_ids": [
+            "lab.exchange-queue"
+          ]
+        },
+        {
+          "id": "messaging.queue-lifecycle",
+          "title": "Queue lifecycle",
+          "target_set": "messaging-surface",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Queueの宣言、利用、削除を隔離されたLabで再現し、残存ResourceをCleanupできる必要がある。",
+          "claim_ids": [
+            "messaging.queue-lifecycle"
+          ],
+          "evidence_ids": [
+            "lab.exchange-queue"
+          ]
+        },
+        {
+          "id": "delivery.acknowledgement",
+          "title": "Consumer acknowledgement",
+          "target_set": "messaging-surface",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Consumer AcknowledgementがBrokerからConsumerまでの配送境界を表すことを観測可能に検証する。",
+          "claim_ids": [
+            "delivery.acknowledgement"
+          ],
+          "evidence_ids": [
+            "lab.ack-redelivery"
+          ]
+        },
+        {
+          "id": "delivery.redelivery",
+          "title": "Redelivery after requeue",
+          "target_set": "messaging-surface",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "未確認MessageをRequeueした際にRedelivered Flagを伴って再配送されることを検証する。",
+          "claim_ids": [
+            "delivery.redelivery"
+          ],
+          "evidence_ids": [
+            "lab.ack-redelivery"
+          ]
+        },
+        {
+          "id": "delivery.dead-lettering",
+          "title": "Dead letter routing",
+          "target_set": "messaging-surface",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "RejectされたMessageが指定したDead Letter Exchangeを経由して隔離Queueへ到達することを検証する。",
+          "claim_ids": [
+            "delivery.dead-lettering"
+          ],
+          "evidence_ids": [
+            "lab.dead-letter"
+          ]
+        },
+        {
+          "id": "delivery.ttl-dead-lettering",
+          "title": "Message TTL and dead letter routing",
+          "target_set": "messaging-surface",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "RejectだけでなくTTL超過によるDead LetteringをSource残数とx-death Headerで検証する。",
+          "claim_ids": [
+            "delivery.ttl-dead-lettering"
+          ],
+          "evidence_ids": [
+            "lab.ttl-dead-letter"
+          ]
+        },
+        {
+          "id": "delivery.flow-control",
+          "title": "Consumer flow control",
+          "target_set": "delivery-pressure",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Prefetch一件の条件でAcknowledgement前に二件目が配送されず、確認後に配送が再開することを検証する。",
+          "claim_ids": [
+            "delivery.flow-control"
+          ],
+          "evidence_ids": [
+            "lab.consumer-flow-control"
+          ]
+        },
+        {
+          "id": "delivery.publisher-flow-control",
+          "title": "Publisher flow control under resource alarm",
+          "target_set": "delivery-pressure",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "Consumer PrefetchとBroker Resource AlarmによるPublisher Blockを区別し、Alarm解除後の再開まで検証する。",
+          "claim_ids": [
+            "delivery.publisher-flow-control"
+          ],
+          "evidence_ids": []
+        },
+        {
+          "id": "delivery.publisher-confirm",
+          "title": "Publisher confirm",
+          "target_set": "delivery-pressure",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Publish処理とConsumer処理を混同せず、Broker受理をPublisher Confirmとして個別に検証する。",
+          "claim_ids": [
+            "delivery.publisher-confirm"
+          ],
+          "evidence_ids": [
+            "lab.exchange-queue"
+          ]
+        },
+        {
+          "id": "queue.quorum-stream",
+          "title": "Quorum queue and stream queue semantics",
+          "target_set": "foundations-design",
+          "kind": "capability",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "複製Queueと追記型Streamを同一視せず、Confirm/AckとOffset Replayの異なる操作を固定Clusterで検証する。",
+          "claim_ids": [
+            "queue.quorum-semantics",
+            "queue.stream-semantics"
+          ],
+          "evidence_ids": [
+            "lab.quorum-stream",
+            "lab.cluster-failure-recovery"
+          ]
+        },
+        {
+          "id": "delivery.ordering-idempotency",
+          "title": "Ordering and application idempotency boundary",
+          "target_set": "delivery-pressure",
+          "kind": "concept",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "順序を保証できる限定条件と、重複排除がApplication責任である境界を同じWorkloadで反証可能にする。",
+          "claim_ids": [
+            "delivery.ordering-boundary",
+            "delivery.idempotency-boundary"
+          ],
+          "evidence_ids": [
+            "lab.ordering-idempotency"
+          ]
+        },
+        {
+          "id": "cluster.three-node-membership",
+          "title": "Three-node cluster membership",
+          "target_set": "cluster-resilience",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "固定OCI Imageと構成から三ノードClusterを作り、全NodeがRunning Membersであることを確認する。",
+          "claim_ids": [
+            "cluster.three-node-membership"
+          ],
+          "evidence_ids": [
+            "lab.cluster-membership"
+          ]
+        },
+        {
+          "id": "cluster.leader-failure",
+          "title": "Quorum queue leader failure",
+          "target_set": "cluster-resilience",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Quorum QueueのLeader Nodeを停止しても多数派が残る条件で確定済みMessageを回収できることを検証する。",
+          "claim_ids": [
+            "cluster.leader-failure"
+          ],
+          "evidence_ids": [
+            "lab.cluster-failure-recovery"
+          ]
+        },
+        {
+          "id": "cluster.node-recovery",
+          "title": "Cluster node recovery",
+          "target_set": "cluster-resilience",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "停止したNodeを再起動し、Cluster Membershipへ復帰するまでを同一Harnessで確認する必要がある。",
+          "claim_ids": [
+            "cluster.node-recovery"
+          ],
+          "evidence_ids": [
+            "lab.cluster-failure-recovery"
+          ]
+        },
+        {
+          "id": "cluster.network-partition-recovery",
+          "title": "Network partition majority and replica recovery",
+          "target_set": "cluster-resilience",
+          "kind": "failure",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "Node停止とNetwork Partitionを区別し、多数派継続、少数派拒否、再接続後Replica復帰を専用Networkで検証する。",
+          "claim_ids": [
+            "cluster.network-partition",
+            "cluster.partition-recovery"
+          ],
+          "evidence_ids": []
+        },
+        {
+          "id": "operation.reproducible-evidence",
+          "title": "Reproducible evidence",
+          "target_set": "atlas-operation",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "実行結果をSource、Harness、Environment、ArtifactのDigestへ束縛して再検証可能にする。",
+          "claim_ids": [
+            "operation.reproducible-evidence"
+          ],
+          "evidence_ids": [
+            "operation.evidence-generation"
+          ]
+        },
+        {
+          "id": "skill.router-evaluation",
+          "title": "Router Skill evaluation",
+          "target_set": "atlas-operation",
+          "kind": "skill",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "Routerが問い合わせを正しいModeとEvidenceへ案内し、対象外機能を捏造せずCoverage Gapを返すことを検証する。",
+          "claim_ids": [
+            "skill.router-evaluation"
+          ],
+          "evidence_ids": [
+            "eval.router"
+          ]
+        },
+        {
+          "id": "compatibility.fixed-client-queue-types",
+          "title": "Fixed AMQP client and queue type compatibility",
+          "target_set": "compatibility-integration",
+          "kind": "compatibility",
+          "requirement": "required",
+          "state": "covered",
+          "rationale": "ClientとBrokerのVersionを固定し、Classic、Quorum、Streamの対象操作を同一Harnessで実証する。",
+          "claim_ids": [
+            "compatibility.fixed-client-queue-types"
+          ],
+          "evidence_ids": [
+            "lab.quorum-stream"
+          ]
+        },
+        {
+          "id": "security.authorization-isolation",
+          "title": "Authentication, authorization, and vhost isolation",
+          "target_set": "security-safety",
+          "kind": "security",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "正常認証だけでなくResource Permissionの許可・拒否を専用vhostで実証する。",
+          "claim_ids": [
+            "security.least-privilege"
+          ],
+          "evidence_ids": []
+        },
+        {
+          "id": "observability.management-health",
+          "title": "Management health, alarms, and safe cleanup",
+          "target_set": "operations-observability",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "三NodeとQueueの状態、正常Health/Alarm、Lab Resource Cleanupを構造化Evidenceへ接続する。",
+          "claim_ids": [
+            "observability.management-api",
+            "operation.health-and-alarms",
+            "operation.safe-cleanup"
+          ],
+          "evidence_ids": []
+        },
+        {
+          "id": "performance.fixed-workload",
+          "title": "Fixed workload performance measurement",
+          "target_set": "performance-capacity",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "普遍値を主張せず、固定条件のRaw Sample、分位、Rate、Resource Snapshotを容量判断の入力として再測定する。",
+          "claim_ids": [
+            "performance.fixed-workload"
+          ],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.foundations-and-decisions",
+          "title": "RabbitMQ foundations and design decisions",
+          "target_set": "foundations-design",
+          "kind": "concept",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "決定版として機能一覧だけでなく、配送、複製、Storage、Protocolの原理と採否判断を追跡可能にする必要がある。",
+          "claim_ids": [],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.operations-observability",
+          "title": "Operational observability and runbooks",
+          "target_set": "operations-observability",
+          "kind": "operation",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "Backlog、未Ack、Alarm、Replica、Connectionを観測し、Alertから安全な復旧へ到達できる証拠が必要である。",
+          "claim_ids": [],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.security-safety",
+          "title": "Security and isolation",
+          "target_set": "security-safety",
+          "kind": "security",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "Transport、Identity、Authorization、Secret Rotation、Tenant Isolationを正常系と拒否系の両方で証明する必要がある。",
+          "claim_ids": [],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.performance-capacity",
+          "title": "Performance and capacity model",
+          "target_set": "performance-capacity",
+          "kind": "performance",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "一般化した性能値ではなく、固定条件の測定とRaw Dataから利用者が自身の容量判断を行える必要がある。",
+          "claim_ids": [],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.compatibility-integration",
+          "title": "Protocol and client compatibility",
+          "target_set": "compatibility-integration",
+          "kind": "compatibility",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "AMQP 0-9-1以外のProtocol、Client、Plugin、Queue Type間の互換性を未検証のまま一般化しないために必要である。",
+          "claim_ids": [],
+          "evidence_ids": []
+        },
+        {
+          "id": "mastery.migration-evolution",
+          "title": "Upgrade migration and deprecation",
+          "target_set": "migration-evolution",
+          "kind": "migration",
+          "requirement": "required",
+          "state": "planned",
+          "rationale": "RabbitMQ 4.3.5への公式Upgrade Path、削除済み機能、Rollback不能点をWorkload付きで実証する必要がある。",
+          "claim_ids": [],
+          "evidence_ids": []
+        }
+      ]
+    },
+    "sources": {
+      "schema_version": 1,
+      "atlas_id": "rabbitmq-reference-atlas",
+      "epoch": "2026-08-28",
+      "generated_at": "2026-08-28T00:00:00+09:00",
+      "sources": [
+        {
+          "id": "rabbitmq-server-v4.3.5",
+          "kind": "source",
+          "title": "RabbitMQ Server v4.3.5 source release",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v4.3.5/release-notes/4.3.5.md",
+          "version": "v4.3.5-0dde27bfdd1984ff7e157226fd97656854a7f359",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:31bc3e0b69ccb97d0c266ba90db5055337772ffb7d0108d7ffcd71803c4ec334",
+          "license": "MPL-2.0",
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-exchanges",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Exchanges",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/exchanges.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:a0a6d3fae2073fe28ffe7fd016bbd3830262db554195e670f5dc57a123832f6c",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-queues",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Queues",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/queues.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:70a81800b3df6e9e0295391a2fae37f67421af5b097d112e06a3ac9ba3087025",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-confirms",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Consumer Acknowledgements and Publisher Confirms",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/confirms.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:861abccf819fddcdaddd661255914d867d6ed511a9ff19311bfef73d0907b127",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-dlx",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Dead Letter Exchanges",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/dlx.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:29bead1952a76facc60f98748860271da24c0feba82b9049ae9fc2eb41cd2a29",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-flow-control",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Flow Control",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/flow-control.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:ce5d0876c0a35e13dc12ee6e199e758a51c5223c05f448b8aed9ebb7e4c13c79",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-clustering",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Clustering Guide",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/clustering.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:f76eea55c22ddac659f4a20c48d236e7e7902527b7b70fb92dc2f55753b02ece",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-amqp-concepts",
+          "kind": "official-documentation",
+          "title": "RabbitMQ AMQP 0-9-1 Model Explained",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/tutorials/amqp-concepts/index.md",
+          "version": "1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:4443361280acd6e415ba8687a63fa022b0e4a4d582a6f8a07d29d29872f3986f",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-ttl",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Time-To-Live and Expiration",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/ttl.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:47b24f48ab6c7099d6d140a19fc66a7a94708d57e6b9d16bbabaa1dfbd1ccc8c",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-streams",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Streams",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/streams.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:1719c724d9d6877aad0b8830bc935d26644710aa7cd510a9fb554c0a239d99a0",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-quorum-queues",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Quorum Queues",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/quorum-queues/index.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:a9a41aca4560ded658c6ada1229258ba8f0a185bc026cb5784dfb831383ff41d",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-partitions",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Network Partitions",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/partitions.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:f3d281f456f88d62af329e2aa2ca8f9f9f7231b430532a0df5dd7a3ad9684df0",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-reliability",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Reliability Guide",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/reliability.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:25d54e926d450a8676a93ba6282f4eb8456ab60db3242ac6333f14871d3e07e4",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-access-control",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Access Control",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/access-control.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:9cccc858072cf3a8fe7dede63cc198289b2414e33e9128d9eb941bfbaa417f7a",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-tls",
+          "kind": "official-documentation",
+          "title": "RabbitMQ TLS Support",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/ssl/index.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:d33e05a1821a2c0ebbbe804050d6c85a320eaba15e6128aa3573deb41dfe31db",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-monitoring",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Monitoring",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/monitoring/index.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:f8ab65c35c95b92aad8d5cc0bdb94560136849a3dfacfd2b827475e7c73ff73d",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-prometheus",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Prometheus Monitoring",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/prometheus/index.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:012c5705ec820fe3d75c92aac79183db5c21b53bf1fa988a271fca2376a58dfe",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-alarms",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Resource Alarms",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/alarms.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:f8dbb38f401201d31da0f6e7151c9519747c44bd4516ed0d2da05e228366a095",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-definitions",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Definition Export and Import",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/definitions.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:37a06b2c2fd6b74d28d3482d719898afcdec29c961cd211b4406c1cb9b5bb3f5",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-feature-flags",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Feature Flags",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/feature-flags/index.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:ed43e6c64fb3076623ced45d42c4bf0de9786cad356f51d01013a3cd488fc62a",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-upgrade",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Upgrade Guide",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/upgrade.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:6eb02dcbc7ca6b504229d185d21ab2293c2fe2cc098a120a5d702c3a94192a5e",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-rolling-upgrade",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Rolling Upgrade Guide",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/rolling-upgrade.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:5cb611d8a2a4bec39c046b37d81578cc369c5427feaf3a17cb2abf02ae94eaf3",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-blue-green-upgrade",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Blue-Green Upgrade Guide",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/blue-green-upgrade.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:e889ac3b44c13b974f2bf2cefe0fcebd11e3e7b143351931a2e3ed023d49ee49",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-4.3-production-checklist",
+          "kind": "official-documentation",
+          "title": "RabbitMQ Production Checklist",
+          "url": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/1c99c9687f012ad700385c1e9a6990f6520720d3/versioned_docs/version-4.3/production-checklist.md",
+          "version": "4.3-1c99c9687f012ad700385c1e9a6990f6520720d3",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:8f944214046052ee6a5134f53715f4cd6207d8390c5946c7b245e2c45abe2c9e",
+          "license": null,
+          "redistribution": "link-only"
+        },
+        {
+          "id": "rabbitmq-container-v4.3.5-management",
+          "kind": "runtime-inventory",
+          "title": "RabbitMQ 4.3.5 management OCI image",
+          "url": "https://github.com/docker-library/rabbitmq/tree/fe08e8852f66fde85461be4eed35675a4b8e35d8/4.3/ubuntu/management",
+          "version": "rabbitmq:4.3.5-management-fe08e8852f66fde85461be4eed35675a4b8e35d8",
+          "retrieved_at": "2026-08-28",
+          "digest": "sha256:45226f38499559b9f56875c752cc6689ff90e8f20796fe80fd9bc28d64723031",
+          "license": "MPL-2.0",
+          "redistribution": "metadata-only"
+        }
+      ]
+    },
+    "skillPackage": {
+      "schema_version": 1,
+      "atlas_id": "rabbitmq-reference-atlas",
+      "atlas_release": "v0.1.0",
+      "router": {
+        "id": "rabbitmq-reference-router",
+        "path": ".agents/skills/rabbitmq-reference-router/SKILL.md",
+        "description": "RabbitMQ 4.3.5の設計、実装、診断、復旧、移行、Reviewを、固定Coverageと再実行可能なLab、Evidence、一次資料へ案内する。"
+      },
+      "generated_from": [
+        "mastery.yaml",
+        "coverage.yaml",
+        "atlas/claims/index.yaml",
+        "atlas/decisions/router.yaml",
+        "operations/runbooks/index.yaml"
+      ],
+      "adapters": [
+        "generic-agent-skills",
+        "codex"
+      ],
+      "evals": {
+        "path": "evals/",
+        "minimum_pass_rate": 1
+      }
+    },
+    "evidence": [
+      {
+        "schema_version": 1,
+        "id": "eval.router",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "skill.router-evaluation"
+        ],
+        "kind": "skill-eval",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make skill-eval",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "local",
+          "manifest_digest": "sha256:f547c6408a52219ff17583156d2a8d221a5f27f065f11382c449408477bd2322",
+          "rabbitmq_version": "not-applicable"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:9e98fba2f5aa50749ed650164389cbc01569b1b41f3e7be7614ba3d47da0a6a0",
+        "artifact": {
+          "uri": "evidence/raw/skill-eval.json",
+          "digest": "sha256:48f20d31eb724713f6a003115e70649adb7bebe0ae2ec6b9deb237ea2adfce82",
+          "media_type": "application/json",
+          "size_bytes": 2075
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.ack-redelivery",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "delivery.acknowledgement",
+          "delivery.redelivery"
+        ],
+        "kind": "test-report",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/core.json",
+          "digest": "sha256:6d1efce10560abb60810a6ed472ff8649464d2e8288784365f521a1e58446218",
+          "media_type": "application/json",
+          "size_bytes": 2682
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.cluster-failure-recovery",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "cluster.leader-failure",
+          "cluster.node-recovery"
+        ],
+        "kind": "recovery",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/recovery.json",
+          "digest": "sha256:85b85708b17dc7b578af68c6d60ae7cc9029f2c7de7ab81880ae39cafd81b759",
+          "media_type": "application/json",
+          "size_bytes": 587
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.cluster-membership",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "cluster.three-node-membership"
+        ],
+        "kind": "conformance",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "cluster",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/cluster-before.json",
+          "digest": "sha256:9b89302f68db200ac3a5c82e41a8f8b76366514e4cc71e7d928ecb3a9867e30c",
+          "media_type": "application/json",
+          "size_bytes": 510
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.consumer-flow-control",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "delivery.flow-control"
+        ],
+        "kind": "test-report",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/core.json",
+          "digest": "sha256:6d1efce10560abb60810a6ed472ff8649464d2e8288784365f521a1e58446218",
+          "media_type": "application/json",
+          "size_bytes": 2682
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.dead-letter",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "delivery.dead-lettering"
+        ],
+        "kind": "test-report",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/core.json",
+          "digest": "sha256:6d1efce10560abb60810a6ed472ff8649464d2e8288784365f521a1e58446218",
+          "media_type": "application/json",
+          "size_bytes": 2682
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "lab.exchange-queue",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "messaging.exchange-routing",
+          "messaging.queue-lifecycle",
+          "delivery.publisher-confirm"
+        ],
+        "kind": "test-report",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "container",
+          "manifest_digest": "sha256:d84277e488c81ab4e5fbf3a394b96ab286e958238ad81a1f0fd9e285cbcb9e1f",
+          "rabbitmq_version": "4.3.5"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/core.json",
+          "digest": "sha256:6d1efce10560abb60810a6ed472ff8649464d2e8288784365f521a1e58446218",
+          "media_type": "application/json",
+          "size_bytes": 2682
+        },
+        "verdict": "pass",
+        "retention": "git"
+      },
+      {
+        "schema_version": 1,
+        "id": "operation.evidence-generation",
+        "atlas_id": "rabbitmq-reference-atlas",
+        "claim_ids": [
+          "operation.reproducible-evidence"
+        ],
+        "kind": "conformance",
+        "producer": "rabbitmq-reference-atlas harness",
+        "command": "make labs",
+        "created_at": "2026-08-28T06:31:59.974514Z",
+        "environment": {
+          "profile": "local",
+          "manifest_digest": "sha256:f547c6408a52219ff17583156d2a8d221a5f27f065f11382c449408477bd2322",
+          "rabbitmq_version": "not-applicable"
+        },
+        "source_digest": "sha256:17667d9e84f296e0b7b51f280f9012e9c29285d7ec0c6b40becce97f6b746920",
+        "harness_digest": "sha256:d9e2dc90b98bae1bef61cbde3f197627ea2d0546de3e7cf50ecf7523aeeb2493",
+        "artifact": {
+          "uri": "evidence/raw/evidence-generation.json",
+          "digest": "sha256:e9cf30232db47efde2a02ecd06c8ca30f519bb72a823bfcffe3bdef9442f154f",
+          "media_type": "application/json",
+          "size_bytes": 610
+        },
+        "verdict": "pass",
+        "retention": "git"
+      }
+    ],
+    "certificate": null
+  }
+}

@@ -1,0 +1,104 @@
+schema_version: 1
+atlas_id: executable-technology-atlas
+epoch: "2026-08-28"
+authority_lock_digest: sha256:b83c07be5325aa79fa76d438fcee9eeac5ec83a6454d8465dfc2453ce6223870
+target_sets:
+  - id: portal-read-model
+    title: 固定Release横断Read Model
+    sequence: 1
+    completion_required: true
+    exit_criteria:
+      - 97 Subjectを欠落なく固定Catalog releaseから索引できる。
+      - 署名、Digest、Schema、Publication Gateの失敗を隠さず隔離できる。
+      - 日本語UIとRouter Skillから全FacetとEvidenceへ到達できる。
+targets:
+  - id: portal.catalog.97-subjects
+    title: 97 Subject Catalogを固定Releaseから索引する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: Core Catalogの全Subjectを欠落させずRead Modelへ含める必要がある。
+    claim_ids: [portal.catalog.complete-index]
+    evidence_ids: [portal.import.integrity]
+    exclusion: null
+  - id: portal.release.integrity
+    title: Release署名とDigestをSchema前に検証する
+    target_set: portal-read-model
+    kind: security
+    requirement: required
+    state: covered
+    rationale: 改変または未知鍵のReleaseを公開Indexへ混入させない必要がある。
+    claim_ids: [portal.release.verified-envelope]
+    evidence_ids: [portal.import.integrity]
+    exclusion: null
+  - id: portal.search.facets
+    title: 8 Facetと全文検索からSubjectを探索する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 分野、Audience、Outcome、Surface、状態、Version、環境、Skillを組み合わせて探索する必要がある。
+    claim_ids: [portal.search.japanese-ui]
+    evidence_ids: [portal.ui.build]
+    exclusion: null
+  - id: portal.state.transparency
+    title: 未完成・除外・実行困難・失効を隠さない
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 状態軸を混ぜずCoverage Gapを正直に返すことが完成契約の境界である。
+    claim_ids: [portal.state.visible-gaps]
+    evidence_ids: [portal.router.eval]
+    exclusion: null
+  - id: portal.fallback.quarantine
+    title: 検証失敗時に隔離してlast-known-goodを維持する
+    target_set: portal-read-model
+    kind: failure
+    requirement: required
+    state: covered
+    rationale: 署名、Digest、Schemaの障害を空Dashboardまたは成功へ変換しない必要がある。
+    claim_ids: [portal.fallback.last-known-good]
+    evidence_ids: [portal.import.integrity]
+    exclusion: null
+  - id: portal.router.skill
+    title: Canonical Indexへ案内するRouter Skillを提供する
+    target_set: portal-read-model
+    kind: skill
+    requirement: required
+    state: covered
+    rationale: 個別技術の知識を複製せず固定ReleaseとEvidenceへ安全にRouteする必要がある。
+    claim_ids: [portal.router.canonical-route]
+    evidence_ids: [portal.router.eval]
+    exclusion: null
+  - id: portal.performance.budget
+    title: 97件探索を固定Performance Budget内で実行する
+    target_set: portal-read-model
+    kind: performance
+    requirement: required
+    state: covered
+    rationale: 実データを含むPortalがローカルで応答性と配布容量の予算を守る必要がある。
+    claim_ids: [portal.performance.within-budget]
+    evidence_ids: [portal.performance.budget]
+    exclusion: null
+  - id: portal.security.privacy
+    title: 外部追跡なしでSecurity Headerを適用する
+    target_set: portal-read-model
+    kind: security
+    requirement: required
+    state: covered
+    rationale: 公開Manifestを扱うRead Modelでも外部Script、Telemetry、不要な権限を拒否する必要がある。
+    claim_ids: [portal.security.local-private]
+    evidence_ids: [portal.security.headers]
+    exclusion: null
+  - id: portal.publication.closure
+    title: SBOM・Provenance・Certificateを固定する
+    target_set: portal-read-model
+    kind: operation
+    requirement: required
+    state: covered
+    rationale: 依存関係、第三者素材、Evidence Set、Completion CertificateをPublication Gateで検証する必要がある。
+    claim_ids: [portal.publication.signed-certificate]
+    evidence_ids: [portal.publication.sbom]
+    exclusion: null
