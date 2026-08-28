@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import atlasIndex from './data/index.generated.json';
+import portalCertificate from '../evidence/completion-certificate.json';
+import portalRelease from '../release/manifest.json';
 
 type Release = NonNullable<(typeof atlasIndex.subjects)[number]['release']>;
 type Subject = (typeof atlasIndex.subjects)[number];
@@ -17,6 +19,10 @@ const surfaceLabels: Record<string, string> = { 'orientation-scope':'定義と�
 
 function coverageCounts(release: Release | null) {
   return release?.coverage.states ?? { missing:0, planned:0, partial:0, covered:0, excluded:0, infeasible:0, expired:0 };
+}
+
+function releaseTrustLabel(release: Release) {
+  return release.trust.usage === 'public-release' ? '公開署名検証' : release.trust.usage === 'fixture-only' ? 'fixture整合性' : '署名整合性';
 }
 
 export default function Home() {
@@ -60,23 +66,25 @@ export default function Home() {
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const effectivePage = Math.min(page, pageCount);
   const visible = filtered.slice((effectivePage - 1) * PAGE_SIZE, effectivePage * PAGE_SIZE);
-  const complete = atlasIndex.subjects.filter((item) => item.release?.status === 'complete' && item.release?.certificate).length;
-  const incomplete = atlasIndex.subjects.filter((item) => !item.release || item.release.status !== 'complete' || !item.release.certificate).length;
+  const publicComplete = atlasIndex.subjects.filter((item) => item.release?.status === 'complete' && item.release.certificateVerification.status === 'verified' && item.release.trust.usage === 'public-release').length;
+  const releaseAbsent = atlasIndex.subjects.filter((item) => !item.release).length;
+  const releaseIncomplete = atlasIndex.subjects.filter((item) => item.release?.status === 'incomplete').length;
+  const fixtureVerified = atlasIndex.subjects.filter((item) => item.release?.verification === 'verified' && item.release.trust.usage === 'fixture-only').length;
 
   return (
     <>
       <a className="skip-link" href="#atlas-results">検索結果へ移動</a>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="実行可能技術アトラス ホーム"><span className="brand-mark" aria-hidden="true">97</span><span><strong>実行可能技術アトラス</strong><small>Executable Technology Atlas</small></span></a>
-        <nav aria-label="主要ナビゲーション"><a href="#explorer">探索</a><a href="#verification">検証</a><a href="#contract">契約</a></nav>
+        <nav aria-label="主要ナビゲーション"><a href="#explorer">探索</a><a href="#verification">検証</a><a href="#portal-certificate">Portal証明</a><a href="#contract">契約</a></nav>
         <span className="epoch">Epoch <b>{atlasIndex.catalog.coverageEpoch}</b></span>
       </header>
 
       <main id="top">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-copy"><p className="eyebrow">固定Releaseを横断する検証済みRead Model</p><h1 id="hero-title">完成だけを<br />数えない。<em>欠けている<br />証拠まで探せる。</em></h1></div>
-          <div className="hero-aside"><p>97 Subject AtlasのManifest、Mastery、Coverage、Evidence、Skill Package、Completion Certificateを索引します。</p><p className="boundary-note"><strong>境界:</strong> Source Tree・Default Branchは参照しません。現時点で実在する署名済み公開ReleaseとCertificateは0件です。7件は再現可能なfixture署名付き候補であり、完成証明ではありません。</p></div>
-          <div className="metrics" aria-label="Catalog 概要"><div><strong>97</strong><span>Catalog subjects</span></div><div><strong>{complete}</strong><span>Certificate付き完成</span></div><div><strong>{atlasIndex.verification.verified}</strong><span>Fixture整合性検証</span></div><div><strong>{incomplete}</strong><span>未完成・Releaseなし</span></div></div>
+          <div className="hero-aside"><p>97 Subject AtlasのManifest、Mastery、Coverage、Evidence、Skill Package、Completion Certificateを索引します。</p><p className="boundary-note"><strong>境界:</strong> Source Tree・Default Branchは参照しません。公開信頼鍵の署名とCertificateを検証できた固定Releaseだけを完成と数えます。現在の{fixtureVerified}件は再現可能なfixture候補であり、公開完成証明ではありません。</p></div>
+          <div className="metrics" aria-label="Catalog 概要"><div><strong>97</strong><span>Catalog subjects</span></div><div><strong>{releaseAbsent}</strong><span>固定Releaseなし</span></div><div><strong>{releaseIncomplete}</strong><span>未完成Release候補</span></div><div><strong>{publicComplete}</strong><span>公開Certificate完成</span></div><div><strong>{fixtureVerified}</strong><span>Fixture整合性検証</span></div></div>
         </section>
 
         <section className="explorer" id="explorer" aria-labelledby="explorer-title">
@@ -87,7 +95,7 @@ export default function Home() {
             <Facet label="Audience" value={audience} onChange={setAudience} options={Object.entries(audienceLabels)} />
             <Facet label="Outcome" value={outcome} onChange={setOutcome} options={Object.entries(outcomeLabels)} />
             <Facet label="Surface" value={surface} onChange={setSurface} options={Object.entries(surfaceLabels)} />
-            <Facet label="状態" value={status} onChange={setStatus} options={[["catalog:planned","Catalog: 未着手"],["catalog:active","Catalog: 活動中"],["catalog:existing","Catalog: 既存"],["release:incomplete","Release: 未完成"],["release:complete","Release: 完成"],["release:superseded","Release: 更新済み"],["release:archived","Release: 保守終了"],...["missing","planned","partial","covered","excluded","infeasible","expired"].map((state) => [`coverage:${state}`,`Coverage: ${stateLabels[state]}`])] as [string,string][]} />
+            <Facet label="状態" value={status} onChange={setStatus} options={[["catalog:planned","Catalog: 未着手"],["catalog:active","Catalog: 活動中"],["catalog:existing","Catalog: 既存"],["catalog:complete","Catalog: 完了"],["catalog:deferred","Catalog: 保留"],["release:planned","Release: 計画"],["release:active","Release: 作業中"],["release:incomplete","Release: 未完成"],["release:complete","Release: 完成"],["release:superseded","Release: 更新済み"],["release:archived","Release: 保守終了"],...["missing","planned","partial","covered","excluded","infeasible","expired"].map((state) => [`coverage:${state}`,`Coverage: ${stateLabels[state]}`])] as [string,string][]} />
             <Facet label="Version" value={version} onChange={setVersion} options={versions.map((item) => [item,item])} />
             <Facet label="環境" value={environment} onChange={setEnvironment} options={['local','container','vm','cluster','simulator','cloud-live','hardware-in-the-loop'].map((item) => [item,item])} />
             <Facet label="Skill" value={skill} onChange={setSkill} options={[["available","Routerあり"],["absent","Routerなし"]]} />
@@ -103,7 +111,12 @@ export default function Home() {
 
         <section className="verification-section" id="verification" aria-labelledby="verification-title">
           <div><p className="eyebrow">Verification ledger</p><h2 id="verification-title">検証に失敗したReleaseは、公開Indexへ混ぜない。</h2><p>署名、Digest、Core Schema、Atlas ID、Coverage Epoch、Router、Target Setを順に検証します。失敗時は隔離し、最後に検証済みのIndexを維持します。</p></div>
-          <dl className="ledger"><div><dt>Catalog release</dt><dd><code>{atlasIndex.catalog.release.version}</code><span className="pass">署名検証済み fixture</span></dd></div><div><dt>Catalog digest</dt><dd><code>{atlasIndex.catalog.release.digest}</code></dd></div><div><dt>Release candidates</dt><dd>{atlasIndex.verification.verified} integrity verified / {atlasIndex.verification.quarantined} quarantined</dd></div><div><dt>Fallback</dt><dd>last-known-good / stale明示 / atomic replace</dd></div><div><dt>Source policy</dt><dd>fixed-release-only</dd></div></dl>
+          <dl className="ledger"><div><dt>Catalog release</dt><dd><code>{atlasIndex.catalog.release.version}</code><span className="pass">署名検証済み {atlasIndex.catalog.trust.usage}</span><span>公開Catalog Releaseではありません</span></dd></div><div><dt>Core v1 正本</dt><dd><code>{atlasIndex.catalog.canonical.commit}</code><span>Completion Policy {atlasIndex.catalog.canonical.policyVersion}</span></dd></div><div><dt>Catalog状態</dt><dd>90 planned / 6 active / 1 existing</dd></div><div><dt>Catalog digest</dt><dd><code>{atlasIndex.catalog.release.digest}</code></dd></div><div><dt>Release candidates</dt><dd>{atlasIndex.verification.verified} integrity verified / {atlasIndex.verification.quarantined} quarantined</dd></div><div><dt>Fallback</dt><dd>last-known-good / stale明示 / atomic replace</dd></div><div><dt>Source policy</dt><dd>fixed-release-only</dd></div></dl>
+        </section>
+
+        <section className="certificate-section" id="portal-certificate" aria-labelledby="portal-certificate-title">
+          <div><p className="eyebrow">Portal Completion Certificate</p><h2 id="portal-certificate-title">Subjectの完成数と、Portal自身の完成を混ぜない。</h2><p>Portal v1はCore `atlas audit`とPublication Gateを通すローカル証明対象です。GitHub公開状態とは分離し、Subjectの公開Certificate完成{publicComplete}件とも別軸で表示します。</p></div>
+          <dl className="certificate-ledger"><div><dt>Atlas / Release</dt><dd><code>{portalCertificate.atlas_id}</code><span>{portalCertificate.atlas_release}</span></dd></div><div><dt>Coverage / Policy</dt><dd>{portalCertificate.coverage_epoch}<span>Core {portalCertificate.core_policy_version}</span></dd></div><div><dt>Required profile</dt><dd>{portalCertificate.required_profiles.map((item) => `${item.profile}: ${item.result}`).join(', ')}</dd></div><div><dt>Router Skill Eval</dt><dd>{Math.round(portalCertificate.skill_eval.pass_rate * 100)}% pass</dd></div><div><dt>Source commit</dt><dd><code>{portalCertificate.commit}</code></dd></div><div><dt>Certificate digest</dt><dd><code>{portalCertificate.signature.digest}</code><span className="pass">payload-sha256</span></dd></div><div><dt>Portal Release</dt><dd><code>{portalRelease.release.digest}</code><span>{portalRelease.signature.identity} / 公開前</span></dd></div></dl>
         </section>
 
         <section className="contract-section" id="contract" aria-labelledby="contract-title"><p className="eyebrow">Completion Contract 1.0.0</p><h2 id="contract-title">完成は、固定Epochに対する8つのClosure。</h2><div className="closure-grid">{['Authority','Coverage','Mastery','Claim','Execution','Operational','Skill','Publication'].map((item,index) => <div key={item}><span>{String(index+1).padStart(2,'0')}</span><strong>{item}</strong></div>)}</div><p>世界知識の網羅ではなく、固定したRelease、Authority Lock、環境、Evidence Setに対する証明です。<code>superseded</code>になっても当時のCertificateは履歴として保持されます。</p></section>
@@ -123,7 +136,7 @@ function Facet({ label, value, onChange, options }: { label:string; value:string
 function AtlasCard({ item, index, onOpen }: { item:Subject; index:number; onOpen:(item:Subject)=>void }) {
   const release = item.release; const counts = coverageCounts(release);
   return <article className="atlas-card"><div className="card-index">{String(index).padStart(2,'0')}</div><div className="card-top"><span>{item.domain.title}</span><span className={`status catalog-${item.status}`}>{catalogLabels[item.status] ?? item.status}</span></div><h3>{item.title}</h3><code lang="en">{item.id}</code><p className="scope">{item.scope}</p>
-    {release ? <><div className="release-line"><span className={`status release-${release.status}`}>{releaseLabels[release.status] ?? release.status}</span><code>{release.version}</code><span className="integrity">✓ fixture整合性</span></div><div className="coverage"><div><span>必須Coverage closure</span><strong>{release.coverage.percent}%</strong></div><progress value={release.coverage.percent} max="100">{release.coverage.percent}%</progress><p>{counts.covered} covered · {counts.partial} partial · {counts.planned} planned · {counts.excluded} excluded · {counts.infeasible} infeasible · {counts.expired} expired</p></div></> : <div className="no-release"><strong>固定Releaseなし</strong><span>Manifest / Evidence / Certificate 未収集</span></div>}
+    {release ? <><div className="release-line"><span className={`status release-${release.status}`}>{releaseLabels[release.status] ?? release.status}</span><code>{release.version}</code><span className="integrity">✓ {releaseTrustLabel(release)}</span></div><div className="coverage"><div><span>必須Coverage closure</span><strong>{release.coverage.percent}%</strong></div><progress value={release.coverage.percent} max="100">{release.coverage.percent}%</progress><p>{counts.covered} covered · {counts.partial} partial · {counts.planned} planned · {counts.excluded} excluded · {counts.infeasible} infeasible · {counts.expired} expired</p>{release.coverage.unresolvedCoveredEvidence > 0 && <p className="fail">Evidence実体未収集: covered {release.coverage.unresolvedCoveredEvidence}件</p>}</div></> : <div className="no-release"><strong>固定Releaseなし</strong><span>Manifest / Evidence / Certificate 未収集</span></div>}
     <div className="card-footer"><span>{item.stage1_required ? 'Stage 1 必須' : 'Seed / 任意'}</span><button type="button" onClick={() => onOpen(item)}>検証情報を見る <span aria-hidden="true">→</span></button></div></article>;
 }
 
@@ -139,7 +152,7 @@ function SubjectDetail({ subject, close }: { subject:Subject; close:()=>void }) 
   },[release,subject.id]);
   return <div className="detail"><header><div><p className="eyebrow">{subject.domain.title} / {subject.id}</p><h2 id="detail-title">{subject.title}</h2></div><button className="close" type="button" onClick={close} aria-label="詳細を閉じる">×</button></header><section><h3>Catalog境界</h3><p>{subject.scope}</p><ul>{subject.excludes.map((item) => <li key={item}>{item}</li>)}</ul></section>
     {!release ? <section className="detail-warning"><h3>固定Releaseはありません</h3><p>Catalogには存在しますが、Manifest、Mastery、Evidence、Skill、Certificateを検証できません。完成済みとしてRouteしません。</p></section> : <>
-      <section><h3>固定Releaseと信頼</h3><dl><div><dt>Version</dt><dd><code>{release.version}</code> / {releaseLabels[release.status] ?? release.status}</dd></div><div><dt>URI</dt><dd><code>{release.uri}</code></dd></div><div><dt>Release digest</dt><dd><code>{release.digest}</code></dd></div><div><dt>署名</dt><dd>{release.signature.algorithm} / <code>{release.signature.keyId}</code>（fixture-only）</dd></div><div><dt>Authority Lock</dt><dd><code>{release.authorityLockDigest}</code></dd></div><div><dt>Publication</dt><dd className="fail">Certificateなし — 未完成</dd></div></dl></section>
+      <section><h3>固定Releaseと信頼</h3><dl><div><dt>Version</dt><dd><code>{release.version}</code> / {releaseLabels[release.status] ?? release.status}</dd></div><div><dt>URI</dt><dd><code>{release.uri}</code></dd></div><div><dt>Release digest</dt><dd><code>{release.digest}</code></dd></div><div><dt>署名</dt><dd>{release.signature.algorithm} / <code>{release.signature.keyId}</code>（{release.trust.usage}）</dd></div><div><dt>Authority Lock</dt><dd><code>{release.authorityLockDigest}</code></dd></div><div><dt>Publication</dt>{release.certificate && release.certificateVerification.status === 'verified' ? <dd className={release.status === 'complete' && release.trust.usage === 'public-release' ? 'pass' : ''}><span>Certificate検証済み</span><code>{release.certificate.signature.digest}</code>{release.trust.usage !== 'public-release' && <span>公開信頼鍵のReleaseではありません</span>}{release.status !== 'complete' && <span>状態は{releaseLabels[release.status] ?? release.status}です</span>}</dd> : <dd className="fail">Certificateなし — 未完成</dd>}</div></dl></section>
       <section><h3>Mastery</h3><p className="token-list">{release.audiences.map((item) => <span key={item}>{audienceLabels[item] ?? item}</span>)}</p><p className="token-list">{release.outcomes.map((item) => <span key={item}>{outcomeLabels[item] ?? item}</span>)}</p><p className="token-list">{release.surfaces.map((item) => <span key={item.id}>{surfaceLabels[item.id] ?? item.id}{item.applicability === 'not-applicable' ? '（非適用）' : ''}</span>)}</p></section>
       <section><h3>Coverage状態</h3><div className="state-grid">{Object.entries(counts).map(([state,count]) => <div key={state}><strong>{count}</strong><span>{stateLabels[state] ?? state}<code>{state}</code></span></div>)}</div></section>
       <section><h3>Evidence / 環境</h3><p>{release.evidenceCount} Evidence records · Required: {release.requiredProfiles.join(', ')}</p>{detailError ? <p className="fail" role="alert">Evidence詳細を読み込めません。概要Indexをlast-known-goodとして表示しています。</p> : evidence === null ? <p role="status">Evidence詳細を読み込み中…</p> : <ul className="evidence-list">{evidence.slice(0,8).map((item) => <li key={item.id}><span className={`verdict verdict-${item.verdict}`}>{item.verdict}</span><code>{item.id}</code><span>{item.kind} / {item.environment.profile}</span></li>)}</ul>}</section>

@@ -10,7 +10,7 @@ export const SURFACES = ['orientation-scope','foundations-mechanics','architectu
 
 export async function loadTrust(fixtureRoot) {
   const trust = JSON.parse(await readFile(path.join(fixtureRoot, 'trust.json'), 'utf8'));
-  return new Map(trust.keys.map((key) => [key.keyId, createPublicKey(key.publicKeyPem)]));
+  return new Map(trust.keys.map((key) => [key.keyId, { publicKey: createPublicKey(key.publicKeyPem), usage: key.usage ?? 'unclassified' }]));
 }
 
 export function verifyEnvelope(envelope, trustedKeys) {
@@ -18,10 +18,11 @@ export function verifyEnvelope(envelope, trustedKeys) {
   if (envelope.schemaVersion !== 1) errors.push('未対応のEnvelope Schemaです');
   const digest = sha256(envelope.payload);
   if (digest !== envelope.release?.digest) errors.push('Release digestが一致しません');
-  const key = trustedKeys.get(envelope.signature?.keyId);
-  if (!key) errors.push('署名鍵がTrust Storeにありません');
-  else if (!verifyDigest(envelope.release.digest, envelope.signature.value, key)) errors.push('Ed25519署名が不正です');
-  return { ok: errors.length === 0, digest, errors };
+  const trust = trustedKeys.get(envelope.signature?.keyId);
+  const publicKey = trust?.publicKey ?? trust;
+  if (!publicKey) errors.push('署名鍵がTrust Storeにありません');
+  else if (!verifyDigest(envelope.release.digest, envelope.signature.value, publicKey)) errors.push('Ed25519署名が不正です');
+  return { ok: errors.length === 0, digest, errors, trust: { keyId: envelope.signature?.keyId ?? null, usage: trust?.usage ?? 'unclassified' } };
 }
 
 export async function schemaValidators(contractRoot) {
@@ -36,7 +37,38 @@ export async function schemaValidators(contractRoot) {
   return validators;
 }
 
-export function validateRelease(payload, validators) {
+export function validateCompletionCertificate(payload, validators, release = {}) {
+  const certificate = payload.certificate;
+  if (!certificate) return { present: false, ok: payload.atlas?.status !== 'complete', errors: payload.atlas?.status === 'complete' ? ['complete ReleaseにCompletion Certificateがありません'] : [] };
+  const errors = [];
+  if (!validators['completion-certificate'](certificate)) errors.push(`Completion Certificate: ${validators['completion-certificate'].errors?.map((error) => error.instancePath + ' ' + error.message).join('; ')}`);
+  const { signature, ...certificatePayload } = certificate;
+  if (sha256(certificatePayload) !== signature?.digest) errors.push('Completion Certificate payload digestが一致しません');
+  const expected = {
+    atlas_id: payload.atlas?.id,
+    atlas_release: payload.skillPackage?.atlas_release,
+    coverage_epoch: payload.atlas?.coverage?.epoch,
+    authority_lock_digest: payload.coverage?.authority_lock_digest,
+    core_policy_version: payload.atlas?.completion?.policy_version,
+  };
+  for (const [key, value] of Object.entries(expected)) if (certificate[key] !== value) errors.push(`Completion Certificate ${key}がManifestと一致しません`);
+  if (release.atlasId && release.atlasId !== payload.atlas?.id) errors.push('Release Atlas IDがManifestと一致しません');
+  if (release.version && release.version !== payload.skillPackage?.atlas_release) errors.push('Release VersionがSkill Packageと一致しません');
+  const evidence = new Map((payload.evidence ?? []).map((item) => [item.id, item]));
+  const profiles = new Map((certificate.required_profiles ?? []).map((item) => [item.profile, item]));
+  for (const required of payload.atlas?.completion?.required_profiles ?? []) {
+    const profile = profiles.get(required);
+    if (!profile || profile.result !== 'pass') errors.push(`Completion Certificateの必須Profile ${required}がpassではありません`);
+    for (const evidenceId of profile?.evidence_ids ?? []) {
+      const record = evidence.get(evidenceId);
+      if (!record || record.verdict !== 'pass' || record.environment?.profile !== required) errors.push(`Completion CertificateのEvidence ${evidenceId}を${required}のpassとして検証できません`);
+    }
+  }
+  if ((certificate.skill_eval?.pass_rate ?? 0) < (payload.skillPackage?.evals?.minimum_pass_rate ?? 1)) errors.push('Completion CertificateのSkill Evalが必要成功率未満です');
+  return { present: true, ok: errors.length === 0, errors, digest: signature?.digest ?? null };
+}
+
+export function validateRelease(payload, validators, release = {}) {
   const errors = [];
   const docs = [['atlas',payload.atlas],['mastery',payload.mastery],['coverage',payload.coverage],['sources-lock',payload.sources],['skill-package',payload.skillPackage]];
   for (const [name, doc] of docs) if (!validators[name](doc)) errors.push(`${name}: ${validators[name].errors?.map((error) => error.instancePath + ' ' + error.message).join('; ')}`);
@@ -50,5 +82,13 @@ export function validateRelease(payload, validators) {
   for (const item of [...(payload.mastery?.outcomes ?? []), ...(payload.mastery?.surfaces ?? [])]) for (const set of item.target_sets ?? []) if (!sets.has(set)) errors.push(`未定義Target Set参照: ${set}`);
   if (!OUTCOMES.every((idValue) => payload.mastery?.outcomes?.some((item) => item.id === idValue))) errors.push('8 Outcomeが揃っていません');
   if (!SURFACES.every((idValue) => payload.mastery?.surfaces?.some((item) => item.id === idValue))) errors.push('14 Surfaceが揃っていません');
+  const targets = payload.coverage?.targets ?? [];
+  if (payload.atlas?.status === 'complete') {
+    const evidenceIds = new Set((payload.evidence ?? []).map((item) => item.id));
+    for (const target of targets.filter((item) => item.state === 'covered')) if (!(target.evidence_ids ?? []).length || !target.evidence_ids.every((idValue) => evidenceIds.has(idValue))) errors.push(`complete Releaseのcovered Target ${target.id}のEvidence参照を検証できません`);
+    const openRequired = targets.filter((target) => target.requirement === 'required' && !['covered','excluded','infeasible'].includes(target.state));
+    if (openRequired.length) errors.push(`complete Releaseに未Closureの必須Targetが${openRequired.length}件あります`);
+  }
+  errors.push(...validateCompletionCertificate(payload, validators, release).errors);
   return { ok: errors.length === 0, errors };
 }

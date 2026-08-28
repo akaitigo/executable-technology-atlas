@@ -8,3 +8,4 @@ test('日本語文書とskip linkを提供する',()=>{assert.match(layout,/html
 test('検索結果更新を支援技術へ通知する',()=>{assert.match(page,/role="status" aria-live="polite"/);});
 test('Facetをlabelとselectで関連付ける',()=>{assert.match(page,/function Facet/);assert.match(page,/<label className=/);assert.match(page,/<select value=/);});
 test('Reduced Motionと可視Focusを提供する',()=>{assert.match(css,/prefers-reduced-motion/);assert.match(css,/:focus-visible/);});
+test('Portal自身のCompletion Certificateへの日本語導線を提供する',()=>{assert.match(page,/href="#portal-certificate"/);assert.match(page,/id="portal-certificate"/);assert.match(page,/Subjectの完成数と、Portal自身の完成を混ぜない/);});
