@@ -10,6 +10,7 @@
 - 新規Subjectを自動昇格しない。
 - Certificate履歴はRelease Digestごとの固定詳細として保持し、current Releaseとは別に索引する。
 - 非後退BaselineよりSubject、Target、Evidence、Failureの粒度や可視性を下げない。`open required`と`unclassified`は未完了として明示する。
+- FE Depth Referenceは18軸中1 satisfied / 17 partialの`incomplete`として扱う。299/299等のTest成功は該当Proofに限定し、軸のGap、bounded、subject-definitiveの判定を代替しない。
 
 ## Core確定後の受入条件
 

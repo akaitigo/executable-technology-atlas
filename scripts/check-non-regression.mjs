@@ -8,7 +8,7 @@ const root = process.cwd();
 const output = path.resolve(process.argv[2] ?? path.join(root, 'evidence', 'non-regression-report.json'));
 const report = await evaluateNonRegression(root);
 const harnessPath = path.join(root, 'evidence', 'non-regression-harness.json');
-const componentPaths = ['scripts/check-non-regression.mjs','scripts/lib/non-regression.mjs','scripts/lib/neutral-language.mjs','contracts/non-regression-baseline.json','contracts/non-regression-mappings.json'];
+const componentPaths = ['scripts/check-non-regression.mjs','scripts/lib/non-regression.mjs','scripts/lib/neutral-language.mjs','scripts/lib/depth-reference.mjs','contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json'];
 const harness = { schemaVersion: 1, generatedAt: report.generatedAt, components: await Promise.all(componentPaths.map(async (file) => ({ path:file, digest:sha256(await readFile(path.join(root,file))) }))) };
 await mkdir(path.dirname(output), { recursive: true });
 const harnessTemporary = `${harnessPath}.tmp`;

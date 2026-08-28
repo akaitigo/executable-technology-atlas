@@ -4,6 +4,7 @@ import { sha256 } from './crypto.mjs';
 import { scanNeutralLanguage } from './neutral-language.mjs';
 
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
+export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
 
 const hasFields = (value, fields = []) => fields.every((field) => value?.[field] !== null && value?.[field] !== undefined);
@@ -12,13 +13,16 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
     readJson('app/data/index.generated.json'),
     readJson('fixtures/failure-scenarios.json'),
     readFile(path.join(root, 'app/page.tsx'), 'utf8'),
+    readFile(path.join(root, 'contracts/depth-reference-lock.json')),
+    readJson('contracts/depth-reference-lock.json'),
+    readJson('fixtures/registry.json'),
   ]);
   const violations = [];
   const checks = [];
@@ -27,6 +31,7 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('baseline-immutable', sha256(baselineBytes) === NON_REGRESSION_BASELINE_DIGEST, `expected ${NON_REGRESSION_BASELINE_DIGEST}`);
   check('baseline-schema', baseline.schemaVersion === 1 && baseline.policy?.aggregateReplacement === 'reject', 'schemaVersion=1 / aggregateReplacement=reject');
   check('mapping-schema', mappings.schemaVersion === 1 && ['subjectMappings','targetMappings','evidenceMappings'].every((key) => Array.isArray(mappings[key])), 'mapping arrays required');
+  check('depth-reference-lock-immutable', sha256(depthLockBytes) === DEPTH_REFERENCE_LOCK_DIGEST, `expected ${DEPTH_REFERENCE_LOCK_DIGEST}`);
 
   const subjectMappings = mappingIndex(mappings.subjectMappings);
   const targetMappings = mappingIndex(mappings.targetMappings);
@@ -135,6 +140,27 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   if (!page.includes('detail.evidence.map(')) fail('evidence-ui-aggregated', 'Evidence IDs must remain individually visible');
   if (!page.includes('gaps.map(')) fail('target-gap-ui-aggregated', 'Target gaps must remain individually visible');
   if (!page.includes('atlasIndex.failureVisibility.scenarios.map(')) fail('failure-ui-aggregated', 'Failure scenarios must remain individually visible');
+  for (const token of ['reference.axes.map(','axis.checks.map(','axis.gaps.map(','Test成功は各軸のProof','bounded={String(reference.completion.bounded)}','definitive={String(reference.completion.definitive)}']) if (!page.includes(token)) fail('depth-reference-ui-reduced', token);
+
+  const depthRegistry = (registry.depthReferences ?? []).find((item) => item.subjectId === depthLock.subjectId);
+  const depthSubject = currentSubjects.get(depthLock.subjectId);
+  const depthSummary = depthSubject?.depthReference;
+  let depthFixture = null;
+  let depthDetail = null;
+  try { depthFixture = await readJson(depthRegistry?.file ? path.join('fixtures',depthRegistry.file) : '(missing)'); }
+  catch { fail('depth-reference-fixture-hidden', depthLock.subjectId); }
+  try { depthDetail = await readJson(path.join('public',depthSubject?.release?.detailUrl ?? '(missing)')); }
+  catch { fail('depth-reference-detail-hidden', depthLock.subjectId); }
+  if (depthRegistry?.commit !== depthLock.sourceCommit || depthRegistry?.sourceDigest !== depthLock.sourceDigest) fail('depth-reference-source-rewritten', depthLock.subjectId);
+  if (depthFixture?.source?.digest !== depthLock.sourceDigest || depthFixture?.release?.commit !== depthLock.sourceCommit) fail('depth-reference-source-binding-reduced', depthLock.subjectId);
+  if (depthSummary?.status !== 'incomplete' || depthSummary?.completion?.bounded !== false || depthSummary?.completion?.definitive !== false) fail('depth-reference-status-promoted', depthLock.subjectId);
+  if (depthSummary?.summary?.axes !== 18 || depthSummary?.summary?.satisfied !== 1 || depthSummary?.summary?.partial !== 17) fail('depth-reference-summary-rewritten', depthLock.subjectId);
+  if (JSON.stringify(depthDetail?.depthReference?.axes) !== JSON.stringify(depthFixture?.payload?.axes)) fail('depth-reference-axis-information-reduced', depthLock.subjectId);
+  for (const axis of depthDetail?.depthReference?.axes ?? []) {
+    if (!axis.denominator) fail('depth-reference-denominator-hidden', axis.id);
+    if (!axis.checks?.length) fail('depth-reference-proof-hidden', axis.id);
+    if (axis.status !== 'satisfied' && !axis.gaps?.length) fail('depth-reference-gap-hidden', axis.id);
+  }
 
   const releases = index.subjects.flatMap((subject) => subject.release ? [subject.release] : []);
   for (const release of index.subjects.flatMap((subject) => subject.releaseHistory ?? [])) {
@@ -152,6 +178,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     unclassified: index.subjects.filter((subject) => (subject.completion?.classification ?? (subject.release ? subject.release.completion?.classification : 'unclassified')) === 'unclassified').length,
     boundedHistorical: index.subjects.flatMap((subject) => subject.releaseHistory ?? []).filter((release) => release.completion?.classification === 'bounded-historical').length,
     subjectDefinitive: releases.filter((release) => release.completion?.definitive).length,
+    depthReferenceAxes: depthDetail?.depthReference?.axes?.length ?? 0,
+    depthReferenceSatisfied: depthDetail?.depthReference?.summary?.satisfied ?? 0,
+    depthReferencePartial: depthDetail?.depthReference?.summary?.partial ?? 0,
     mappingsApplied: mappedCount,
     violations: violations.length,
   };

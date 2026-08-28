@@ -3,6 +3,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { classifySubjectCompletion, loadTrust, schemaValidators, verifyEnvelope, validateCompletionCertificate, validateRelease } from './lib/validate.mjs';
 import { sha256 } from './lib/crypto.mjs';
+import { projectDepthReference, validateDepthReference } from './lib/depth-reference.mjs';
 import { neutralizeDisplayText } from './lib/neutral-language.mjs';
 
 const root = process.cwd();
@@ -20,6 +21,19 @@ if (!validators.catalog(catalog)) throw new Error(`Catalog Schema不適合: ${JS
 
 const registry = JSON.parse(await readFile(path.join(fixtureRoot, 'registry.json'), 'utf8'));
 const failureScenarios = JSON.parse(await readFile(path.join(fixtureRoot, 'failure-scenarios.json'), 'utf8'));
+const depthReferenceLock = JSON.parse(await readFile(path.join(root, 'contracts', 'depth-reference-lock.json'), 'utf8'));
+const depthReferences = new Map();
+const depthImports = [];
+for (const item of registry.depthReferences ?? []) {
+  const envelope = JSON.parse(await readFile(path.join(fixtureRoot, item.file), 'utf8'));
+  const integrity = verifyEnvelope(envelope, trustedKeys);
+  const contract = validateDepthReference(envelope, depthReferenceLock, integrity);
+  const errors = [...contract.errors];
+  if (item.subjectId !== envelope.release?.subjectId || item.atlasId !== envelope.release?.atlasId || item.repository !== envelope.release?.repository || item.commit !== envelope.release?.commit || item.digest !== envelope.release?.digest || item.sourceDigest !== envelope.source?.digest) errors.push('Depth Reference registry bindingがEnvelopeと一致しません');
+  const verification = errors.length === 0 ? 'verified' : 'quarantined';
+  depthImports.push({ subjectId:item.subjectId, commit:item.commit, digest:item.digest, verification, errors, axes:contract.axes, counts:contract.counts });
+  if (verification === 'verified') depthReferences.set(item.subjectId, projectDepthReference(envelope, integrity));
+}
 const releasesByRepository = new Map();
 const releaseDetailsByRepository = new Map();
 const imports = [];
@@ -80,6 +94,7 @@ for (const item of registry.releases) {
 
 const subjects = [];
 for (const domain of catalog.domains) for (const subject of domain.subjects) {
+  const depthReference = depthReferences.get(subject.id) ?? null;
   const releaseHistory = (releasesByRepository.get(subject.repository) ?? []).map((item) => ({ ...item, detailUrl: `/data/releases/${subject.id}/${item.digest.replace(/^sha256:/, '')}.json` }));
   const release = releaseHistory.at(-1) ?? null;
   subjects.push({
@@ -89,7 +104,8 @@ for (const domain of catalog.domains) for (const subject of domain.subjects) {
     releaseHistory,
     currentReleaseDigest: release?.digest ?? null,
     completion: release?.completion ?? { classification: 'unclassified', definitive: false, reason: 'fixed-release-absent', certificateSchemaVersion: null, corePolicyVersion: null, coverageEpoch: null, trustUsage: 'unclassified' },
-    searchText: [subject.id,subject.title,subject.repository,subject.scope,subject.excludes.join(' '),domain.title,release?.atlasId,release?.skill?.router?.id,release?.outcomes?.join(' '),release?.surfaces?.map((item) => item.id).join(' ')].filter(Boolean).join(' ').toLocaleLowerCase('ja'),
+    depthReference: depthReference ? { ...depthReference, axes:undefined } : null,
+    searchText: [subject.id,subject.title,subject.repository,subject.scope,subject.excludes.join(' '),domain.title,release?.atlasId,release?.skill?.router?.id,release?.outcomes?.join(' '),release?.surfaces?.map((item) => item.id).join(' '),depthReference?.axes.map((axis)=>`${axis.id} ${axis.title} ${axis.denominator}`).join(' ')].filter(Boolean).join(' ').toLocaleLowerCase('ja'),
   });
 }
 
@@ -100,6 +116,7 @@ const index = {
   sourcePolicy: 'fixed-release-only',
   completionPolicy: { definitiveGate: 'pending-core-v2', boundedCertificateSchemaVersions: [1], autoPromotion: false, requiredForDefinitive: ['public-trust-key','core-v2-definitive-certificate'] },
   completionSummary: { openRequired: subjects.reduce((sum, subject) => sum + (subject.release?.coverage.openRequired ?? 0), 0), unclassified: subjects.filter((subject) => subject.completion.classification === 'unclassified').length, boundedHistorical: subjects.flatMap((subject) => subject.releaseHistory).filter((release) => release.completion.classification === 'bounded-historical').length, subjectDefinitive: subjects.filter((subject) => subject.completion.definitive).length },
+  depthReferenceSummary: { subjects:depthReferences.size, axes:[...depthReferences.values()].reduce((sum,item)=>sum+item.summary.axes,0), satisfied:[...depthReferences.values()].reduce((sum,item)=>sum+item.summary.satisfied,0), partial:[...depthReferences.values()].reduce((sum,item)=>sum+item.summary.partial,0), definitive:0 },
   failureVisibility: { fixtureOnly: failureScenarios.fixtureOnly, scenarios: failureScenarios.scenarios },
   fallback: { strategy: 'last-known-good', message: '新規取込に失敗した場合は最後に検証済みのIndexを維持します。' },
   subjects,
@@ -109,8 +126,8 @@ index.digest = sha256(index);
 await mkdir(path.dirname(reportPath), { recursive: true });
 const outputTemporary = `${output}.tmp`;
 const reportTemporary = `${reportPath}.tmp`;
-const verdict = subjects.length === 97 && imports.every((item) => item.verification === 'verified') ? 'pass' : 'fail';
-await writeFile(reportTemporary, `${JSON.stringify({ schemaVersion: 1, catalog: catalogVerification, imports, index: { path: path.relative(root, output), digest: index.digest, subjects: subjects.length }, verdict }, null, 2)}\n`);
+const verdict = subjects.length === 97 && imports.every((item) => item.verification === 'verified') && depthImports.length === 1 && depthImports.every((item) => item.verification === 'verified') ? 'pass' : 'fail';
+await writeFile(reportTemporary, `${JSON.stringify({ schemaVersion: 1, catalog: catalogVerification, imports, depthImports, index: { path: path.relative(root, output), digest: index.digest, subjects: subjects.length }, verdict }, null, 2)}\n`);
 await rename(reportTemporary, reportPath);
 if (verdict === 'fail') {
   console.error(`取込失敗: 検証済みIndexと詳細は更新しません / quarantined=${index.verification.quarantined}`);
@@ -124,7 +141,8 @@ if (verdict === 'fail') {
     await mkdir(subjectDetailRoot, { recursive: true });
     for (const detail of details) {
       const contentId = detail.digest.replace(/^sha256:/, '');
-      const sourceDetail = { ...detail, detailUrl: `/data/releases/${subject.id}/${contentId}.json` };
+      const subjectDepthReference = depthReferences.get(subject.id);
+      const sourceDetail = { ...detail, ...(subjectDepthReference ? { depthReference:subjectDepthReference } : {}), detailUrl: `/data/releases/${subject.id}/${contentId}.json` };
       const projectedDetail = neutralizeDisplayText(sourceDetail);
       const transformations = JSON.stringify(projectedDetail) === JSON.stringify(sourceDetail) ? [] : ['definitive-marketing-to-neutral-fact'];
       await writeFile(path.join(subjectDetailRoot, `${contentId}.json`), `${JSON.stringify({ ...projectedDetail, displayProjection: { sourceReleaseDigest:detail.digest, transformations } }, null, 2)}\n`);
