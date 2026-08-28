@@ -7,5 +7,6 @@
 - Coverage Target: `missing | planned | partial | covered | excluded | infeasible | expired`
 - Evidence verdict: `pass | fail | inconclusive`
 - Portal verification: `verified | unverified | invalid | quarantined`
+- Completion class: `not-definitive | bounded-historical | subject-definitive`
 
-`superseded`は当時のCertificateを失効させない。Certificate失効は署名付きNoticeがIndexに存在するときだけ別軸で扱う。`excluded`と`infeasible`には理由と再評価日を添える。`expired`を現行passとして推薦しない。
+v1 CertificateはTrust分類にかかわらず`bounded-historical`であり、`subject-definitive`ではない。`superseded`は当時のCertificate履歴を削除しない。Certificate失効は署名付きNoticeがIndexに存在するときだけ別軸で扱う。`excluded`と`infeasible`には理由と再評価日を添える。`expired`を現行passとして推薦しない。

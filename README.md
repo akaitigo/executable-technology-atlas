@@ -25,17 +25,20 @@ node scripts/atlas-portal.mjs import
 node scripts/atlas-portal.mjs verify
 ```
 
-実在する署名済み公開Releaseは現時点で0件です。7件のfixture署名付き候補は完成証明ではなく、取込・検索・失敗Fallbackを再現するための固定入力です。
+組込Indexで検証できる署名済み公開Releaseは現時点で0件です。7件のfixture署名付き候補は完成証明ではなく、取込・検索・失敗Fallbackを再現するための固定入力です。既知のSubject v1 Certificateは、公開固定Releaseとして取込まれるまで件数へ加えず、取込後も固定Epochの`bounded-historical`履歴として保持します。
 
 ## 完成と信頼の境界
 
-- Subjectは固定Releaseの署名、Digest、Core v1横断契約、Completion Certificateを検証し、公開用Trust Keyに固定された`complete`だけを公開完成と数えます。
+- Core v1 Completion Certificateは固定Epochの形式的Closureを証明する`bounded-historical`です。Manifestが`complete`でもSubject Definitive完成とは表示しません。
+- Subject Definitive完成への自動昇格はありません。公開Trust Keyと、確定したCore v2 Definitive Certificateを検証できるまで必ず未証明として扱います。
 - `planned`、`active`、`incomplete`、Releaseなし、隔離を同じ完成状態に丸めません。Coverageの`excluded`、`infeasible`、`expired`も既定で表示します。
-- Portal Repositoryは[GitHub PUBLICのmain](https://github.com/akaitigo/executable-technology-atlas)を正本とします。Portal自身の`evidence/completion-certificate.json`とSubjectの公開完成数は別軸です。
+- Portal Repositoryは[GitHub PUBLICのmain](https://github.com/akaitigo/executable-technology-atlas)を正本とします。Portal自身のv1 `evidence/completion-certificate.json`もbounded証明であり、Subject Definitive完成数とは別軸です。
+- Release詳細はDigest固定で保存し、同一SubjectのCertificate履歴を上書きしません。隔離が1件でもあれば生成Indexと詳細は更新せず、last-known-goodを維持します。
+- Core v2 Schema/Migrationは未確定です。Gap、除外・実行困難、実Runtime Profile、Authority-derived inventory closureのv2判定は推測せず、[移行境界](docs/DEFINITIVE_GATE_V2.md)に従って確定後に実装します。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration
 
 `.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Core v1は`cf9e6e2d…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
 
-Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定IndexとRouter Evalの再現一致、24件以上のTest、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。
+Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定IndexとRouter Evalの再現一致、全Test、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。
