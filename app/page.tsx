@@ -48,7 +48,6 @@ export default function Home() {
     return result.toSorted((a, b) => sort === 'title' ? a.title.localeCompare(b.title, 'ja') : sort === 'coverage' ? (b.release?.coverage.percent ?? -1) - (a.release?.coverage.percent ?? -1) : `${a.domain.title}${a.title}`.localeCompare(`${b.domain.title}${b.title}`, 'ja'));
   }, [query, domain, audience, outcome, surface, status, version, environment, skill, sort]);
 
-  useEffect(() => setPage(1), [query, domain, audience, outcome, surface, status, version, environment, skill, sort]);
   useEffect(() => {
     const listener = (event: KeyboardEvent) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); searchRef.current?.focus(); } };
     window.addEventListener('keydown', listener); return () => window.removeEventListener('keydown', listener);
@@ -59,7 +58,8 @@ export default function Home() {
 
   const reset = () => { setQuery(''); setDomain(''); setAudience(''); setOutcome(''); setSurface(''); setStatus(''); setVersion(''); setEnvironment(''); setSkill(''); };
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const effectivePage = Math.min(page, pageCount);
+  const visible = filtered.slice((effectivePage - 1) * PAGE_SIZE, effectivePage * PAGE_SIZE);
   const complete = atlasIndex.subjects.filter((item) => item.release?.status === 'complete' && item.release?.certificate).length;
   const incomplete = atlasIndex.subjects.filter((item) => !item.release || item.release.status !== 'complete' || !item.release.certificate).length;
 
@@ -95,10 +95,10 @@ export default function Home() {
           <div className="result-tools"><p role="status" aria-live="polite"><strong>{filtered.length}</strong> / 97 subjects <span>— 未完成・除外・実行困難・失効を既定で隠しません</span></p><div><button className="text-button" type="button" onClick={reset}>条件をすべて解除</button><label>並び順<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="domain">分野</option><option value="title">名称</option><option value="coverage">Coverage</option></select></label></div></div>
 
           <div className="atlas-grid" id="atlas-results" tabIndex={-1}>
-            {visible.map((item, index) => <AtlasCard item={item} key={item.id} index={(page - 1) * PAGE_SIZE + index + 1} onOpen={setSelected} />)}
+            {visible.map((item, index) => <AtlasCard item={item} key={item.id} index={(effectivePage - 1) * PAGE_SIZE + index + 1} onOpen={setSelected} />)}
           </div>
           {visible.length === 0 && <div className="empty-state"><strong>該当するSubjectはありません</strong><p>Coverage Gapを0件の成功として扱いません。条件を解除するか、Catalog正本への追加提案を検討してください。</p><button type="button" onClick={reset}>すべて表示</button></div>}
-          <nav className="pagination" aria-label="検索結果ページ"><button type="button" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>← 前へ</button><span>{page} / {pageCount}</span><button type="button" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>次へ →</button></nav>
+          <nav className="pagination" aria-label="検索結果ページ"><button type="button" disabled={effectivePage === 1} onClick={() => setPage(effectivePage - 1)}>← 前へ</button><span>{effectivePage} / {pageCount}</span><button type="button" disabled={effectivePage === pageCount} onClick={() => setPage(effectivePage + 1)}>次へ →</button></nav>
         </section>
 
         <section className="verification-section" id="verification" aria-labelledby="verification-title">

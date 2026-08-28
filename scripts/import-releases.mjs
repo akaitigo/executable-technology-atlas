@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { loadTrust, schemaValidators, verifyEnvelope, validateRelease } from './lib/validate.mjs';
 import { sha256 } from './lib/crypto.mjs';
