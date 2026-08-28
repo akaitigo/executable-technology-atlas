@@ -1,12 +1,19 @@
 #!/usr/bin/env node
-import { mkdir, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { evaluateNonRegression } from './lib/non-regression.mjs';
+import { sha256 } from './lib/crypto.mjs';
 
 const root = process.cwd();
 const output = path.resolve(process.argv[2] ?? path.join(root, 'evidence', 'non-regression-report.json'));
 const report = await evaluateNonRegression(root);
+const harnessPath = path.join(root, 'evidence', 'non-regression-harness.json');
+const componentPaths = ['scripts/check-non-regression.mjs','scripts/lib/non-regression.mjs','contracts/non-regression-baseline.json','contracts/non-regression-mappings.json'];
+const harness = { schemaVersion: 1, generatedAt: report.generatedAt, components: await Promise.all(componentPaths.map(async (file) => ({ path:file, digest:sha256(await readFile(path.join(root,file))) }))) };
 await mkdir(path.dirname(output), { recursive: true });
+const harnessTemporary = `${harnessPath}.tmp`;
+await writeFile(harnessTemporary, `${JSON.stringify(harness, null, 2)}\n`);
+await rename(harnessTemporary, harnessPath);
 const temporary = `${output}.tmp`;
 await writeFile(temporary, `${JSON.stringify(report, null, 2)}\n`);
 await rename(temporary, output);
