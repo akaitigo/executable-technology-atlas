@@ -18,13 +18,14 @@ test('凍結Baselineは97 Subject・246 Target・45 Evidenceを個別に保護�
 test('削除・格上げ・不可視化・粒度低下を拒否する', async () => {
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'atlas-non-regression-'));
   try {
-    for (const directory of ['contracts','contracts/reference','app/data','fixtures/depth-references','fixtures/fixed-commit-audits','public/data/releases','public/data/authority-reviews']) await mkdir(path.join(temporary,directory), { recursive:true });
-    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','contracts/definitive-v2-lock.json','contracts/fixed-commit-audit-lock.json','contracts/fixed-commit-audit-postgresql-lock.json','contracts/reference/MIGRATION_DEFINITIVE_V2.md','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
+    for (const directory of ['contracts','contracts/reference','app/data','fixtures/depth-references','fixtures/fixed-commit-audits','public/data/releases','public/data/authority-reviews','public/data/fixed-commit-audits']) await mkdir(path.join(temporary,directory), { recursive:true });
+    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','contracts/definitive-v2-lock.json','contracts/fixed-commit-audit-lock.json','contracts/fixed-commit-audit-postgresql-lock.json','contracts/fixed-commit-audit-flutter-lock.json','contracts/reference/MIGRATION_DEFINITIVE_V2.md','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
       await mkdir(path.dirname(path.join(temporary,file)), { recursive:true });
       await cp(path.join(root,file), path.join(temporary,file));
     }
     await cp(path.join(root,'public/data/releases'), path.join(temporary,'public/data/releases'), { recursive:true });
     await cp(path.join(root,'public/data/authority-reviews'), path.join(temporary,'public/data/authority-reviews'), { recursive:true });
+    await cp(path.join(root,'public/data/fixed-commit-audits'), path.join(temporary,'public/data/fixed-commit-audits'), { recursive:true });
     await cp(path.join(root,'fixtures/depth-references'), path.join(temporary,'fixtures/depth-references'), { recursive:true });
     await cp(path.join(root,'fixtures/fixed-commit-audits'), path.join(temporary,'fixtures/fixed-commit-audits'), { recursive:true });
     const indexPath = path.join(temporary,'app/data/index.generated.json');
@@ -58,8 +59,8 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const definitivePromoted=structuredClone(originalIndex);definitivePromoted.subjects[0].definitiveV2={...definitivePromoted.subjects[0].definitiveV2,availability:'missing',status:'subject-definitive',autoPromotion:true,coreGate:{...definitivePromoted.subjects[0].definitiveV2.coreGate,result:'pass'}};await writeJson(indexPath,definitivePromoted);await expectViolation('definitive-v2-write-boundary-weakened');await writeJson(indexPath,originalIndex);
     const definitiveAggregated=structuredClone(originalIndex);definitiveAggregated.definitiveV2Summary.gapCounts=[];definitiveAggregated.definitiveV2Summary.gapInstances=0;await writeJson(indexPath,definitiveAggregated);await expectViolation('definitive-v2-summary-information-reduced');await writeJson(indexPath,originalIndex);
     const definitiveGapHidden=structuredClone(originalIndex);definitiveGapHidden.subjects[0].definitiveV2.gapIds.pop();await writeJson(indexPath,definitiveGapHidden);await expectViolation('definitive-v2-gap-information-reduced');await writeJson(indexPath,originalIndex);
-    const fixedAuditPromoted=structuredClone(originalIndex);const audited=fixedAuditPromoted.subjects.find((subject)=>subject.fixedCommitAudit);audited.fixedCommitAudit.autoPromotion=true;audited.fixedCommitAudit.releaseBoundary.signedManifest=true;await writeJson(indexPath,fixedAuditPromoted);await expectViolation('fixed-commit-audit-promoted');await writeJson(indexPath,originalIndex);
-    const fixedAuditGapHidden=structuredClone(originalIndex);fixedAuditGapHidden.subjects.find((subject)=>subject.fixedCommitAudit).fixedCommitAudit.gaps.pop();await writeJson(indexPath,fixedAuditGapHidden);await expectViolation('fixed-commit-audit-gaps-reduced');await writeJson(indexPath,originalIndex);
+    const fixedAuditPromoted=structuredClone(originalIndex);const audited=fixedAuditPromoted.subjects.find((subject)=>subject.fixedCommitAudit);audited.fixedCommitAudit.autoPromotion=true;await writeJson(indexPath,fixedAuditPromoted);await expectViolation('fixed-commit-audit-promoted');await writeJson(indexPath,originalIndex);
+    const fixedAuditGapHidden=structuredClone(originalIndex);fixedAuditGapHidden.subjects.find((subject)=>subject.fixedCommitAudit).fixedCommitAudit.gapCount-=1;await writeJson(indexPath,fixedAuditGapHidden);await expectViolation('fixed-commit-audit-gaps-reduced');await writeJson(indexPath,originalIndex);
     assert.equal((await evaluateNonRegression(temporary,{scanLanguage:false})).verdict,'pass');
   } finally {
     await rm(temporary,{recursive:true,force:true});

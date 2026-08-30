@@ -48,6 +48,7 @@ node scripts/atlas-portal.mjs verify
 - Portal自身は`evidence/dependency-graph.json`で4入力群と全派生Evidenceを固定し、`npm run dependency:reproduce`で実再実行を記録します。`npm run dependency:negative`はSource Digestとbindingだけを更新した隔離コピーがCore Gateで失敗することを検証します。このPortal bounded Closureは97 Subjectの`subject-definitive`を1件も補いません。
 - `argocd`は`argocd-reference-atlas`のclean commit `37db7c88…`をGit objectからread-only監査した観測Envelopeを表示します。Core通常AuditとEvidence Dependency Gateはpassですが、署名済みRelease Manifest、公開Trust、v2 Certificate、Depth parityがなく、open required 22件、Authority未分類63,889件、Scenario Proof Schema driftが残るため`fixed-commit-incomplete / Release未成立`です。この入力も97 SubjectのDefinitive入力欠落を補いません。
 - `postgresql`は`postgresql-reference-atlas`のclean commit `94353f51…`を同じ境界で監査します。Core通常Audit、Evidence Dependency、Non-regression、Scenario Trace Gateはpassしていますが、署名済みRelease Manifest、公開Trust、v2 Certificateがなく、open required 27件、Authority未分類5,512件、Human decision 0件、Scenario runtime closure gap 278件が残り、Definitive Gateはrequired Targetの`partial`でfailします。
+- `flutter`は`flutter-reference-atlas`のclean commit `45980f04…`を同じ境界で監査します。Core通常Auditはpassしますが、open required 2件、Evidence Dependency必須output欠落1件、Authority未分類74件・Human decision 0件・stale hold 3件、Scenario runtime gap 531件が残ります。Authority/ScenarioのCore v2 Schema drift、Definitive契約3 artifact、Non-regression契約、Evidence durability outputも欠けるため、各Gateのfailをそのまま表示しReleaseやDefinitiveへ昇格しません。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration

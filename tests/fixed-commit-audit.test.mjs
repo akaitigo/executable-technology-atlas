@@ -12,6 +12,8 @@ const envelope=JSON.parse(await readFile(path.join(root,lock.fixturePath),'utf8'
 const trusted=await loadTrust(path.join(root,'fixtures'));
 const postgresqlLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-postgresql-lock.json'),'utf8'));
 const postgresqlEnvelope=JSON.parse(await readFile(path.join(root,postgresqlLock.fixturePath),'utf8'));
+const flutterLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-flutter-lock.json'),'utf8'));
+const flutterEnvelope=JSON.parse(await readFile(path.join(root,flutterLock.fixturePath),'utf8'));
 
 test('実Subject固定commit監査EnvelopeをSchema・Digest・署名で受理する',()=>{
   const result=validateFixedCommitAudit(envelope,schema,trusted);
@@ -53,6 +55,18 @@ test('PostgreSQL固定commitのTarget・Authority・Scenario Gapを保持する'
   assert.equal(audit.core.definitive.result,'fail');
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),postgresqlLock.requiredGapIds);
   assert.equal(audit.gaps.find((gap)=>gap.id==='scenario-runtime-gaps').count,278);
+});
+
+test('Flutter固定commitのCore v2 Schema driftと必須output欠落を保持する',()=>{
+  const validated=validateFixedCommitAudit(flutterEnvelope,schema,trusted);
+  assert.equal(validated.ok,true,validated.errors.join('; '));
+  const audit=projectFixedCommitAudit(flutterEnvelope,validated);
+  assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:flutterLock.sourceCommit,tree:flutterLock.sourceTree});
+  assert.deepEqual({openRequired:audit.manifest.openRequired,inputs:audit.core.evidenceDependency.summary.inputs,outputs:audit.core.evidenceDependency.summary.outputs,missing:audit.core.evidenceDependency.summary.missingRequiredOutputs},{openRequired:2,inputs:19,outputs:742,missing:1});
+  assert.deepEqual({anchors:audit.core.authorityBody.summary.candidateAnchors,unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{anchors:74,unclassified:74,pending:74,decisions:0});
+  for(const gate of ['evidenceDependency','authorityExtraction','authorityBody','authorityReview','definitive','scenarioTrace','nonRegression','evidenceDurability'])assert.equal(audit.core[gate].result,'fail',gate);
+  assert.equal(audit.core.scenarioTrace.summary.gaps,531);
+  assert.deepEqual(audit.gaps.map((gap)=>gap.id),flutterLock.requiredGapIds);
 });
 
 test('改変とRelease/Definitiveへの格上げを拒否する',()=>{
