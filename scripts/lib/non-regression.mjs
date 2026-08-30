@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { sha256 } from './crypto.mjs';
 import { scanNeutralLanguage } from './neutral-language.mjs';
+import { evaluateRegistryEvidence } from './registry.mjs';
 
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
 export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
@@ -59,10 +60,14 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   const fail = (code, detail) => violations.push({ code, detail });
   const check = (name, pass, detail) => { checks.push({ name, pass, detail }); if (!pass) fail(name, detail); };
   const indexBytes=await readFile(path.join(root,'app/data/index.generated.json'));let bootstrap=null;let publicIndexBytes=null;let publicIndex=null;try{bootstrap=await readJson('app/data/index-bootstrap.generated.json');if(/^\/data\/index\/[a-f0-9]{64}\.json$/.test(bootstrap.publicUrl)){publicIndexBytes=await readFile(path.join(root,`public${bootstrap.publicUrl}`));publicIndex=JSON.parse(publicIndexBytes);}}catch{}
+  const importReport=await readJson('evidence/import-report.json');const registryNegative=await readJson('fixtures/registry/invalid-registry-cases.json');
   const{digest:indexDigest,...indexPayload}=index;
   check('content-addressed-index-binding',Boolean(bootstrap)&&bootstrap.indexDigest===indexDigest&&bootstrap.publicUrl===`/data/index/${indexDigest.replace(/^sha256:/,'')}.json`&&sha256(indexPayload)===indexDigest,'bootstrap URL / canonical digest');
   check('content-addressed-index-bytes',Boolean(publicIndexBytes)&&publicIndexBytes.equals(indexBytes)&&publicIndex?.digest===indexDigest&&bootstrap?.artifactDigest===sha256(publicIndexBytes),'public Index must equal CLI Index bytes and bootstrap artifact digest');
   check('index-bootstrap-fail-closed',bootstrap?.subjects===index.subjects.length&&bootstrap?.readOnly===true&&bootstrap?.autoPromotion===false&&bootstrap?.completionSummary?.subjectDefinitive===index.completionSummary.subjectDefinitive&&bootstrap?.definitiveV2Summary?.missing===index.definitiveV2Summary.missing&&bootstrap?.definitiveV2Summary?.gapInstances===index.definitiveV2Summary.gapInstances&&bootstrap?.definitiveV2Summary?.autoPromotion===false&&bootstrap?.evidenceDependencySummary?.missing===index.evidenceDependencySummary.missing&&bootstrap?.fixedCommitAuditSummary?.incomplete===index.fixedCommitAuditSummary.incomplete&&bootstrap?.fixedCommitAuditSummary?.missing===index.fixedCommitAuditSummary.missing&&bootstrap?.fixedCommitAuditSummary?.releaseEligible===0&&bootstrap?.fallback?.status==='index-unavailable-not-evaluated','bootstrap must preserve incomplete and missing-input summaries');
+  const registryEvidence=evaluateRegistryEvidence(importReport.registry,registryNegative);
+  check('registry-preflight-fail-closed',registryEvidence.policyPass,`${registryEvidence.catalogSubjects} Catalog subjects / ${registryEvidence.fixedCommitAudits} fixed audits / duplicate and non-canonical binding rejected before import`);
+  check('registry-negative-fixture',registryEvidence.negativePass,`${registryEvidence.negativeCases}/${registryEvidence.expectedNegativeCases} duplicate / binding / path negative cases preserve last-known-good`);
   check('baseline-immutable', sha256(baselineBytes) === NON_REGRESSION_BASELINE_DIGEST, `expected ${NON_REGRESSION_BASELINE_DIGEST}`);
   check('baseline-schema', baseline.schemaVersion === 1 && baseline.policy?.aggregateReplacement === 'reject', 'schemaVersion=1 / aggregateReplacement=reject');
   check('mapping-schema', mappings.schemaVersion === 1 && ['subjectMappings','targetMappings','evidenceMappings'].every((key) => Array.isArray(mappings[key])), 'mapping arrays required');

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "duplicate-fixed-commit-subject",
+      "mutation": "duplicate-first-fixed-commit-audit",
+      "expectedDiagnostic": "Registry fixedCommitAuditsに重複subjectIdがあります",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "duplicate-release-identity",
+      "mutation": "duplicate-first-release",
+      "expectedDiagnostic": "Registry releasesに重複Release identityがあります",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "catalog-outside-subject",
+      "mutation": "replace-first-fixed-commit-subject-with-unknown",
+      "expectedDiagnostic": "Catalog外subjectを参照しています",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "catalog-repository-rebind",
+      "mutation": "replace-first-fixed-commit-repository",
+      "expectedDiagnostic": "repositoryがCatalogと一致しません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "duplicate-file-binding",
+      "mutation": "replace-second-fixed-commit-file-with-first-file",
+      "expectedDiagnostic": "同一Fileを重複bindingしています",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "fixture-root-path-escape",
+      "mutation": "replace-first-fixed-commit-file-with-parent-path",
+      "expectedDiagnostic": "親Directory参照を使用できません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "normalized-parent-segment",
+      "mutation": "replace-first-fixed-commit-file-with-normalized-parent-segment",
+      "expectedDiagnostic": "親Directory参照を使用できません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "absolute-path",
+      "mutation": "replace-first-fixed-commit-file-with-absolute-path",
+      "expectedDiagnostic": "絶対Pathを使用できません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "missing-file",
+      "mutation": "replace-first-fixed-commit-file-with-missing-path",
+      "expectedDiagnostic": "Fileが存在しません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "directory-target",
+      "mutation": "replace-first-fixed-commit-file-with-directory",
+      "expectedDiagnostic": "通常Fileである必要があります",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "symlink-target",
+      "mutation": "replace-first-fixed-commit-file-with-symlink",
+      "expectedDiagnostic": "symlinkを経由できません",
+      "expectedResult": "last-known-good-preserved"
+    },
+    {
+      "id": "symlink-directory-target",
+      "mutation": "replace-first-fixed-commit-file-with-symlink-directory",
+      "expectedDiagnostic": "symlinkを経由できません",
+      "expectedResult": "last-known-good-preserved"
+    }
+  ]
+}

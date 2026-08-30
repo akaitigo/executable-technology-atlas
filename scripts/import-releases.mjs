@@ -9,6 +9,7 @@ import { missingEvidenceDependency, projectEvidenceDependency, validateEvidenceD
 import { missingDefinitiveV2, projectDefinitiveV2, validateDefinitiveV2Envelope } from './lib/definitive-v2.mjs';
 import { missingFixedCommitAudit, projectFixedCommitAudit, validateFixedCommitAudit } from './lib/fixed-commit-audit.mjs';
 import { neutralizeDisplayText } from './lib/neutral-language.mjs';
+import { recordRegistryPreflightFailure, validateRegistryPreflight } from './lib/registry.mjs';
 
 const root = process.cwd();
 const fixtureRoot = path.resolve(process.argv[2] ?? path.join(root, 'fixtures'));
@@ -25,6 +26,10 @@ const catalog = catalogEnvelope.payload.catalog;
 if (!validators.catalog(catalog)) throw new Error(`Catalog Schema不適合: ${JSON.stringify(validators.catalog.errors)}`);
 
 const registry = JSON.parse(await readFile(path.join(fixtureRoot, 'registry.json'), 'utf8'));
+const registryPreflight=await validateRegistryPreflight(registry,fixtureRoot,catalog);
+if(registryPreflight.result!=='pass'){
+  await recordRegistryPreflightFailure(reportPath,registryPreflight);console.error(`取込失敗: Registry preflight / ${registryPreflight.errors.join('; ')}`);process.exit(1);
+}
 const failureScenarios = JSON.parse(await readFile(path.join(fixtureRoot, 'failure-scenarios.json'), 'utf8'));
 const evidenceDependencyLock=JSON.parse(await readFile(path.join(root,'contracts','evidence-dependency-lock.json'),'utf8'));
 const evidenceDependencySchemaBytes=await readFile(path.join(root,'contracts','schemas','evidence-dependency-graph.schema.json'));
@@ -201,7 +206,7 @@ await mkdir(path.dirname(reportPath), { recursive: true });
 const outputTemporary = `${output}.tmp`;
 const reportTemporary = `${reportPath}.tmp`;
 const verdict = subjects.length === 97 && imports.every((item) => item.verification === 'verified') && depthImports.length === 1 && depthImports.every((item) => item.verification === 'verified') && reviewImports.length===1 && reviewImports.every((item)=>item.verification==='verified')&&evidenceDependencyImports.every((item)=>item.verification==='verified')&&fixedCommitAuditImports.every((item)=>item.verification==='verified')&&definitiveV2Imports.every((item)=>item.verification==='verified') ? 'pass' : 'fail';
-await writeFile(reportTemporary, `${JSON.stringify({ schemaVersion: 1, catalog: catalogVerification, imports, depthImports, reviewImports, evidenceDependencyImports, fixedCommitAuditImports, definitiveV2Imports, index: { path: path.relative(root, output), digest: index.digest, subjects: subjects.length }, verdict }, null, 2)}\n`);
+await writeFile(reportTemporary, `${JSON.stringify({ schemaVersion: 1, catalog: catalogVerification, registry:registryPreflight, imports, depthImports, reviewImports, evidenceDependencyImports, fixedCommitAuditImports, definitiveV2Imports, index: { path: path.relative(root, output), digest: index.digest, subjects: subjects.length }, verdict }, null, 2)}\n`);
 await rename(reportTemporary, reportPath);
 if (verdict === 'fail') {
   console.error(`取込失敗: 検証済みIndexと詳細は更新しません / quarantined=${index.verification.quarantined}`);

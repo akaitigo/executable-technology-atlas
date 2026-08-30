@@ -13,7 +13,9 @@ signed Catalog release + signed Subject release bundles
 
 Runtimeは`fixtures/`のcontent-addressed bundleと生成済み`app/data/index.generated.json`だけを読み、Subject Source Tree、Git submodule、Default Branchへ依存しない。`scripts/generate-fixtures.mjs`はfixture更新時に明示された固定checkoutを入力として受ける開発用Exportであり、Runtime取込経路ではない。
 
-署名済みSubject Releaseがまだない場合、Portalは明示したclean commitのGit objectだけを開発時にCoreで監査し、観測専用のfixture署名Envelopeとして索引できる。この経路は`fixed-commit-incomplete`専用で、公開Release Trust、Release Manifest、Definitive Certificateを代替せず、Core Gateごとのpass/fail、Authority分母、必須output欠落、Schema drift、既知Gapを独立して保持する。現在はArgo CD、PostgreSQL、Flutterの3件をこの境界で表示する。
+署名済みSubject Releaseがまだない場合、Portalは明示したclean commitのGit objectだけを開発時にCoreで監査し、観測専用のfixture署名Envelopeとして索引できる。この経路は`fixed-commit-incomplete`専用で、公開Release Trust、Release Manifest、Definitive Certificateを代替せず、Core Gateごとのpass/fail、Authority分母、必須output欠落、Schema drift、既知Gapを独立して保持する。現在は7 Subjectをこの境界で表示する。
+
+RegistryはEnvelope読込前にpreflightし、singleton入力の重複、Release identity/digestの重複、異なるEntryによる同一Fileの再binding、Catalog外Subject/Repository、親Directory参照・絶対Path・fixture root外Path、全Path componentのsymlink、通常File以外を拒否する。preflight失敗はIndexとBootstrapを更新せず、診断だけをatomicなImport Reportへ記録する。
 
 `frontend-behavior`のDepth Referenceは、明示Commit `4a0b2df8e2091a963bd0e0e1bbccef9c84b49a45`の`FE_DEPTH_REFERENCE.json`をSource digestと署名付きEnvelopeへ固定する。Importerは`contracts/depth-reference-lock.json`に対して18軸、状態、分母、Proof、Gapを検証し、生成IndexとDigest固定Subject詳細へ投影する。実行時にSubject checkoutは読まない。
 
