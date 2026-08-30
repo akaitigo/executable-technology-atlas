@@ -31,16 +31,19 @@ const observations=[
     ]
   },
   {
-    subjectId:'postgresql',atlasId:'postgresql-reference-atlas',repository:'postgresql-reference-atlas',commit:'94353f5145a419e585fd73ec7dd496dc79f3f0e9',environment:'POSTGRESQL_ATLAS_REPOSITORY',
-    paths:['atlas.yaml','definitive.yaml','depth.parity.yaml','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json'],
+    subjectId:'postgresql',atlasId:'postgresql-reference-atlas',repository:'postgresql-reference-atlas',commit:'727aef0532f4b0465324981ec85a59a93ac875a2',environment:'POSTGRESQL_ATLAS_REPOSITORY',
+    paths:['atlas.yaml','definitive.yaml','depth.parity.yaml','verification.matrix.yaml','non-regression.yaml','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json','artifacts/pattern-scenarios/results.json'],
     manifest:{status:'incomplete',completionClass:'incomplete',targets:56,openRequired:27,claims:30,evidence:31},
     core:{
       audit:gate('atlas audit .','pass',{completionClass:'incomplete',targets:56,claims:30,evidence:31,openRequired:27}),
-      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:11,changedInputs:4,outputs:435,affectedOutputs:435,runs:1}),
+      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:12,changedInputs:9,outputs:443,affectedOutputs:443,runs:1}),
       authorityExtraction:gate('atlas audit . --gate authority-extraction','pass',{status:'incomplete-human-review-required',locked:10,matched:0,failed:10,candidateEdges:10,classifiedEdges:10,unclassifiedEdges:0,deferredLocators:10,humanReviewed:0,coreV2Eligible:0}),
       authorityBody:gate('atlas audit . --gate authority-body','pass',{status:'incomplete-human-review-required',sources:10,documents:398,matched:390,failed:8,candidateAnchors:5512,classified:0,unclassified:5512,humanReviewed:0,coreV2Eligible:0}),
       authorityReview:gate('atlas audit . --gate authority-review','pass',{status:'incomplete-human-review-required',queued:5512,pendingHuman:5512,humanReviewed:0,unavailableHolds:8,decisions:0}),
-      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive'},['required Target query.sql-commandsはpartialです'])
+      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive'},['required Target query.sql-commandsはpartialです']),
+      scenarioTrace:gate('atlas audit . --gate scenario-trace','pass',{status:'incomplete-authority-atomic-and-runtime-closure',rows:290,runtimeRows:16,gaps:274,authorityAtomicRows:0,completionEligibleRows:0},['Authority atomic bindingは0、completion eligible rowは0です']),
+      nonRegression:gate('atlas audit . --gate non-regression','pass',{baselineItems:239,currentItems:1733,replacements:16}),
+      evidenceDurability:gate('atlas audit . --gate evidence-durability','pass',{status:'passed',artifacts:33,rows:16,variants:16})
     },
     gaps:[
       {id:'fixed-release-manifest-missing',status:'open',detail:'署名済み固定Release Manifestがありません。',count:1},
@@ -51,7 +54,7 @@ const observations=[
       {id:'authority-body-unclassified',status:'open',detail:'Authority body anchorが未分類です。',count:5512},
       {id:'authority-human-review-open',status:'open',detail:'Authority anchorがhuman review未完了です。',count:5512},
       {id:'authority-unavailable-holds',status:'open',detail:'一次資料がunavailable holdです。',count:8},
-      {id:'scenario-runtime-gaps',status:'open',detail:'Scenario runtime closure gapが残っています。',count:278}
+      {id:'scenario-runtime-gaps',status:'open',detail:'Scenario runtime closure gapが残っています。',count:274}
     ]
   },
   {

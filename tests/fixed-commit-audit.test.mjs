@@ -60,9 +60,13 @@ test('PostgreSQL固定commitのTarget・Authority・Scenario Gapを保持する'
   assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:postgresqlLock.sourceCommit,tree:postgresqlLock.sourceTree});
   assert.deepEqual({openRequired:audit.manifest.openRequired,unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{openRequired:27,unclassified:5512,pending:5512,decisions:0});
   assert.equal(audit.core.evidenceDependency.result,'pass');
+  assert.deepEqual(audit.core.evidenceDependency.summary,{inputs:12,changedInputs:9,outputs:443,affectedOutputs:443,runs:1});
+  assert.deepEqual({result:audit.core.scenarioTrace.result,rows:audit.core.scenarioTrace.summary.rows,runtimeRows:audit.core.scenarioTrace.summary.runtimeRows,gaps:audit.core.scenarioTrace.summary.gaps,authorityAtomicRows:audit.core.scenarioTrace.summary.authorityAtomicRows,completionEligibleRows:audit.core.scenarioTrace.summary.completionEligibleRows},{result:'pass',rows:290,runtimeRows:16,gaps:274,authorityAtomicRows:0,completionEligibleRows:0});
+  assert.equal(audit.core.nonRegression.result,'pass');
+  assert.deepEqual(audit.core.evidenceDurability.summary,{status:'passed',artifacts:33,rows:16,variants:16});
   assert.equal(audit.core.definitive.result,'fail');
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),postgresqlLock.requiredGapIds);
-  assert.equal(audit.gaps.find((gap)=>gap.id==='scenario-runtime-gaps').count,278);
+  assert.equal(audit.gaps.find((gap)=>gap.id==='scenario-runtime-gaps').count,274);
 });
 
 test('Flutter固定commitのCore v2 Schema driftと必須output欠落を保持する',()=>{
