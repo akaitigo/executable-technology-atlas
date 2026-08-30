@@ -14,6 +14,8 @@ const postgresqlLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-c
 const postgresqlEnvelope=JSON.parse(await readFile(path.join(root,postgresqlLock.fixturePath),'utf8'));
 const flutterLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-flutter-lock.json'),'utf8'));
 const flutterEnvelope=JSON.parse(await readFile(path.join(root,flutterLock.fixturePath),'utf8'));
+const rabbitmqLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-rabbitmq-lock.json'),'utf8'));
+const rabbitmqEnvelope=JSON.parse(await readFile(path.join(root,rabbitmqLock.fixturePath),'utf8'));
 
 test('実Subject固定commit監査EnvelopeをSchema・Digest・署名で受理する',()=>{
   const result=validateFixedCommitAudit(envelope,schema,trusted);
@@ -67,6 +69,20 @@ test('Flutter固定commitのCore v2 Schema driftと必須output欠落を保持�
   for(const gate of ['evidenceDependency','authorityExtraction','authorityBody','authorityReview','definitive','scenarioTrace','nonRegression','evidenceDurability'])assert.equal(audit.core[gate].result,'fail',gate);
   assert.equal(audit.core.scenarioTrace.summary.gaps,531);
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),flutterLock.requiredGapIds);
+});
+
+test('RabbitMQ固定commitの自己宣言完成をCore Gate失敗として保持する',()=>{
+  const validated=validateFixedCommitAudit(rabbitmqEnvelope,schema,trusted);
+  assert.equal(validated.ok,true,validated.errors.join('; '));
+  const audit=projectFixedCommitAudit(rabbitmqEnvelope,validated);
+  assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:rabbitmqLock.sourceCommit,tree:rabbitmqLock.sourceTree});
+  assert.deepEqual({openRequired:audit.manifest.openRequired,inputs:audit.core.evidenceDependency.summary.inputs,changed:audit.core.evidenceDependency.summary.changedInputs,outputs:audit.core.evidenceDependency.summary.outputs},{openRequired:203,inputs:14,changed:2,outputs:2397});
+  assert.deepEqual({anchors:audit.core.authorityBody.summary.candidateAnchors,unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{anchors:1579,unclassified:1579,pending:1579,decisions:0});
+  assert.equal(audit.core.definitive.result,'fail');
+  assert.equal(audit.core.definitive.summary.declaredCompletionClass,'subject-definitive');
+  assert.equal(audit.core.definitive.summary.completionClass,'not-definitive');
+  assert.equal(audit.core.scenarioTrace.summary.gaps,925);
+  assert.deepEqual(audit.gaps.map((gap)=>gap.id),rabbitmqLock.requiredGapIds);
 });
 
 test('改変とRelease/Definitiveへの格上げを拒否する',()=>{

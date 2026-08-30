@@ -87,6 +87,41 @@ const observations=[
       {id:'non-regression-contract-missing',status:'open',detail:'Non-regression契約が固定commitにありません。',count:1},
       {id:'evidence-durability-output-missing',status:'open',detail:'Evidence durabilityの必須outputが固定commitにありません。',count:1}
     ]
+  },
+  {
+    subjectId:'rabbitmq',atlasId:'rabbitmq-reference-atlas',repository:'rabbitmq-reference-atlas',commit:'a500e567648cb076a1498a2ddc7b9f5393ce3c2f',environment:'RABBITMQ_ATLAS_REPOSITORY',
+    paths:['atlas.yaml','definitive.yaml','evidence/completion-certificate.json','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json'],
+    manifest:{status:'incomplete',completionClass:'incomplete',targets:238,openRequired:203,claims:206,evidence:33},
+    core:{
+      audit:gate('atlas audit .','pass',{completionClass:'incomplete',targets:238,claims:206,evidence:33,openRequired:203}),
+      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:14,changedInputs:2,outputs:2397,affectedOutputs:2363,runs:63}),
+      authorityExtraction:gate('atlas audit . --gate authority-extraction','fail',{status:'schema-drift',locked:50,matched:48,failed:0,staleSources:2,candidateEdges:206,classifiedEdges:206,unclassifiedEdges:0,deferredLocators:0,humanReviewed:0,coreV2Eligible:0},['authority/extraction.snapshot.jsonが固定Core v2 Schemaと一致しません']),
+      authorityBody:gate('atlas audit . --gate authority-body','fail',{status:'schema-drift',sources:50,documents:50,matched:48,staleDocuments:2,candidateAnchors:1579,classified:0,unclassified:1579,humanReviewed:0,coreV2Eligible:0},['authority/body-inventory.snapshot.jsonが固定Core v2 Schemaと一致しません']),
+      authorityReview:gate('atlas audit . --gate authority-review','fail',{status:'schema-drift',queued:1579,pendingHuman:1579,humanReviewed:0,unavailableHolds:2,decisions:0},['Authority body schema driftのためreview gateを通過しません']),
+      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive',declaredCompletionClass:'subject-definitive',missingContractArtifacts:2},['自己宣言のsubject-definitiveはCore Gate結果ではありません','verification.matrix.yamlとdepth.parity.yamlが固定commitに存在しません']),
+      scenarioTrace:gate('atlas audit . --gate scenario-trace','fail',{status:'schema-drift',rows:2060,runtimeRows:26,gaps:925},['evidence/scenarios/index.jsonが固定Core v2 Scenario Proof Schemaと一致しません']),
+      nonRegression:gate('atlas audit . --gate non-regression','fail',{missingContractArtifacts:1},['non-regression.yamlが固定commitに存在しません']),
+      evidenceDurability:gate('atlas audit . --gate evidence-durability','fail',{missingRequiredOutputs:1},['artifacts/pattern-scenarios/results.jsonが固定commitに存在しません'])
+    },
+    gaps:[
+      {id:'fixed-release-manifest-missing',status:'open',detail:'署名済み固定Release Manifestがありません。',count:1},
+      {id:'public-trust-key-missing',status:'open',detail:'公開Release Trust Keyがありません。',count:1},
+      {id:'definitive-certificate-missing',status:'open',detail:'Core v2 Definitive Certificateがありません。',count:1},
+      {id:'open-required-targets',status:'open',detail:'必須TargetがClosureしていません。',count:203},
+      {id:'historical-certificate-schema-drift',status:'open',detail:'既存Completion Certificateは固定Core v2 Schemaに適合せず署名もありません。',count:1},
+      {id:'authority-extraction-schema-drift',status:'open',detail:'Authority extraction snapshotが固定Core v2 Schemaと一致しません。',count:1},
+      {id:'authority-source-stale',status:'open',detail:'Authority一次資料の固定digestと取得digestが一致しません。',count:2},
+      {id:'authority-body-schema-drift',status:'open',detail:'Authority body inventoryが固定Core v2 Schemaと一致しません。',count:1},
+      {id:'authority-body-unclassified',status:'open',detail:'Authority body anchorが未分類です。',count:1579},
+      {id:'authority-human-review-open',status:'open',detail:'Authority anchorがhuman review未完了です。',count:1579},
+      {id:'authority-stale-holds',status:'open',detail:'Authority一次資料がstale holdです。',count:2},
+      {id:'definitive-self-declaration-rejected',status:'open',detail:'definitive.yamlのsubject-definitive自己宣言はCore Gate失敗のため完成扱いできません。',count:1},
+      {id:'definitive-contract-artifacts-missing',status:'open',detail:'Verification matrixとDepth parityが固定commitにありません。',count:2},
+      {id:'scenario-proof-schema-drift',status:'open',detail:'Scenario Proof Indexが固定Core v2 Schemaと一致しません。',count:1},
+      {id:'scenario-runtime-gaps',status:'open',detail:'Scenario runtime closure gapが残っています。',count:925},
+      {id:'non-regression-contract-missing',status:'open',detail:'Non-regression契約が固定commitにありません。',count:1},
+      {id:'evidence-durability-output-missing',status:'open',detail:'Evidence durabilityの必須outputが固定commitにありません。',count:1}
+    ]
   }
 ];
 
@@ -95,7 +130,7 @@ const keyId=`fixture-ed25519-${sha256(publicKeyPem).slice(7,23)}`;
 for(const observation of observations){
   const sourceRoot=path.resolve(process.env[observation.environment]??path.join(root,'..',observation.repository));
   const tree=execFileSync('git',['rev-parse',`${observation.commit}^{tree}`],{cwd:sourceRoot,encoding:'utf8'}).trim();
-  const artifactDigests=observation.paths.map((relative)=>({path:relative,digest:sha256(execFileSync('git',['show',`${observation.commit}:${relative}`],{cwd:sourceRoot}))}));
+  const artifactDigests=observation.paths.map((relative)=>({path:relative,digest:sha256(execFileSync('git',['show',`${observation.commit}:${relative}`],{cwd:sourceRoot,maxBuffer:16*1024*1024}))}));
   const payload={subjectId:observation.subjectId,atlasId:observation.atlasId,repository:observation.repository,sourceCommit:observation.commit,sourceTree:tree,sourceMode:'fixed-clean-commit',releaseBoundary:{status:'unpublished-fixed-commit',tag:null,signedManifest:false,publicTrustKey:false,definitiveCertificate:false},manifest:observation.manifest,core:{commit:coreCommit,...observation.core},artifactDigests,gaps:observation.gaps,readOnly:true,autoPromotion:false};
   const digest=sha256(payload);
   const envelope={schemaVersion:1,kind:'portal-fixed-commit-audit',attestation:{digest,observedAt:'2026-08-31T00:00:00Z'},signature:{algorithm:'Ed25519',keyId,value:signDigest(digest,privateKey),identity:'portal-fixture-observation-only'},payload};
