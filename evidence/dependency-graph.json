@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "atlas_id": "executable-technology-atlas",
-  "generated_at": "2026-08-30T19:19:39.885Z",
+  "generated_at": "2026-08-30T19:37:35.028Z",
   "status": "current",
   "policy": {
     "transitive_staleness": true,
@@ -91,6 +91,7 @@
         "contracts/non-regression-baseline.json",
         "contracts/non-regression-mappings.json",
         "contracts/portal-evidence-dependency-inputs.json",
+        "contracts/portal-root-definitive-lock.json",
         "contracts/reference/EVIDENCE_DEPENDENCY_GRAPH.md",
         "contracts/reference/MIGRATION_DEFINITIVE_V2.md",
         "contracts/schemas/atlas.schema.json",
@@ -114,6 +115,7 @@
         "next.config.ts",
         "scripts/atlas-portal.mjs",
         "scripts/check-non-regression.mjs",
+        "scripts/check-portal-root-definitive.mjs",
         "scripts/generate-authority-review-fixture.mjs",
         "scripts/generate-depth-reference.mjs",
         "scripts/generate-fixed-commit-audit.mjs",
@@ -155,13 +157,14 @@
         "tests/non-regression-registry.test.mjs",
         "tests/non-regression.test.mjs",
         "tests/portal-dependency-graph.test.mjs",
+        "tests/portal-root-definitive.test.mjs",
         "tests/publication.test.mjs",
         "tests/registry.test.mjs",
         "tests/router.test.mjs"
       ],
       "baseline_digest": "sha256:e6a4aabae4ecde06d6ff97facdc6c859f54de4f63da82103806cd38233022879",
-      "current_digest": "sha256:4d88842af56e9b1501f102aad39237869452357672ab3fdb6dff180abdc9b335",
-      "observed_at": "2026-08-30T19:19:26.266Z"
+      "current_digest": "sha256:e210924a480cf3c40518f6129efe1e58d21a8b1d923ab341de5741460e385f2a",
+      "observed_at": "2026-08-30T19:37:27.074Z"
     },
     {
       "id": "portal-runtime",
@@ -172,8 +175,8 @@
         "package.json"
       ],
       "baseline_digest": "sha256:8a08497451f4ec1ed83cdc36f17f66c99635e46b495d1317ac80313ad345a2c5",
-      "current_digest": "sha256:3522a1edb2b9ba6bc32f9ff71e886de1f7f8e01fef70a4f547bec1aafbe4abc5",
-      "observed_at": "2026-08-30T15:14:30.893Z"
+      "current_digest": "sha256:34cee5de01d933dba2a08ac770cfb4e1fb13f2f765248126684410c0aa9e8751",
+      "observed_at": "2026-08-30T19:35:49.168Z"
     },
     {
       "id": "portal-profile",
@@ -187,8 +190,8 @@
         "security/allowed_signers"
       ],
       "baseline_digest": "sha256:4b929742390db812bfc1d40f182eaa9fbe5deb3d2faa652c52bf6d5fd46a6739",
-      "current_digest": "sha256:8868620a05d9ef927b7e9d35597b3142ae1a7ff3fabdb1a4487ee158554cfe78",
-      "observed_at": "2026-08-30T15:39:55.107Z"
+      "current_digest": "sha256:776f0ee4e567c3c5feab84323d9f38a0cb71b84482e0b599ac44d861e2834779",
+      "observed_at": "2026-08-30T19:35:49.168Z"
     }
   ],
   "outputs": [
@@ -275,7 +278,7 @@
       "id": "output.evidence.non.regression.harness.json",
       "kind": "runtime-evidence",
       "path": "evidence/non-regression-harness.json",
-      "digest": "sha256:4549a5fbfa8c81e1d0027ff3401ebe4f863001b0402027c0ea6b5656e80a2688",
+      "digest": "sha256:390589d1914ce7ba801caffc5fe3616d15e4a3fa7e8dc986d552930c96cc389d",
       "depends_on": [
         "portal-source",
         "portal-harness",
@@ -289,7 +292,7 @@
       "id": "output.evidence.non.regression.report.json",
       "kind": "runtime-evidence",
       "path": "evidence/non-regression-report.json",
-      "digest": "sha256:be790912e3dcd99319ab3843d286c11f89a13668c1406cb5cf3bfd9b60712b61",
+      "digest": "sha256:0a8a8c1435e23cdbbbb64758abeff3b288d87af1be4b83a37383f7ab1376edca",
       "depends_on": [
         "portal-source",
         "portal-harness",
@@ -303,7 +306,7 @@
       "id": "output.evidence.non.regression.evidence.json",
       "kind": "derived-evidence",
       "path": "evidence/non-regression.evidence.json",
-      "digest": "sha256:1766ee80ad656a76ce3e6eb0c4d0ff1d55c3826ac62897d6b05e101ec9c103ee",
+      "digest": "sha256:4ae34b6e1deab303be4007ed529753b15466e0813e929c5676752fa870bb3421",
       "depends_on": [
         "output.evidence.non.regression.report.json",
         "portal-harness",
@@ -316,10 +319,24 @@
       "id": "output.evidence.performance.budget.evidence.json",
       "kind": "benchmark",
       "path": "evidence/performance.budget.evidence.json",
-      "digest": "sha256:14253d2ba773dadba581dfe7582fd6d18d4597ae099d0a71dbfec608ad553189",
+      "digest": "sha256:7998d72a72c9e2e3bb924f9e8316fab4d16243cfd43380e0fa4002a4d04930d2",
       "depends_on": [
         "output.evidence.reports.performance.json",
         "portal-harness",
+        "portal-profile"
+      ],
+      "status": "current",
+      "run_id": "portal-reproduce-run"
+    },
+    {
+      "id": "output.evidence.portal.root.definitive.report.json",
+      "kind": "runtime-evidence",
+      "path": "evidence/portal-root-definitive-report.json",
+      "digest": "sha256:c0545604df12c38a1106a8d9264cc4427d7e5464aaac8b16ecc7ae3680e4d4e7",
+      "depends_on": [
+        "portal-source",
+        "portal-harness",
+        "portal-runtime",
         "portal-profile"
       ],
       "status": "current",
@@ -342,7 +359,7 @@
       "id": "output.evidence.reports.performance.json",
       "kind": "benchmark",
       "path": "evidence/reports/performance.json",
-      "digest": "sha256:df59cad33abf24049e0c550979e0d19f271ebaad5012ef763e42756ac9d55e14",
+      "digest": "sha256:2cc140b9a363dc0509c717d9109cb3c8da74346655f6116e6b038bbd60042286",
       "depends_on": [
         "portal-source",
         "portal-harness",
@@ -464,7 +481,7 @@
       "id": "output.provenance.yaml",
       "kind": "derived-evidence",
       "path": "provenance.yaml",
-      "digest": "sha256:fe76fe81603371f553cbabff6d18ec6df7302365ea61899322ff11994f9af980",
+      "digest": "sha256:d7794a3fdc48b24deeeffb19f9aaedecef1cfffbb2b8b344c0deb1e2f3135792",
       "depends_on": [
         "output.evidence.dependency.own.closure.evidence.json",
         "output.evidence.import.integrity.evidence.json",
@@ -526,8 +543,8 @@
       "id": "portal-reproduce-run",
       "execution_kind": "runtime",
       "command": "npm run dependency:reproduce",
-      "started_at": "2026-08-30T19:19:26.266Z",
-      "completed_at": "2026-08-30T19:19:39.885Z",
+      "started_at": "2026-08-30T19:37:27.074Z",
+      "completed_at": "2026-08-30T19:37:35.028Z",
       "result": "passed",
       "attempts": 1,
       "runtime_identity": {
@@ -543,15 +560,15 @@
         },
         {
           "input_id": "portal-harness",
-          "digest": "sha256:4d88842af56e9b1501f102aad39237869452357672ab3fdb6dff180abdc9b335"
+          "digest": "sha256:e210924a480cf3c40518f6129efe1e58d21a8b1d923ab341de5741460e385f2a"
         },
         {
           "input_id": "portal-runtime",
-          "digest": "sha256:3522a1edb2b9ba6bc32f9ff71e886de1f7f8e01fef70a4f547bec1aafbe4abc5"
+          "digest": "sha256:34cee5de01d933dba2a08ac770cfb4e1fb13f2f765248126684410c0aa9e8751"
         },
         {
           "input_id": "portal-profile",
-          "digest": "sha256:8868620a05d9ef927b7e9d35597b3142ae1a7ff3fabdb1a4487ee158554cfe78"
+          "digest": "sha256:776f0ee4e567c3c5feab84323d9f38a0cb71b84482e0b599ac44d861e2834779"
         }
       ],
       "output_ids": [
@@ -565,6 +582,7 @@
         "output.evidence.non.regression.report.json",
         "output.evidence.non.regression.evidence.json",
         "output.evidence.performance.budget.evidence.json",
+        "output.evidence.portal.root.definitive.report.json",
         "output.evidence.publication.sbom.evidence.json",
         "output.evidence.reports.performance.json",
         "output.evidence.reports.router.eval.json",
@@ -593,6 +611,7 @@
     "evidence/non-regression-report.json",
     "evidence/non-regression.evidence.json",
     "evidence/performance.budget.evidence.json",
+    "evidence/portal-root-definitive-report.json",
     "evidence/publication.sbom.evidence.json",
     "evidence/reports/performance.json",
     "evidence/reports/router-eval.json",

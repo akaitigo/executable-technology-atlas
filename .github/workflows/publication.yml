@@ -111,5 +111,10 @@ jobs:
         working-directory: .ci/reference-atlas-core-evidence
         run: go run ./cmd/atlas audit "$GITHUB_WORKSPACE" --gate evidence-dependency
 
+      - name: Verify Portal root remains honestly non-definitive
+        env:
+          ATLAS_CORE_DIR: .ci/reference-atlas-core-evidence
+        run: npm run definitive:root:check
+
       - name: Reject tracked mutations
         run: git diff --exit-code

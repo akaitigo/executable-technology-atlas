@@ -18,7 +18,7 @@ test('正規lockfileはImporter Schema検証用Ajvをintegrity付きで固定す
 });
 
 test('clean-room CIは依存導入後のfull Importer・Non-regression・Build・Publication・Core Gateを省略しない',()=>{
-  const ordered=['npm ci --ignore-scripts --no-audit --no-fund','npm run import','npm run non-regression','npm test','npm run build','npm run dependency:graph:check','npm run gate','npm run dependency:negative','atlas audit','certificate verify','--gate evidence-dependency'];
+  const ordered=['npm ci --ignore-scripts --no-audit --no-fund','npm run import','npm run non-regression','npm test','npm run build','npm run dependency:graph:check','npm run gate','npm run dependency:negative','atlas audit','certificate verify','--gate evidence-dependency','npm run definitive:root:check'];
   let previous=-1;for(const command of ordered){const index=workflow.indexOf(command);assert.ok(index>previous,`${command} must follow prior required command`);previous=index;}
   assert.ok((workflow.match(/git diff --exit-code/g)??[]).length>=2);assert.ok(workflow.lastIndexOf('git diff --exit-code')>previous,'final tracked-mutation rejection must follow Core gates');
   assert.equal(packageJson.scripts.test,'node --test tests/*.test.mjs');assert.equal(packageJson.scripts.gate,'node scripts/publication-gate.mjs');

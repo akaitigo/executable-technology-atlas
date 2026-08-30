@@ -9,6 +9,7 @@ export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af8
 export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
 export const EVIDENCE_DEPENDENCY_LOCK_DIGEST = 'sha256:720ece5c5287b40c62d71f2eba61d9c8a366c7664afc32b817358b3035a23156';
 export const DEFINITIVE_V2_LOCK_DIGEST = 'sha256:3465e848443f47f8dca4f012dc75f1585b406228fbde4f3a1467a715cbbbdf7f';
+export const PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST = 'sha256:cbec4b06b2462d40455d00c073dde76792208c724bed9aeb4f3d04796c598559';
 export const FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:33622727def0ec008776d57c86bf21cf421a0874ba150014465044bb8ffed2c3';
 export const POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:6759e809a36ad480e5e548db8a2a3f4743f500b87d58f1e259c72348380dc9ee';
 export const FLUTTER_FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:0391777120ea2aece38edcf49cc9e938417ba17de9c8edb816e8e5e1ded91831';
@@ -24,7 +25,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, fixedAuditLockBytes, fixedAuditLock, postgresqlAuditLockBytes, postgresqlAuditLock, flutterAuditLockBytes, flutterAuditLock, rabbitmqAuditLockBytes, rabbitmqAuditLock, kotlinAuditLockBytes, kotlinAuditLock, zeroTrustAuditLockBytes, zeroTrustAuditLock, frontendBehaviorAuditLockBytes, frontendBehaviorAuditLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, portalRootDefinitiveLockBytes, portalRootDefinitiveLock, portalRootDefinitiveReport, fixedAuditLockBytes, fixedAuditLock, postgresqlAuditLockBytes, postgresqlAuditLock, flutterAuditLockBytes, flutterAuditLock, rabbitmqAuditLockBytes, rabbitmqAuditLock, kotlinAuditLockBytes, kotlinAuditLock, zeroTrustAuditLockBytes, zeroTrustAuditLock, frontendBehaviorAuditLockBytes, frontendBehaviorAuditLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -39,6 +40,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readJson('contracts/evidence-dependency-lock.json'),
     readFile(path.join(root, 'contracts/definitive-v2-lock.json')),
     readJson('contracts/definitive-v2-lock.json'),
+    readFile(path.join(root, 'contracts/portal-root-definitive-lock.json')),
+    readJson('contracts/portal-root-definitive-lock.json'),
+    readJson('evidence/portal-root-definitive-report.json'),
     readFile(path.join(root, 'contracts/fixed-commit-audit-lock.json')),
     readJson('contracts/fixed-commit-audit-lock.json'),
     readFile(path.join(root, 'contracts/fixed-commit-audit-postgresql-lock.json')),
@@ -78,6 +82,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('definitive-v2-lock-immutable',sha256(definitiveLockBytes)===DEFINITIVE_V2_LOCK_DIGEST,`expected ${DEFINITIVE_V2_LOCK_DIGEST}`);
   check('definitive-v2-core-main',definitiveLock.coreRef==='main'&&definitiveLock.coreCommitStatus==='official-main-ci-passed'&&definitiveLock.coreCommit==='072d7ca77981f51754e824d70c6d4ecd55ea67e5'&&definitiveLock.writePolicy==='read-only'&&definitiveLock.autoPromotion===false,definitiveLock.coreCommit);
   check('definitive-v2-migration-document',sha256(await readFile(path.join(root,definitiveLock.vendoredMigrationDocumentPath)))===definitiveLock.migrationDocumentDigest,definitiveLock.vendoredMigrationDocumentPath);
+  check('portal-root-definitive-lock-immutable',sha256(portalRootDefinitiveLockBytes)===PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST,`expected ${PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST}`);
+  check('portal-root-definitive-core-failure',portalRootDefinitiveLock.coreCommit===definitiveLock.coreCommit&&portalRootDefinitiveReport.core?.commit===portalRootDefinitiveLock.coreCommit&&portalRootDefinitiveReport.result==='fail'&&portalRootDefinitiveReport.exitCode===portalRootDefinitiveLock.expectedExitCode&&portalRootDefinitiveReport.status==='root-definitive-incomplete'&&portalRootDefinitiveReport.completionClass==='not-definitive'&&portalRootDefinitiveReport.failureOrdering==='core-order-independent'&&portalRootDefinitiveReport.diagnosticClass==='known-required-root-artifact-unreadable'&&JSON.stringify(portalRootDefinitiveReport.knownMissingArtifacts)===JSON.stringify(portalRootDefinitiveLock.knownMissingArtifacts),'actual Core v2 failure / six required root artifacts absent / failure order independent');
+  check('portal-root-distribution-boundary',portalRootDefinitiveReport.boundary?.portalBoundedCertificate==='preserved-v1-local-evidence'&&portalRootDefinitiveReport.boundary?.subjectDefinitiveEffect==='none'&&portalRootDefinitiveReport.boundary?.distributionStatus==='not-established'&&portalRootDefinitiveReport.boundary?.distributionGapEffect==='none'&&portalRootDefinitiveReport.boundary?.completionEffect==='none'&&portalRootDefinitiveReport.boundary?.autoPromotion===false,'bounded local evidence / distribution not established / no promotion');
   check('fixed-commit-audit-lock-immutable',sha256(fixedAuditLockBytes)===FIXED_COMMIT_AUDIT_LOCK_DIGEST,`expected ${FIXED_COMMIT_AUDIT_LOCK_DIGEST}`);
   check('fixed-commit-audit-fixture-immutable',sha256(await readFile(path.join(root,fixedAuditLock.fixturePath)))===fixedAuditLock.fixtureFileDigest,fixedAuditLock.fixturePath);
   check('postgresql-fixed-commit-audit-lock-immutable',sha256(postgresqlAuditLockBytes)===POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST,`expected ${POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST}`);

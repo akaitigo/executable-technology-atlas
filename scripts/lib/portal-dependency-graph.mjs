@@ -25,7 +25,7 @@ export async function aggregateMemberDigest(root,members){
 }
 
 export async function discoverPortalOutputs(root){
-  const paths=new Set(['app/data/index.generated.json','app/data/index-bootstrap.generated.json','evals/router.skill-eval.json','evidence/import-report.json','evidence/non-regression-harness.json','evidence/non-regression-report.json','evidence/scenarios/closure-plan.json','evidence/scenarios/index.json','provenance.yaml','sbom.npm.spdx.json','sbom.spdx.json']);
+  const paths=new Set(['app/data/index.generated.json','app/data/index-bootstrap.generated.json','evals/router.skill-eval.json','evidence/import-report.json','evidence/non-regression-harness.json','evidence/non-regression-report.json','evidence/portal-root-definitive-report.json','evidence/scenarios/closure-plan.json','evidence/scenarios/index.json','provenance.yaml','sbom.npm.spdx.json','sbom.spdx.json']);
   try{const bootstrap=JSON.parse(await readFile(path.join(root,'app/data/index-bootstrap.generated.json'),'utf8'));if(/^\/data\/index\/[a-f0-9]{64}\.json$/.test(bootstrap.publicUrl))paths.add(`public${bootstrap.publicUrl}`);}catch{}
   for(const directory of ['evidence/reports','evidence/scenarios'])for(const relative of await walkFiles(root,directory))if(/\.json$/.test(relative))paths.add(relative);
   for(const name of await readdir(path.join(root,'evidence')))if(/\.evidence\.json$/.test(name))paths.add(`evidence/${name}`);
