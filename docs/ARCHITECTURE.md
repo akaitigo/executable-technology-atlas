@@ -13,6 +13,8 @@ signed Catalog release + signed Subject release bundles
 
 Runtimeは`fixtures/`のcontent-addressed bundleと生成済み`app/data/index.generated.json`だけを読み、Subject Source Tree、Git submodule、Default Branchへ依存しない。`scripts/generate-fixtures.mjs`はfixture更新時に明示された固定checkoutを入力として受ける開発用Exportであり、Runtime取込経路ではない。
 
+署名検証済みReleaseの公開詳細はRelease payload digestを使うURLと、公開Projection JSONそのもののbytes digestを別々にIndexへ保持する。Browserは取得bytesをIndex digestへ再照合し、HTTP失敗、改変、不正JSONではTargetやEvidence詳細を採用せず、Indexに固定したRelease状態、Coverage分母、Definitive不足をlast-known-goodとして残す。
+
 署名済みSubject Releaseがまだない場合、Portalは明示したclean commitのGit objectだけを開発時にCoreで監査し、観測専用のfixture署名Envelopeとして索引できる。この経路は`fixed-commit-incomplete`専用で、公開Release Trust、Release Manifest、Definitive Certificateを代替せず、Core Gateごとのpass/fail、Authority分母、必須output欠落、Schema drift、既知Gapを独立して保持する。現在は7 Subjectをこの境界で表示する。
 
 固定commit監査の公開詳細は、attestation digestを使うcontent-addressed URLに加えて、生成Indexへ詳細JSONのbytes digestを保持する。Browserは両者を分離して検証し、取得bytes不一致や不正JSONでは詳細を採用せず、Indexの`fixed-commit-incomplete / Release未成立`とGap分母をlast-known-goodとして表示する。

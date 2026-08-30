@@ -3,6 +3,7 @@
 - Telemetry、Cookie、外部Font、外部Scriptを使用しない。
 - Importerはローカルartifactまたは明示された固定Releaseだけを受け付け、URLを実行・追跡しない。
 - 署名とDigestをSchema解釈前に検証し、不一致は隔離する。
+- 署名済みReleaseの公開Projection詳細も、生成Indexに固定したbytes digestへBrowserとPublication Gateの両方で再照合する。
 - Manifest内のcommandは表示対象であり実行しない。
 - CSP、Referrer Policy、Permissions Policy、frame拒否を`public/_headers`で配布する。
 - Fixtureの秘密鍵は実鍵ではなく、決定論的なtest-only seedから生成する。Trust Storeにも`fixture-only`を明記する。

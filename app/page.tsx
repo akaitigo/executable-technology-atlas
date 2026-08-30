@@ -244,7 +244,7 @@ function SubjectDetail({ subject, close }: { subject:Subject; close:()=>void }) 
   useEffect(() => {
     if (!release) return;
     let active=true;
-    fetch(release.detailUrl).then((response)=>{if(!response.ok)throw new Error('detail unavailable');return response.json();}).then((value)=>{if(active)setDetail({ evidence:value.evidence??[], targets:value.targets??[], depthReference:value.depthReference??null });}).catch(()=>{if(active)setDetailError(true);});
+    fetch(release.detailUrl,{cache:'force-cache',credentials:'same-origin'}).then((response)=>parseDigestVerifiedJson(response,release.artifactDigest)).then((value)=>{const verified=value as ReleaseDetail;if(active)setDetail({evidence:verified.evidence??[],targets:verified.targets??[],depthReference:verified.depthReference??null});}).catch(()=>{if(active){setDetail(null);setDetailError(true);}});
     return ()=>{active=false;};
   },[release,subject.id]);
   useEffect(()=>{const audit=subject.fixedCommitAudit as FixedCommitAuditIndex;if(audit.availability!=='available')return;let active=true;fetch(audit.detailUrl,{cache:'force-cache',credentials:'same-origin'}).then((response)=>parseDigestVerifiedJson(response,audit.artifactDigest)).then((value)=>{if(active)setFixedAuditDetail(value as FixedCommitAudit);}).catch(()=>{if(active){setFixedAuditDetail(null);setFixedAuditError(true);}});return()=>{active=false;};},[subject.fixedCommitAudit]);
