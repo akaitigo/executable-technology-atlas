@@ -7,6 +7,7 @@ export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404
 export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
 export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
 export const EVIDENCE_DEPENDENCY_LOCK_DIGEST = 'sha256:720ece5c5287b40c62d71f2eba61d9c8a366c7664afc32b817358b3035a23156';
+export const DEFINITIVE_V2_LOCK_DIGEST = 'sha256:ae99e7f23ad0043a38a37e94d70ae2be5402e71a8936cb6b8d4f3931ee49c8b5';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
 
 const hasFields = (value, fields = []) => fields.every((field) => value?.[field] !== null && value?.[field] !== undefined);
@@ -15,7 +16,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -28,6 +29,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readJson('contracts/authority-review-lock.json'),
     readFile(path.join(root, 'contracts/evidence-dependency-lock.json')),
     readJson('contracts/evidence-dependency-lock.json'),
+    readFile(path.join(root, 'contracts/definitive-v2-lock.json')),
+    readJson('contracts/definitive-v2-lock.json'),
     readJson('fixtures/registry.json'),
   ]);
   const violations = [];
@@ -41,6 +44,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('authority-review-lock-immutable',sha256(reviewLockBytes)===AUTHORITY_REVIEW_LOCK_DIGEST,`expected ${AUTHORITY_REVIEW_LOCK_DIGEST}`);
   check('evidence-dependency-lock-immutable',sha256(dependencyLockBytes)===EVIDENCE_DEPENDENCY_LOCK_DIGEST,`expected ${EVIDENCE_DEPENDENCY_LOCK_DIGEST}`);
   check('evidence-dependency-core-main',dependencyLock.coreRef==='main'&&dependencyLock.coreCommitStatus==='official-main-ci-passed'&&dependencyLock.coreCommit==='072d7ca77981f51754e824d70c6d4ecd55ea67e5',dependencyLock.coreCommit);
+  check('definitive-v2-lock-immutable',sha256(definitiveLockBytes)===DEFINITIVE_V2_LOCK_DIGEST,`expected ${DEFINITIVE_V2_LOCK_DIGEST}`);
+  check('definitive-v2-core-main',definitiveLock.coreRef==='main'&&definitiveLock.coreCommitStatus==='official-main-ci-passed'&&definitiveLock.coreCommit==='072d7ca77981f51754e824d70c6d4ecd55ea67e5'&&definitiveLock.writePolicy==='read-only'&&definitiveLock.autoPromotion===false,definitiveLock.coreCommit);
 
   const subjectMappings = mappingIndex(mappings.subjectMappings);
   const targetMappings = mappingIndex(mappings.targetMappings);
@@ -153,8 +158,10 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   for(const token of ['Priority','Batch','Stale relock hold','pending','reviewed','include','exclude','merge','split','defer','一次資料をURL＋locatorで開く','write_decisions=false','Core共通API未接続','機械proposal / Human decisionではない','human decision 0件を進捗として扱いません'])if(!page.includes(token))fail('authority-review-ui-reduced',token);
   for(const forbidden of ['item.body','item.text','item.content','item.html','item.excerpt'])if(page.includes(forbidden))fail('authority-body-copied-to-ui',forbidden);
   for(const token of ['Evidence Dependency Graph','Inputs — changed / current','Impacted outputs — stale / current','Missing required output','Proof / Closure structure drift','digest更新だけを「復旧済み」と表示せず','autoPromotion=false'])if(!page.includes(token))fail('evidence-dependency-ui-reduced',token);
+  for(const token of ['Core Definitive Gate v2','bounded-complete / bounded historical','Authority-derived inventory closure','実Runtime Profile','definitive.gapIds.map(','Migration actions','readOnly=','autoPromotion='])if(!page.includes(token))fail('definitive-v2-ui-reduced',token);
 
   for(const subject of index.subjects){const dependency=subject.evidenceDependency;if(!dependency){fail('evidence-dependency-subject-hidden',subject.id);continue;}if(dependency.autoPromotion!==false||dependency.readOnly!==true)fail('evidence-dependency-write-boundary-weakened',subject.id);if(dependency.status==='current'&&(dependency.availability!=='available'||dependency.coreGate?.result!=='pass'||dependency.coreGate?.coreCommit!==dependencyLock.coreCommit))fail('evidence-dependency-current-without-core-gate',subject.id);if(dependency.availability==='missing'&&(dependency.status!=='missing-required-output'||dependency.coreGate?.result!=='not-run'))fail('evidence-dependency-missing-promoted',subject.id);}
+  for(const subject of index.subjects){const definitive=subject.definitiveV2;if(!definitive){fail('definitive-v2-subject-hidden',subject.id);continue;}if(definitive.autoPromotion!==false||definitive.readOnly!==true)fail('definitive-v2-write-boundary-weakened',subject.id);if(definitive.coreContract?.commit!==definitiveLock.coreCommit)fail('definitive-v2-core-binding-rewritten',subject.id);if(definitive.status==='subject-definitive'&&(definitive.availability!=='available'||definitive.coreGate?.result!=='pass'||definitive.certificate?.schemaVersion!==2||definitive.certificate?.trust?.usage!=='public-release'||definitive.inventoryClosure?.status!=='closed'||definitive.inventoryClosure?.unclassified!==0||definitive.inventoryClosure?.openRequired!==0||definitive.gapIds?.length))fail('definitive-v2-promoted-without-gate',subject.id);if(definitive.availability==='missing'&&(definitive.status!=='subject-definitive-input-missing'||definitive.coreGate?.result!=='not-run'||!definitive.gapIds?.length))fail('definitive-v2-missing-promoted',subject.id);}
 
   const depthRegistry = (registry.depthReferences ?? []).find((item) => item.subjectId === depthLock.subjectId);
   const depthSubject = currentSubjects.get(depthLock.subjectId);
@@ -213,6 +220,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     evidenceDependencyCurrent: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='current').length,
     evidenceDependencyStale: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='stale-or-incomplete').length,
     evidenceDependencyMissing: index.subjects.filter((subject)=>subject.evidenceDependency?.status==='missing-required-output').length,
+    definitiveV2Complete: index.subjects.filter((subject)=>subject.definitiveV2?.status==='subject-definitive').length,
+    definitiveV2Incomplete: index.subjects.filter((subject)=>subject.definitiveV2?.status==='subject-definitive-incomplete').length,
+    definitiveV2Missing: index.subjects.filter((subject)=>subject.definitiveV2?.status==='subject-definitive-input-missing').length,
     mappingsApplied: mappedCount,
     violations: violations.length,
   };

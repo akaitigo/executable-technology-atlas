@@ -1,6 +1,6 @@
 # Definitive Gate v2 取込境界
 
-この文書は実装済みのv2契約ではなく、Core正本確定までPortalが誤って完成表示しないための移行境界である。
+この文書はCore正式main `072d7ca77981f51754e824d70c6d4ecd55ea67e5`で確定したDefinitive v2契約をPortalへ取り込む境界である。Portalはread-only Adapterとして実装済みだが、現在の97 Subjectには署名済みv2 bundleがないため、Definitive完成は0件である。
 
 ## 現在の判定
 
@@ -14,7 +14,7 @@
 - Authority Human Review read-only exportのpacket、projection、machine proposal、pending、reviewed、stale holdを個別に保持する。自動proposal、0 decision、`defer`をHuman review closureへ算入せず、本文を複製しない。Core共通API/Schemaが確定するまで書込みを提供せず、将来もreason、reviewer、time、manual-primary-source、digest、mappingが欠けるDecisionを拒否する。
 - Evidence Dependency Graphは正式main commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`で確定した独立契約として取込む。Graph、rerun、runtime identity、required output、Proof/Closure構造のCore Gate結果はDefinitive完成の十分条件ではなく、Graph/Gate欠落、stale、failは既存Gapとincompleteを維持する。
 
-## Core確定後の受入条件
+## 受入条件
 
 次のすべてをCore v2の確定Schema、Migration、CLIで検証できる場合に限り`subject-definitive`を返す。
 
@@ -26,8 +26,8 @@
 6. Core Definitive GateとMigration互換検証の成功
 7. 非後退Baselineの成功と、旧ID Mappingを含む同等以上の情報・Evidence
 
-フィールド名、Enum、署名形式、freshness規則はPortal側で推測しない。`reference-atlas-core`のversion、commit、Schema digestをvendor provenanceへ固定し、拒否Testを追加してから本Adapterを実装する。
+フィールド名、Enum、署名形式、freshness規則はPortal側で推測しない。`reference-atlas-core`のcommit、3 Schema digest、Gate commandを`contracts/definitive-v2-lock.json`へ固定し、不一致、fixture Trust、Gap、未Closure、未検証Runtime identityを拒否する。
 
 ## main反映条件
 
-Core v2 Schema/Migration/CLI/Testが正本で確定し、PortalのImporter、UI、Router、Eval、Publication Gate、Portal自身のCertificateを同一契約へ移行した後に限る。それまではこのfeature branchをmainへmergeしない。
+PortalのImporter、UI、Router、Eval、Publication Gate、非後退Gate、Portal自身のCertificateが同一契約を検証し、全Gateが再現可能に成功したcheckpointに限る。Subject v2入力の欠落は隠さず、外部公開やmain反映は別の明示的な作業として扱う。

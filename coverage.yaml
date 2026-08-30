@@ -1,7 +1,7 @@
 schema_version: 1
 atlas_id: executable-technology-atlas
 epoch: "2026-08-28"
-authority_lock_digest: sha256:ccaf3bfa4757b42eb8d41be89f012fcbafa249ddaaf1bad3863dc5b7568c7e97
+authority_lock_digest: sha256:2d9acb565608c9f6d36bca52254b07af893f20d2ceaaa0cdeaf61bb4e3f1cf1d
 target_sets:
   - id: portal-read-model
     title: 固定Release横断Read Model
@@ -120,5 +120,15 @@ targets:
     state: covered
     rationale: 入力変化、影響output、stale状態、rerun、runtime identity、required output欠落、Proof/Closure構造差分を自動昇格なしで検証・表示する必要がある。
     claim_ids: [portal.evidence-dependency.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
+    exclusion: null
+  - id: portal.definitive-v2.read-model
+    title: Core Definitive Gate v2結果をfail-closedでread-only表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: bounded履歴とSubject Definitiveを分離し、Inventory Closure、Runtime identity、Migration、Gap、Core Gate結果を自動昇格なしで検証・表示する必要がある。
+    claim_ids: [portal.definitive-v2.read-model]
     evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
     exclusion: null

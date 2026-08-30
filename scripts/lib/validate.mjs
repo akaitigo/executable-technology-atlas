@@ -70,7 +70,7 @@ export function validateCompletionCertificate(payload, validators, release = {})
 
 // Core v1 certificates prove closure only for their fixed historical epoch. They
 // do not contain the identity, inventory and public-trust bindings required by
-// the forthcoming Definitive Gate v2. Keep this decision fail-closed and in one
+// the Core Definitive Gate v2 adapter. Keep this decision fail-closed and in one
 // place so a future v2 adapter can replace it only after the canonical contract
 // and migration are committed in reference-atlas-core.
 export function classifySubjectCompletion(payload, certificateVerification, trust = {}) {

@@ -19,7 +19,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'atlas-non-regression-'));
   try {
     for (const directory of ['contracts','app/data','fixtures/depth-references','public/data/releases','public/data/authority-reviews']) await mkdir(path.join(temporary,directory), { recursive:true });
-    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
+    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','contracts/definitive-v2-lock.json','app/data/index.generated.json','fixtures/failure-scenarios.json','fixtures/registry.json','app/page.tsx']) {
       await mkdir(path.dirname(path.join(temporary,file)), { recursive:true });
       await cp(path.join(root,file), path.join(temporary,file));
     }
@@ -54,6 +54,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const depthPromoted=structuredClone(originalIndex);depthPromoted.subjects.find((subject)=>subject.id==='frontend-behavior').depthReference.completion.definitive=true;await writeJson(indexPath,depthPromoted);await expectViolation('depth-reference-status-promoted');await writeJson(indexPath,originalIndex);
     const reviewProgress=structuredClone(originalIndex);const reviewSubject=reviewProgress.subjects.find((subject)=>subject.id==='frontend-behavior');reviewSubject.authorityReview.summary.human_reviewed=1;reviewSubject.authorityReview.summary.has_human_progress=true;await writeJson(indexPath,reviewProgress);await expectViolation('authority-review-summary-rewritten');await writeJson(indexPath,originalIndex);
     const dependencyPromoted=structuredClone(originalIndex);dependencyPromoted.subjects[0].evidenceDependency={...dependencyPromoted.subjects[0].evidenceDependency,availability:'missing',status:'current',autoPromotion:true,coreGate:{...dependencyPromoted.subjects[0].evidenceDependency.coreGate,result:'pass'}};await writeJson(indexPath,dependencyPromoted);await expectViolation('evidence-dependency-write-boundary-weakened');await writeJson(indexPath,originalIndex);
+    const definitivePromoted=structuredClone(originalIndex);definitivePromoted.subjects[0].definitiveV2={...definitivePromoted.subjects[0].definitiveV2,availability:'missing',status:'subject-definitive',autoPromotion:true,coreGate:{...definitivePromoted.subjects[0].definitiveV2.coreGate,result:'pass'}};await writeJson(indexPath,definitivePromoted);await expectViolation('definitive-v2-write-boundary-weakened');await writeJson(indexPath,originalIndex);
     assert.equal((await evaluateNonRegression(temporary,{scanLanguage:false})).verdict,'pass');
   } finally {
     await rm(temporary,{recursive:true,force:true});

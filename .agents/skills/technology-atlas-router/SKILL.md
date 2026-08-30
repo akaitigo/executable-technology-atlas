@@ -14,9 +14,10 @@ Portalの生成Indexを検索し、技術知識を複製せず、固定Release�
 3. 候補のCatalog状態と固定Releaseの有無を先に確認する。Source Tree、Default Branch、浮動URLへRouteしない。
 4. Releaseがある場合はURI、Digest、署名、検証状態を確認してからCoverageとEvidenceへ進む。
 5. Route可能性と完成判定を必ず分離し、`release.completion`を返す。v1 Certificateは`bounded-historical`としてのみ案内する。
-6. Subject Definitive完成を主張する場合は、公開Trust KeyとCore v2 Definitive Certificateの検証成功を要求する。Core v2確定までは常に未証明と返す。
+6. Subject Definitive完成を主張する場合は、Core正式main `072d7ca77981f51754e824d70c6d4ecd55ea67e5` の確定Schema/Migration、公開Trust Key、署名済みv2 bundle、固定Release binding、`atlas audit . --gate definitive` passをすべて要求する。入力欠落またはGate未通過は未証明と返す。
 7. `evidence/non-regression-report.json`が`pass`であることを確認し、open required、unclassified、bounded historical、非後退違反数を省略しない。
 8. `depthReference`があるSubjectでは、18軸を省略せず状態、分母、各CheckのProof、GapへRouteする。Test成功件数はProofとして返し、`depthReference.status`、`completion.bounded`、`completion.definitive`を別々に返す。
+9. `definitiveV2`はInventory Closure、unclassified、open required、excluded、infeasible、実Runtime identity、Gap、Migration actionを省略せず返す。`bounded-historical`を`subject-definitive`へ読み替えず、Portalから書込み・自動昇格を行わない。
 9. `authorityReview`があるSubjectでは固定read-only exportのpriority、packet、projection、machine proposal、stale hold、pending、reviewedとinclude/exclude/merge/split/defer境界へRouteする。decision 0件は進捗0として返し、URLとlocatorから一次資料を人が確認する導線を示す。machine proposalをHuman decisionと呼ばず、Portal書込みを案内しない。
 10. `evidenceDependency`を必ず返し、input changed/current、影響output、stale/current、rerun command/result/runtime identity、missing required output、Proof/Closure structure driftへRouteする。`current`は`reference-atlas-core`正式main commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のCore Gate `pass`だけから返す。
 

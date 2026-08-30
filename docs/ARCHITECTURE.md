@@ -25,7 +25,7 @@ Evidence Dependency Graph Adapterは`reference-atlas-core`正式main/CI成功com
 
 Core v1 Completion Certificateは固定Epochの`bounded-historical`として分類する。Releaseのraw `complete`、v1 Certificate検証、`public-release` Trustだけでは`subject-definitive`へ昇格しない。ReleaseはRepositoryごとの履歴配列とDigest固定の詳細Fileで保持し、current pointerをIndexで明示する。
 
-Evidence Dependency Graph契約の確定はSubject Definitive Gate v2確定を意味しない。Core Definitive Gate v2のSchema/Migrationが正本へcommitされるまでは、`completionPolicy.definitiveGate`を`pending-core-v2`としてfail closedにする。確定後の受理条件は[DEFINITIVE_GATE_V2.md](DEFINITIVE_GATE_V2.md)で管理する。
+Core Definitive Gate v2のSchema、Migration、CLIは正式main `072d7ca77981f51754e824d70c6d4ecd55ea67e5`で確定している。Portalは3 Schemaのbyte digestとGate commandを固定し、`completionPolicy.definitiveGate`を`core-v2-final-fail-closed`として扱う。署名済みbundle、公開Trust、固定Release binding、Core Gate passが揃わないSubjectは`subject-definitive-input-missing`または`subject-definitive-incomplete`のままにする。受理条件は[DEFINITIVE_GATE_V2.md](DEFINITIVE_GATE_V2.md)で管理する。
 
 非後退BaselineはSubject、Target、Evidence、FailureをID単位で保持し、生成Indexとは独立した固定契約として扱う。Importer後に`scripts/check-non-regression.mjs`が現行Read ModelとDigest固定詳細を照合し、Publication Gateが結果の再現一致まで検証する。置換は明示Mappingが必要で、件数集約だけでは元のID、理由、環境、Evidenceを代替できない。
 

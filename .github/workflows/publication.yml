@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Checkout Evidence Dependency contract from official Core main commit
+      - name: Checkout Evidence Dependency and Definitive v2 contracts from official Core main commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: akaitigo/reference-atlas-core
@@ -61,10 +61,13 @@ jobs:
       - name: Install lockfile dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: Verify vendored Evidence Dependency contract
+      - name: Verify vendored Core v2 contracts
         run: |
           cmp contracts/schemas/evidence-dependency-graph.schema.json .ci/reference-atlas-core-evidence/schemas/evidence-dependency-graph.schema.json
           cmp contracts/reference/EVIDENCE_DEPENDENCY_GRAPH.md .ci/reference-atlas-core-evidence/docs/EVIDENCE_DEPENDENCY_GRAPH.md
+          cmp contracts/schemas/definitive.schema.json .ci/reference-atlas-core-evidence/schemas/definitive.schema.json
+          cmp contracts/schemas/definitive-migration.schema.json .ci/reference-atlas-core-evidence/schemas/definitive-migration.schema.json
+          cmp contracts/schemas/definitive-certificate.schema.json .ci/reference-atlas-core-evidence/schemas/definitive-certificate.schema.json
           test "$(git -C .ci/reference-atlas-core-evidence rev-parse HEAD)" = "072d7ca77981f51754e824d70c6d4ecd55ea67e5"
 
       - name: Reproduce fixed Index and Router Eval
