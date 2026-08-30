@@ -18,6 +18,8 @@ const rabbitmqLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-com
 const rabbitmqEnvelope=JSON.parse(await readFile(path.join(root,rabbitmqLock.fixturePath),'utf8'));
 const kotlinLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-kotlin-lock.json'),'utf8'));
 const kotlinEnvelope=JSON.parse(await readFile(path.join(root,kotlinLock.fixturePath),'utf8'));
+const zeroTrustLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-zero-trust-lock.json'),'utf8'));
+const zeroTrustEnvelope=JSON.parse(await readFile(path.join(root,zeroTrustLock.fixturePath),'utf8'));
 
 test('実Subject固定commit監査EnvelopeをSchema・Digest・署名で受理する',()=>{
   const result=validateFixedCommitAudit(envelope,schema,trusted);
@@ -103,6 +105,30 @@ test('Kotlin固定commitの契約passと実行Gapを同時に保持する',()=>{
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),kotlinLock.requiredGapIds);
 });
 
+test('Zero Trustのbounded closureとDefinitive inventory未完了を分離する',()=>{
+  const validated=validateFixedCommitAudit(zeroTrustEnvelope,schema,trusted);
+  assert.equal(validated.ok,true,validated.errors.join('; '));
+  const audit=projectFixedCommitAudit(zeroTrustEnvelope,validated);
+  assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:zeroTrustLock.sourceCommit,tree:zeroTrustLock.sourceTree});
+  assert.deepEqual({boundedOpenRequired:audit.manifest.openRequired,definitiveOpenRequired:audit.core.definitive.summary.openRequired,coreResult:audit.core.definitive.result},{boundedOpenRequired:0,definitiveOpenRequired:91,coreResult:'fail'});
+  assert.deepEqual(audit.depthReference.summary,{axes:18,satisfied:1,partial:17,missing:0});
+  assert.equal(audit.depthReference.axes.length,18);
+  assert.equal(audit.depthReference.axes.filter((axis)=>axis.status!=='satisfied'&&axis.gaps.length>0).length,17);
+  assert.deepEqual({unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{unclassified:2786,pending:2786,decisions:0});
+  assert.deepEqual({rows:audit.core.scenarioTrace.summary.rows,runtimeRows:audit.core.scenarioTrace.summary.runtimeRows,variantCells:audit.core.scenarioTrace.summary.variantCells,closedVariantCells:audit.core.scenarioTrace.summary.closedVariantCells,gaps:audit.core.scenarioTrace.summary.gaps},{rows:910,runtimeRows:0,variantCells:1820,closedVariantCells:16,gaps:910});
+  assert.deepEqual(audit.gaps.map((gap)=>gap.id),zeroTrustLock.requiredGapIds);
+  assert.equal(audit.readOnly,true);
+  assert.equal(audit.autoPromotion,false);
+});
+
+test('bounded open required 0をDefinitive inventory Gapなしで受理しない',()=>{
+  const mutated=structuredClone(zeroTrustEnvelope);
+  mutated.payload.gaps=mutated.payload.gaps.filter((gap)=>gap.id!=='definitive-inventory-open-required');
+  const result=validateFixedCommitAudit(mutated,schema,trusted);
+  assert.equal(result.ok,false);
+  assert.match(result.errors.join('; '),/Definitive inventory/);
+});
+
 test('改変とRelease/Definitiveへの格上げを拒否する',()=>{
   const tampered=structuredClone(envelope);tampered.payload.manifest.openRequired=21;
   assert.equal(validateFixedCommitAudit(tampered,schema,trusted).ok,false);
@@ -110,6 +136,6 @@ test('改変とRelease/Definitiveへの格上げを拒否する',()=>{
   const result=validateFixedCommitAudit(promoted,schema,trusted);
   assert.equal(result.ok,false);
   assert.ok(result.errors.some((error)=>error.includes('ReleaseまたはDefinitive')));
-  assert.ok(result.errors.some((error)=>error.includes('incomplete/open required')));
+  assert.ok(result.errors.some((error)=>error.includes('incomplete境界')));
   assert.ok(result.errors.some((error)=>error.includes('read-only/autoPromotion')));
 });

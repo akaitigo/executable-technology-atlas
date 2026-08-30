@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "zero-trust",
+  "atlasId": "zero-trust-reference-atlas",
+  "status": "fixed-commit-incomplete",
+  "source": {
+    "repository": "zero-trust-reference-atlas",
+    "commit": "d0b127baef7a3e71bd9f7d804a9bafcf0af0a3c0",
+    "tree": "4876b218ae2e782096deff762f72c323b52720d9",
+    "mode": "fixed-clean-commit",
+    "attestationDigest": "sha256:59d88d4d5065dee12d71a15e59b536af81d2e48d581ea6f6fe37fc1a65f55c0d",
+    "trust": {
+      "keyId": "fixture-ed25519-4e119a9024374301",
+      "usage": "fixture-only"
+    }
+  },
+  "releaseBoundary": {
+    "status": "unpublished-fixed-commit",
+    "tag": null,
+    "signedManifest": false,
+    "publicTrustKey": false,
+    "definitiveCertificate": false
+  },
+  "manifest": {
+    "status": "incomplete",
+    "completionClass": "incomplete",
+    "targets": 33,
+    "openRequired": 0,
+    "claims": 33,
+    "evidence": 29
+  },
+  "core": {
+    "commit": "072d7ca77981f51754e824d70c6d4ecd55ea67e5",
+    "audit": {
+      "result": "pass",
+      "summary": {
+        "completionClass": "incomplete",
+        "targets": 33,
+        "claims": 33,
+        "evidence": 29,
+        "openRequired": 0
+      },
+      "diagnostics": [
+        "bounded Target closureはDefinitive inventory closureではありません"
+      ]
+    },
+    "evidenceDependency": {
+      "result": "pass",
+      "summary": {
+        "inputs": 20,
+        "changedInputs": 13,
+        "outputs": 1129,
+        "affectedOutputs": 1129,
+        "runs": 9
+      }
+    },
+    "authorityExtraction": {
+      "result": "pass",
+      "summary": {
+        "status": "incomplete-human-review-required",
+        "locked": 16,
+        "matched": 0,
+        "failed": 0,
+        "deferredLocators": 322,
+        "humanReviewed": 0,
+        "coreV2Eligible": 0
+      },
+      "diagnostics": [
+        "322 locatorはbodyをPortalへ複製せずhuman review待ちです"
+      ]
+    },
+    "authorityBody": {
+      "result": "pass",
+      "summary": {
+        "status": "incomplete-human-review-required",
+        "sources": 16,
+        "documents": 16,
+        "matched": 16,
+        "failed": 0,
+        "candidateAnchors": 2786,
+        "classified": 0,
+        "unclassified": 2786,
+        "humanReviewed": 0,
+        "coreV2Eligible": 0
+      },
+      "diagnostics": [
+        "2,786 raw anchorは意味的Surfaceへ昇格していません"
+      ]
+    },
+    "authorityReview": {
+      "result": "pass",
+      "summary": {
+        "status": "incomplete-human-review-required",
+        "queued": 2786,
+        "pendingHuman": 2786,
+        "humanReviewed": 0,
+        "unavailableHolds": 0,
+        "decisions": 0
+      },
+      "diagnostics": [
+        "machine proposalはHuman decisionではなく、decision 0は進捗ではありません"
+      ]
+    },
+    "definitive": {
+      "result": "fail",
+      "summary": {
+        "completionClass": "not-definitive",
+        "declaredCompletionClass": "subject-definitive",
+        "missingContractArtifacts": 3,
+        "openRequired": 91
+      },
+      "diagnostics": [
+        "surface.inventory.yamlがなくCore Definitive Gateはfailします",
+        "verification.matrix.yamlとDefinitive Certificateもありません"
+      ]
+    },
+    "scenarioTrace": {
+      "result": "pass",
+      "summary": {
+        "status": "incomplete-authority-atomic-and-behavior-runtime-closure",
+        "rows": 910,
+        "runtimeRows": 0,
+        "variantCells": 1820,
+        "closedVariantCells": 16,
+        "gaps": 910
+      },
+      "diagnostics": [
+        "16/1,820 cellの実行を910 rowのClosureへ流用せず、completion eligible rowは0です"
+      ]
+    },
+    "nonRegression": {
+      "result": "pass",
+      "summary": {},
+      "diagnostics": [
+        "published-mainのTarget/Claim/Proof/Evidence/Source/Skill/Lab/CIを保持しています"
+      ]
+    },
+    "evidenceDurability": {
+      "result": "fail",
+      "summary": {
+        "missingRequiredOutputs": 1
+      },
+      "diagnostics": [
+        "artifacts/pattern-scenarios/results.jsonが固定commitに存在しません"
+      ]
+    }
+  },
+  "depthReference": {
+    "sourcePath": "definitive/zero-trust-depth-parity.json",
+    "status": "incomplete",
+    "summary": {
+      "axes": 18,
+      "satisfied": 1,
+      "partial": 17,
+      "missing": 0
+    },
+    "denominatorPolicy": {
+      "source": "NIST/CISA/IETF/OIDC/WebAuthn/SPIFFE authority-derived Zero Trust inventory",
+      "requiredAtomicItems": 91,
+      "transplantFrontendCounts": false,
+      "rule": "Control数や文書数ではなく、Zero Trust固有item × scenario × runtime profile × implementation variantの専用Proofで判定する。"
+    },
+    "axes": [
+      {
+        "id": "authority-body-digestion",
+        "status": "partial",
+        "denominator": "locked authority sources and locator-level extracted Zero Trust surfaces",
+        "proofGranularity": "source response body digest × locator × atomic item × human review",
+        "evidencePaths": [
+          "sources.lock.yaml",
+          "inventory/definitive-v2.yaml",
+          "authority/extraction.snapshot.json",
+          "authority/body-inventory.snapshot.json",
+          "authority/review-queue.snapshot.json",
+          "authority/reviews/decisions.json",
+          "baseline/authority-body-inventory-v1.json"
+        ],
+        "gaps": [
+          "16 unique documentの2,786 raw anchorをstable IDで完全Queue化したが、priority/cluster/batchは提案のみ、全件pending-human、human decision 0、Semantic Surface昇格0、PDFはdocument-rootのみで、Authority本文全体の意味的exhaustive判定が未完了。"
+        ]
+      },
+      {
+        "id": "surface-atomic-behavior-variant",
+        "status": "partial",
+        "denominator": "91 authority-derived required atomic Zero Trust items and applicable implementation variants",
+        "proofGranularity": "surface locator × one atomic item × Target × Claim × comparable real implementation variant",
+        "evidencePaths": [
+          "inventory/definitive-v2.yaml",
+          "coverage.yaml",
+          "evidence/definitive/policy-comparison.json",
+          "evidence/scenarios/index.json"
+        ],
+        "gaps": [
+          "91 Surface×10 Scenarioを910個の専用Proofへ分割し2 Variant profileで1,820 execution cellを固定したが、専用Runtime Closureは0、Scenario gapは910、Authority atomic bindingは0である。",
+          "OpenFGA E2E接続、Variant Inventory、Core v2専用Target/Claim/Verification closureが未完了である。"
+        ]
+      },
+      {
+        "id": "real-runtime-lab",
+        "status": "partial",
+        "denominator": "required item × local/container/cloud-live/hybrid/device runtime profile",
+        "proofGranularity": "atomic item × runtime profile × exact component version × source/harness digest × artifact",
+        "evidencePaths": [
+          "integration/compose.yaml",
+          "evidence/definitive/integration-scenarios.json",
+          "integration/reference-system.yaml",
+          "evidence/scenarios/index.json",
+          "scripts/report_dedicated_runtime.py"
+        ],
+        "gaps": [
+          "集約OIDC/PDP/PEP/Telemetry container proofはあるが専用Surface×Scenario×Variant実行へ流用せずClosureは0/1,820である。原子的Reporterは実装済みだが公開可能なfull dedicated runtime bundleはまだない。",
+          "SPIFFE Workload API、実Device posture、cloud-live、hybrid profileもない。"
+        ]
+      },
+      {
+        "id": "scenario-normal",
+        "status": "partial",
+        "denominator": "91 required Zero Trust items",
+        "proofGranularity": "one atomic item × normal scenario × dedicated oracle × runtime artifact",
+        "evidencePaths": [
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/generated/normal.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0である。"
+        ]
+      },
+      {
+        "id": "scenario-boundary",
+        "status": "partial",
+        "denominator": "91 required Zero Trust items with applicable trust and data boundaries",
+        "proofGranularity": "one atomic item × boundary input × expected decision/enforcement × dedicated artifact",
+        "evidencePaths": [
+          "evidence/generated/deny.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、clock-skew等も未実行である。"
+        ]
+      },
+      {
+        "id": "scenario-refusal",
+        "status": "partial",
+        "denominator": "91 required Zero Trust items with deny/refusal behavior",
+        "proofGranularity": "one atomic item × refusal reason × deny decision × PEP outcome × artifact",
+        "evidencePaths": [
+          "evidence/generated/deny.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0である。"
+        ]
+      },
+      {
+        "id": "scenario-failure",
+        "status": "partial",
+        "denominator": "91 required Zero Trust items × applicable component/control-plane failure modes",
+        "proofGranularity": "one atomic item × injected failure × fail-closed/degraded oracle × artifact",
+        "evidencePaths": [
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/generated/failure.json"
+        ],
+        "gaps": [
+          "IdP+PDP同時offlineのdefault denyは実Containerで追加したが91専用rowと182 Variant cellの全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、Network partition、明示的emergency degraded allow、backup lossも未完了である。"
+        ]
+      },
+      {
+        "id": "scenario-recovery",
+        "status": "partial",
+        "denominator": "91 required Zero Trust items × applicable recovery modes",
+        "proofGranularity": "one failure proof × fresh credential/decision/state recovery × bounded recovery artifact",
+        "evidencePaths": [
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/generated/recovery.json"
+        ],
+        "gaps": [
+          "IdP+PDP復旧後のfresh token/fresh decisionは実Containerで追加したが91専用rowと182 Variant cellの全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、backup restore、partition heal、SVID recoveryも未完了である。"
+        ]
+      },
+      {
+        "id": "scenario-migration",
+        "status": "partial",
+        "denominator": "required item × supported source/target product or policy evolution path",
+        "proofGranularity": "one atomic item × shadow/cutover/rollback state × old/new decision comparison × artifact",
+        "evidencePaths": [
+          "evidence/generated/migration-shadow-cutover.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/definitive/policy-comparison.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、実IdP/PDP/PEP upgradeのshadow cutoverとrollbackもない。"
+        ]
+      },
+      {
+        "id": "scenario-operations",
+        "status": "partial",
+        "denominator": "required item × operational diagnosis/change/incident workflow",
+        "proofGranularity": "decision ID × token/posture/policy/PEP/resource/log correlation × operator outcome × artifact",
+        "evidencePaths": [
+          "evidence/definitive/operations-exercise.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、時間制限付き人手handoff、retention、access-control演習もない。"
+        ]
+      },
+      {
+        "id": "scenario-security",
+        "status": "partial",
+        "denominator": "required item × authority-derived threat/abuse/control-plane case",
+        "proofGranularity": "isolated abuse case × observable attack precondition × refusal/containment oracle × artifact",
+        "evidencePaths": [
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/generated/threat-credential-abuse.json"
+        ],
+        "gaps": [
+          "header/decision spoofとPosture管理API低権限拒否は実Containerで追加したが91専用rowと182 Variant cellの全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、DPoP、Policy bundle改ざん、全Control Plane role separationは未完了である。"
+        ]
+      },
+      {
+        "id": "scenario-performance",
+        "status": "partial",
+        "denominator": "required decision/enforcement item × implementation variant × workload/profile",
+        "proofGranularity": "component versions × workload × concurrency × latency distribution/throughput × budget × artifact",
+        "evidencePaths": [
+          "evidence/definitive/performance.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、cache、saturation、soak、availability SLO、cost profileもない。"
+        ]
+      },
+      {
+        "id": "scenario-compatibility",
+        "status": "partial",
+        "denominator": "required item × IdP/PDP/PEP/workload/telemetry/network/cloud/hybrid product profile",
+        "proofGranularity": "one atomic item × exact cross-product/profile combination × supported/degraded/refused outcome × artifact",
+        "evidencePaths": [
+          "evidence/definitive/policy-comparison.json",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "docs/CLOUD_INTEGRATION.md"
+        ],
+        "gaps": [
+          "91専用rowと182 Variant cellを固定したが全Variant専用Runtime Closureは0/91、Authority atomic bindingは0で、IdP、Workload、Telemetry、cloud/hybrid互換性も未実証である。"
+        ]
+      },
+      {
+        "id": "artifact-trace",
+        "status": "partial",
+        "denominator": "every required scenario row",
+        "proofGranularity": "one item × one scenario × one profile × one Proof × one uniquely bound token/decision/log/trace/metric/artifact",
+        "evidencePaths": [
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "evidence/dependency-graph.json",
+          "evidence/definitive/operations-exercise.json",
+          "evidence/definitive/performance.json",
+          "evidence/definitive/distributed-traces.json",
+          "evidence/definitive/runtime-metrics.json",
+          "docs/SCENARIO_GAP_CLOSURE.md",
+          "docs/EVIDENCE_DEPENDENCY_GRAPH.md",
+          "scripts/report_dedicated_runtime.py",
+          "scripts/test_atomic_evidence_reporter.py"
+        ],
+        "gaps": [
+          "910 row・1,820 Variant cellすべてに専用token/decision/log/trace、Oracle、Source/Harness digest、Runtime identityのClosure predicateと推移stale契約を記録し、全Artifactの原子的保存契約も実装したが、専用Runtime Artifactは0でScenario gapは910、Authority atomic bindingは0である。",
+          "集約Trace/Log/Decision/Token metadataは流用せず、秘密最小化と両立する専用Artifact生成も未完了である。"
+        ]
+      },
+      {
+        "id": "integrated-reference-system",
+        "status": "partial",
+        "denominator": "authority-derived Identity/Policy/Enforcement/Resource/Telemetry architecture surfaces",
+        "proofGranularity": "reference system manifest × real responsibility boundaries × cross-component failure/recovery × artifact",
+        "evidencePaths": [
+          "integration/reference-system.yaml",
+          "integration/manifest.yaml",
+          "integration/compose.yaml",
+          "evidence/definitive/reference-system-scenarios.json",
+          "evidence/scenarios/index.json",
+          "scripts/report_dedicated_runtime.py"
+        ],
+        "gaps": [
+          "10 Scenario統合実行は固定したがSurface×Scenario×Variant専用Runtimeへ流用せず、Scenario Closure 0/910、Variant cell Closure 0/1,820、completion eligible 0である。",
+          "実Workload API、第二IdP、第二PEP、第二Telemetry、cloud/hybrid systemもない。"
+        ]
+      },
+      {
+        "id": "skill-eval",
+        "status": "partial",
+        "denominator": "8 outcomes × 14 surfaces × ambiguity/gap/authority/implementation/diagnosis/migration/review classes",
+        "proofGranularity": "one user intent/surface/risk class × expected route/refusal × independent execution oracle × artifact",
+        "evidencePaths": [
+          "evals/zero-trust-router.definitive-skill-eval.json",
+          "evals/zero-trust-router.mastery-routing-eval.json",
+          "evals/zero-trust-router.forward-agent-eval.json",
+          "evidence/generated/skill-eval.json"
+        ],
+        "gaps": [
+          "Router 34 case、8 Outcome×14 Surface、独立Agent Forward Evalを機械記録したが、91 Definitive Targetはopenであり、実Artifact変更・運用Closureをmatrix passで代替しない。"
+        ]
+      },
+      {
+        "id": "rights-provenance",
+        "status": "partial",
+        "denominator": "repository code, dependencies, authority artifacts, images, licenses and publication obligations",
+        "proofGranularity": "artifact/package × exact version/source/license × SBOM/NOTICE obligation × human review when required",
+        "evidencePaths": [
+          "third_party/manifest.yaml",
+          "sbom.spdx.json",
+          "third_party/sbom.cdx.json",
+          "NOTICE"
+        ],
+        "gaps": [
+          "自動Inventoryはあるが第三者義務と公開範囲の独立人手Reviewが未完了。"
+        ]
+      },
+      {
+        "id": "non-regression-gate",
+        "status": "satisfied",
+        "denominator": "published-main Target/Claim/Proof/Evidence/Source/Skill/Lab/CI identities and contracts",
+        "proofGranularity": "baseline identity set × assertion/profile/CI preservation × explicit replacement mapping and migration proof",
+        "evidencePaths": [
+          "baseline/published-main-v1.json",
+          "baseline/evidence-dependency-v1.json",
+          "migrations/non-regression-v1.yaml",
+          "evidence/dependency-graph.json",
+          "fixtures/evidence-dependency/input-change-digest-only.fixture.json"
+        ],
+        "gaps": []
+      }
+    ]
+  },
+  "gaps": [
+    {
+      "id": "fixed-release-manifest-missing",
+      "status": "open",
+      "detail": "署名済み固定Release Manifestがありません。",
+      "count": 1
+    },
+    {
+      "id": "public-trust-key-missing",
+      "status": "open",
+      "detail": "公開Release Trust Keyがありません。",
+      "count": 1
+    },
+    {
+      "id": "definitive-certificate-missing",
+      "status": "open",
+      "detail": "Core v2 Definitive Certificateがありません。",
+      "count": 1
+    },
+    {
+      "id": "historical-certificate-not-definitive",
+      "status": "open",
+      "detail": "既存v1 Certificateはbounded historicalでありDefinitive完成を証明しません。",
+      "count": 1
+    },
+    {
+      "id": "definitive-inventory-open-required",
+      "status": "open",
+      "detail": "bounded Targetのopen requiredは0ですが、Authority-derived Definitive inventory 91件は全件openです。",
+      "count": 91
+    },
+    {
+      "id": "definitive-contract-artifacts-missing",
+      "status": "open",
+      "detail": "Surface inventory、Verification matrix、Definitive Certificateがありません。",
+      "count": 3
+    },
+    {
+      "id": "authority-locator-evaluation-deferred",
+      "status": "open",
+      "detail": "Authority locator評価がhuman review待ちです。",
+      "count": 322
+    },
+    {
+      "id": "authority-body-unclassified",
+      "status": "open",
+      "detail": "Authority body anchorが未分類です。",
+      "count": 2786
+    },
+    {
+      "id": "authority-human-review-open",
+      "status": "open",
+      "detail": "Authority anchorがhuman review未完了です。",
+      "count": 2786
+    },
+    {
+      "id": "depth-parity-incomplete",
+      "status": "open",
+      "detail": "Depth Reference 18軸のうち17軸がpartialです。",
+      "count": 17
+    },
+    {
+      "id": "definitive-self-declaration-rejected",
+      "status": "open",
+      "detail": "definitive.yamlのsubject-definitive自己宣言はCore Gate失敗のため完成扱いできません。",
+      "count": 1
+    },
+    {
+      "id": "scenario-runtime-gaps",
+      "status": "open",
+      "detail": "Authority atomic binding済みの専用Scenario runtime closureがありません。",
+      "count": 910
+    },
+    {
+      "id": "variant-execution-gaps",
+      "status": "open",
+      "detail": "実装Variant別の専用実行cellが未完了です。",
+      "count": 1804
+    },
+    {
+      "id": "authority-atomic-binding-missing",
+      "status": "open",
+      "detail": "91 required itemのAuthority atomic bindingがありません。",
+      "count": 91
+    },
+    {
+      "id": "evidence-durability-output-missing",
+      "status": "open",
+      "detail": "Evidence durabilityの必須outputが固定commitにありません。",
+      "count": 1
+    }
+  ],
+  "readOnly": true,
+  "autoPromotion": false
+}
