@@ -21,6 +21,8 @@ PortalはHuman Decisionの正本を所有しない。UIが端末へ出力する�
 
 Evidence Dependency Graph Adapterは`reference-atlas-core`正式main/CI成功commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のSchemaと`atlas audit . --gate evidence-dependency`結果へ固定する。Importerは署名済みsidecarのGraph digest、Core commit、Gate runtime identityを検証し、Graph自体とGate結果を分離して投影する。Portalはinput、transitive impacted output、rerun、required output、Proof/Closure構造をread-only表示し、GraphもSubject状態も書き換えない。固定ReleaseにGraphがない場合は97 Subjectすべてを個別に`missing-required-output`として残し、空集計や成功へ変換しない。
 
+Portal自身のEvidence Dependency Graphは別の証跡である。`contracts/portal-evidence-dependency-inputs.json`がPortal Source、Harness、Runtime、Profileの分母を固定し、`npm run dependency:reproduce`が生成Index、非後退、Router Eval、SBOM、Build、Performance、Evidence、Provenanceを再実行してrun時刻とruntime identityを記録する。Graph checkに加え、隔離コピーでSource Digestとbindingだけを更新した負例を正式Core Gateへ渡す。このClosureはPortalのbounded証明だけを支え、SubjectのGap、Human review、`subject-definitive`欠落を変更しない。
+
 現時点で組込Indexが検証できる署名済み公開Releaseは0件である。7件のSubject bundleはtest-only鍵で署名した再現可能fixture候補であり、UI・Indexとも`fixture-only`として完成証明と分離する。
 
 Core v1 Completion Certificateは固定Epochの`bounded-historical`として分類する。Releaseのraw `complete`、v1 Certificate検証、`public-release` Trustだけでは`subject-definitive`へ昇格しない。ReleaseはRepositoryごとの履歴配列とDigest固定の詳細Fileで保持し、current pointerをIndexで明示する。

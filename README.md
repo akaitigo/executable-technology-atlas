@@ -12,6 +12,8 @@ npm test
 npm run eval
 npm run build
 npm run perf
+npm run dependency:graph:check
+npm run dependency:negative
 npm run gate
 npm run dev
 ```
@@ -43,10 +45,11 @@ node scripts/atlas-portal.mjs verify
 - Authority Human ReviewはFE commit `6c2cfa41…`の固定read-only exportと2 Schemaを正本入力にします。80 packet/deep-link、230 candidate projection、113 machine proposal、3 stale relock hold、human decision 0件をDigest検証し、機械proposalをHuman decisionとして表示しません。
 - Portalは一次資料本文を複製せず、URL、locator、offset、digestを表示します。Decision候補も保存・送信しません。将来の書込みはCore共通API/Schemaへ分離し、reviewer、time、reason、`manual-primary-source`、source/tool/context digest、旧→新mappingが揃わない操作を拒否します。`defer`と選択前stale relockはpendingのread-only holdです。
 - Evidence Dependency Graphは`reference-atlas-core`正式main/CI成功commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のSchemaとGate契約へ固定します。各Subjectのinput changed/current、影響output、stale/current、rerun command/result/runtime identity、missing required output、Proof/Closure structure driftをread-only表示します。GraphまたはCore Gate結果がない現在のSubjectは`missing-required-output`のままで、digest更新だけを復旧や完成へ読み替えません。
+- Portal自身は`evidence/dependency-graph.json`で4入力群と全派生Evidenceを固定し、`npm run dependency:reproduce`で実再実行を記録します。`npm run dependency:negative`はSource Digestとbindingだけを更新した隔離コピーがCore Gateで失敗することを検証します。このPortal bounded Closureは97 Subjectの`subject-definitive`を1件も補いません。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration
 
 `.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Completion Certificate検証用Core v1は`cf9e6e2d…`、Evidence DependencyとDefinitive v2契約は正式main `072d7ca…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
 
-Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定Index、非後退結果、Router Evalの再現一致、全Test、Lint、Build、Publication Gate、Core Audit、Certificate再検証を通し、runner内で追跡対象ファイルが変わった場合は拒否します。
+Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定Index、非後退結果、Router Evalの再現一致、全Test、Lint、Build、Portal GraphのDigest/構造、digest-only負例、Publication Gate、Core v1 Audit/Certificate、Core v2 Evidence Dependency Gateを通し、runner内で追跡対象ファイルが変わった場合は拒否します。

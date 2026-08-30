@@ -83,9 +83,15 @@ jobs:
           npm test
           npm run lint
           npm run build
+          npm run dependency:graph:check
 
       - name: Verify Publication Gate
         run: npm run gate
+
+      - name: Verify Evidence Dependency negative with pinned Core v2
+        env:
+          ATLAS_CORE_DIR: .ci/reference-atlas-core-evidence
+        run: npm run dependency:negative
 
       - name: Verify with pinned Core CLI
         working-directory: .ci/reference-atlas-core
@@ -94,6 +100,10 @@ jobs:
           go mod verify
           go run ./cmd/atlas audit "$GITHUB_WORKSPACE"
           go run ./cmd/atlas certificate verify "$GITHUB_WORKSPACE"
+
+      - name: Verify Portal Evidence Dependency Graph with pinned Core v2
+        working-directory: .ci/reference-atlas-core-evidence
+        run: go run ./cmd/atlas audit "$GITHUB_WORKSPACE" --gate evidence-dependency
 
       - name: Reject tracked mutations
         run: git diff --exit-code

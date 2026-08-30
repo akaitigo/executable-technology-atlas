@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "portal.evidence-dependency.own-closure",
+  "atlas_id": "executable-technology-atlas",
+  "capability_id": "portal.evidence-dependency.own-closure",
+  "statement": "Portal自身の入力から派生するEvidenceをGraphへ固定し、入力変更時は実再実行とCore Gateが揃うまでClosureしない。",
+  "status": "accepted",
+  "source_ids": ["reference-atlas-core-evidence-dependency"],
+  "proof_obligations": [
+    {
+      "id": "proof.evidence-dependency.own-current",
+      "statement": "全入力、派生Evidence、実行時刻、runtime identity、ProofとClosure構造をGraphへ固定すること。",
+      "acceptance_criteria": [
+        "Core正式mainのevidence-dependency GateがPortal Repositoryで成功する。",
+        "GraphからCoreが列挙するrequired outputを削除すると検証を拒否する。"
+      ]
+    },
+    {
+      "id": "proof.evidence-dependency.digest-only-negative",
+      "statement": "Source入力のDigestとbindingだけを更新した負例を実Core Gateが拒否すること。",
+      "acceptance_criteria": [
+        "変更観測後の実再実行がない負例はdigest-only closure診断で失敗する。",
+        "Portal自身のbounded-completeをSubjectのsubject-definitiveへ転用しない。"
+      ]
+    }
+  ]
+}
