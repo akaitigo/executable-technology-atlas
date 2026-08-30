@@ -13,6 +13,8 @@ signed Catalog release + signed Subject release bundles
 
 Runtimeは`fixtures/`のcontent-addressed bundleと生成済み`app/data/index.generated.json`だけを読み、Subject Source Tree、Git submodule、Default Branchへ依存しない。`scripts/generate-fixtures.mjs`はfixture更新時に明示された固定checkoutを入力として受ける開発用Exportであり、Runtime取込経路ではない。
 
+署名済みSubject Releaseがまだない場合、Portalは明示したclean commitのGit objectだけを開発時にCoreで監査し、観測専用のfixture署名Envelopeとして索引できる。この経路は`fixed-commit-incomplete`専用で、公開Release Trust、Release Manifest、Definitive Certificateを代替せず、Core GateのpassとDefinitive fail、Authority分母、既知Gapを独立して保持する。現在はArgo CDとPostgreSQLの2件をこの境界で表示する。
+
 `frontend-behavior`のDepth Referenceは、明示Commit `4a0b2df8e2091a963bd0e0e1bbccef9c84b49a45`の`FE_DEPTH_REFERENCE.json`をSource digestと署名付きEnvelopeへ固定する。Importerは`contracts/depth-reference-lock.json`に対して18軸、状態、分母、Proof、Gapを検証し、生成IndexとDigest固定Subject詳細へ投影する。実行時にSubject checkoutは読まない。
 
 Authority Human Reviewは明示Commitの`review-export.v1.json`、export Schema、packet Schema、packet index、80 packetをgzip固定Bundleと署名Manifestとして取込む。初期表示にはSubject横断summaryとpacket indexだけを含め、選択packetを静的JSONから遅延読込する。PacketはURL、locator、offset、digest、未review projection、machine-only proposalだけを保持し、一次資料本文をPortalへ複製しない。Portalのwrite capabilityは常にfalseで、将来のDecision書込みはCore共通API/Schemaの責務とする。
