@@ -13,6 +13,7 @@
 - FE Depth Referenceは18軸中1 satisfied / 17 partialの`incomplete`として扱う。299/299等のTest成功は該当Proofに限定し、軸のGap、bounded、subject-definitiveの判定を代替しない。
 - Authority Human Review read-only exportのpacket、projection、machine proposal、pending、reviewed、stale holdを個別に保持する。自動proposal、0 decision、`defer`をHuman review closureへ算入せず、本文を複製しない。Core共通API/Schemaが確定するまで書込みを提供せず、将来もreason、reviewer、time、manual-primary-source、digest、mappingが欠けるDecisionを拒否する。
 - Evidence Dependency Graphは正式main commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`で確定した独立契約として取込む。Graph、rerun、runtime identity、required output、Proof/Closure構造のCore Gate結果はDefinitive完成の十分条件ではなく、Graph/Gate欠落、stale、failは既存Gapとincompleteを維持する。
+- 実Subjectの固定clean commit監査は、active working treeやDefault Branchに依存しない観測入力としてのみ扱う。署名済みRelease Manifest、公開Trust Key、v2 Certificateがないcommitは、Coreの一部Gateがpassしても`fixed-commit-incomplete / Release未成立`とし、Subject Definitive入力件数へ算入しない。観測Envelopeのfixture鍵は公開Release Trustではない。
 
 ## 受入条件
 

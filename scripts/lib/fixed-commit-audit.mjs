@@ -1,0 +1,11 @@
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
+import { sha256, verifyDigest } from './crypto.mjs';
+
+export function validateFixedCommitAudit(envelope,schema,trustedKeys){
+  const errors=[];const ajv=new Ajv2020({allErrors:true,strict:true});addFormats(ajv);const validate=ajv.compile(schema);if(!validate(envelope))errors.push(`Fixed commit audit Schema不適合: ${ajv.errorsText(validate.errors)}`);const digest=sha256(envelope?.payload);if(digest!==envelope?.attestation?.digest)errors.push('Fixed commit audit payload digestが一致しません');const trust=trustedKeys.get(envelope?.signature?.keyId);if(!trust)errors.push('Fixed commit audit署名鍵がTrust Storeにありません');else if(!verifyDigest(digest,envelope.signature.value,trust.publicKey))errors.push('Fixed commit audit署名が不正です');const payload=envelope?.payload;if(payload?.releaseBoundary?.signedManifest||payload?.releaseBoundary?.publicTrustKey||payload?.releaseBoundary?.definitiveCertificate)errors.push('未公開固定commitをReleaseまたはDefinitiveとして扱えません');if(payload?.manifest?.status!=='incomplete'||payload?.manifest?.openRequired<1)errors.push('incomplete/open requiredを保持していません');if(payload?.core?.definitive?.result!=='fail'||!(payload?.gaps??[]).length)errors.push('Definitive failまたはGapが欠落しています');if(payload?.readOnly!==true||payload?.autoPromotion!==false)errors.push('read-only/autoPromotion境界が不正です');return{ok:errors.length===0,errors,digest,trust:{keyId:envelope?.signature?.keyId??null,usage:trust?.usage??'unclassified'}};
+}
+
+export function projectFixedCommitAudit(envelope,validated){
+  const value=envelope.payload;return{schemaVersion:1,subjectId:value.subjectId,atlasId:value.atlasId,status:'fixed-commit-incomplete',source:{repository:value.repository,commit:value.sourceCommit,tree:value.sourceTree,mode:value.sourceMode,attestationDigest:validated.digest,trust:validated.trust},releaseBoundary:value.releaseBoundary,manifest:value.manifest,core:value.core,artifactDigests:value.artifactDigests,gaps:value.gaps,readOnly:true,autoPromotion:false};
+}

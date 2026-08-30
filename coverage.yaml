@@ -1,7 +1,7 @@
 schema_version: 1
 atlas_id: executable-technology-atlas
 epoch: "2026-08-28"
-authority_lock_digest: sha256:2d9acb565608c9f6d36bca52254b07af893f20d2ceaaa0cdeaf61bb4e3f1cf1d
+authority_lock_digest: sha256:b693809351f6e27a4fd189107e6b33cb97d04af0d65cf9c34240bf5eb7d60b42
 target_sets:
   - id: portal-read-model
     title: 固定Release横断Read Model
@@ -141,4 +141,14 @@ targets:
     rationale: Portal自身のbounded完成証跡でも入力変化後のDigest再固定だけをClosureとして扱わず、Core Gateで全派生Evidenceと構造を検証する必要がある。
     claim_ids: [portal.evidence-dependency.own-closure]
     evidence_ids: [portal.evidence-dependency.own-closure]
+    exclusion: null
+  - id: portal.fixed-commit-audit.read-model
+    title: 実Subjectの固定clean commitをRelease未成立のまま監査表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 実Subjectの未公開commitにEvidenceがあっても、署名済み固定ReleaseやDefinitive入力へ読み替えず、Core Gate結果と既知Gapを保持する必要がある。
+    claim_ids: [portal.fixed-commit-audit.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
     exclusion: null

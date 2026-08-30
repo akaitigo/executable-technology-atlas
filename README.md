@@ -46,6 +46,7 @@ node scripts/atlas-portal.mjs verify
 - Portalは一次資料本文を複製せず、URL、locator、offset、digestを表示します。Decision候補も保存・送信しません。将来の書込みはCore共通API/Schemaへ分離し、reviewer、time、reason、`manual-primary-source`、source/tool/context digest、旧→新mappingが揃わない操作を拒否します。`defer`と選択前stale relockはpendingのread-only holdです。
 - Evidence Dependency Graphは`reference-atlas-core`正式main/CI成功commit `072d7ca77981f51754e824d70c6d4ecd55ea67e5`のSchemaとGate契約へ固定します。各Subjectのinput changed/current、影響output、stale/current、rerun command/result/runtime identity、missing required output、Proof/Closure structure driftをread-only表示します。GraphまたはCore Gate結果がない現在のSubjectは`missing-required-output`のままで、digest更新だけを復旧や完成へ読み替えません。
 - Portal自身は`evidence/dependency-graph.json`で4入力群と全派生Evidenceを固定し、`npm run dependency:reproduce`で実再実行を記録します。`npm run dependency:negative`はSource Digestとbindingだけを更新した隔離コピーがCore Gateで失敗することを検証します。このPortal bounded Closureは97 Subjectの`subject-definitive`を1件も補いません。
+- `argocd`は`argocd-reference-atlas`のclean commit `37db7c88…`をGit objectからread-only監査した観測Envelopeを表示します。Core通常AuditとEvidence Dependency Gateはpassですが、署名済みRelease Manifest、公開Trust、v2 Certificate、Depth parityがなく、open required 22件、Authority未分類63,889件、Scenario Proof Schema driftが残るため`fixed-commit-incomplete / Release未成立`です。この入力も97 SubjectのDefinitive入力欠落を補いません。
 - `npm run gate`はPortal契約、Evidence、SBOM、Release署名、DCO、証明対象Commitを検証します。Core正本の`atlas audit`と`atlas certificate verify`も完成条件です。
 
 ## Continuous Integration
@@ -53,3 +54,5 @@ node scripts/atlas-portal.mjs verify
 `.github/workflows/publication.yml`は、全pushと`main`向けPull Requestをクリーンな`ubuntu-24.04` runnerで検証します。GitHub公式Actionはcommit SHA、Node.jsとGoは完全Version、Completion Certificate検証用Core v1は`cf9e6e2d…`、Evidence DependencyとDefinitive v2契約は正式main `072d7ca…`へ固定し、npm依存は`package-lock.json`だけから`npm ci --ignore-scripts`で導入します。
 
 Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定Index、非後退結果、Router Evalの再現一致、全Test、Lint、Build、Portal GraphのDigest/構造、digest-only負例、Publication Gate、Core v1 Audit/Certificate、Core v2 Evidence Dependency Gateを通し、runner内で追跡対象ファイルが変わった場合は拒否します。
+
+Repository admissionはengineering-control-plane commit `00fe010a…`からrolloutされた`repo.yaml`を正本とし、Portal自身のGitHub writeだけを許可します。cloud writeと他Repositoryへのwriteは拒否し、この境界をPublication GateとProvenanceで検証します。

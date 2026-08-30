@@ -8,6 +8,7 @@ export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af8
 export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
 export const EVIDENCE_DEPENDENCY_LOCK_DIGEST = 'sha256:720ece5c5287b40c62d71f2eba61d9c8a366c7664afc32b817358b3035a23156';
 export const DEFINITIVE_V2_LOCK_DIGEST = 'sha256:3465e848443f47f8dca4f012dc75f1585b406228fbde4f3a1467a715cbbbdf7f';
+export const FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:51302abcb7bb8054d4f2d77263c24244ae6adf9faf5b53b75e4029d9a47f8ad9';
 const OPEN_STATES = new Set(['missing','planned','partial','expired','unclassified']);
 
 const hasFields = (value, fields = []) => fields.every((field) => value?.[field] !== null && value?.[field] !== undefined);
@@ -16,7 +17,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, fixedAuditLockBytes, fixedAuditLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -31,6 +32,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readJson('contracts/evidence-dependency-lock.json'),
     readFile(path.join(root, 'contracts/definitive-v2-lock.json')),
     readJson('contracts/definitive-v2-lock.json'),
+    readFile(path.join(root, 'contracts/fixed-commit-audit-lock.json')),
+    readJson('contracts/fixed-commit-audit-lock.json'),
     readJson('fixtures/registry.json'),
   ]);
   const violations = [];
@@ -47,6 +50,8 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('definitive-v2-lock-immutable',sha256(definitiveLockBytes)===DEFINITIVE_V2_LOCK_DIGEST,`expected ${DEFINITIVE_V2_LOCK_DIGEST}`);
   check('definitive-v2-core-main',definitiveLock.coreRef==='main'&&definitiveLock.coreCommitStatus==='official-main-ci-passed'&&definitiveLock.coreCommit==='072d7ca77981f51754e824d70c6d4ecd55ea67e5'&&definitiveLock.writePolicy==='read-only'&&definitiveLock.autoPromotion===false,definitiveLock.coreCommit);
   check('definitive-v2-migration-document',sha256(await readFile(path.join(root,definitiveLock.vendoredMigrationDocumentPath)))===definitiveLock.migrationDocumentDigest,definitiveLock.vendoredMigrationDocumentPath);
+  check('fixed-commit-audit-lock-immutable',sha256(fixedAuditLockBytes)===FIXED_COMMIT_AUDIT_LOCK_DIGEST,`expected ${FIXED_COMMIT_AUDIT_LOCK_DIGEST}`);
+  check('fixed-commit-audit-fixture-immutable',sha256(await readFile(path.join(root,fixedAuditLock.fixturePath)))===fixedAuditLock.fixtureFileDigest,fixedAuditLock.fixturePath);
 
   const subjectMappings = mappingIndex(mappings.subjectMappings);
   const targetMappings = mappingIndex(mappings.targetMappings);
@@ -160,9 +165,11 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   for(const forbidden of ['item.body','item.text','item.content','item.html','item.excerpt'])if(page.includes(forbidden))fail('authority-body-copied-to-ui',forbidden);
   for(const token of ['Evidence Dependency Graph','Inputs — changed / current','Impacted outputs — stale / current','Missing required output','Proof / Closure structure drift','digest更新だけを「復旧済み」と表示せず','autoPromotion=false'])if(!page.includes(token))fail('evidence-dependency-ui-reduced',token);
   for(const token of ['Core Definitive Gate v2','bounded-complete / bounded historical','Authority-derived inventory closure','実Runtime Profile','definitive.gapIds.map(','Migration actions','readOnly=','autoPromotion=','これらは達成件数ではなく','Inventory未評価','既知open required','Runtime未検証','全SubjectのGap内訳','summary.gapCounts.map'])if(!page.includes(token))fail('definitive-v2-ui-reduced',token);
+  for(const token of ['実Subject固定commit監査','固定Evidenceはあるが、署名済みReleaseではない','fixed-commit-incomplete','Release未成立','audit.gaps.map(','固定commit監査はRelease入力欠落を埋めません'])if(!page.includes(token))fail('fixed-commit-audit-ui-reduced',token);
 
   for(const subject of index.subjects){const dependency=subject.evidenceDependency;if(!dependency){fail('evidence-dependency-subject-hidden',subject.id);continue;}if(dependency.autoPromotion!==false||dependency.readOnly!==true)fail('evidence-dependency-write-boundary-weakened',subject.id);if(dependency.status==='current'&&(dependency.availability!=='available'||dependency.coreGate?.result!=='pass'||dependency.coreGate?.coreCommit!==dependencyLock.coreCommit))fail('evidence-dependency-current-without-core-gate',subject.id);if(dependency.availability==='missing'&&(dependency.status!=='missing-required-output'||dependency.coreGate?.result!=='not-run'))fail('evidence-dependency-missing-promoted',subject.id);}
   for(const subject of index.subjects){const definitive=subject.definitiveV2;if(!definitive){fail('definitive-v2-subject-hidden',subject.id);continue;}if(definitive.autoPromotion!==false||definitive.readOnly!==true)fail('definitive-v2-write-boundary-weakened',subject.id);if(definitive.coreContract?.commit!==definitiveLock.coreCommit)fail('definitive-v2-core-binding-rewritten',subject.id);if(definitive.status==='subject-definitive'&&(definitive.availability!=='available'||definitive.coreGate?.result!=='pass'||definitive.certificate?.schemaVersion!==2||definitive.certificate?.trust?.usage!=='public-release'||definitive.inventoryClosure?.status!=='closed'||definitive.inventoryClosure?.unclassified!==0||definitive.inventoryClosure?.openRequired!==0||definitive.gapIds?.length))fail('definitive-v2-promoted-without-gate',subject.id);if(definitive.availability==='missing'){const expectedProfiles=(subject.release?.observedProfiles??[]).map((profile)=>({profile,status:'v1-evidence-observed-not-v2-verified',runtimeIdentity:null}));if(definitive.status!==definitiveLock.missingInputState||definitive.coreGate?.result!=='not-run'||definitive.coreGate?.command!==definitiveLock.gateCommand)fail('definitive-v2-missing-promoted',subject.id);if(JSON.stringify(definitive.gapIds)!==JSON.stringify(definitiveLock.missingRequiredInputs))fail('definitive-v2-gap-information-reduced',subject.id);if(JSON.stringify(definitive.runtimeProfiles)!==JSON.stringify(expectedProfiles))fail('definitive-v2-runtime-information-reduced',subject.id);}}
+  const fixedAuditSubject=currentSubjects.get(fixedAuditLock.subjectId);const fixedAudit=fixedAuditSubject?.fixedCommitAudit;if(!fixedAudit)fail('fixed-commit-audit-hidden',fixedAuditLock.subjectId);else{if(fixedAudit.source?.commit!==fixedAuditLock.sourceCommit||fixedAudit.source?.tree!==fixedAuditLock.sourceTree||fixedAudit.source?.attestationDigest!==fixedAuditLock.attestationDigest)fail('fixed-commit-audit-source-rewritten',fixedAuditLock.subjectId);if(fixedAudit.status!=='fixed-commit-incomplete'||fixedAudit.readOnly!==true||fixedAudit.autoPromotion!==false||fixedAudit.releaseBoundary?.status!=='unpublished-fixed-commit'||fixedAudit.releaseBoundary?.signedManifest!==false||fixedAudit.releaseBoundary?.publicTrustKey!==false||fixedAudit.releaseBoundary?.definitiveCertificate!==false)fail('fixed-commit-audit-promoted',fixedAuditLock.subjectId);if(fixedAudit.core?.definitive?.result!=='fail'||fixedAudit.manifest?.status!=='incomplete'||fixedAudit.manifest?.openRequired!==22)fail('fixed-commit-audit-gap-status-rewritten',fixedAuditLock.subjectId);if(JSON.stringify(fixedAudit.gaps?.map((gap)=>gap.id))!==JSON.stringify(fixedAuditLock.requiredGapIds))fail('fixed-commit-audit-gaps-reduced',fixedAuditLock.subjectId);}
   const definitiveValues=index.subjects.map((subject)=>subject.definitiveV2).filter(Boolean);const expectedDefinitiveGaps=[...definitiveValues.flatMap((value)=>value.gapIds).reduce((counts,id)=>counts.set(id,(counts.get(id)??0)+1),new Map())].map(([id,count])=>({id,count})).sort((a,b)=>a.id.localeCompare(b.id));const expectedDefinitiveProfiles=definitiveValues.flatMap((value)=>value.runtimeProfiles);const definitiveSummary=index.definitiveV2Summary;if(definitiveSummary?.inventoryUnevaluated!==definitiveValues.filter((value)=>value.inventoryClosure.status==='not-evaluated').length||definitiveSummary?.openRequiredKnown!==definitiveValues.reduce((sum,value)=>sum+(value.inventoryClosure.openRequired??0),0)||definitiveSummary?.excluded!==definitiveValues.reduce((sum,value)=>sum+value.inventoryClosure.excluded,0)||definitiveSummary?.infeasible!==definitiveValues.reduce((sum,value)=>sum+value.inventoryClosure.infeasible,0)||definitiveSummary?.runtimeProfilesUnverified!==expectedDefinitiveProfiles.filter((value)=>value.status!=='current'||!value.runtimeIdentity).length||definitiveSummary?.gapInstances!==expectedDefinitiveGaps.reduce((sum,value)=>sum+value.count,0)||JSON.stringify(definitiveSummary?.gapCounts)!==JSON.stringify(expectedDefinitiveGaps))fail('definitive-v2-summary-information-reduced','aggregate must equal per-subject gaps, inventory, and runtime state');
 
   const depthRegistry = (registry.depthReferences ?? []).find((item) => item.subjectId === depthLock.subjectId);
@@ -229,6 +236,10 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     definitiveV2InventoryUnevaluated: index.definitiveV2Summary?.inventoryUnevaluated ?? 0,
     definitiveV2RuntimeUnverified: index.definitiveV2Summary?.runtimeProfilesUnverified ?? 0,
     definitiveV2GapInstances: index.definitiveV2Summary?.gapInstances ?? 0,
+    fixedCommitAudits: index.fixedCommitAuditSummary?.available ?? 0,
+    fixedCommitAuditIncomplete: index.fixedCommitAuditSummary?.incomplete ?? 0,
+    fixedCommitAuditReleaseEligible: index.fixedCommitAuditSummary?.releaseEligible ?? 0,
+    fixedCommitAuditGapInstances: index.fixedCommitAuditSummary?.gapInstances ?? 0,
     mappingsApplied: mappedCount,
     violations: violations.length,
   };
