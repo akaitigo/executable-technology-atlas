@@ -3,13 +3,15 @@ import path from 'node:path';
 import { sha256 } from './crypto.mjs';
 import { scanNeutralLanguage } from './neutral-language.mjs';
 import { evaluateRegistryEvidence } from './registry.mjs';
+import { applyPortalRootSurfaceNegative, validatePortalRootSurfaceInventory } from './portal-root-surface-inventory.mjs';
 
 export const NON_REGRESSION_BASELINE_DIGEST = 'sha256:26199a179dc48bd5b36826a404395589d38be5aae40cca6bbb1fe77fb1c41fc7';
 export const DEPTH_REFERENCE_LOCK_DIGEST = 'sha256:077bb3514401dc3dafb250d8a8af860440ef3ad9c898ffc9286b4e728cb2c514';
 export const AUTHORITY_REVIEW_LOCK_DIGEST = 'sha256:521a4056e9b5907a8f927023f1ea9ad67835353b63831998b145a60a1ca4075f';
 export const EVIDENCE_DEPENDENCY_LOCK_DIGEST = 'sha256:720ece5c5287b40c62d71f2eba61d9c8a366c7664afc32b817358b3035a23156';
 export const DEFINITIVE_V2_LOCK_DIGEST = 'sha256:3465e848443f47f8dca4f012dc75f1585b406228fbde4f3a1467a715cbbbdf7f';
-export const PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST = 'sha256:cbec4b06b2462d40455d00c073dde76792208c724bed9aeb4f3d04796c598559';
+export const PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST = 'sha256:7d969c56b69d0d29afef41b8c4c9d0baa17f4bf0fb423c6c384c92788bb079e2';
+export const PORTAL_ROOT_SURFACE_INVENTORY_DIGEST = 'sha256:a972cc47ab12f57bfdb146c59468e46158cf6c01d1b95ff1aa6825e7f90d66a9';
 export const FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:65fe1127b5ae38db14ba72d5f994a1e6fffee467295de24651fd3662123d43b4';
 export const POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:c58f7bdef155165c6ef0c4a4cb6fedbf287baf7e6a2c8fd2e35a138436b9c721';
 export const FLUTTER_FIXED_COMMIT_AUDIT_LOCK_DIGEST = 'sha256:3c654d0726c9c3117ebae61de6949c23f3c641c2caa1cb06c0848149c9f5a286';
@@ -25,7 +27,7 @@ const validMapping = (mapping) => Boolean(mapping?.to && mapping?.rationale?.len
 
 export async function evaluateNonRegression(root = process.cwd(), options = {}) {
   const readJson = async (file) => JSON.parse(await readFile(path.join(root, file), 'utf8'));
-  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, portalRootDefinitiveLockBytes, portalRootDefinitiveLock, portalRootDefinitiveReport, fixedAuditLockBytes, fixedAuditLock, postgresqlAuditLockBytes, postgresqlAuditLock, flutterAuditLockBytes, flutterAuditLock, rabbitmqAuditLockBytes, rabbitmqAuditLock, kotlinAuditLockBytes, kotlinAuditLock, zeroTrustAuditLockBytes, zeroTrustAuditLock, frontendBehaviorAuditLockBytes, frontendBehaviorAuditLock, registry] = await Promise.all([
+  const [baselineBytes, baseline, mappings, index, failures, page, depthLockBytes, depthLock, reviewLockBytes, reviewLock, dependencyLockBytes, dependencyLock, definitiveLockBytes, definitiveLock, portalRootDefinitiveLockBytes, portalRootDefinitiveLock, portalRootDefinitiveReport, portalRootSurfaceInventoryBytes, portalRootSurfaceInventory, portalRootSurfaceNegative, fixedAuditLockBytes, fixedAuditLock, postgresqlAuditLockBytes, postgresqlAuditLock, flutterAuditLockBytes, flutterAuditLock, rabbitmqAuditLockBytes, rabbitmqAuditLock, kotlinAuditLockBytes, kotlinAuditLock, zeroTrustAuditLockBytes, zeroTrustAuditLock, frontendBehaviorAuditLockBytes, frontendBehaviorAuditLock, registry] = await Promise.all([
     readFile(path.join(root, 'contracts/non-regression-baseline.json')),
     readJson('contracts/non-regression-baseline.json'),
     readJson('contracts/non-regression-mappings.json'),
@@ -43,6 +45,9 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
     readFile(path.join(root, 'contracts/portal-root-definitive-lock.json')),
     readJson('contracts/portal-root-definitive-lock.json'),
     readJson('evidence/portal-root-definitive-report.json'),
+    readFile(path.join(root, 'contracts/portal-root-surface-inventory.json')),
+    readJson('contracts/portal-root-surface-inventory.json'),
+    readJson('fixtures/portal-root-surface-inventory/negative-cases.json'),
     readFile(path.join(root, 'contracts/fixed-commit-audit-lock.json')),
     readJson('contracts/fixed-commit-audit-lock.json'),
     readFile(path.join(root, 'contracts/fixed-commit-audit-postgresql-lock.json')),
@@ -85,6 +90,12 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   check('portal-root-definitive-lock-immutable',sha256(portalRootDefinitiveLockBytes)===PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST,`expected ${PORTAL_ROOT_DEFINITIVE_LOCK_DIGEST}`);
   check('portal-root-definitive-core-failure',portalRootDefinitiveLock.coreCommit===definitiveLock.coreCommit&&portalRootDefinitiveReport.core?.commit===portalRootDefinitiveLock.coreCommit&&portalRootDefinitiveReport.result==='fail'&&portalRootDefinitiveReport.exitCode===portalRootDefinitiveLock.expectedExitCode&&portalRootDefinitiveReport.status==='root-definitive-incomplete'&&portalRootDefinitiveReport.completionClass==='not-definitive'&&portalRootDefinitiveReport.failureOrdering==='core-order-independent'&&portalRootDefinitiveReport.diagnosticClass==='known-required-root-artifact-unreadable'&&JSON.stringify(portalRootDefinitiveReport.knownMissingArtifacts)===JSON.stringify(portalRootDefinitiveLock.knownMissingArtifacts),'actual Core v2 failure / six required root artifacts absent / failure order independent');
   check('portal-root-distribution-boundary',portalRootDefinitiveReport.boundary?.portalBoundedCertificate==='preserved-v1-local-evidence'&&portalRootDefinitiveReport.boundary?.subjectDefinitiveEffect==='none'&&portalRootDefinitiveReport.boundary?.distributionStatus==='not-established'&&portalRootDefinitiveReport.boundary?.distributionGapEffect==='none'&&portalRootDefinitiveReport.boundary?.completionEffect==='none'&&portalRootDefinitiveReport.boundary?.autoPromotion===false,'bounded local evidence / distribution not established / no promotion');
+  const portalSurfaceResult=await validatePortalRootSurfaceInventory(root,portalRootSurfaceInventory,portalRootDefinitiveLock);
+  check('portal-root-surface-inventory-immutable',sha256(portalRootSurfaceInventoryBytes)===PORTAL_ROOT_SURFACE_INVENTORY_DIGEST,`expected ${PORTAL_ROOT_SURFACE_INVENTORY_DIGEST}`);
+  check('portal-root-surface-denominator',portalSurfaceResult.ok&&portalSurfaceResult.summary.masterySurfaces===14&&portalSurfaceResult.summary.coverageTargets===14&&portalSurfaceResult.summary.inventedEdges===0,'14 Mastery surfaces / 14 Coverage targets / no invented mapping');
+  check('portal-root-surface-report-binding',portalRootDefinitiveReport.portalInfrastructureArtifacts?.length===1&&portalRootDefinitiveReport.portalInfrastructureArtifacts[0]?.digest===PORTAL_ROOT_SURFACE_INVENTORY_DIGEST&&portalRootDefinitiveReport.portalInfrastructureArtifacts[0]?.coreSubjectArtifact?.status==='missing'&&portalRootDefinitiveReport.portalInfrastructureArtifacts[0]?.coreSubjectArtifact?.effect==='none','Portal bounded artifact / Core subject artifact remains missing');
+  const portalSurfaceNegativeResults=await Promise.all((portalRootSurfaceNegative.cases??[]).map((item)=>validatePortalRootSurfaceInventory(root,applyPortalRootSurfaceNegative(portalRootSurfaceInventory,item),portalRootDefinitiveLock)));
+  check('portal-root-surface-negative',portalRootSurfaceNegative.cases?.length===4&&portalSurfaceNegativeResults.every((result,index)=>!result.ok&&result.errors.includes(portalRootSurfaceNegative.cases[index].expectedDiagnostic)),'surface/target removal, invented mapping, promotion rejected');
   check('fixed-commit-audit-lock-immutable',sha256(fixedAuditLockBytes)===FIXED_COMMIT_AUDIT_LOCK_DIGEST,`expected ${FIXED_COMMIT_AUDIT_LOCK_DIGEST}`);
   check('fixed-commit-audit-fixture-immutable',sha256(await readFile(path.join(root,fixedAuditLock.fixturePath)))===fixedAuditLock.fixtureFileDigest,fixedAuditLock.fixturePath);
   check('postgresql-fixed-commit-audit-lock-immutable',sha256(postgresqlAuditLockBytes)===POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST,`expected ${POSTGRESQL_FIXED_COMMIT_AUDIT_LOCK_DIGEST}`);
@@ -215,7 +226,7 @@ export async function evaluateNonRegression(root = process.cwd(), options = {}) 
   for(const forbidden of ['item.body','item.text','item.content','item.html','item.excerpt'])if(page.includes(forbidden))fail('authority-body-copied-to-ui',forbidden);
   for(const token of ['Evidence Dependency Graph','Inputs — changed / current','Impacted outputs — stale / current','Missing required output','Proof / Closure structure drift','digest更新だけを「復旧済み」と表示せず','autoPromotion=false'])if(!page.includes(token))fail('evidence-dependency-ui-reduced',token);
   for(const token of ['Core Definitive Gate v2','bounded-complete / bounded historical','Authority-derived inventory closure','実Runtime Profile','definitive.gapIds.map(','Migration actions','readOnly=','autoPromotion=','これらは達成件数ではなく','Inventory未評価','既知open required','Runtime未検証','全SubjectのGap内訳','summary.gapCounts.map'])if(!page.includes(token))fail('definitive-v2-ui-reduced',token);
-  for(const token of ['Portal root Definitive / distribution','portalRootDefinitive.status','portalRootDefinitive.completionClass','portalRootDefinitive.boundary.distributionStatus','portalRootDefinitive.boundary.completionEffect','portalRootDefinitive.boundary.subjectDefinitiveEffect','portalRootDefinitive.knownMissingArtifacts.map'])if(!page.includes(token))fail('portal-root-definitive-ui-reduced',token);
+  for(const token of ['Portal root Definitive / distribution','portalRootDefinitive.status','portalRootDefinitive.completionClass','portalRootDefinitive.boundary.distributionStatus','portalRootDefinitive.boundary.completionEffect','portalRootDefinitive.boundary.subjectDefinitiveEffect','portalRootDefinitive.portalInfrastructureArtifacts.map','Portal固有の実分母','推測edge','Portal固有分母の固定はSubject完成や配布Gapへ効果を持ちません','portalRootDefinitive.knownMissingArtifacts.map'])if(!page.includes(token))fail('portal-root-definitive-ui-reduced',token);
   for(const token of ['実Subject固定commit監査','固定Evidenceはあるが、署名済みReleaseではない','fixed-commit-incomplete','fixed-commit-input-missing','固定commit監査入力はありません','未評価をincompleteや完成へ読み替えません','Release未成立','audit.gaps.map(','固定commit監査はRelease入力欠落を埋めません','bounded open required 0でもSubject Definitive完成ではありません','dependency.changedInputs','dependency.affectedOutputs','audit.depthReference.axes.map(','Subject Depth Reference: 18軸の状態・分母・Proof・Gap','Verification matrix contract','parseDigestVerifiedJson(response,audit.artifactDigest)'])if(!page.includes(token))fail('fixed-commit-audit-ui-reduced',token);
   for(const token of ['indexBootstrap.publicUrl','indexBootstrap.artifactDigest',"crypto.subtle.digest('SHA-256',bytes)",'index artifact digest mismatch','index binding mismatch','検証済みIndexを読み込めません','この画面はSubject 0件や完成0件という判定ではありません','未取得の詳細を完成・推奨へ昇格しません'])if(!page.includes(token))fail('runtime-index-fallback-reduced',token);if(page.includes("import atlasIndex from './data/index.generated.json'"))fail('runtime-index-rebundled','full Index must not be a runtime module import');
 

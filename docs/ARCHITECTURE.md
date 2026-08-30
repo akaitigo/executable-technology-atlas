@@ -33,7 +33,7 @@ Evidence Dependency Graph Adapterは`reference-atlas-core`正式main/CI成功com
 
 Portal自身のEvidence Dependency Graphは別の証跡である。`contracts/portal-evidence-dependency-inputs.json`がPortal Source、Harness、Runtime、Profileの分母を固定し、`npm run dependency:reproduce`が生成Index、非後退、Router Eval、SBOM、Build、Performance、Evidence、Provenanceを再実行してrun時刻とruntime identityを記録する。Graph checkに加え、隔離コピーでSource Digestとbindingだけを更新した負例を正式Core Gateへ渡す。このClosureはPortalのbounded証明だけを支え、SubjectのGap、Human review、`subject-definitive`欠落を変更しない。
 
-Portal rootのDefinitive状態は`contracts/portal-root-definitive-lock.json`と`evidence/portal-root-definitive-report.json`で別に固定する。正式Core v2 CLIを実行して期待された失敗診断と6個のroot artifact欠落を再検証し、`root-definitive-incomplete`、配布`not-established`、completion effect `none`として扱う。空のartifactを置くこと、bounded v1 CertificateをDefinitiveまたは配布Closureへ読み替えること、digest更新だけで成功へ変えることを拒否する。
+Portal rootのDefinitive状態は`contracts/portal-root-definitive-lock.json`と`evidence/portal-root-definitive-report.json`で別に固定する。正式Core v2 CLIを実行して期待された失敗診断と6個のroot artifact欠落を再検証し、`root-definitive-incomplete`、配布`not-established`、completion effect `none`として扱う。Portal自身の実分母は`contracts/portal-root-surface-inventory.json`へ分離し、Mastery 14 SurfaceとCoverage 14 Targetを正本順で保持する。v1契約にSurfaceとTargetの個別edgeがないため対応を推測せず、Subject用`surface.inventory.yaml`も生成しない。空のartifactを置くこと、bounded v1 CertificateをDefinitiveまたは配布Closureへ読み替えること、digest更新だけで成功へ変えることを拒否する。
 
 現時点で組込Indexが検証できる署名済み公開Releaseは0件である。7件のSubject bundleはtest-only鍵で署名した再現可能fixture候補であり、UI・Indexとも`fixture-only`として完成証明と分離する。
 
