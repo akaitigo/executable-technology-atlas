@@ -155,6 +155,42 @@ const observations=[
     ]
   },
   {
+    subjectId:'frontend-behavior',atlasId:'frontend-behavior-atlas',repository:'frontend-behavior-atlas',commit:'6c2cfa41f0390ef23637fbfc8dd614a040f52618',environment:'FRONTEND_BEHAVIOR_ATLAS_REPOSITORY',
+    paths:['atlas.yaml','coverage.yaml','mastery.yaml','sources.lock.yaml','skill.package.yaml','FE_DEPTH_REFERENCE.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','authority/portal/review-export.v1.json','authority/portal/review-export.v1.schema.json','authority/portal/review-packet.v1.schema.json'],
+    depthPath:'FE_DEPTH_REFERENCE.json',
+    manifest:{status:'incomplete',completionClass:'incomplete',targets:85,openRequired:85,claims:85,evidence:7},
+    core:{
+      audit:gate('atlas audit .','pass',{completionClass:'incomplete',targets:85,claims:85,evidence:7,openRequired:85}),
+      evidenceDependency:gate('atlas audit . --gate evidence-dependency','fail',{inputs:0,changedInputs:0,outputs:0,affectedOutputs:0,runs:0,missingRequiredOutputs:1},['evidence/dependency-graph.jsonが固定commitに存在しません']),
+      authorityExtraction:gate('atlas audit . --gate authority-extraction','pass',{status:'incomplete-human-review-required',locked:84,matched:81,failed:0,staleSources:3,deferredLocators:4,humanReviewed:0,coreV2Eligible:0}),
+      authorityBody:gate('atlas audit . --gate authority-body','pass',{status:'incomplete-human-review-required',sources:84,documents:73,matched:70,failed:0,candidateAnchors:15963,classified:0,unclassified:15963,humanReviewed:0,coreV2Eligible:0}),
+      authorityReview:gate('atlas audit . --gate authority-review-export','pass',{status:'incomplete-human-review-required',queued:15963,pendingHuman:15963,humanReviewed:0,unavailableHolds:0,decisions:0,packets:80,candidateProjections:230,machineProposals:113,staleHolds:3}),
+      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive',missingContractArtifacts:4,openRequired:85},['definitive.yaml、surface.inventory.yaml、verification.matrix.yaml、Definitive Certificateがありません']),
+      scenarioTrace:gate('atlas audit . --gate scenario-trace','fail',{status:'missing',rows:0,runtimeRows:0,gaps:850},['evidence/scenarios/index.jsonが固定commitに存在しません']),
+      nonRegression:gate('atlas audit . --gate non-regression','fail',{missingContractArtifacts:1},['non-regression.yamlが固定commitに存在しません']),
+      evidenceDurability:gate('atlas audit . --gate evidence-durability','fail',{missingRequiredOutputs:1},['artifacts/pattern-scenarios/results.jsonが固定commitに存在しません'])
+    },
+    gaps:[
+      {id:'fixed-release-manifest-missing',status:'open',detail:'署名済み固定Release Manifestがありません。',count:1},
+      {id:'public-trust-key-missing',status:'open',detail:'公開Release Trust Keyがありません。',count:1},
+      {id:'definitive-certificate-missing',status:'open',detail:'Core v2 Definitive Certificateがありません。',count:1},
+      {id:'open-required-targets',status:'open',detail:'必須TargetがClosureしていません。',count:85},
+      {id:'evidence-dependency-graph-missing',status:'open',detail:'Evidence Dependency Graphが固定commitにありません。',count:1},
+      {id:'authority-source-stale',status:'open',detail:'Authority一次資料の固定digestと取得digestが一致しません。',count:3},
+      {id:'authority-locator-evaluation-deferred',status:'open',detail:'Authority locator評価がdeferされています。',count:4},
+      {id:'authority-body-unclassified',status:'open',detail:'Authority body anchorが未分類です。',count:15963},
+      {id:'authority-human-review-open',status:'open',detail:'Authority anchorがhuman review未完了です。',count:15963},
+      {id:'authority-machine-proposals-unreviewed',status:'open',detail:'Machine proposalはHuman decisionではありません。',count:113},
+      {id:'authority-stale-holds',status:'open',detail:'一次資料がstale relock holdです。',count:3},
+      {id:'definitive-contract-artifacts-missing',status:'open',detail:'Definitive inventory、Verification matrix、Certificateがありません。',count:4},
+      {id:'depth-parity-incomplete',status:'open',detail:'FE Depth Reference 18軸のうち17軸がpartialです。',count:17},
+      {id:'scenario-proof-index-missing',status:'open',detail:'Authority由来Behavior×10 Scenario Proof Indexがありません。',count:1},
+      {id:'scenario-runtime-gaps',status:'open',detail:'85 behavior×10 scenarioの専用Runtime closureがありません。',count:850},
+      {id:'non-regression-contract-missing',status:'open',detail:'Non-regression契約が固定commitにありません。',count:1},
+      {id:'evidence-durability-output-missing',status:'open',detail:'Evidence durabilityの必須outputが固定commitにありません。',count:1}
+    ]
+  },
+  {
     subjectId:'zero-trust',atlasId:'zero-trust-reference-atlas',repository:'zero-trust-reference-atlas',commit:'d0b127baef7a3e71bd9f7d804a9bafcf0af0a3c0',environment:'ZERO_TRUST_ATLAS_REPOSITORY',
     paths:['atlas.yaml','definitive.yaml','definitive/zero-trust-depth-parity.json','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','authority/reviews/decisions.json','inventory/definitive-v2.yaml','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json','baseline/published-main-v1.json','migrations/non-regression-v1.yaml'],
     depthPath:'definitive/zero-trust-depth-parity.json',
@@ -198,7 +234,7 @@ for(const observation of observations){
   const readObject=(relative)=>execFileSync('git',['show',`${observation.commit}:${relative}`],{cwd:sourceRoot,maxBuffer:32*1024*1024});
   const artifactDigests=observation.paths.map((relative)=>({path:relative,digest:sha256(readObject(relative))}));
   let depthReference;
-  if(observation.depthPath){const depth=JSON.parse(readObject(observation.depthPath).toString('utf8'));depthReference={sourcePath:observation.depthPath,status:depth.status,summary:{axes:depth.axes.length,...depth.summary},denominatorPolicy:{source:depth.denominator_policy.source,requiredAtomicItems:depth.denominator_policy.required_atomic_items,transplantFrontendCounts:depth.denominator_policy.transplant_frontend_counts,rule:depth.denominator_policy.rule},axes:depth.axes.map((axis)=>({id:axis.id,status:axis.status,denominator:axis.denominator,proofGranularity:axis.proof_granularity,evidencePaths:axis.evidence_paths,gaps:axis.gaps}))};}
+  if(observation.depthPath){const depth=JSON.parse(readObject(observation.depthPath).toString('utf8'));const denominator=depth.denominator_policy??depth.denominatorPolicy;depthReference={sourcePath:observation.depthPath,status:depth.status,summary:{axes:depth.axes.length,...depth.summary},denominatorPolicy:{source:denominator.source,requiredAtomicItems:denominator.required_atomic_items??observation.manifest.targets,transplantFrontendCounts:denominator.transplant_frontend_counts??denominator.transplantAbsoluteCounts,rule:denominator.rule??denominator.note},axes:depth.axes.map((axis)=>({id:axis.id,status:axis.status,denominator:axis.denominator,proofGranularity:axis.proof_granularity??axis.portableCriterion,evidencePaths:axis.evidence_paths??[...new Set((axis.checks??[]).flatMap((check)=>check.evidence??[]))],gaps:axis.gaps}))};}
   const payload={subjectId:observation.subjectId,atlasId:observation.atlasId,repository:observation.repository,sourceCommit:observation.commit,sourceTree:tree,sourceMode:'fixed-clean-commit',releaseBoundary:{status:'unpublished-fixed-commit',tag:null,signedManifest:false,publicTrustKey:false,definitiveCertificate:false},manifest:observation.manifest,core:{commit:coreCommit,...observation.core},artifactDigests,...(depthReference?{depthReference}:{}),gaps:observation.gaps,readOnly:true,autoPromotion:false};
   const digest=sha256(payload);
   const envelope={schemaVersion:1,kind:'portal-fixed-commit-audit',attestation:{digest,observedAt:'2026-08-31T00:00:00Z'},signature:{algorithm:'Ed25519',keyId,value:signDigest(digest,privateKey),identity:'portal-fixture-observation-only'},payload};

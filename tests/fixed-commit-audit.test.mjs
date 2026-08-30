@@ -20,6 +20,8 @@ const kotlinLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commi
 const kotlinEnvelope=JSON.parse(await readFile(path.join(root,kotlinLock.fixturePath),'utf8'));
 const zeroTrustLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-zero-trust-lock.json'),'utf8'));
 const zeroTrustEnvelope=JSON.parse(await readFile(path.join(root,zeroTrustLock.fixturePath),'utf8'));
+const frontendBehaviorLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-frontend-behavior-lock.json'),'utf8'));
+const frontendBehaviorEnvelope=JSON.parse(await readFile(path.join(root,frontendBehaviorLock.fixturePath),'utf8'));
 
 test('実Subject固定commit監査EnvelopeをSchema・Digest・署名で受理する',()=>{
   const result=validateFixedCommitAudit(envelope,schema,trusted);
@@ -117,6 +119,23 @@ test('Zero Trustのbounded closureとDefinitive inventory未完了を分離す�
   assert.deepEqual({unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{unclassified:2786,pending:2786,decisions:0});
   assert.deepEqual({rows:audit.core.scenarioTrace.summary.rows,runtimeRows:audit.core.scenarioTrace.summary.runtimeRows,variantCells:audit.core.scenarioTrace.summary.variantCells,closedVariantCells:audit.core.scenarioTrace.summary.closedVariantCells,gaps:audit.core.scenarioTrace.summary.gaps},{rows:910,runtimeRows:0,variantCells:1820,closedVariantCells:16,gaps:910});
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),zeroTrustLock.requiredGapIds);
+  assert.equal(audit.readOnly,true);
+  assert.equal(audit.autoPromotion,false);
+});
+
+test('Frontend固定commitのDepth・Authority・Evidence Dependency Gapを保持する',()=>{
+  const validated=validateFixedCommitAudit(frontendBehaviorEnvelope,schema,trusted);
+  assert.equal(validated.ok,true,validated.errors.join('; '));
+  const audit=projectFixedCommitAudit(frontendBehaviorEnvelope,validated);
+  assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:frontendBehaviorLock.sourceCommit,tree:frontendBehaviorLock.sourceTree});
+  assert.deepEqual({status:audit.manifest.status,openRequired:audit.manifest.openRequired},{status:'incomplete',openRequired:85});
+  assert.deepEqual({result:audit.core.evidenceDependency.result,missing:audit.core.evidenceDependency.summary.missingRequiredOutputs},{result:'fail',missing:1});
+  assert.deepEqual({stale:audit.core.authorityExtraction.summary.staleSources,deferred:audit.core.authorityExtraction.summary.deferredLocators,unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions,packets:audit.core.authorityReview.summary.packets,projections:audit.core.authorityReview.summary.candidateProjections,proposals:audit.core.authorityReview.summary.machineProposals,staleHolds:audit.core.authorityReview.summary.staleHolds},{stale:3,deferred:4,unclassified:15963,pending:15963,decisions:0,packets:80,projections:230,proposals:113,staleHolds:3});
+  assert.deepEqual(audit.depthReference.summary,{axes:18,satisfied:1,partial:17,missing:0});
+  assert.equal(audit.depthReference.axes.filter((axis)=>axis.status!=='satisfied'&&axis.gaps.length>0).length,17);
+  assert.deepEqual({runtime:audit.core.scenarioTrace.summary.runtimeRows,gaps:audit.core.scenarioTrace.summary.gaps},{runtime:0,gaps:850});
+  for(const gate of ['evidenceDependency','definitive','scenarioTrace','nonRegression','evidenceDurability'])assert.equal(audit.core[gate].result,'fail',gate);
+  assert.deepEqual(audit.gaps.map((gap)=>gap.id),frontendBehaviorLock.requiredGapIds);
   assert.equal(audit.readOnly,true);
   assert.equal(audit.autoPromotion,false);
 });
