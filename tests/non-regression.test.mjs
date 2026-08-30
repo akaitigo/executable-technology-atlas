@@ -19,7 +19,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'atlas-non-regression-'));
   try {
     for (const directory of ['contracts','contracts/reference','app/data','evidence','fixtures/depth-references','fixtures/fixed-commit-audits','public/data/releases','public/data/authority-reviews','public/data/fixed-commit-audits','public/data/index']) await mkdir(path.join(temporary,directory), { recursive:true });
-    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','contracts/definitive-v2-lock.json','contracts/portal-root-definitive-lock.json','contracts/fixed-commit-audit-lock.json','contracts/fixed-commit-audit-postgresql-lock.json','contracts/fixed-commit-audit-flutter-lock.json','contracts/fixed-commit-audit-rabbitmq-lock.json','contracts/fixed-commit-audit-kotlin-lock.json','contracts/fixed-commit-audit-zero-trust-lock.json','contracts/fixed-commit-audit-frontend-behavior-lock.json','contracts/reference/MIGRATION_DEFINITIVE_V2.md','app/data/index.generated.json','app/data/index-bootstrap.generated.json','evidence/import-report.json','evidence/portal-root-definitive-report.json','fixtures/failure-scenarios.json','fixtures/registry.json','fixtures/registry/invalid-registry-cases.json','app/page.tsx']) {
+    for (const file of ['contracts/non-regression-baseline.json','contracts/non-regression-mappings.json','contracts/depth-reference-lock.json','contracts/authority-review-lock.json','contracts/evidence-dependency-lock.json','contracts/definitive-v2-lock.json','contracts/portal-root-definitive-lock.json','contracts/fixed-commit-audit-lock.json','contracts/fixed-commit-audit-postgresql-lock.json','contracts/fixed-commit-audit-flutter-lock.json','contracts/fixed-commit-audit-rabbitmq-lock.json','contracts/fixed-commit-audit-kotlin-lock.json','contracts/fixed-commit-audit-zero-trust-lock.json','contracts/fixed-commit-audit-frontend-behavior-lock.json','contracts/reference/MIGRATION_DEFINITIVE_V2.md','app/data/index.generated.json','app/data/index-bootstrap.generated.json','app/lib/verified-json.mjs','evidence/import-report.json','evidence/portal-root-definitive-report.json','fixtures/failure-scenarios.json','fixtures/registry.json','fixtures/registry/invalid-registry-cases.json','app/page.tsx']) {
       await mkdir(path.dirname(path.join(temporary,file)), { recursive:true });
       await cp(path.join(root,file), path.join(temporary,file));
     }
@@ -33,6 +33,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const failuresPath = path.join(temporary,'fixtures/failure-scenarios.json');
     const mappingsPath = path.join(temporary,'contracts/non-regression-mappings.json');
     const pagePath = path.join(temporary,'app/page.tsx');
+    const verifierPath=path.join(temporary,'app/lib/verified-json.mjs');
     const bootstrapPath=path.join(temporary,'app/data/index-bootstrap.generated.json');
     const rootDefinitiveReportPath=path.join(temporary,'evidence/portal-root-definitive-report.json');
     const originalIndex = await readJson(indexPath);
@@ -43,6 +44,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
     const originalFailures = await readJson(failuresPath);
     const originalMappings = await readJson(mappingsPath);
     const originalPage = await readFile(pagePath,'utf8');
+    const originalVerifier=await readFile(verifierPath,'utf8');
     const expectViolation = async (code) => { const result=await evaluateNonRegression(temporary,{scanLanguage:false});assert.equal(result.verdict,'fail');assert.ok(result.violations.some((item)=>item.code===code),`${code}: ${JSON.stringify(result.violations)}`); };
 
     const withoutSubject=structuredClone(originalIndex);withoutSubject.subjects.shift();await writeJson(indexPath,withoutSubject);await expectViolation('subject-deleted');await writeJson(indexPath,originalIndex);
@@ -58,6 +60,7 @@ test('削除・格上げ・不可視化・粒度低下を拒否する', async ()
 
     const failures=structuredClone(originalFailures);failures.scenarios=failures.scenarios.filter((scenario)=>scenario.id!=='coverage-infeasible');await writeJson(failuresPath,failures);await expectViolation('failure-scenario-deleted');await writeJson(failuresPath,originalFailures);
     await writeFile(pagePath,originalPage.replace("const [status, setStatus] = useState('')","const [status, setStatus] = useState('release:complete')"));await expectViolation('filter-default-excludes');await writeFile(pagePath,originalPage);
+    await writeFile(verifierPath,originalVerifier.toString().replace('detail artifact digest mismatch','detail accepted without digest'));await expectViolation('authority-review-browser-integrity-reduced');await writeFile(verifierPath,originalVerifier);
     const mappings=structuredClone(originalMappings);mappings.subjectMappings.push({from:originalIndex.subjects[0].id,to:originalIndex.subjects[0].id});await writeJson(mappingsPath,mappings);await expectViolation('invalid-subject-mapping');await writeJson(mappingsPath,originalMappings);
     const depthSubject=originalIndex.subjects.find((subject)=>subject.id==='frontend-behavior');const depthDetailPath=path.join(temporary,'public',depthSubject.release.detailUrl);const depthDetail=await readJson(depthDetailPath);const originalDepthDetail=structuredClone(depthDetail);depthDetail.depthReference.axes.shift();await writeJson(depthDetailPath,depthDetail);await expectViolation('depth-reference-axis-information-reduced');await writeJson(depthDetailPath,originalDepthDetail);
     const depthPromoted=structuredClone(originalIndex);depthPromoted.subjects.find((subject)=>subject.id==='frontend-behavior').depthReference.completion.definitive=true;await writeJson(indexPath,depthPromoted);await expectViolation('depth-reference-status-promoted');await writeJson(indexPath,originalIndex);
