@@ -37,6 +37,7 @@ node scripts/atlas-portal.mjs verify
 - `planned`、`active`、`incomplete`、Releaseなし、隔離を同じ完成状態に丸めません。Coverageの`excluded`、`infeasible`、`expired`も既定で表示します。
 - Portal Repositoryは[GitHub PUBLICのmain](https://github.com/akaitigo/executable-technology-atlas)を正本とします。Portal自身のv1 `evidence/completion-certificate.json`もbounded証明であり、Subject Definitive完成数とは別軸です。
 - Release詳細はDigest固定で保存し、同一SubjectのCertificate履歴を上書きしません。隔離が1件でもあれば生成Indexと詳細は更新せず、last-known-goodを維持します。
+- CLIと検証Harnessは完全な`app/data/index.generated.json`を読み、Browser UIは小さな固定bootstrapから`public/data/index/<digest>.json`を同一originで取得します。両Indexのbytes、自己Digest、97 Subject、未完了集約をGateで照合し、取得またはbinding検証に失敗した場合は空Dashboardや完成0件を表示せず、`not-evaluated`のFallbackと直前に固定したGap集約だけを表示します。過去に公開したcontent-addressed IndexはImporterが削除しません。
 - `contracts/non-regression-baseline.json`は97 Subject、246 Target、45 Evidence、11 Failure scenarioをID単位で凍結します。削除、未証明のStatus格上げ、boundedのDefinitive表示、Failure不可視化、Evidence切捨て、集約による粒度低下をGateで拒否します。
 - 正当なID置換は`contracts/non-regression-mappings.json`に旧ID→新ID、理由、情報保持、同等以上のEvidence方針を明示する必要があります。旧固定Release自体は履歴から削除できません。
 - UI、Portal Manifest、Docs、Routerは中立な事実、Coverage、Evidence、制約、比較条件、実行結果だけを記述します。自己宣伝、人物評価、推薦を目的化する文言をGateで拒否し、作者namespaceはRepository URLなど技術的に必要な識別に限定します。

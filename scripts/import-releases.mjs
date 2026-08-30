@@ -14,6 +14,7 @@ const root = process.cwd();
 const fixtureRoot = path.resolve(process.argv[2] ?? path.join(root, 'fixtures'));
 const output = path.resolve(process.argv[3] ?? path.join(root, 'app', 'data', 'index.generated.json'));
 const reportPath = path.resolve(process.argv[4] ?? path.join(root, 'evidence', 'import-report.json'));
+const bootstrapPath = path.join(root, 'app', 'data', 'index-bootstrap.generated.json');
 const trustedKeys = await loadTrust(fixtureRoot);
 const validators = await schemaValidators(path.join(root, 'contracts', 'schemas'));
 
@@ -176,7 +177,26 @@ const index = {
   subjects,
   verification: { verified: imports.filter((item) => item.verification === 'verified').length, quarantined: imports.filter((item) => item.verification === 'quarantined').length, absent: subjects.filter((item) => !item.release).length },
 };
-index.digest = sha256(index);
+index.digest = sha256(JSON.parse(JSON.stringify(index)));
+const indexDocument=`${JSON.stringify(index,null,2)}\n`;
+const indexArtifactDigest=sha256(Buffer.from(indexDocument));
+const publicIndexRelativePath=`public/data/index/${index.digest.replace(/^sha256:/,'')}.json`;
+const publicIndexPath=path.join(root,publicIndexRelativePath);
+const bootstrap={
+  schemaVersion:1,
+  generatedAt:index.generatedAt,
+  indexDigest:index.digest,
+  artifactDigest:indexArtifactDigest,
+  publicUrl:`/${publicIndexRelativePath.replace(/^public\//,'')}`,
+  subjects:index.subjects.length,
+  completionSummary:index.completionSummary,
+  definitiveV2Summary:index.definitiveV2Summary,
+  evidenceDependencySummary:index.evidenceDependencySummary,
+  fixedCommitAuditSummary:index.fixedCommitAuditSummary,
+  readOnly:true,
+  autoPromotion:false,
+  fallback:{status:'index-unavailable-not-evaluated',message:'検証済みIndexを読み込めないため、Subject一覧と完成判定を表示しません。'},
+};
 await mkdir(path.dirname(reportPath), { recursive: true });
 const outputTemporary = `${output}.tmp`;
 const reportTemporary = `${reportPath}.tmp`;
@@ -207,7 +227,14 @@ if (verdict === 'fail') {
     }
   }
   await mkdir(path.dirname(output), { recursive: true });
-  await writeFile(outputTemporary, `${JSON.stringify(index, null, 2)}\n`);
+  await mkdir(path.dirname(publicIndexPath),{recursive:true});
+  const publicIndexTemporary=`${publicIndexPath}.tmp`;
+  await writeFile(publicIndexTemporary,indexDocument);
+  await rename(publicIndexTemporary,publicIndexPath);
+  await writeFile(outputTemporary,indexDocument);
   await rename(outputTemporary, output);
+  const bootstrapTemporary=`${bootstrapPath}.tmp`;
+  await writeFile(bootstrapTemporary,`${JSON.stringify(bootstrap,null,2)}\n`);
+  await rename(bootstrapTemporary,bootstrapPath);
   console.log(`Index生成済み: ${subjects.length} subjects / verified=${index.verification.verified} / absent=${index.verification.absent} / quarantined=${index.verification.quarantined}`);
 }

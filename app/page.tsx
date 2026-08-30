@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import atlasIndex from './data/index.generated.json';
+import type atlasIndexShape from './data/index.generated.json';
+import indexBootstrap from './data/index-bootstrap.generated.json';
 import portalCertificate from '../evidence/completion-certificate.json';
 import nonRegressionReport from '../evidence/non-regression-report.json';
 import portalRelease from '../release/manifest.json';
 
-type Release = NonNullable<(typeof atlasIndex.subjects)[number]['release']>;
-type Subject = (typeof atlasIndex.subjects)[number];
+type AtlasIndex = typeof atlasIndexShape;
+type Release = NonNullable<AtlasIndex['subjects'][number]['release']>;
+type Subject = AtlasIndex['subjects'][number];
 type EvidenceRecord = { id:string; verdict:string; kind:string; environment:{ profile:string } };
 type CoverageTarget = { id:string; title:string; requirement:string; state:string; rationale:string; exclusion?:{ reason:string; reviewed_at:string } | null };
 type DepthCheck = { id:string; status:string; required:string; observed:unknown; evidence:string[] };
@@ -54,7 +56,50 @@ function completionBadgeClass(release: Release) {
   return `release-${release.status}`;
 }
 
+function isBoundIndex(value:unknown):value is AtlasIndex {
+  if(!value||typeof value!=='object')return false;
+  const candidate=value as Partial<AtlasIndex>;
+  return candidate.digest===indexBootstrap.indexDigest
+    &&candidate.subjects?.length===indexBootstrap.subjects
+    &&candidate.completionSummary?.subjectDefinitive===indexBootstrap.completionSummary.subjectDefinitive
+    &&candidate.definitiveV2Summary?.missing===indexBootstrap.definitiveV2Summary.missing
+    &&candidate.definitiveV2Summary?.autoPromotion===false
+    &&candidate.fixedCommitAuditSummary?.releaseEligible===0
+    &&candidate.fixedCommitAuditSummary?.autoPromotion===false;
+}
+
+async function parseVerifiedIndex(response:Response):Promise<AtlasIndex> {
+  if(!response.ok)throw new Error(`index HTTP ${response.status}`);
+  const bytes=await response.arrayBuffer();
+  const hash=await crypto.subtle.digest('SHA-256',bytes);
+  const observed=`sha256:${[...new Uint8Array(hash)].map((value)=>value.toString(16).padStart(2,'0')).join('')}`;
+  if(observed!==indexBootstrap.artifactDigest)throw new Error('index artifact digest mismatch');
+  const value:unknown=JSON.parse(new TextDecoder().decode(bytes));
+  if(!isBoundIndex(value))throw new Error('index binding mismatch');
+  return value;
+}
+
 export default function Home() {
+  const [atlasIndex,setAtlasIndex]=useState<AtlasIndex|null>(null);
+  const [loadFailed,setLoadFailed]=useState(false);
+  useEffect(()=>{
+    const controller=new AbortController();
+    fetch(indexBootstrap.publicUrl,{cache:'force-cache',credentials:'same-origin',signal:controller.signal})
+      .then(parseVerifiedIndex)
+      .then(setAtlasIndex)
+      .catch((error:unknown)=>{if(error instanceof DOMException&&error.name==='AbortError')return;setLoadFailed(true);});
+    return()=>controller.abort();
+  },[]);
+  if(!atlasIndex)return <IndexLoadBoundary failed={loadFailed}/>;
+  return <AtlasHome atlasIndex={atlasIndex}/>;
+}
+
+function IndexLoadBoundary({failed}:{failed:boolean}) {
+  const summary=indexBootstrap.definitiveV2Summary;
+  return <main id="top"><section className="hero" aria-labelledby="index-boundary-title" role={failed?'alert':'status'} aria-live="polite"><div className="hero-copy"><p className="eyebrow">Digest固定Read Model</p><h1 id="index-boundary-title">{failed?'検証済みIndexを読み込めません':'検証済みIndexを読み込んでいます'}</h1></div><div className="hero-aside"><p>{failed?indexBootstrap.fallback.message:'Subject一覧を表示する前に、固定URL・Index digest・件数・完成境界を照合しています。'}</p><p className="boundary-note"><strong>Fail closed:</strong> この画面はSubject 0件や完成0件という判定ではありません。直前に生成された集約ではSubject Definitive {summary.definitive}件、v2入力missing {summary.missing}件、既知Gap {summary.gapInstances}件です。未取得の詳細を完成・推奨へ昇格しません。</p></div><div className="metrics" aria-label="固定bootstrapの未完了集約"><div><strong>{indexBootstrap.subjects}</strong><span>期待するCatalog subjects</span></div><div><strong>{summary.missing}</strong><span>Definitive v2 input missing</span></div><div><strong>{summary.gapInstances}</strong><span>既知Gap</span></div><div><strong>{indexBootstrap.fixedCommitAuditSummary.incomplete}</strong><span>固定commit監査 incomplete</span></div><div><strong>{indexBootstrap.evidenceDependencySummary.missing}</strong><span>Dependency Graph missing</span></div><div><strong>{summary.definitive}</strong><span>Subject Definitive（固定集約）</span></div></div></section></main>;
+}
+
+function AtlasHome({atlasIndex}:{atlasIndex:AtlasIndex}) {
   const [query, setQuery] = useState('');
   const [domain, setDomain] = useState('');
   const [audience, setAudience] = useState('');
@@ -69,19 +114,20 @@ export default function Home() {
   const [selected, setSelected] = useState<Subject | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const subjects=atlasIndex.subjects;
 
-  const domains = useMemo(() => [...new Map(atlasIndex.subjects.map((item) => [item.domain.id, item.domain])).values()], []);
-  const versions = useMemo(() => [...new Set(atlasIndex.subjects.flatMap((item) => item.release ? [item.release.version] : []))].sort(), []);
+  const domains = useMemo(() => [...new Map(subjects.map((item) => [item.domain.id, item.domain])).values()], [subjects]);
+  const versions = useMemo(() => [...new Set(subjects.flatMap((item) => item.release ? [item.release.version] : []))].sort(), [subjects]);
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('ja');
-    const result = atlasIndex.subjects.filter((item) => {
+    const result = subjects.filter((item) => {
       const release = item.release;
       const stateMatch = status.startsWith('catalog:') ? item.status === status.slice(8) : status.startsWith('release:') ? release?.status === status.slice(8) : status.startsWith('coverage:') ? (release?.coverage.states as Record<string, number> | undefined)?.[status.slice(9)] : status.startsWith('dependency:') ? item.evidenceDependency.status===status.slice(11) : status.startsWith('definitive:') ? item.definitiveV2.status===status.slice(11) : status.startsWith('audit:') ? item.fixedCommitAudit?.status===status.slice(6) : status === 'completion:bounded-historical' ? release?.completion.classification === 'bounded-historical' : status === 'completion:subject-definitive' ? release?.completion.definitive : status === 'completion:not-definitive' ? !release?.completion.definitive : true;
       return (!normalized || item.searchText.includes(normalized)) && (!domain || item.domain.id === domain) && (!audience || release?.audiences.includes(audience)) && (!outcome || release?.outcomes.includes(outcome)) && (!surface || release?.surfaces.some((itemSurface) => itemSurface.id === surface)) && (!status || Boolean(stateMatch)) && (!version || release?.version === version) && (!environment || release?.requiredProfiles.includes(environment) || release?.observedProfiles.includes(environment)) && (!skill || (skill === 'available' ? Boolean(release?.skill?.router) : !release?.skill?.router));
     });
     return result.toSorted((a, b) => sort === 'title' ? a.title.localeCompare(b.title, 'ja') : sort === 'coverage' ? (b.release?.coverage.percent ?? -1) - (a.release?.coverage.percent ?? -1) : `${a.domain.title}${a.title}`.localeCompare(`${b.domain.title}${b.title}`, 'ja'));
-  }, [query, domain, audience, outcome, surface, status, version, environment, skill, sort]);
+  }, [subjects, query, domain, audience, outcome, surface, status, version, environment, skill, sort]);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); searchRef.current?.focus(); } };
