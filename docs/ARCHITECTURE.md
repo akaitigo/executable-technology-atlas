@@ -15,6 +15,8 @@ Runtimeは`fixtures/`のcontent-addressed bundleと生成済み`app/data/index.g
 
 署名済みSubject Releaseがまだない場合、Portalは明示したclean commitのGit objectだけを開発時にCoreで監査し、観測専用のfixture署名Envelopeとして索引できる。この経路は`fixed-commit-incomplete`専用で、公開Release Trust、Release Manifest、Definitive Certificateを代替せず、Core Gateごとのpass/fail、Authority分母、必須output欠落、Schema drift、既知Gapを独立して保持する。現在は7 Subjectをこの境界で表示する。
 
+固定commit監査の公開詳細は、attestation digestを使うcontent-addressed URLに加えて、生成Indexへ詳細JSONのbytes digestを保持する。Browserは両者を分離して検証し、取得bytes不一致や不正JSONでは詳細を採用せず、Indexの`fixed-commit-incomplete / Release未成立`とGap分母をlast-known-goodとして表示する。
+
 RegistryはEnvelope読込前にpreflightし、singleton入力の重複、Release identity/digestの重複、異なるEntryによる同一Fileの再binding、Catalog外Subject/Repository、親Directory参照・絶対Path・fixture root外Path、全Path componentのsymlink、通常File以外、`stale`または`revoked`のlockを拒否する。`lockStatus`を持たない既存v1 Entryは互換上`current`として扱うが、未知状態も拒否する。preflight失敗はIndexとBootstrapを更新せず、診断だけをatomicなImport Reportへ記録する。
 
 `frontend-behavior`のDepth Referenceは、明示Commit `4a0b2df8e2091a963bd0e0e1bbccef9c84b49a45`の`FE_DEPTH_REFERENCE.json`をSource digestと署名付きEnvelopeへ固定する。Importerは`contracts/depth-reference-lock.json`に対して18軸、状態、分母、Proof、Gapを検証し、生成IndexとDigest固定Subject詳細へ投影する。実行時にSubject checkoutは読まない。
