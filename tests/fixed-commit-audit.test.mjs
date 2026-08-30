@@ -16,6 +16,8 @@ const flutterLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-comm
 const flutterEnvelope=JSON.parse(await readFile(path.join(root,flutterLock.fixturePath),'utf8'));
 const rabbitmqLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-rabbitmq-lock.json'),'utf8'));
 const rabbitmqEnvelope=JSON.parse(await readFile(path.join(root,rabbitmqLock.fixturePath),'utf8'));
+const kotlinLock=JSON.parse(await readFile(path.join(root,'contracts/fixed-commit-audit-kotlin-lock.json'),'utf8'));
+const kotlinEnvelope=JSON.parse(await readFile(path.join(root,kotlinLock.fixturePath),'utf8'));
 
 test('実Subject固定commit監査EnvelopeをSchema・Digest・署名で受理する',()=>{
   const result=validateFixedCommitAudit(envelope,schema,trusted);
@@ -83,6 +85,22 @@ test('RabbitMQ固定commitの自己宣言完成をCore Gate失敗として保持
   assert.equal(audit.core.definitive.summary.completionClass,'not-definitive');
   assert.equal(audit.core.scenarioTrace.summary.gaps,925);
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),rabbitmqLock.requiredGapIds);
+});
+
+test('Kotlin固定commitの契約passと実行Gapを同時に保持する',()=>{
+  const validated=validateFixedCommitAudit(kotlinEnvelope,schema,trusted);
+  assert.equal(validated.ok,true,validated.errors.join('; '));
+  const audit=projectFixedCommitAudit(kotlinEnvelope,validated);
+  assert.deepEqual({commit:audit.source.commit,tree:audit.source.tree},{commit:kotlinLock.sourceCommit,tree:kotlinLock.sourceTree});
+  assert.deepEqual({openRequired:audit.manifest.openRequired,inputs:audit.core.evidenceDependency.summary.inputs,changed:audit.core.evidenceDependency.summary.changedInputs,outputs:audit.core.evidenceDependency.summary.outputs},{openRequired:3,inputs:4,changed:4,outputs:777});
+  assert.deepEqual({failed:audit.core.authorityExtraction.summary.failed,deferred:audit.core.authorityExtraction.summary.deferredLocators,unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{failed:18,deferred:18,unclassified:146402,pending:146402,decisions:0});
+  for(const gate of ['evidenceDependency','authorityExtraction','authorityBody','authorityReview','scenarioTrace','nonRegression'])assert.equal(audit.core[gate].result,'pass',gate);
+  assert.equal(audit.core.definitive.result,'fail');
+  assert.equal(audit.core.definitive.summary.declaredCompletionClass,'subject-definitive');
+  assert.equal(audit.core.definitive.summary.completionClass,'not-definitive');
+  assert.deepEqual({runtime:audit.core.scenarioTrace.summary.runtimeRows,gaps:audit.core.scenarioTrace.summary.gaps},{runtime:0,gaps:690});
+  assert.deepEqual({result:audit.core.evidenceDurability.result,status:audit.core.evidenceDurability.summary.status},{result:'fail',status:'failed'});
+  assert.deepEqual(audit.gaps.map((gap)=>gap.id),kotlinLock.requiredGapIds);
 });
 
 test('改変とRelease/Definitiveへの格上げを拒否する',()=>{

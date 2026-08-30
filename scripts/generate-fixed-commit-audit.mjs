@@ -122,6 +122,37 @@ const observations=[
       {id:'non-regression-contract-missing',status:'open',detail:'Non-regression契約が固定commitにありません。',count:1},
       {id:'evidence-durability-output-missing',status:'open',detail:'Evidence durabilityの必須outputが固定commitにありません。',count:1}
     ]
+  },
+  {
+    subjectId:'kotlin',atlasId:'kotlin-reference-atlas',repository:'kotlin-reference-atlas',commit:'39da6284576c5bafae4921ba7578090ca5603318',environment:'KOTLIN_ATLAS_REPOSITORY',
+    paths:['atlas.yaml','definitive.yaml','depth.parity.yaml','verification.matrix.yaml','non-regression.yaml','migrations/definitive-v2.yaml','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json','artifacts/pattern-scenarios/results.json'],
+    manifest:{status:'incomplete',completionClass:'incomplete',targets:33,openRequired:3,claims:31,evidence:32},
+    core:{
+      audit:gate('atlas audit .','pass',{completionClass:'incomplete',targets:33,claims:31,evidence:32,openRequired:3}),
+      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:4,changedInputs:4,outputs:777,affectedOutputs:777,runs:1}),
+      authorityExtraction:gate('atlas audit . --gate authority-extraction','pass',{status:'incomplete-source-state',locked:18,matched:0,failed:18,staleSources:0,candidateEdges:18,classifiedEdges:0,unclassifiedEdges:18,deferredLocators:18,humanReviewed:0,coreV2Eligible:0},['18 Sourceのlocator評価がdeferされ、Core v2 eligible surfaceは0です']),
+      authorityBody:gate('atlas audit . --gate authority-body','pass',{status:'incomplete-human-review-required',sources:18,documents:16,matched:16,staleDocuments:0,candidateAnchors:146402,classified:0,unclassified:146402,humanReviewed:0,coreV2Eligible:0},['146402 anchorが未分類でhuman review未完了です']),
+      authorityReview:gate('atlas audit . --gate authority-review','pass',{status:'incomplete-human-review-required',queued:146402,pendingHuman:146402,humanReviewed:0,unavailableHolds:0,decisions:0},['0 decisionは進捗またはDepth達成として扱えません']),
+      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive',declaredCompletionClass:'subject-definitive',openRequired:3},['required Target authority.locator-extractionはpartialです']),
+      scenarioTrace:gate('atlas audit . --gate scenario-trace','pass',{status:'incomplete-runtime-proof-required',rows:690,runtimeRows:0,gaps:690},['Gate契約は有効ですが、全690 rowがPattern-specific runtime gapです']),
+      nonRegression:gate('atlas audit . --gate non-regression','pass',{baselineItems:220,currentItems:2868,replacements:5}),
+      evidenceDurability:gate('atlas audit . --gate evidence-durability','fail',{status:'failed',total:0,passed:0,failed:0},['failed runを成功Evidence directoryへ公開できません'])
+    },
+    gaps:[
+      {id:'fixed-release-manifest-missing',status:'open',detail:'署名済み固定Release Manifestがありません。',count:1},
+      {id:'public-trust-key-missing',status:'open',detail:'公開Release Trust Keyがありません。',count:1},
+      {id:'definitive-certificate-missing',status:'open',detail:'Core v2 Definitive Certificateがありません。',count:1},
+      {id:'open-required-targets',status:'open',detail:'必須TargetがClosureしていません。',count:3},
+      {id:'authority-locator-extraction-failed',status:'open',detail:'Authority locator extractionが失敗またはdeferです。',count:18},
+      {id:'authority-reference-edges-unclassified',status:'open',detail:'Authority reference edgeが未分類です。',count:18},
+      {id:'authority-body-unclassified',status:'open',detail:'Authority body anchorが未分類です。',count:146402},
+      {id:'authority-human-review-open',status:'open',detail:'Authority anchorがhuman review未完了です。',count:146402},
+      {id:'depth-parity-incomplete',status:'open',detail:'Depth parityはincompleteでrowがありません。',count:1},
+      {id:'definitive-self-declaration-rejected',status:'open',detail:'definitive.yamlのsubject-definitive自己宣言はCore Gate失敗のため完成扱いできません。',count:1},
+      {id:'definitive-required-target-partial',status:'open',detail:'Definitive Gate必須Target authority.locator-extractionがpartialです。',count:1},
+      {id:'scenario-runtime-gaps',status:'open',detail:'Pattern-specific Scenario runtime proofがありません。',count:690},
+      {id:'evidence-durability-failed',status:'open',detail:'Evidence durability artifactはstatus=failedで実行結果が0件です。',count:1}
+    ]
   }
 ];
 
