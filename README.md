@@ -57,3 +57,5 @@ node scripts/atlas-portal.mjs verify
 Workflowの権限は`contents: read`のみで、秘密情報、永続Credential、依存Cacheは使いません。固定Index、非後退結果、Router Evalの再現一致、全Test、Lint、Build、Portal GraphのDigest/構造、digest-only負例、Publication Gate、Core v1 Audit/Certificate、Core v2 Evidence Dependency Gateを通し、runner内で追跡対象ファイルが変わった場合は拒否します。
 
 Repository admissionはengineering-control-plane commit `00fe010a…`からrolloutされた`repo.yaml`を正本とし、Portal自身のGitHub writeだけを許可します。cloud writeと他Repositoryへのwriteは拒否し、この境界をPublication GateとProvenanceで検証します。
+
+Commit署名は`e4e3e48f…`を非破壊な施行境界とします。それ以前のDCO付きunsigned履歴をamend、rebase、force pushせず、以後のcheckpointはDCOとSSH/GPG署名の両方を要求します。`security/allowed_signers`の公開鍵で各commitへ`git verify-commit`を実行し、Publication Gateとclean-room CIで検証します。

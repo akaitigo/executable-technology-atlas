@@ -61,6 +61,12 @@ jobs:
       - name: Install lockfile dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
 
+      - name: Verify cryptographically signed checkpoints
+        run: |
+          for commit in $(git rev-list e4e3e48fbc270789505c90c1433f8ccc6a2900fb^..HEAD); do
+            git -c gpg.format=ssh -c gpg.ssh.allowedSignersFile="$GITHUB_WORKSPACE/security/allowed_signers" verify-commit "$commit"
+          done
+
       - name: Verify vendored Core v2 contracts
         run: |
           cmp contracts/schemas/evidence-dependency-graph.schema.json .ci/reference-atlas-core-evidence/schemas/evidence-dependency-graph.schema.json

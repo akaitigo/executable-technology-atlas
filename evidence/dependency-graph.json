@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "atlas_id": "executable-technology-atlas",
-  "generated_at": "2026-08-30T15:32:53.452Z",
+  "generated_at": "2026-08-30T15:40:03.251Z",
   "status": "current",
   "policy": {
     "transitive_staleness": true,
@@ -62,8 +62,8 @@
         "sources.lock.yaml"
       ],
       "baseline_digest": "sha256:2b124385679b4ec05a0d41542de88299ff19ffb20faa8350da96e1aa443f07b1",
-      "current_digest": "sha256:e9d4c6bcb6ddd327efe26d3e51a370340be57dca14628c936e680959ca8fd628",
-      "observed_at": "2026-08-30T15:32:46.939Z"
+      "current_digest": "sha256:f84d6495f5e72c8479d69eb6b0eb8959c22da4b7c7304c622ff90e35e0e97710",
+      "observed_at": "2026-08-30T15:39:55.107Z"
     },
     {
       "id": "portal-harness",
@@ -71,6 +71,7 @@
       "members": [
         "contracts/PROVENANCE.json",
         "contracts/authority-review-lock.json",
+        "contracts/commit-signing-policy.json",
         "contracts/definitive-v2-lock.json",
         "contracts/depth-reference-lock.json",
         "contracts/evidence-dependency-lock.json",
@@ -131,6 +132,7 @@
         "tests/accessibility.test.mjs",
         "tests/authority-review.test.mjs",
         "tests/ci.test.mjs",
+        "tests/commit-signing.test.mjs",
         "tests/definitive-v2.test.mjs",
         "tests/evidence-dependency.test.mjs",
         "tests/fixed-commit-audit.test.mjs",
@@ -142,8 +144,8 @@
         "tests/router.test.mjs"
       ],
       "baseline_digest": "sha256:e6a4aabae4ecde06d6ff97facdc6c859f54de4f63da82103806cd38233022879",
-      "current_digest": "sha256:4f21fa8743dedd600b2f31adc5045ce39d6191d4d3bb54e1871fec517b8329be",
-      "observed_at": "2026-08-30T15:32:46.939Z"
+      "current_digest": "sha256:ade16d4928490cca6e9f687578f863c9b5ebbc140232f71f1b489a1ca5d366f7",
+      "observed_at": "2026-08-30T15:39:55.107Z"
     },
     {
       "id": "portal-runtime",
@@ -165,11 +167,12 @@
         ".openai/hosting.json",
         "environments/local.json",
         "public/_headers",
-        "repo.yaml"
+        "repo.yaml",
+        "security/allowed_signers"
       ],
       "baseline_digest": "sha256:4b929742390db812bfc1d40f182eaa9fbe5deb3d2faa652c52bf6d5fd46a6739",
-      "current_digest": "sha256:99f37dccdff73a08af31845d1c1f561f9f69cbe4da3b74711da98411e113c7c1",
-      "observed_at": "2026-08-30T15:17:05.412Z"
+      "current_digest": "sha256:8868620a05d9ef927b7e9d35597b3142ae1a7ff3fabdb1a4487ee158554cfe78",
+      "observed_at": "2026-08-30T15:39:55.107Z"
     }
   ],
   "outputs": [
@@ -286,7 +289,7 @@
       "id": "output.evidence.performance.budget.evidence.json",
       "kind": "benchmark",
       "path": "evidence/performance.budget.evidence.json",
-      "digest": "sha256:6094461cb95cd49db1cbe6f163a8cbc65bb86ee64c6dbd007b786d7288e75c47",
+      "digest": "sha256:3b1fec9deffe996b688c070c22671616e6ddc2fffa7e55526d9d20e7d0b8f8b1",
       "depends_on": [
         "output.evidence.reports.performance.json",
         "portal-harness",
@@ -312,7 +315,7 @@
       "id": "output.evidence.reports.performance.json",
       "kind": "benchmark",
       "path": "evidence/reports/performance.json",
-      "digest": "sha256:087b8f188dedf9bfa1707665d5a21e4be2c782551404c9450fdda1628cdc581f",
+      "digest": "sha256:e41a8493f06da9f40bd3c458a7b0bac87c8d497a48c9a306ff45b9dfdb2952b7",
       "depends_on": [
         "portal-source",
         "portal-harness",
@@ -434,7 +437,7 @@
       "id": "output.provenance.yaml",
       "kind": "derived-evidence",
       "path": "provenance.yaml",
-      "digest": "sha256:f4f0c05eb40a9a96093407258e958f3fea7e0bba7d39442e42f5ea205c8b111f",
+      "digest": "sha256:dc6c66636664e638fe0e639b2d4ce7424e164638c952441522c1ede17fefb0d7",
       "depends_on": [
         "output.evidence.dependency.own.closure.evidence.json",
         "output.evidence.import.integrity.evidence.json",
@@ -485,8 +488,8 @@
       "id": "portal-reproduce-run",
       "execution_kind": "runtime",
       "command": "npm run dependency:reproduce",
-      "started_at": "2026-08-30T15:32:46.939Z",
-      "completed_at": "2026-08-30T15:32:53.452Z",
+      "started_at": "2026-08-30T15:39:55.107Z",
+      "completed_at": "2026-08-30T15:40:03.251Z",
       "result": "passed",
       "attempts": 1,
       "runtime_identity": {
@@ -498,11 +501,11 @@
       "input_bindings": [
         {
           "input_id": "portal-source",
-          "digest": "sha256:e9d4c6bcb6ddd327efe26d3e51a370340be57dca14628c936e680959ca8fd628"
+          "digest": "sha256:f84d6495f5e72c8479d69eb6b0eb8959c22da4b7c7304c622ff90e35e0e97710"
         },
         {
           "input_id": "portal-harness",
-          "digest": "sha256:4f21fa8743dedd600b2f31adc5045ce39d6191d4d3bb54e1871fec517b8329be"
+          "digest": "sha256:ade16d4928490cca6e9f687578f863c9b5ebbc140232f71f1b489a1ca5d366f7"
         },
         {
           "input_id": "portal-runtime",
@@ -510,7 +513,7 @@
         },
         {
           "input_id": "portal-profile",
-          "digest": "sha256:99f37dccdff73a08af31845d1c1f561f9f69cbe4da3b74711da98411e113c7c1"
+          "digest": "sha256:8868620a05d9ef927b7e9d35597b3142ae1a7ff3fabdb1a4487ee158554cfe78"
         }
       ],
       "output_ids": [
