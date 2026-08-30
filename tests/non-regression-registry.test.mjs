@@ -9,9 +9,9 @@ const registry=JSON.parse(await readFile(path.join(fixtureRoot,'registry.json'),
 const catalog=JSON.parse(await readFile(path.join(fixtureRoot,'core/catalog.release.json'),'utf8')).payload.catalog;
 const negative=JSON.parse(await readFile(path.join(fixtureRoot,'registry/invalid-registry-cases.json'),'utf8'));
 
-test('Registry Non-regressionは97 Subject・7 fixed audit・12負例を完全一致で受理する',async()=>{
+test('Registry Non-regressionは97 Subject・7 fixed audit・14負例を完全一致で受理する',async()=>{
   const preflight=await validateRegistryPreflight(registry,fixtureRoot,catalog);const result=evaluateRegistryEvidence(preflight,negative);
-  assert.deepEqual(result,{ok:true,policyPass:true,negativePass:true,catalogSubjects:97,fixedCommitAudits:7,negativeCases:12,expectedNegativeCases:12});
+  assert.deepEqual(result,{ok:true,policyPass:true,negativePass:true,catalogSubjects:97,fixedCommitAudits:7,negativeCases:14,expectedNegativeCases:14});
 });
 
 test('Registry Policyまたは負例分母の縮小をNon-regressionが拒否する',async()=>{

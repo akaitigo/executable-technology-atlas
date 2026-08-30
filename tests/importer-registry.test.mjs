@@ -28,6 +28,8 @@ async function applyScenario(mutated,scenario,scenarioRoot){
     case 'replace-first-fixed-commit-file-with-symlink-directory': {
       const link='registry/fixed-commit-directory-link';const original=mutated.fixedCommitAudits[0].file;await symlink(path.relative(path.join(scenarioRoot,'registry'),path.join(scenarioRoot,'fixed-commit-audits')),path.join(scenarioRoot,link));mutated.fixedCommitAudits[0].file=`${link}/${path.basename(original)}`;break;
     }
+    case 'mark-first-fixed-commit-lock-stale': mutated.fixedCommitAudits[0].lockStatus='stale';break;
+    case 'mark-first-fixed-commit-lock-revoked': mutated.fixedCommitAudits[0].lockStatus='revoked';break;
     default: assert.fail(`unknown mutation: ${scenario.mutation}`);
   }
 }
@@ -40,7 +42,7 @@ test('Importerは登録Envelopeを読む前に共有Registry preflightとatomic 
   assert.ok(preflight>=0);assert.ok(failureRecord>preflight);assert.ok(firstRegisteredEnvelope>failureRecord);
 });
 
-test('12 Registry負例はImport Reportだけをatomic更新しlast-known-good IndexとBootstrapを保持する',async()=>{
+test('既存12境界とstale/revokedを含む14 Registry負例はlast-known-goodを保持する',async()=>{
   const temporary=await mkdtemp(path.join(os.tmpdir(),'atlas-importer-registry-'));
   try{
     const copiedFixtures=path.join(temporary,'fixtures');await cp(fixtureRoot,copiedFixtures,{recursive:true});

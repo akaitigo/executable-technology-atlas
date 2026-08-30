@@ -34,6 +34,8 @@ async function applyScenario(mutated,scenario,scenarioRoot){
       mutated.fixedCommitAudits[0].file=`${link}/${path.basename(original)}`;
       break;
     }
+    case 'mark-first-fixed-commit-lock-stale': mutated.fixedCommitAudits[0].lockStatus='stale';break;
+    case 'mark-first-fixed-commit-lock-revoked': mutated.fixedCommitAudits[0].lockStatus='revoked';break;
     default: assert.fail(`unknown mutation: ${scenario.mutation}`);
   }
 }
@@ -43,7 +45,7 @@ test('Registryは重複なし・Catalog binding・fixture root内の通常File�
   assert.equal(result.result,'pass',result.errors.join('; '));
   assert.equal(result.catalogSubjects,97);
   assert.deepEqual(result.collections,{releases:7,depthReferences:1,authorityReviews:1,evidenceDependencies:0,fixedCommitAudits:7,definitiveV2:0});
-  assert.equal(result.duplicatePolicy,'reject');assert.equal(result.fileBindingPolicy,'one-registry-reference-per-file');assert.equal(result.pathPolicy,'fixture-root-regular-files-only');assert.equal(result.parentTraversalPolicy,'reject');assert.equal(result.symlinkPolicy,'reject-all-components');
+  assert.equal(result.duplicatePolicy,'reject');assert.equal(result.fileBindingPolicy,'one-registry-reference-per-file');assert.equal(result.pathPolicy,'fixture-root-regular-files-only');assert.equal(result.parentTraversalPolicy,'reject');assert.equal(result.symlinkPolicy,'reject-all-components');assert.equal(result.lifecyclePolicy,'current-or-legacy-current-only-stale-and-revoked-rejected');
 });
 
 test('Registry負例を入力読込前にfail-closed拒否する',async()=>{

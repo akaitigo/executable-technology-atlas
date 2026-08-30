@@ -11,7 +11,8 @@ const FILE_FIELDS = {
   fixedCommitAudits:['file'],
   definitiveV2:['file'],
 };
-const NEGATIVE_CASE_IDS=['duplicate-fixed-commit-subject','duplicate-release-identity','catalog-outside-subject','catalog-repository-rebind','duplicate-file-binding','fixture-root-path-escape','normalized-parent-segment','absolute-path','missing-file','directory-target','symlink-target','symlink-directory-target'];
+const NEGATIVE_CASE_IDS=['duplicate-fixed-commit-subject','duplicate-release-identity','catalog-outside-subject','catalog-repository-rebind','duplicate-file-binding','fixture-root-path-escape','normalized-parent-segment','absolute-path','missing-file','directory-target','symlink-target','symlink-directory-target','stale-lock','revoked-lock'];
+const LOCK_STATES=new Set(['current','stale','revoked']);
 
 function duplicateValues(items,keyFor){
   const seen=new Set();const duplicates=new Set();
@@ -36,6 +37,11 @@ export async function validateRegistryPreflight(registry,fixtureRoot,catalog){
       if(!subject)errors.push(`Registry ${name}がCatalog外subjectを参照しています: ${item?.subjectId??'(missing)'}`);
       else if(subject.repository!==item?.repository)errors.push(`Registry ${name}のrepositoryがCatalogと一致しません: ${item.subjectId}`);
     }
+  }
+  for(const name of COLLECTIONS)for(const[index,item]of registry[name].entries()){
+    const state=item?.lockStatus??'current';
+    if(!LOCK_STATES.has(state))errors.push(`Registry ${name}[${index}]のlockStatusが不明です: ${state}`);
+    else if(state!=='current')errors.push(`Registry ${name}[${index}]の${state} lockは取込できません`);
   }
   for(const identity of duplicateValues(registry.releases,(item)=>item?.repository&&item?.version?`${item.repository}@${item.version}`:null))errors.push(`Registry releasesに重複Release identityがあります: ${identity}`);
   for(const digest of duplicateValues(registry.releases,(item)=>item?.digest))errors.push(`Registry releasesに重複digestがあります: ${digest}`);
@@ -63,7 +69,7 @@ export async function validateRegistryPreflight(registry,fixtureRoot,catalog){
       if(targetRelative.startsWith(`..${path.sep}`)||targetRelative==='..'||path.isAbsolute(targetRelative))errors.push(`Registry ${label}の実体がfixture root外です`);
     }catch{errors.push(`Registry ${label}のFileが存在しません`);}
   }
-  return{result:errors.length?'fail':'pass',errors,catalogSubjects:catalogSubjects.size,collections:Object.fromEntries(COLLECTIONS.map((name)=>[name,registry[name].length])),referencedFiles:referencedFiles.length,duplicatePolicy:'reject',fileBindingPolicy:'one-registry-reference-per-file',pathPolicy:'fixture-root-regular-files-only',parentTraversalPolicy:'reject',symlinkPolicy:'reject-all-components'};
+  return{result:errors.length?'fail':'pass',errors,catalogSubjects:catalogSubjects.size,collections:Object.fromEntries(COLLECTIONS.map((name)=>[name,registry[name].length])),referencedFiles:referencedFiles.length,duplicatePolicy:'reject',fileBindingPolicy:'one-registry-reference-per-file',pathPolicy:'fixture-root-regular-files-only',parentTraversalPolicy:'reject',symlinkPolicy:'reject-all-components',lifecyclePolicy:'current-or-legacy-current-only-stale-and-revoked-rejected'};
 }
 
 export async function recordRegistryPreflightFailure(reportPath,registryPreflight){
@@ -72,7 +78,7 @@ export async function recordRegistryPreflightFailure(reportPath,registryPrefligh
 
 export function evaluateRegistryEvidence(registryPreflight,negativeFixture){
   const ids=new Set(negativeFixture?.cases?.map((item)=>item.id));
-  const policyPass=registryPreflight?.result==='pass'&&registryPreflight?.catalogSubjects===97&&registryPreflight?.collections?.fixedCommitAudits===7&&registryPreflight?.duplicatePolicy==='reject'&&registryPreflight?.fileBindingPolicy==='one-registry-reference-per-file'&&registryPreflight?.pathPolicy==='fixture-root-regular-files-only'&&registryPreflight?.parentTraversalPolicy==='reject'&&registryPreflight?.symlinkPolicy==='reject-all-components';
+  const policyPass=registryPreflight?.result==='pass'&&registryPreflight?.catalogSubjects===97&&registryPreflight?.collections?.fixedCommitAudits===7&&registryPreflight?.duplicatePolicy==='reject'&&registryPreflight?.fileBindingPolicy==='one-registry-reference-per-file'&&registryPreflight?.pathPolicy==='fixture-root-regular-files-only'&&registryPreflight?.parentTraversalPolicy==='reject'&&registryPreflight?.symlinkPolicy==='reject-all-components'&&registryPreflight?.lifecyclePolicy==='current-or-legacy-current-only-stale-and-revoked-rejected';
   const negativePass=negativeFixture?.schemaVersion===1&&negativeFixture?.cases?.length===NEGATIVE_CASE_IDS.length&&NEGATIVE_CASE_IDS.every((id)=>ids.has(id))&&negativeFixture.cases.every((item)=>item.expectedResult==='last-known-good-preserved');
   return{ok:policyPass&&negativePass,policyPass,negativePass,catalogSubjects:registryPreflight?.catalogSubjects??0,fixedCommitAudits:registryPreflight?.collections?.fixedCommitAudits??0,negativeCases:negativeFixture?.cases?.length??0,expectedNegativeCases:NEGATIVE_CASE_IDS.length};
 }
