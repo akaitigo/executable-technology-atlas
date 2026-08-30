@@ -191,18 +191,19 @@ const observations=[
     ]
   },
   {
-    subjectId:'zero-trust',atlasId:'zero-trust-reference-atlas',repository:'zero-trust-reference-atlas',commit:'d0b127baef7a3e71bd9f7d804a9bafcf0af0a3c0',environment:'ZERO_TRUST_ATLAS_REPOSITORY',
-    paths:['atlas.yaml','definitive.yaml','definitive/zero-trust-depth-parity.json','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','authority/reviews/decisions.json','inventory/definitive-v2.yaml','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json','baseline/published-main-v1.json','migrations/non-regression-v1.yaml'],
+    subjectId:'zero-trust',atlasId:'zero-trust-reference-atlas',repository:'zero-trust-reference-atlas',commit:'0a355a78a4e0342c75c41444ab8dc7db09cc4450',environment:'ZERO_TRUST_ATLAS_REPOSITORY',
+    paths:['atlas.yaml','definitive.yaml','verification.matrix.yaml','definitive/zero-trust-depth-parity.json','evidence/dependency-graph.json','authority/extraction.snapshot.json','authority/body-inventory.snapshot.json','authority/review-queue.snapshot.json','authority/reviews/decisions.json','inventory/definitive-v2.yaml','evidence/scenarios/index.json','evidence/scenarios/closure-plan.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-001/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-002/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-003/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-014/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-024/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-047/bundle-manifest.json','evidence/scenarios/dedicated-runtime-tranches/zt-tranche-070/bundle-manifest.json','baseline/published-main-v1.json','migrations/non-regression-v1.yaml'],
     depthPath:'definitive/zero-trust-depth-parity.json',
     manifest:{status:'incomplete',completionClass:'incomplete',targets:33,openRequired:0,claims:33,evidence:29},
     core:{
       audit:gate('atlas audit .','pass',{completionClass:'incomplete',targets:33,claims:33,evidence:29,openRequired:0},['bounded Target closureはDefinitive inventory closureではありません']),
-      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:20,changedInputs:13,outputs:1129,affectedOutputs:1129,runs:9}),
+      evidenceDependency:gate('atlas audit . --gate evidence-dependency','pass',{inputs:27,changedInputs:14,outputs:1500,affectedOutputs:1500,runs:10}),
       authorityExtraction:gate('go run ./cmd/atlascheck .','pass',{status:'incomplete-human-review-required',locked:16,matched:0,failed:0,deferredLocators:322,humanReviewed:0,coreV2Eligible:0},['322 locatorはbodyをPortalへ複製せずhuman review待ちです']),
       authorityBody:gate('go run ./cmd/atlascheck .','pass',{status:'incomplete-human-review-required',sources:16,documents:16,matched:16,failed:0,candidateAnchors:2786,classified:0,unclassified:2786,humanReviewed:0,coreV2Eligible:0},['2,786 raw anchorは意味的Surfaceへ昇格していません']),
       authorityReview:gate('go run ./cmd/atlascheck .','pass',{status:'incomplete-human-review-required',queued:2786,pendingHuman:2786,humanReviewed:0,unavailableHolds:0,decisions:0},['machine proposalはHuman decisionではなく、decision 0は進捗ではありません']),
-      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive',declaredCompletionClass:'subject-definitive',missingContractArtifacts:3,openRequired:91},['surface.inventory.yamlがなくCore Definitive Gateはfailします','verification.matrix.yamlとDefinitive Certificateもありません']),
-      scenarioTrace:gate('go run ./cmd/atlascheck .','pass',{status:'incomplete-authority-atomic-and-behavior-runtime-closure',rows:910,runtimeRows:0,variantCells:1820,closedVariantCells:16,gaps:910},['16/1,820 cellの実行を910 rowのClosureへ流用せず、completion eligible rowは0です']),
+      definitive:gate('atlas audit . --gate definitive','fail',{completionClass:'not-definitive',declaredCompletionClass:'subject-definitive',missingContractArtifacts:3,openRequired:91},['surface.inventory.yamlがなくCore Definitive Gateはfailします','root depth.parity.yamlとDefinitive Certificateもありません']),
+      verificationMatrix:gate('python3 scripts/test_verification_matrix.py','pass',{rows:910,closedRows:28,gapRows:882,variantCells:1820,closedVariantCells:56,completionEligibleRows:0},['10 Scenario 910 row中28 closed / 882 gap、1,820 Variant cell中56 closed、Authority atomic binding未完のためcompletion eligible rowは0です']),
+      scenarioTrace:gate('go run ./cmd/atlascheck .','pass',{status:'incomplete-authority-atomic-and-behavior-runtime-closure',rows:910,runtimeRows:28,variantCells:1820,closedVariantCells:56,gaps:882},['28/910 rowと56/1,820 cellを専用Runtimeで閉鎖しましたが、completion eligible rowは0です']),
       nonRegression:gate('go run ./cmd/nonregression --root .','pass',{},['published-mainのTarget/Claim/Proof/Evidence/Source/Skill/Lab/CIを保持しています']),
       evidenceDurability:gate('required output existence check','fail',{missingRequiredOutputs:1},['artifacts/pattern-scenarios/results.jsonが固定commitに存在しません'])
     },
@@ -212,14 +213,14 @@ const observations=[
       {id:'definitive-certificate-missing',status:'open',detail:'Core v2 Definitive Certificateがありません。',count:1},
       {id:'historical-certificate-not-definitive',status:'open',detail:'既存v1 Certificateはbounded historicalでありDefinitive完成を証明しません。',count:1},
       {id:'definitive-inventory-open-required',status:'open',detail:'bounded Targetのopen requiredは0ですが、Authority-derived Definitive inventory 91件は全件openです。',count:91},
-      {id:'definitive-contract-artifacts-missing',status:'open',detail:'Surface inventory、Verification matrix、Definitive Certificateがありません。',count:3},
+      {id:'definitive-contract-artifacts-missing',status:'open',detail:'Surface inventory、root Depth parity、Definitive Certificateがありません。Verification matrixは追加済みです。',count:3},
       {id:'authority-locator-evaluation-deferred',status:'open',detail:'Authority locator評価がhuman review待ちです。',count:322},
       {id:'authority-body-unclassified',status:'open',detail:'Authority body anchorが未分類です。',count:2786},
       {id:'authority-human-review-open',status:'open',detail:'Authority anchorがhuman review未完了です。',count:2786},
       {id:'depth-parity-incomplete',status:'open',detail:'Depth Reference 18軸のうち17軸がpartialです。',count:17},
       {id:'definitive-self-declaration-rejected',status:'open',detail:'definitive.yamlのsubject-definitive自己宣言はCore Gate失敗のため完成扱いできません。',count:1},
-      {id:'scenario-runtime-gaps',status:'open',detail:'Authority atomic binding済みの専用Scenario runtime closureがありません。',count:910},
-      {id:'variant-execution-gaps',status:'open',detail:'実装Variant別の専用実行cellが未完了です。',count:1804},
+      {id:'scenario-runtime-gaps',status:'open',detail:'Authority atomic bindingを伴う専用Scenario runtime closureが未完了です。',count:882},
+      {id:'variant-execution-gaps',status:'open',detail:'実装Variant別の専用実行cellが未完了です。',count:1764},
       {id:'authority-atomic-binding-missing',status:'open',detail:'91 required itemのAuthority atomic bindingがありません。',count:91},
       {id:'evidence-durability-output-missing',status:'open',detail:'Evidence durabilityの必須outputが固定commitにありません。',count:1}
     ]

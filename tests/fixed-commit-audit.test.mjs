@@ -117,7 +117,8 @@ test('Zero Trustのbounded closureとDefinitive inventory未完了を分離す�
   assert.equal(audit.depthReference.axes.length,18);
   assert.equal(audit.depthReference.axes.filter((axis)=>axis.status!=='satisfied'&&axis.gaps.length>0).length,17);
   assert.deepEqual({unclassified:audit.core.authorityBody.summary.unclassified,pending:audit.core.authorityReview.summary.pendingHuman,decisions:audit.core.authorityReview.summary.decisions},{unclassified:2786,pending:2786,decisions:0});
-  assert.deepEqual({rows:audit.core.scenarioTrace.summary.rows,runtimeRows:audit.core.scenarioTrace.summary.runtimeRows,variantCells:audit.core.scenarioTrace.summary.variantCells,closedVariantCells:audit.core.scenarioTrace.summary.closedVariantCells,gaps:audit.core.scenarioTrace.summary.gaps},{rows:910,runtimeRows:0,variantCells:1820,closedVariantCells:16,gaps:910});
+  assert.deepEqual({result:audit.core.verificationMatrix.result,rows:audit.core.verificationMatrix.summary.rows,closedRows:audit.core.verificationMatrix.summary.closedRows,gapRows:audit.core.verificationMatrix.summary.gapRows,completionEligibleRows:audit.core.verificationMatrix.summary.completionEligibleRows},{result:'pass',rows:910,closedRows:28,gapRows:882,completionEligibleRows:0});
+  assert.deepEqual({rows:audit.core.scenarioTrace.summary.rows,runtimeRows:audit.core.scenarioTrace.summary.runtimeRows,variantCells:audit.core.scenarioTrace.summary.variantCells,closedVariantCells:audit.core.scenarioTrace.summary.closedVariantCells,gaps:audit.core.scenarioTrace.summary.gaps},{rows:910,runtimeRows:28,variantCells:1820,closedVariantCells:56,gaps:882});
   assert.deepEqual(audit.gaps.map((gap)=>gap.id),zeroTrustLock.requiredGapIds);
   assert.equal(audit.readOnly,true);
   assert.equal(audit.autoPromotion,false);
