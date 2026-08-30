@@ -132,7 +132,7 @@ for (const domain of catalog.domains) for (const subject of domain.subjects) {
   const authorityReviewIndex = authorityReview ? { schemaVersion:1, subjectId:authorityReview.subjectId, atlasId:authorityReview.atlasId, status:authorityReview.status, mode:authorityReview.mode, queueId:authorityReview.queueId, summary:authorityReview.summary, capabilities:authorityReview.capabilities, exportUrl:`/data/authority-reviews/${subject.id}/review-export.v1.json`, source:authorityReview.source } : null;
   let releaseHistory = (releasesByRepository.get(subject.repository) ?? []).map((item) => ({ ...item, detailUrl: `/data/releases/${subject.id}/${item.digest.replace(/^sha256:/, '')}.json` }));
   let release = releaseHistory.at(-1) ?? null;
-  const definitive=definitiveV2.get(subject.id)??missingDefinitiveV2(subject,release);
+  const definitive=definitiveV2.get(subject.id)??missingDefinitiveV2(subject,release,definitiveV2Lock);
   if(definitive.status==='subject-definitive'&&release?.digest===definitive.source?.releaseDigest){const completion={classification:'subject-definitive',definitive:true,reason:'core-v2-definitive-gate-pass',certificateSchemaVersion:2,corePolicyVersion:'2.0.0',coverageEpoch:release.epoch,trustUsage:definitive.certificate.trust.usage};releaseHistory=releaseHistory.map((item)=>item.digest===release.digest?{...item,completion,definitiveCertificate:definitive.certificate}:item);release=releaseHistory.at(-1);}
   subjects.push({
     ...subject,
