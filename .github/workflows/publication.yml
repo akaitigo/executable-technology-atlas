@@ -110,12 +110,7 @@ jobs:
 
       - name: Verify Portal Evidence Dependency Graph with pinned Core v2
         working-directory: .ci/reference-atlas-core-evidence
-        run: |
-          if go run ./cmd/atlas audit "$GITHUB_WORKSPACE" --gate evidence-dependency > "$RUNNER_TEMP/portal-evidence-dependency.log" 2>&1; then
-            echo "expected the recorded stale historical Index to fail closed" >&2
-            exit 1
-          fi
-          grep -F "影響Evidenceがstaleのままです: output.public.data.index.76090e9b725c469db2cfbe02a8c5f3ab8874b6422cba88d37bd7bec6e7aed3b0.json" "$RUNNER_TEMP/portal-evidence-dependency.log"
+        run: go run ./cmd/atlas audit "$GITHUB_WORKSPACE" --gate evidence-dependency
 
       - name: Verify Portal root remains honestly non-definitive
         env:

@@ -11,7 +11,7 @@ const EXACT = Object.freeze({
     prerequisites: 6,
     wrappers: 8,
     inputs: 4,
-    discoveredOutputs: 39,
+    discoveredOutputs: 38,
   },
 });
 

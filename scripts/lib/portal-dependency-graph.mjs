@@ -45,7 +45,9 @@ export async function validatePortalContentAddressedIndexMigration(root,document
     if((item.reason??'').length<20)errors.push('content-addressed-index-reason-missing');
     for(const required of ['evidence/import-report.json','provenance.yaml','app/data/index-bootstrap.generated.json'])if(!item.evidence?.includes(required))errors.push('content-addressed-index-evidence-incomplete');
     if(!preserved.has(item.from.path)||!preserved.has(item.to.path))errors.push('content-addressed-index-not-append-only');
-    const [fromSummary,toSummary]=await Promise.all([contentAddressedIndexSummary(root,item.from.path),contentAddressedIndexSummary(root,item.to.path)]);
+    let fromSummary;let toSummary;
+    try{fromSummary=await contentAddressedIndexSummary(root,item.from.path);}catch{errors.push(`content-addressed-index-history-artifact-missing:${item.from.path}`);continue;}
+    try{toSummary=await contentAddressedIndexSummary(root,item.to.path);}catch{errors.push(`content-addressed-index-current-artifact-missing:${item.to.path}`);continue;}
     for(const [record,summary,label] of [[item.from,fromSummary,'from'],[item.to,toSummary,'to'],[document.current,toSummary,'current']]){
       if(record.path!==summary.path||record.pathDigest!==summary.pathDigest||record.artifactDigest!==summary.artifactDigest||record.payloadDigest!==summary.payloadDigest)errors.push(`content-addressed-index-${label}-digest-mismatch`);
     }
@@ -78,7 +80,6 @@ export async function aggregateMemberDigest(root,members){
 export async function discoverPortalOutputs(root){
   const paths=new Set(['app/data/index.generated.json','app/data/index-bootstrap.generated.json','evals/router.skill-eval.json','evidence/import-report.json','evidence/non-regression-harness.json','evidence/non-regression-report.json','evidence/portal-ci-checkpoint-readiness.json','evidence/portal-distribution-gap-index.json','evidence/portal-distribution-input-bindings.json','evidence/portal-distribution-readiness.json','evidence/portal-distribution-verification-matrix.json','evidence/portal-import-lifecycle-visibility.json','evidence/portal-root-artifact-gap-index.json','evidence/portal-root-definitive-certificate-readiness.json','evidence/portal-root-definitive-declaration-readiness.json','evidence/portal-root-depth-parity-readiness.json','evidence/portal-root-migration-readiness.json','evidence/portal-root-surface-inventory-readiness.json','evidence/portal-root-verification-matrix-readiness.json','evidence/portal-root-definitive-report.json','evidence/scenarios/closure-plan.json','evidence/scenarios/index.json','provenance.yaml','sbom.npm.spdx.json','sbom.spdx.json']);
   try{const bootstrap=JSON.parse(await readFile(path.join(root,'app/data/index-bootstrap.generated.json'),'utf8'));if(/^\/data\/index\/[a-f0-9]{64}\.json$/.test(bootstrap.publicUrl))paths.add(`public${bootstrap.publicUrl}`);}catch{}
-  for(const relative of (await preservedHistoricalIndexPaths(root)).paths)if(relative.startsWith('public/data/index/'))paths.add(relative);
   for(const directory of ['evidence/reports','evidence/scenarios'])for(const relative of await walkFiles(root,directory))if(/\.json$/.test(relative))paths.add(relative);
   for(const name of await readdir(path.join(root,'evidence')))if(/\.evidence\.json$/.test(name))paths.add(`evidence/${name}`);
   return[...paths].filter((relative)=>existingFile(root,relative)).sort();
@@ -98,11 +99,10 @@ async function closureStructureDigest(root){
 }
 
 export async function buildPortalGraph(root,{inputs,startedAt,completedAt,runtimeIdentity}){
-  const paths=await discoverPortalOutputs(root);const inputIds=inputs.map((item)=>item.id);const idByPath=new Map(paths.map((relative)=>[relative,outputId(relative)]));const evidenceWrappers=new Map();const preservedIndexes=await preservedHistoricalIndexPaths(root);const staleHistoricalIndexes=new Set((preservedIndexes.document?.replacements??[]).map((item)=>item.from.path));
+  const paths=await discoverPortalOutputs(root);const inputIds=inputs.map((item)=>item.id);const idByPath=new Map(paths.map((relative)=>[relative,outputId(relative)]));const evidenceWrappers=new Map();
   for(const relative of paths.filter((item)=>item.endsWith('.evidence.json'))){const record=JSON.parse(await readFile(path.join(root,relative),'utf8'));evidenceWrappers.set(relative,record.artifact.uri);}
   const outputs=[];
   for(const relative of paths){let dependsOn=inputIds;if(relative==='app/data/index-bootstrap.generated.json'||relative.startsWith('public/data/index/')){dependsOn=[idByPath.get('app/data/index.generated.json')];}else if(evidenceWrappers.has(relative)){const artifact=evidenceWrappers.get(relative);dependsOn=idByPath.has(artifact)?[idByPath.get(artifact),'portal-harness','portal-profile']:['portal-harness','portal-profile'];}else if(relative==='provenance.yaml'){dependsOn=[...paths.filter((item)=>item.endsWith('.evidence.json')).map((item)=>idByPath.get(item)),'portal-source','portal-harness','portal-runtime'];}outputs.push({id:idByPath.get(relative),kind:outputKind(relative),path:relative,digest:sha256(await readFile(path.join(root,relative))),depends_on:[...new Set(dependsOn)],status:'current',run_id:'portal-reproduce-run'});}
-  for(const output of outputs)if(staleHistoricalIndexes.has(output.path)){output.status='stale';delete output.run_id;}
   const bindings=inputs.map((item)=>({input_id:item.id,digest:item.current_digest}));
   return{schema_version:1,atlas_id:'executable-technology-atlas',generated_at:completedAt,status:'current',policy:POLICY,inputs,outputs,runs:[{id:'portal-reproduce-run',execution_kind:'runtime',command:'npm run dependency:reproduce',started_at:startedAt,completed_at:completedAt,result:'passed',attempts:1,runtime_identity:runtimeIdentity,input_bindings:bindings,output_ids:outputs.filter((item)=>item.status==='current').map((item)=>item.id)}],required_outputs:outputs.map((item)=>item.path),structures:[{id:'portal-proof-topology-v1',kind:'scenario-proof-index',path:'evidence/scenarios/index.json',baseline_digest:await proofStructureDigest(root)},{id:'portal-closure-topology-v1',kind:'scenario-closure-plan',path:'evidence/scenarios/closure-plan.json',baseline_digest:await closureStructureDigest(root)}]};
 }
@@ -118,10 +118,10 @@ export async function auditPortalGraph(root,graph,schema){
     const outputsByPath=new Map((graph.outputs??[]).map((item)=>[item.path,item]));
     for(const item of indexMigration.document.replacements??[]){
       const fromOutput=outputsByPath.get(item.from.path);const toOutput=outputsByPath.get(item.to.path);
-      if(fromOutput?.status!=='stale')errors.push(`historical output status invalid: ${item.from.path}`);
+      if(fromOutput)errors.push(`historical output leaked into current graph: ${item.from.path}`);
       if(toOutput?.status!=='current')errors.push(`current output status invalid: ${item.to.path}`);
-      if(!graph.required_outputs?.includes(item.from.path)||!graph.required_outputs?.includes(item.to.path))errors.push('content-addressed-index-required-output-missing');
-      if(run?.output_ids?.includes(fromOutput?.id))errors.push(`historical output rerun rebinding: ${item.from.path}`);
+      if(graph.required_outputs?.includes(item.from.path))errors.push(`historical required output leaked into current graph: ${item.from.path}`);
+      if(!graph.required_outputs?.includes(item.to.path))errors.push('content-addressed-index-required-output-missing');
       if(toOutput&&!run?.output_ids?.includes(toOutput.id))errors.push(`current output run missing: ${item.to.path}`);
     }
   }
