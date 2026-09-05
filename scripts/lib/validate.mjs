@@ -68,6 +68,35 @@ export function validateCompletionCertificate(payload, validators, release = {})
   return { present: true, ok: errors.length === 0, errors, digest: signature?.digest ?? null };
 }
 
+// Core v1 certificates prove closure only for their fixed historical epoch. They
+// do not contain the identity, inventory and public-trust bindings required by
+// the Core Definitive Gate v2 adapter. Keep this decision fail-closed and in one
+// place so a future v2 adapter can replace it only after the canonical contract
+// and migration are committed in reference-atlas-core.
+export function classifySubjectCompletion(payload, certificateVerification, trust = {}) {
+  const certificate = payload.certificate;
+  if (certificateVerification?.ok && certificate?.schema_version === 1) {
+    return {
+      classification: 'bounded-historical',
+      definitive: false,
+      reason: 'core-v1-fixed-epoch-certificate',
+      certificateSchemaVersion: 1,
+      corePolicyVersion: certificate.core_policy_version ?? null,
+      coverageEpoch: certificate.coverage_epoch ?? null,
+      trustUsage: trust.usage ?? 'unclassified',
+    };
+  }
+  return {
+    classification: 'not-definitive',
+    definitive: false,
+    reason: certificate ? 'certificate-not-accepted-as-definitive' : 'certificate-absent',
+    certificateSchemaVersion: certificate?.schema_version ?? null,
+    corePolicyVersion: certificate?.core_policy_version ?? payload.atlas?.completion?.policy_version ?? null,
+    coverageEpoch: certificate?.coverage_epoch ?? payload.atlas?.coverage?.epoch ?? null,
+    trustUsage: trust.usage ?? 'unclassified',
+  };
+}
+
 export function validateRelease(payload, validators, release = {}) {
   const errors = [];
   const docs = [['atlas',payload.atlas],['mastery',payload.mastery],['coverage',payload.coverage],['sources-lock',payload.sources],['skill-package',payload.skillPackage]];

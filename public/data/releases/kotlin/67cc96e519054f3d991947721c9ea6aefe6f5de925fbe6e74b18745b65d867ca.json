@@ -1,0 +1,832 @@
+{
+  "atlasId": "kotlin-reference-atlas",
+  "version": "v0.1.0",
+  "status": "incomplete",
+  "epoch": "2026-08-28",
+  "corePolicyVersion": "1.0.0",
+  "commit": "3adbc03f5ab976fe4927fe787be08281f762f699",
+  "uri": "urn:atlas:release:kotlin-reference-atlas:v0.1.0:3adbc03f5ab976fe4927fe787be08281f762f699",
+  "digest": "sha256:67cc96e519054f3d991947721c9ea6aefe6f5de925fbe6e74b18745b65d867ca",
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "value": "xKZyFM2nc8H5MX/sxCXOqkhcDqSAUY9RiLXsElrBL0kDFbaj7MIJpVe1BioPRl8UFBBchYIXslFldGt6u4z9Aw=="
+  },
+  "trust": {
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "usage": "fixture-only"
+  },
+  "verification": "verified",
+  "verificationErrors": [],
+  "authorityLockDigest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+  "requiredProfiles": [
+    "local",
+    "container"
+  ],
+  "observedProfiles": [
+    "local"
+  ],
+  "scope": {
+    "statement": "Kotlin 2.4.10を基準に、Kotlin/JVM、Gradle、structured concurrency、Java相互運用の設計判断と挙動を再実行可能なLabとEvidenceで実証する。",
+    "exclusions": [
+      "Android、Kotlin/Native、Kotlin/JS、Kotlin/Wasm、Apple相互運用は本Coverage Epochの必須完了対象に含めない。",
+      "Ktor、Spring、Compose等の第三者または周辺Frameworkの全公開API閉包は対象に含めない。",
+      "Kotlin 2.4.10より前の全Version再現は行わず、現行移行判断に必要なfixtureだけを将来追加する。"
+    ]
+  },
+  "audiences": [
+    "learner",
+    "practitioner",
+    "architect",
+    "operator",
+    "maintainer",
+    "reviewer",
+    "educator",
+    "agent"
+  ],
+  "outcomes": [
+    "understand",
+    "choose",
+    "build",
+    "verify",
+    "operate",
+    "troubleshoot",
+    "evolve",
+    "delegate"
+  ],
+  "surfaces": [
+    {
+      "id": "orientation-scope",
+      "applicability": "required"
+    },
+    {
+      "id": "foundations-mechanics",
+      "applicability": "required"
+    },
+    {
+      "id": "architecture-design",
+      "applicability": "required"
+    },
+    {
+      "id": "implementation-construction",
+      "applicability": "required"
+    },
+    {
+      "id": "testing-verification",
+      "applicability": "required"
+    },
+    {
+      "id": "failure-recovery",
+      "applicability": "required"
+    },
+    {
+      "id": "operations-observability",
+      "applicability": "required"
+    },
+    {
+      "id": "security-privacy-safety",
+      "applicability": "required"
+    },
+    {
+      "id": "performance-capacity-cost",
+      "applicability": "required"
+    },
+    {
+      "id": "compatibility-integration",
+      "applicability": "required"
+    },
+    {
+      "id": "migration-evolution-deprecation",
+      "applicability": "required"
+    },
+    {
+      "id": "decision-comparison",
+      "applicability": "required"
+    },
+    {
+      "id": "provenance-rights",
+      "applicability": "required"
+    },
+    {
+      "id": "agent-skill",
+      "applicability": "required"
+    }
+  ],
+  "coverage": {
+    "required": 27,
+    "closed": 27,
+    "openRequired": 0,
+    "percent": 100,
+    "unresolvedCoveredEvidence": 18,
+    "states": {
+      "missing": 0,
+      "planned": 1,
+      "partial": 0,
+      "covered": 26,
+      "excluded": 0,
+      "infeasible": 1,
+      "expired": 0
+    }
+  },
+  "targets": [
+    {
+      "id": "authority.source-lock",
+      "title": "Kotlin 2.4.10 Authority Lock",
+      "target_set": "authority",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "再現対象を移動する最新版ではなく固定VersionとDigestへ束縛するために必要である。",
+      "claim_ids": [
+        "authority.source-lock-matches"
+      ],
+      "evidence_ids": [
+        "authority.source-lock-validation"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "inventory.kotlin-public-surface",
+      "title": "Compilerとstdlib公開Surface Inventory",
+      "target_set": "authority",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "固定ArtifactのClassとPackageを自動列挙し未分類Surfaceを検知するために必要である。",
+      "claim_ids": [
+        "inventory.locked-surface-enumerated"
+      ],
+      "evidence_ids": [
+        "inventory.public-surface"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "semantics.language-core",
+      "title": "言語Semantics実行Oracle",
+      "target_set": "semantics",
+      "kind": "concept",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "sealed型、smart cast、delegate、Sequenceを構文説明ではなく実行結果で検証する必要がある。",
+      "claim_ids": [
+        "semantics.exhaustive-and-lazy"
+      ],
+      "evidence_ids": [
+        "semantics.language-types"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "semantics.type-system",
+      "title": "型System境界",
+      "target_set": "semantics",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "variance、Nothing、reified型はAPI安全性とRuntime型判断の基礎なのでcompileと実行の両面が必要である。",
+      "claim_ids": [
+        "types.variance-nothing-reified"
+      ],
+      "evidence_ids": [
+        "semantics.language-types"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "platform.jvm-value-class-boundary",
+      "title": "JVM value class境界",
+      "target_set": "platforms",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "型安全な識別子の設計判断にはsource-level分離とboxing境界の両方を確認する必要がある。",
+      "claim_ids": [
+        "jvm.value-class-generic-boxing"
+      ],
+      "evidence_ids": [
+        "jvm.value-class-boundary"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "platform.jvm-js-wasm-runtime",
+      "title": "JVM、JS、Wasm共通Contract",
+      "target_set": "platforms",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Multiplatformの移植性は同じcommonTestを三つのRuntimeで実行して初めて証明できる。",
+      "claim_ids": [
+        "platform.jvm-js-wasm-contract"
+      ],
+      "evidence_ids": [
+        "platform.multiplatform-runtime"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "platform.native-compile",
+      "title": "macOS arm64 Native KLIB",
+      "target_set": "platforms",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Native actualとcommonTestがNative compiler frontend/backendを通ることを固定Artifactで確認する必要がある。",
+      "claim_ids": [
+        "platform.native-test-klib"
+      ],
+      "evidence_ids": [
+        "platform.native-compile"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "platform.native-runtime",
+      "title": "macOS arm64 Native executable実行",
+      "target_set": "platforms",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "infeasible",
+      "rationale": "Native executable linkと実行にはApple SDKを含むFull Xcode toolchainが必要であり、現在のHostにはCommand Line Toolsしかない。",
+      "claim_ids": [],
+      "evidence_ids": [],
+      "exclusion": {
+        "reason": "xcrun xcodebuild -versionがFull Xcode未導入で失敗するため、test KLIB compileまでを代替Evidenceとする。Full Xcode利用可能時に再評価する。",
+        "reviewed_at": "2026-11-30"
+      }
+    },
+    {
+      "id": "interop.java-consumer",
+      "title": "Java consumer契約",
+      "target_set": "interop",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Kotlin側だけのTestではJavaから見えるoverloadとchecked exception宣言を証明できない。",
+      "claim_ids": [
+        "interop.java-overloads-and-throws"
+      ],
+      "evidence_ids": [
+        "interop.java-consumer"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "interop.expect-actual",
+      "title": "expect/actual Platform境界",
+      "target_set": "interop",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Platform固有実装がcommon契約へ正しくLinkされることを各Targetのcompileと実行で検証する必要がある。",
+      "claim_ids": [
+        "platform.jvm-js-wasm-contract",
+        "platform.native-test-klib"
+      ],
+      "evidence_ids": [
+        "platform.multiplatform-runtime",
+        "platform.native-compile"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "compiler.runtime-shapes",
+      "title": "CompilerとRuntime形状",
+      "target_set": "compiler-runtime",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "data class、lambda、inline/reified、suspendがRuntimeで示す形状を実測する必要がある。",
+      "claim_ids": [
+        "compiler.runtime-shapes-observable"
+      ],
+      "evidence_ids": [
+        "compiler.runtime-shapes"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "compiler.jvm-bytecode",
+      "title": "JVM bytecode検査",
+      "target_set": "compiler-runtime",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Source testだけでは生成MemberとContinuation signatureを確認できないためjavap検査が必要である。",
+      "claim_ids": [
+        "compiler.bytecode-state-machine"
+      ],
+      "evidence_ids": [
+        "compiler.bytecode-inspection"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "build.gradle-plugin-consumer",
+      "title": "Gradle Plugin consumer build",
+      "target_set": "build-tooling",
+      "kind": "construction",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Plugin実装単体ではなく独立consumer buildからPlugin IDとTask契約を検証する必要がある。",
+      "claim_ids": [
+        "gradle.plugin-registers-probe-task"
+      ],
+      "evidence_ids": [
+        "gradle.plugin-consumer"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "build.toolchain-lock",
+      "title": "Gradle ToolchainとSupply-chain Lock",
+      "target_set": "build-tooling",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Wrapper、全Project lockfile、Artifact checksumを固定しDependency driftを拒否する必要がある。",
+      "claim_ids": [
+        "gradle.toolchain-and-artifacts-locked"
+      ],
+      "evidence_ids": [
+        "build.toolchain-lock"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "concurrency.structured-cancellation",
+      "title": "Structured concurrencyの失敗伝播",
+      "target_set": "concurrency",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "子の失敗が兄弟をcancelし親へ伝播する性質は業務Coroutineのresource安全性に直結する。",
+      "claim_ids": [
+        "coroutines.child-failure-cancels-sibling"
+      ],
+      "evidence_ids": [
+        "coroutines.failure-propagation"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "concurrency.flow-pipelines",
+      "title": "Flow収集、retry、State、cancel",
+      "target_set": "concurrency",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Flowのcold性、再収集、状態共有、cancellation cleanupを独立したOracleで確認する必要がある。",
+      "claim_ids": [
+        "flow.retry-state-cancellation"
+      ],
+      "evidence_ids": [
+        "flow.pipeline-semantics"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "quality.testing-oracles",
+      "title": "全Surface Test Oracle",
+      "target_set": "quality",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "正常、拒否、失敗、回復、互換性とPlatform差を一つのhappy pathに偏らず検証する必要がある。",
+      "claim_ids": [
+        "testing.cross-surface-oracles"
+      ],
+      "evidence_ids": [
+        "quality.testing-oracles"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "quality.failure-debugging",
+      "title": "Failure分類とDebug情報",
+      "target_set": "quality",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "復旧判断に必要なcategoryとroot causeを例外変換時に失わないことを検証する必要がある。",
+      "claim_ids": [
+        "failure.diagnostic-preserves-cause"
+      ],
+      "evidence_ids": [
+        "failure.debugging"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "performance.measurement-harness",
+      "title": "性能Measurement Harness",
+      "target_set": "performance-security",
+      "kind": "performance",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "単発時間や優劣断定ではなく複数sample、Median、checksumを再生成して比較可能にする必要がある。",
+      "claim_ids": [
+        "performance.harness-reports-median"
+      ],
+      "evidence_ids": [
+        "performance.measurement"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "security.input-boundaries",
+      "title": "入力境界とSecret比較",
+      "target_set": "performance-security",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "URI allowlist、Path traversal、Secret比較を防御的negative testで実証する必要がある。",
+      "claim_ids": [
+        "security.boundaries-reject-unsafe-input"
+      ],
+      "evidence_ids": [
+        "security.boundaries"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "evolution.compatibility-migration",
+      "title": "Versioned data Migration",
+      "target_set": "evolution",
+      "kind": "migration",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "旧Schema受理、現行Schema受理、未知Schema拒否を同じ互換性Harnessで検証する必要がある。",
+      "claim_ids": [
+        "migration.v1-v2-compatible"
+      ],
+      "evidence_ids": [
+        "evolution.compatibility-migration"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "operation.lifecycle-recovery",
+      "title": "Lifecycle劣化・回復・停止",
+      "target_set": "operation",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Operational stateの遷移をRunbookだけでなく実行可能な状態機械で検証する必要がある。",
+      "claim_ids": [
+        "operation.lifecycle-recovers"
+      ],
+      "evidence_ids": [
+        "operation.lifecycle-recovery"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "operation.local-evidence",
+      "title": "Local profile Evidence再生成",
+      "target_set": "operation",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "固定Harnessから正規化ArtifactとDigest付きEvidenceを再生成できることがLocal検証の前提である。",
+      "claim_ids": [
+        "operation.local-suite-reproducible"
+      ],
+      "evidence_ids": [
+        "operation.local-verification"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "operation.container-evidence",
+      "title": "Container profile Evidence再生成",
+      "target_set": "operation",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Host固有cacheやtoolchain状態から独立したJVM必須Gateの再現性を確認するためContainer profileが必要である。",
+      "claim_ids": [
+        "operation.container-suite-reproducible"
+      ],
+      "evidence_ids": [
+        "operation.container-verification"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "skill.router-evaluation",
+      "title": "Kotlin Router Skill評価",
+      "target_set": "skill",
+      "kind": "skill",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "RouterがCapabilityを捏造せず設計、実装、診断、移行、ReviewとGapを区別する必要がある。",
+      "claim_ids": [
+        "skill.router-respects-coverage"
+      ],
+      "evidence_ids": [
+        "skill.router-evaluation"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "publication.rights-metadata",
+      "title": "Licenseと第三者Metadata",
+      "target_set": "publication",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "独自成果物と第三者依存の権利を分離し公開可否を機械的に判定するために必要である。",
+      "claim_ids": [
+        "publication.required-rights-files-present"
+      ],
+      "evidence_ids": [
+        "publication.rights-metadata"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "publication.complete-sbom",
+      "title": "Gradleとnpmのtransitive SPDX SBOM",
+      "target_set": "publication",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "直接依存だけでなく全Gradle lockとnpm package-lockの閉包を公開Artifactへ反映する必要がある。",
+      "claim_ids": [
+        "publication.transitive-sbom-from-locks"
+      ],
+      "evidence_ids": [
+        "publication.complete-sbom"
+      ],
+      "exclusion": null
+    },
+    {
+      "id": "reference-system.automation-workbench",
+      "title": "Automation Workbench reference system",
+      "target_set": "semantics",
+      "kind": "construction",
+      "requirement": "recommended",
+      "state": "planned",
+      "rationale": "複数Capabilityを統合する実用Referenceは有用だが、個別Mastery SurfaceのClosureとは独立して扱う。",
+      "claim_ids": [],
+      "evidence_ids": [],
+      "exclusion": null
+    }
+  ],
+  "evidence": [
+    {
+      "artifact": {
+        "digest": "sha256:ce22b4b20c48f812b7c6a45102e0d529d7f6593504fda164674af78c68c29f7a",
+        "media_type": "application/json",
+        "size_bytes": 370,
+        "uri": "evidence/artifacts/manifest-validation.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "authority.source-lock-matches"
+      ],
+      "command": "atlas validate atlas.yaml mastery.yaml coverage.yaml sources.lock.yaml skill.package.yaml && atlas audit .",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:a935533e2bafb46197588f5525062bcc810e0cd2453f1b27a021a19c8566e4fe",
+      "id": "authority.source-lock-validation",
+      "kind": "conformance",
+      "producer": "kotlin-atlas-verifier",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:50ccaeef0a501a25326d612861b1e2929d2ccf3a1a118750231a320f6e3cd983",
+        "media_type": "application/json",
+        "size_bytes": 1801,
+        "uri": "evidence/artifacts/lab-results.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "coroutines.child-failure-cancels-sibling"
+      ],
+      "command": "./gradlew :labs:coroutines:test",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:4463c6839a8f17b8ab47ed11796e03cd44bf634a196017f5f91ac56a960d2648",
+      "id": "coroutines.failure-propagation",
+      "kind": "test-report",
+      "producer": "gradle-junit",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:50ccaeef0a501a25326d612861b1e2929d2ccf3a1a118750231a320f6e3cd983",
+        "media_type": "application/json",
+        "size_bytes": 1801,
+        "uri": "evidence/artifacts/lab-results.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "gradle.plugin-registers-probe-task"
+      ],
+      "command": "./gradlew :labs:gradle-plugin:test",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:c6c831ffc56e1f9b19963389bd5880afd59e5fbda6a34d2a03c50d5e18b6fb6f",
+      "id": "gradle.plugin-consumer",
+      "kind": "test-report",
+      "producer": "gradle-testkit",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:50ccaeef0a501a25326d612861b1e2929d2ccf3a1a118750231a320f6e3cd983",
+        "media_type": "application/json",
+        "size_bytes": 1801,
+        "uri": "evidence/artifacts/lab-results.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "interop.java-overloads-and-throws"
+      ],
+      "command": "./gradlew :labs:interop:test",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:a50ae06984178f3768e5da6962d3fca0b3e51cad1582fce8e9360755c158eb83",
+      "id": "interop.java-consumer",
+      "kind": "compatibility",
+      "producer": "gradle-junit",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:50ccaeef0a501a25326d612861b1e2929d2ccf3a1a118750231a320f6e3cd983",
+        "media_type": "application/json",
+        "size_bytes": 1801,
+        "uri": "evidence/artifacts/lab-results.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "jvm.value-class-generic-boxing"
+      ],
+      "command": "./gradlew :labs:jvm:test",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:fa000cb3b1d143b580d2607acbf5b9cecc350b110374c9afe3c730a01490282d",
+      "id": "jvm.value-class-boundary",
+      "kind": "test-report",
+      "producer": "gradle-junit",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:617290a8e94cde5c0d2240073a92113e9b4abb360ea23c065fd0c8c44b6f9a99",
+        "media_type": "application/json",
+        "size_bytes": 587,
+        "uri": "evidence/artifacts/verification-summary.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "operation.local-suite-reproducible"
+      ],
+      "command": "python3 scripts/verify.py",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:0e4ca3915f50da2aeddfe8be514b685c06a95f52d331fab0f940b63f210abfea",
+      "id": "operation.local-verification",
+      "kind": "conformance",
+      "producer": "kotlin-atlas-verifier",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:c70961ed94357a371e3b1a49447e4b5ddebd3602860abec17ff6419f097927d6",
+        "media_type": "application/json",
+        "size_bytes": 543,
+        "uri": "evidence/artifacts/rights-validation.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "publication.required-rights-files-present"
+      ],
+      "command": "python3 scripts/verify.py",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:b69d1a449b353e602454ad483fe5d590374a913df05fa86293903c1b13064c13",
+      "id": "publication.rights-metadata",
+      "kind": "conformance",
+      "producer": "kotlin-atlas-verifier",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    },
+    {
+      "artifact": {
+        "digest": "sha256:06a11f4508e0e822128ee501e3678b28e6728e511f76dbb14b31fce8e0e29960",
+        "media_type": "application/json",
+        "size_bytes": 3048,
+        "uri": "evidence/artifacts/skill-eval.json"
+      },
+      "atlas_id": "kotlin-reference-atlas",
+      "claim_ids": [
+        "skill.router-respects-coverage"
+      ],
+      "command": "python3 scripts/verify.py",
+      "created_at": "2026-08-28T00:00:00+09:00",
+      "environment": {
+        "manifest_digest": "sha256:7dd6e45eb3a5a22cb9948e0d88ff03596474796978625984269a49bbab44dc97",
+        "profile": "local"
+      },
+      "harness_digest": "sha256:26836bd00a859e5358254f9a85324cedcb2ff9c053af4fd5be723cd43a0e19ab",
+      "id": "skill.router-evaluation",
+      "kind": "skill-eval",
+      "producer": "kotlin-router-eval",
+      "retention": "git",
+      "schema_version": 1,
+      "source_digest": "sha256:656a3c4f0687029c7b4113a2cd36b1640251da05b986900a2dddba4e299e2b33",
+      "verdict": "pass"
+    }
+  ],
+  "skill": {
+    "schema_version": 1,
+    "atlas_id": "kotlin-reference-atlas",
+    "atlas_release": "v0.1.0",
+    "router": {
+      "id": "kotlin-reference-router",
+      "path": ".agents/skills/kotlin-reference-router/SKILL.md",
+      "description": "Kotlinの設計、実装、診断、移行、ReviewをCoverage内の一次資料、Lab、Claim、Evidenceへ段階的に案内する。"
+    },
+    "generated_from": [
+      "mastery.yaml",
+      "coverage.yaml",
+      "atlas/capabilities/capabilities.json",
+      "atlas/claims/claims.json"
+    ],
+    "adapters": [
+      "generic-agent-skills",
+      "codex"
+    ],
+    "evals": {
+      "path": "evals/",
+      "minimum_pass_rate": 1
+    }
+  },
+  "certificate": null,
+  "certificateVerification": {
+    "present": false,
+    "status": "absent",
+    "digest": null
+  },
+  "completion": {
+    "classification": "not-definitive",
+    "definitive": false,
+    "reason": "certificate-absent",
+    "certificateSchemaVersion": null,
+    "corePolicyVersion": "1.0.0",
+    "coverageEpoch": "2026-08-28",
+    "trustUsage": "fixture-only"
+  },
+  "detailUrl": "/data/releases/kotlin/67cc96e519054f3d991947721c9ea6aefe6f5de925fbe6e74b18745b65d867ca.json",
+  "displayProjection": {
+    "sourceReleaseDigest": "sha256:67cc96e519054f3d991947721c9ea6aefe6f5de925fbe6e74b18745b65d867ca",
+    "transformations": []
+  }
+}

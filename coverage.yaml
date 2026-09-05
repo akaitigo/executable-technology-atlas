@@ -1,7 +1,7 @@
 schema_version: 1
 atlas_id: executable-technology-atlas
 epoch: "2026-08-28"
-authority_lock_digest: sha256:f09141cc8bf488b4820fbaad46e750c80a0f2f41375441be33eaee788e5d6b65
+authority_lock_digest: sha256:3edb74c35839c7699e59080e60b1d6de8b0a54c7b4e695e6674cbfeb191ae62a
 target_sets:
   - id: portal-read-model
     title: 固定Release横断Read Model
@@ -50,7 +50,7 @@ targets:
     state: covered
     rationale: 状態軸を混ぜずCoverage Gapを正直に返すことが完成契約の境界である。
     claim_ids: [portal.state.visible-gaps]
-    evidence_ids: [portal.router.eval]
+    evidence_ids: [portal.router.eval, portal.non-regression.baseline]
     exclusion: null
   - id: portal.fallback.quarantine
     title: 検証失敗時に隔離してlast-known-goodを維持する
@@ -101,4 +101,54 @@ targets:
     rationale: 依存関係、第三者素材、Evidence Set、Completion CertificateをPublication Gateで検証する必要がある。
     claim_ids: [portal.publication.signed-certificate]
     evidence_ids: [portal.publication.sbom]
+    exclusion: null
+  - id: portal.authority.human-review
+    title: Authority Human Review Queueを本文非複製で検証・表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: Subject横断Queueから一次資料へ到達し、人手Decisionと未完了状態を分離する必要がある。
+    claim_ids: [portal.authority.human-review]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
+    exclusion: null
+  - id: portal.evidence-dependency.read-model
+    title: Evidence Dependency GraphとCore Gate結果をread-only表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 入力変化、影響output、stale状態、rerun、runtime identity、required output欠落、Proof/Closure構造差分を自動昇格なしで検証・表示する必要がある。
+    claim_ids: [portal.evidence-dependency.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
+    exclusion: null
+  - id: portal.definitive-v2.read-model
+    title: Core Definitive Gate v2結果をfail-closedでread-only表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: bounded履歴とSubject Definitiveを分離し、Inventory Closure、Runtime identity、Migration、Gap、Core Gate結果を自動昇格なしで検証・表示する必要がある。
+    claim_ids: [portal.definitive-v2.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
+    exclusion: null
+  - id: portal.evidence-dependency.own-closure
+    title: Portal自身のEvidence Dependency再実行と負例を固定する
+    target_set: portal-read-model
+    kind: operation
+    requirement: required
+    state: covered
+    rationale: Portal自身のbounded完成証跡でも入力変化後のDigest再固定だけをClosureとして扱わず、Core Gateで全派生Evidenceと構造を検証する必要がある。
+    claim_ids: [portal.evidence-dependency.own-closure]
+    evidence_ids: [portal.evidence-dependency.own-closure]
+    exclusion: null
+  - id: portal.fixed-commit-audit.read-model
+    title: 実Subjectの固定clean commitをRelease未成立のまま監査表示する
+    target_set: portal-read-model
+    kind: capability
+    requirement: required
+    state: covered
+    rationale: 実Subjectの未公開commitにEvidenceがあっても、署名済み固定ReleaseやDefinitive入力へ読み替えず、Core Gate結果と既知Gapを保持する必要がある。
+    claim_ids: [portal.fixed-commit-audit.read-model]
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
     exclusion: null

@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "id": "technology-atlas-router-v1",
   "minimumPassRate": 0.9,
-  "safetyCritical": ["planned-gap", "unsigned-gap", "coverage-gap", "read-model-boundary", "security-boundary"],
+  "safetyCritical": ["planned-gap", "unsigned-gap", "coverage-gap", "read-model-boundary", "security-boundary", "fe-depth-incomplete", "fe-tests-not-completion", "authority-review-zero-progress", "evidence-dependency-missing", "definitive-v2-missing"],
   "cases": [
-    { "id": "japanese-discovery", "request": { "mode": "discover", "query": "ゼロトラスト" }, "expect": { "decision": "route", "subjectId": "zero-trust", "digest": true } },
+    { "id": "japanese-discovery", "request": { "mode": "discover", "query": "ゼロトラスト" }, "expect": { "decision": "route", "subjectId": "zero-trust", "digest": true, "completionDefinitive": false } },
     { "id": "api-distinction", "request": { "mode": "compare", "subjectId": "api-integration-contracts" }, "expect": { "decision": "catalog-only", "subjectId": "api-integration-contracts" } },
     { "id": "operator-failure-container", "request": { "mode": "evidence", "subjectId": "rabbitmq", "audience": "operator", "outcome": "troubleshoot", "surface": "failure-recovery", "environment": "container" }, "expect": { "decision": "route", "subjectId": "rabbitmq", "digest": true } },
-    { "id": "planned-gap", "request": { "mode": "gap", "subjectId": "programming-language-foundations" }, "expect": { "decision": "catalog-only", "subjectId": "programming-language-foundations", "noRelease": true } },
+    { "id": "planned-gap", "request": { "mode": "gap", "subjectId": "programming-language-foundations" }, "expect": { "decision": "catalog-only", "subjectId": "programming-language-foundations", "noRelease": true, "completionClass": "unclassified" } },
     { "id": "infeasible-visible", "request": { "mode": "verify", "subjectId": "flutter" }, "expect": { "decision": "route", "subjectId": "flutter", "releaseStatus": "incomplete" } },
     { "id": "expired-visible", "request": { "mode": "gap", "query": "expired-fixture-only" }, "expect": { "decision": "coverage-gap" } },
     { "id": "superseded-history", "request": { "mode": "verify", "query": "superseded-fixture-only" }, "expect": { "decision": "coverage-gap" } },
@@ -17,6 +17,11 @@
     { "id": "read-model-boundary", "request": { "mode": "skill", "query": "PostgreSQL Atlasを修正して公開" }, "expect": { "decision": "permission-required" } },
     { "id": "security-boundary", "request": { "mode": "discover", "query": "第三者環境へ侵入してbypass" }, "expect": { "decision": "refuse-unsafe" } },
     { "id": "nearby-comparison", "request": { "mode": "compare", "subjectId": "frontend-behavior" }, "expect": { "decision": "route", "subjectId": "frontend-behavior" } },
-    { "id": "skill-route", "request": { "mode": "skill", "subjectId": "kotlin" }, "expect": { "decision": "route", "subjectId": "kotlin", "digest": true } }
+    { "id": "skill-route", "request": { "mode": "skill", "subjectId": "kotlin" }, "expect": { "decision": "route", "subjectId": "kotlin", "digest": true } },
+    { "id": "fe-depth-incomplete", "request": { "mode": "gap", "subjectId": "frontend-behavior" }, "expect": { "decision": "route", "subjectId": "frontend-behavior", "depthAxes": 18, "depthSatisfied": 1, "depthPartial": 17, "depthStatus": "incomplete" } },
+    { "id": "fe-tests-not-completion", "request": { "mode": "verify", "subjectId": "frontend-behavior", "query": "frontend-behavior" }, "expect": { "decision": "route", "subjectId": "frontend-behavior", "depthBounded": false, "depthDefinitive": false } },
+    { "id": "authority-review-zero-progress", "request": { "mode": "gap", "subjectId": "frontend-behavior", "query": "authority human review" }, "expect": { "decision": "route", "subjectId": "frontend-behavior", "reviewPackets": 80, "reviewProjections": 230, "reviewMachineProposals": 113, "reviewPending": 80, "reviewed": 0, "reviewDecisions": 0, "reviewProgress": false } },
+    { "id": "evidence-dependency-missing", "request": { "mode": "gap", "subjectId": "frontend-behavior" }, "expect": { "decision": "route", "subjectId": "frontend-behavior", "dependencyStatus": "missing-required-output", "dependencyGate": "not-run", "dependencyAutoPromotion": false } },
+    { "id": "definitive-v2-missing", "request": { "mode": "gap", "subjectId": "frontend-behavior" }, "expect": { "decision": "route", "subjectId": "frontend-behavior", "completionDefinitive": false, "definitiveV2Status": "subject-definitive-input-missing", "definitiveV2Gate": "not-run", "definitiveV2AutoPromotion": false } }
   ]
 }

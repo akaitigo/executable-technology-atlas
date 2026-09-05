@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-evidence-refresh-policy",
+  "graphPath": "evidence/dependency-graph.json",
+  "graphSchemaPath": "contracts/schemas/evidence-dependency-graph.schema.json",
+  "requiredWrappers": [
+    "evidence/dependency.own-closure.evidence.json",
+    "evidence/import.integrity.evidence.json",
+    "evidence/non-regression.evidence.json",
+    "evidence/performance.budget.evidence.json",
+    "evidence/publication.sbom.evidence.json",
+    "evidence/router.eval.evidence.json",
+    "evidence/security.headers.evidence.json",
+    "evidence/ui.build.evidence.json"
+  ],
+  "pipeline": {
+    "command": "npm run dependency:reproduce",
+    "entrypoint": "node scripts/refresh-portal-dependency-graph.mjs --record",
+    "stages": [
+      { "id": "import", "script": "node scripts/import-releases.mjs" },
+      { "id": "non-regression", "script": "node scripts/check-non-regression.mjs" },
+      { "id": "eval", "script": "node scripts/run-evals.mjs" },
+      { "id": "sbom", "script": "node scripts/generate-sbom.mjs" },
+      { "id": "build", "script": "vinext build" },
+      { "id": "perf", "script": "node scripts/performance-budget.mjs" },
+      { "id": "evidence", "script": "node scripts/refresh-evidence.mjs" },
+      { "id": "provenance", "script": "node scripts/generate-provenance.mjs" }
+    ]
+  },
+  "boundary": {
+    "readOnly": true,
+    "autoRun": false,
+    "digestOnlyClosure": false,
+    "wrapperRewriteIsRerun": false,
+    "stageSkipAllowed": false,
+    "runtimeSubstitution": false,
+    "recordedGraphStatusIsCurrentProof": false,
+    "completionEffect": "none"
+  }
+}

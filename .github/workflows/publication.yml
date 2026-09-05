@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 20
     env:
       CI: "true"
+      ATLAS_CORE_DIR: ${{ github.workspace }}/.ci/reference-atlas-core-evidence
     steps:
       - name: Checkout Portal history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,6 +34,15 @@ jobs:
           repository: akaitigo/reference-atlas-core
           ref: cf9e6e2d981305c83f970c1f21a1ddc9c1109263
           path: .ci/reference-atlas-core
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout Evidence Dependency and Definitive v2 contracts from official Core main commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: akaitigo/reference-atlas-core
+          ref: 072d7ca77981f51754e824d70c6d4ecd55ea67e5
+          path: .ci/reference-atlas-core-evidence
           fetch-depth: 1
           persist-credentials: false
 
@@ -52,9 +62,26 @@ jobs:
       - name: Install lockfile dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
 
+      - name: Verify cryptographically signed checkpoints
+        run: |
+          for commit in $(git rev-list e4e3e48fbc270789505c90c1433f8ccc6a2900fb^..HEAD); do
+            git -c gpg.format=ssh -c gpg.ssh.allowedSignersFile="$GITHUB_WORKSPACE/security/allowed_signers" verify-commit "$commit"
+          done
+
+      - name: Verify vendored Core v2 contracts
+        run: |
+          cmp contracts/schemas/evidence-dependency-graph.schema.json .ci/reference-atlas-core-evidence/schemas/evidence-dependency-graph.schema.json
+          cmp contracts/reference/EVIDENCE_DEPENDENCY_GRAPH.md .ci/reference-atlas-core-evidence/docs/EVIDENCE_DEPENDENCY_GRAPH.md
+          cmp contracts/schemas/definitive.schema.json .ci/reference-atlas-core-evidence/schemas/definitive.schema.json
+          cmp contracts/schemas/definitive-migration.schema.json .ci/reference-atlas-core-evidence/schemas/definitive-migration.schema.json
+          cmp contracts/schemas/definitive-certificate.schema.json .ci/reference-atlas-core-evidence/schemas/definitive-certificate.schema.json
+          cmp contracts/reference/MIGRATION_DEFINITIVE_V2.md .ci/reference-atlas-core-evidence/docs/MIGRATION_DEFINITIVE_V2.md
+          test "$(git -C .ci/reference-atlas-core-evidence rev-parse HEAD)" = "072d7ca77981f51754e824d70c6d4ecd55ea67e5"
+
       - name: Reproduce fixed Index and Router Eval
         run: |
           npm run import
+          npm run non-regression
           npm run eval
           git diff --exit-code
 
@@ -63,9 +90,15 @@ jobs:
           npm test
           npm run lint
           npm run build
+          npm run dependency:graph:check
 
       - name: Verify Publication Gate
         run: npm run gate
+
+      - name: Verify Evidence Dependency negative with pinned Core v2
+        env:
+          ATLAS_CORE_DIR: .ci/reference-atlas-core-evidence
+        run: npm run dependency:negative
 
       - name: Verify with pinned Core CLI
         working-directory: .ci/reference-atlas-core
@@ -74,6 +107,15 @@ jobs:
           go mod verify
           go run ./cmd/atlas audit "$GITHUB_WORKSPACE"
           go run ./cmd/atlas certificate verify "$GITHUB_WORKSPACE"
+
+      - name: Verify Portal Evidence Dependency Graph with pinned Core v2
+        working-directory: .ci/reference-atlas-core-evidence
+        run: go run ./cmd/atlas audit "$GITHUB_WORKSPACE" --gate evidence-dependency
+
+      - name: Verify Portal root remains honestly non-definitive
+        env:
+          ATLAS_CORE_DIR: .ci/reference-atlas-core-evidence
+        run: npm run definitive:root:check
 
       - name: Reject tracked mutations
         run: git diff --exit-code

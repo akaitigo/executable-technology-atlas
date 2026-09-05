@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-ci-checkpoint-readiness",
+  "status": "blocked",
+  "classification": "portal-integration-checkpoint-readiness-only",
+  "source": {
+    "index": {
+      "path": "app/data/index.generated.json",
+      "digest": "sha256:9a3296fb4eb346f9002a995cc977ed3d5104d91ffe652ac1841e9c561d89058c"
+    },
+    "distribution": {
+      "path": "evidence/portal-distribution-readiness.json",
+      "digest": "sha256:c4b388d7253636eb31f0c67ba316b4d23399023b3922753a2ddd8a7a199d1875"
+    },
+    "rootReport": {
+      "path": "evidence/portal-root-definitive-report.json",
+      "digest": "sha256:44f7d0511ca1b9f93e74d21c5bd146c258618ea85bbfbb8a126c552949fd615a"
+    },
+    "dependencyGraph": {
+      "path": "evidence/dependency-graph.json",
+      "digest": "sha256:2d699c574f6d94a3506a4ee2db604c89d83ce2d61738f3939ad255549055fca4"
+    },
+    "workflow": {
+      "path": ".github/workflows/publication.yml",
+      "digest": "sha256:3cf5f929c02401e68f61c1ca61c03003f8f94ac442fd1b20e139b27fbacaec6c"
+    },
+    "signingPolicy": {
+      "path": "contracts/commit-signing-policy.json",
+      "digest": "sha256:43a4a100c5faa27856c9d634886013d427fce336caf5e9462d0497ac1c35bb25"
+    }
+  },
+  "observed": {
+    "git": {
+      "head": "aa0059ae9efc147be15b6aaac1fac9d25fa837f6",
+      "upstream": "aa0059ae9efc147be15b6aaac1fac9d25fa837f6",
+      "headUpstreamMatch": true,
+      "worktreeClean": false
+    },
+    "workflow": {
+      "pushTrigger": true,
+      "pullRequestTrigger": true,
+      "permissions": "contents-read",
+      "credentialsPersisted": false,
+      "exactHeadCheckout": true,
+      "concurrencyCancellation": true,
+      "trackedMutationRejected": true
+    },
+    "signingPolicy": {
+      "cryptographicSignature": true,
+      "dco": true,
+      "historyRewrite": false,
+      "forcePush": false
+    },
+    "subjectAggregation": {
+      "subjects": 97,
+      "subjectDefinitive": 0,
+      "definitiveMissing": 97,
+      "openRequired": 119,
+      "unclassified": 90,
+      "gapInstances": 388,
+      "autoPromotion": false
+    },
+    "distribution": {
+      "status": "not-established",
+      "ready": 0,
+      "blockerInstances": 589
+    },
+    "root": {
+      "status": "root-definitive-incomplete",
+      "missingArtifacts": 5,
+      "completionEffect": "none"
+    },
+    "dependencyGraph": {
+      "recordedStatus": "current",
+      "recordedRequiredOutputs": 39,
+      "currentProof": false
+    },
+    "ci": {
+      "candidateCommit": null,
+      "pushRun": null,
+      "pullRequestRun": null,
+      "sameShaVerified": false
+    }
+  },
+  "summary": {
+    "prerequisites": 9,
+    "satisfied": 3,
+    "blocked": 6,
+    "checkpointReady": false,
+    "completionEffect": "none"
+  },
+  "prerequisites": [
+    {
+      "id": "exact-ci-head-checkout",
+      "state": "satisfied",
+      "evidence": [
+        ".github/workflows/publication.yml"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "least-privilege-clean-room-workflow",
+      "state": "satisfied",
+      "evidence": [
+        ".github/workflows/publication.yml"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "signed-dco-non-rewrite-policy",
+      "state": "satisfied",
+      "evidence": [
+        "contracts/commit-signing-policy.json"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "subject-definitive-aggregation",
+      "state": "blocked",
+      "evidence": [
+        "app/data/index.generated.json"
+      ],
+      "gapIds": [
+        "subject-definitive-missing-97"
+      ]
+    },
+    {
+      "id": "distribution-closure",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-distribution-readiness.json"
+      ],
+      "gapIds": [
+        "distribution-not-established"
+      ]
+    },
+    {
+      "id": "portal-root-closure",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-root-definitive-report.json"
+      ],
+      "gapIds": [
+        "portal-root-artifacts-missing-5"
+      ]
+    },
+    {
+      "id": "clean-candidate-commit",
+      "state": "blocked",
+      "evidence": [
+        "contracts/commit-signing-policy.json"
+      ],
+      "gapIds": [
+        "worktree-has-uncommitted-integration-evidence"
+      ]
+    },
+    {
+      "id": "current-evidence-dependency-rerun",
+      "state": "blocked",
+      "evidence": [
+        "evidence/dependency-graph.json"
+      ],
+      "gapIds": [
+        "current-portal-derived-outputs-not-bound"
+      ]
+    },
+    {
+      "id": "push-and-pr-same-sha-ci",
+      "state": "blocked",
+      "evidence": [
+        ".github/workflows/publication.yml"
+      ],
+      "gapIds": [
+        "current-dirty-tree-has-no-ci-sha"
+      ]
+    }
+  ],
+  "boundary": {
+    "readOnly": true,
+    "autoCommit": false,
+    "autoPush": false,
+    "autoMerge": false,
+    "autoPromotion": false,
+    "dirtyTreeHasCiIdentity": false,
+    "headUpstreamMatchIsCheckpoint": false,
+    "sameShaRequired": true,
+    "pushAndPullRequestSuccessRequired": true,
+    "graphRerunRequired": true,
+    "externalPublication": false,
+    "completionEffect": "none"
+  }
+}

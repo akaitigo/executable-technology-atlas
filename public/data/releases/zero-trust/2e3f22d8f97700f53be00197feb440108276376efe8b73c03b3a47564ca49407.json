@@ -1,0 +1,691 @@
+{
+  "atlasId": "zero-trust-reference-atlas",
+  "version": "v0.1.0",
+  "status": "incomplete",
+  "epoch": "2026-08-28",
+  "corePolicyVersion": "1.0.0",
+  "commit": "64a4164e2ddbb9e41b94563cb13ca8b49f90f863",
+  "uri": "urn:atlas:release:zero-trust-reference-atlas:v0.1.0:64a4164e2ddbb9e41b94563cb13ca8b49f90f863",
+  "digest": "sha256:2e3f22d8f97700f53be00197feb440108276376efe8b73c03b3a47564ca49407",
+  "signature": {
+    "algorithm": "Ed25519",
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "value": "5ttpiZbOmXms/pHmNo0DfP0EIoTM6KOA8a7I784yb/GF6a2PasLNQUWfeh7t1mUryQwQPEZuh/yOr9qT66itAA=="
+  },
+  "trust": {
+    "keyId": "fixture-ed25519-4e119a9024374301",
+    "usage": "fixture-only"
+  },
+  "verification": "verified",
+  "verificationErrors": [],
+  "authorityLockDigest": "sha256:6cbcece46eec5b838049e4a5812e0ebcba47619031b4c4f3d6b4dd0d4baa190f",
+  "requiredProfiles": [
+    "local"
+  ],
+  "observedProfiles": [],
+  "scope": {
+    "statement": "Resource、Subject、Policy Information/Decision/Enforcement、Identity、Device Posture、Workload、Network、Data、Continuous Evaluation、Telemetry、Revocation、Failure/Recovery、Migration、Operations、Threat/Abuse Case、Skillの有限な制御連鎖を、ローカルの再現可能なLabと証拠で実証する。",
+    "exclusions": [
+      "特定製品の導入だけをゼロトラスト達成の証拠とすること",
+      "実在する第三者環境を対象にした探索、侵入、回避、権限取得",
+      "クラウド事業者や市販製品の全機能・全組合せの網羅"
+    ]
+  },
+  "audiences": [
+    "learner",
+    "practitioner",
+    "architect",
+    "operator",
+    "maintainer",
+    "reviewer",
+    "educator",
+    "agent"
+  ],
+  "outcomes": [
+    "understand",
+    "choose",
+    "build",
+    "verify",
+    "operate",
+    "troubleshoot",
+    "evolve",
+    "delegate"
+  ],
+  "surfaces": [
+    {
+      "id": "orientation-scope",
+      "applicability": "required"
+    },
+    {
+      "id": "foundations-mechanics",
+      "applicability": "required"
+    },
+    {
+      "id": "architecture-design",
+      "applicability": "required"
+    },
+    {
+      "id": "implementation-construction",
+      "applicability": "required"
+    },
+    {
+      "id": "testing-verification",
+      "applicability": "required"
+    },
+    {
+      "id": "failure-recovery",
+      "applicability": "required"
+    },
+    {
+      "id": "operations-observability",
+      "applicability": "required"
+    },
+    {
+      "id": "security-privacy-safety",
+      "applicability": "required"
+    },
+    {
+      "id": "performance-capacity-cost",
+      "applicability": "required"
+    },
+    {
+      "id": "compatibility-integration",
+      "applicability": "required"
+    },
+    {
+      "id": "migration-evolution-deprecation",
+      "applicability": "required"
+    },
+    {
+      "id": "decision-comparison",
+      "applicability": "required"
+    },
+    {
+      "id": "provenance-rights",
+      "applicability": "required"
+    },
+    {
+      "id": "agent-skill",
+      "applicability": "required"
+    }
+  ],
+  "coverage": {
+    "required": 33,
+    "closed": 33,
+    "openRequired": 0,
+    "percent": 100,
+    "unresolvedCoveredEvidence": 33,
+    "states": {
+      "missing": 0,
+      "planned": 0,
+      "partial": 0,
+      "covered": 33,
+      "excluded": 0,
+      "infeasible": 0,
+      "expired": 0
+    }
+  },
+  "targets": [
+    {
+      "id": "identity.subject-binding",
+      "title": "主体Binding",
+      "target_set": "identity",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "ネットワーク位置ではなく明示的な主体Contextを判断へ結合する必要がある。",
+      "claim_ids": [
+        "claim.identity.subject-binding"
+      ],
+      "evidence_ids": [
+        "evidence.normal"
+      ]
+    },
+    {
+      "id": "identity.bounded-revocation",
+      "title": "有界失効",
+      "target_set": "identity",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "退職や侵害後に以前のContextが権限を保持し続けないことを実証する必要がある。",
+      "claim_ids": [
+        "claim.identity.bounded-revocation"
+      ],
+      "evidence_ids": [
+        "evidence.revocation",
+        "evidence.isolated-replay"
+      ]
+    },
+    {
+      "id": "device.posture-input",
+      "title": "Device Posture入力",
+      "target_set": "device",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Deviceの適合状態を主体とは独立した判断材料として扱う必要がある。",
+      "claim_ids": [
+        "claim.device.posture-input"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.deny",
+        "evidence.device-posture"
+      ]
+    },
+    {
+      "id": "device.stale-signal-safety",
+      "title": "古いDevice Signalの安全性",
+      "target_set": "device",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "古いDevice Contextの再利用によって権限が増加しないことを実証する必要がある。",
+      "claim_ids": [
+        "claim.device.stale-signal-safety"
+      ],
+      "evidence_ids": [
+        "evidence.isolated-replay",
+        "evidence.device-posture"
+      ]
+    },
+    {
+      "id": "policy-decision.context-composition",
+      "title": "Context合成判断",
+      "target_set": "policy-decision",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "ID、Device、Resource、Actionを分離せず同じDecisionへ束縛する必要がある。",
+      "claim_ids": [
+        "claim.policy-decision.context-composition"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.deny"
+      ]
+    },
+    {
+      "id": "policy-decision.fail-closed",
+      "title": "判断障害時のFail Closed",
+      "target_set": "policy-decision",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Policy Decision機能が停止してもRestricted Resourceへの権限を増加させてはならない。",
+      "claim_ids": [
+        "claim.policy-decision.fail-closed"
+      ],
+      "evidence_ids": [
+        "evidence.failure",
+        "evidence.recovery"
+      ]
+    },
+    {
+      "id": "policy-enforcement.complete-mediation",
+      "title": "Complete Mediation",
+      "target_set": "policy-enforcement",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "保護対象への要求がDecisionなしに処理される迂回経路を許容しない。",
+      "claim_ids": [
+        "claim.policy-enforcement.complete-mediation"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.deny",
+        "evidence.failure"
+      ]
+    },
+    {
+      "id": "policy-enforcement.revocation-enforcement",
+      "title": "失効強制",
+      "target_set": "policy-enforcement",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "失効通知後に古い許可結果を再利用できないことをEnforcement Pointで検証する。",
+      "claim_ids": [
+        "claim.policy-enforcement.revocation-enforcement"
+      ],
+      "evidence_ids": [
+        "evidence.revocation",
+        "evidence.isolated-replay"
+      ]
+    },
+    {
+      "id": "resource.classified-action",
+      "title": "分類済みResourceとAction",
+      "target_set": "resource",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Resource分類と要求Actionの組で最小権限を決定する必要がある。",
+      "claim_ids": [
+        "claim.resource.classified-action"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.deny"
+      ]
+    },
+    {
+      "id": "resource.default-deny",
+      "title": "未知ResourceのDefault Deny",
+      "target_set": "resource",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "未登録Resourceや未定義Actionを暗黙に許可しないことを実証する必要がある。",
+      "claim_ids": [
+        "claim.resource.default-deny"
+      ],
+      "evidence_ids": [
+        "evidence.deny"
+      ]
+    },
+    {
+      "id": "telemetry.decision-reconstruction",
+      "title": "Decision再構成",
+      "target_set": "telemetry",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "任意のDecisionについて入力、Policy版、結果、理由を監査可能にする必要がある。",
+      "claim_ids": [
+        "claim.telemetry.decision-reconstruction"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.revocation",
+        "evidence.failure"
+      ]
+    },
+    {
+      "id": "telemetry.evidence-integrity",
+      "title": "Evidence Integrity",
+      "target_set": "telemetry",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Source、Harness、Environment、Artifactの変更をDigest差分として検出する必要がある。",
+      "claim_ids": [
+        "claim.telemetry.evidence-integrity"
+      ],
+      "evidence_ids": [
+        "evidence.normal",
+        "evidence.deny",
+        "evidence.revocation",
+        "evidence.failure",
+        "evidence.recovery",
+        "evidence.isolated-replay"
+      ]
+    },
+    {
+      "id": "subject.control-chain",
+      "title": "SubjectからPEPまでの制御連鎖",
+      "target_set": "subject",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Resource、Subject、PIP、PE/PA、PEPを混同せず完全な制御連鎖を実証する必要がある。",
+      "claim_ids": [
+        "claim.architecture.control-chain"
+      ],
+      "evidence_ids": [
+        "evidence.architecture-flow"
+      ]
+    },
+    {
+      "id": "identity.lifecycle-assurance",
+      "title": "Identity LifecycleとAssurance",
+      "target_set": "identity",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "無効IdentityまたはResource要件未満のAssuranceを暗黙に許可してはならない。",
+      "claim_ids": [
+        "claim.identity.lifecycle-assurance"
+      ],
+      "evidence_ids": [
+        "evidence.identity-lifecycle"
+      ]
+    },
+    {
+      "id": "policy-information.fresh-provenance",
+      "title": "PIP鮮度と来歴",
+      "target_set": "policy-information",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "古いSignalや欠落したPolicy情報が権限増加へつながらないことを実証する必要がある。",
+      "claim_ids": [
+        "claim.policy-information.fresh-provenance"
+      ],
+      "evidence_ids": [
+        "evidence.policy-information"
+      ]
+    },
+    {
+      "id": "workload.cryptographic-identity",
+      "title": "Workload IdentityとAttestation",
+      "target_set": "workload",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Service間通信もHumanと同様に一意で継続検証可能なIdentityへ結合する必要がある。",
+      "claim_ids": [
+        "claim.workload.cryptographic-identity"
+      ],
+      "evidence_ids": [
+        "evidence.workload-identity"
+      ]
+    },
+    {
+      "id": "network.identity-multitier",
+      "title": "NetworkとIdentityの多層Policy",
+      "target_set": "network",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Network位置ではなく暗号化、Identity、Resource別経路の複数層で判断する必要がある。",
+      "claim_ids": [
+        "claim.network.identity-multitier"
+      ],
+      "evidence_ids": [
+        "evidence.network-multitier"
+      ]
+    },
+    {
+      "id": "data.purpose-obligation",
+      "title": "Data利用目的とObligation",
+      "target_set": "data",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Data分類とActionだけでなく利用目的と許可後の保護義務を同じ判断へ含める必要がある。",
+      "claim_ids": [
+        "claim.data.purpose-obligation"
+      ],
+      "evidence_ids": [
+        "evidence.data-protection"
+      ]
+    },
+    {
+      "id": "continuous-evaluation.risk-change",
+      "title": "Risk変化の継続評価",
+      "target_set": "continuous-evaluation",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "初回認証後のThreat変化を無視せずStep-upまたは拒否へ反映する必要がある。",
+      "claim_ids": [
+        "claim.continuous.risk-reevaluation"
+      ],
+      "evidence_ids": [
+        "evidence.continuous-evaluation",
+        "evidence.threat-credential-abuse"
+      ]
+    },
+    {
+      "id": "policy-enforcement.bypass-resistance",
+      "title": "PEP迂回耐性",
+      "target_set": "policy-enforcement",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "DecisionとPEPを経由しない保護Resourceへの経路を許容しない。",
+      "claim_ids": [
+        "claim.policy-enforcement.bypass-resistance"
+      ],
+      "evidence_ids": [
+        "evidence.enforcement-bypass"
+      ]
+    },
+    {
+      "id": "revocation.propagation",
+      "title": "失効伝播",
+      "target_set": "revocation",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Identity失効をDecisionとPEPの両方へ伝播し古いContextを無効化する必要がある。",
+      "claim_ids": [
+        "claim.revocation.propagation"
+      ],
+      "evidence_ids": [
+        "evidence.revocation-propagation"
+      ]
+    },
+    {
+      "id": "failure-recovery.control-plane",
+      "title": "Control Plane障害と回復",
+      "target_set": "failure-recovery",
+      "kind": "failure",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Policy改ざん、PIP停止、Decision停止、PEP停止の全てでFail Closedする必要がある。",
+      "claim_ids": [
+        "claim.failure.control-plane"
+      ],
+      "evidence_ids": [
+        "evidence.control-plane-failure",
+        "evidence.failure",
+        "evidence.recovery"
+      ]
+    },
+    {
+      "id": "migration.staged-cutover",
+      "title": "段階移行とRollback",
+      "target_set": "migration",
+      "kind": "migration",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Brownfield環境を一括置換せず観測とShadow比較を経て安全にCutoverする必要がある。",
+      "claim_ids": [
+        "claim.migration.staged-cutover"
+      ],
+      "evidence_ids": [
+        "evidence.migration-shadow-cutover"
+      ]
+    },
+    {
+      "id": "operations.reconstruction",
+      "title": "Decision運用再構成",
+      "target_set": "operations",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "運用者が許可と拒否の双方を同じ証跡形式で診断できる必要がある。",
+      "claim_ids": [
+        "claim.operations.reconstruction"
+      ],
+      "evidence_ids": [
+        "evidence.operations-reconstruction"
+      ]
+    },
+    {
+      "id": "threat-abuse.decision-subversion",
+      "title": "Decision Process改ざん",
+      "target_set": "threat-abuse",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "PolicyまたはDecision ProcessのIntegrity喪失を隔離環境で安全に検証する必要がある。",
+      "claim_ids": [
+        "claim.threat.decision-subversion"
+      ],
+      "evidence_ids": [
+        "evidence.threat-decision-subversion"
+      ]
+    },
+    {
+      "id": "threat-abuse.credential-abuse",
+      "title": "Credential濫用",
+      "target_set": "threat-abuse",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "窃取Credentialを模した高Riskと失効済みContextを外部Targetなしで検証する必要がある。",
+      "claim_ids": [
+        "claim.threat.credential-abuse"
+      ],
+      "evidence_ids": [
+        "evidence.threat-credential-abuse"
+      ]
+    },
+    {
+      "id": "threat-abuse.network-visibility",
+      "title": "暗号化通信のDecision可視性",
+      "target_set": "threat-abuse",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "暗号化によって内容を露出せず要求連鎖と強制結果を診断できる必要がある。",
+      "claim_ids": [
+        "claim.threat.network-visibility"
+      ],
+      "evidence_ids": [
+        "evidence.operations-reconstruction"
+      ]
+    },
+    {
+      "id": "threat-abuse.telemetry-minimization",
+      "title": "Control Plane情報の最小化",
+      "target_set": "threat-abuse",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "PolicyとTelemetryの蓄積情報自体が攻撃対象になるため再構成に不要な秘密を保持しない。",
+      "claim_ids": [
+        "claim.threat.telemetry-minimization"
+      ],
+      "evidence_ids": [
+        "evidence.operations-reconstruction"
+      ]
+    },
+    {
+      "id": "threat-abuse.open-interchange",
+      "title": "独自形式Lock-inの回避",
+      "target_set": "threat-abuse",
+      "kind": "compatibility",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "PolicyとEvidenceを公開JSON/YAML形式で交換し実装差を検査できる必要がある。",
+      "claim_ids": [
+        "claim.threat.open-interchange"
+      ],
+      "evidence_ids": [
+        "evidence.network-multitier"
+      ]
+    },
+    {
+      "id": "threat-abuse.non-person-entity",
+      "title": "Non-person Entity管理",
+      "target_set": "threat-abuse",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Service Accountを例外扱いせず一意で継続検証可能なWorkload Identityへ結合する必要がある。",
+      "claim_ids": [
+        "claim.threat.non-person-entity"
+      ],
+      "evidence_ids": [
+        "evidence.workload-identity"
+      ]
+    },
+    {
+      "id": "policy-decision.deterministic-capacity",
+      "title": "決定論的Decision容量",
+      "target_set": "policy-decision",
+      "kind": "operation",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Wall clock測定の揺らぎと分離してDecision欠落とPEP未強制の容量上限を検証する必要がある。",
+      "claim_ids": [
+        "claim.performance.deterministic-capacity"
+      ],
+      "evidence_ids": [
+        "evidence.deterministic-capacity"
+      ]
+    },
+    {
+      "id": "skill.routing",
+      "title": "Coverage Router",
+      "target_set": "skill",
+      "kind": "capability",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "Agentが利用目的に対応するClaim、Lab、Evidenceへ決定論的に到達できる必要がある。",
+      "claim_ids": [
+        "claim.skill.routing"
+      ],
+      "evidence_ids": [
+        "evidence.skill-eval"
+      ]
+    },
+    {
+      "id": "skill.safety-boundary",
+      "title": "Skill安全境界",
+      "target_set": "skill",
+      "kind": "security",
+      "requirement": "required",
+      "state": "covered",
+      "rationale": "攻撃要求を防御目的の隔離Labへ限定しCoverage外を捏造しない必要がある。",
+      "claim_ids": [
+        "claim.skill.safety-boundary"
+      ],
+      "evidence_ids": [
+        "evidence.skill-eval"
+      ]
+    }
+  ],
+  "evidence": [],
+  "skill": {
+    "schema_version": 1,
+    "atlas_id": "zero-trust-reference-atlas",
+    "atlas_release": "v0.1.0",
+    "router": {
+      "id": "zero-trust-router",
+      "path": ".agents/skills/zero-trust-router/SKILL.md",
+      "description": "ゼロトラストの設計、実装、診断、失効、回復、Reviewを有限Coverageと実行Evidenceへ案内する。"
+    },
+    "generated_from": [
+      "atlas.yaml",
+      "mastery.yaml",
+      "coverage.yaml",
+      "atlas/claims/claims.yaml",
+      "labs/*/README.md"
+    ],
+    "adapters": [
+      "generic-agent-skills",
+      "codex"
+    ],
+    "evals": {
+      "path": "evals/",
+      "minimum_pass_rate": 1
+    }
+  },
+  "certificate": null,
+  "certificateVerification": {
+    "present": false,
+    "status": "absent",
+    "digest": null
+  },
+  "completion": {
+    "classification": "not-definitive",
+    "definitive": false,
+    "reason": "certificate-absent",
+    "certificateSchemaVersion": null,
+    "corePolicyVersion": "1.0.0",
+    "coverageEpoch": "2026-08-28",
+    "trustUsage": "fixture-only"
+  },
+  "detailUrl": "/data/releases/zero-trust/2e3f22d8f97700f53be00197feb440108276376efe8b73c03b3a47564ca49407.json",
+  "displayProjection": {
+    "sourceReleaseDigest": "sha256:2e3f22d8f97700f53be00197feb440108276376efe8b73c03b3a47564ca49407",
+    "transformations": []
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-dependency-reproduce-order",
+  "entrypoint": "node scripts/refresh-portal-dependency-graph.mjs --record",
+  "reportRecordScripts": [
+    "import:lifecycle:record",
+    "distribution:record",
+    "distribution:bindings:record",
+    "distribution:gaps:record",
+    "distribution:matrix:record",
+    "definitive:root:gaps:record",
+    "definitive:root:depth:record",
+    "definitive:root:migration:record",
+    "definitive:root:certificate:record",
+    "definitive:root:declaration:record",
+    "definitive:root:surface-readiness:record",
+    "definitive:root:matrix-readiness:record",
+    "definitive:root:record",
+    "checkpoint:readiness:record"
+  ],
+  "validationScripts": [
+    "definitive:root:check",
+    "import:lifecycle:check",
+    "distribution:check",
+    "distribution:bindings:check",
+    "distribution:gaps:check",
+    "distribution:matrix:check",
+    "definitive:root:gaps:check",
+    "definitive:root:depth:check",
+    "definitive:root:migration:check",
+    "definitive:root:certificate:check",
+    "definitive:root:declaration:check",
+    "definitive:root:surface-readiness:check",
+    "definitive:root:matrix-readiness:check",
+    "checkpoint:readiness:check",
+    "dependency:negative",
+    "dependency:refresh-readiness:check",
+    "integration:status:check",
+    "root:readiness:check"
+  ],
+  "importAndIndexScripts": [
+    "import"
+  ],
+  "postImportScripts": [
+    "non-regression",
+    "eval",
+    "sbom",
+    "build",
+    "perf",
+    "evidence",
+    "provenance"
+  ],
+  "graphCheck": {
+    "auditBeforeWrite": true,
+    "digestOnlyClosure": false,
+    "graphFirstRefresh": false,
+    "sameRunCurrentProofRequired": true
+  }
+}

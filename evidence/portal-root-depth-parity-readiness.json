@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-root-depth-parity-readiness",
+  "status": "blocked",
+  "classification": "portal-infrastructure-readiness-only",
+  "source": {
+    "rootGapIndex": {
+      "path": "evidence/portal-root-artifact-gap-index.json",
+      "digest": "sha256:58b66d7265cafd1db2ddd48275c81c1318df639027f38a1bd1495352bd366e8d"
+    },
+    "portalSurfaceInventory": {
+      "path": "contracts/portal-root-surface-inventory.json",
+      "digest": "sha256:a972cc47ab12f57bfdb146c59468e46158cf6c01d1b95ff1aa6825e7f90d66a9"
+    },
+    "distributionMatrix": {
+      "path": "evidence/portal-distribution-verification-matrix.json",
+      "digest": "sha256:be3c52bd9e31ab18d9790b25f36bf43b196dd2bec93c2adf313df250bec41be8"
+    },
+    "dependencyGraph": {
+      "path": "evidence/dependency-graph.json",
+      "digest": "sha256:2d699c574f6d94a3506a4ee2db604c89d83ce2d61738f3939ad255549055fca4"
+    }
+  },
+  "coreContract": {
+    "commit": "072d7ca77981f51754e824d70c6d4ecd55ea67e5",
+    "artifactPath": "depth.parity.yaml",
+    "schemaPath": "schemas/depth-parity.schema.json",
+    "schemaDigest": "sha256:c920135fd3e4bbdfb258c1c8155be6a62648cc9c52409dc3a95eef5060dbf7e1",
+    "validatorPath": "internal/validate/depth_parity.go",
+    "validatorDigest": "sha256:8c4907d0bcb0e09a5b4545fa9c811aac2f0ff720aa5657e3d5a100d6d8121ff5",
+    "observedStatus": "missing"
+  },
+  "observed": {
+    "portalIsSubject": false,
+    "portalSurfaceInventory": {
+      "classification": "bounded-root-artifact",
+      "masterySurfaces": 14,
+      "coverageTargets": 14,
+      "coreSubjectArtifactStatus": "missing"
+    },
+    "distributionMatrix": {
+      "status": "incomplete",
+      "cells": 970,
+      "gap": 478,
+      "notEvaluated": 291,
+      "coreSubjectArtifactStatus": "present",
+      "runtimeSubstitution": false
+    },
+    "dependencyGraph": {
+      "recordedStatus": "current",
+      "requiredOutputDenominator": 6,
+      "boundRequiredOutputs": 6,
+      "missingRequiredOutputs": []
+    }
+  },
+  "summary": {
+    "prerequisites": 6,
+    "satisfied": 1,
+    "blocked": 5,
+    "coreDepthParityArtifactsPresent": 0,
+    "completionEffect": "none"
+  },
+  "prerequisites": [
+    {
+      "id": "portal-subject-authority-declaration",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-root-artifact-gap-index.json"
+      ],
+      "gapIds": [
+        "portal-is-not-a-core-subject"
+      ]
+    },
+    {
+      "id": "core-subject-surface-inventory",
+      "state": "blocked",
+      "evidence": [
+        "contracts/portal-root-surface-inventory.json"
+      ],
+      "gapIds": [
+        "surface.inventory.yaml-missing"
+      ]
+    },
+    {
+      "id": "core-subject-verification-matrix",
+      "state": "satisfied",
+      "evidence": [
+        "verification.matrix.yaml"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "authority-derived-depth-denominator",
+      "state": "blocked",
+      "evidence": [
+        "contracts/portal-root-surface-inventory.json"
+      ],
+      "gapIds": [
+        "authority-derived-depth-denominator-not-established"
+      ]
+    },
+    {
+      "id": "actual-runtime-depth-proof",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-distribution-verification-matrix.json"
+      ],
+      "gapIds": [
+        "subject-runtime-proof-not-evaluated"
+      ]
+    },
+    {
+      "id": "current-evidence-dependency-rerun",
+      "state": "blocked",
+      "evidence": [
+        "evidence/dependency-graph.json"
+      ],
+      "gapIds": [
+        "current-portal-derived-outputs-not-bound"
+      ]
+    }
+  ],
+  "boundary": {
+    "readOnly": true,
+    "autoCreate": false,
+    "autoPromotion": false,
+    "portalSurfaceInventoryIsCoreSubjectArtifact": false,
+    "distributionMatrixIsCoreSubjectMatrix": false,
+    "recordedGraphStatusIsCurrentProof": false,
+    "runtimeSubstitution": false,
+    "digestOnlyClosure": false,
+    "coreSubjectArtifact": {
+      "path": "depth.parity.yaml",
+      "status": "missing",
+      "effect": "none"
+    },
+    "rootDefinitiveStatus": "root-definitive-incomplete",
+    "distributionStatus": "not-established",
+    "completionEffect": "none"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-integration-status.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "status", "classification", "sources", "root", "distribution", "evidenceRefresh", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-integration-status" },
+    "status": { "const": "blocked" },
+    "classification": { "const": "dynamic-read-only-integration-observation" },
+    "sources": {
+      "type": "object",
+      "minProperties": 5,
+      "maxProperties": 5,
+      "additionalProperties": { "$ref": "#/$defs/source" }
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definitiveStatus", "artifactsRequired", "artifactsMissing", "artifactsPresent", "matrixPrerequisites", "matrixSatisfied", "matrixBlocked", "matrixCells", "matrixVerified", "matrixGap", "matrixNotEvaluated", "coreMatrixArtifactStatus"],
+      "properties": {
+        "definitiveStatus": { "const": "root-definitive-incomplete" },
+        "artifactsRequired": { "const": 6 },
+        "artifactsMissing": { "const": 5 },
+        "artifactsPresent": { "const": 1 },
+        "matrixPrerequisites": { "const": 8 },
+        "matrixSatisfied": { "const": 3 },
+        "matrixBlocked": { "const": 5 },
+        "matrixCells": { "const": 970 },
+        "matrixVerified": { "const": 201 },
+        "matrixGap": { "const": 478 },
+        "matrixNotEvaluated": { "const": 291 },
+        "coreMatrixArtifactStatus": { "const": "present" }
+      }
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "subjects", "ready", "subjectDefinitive", "openGapInstances", "closedGapInstances", "publicTrustedRelease", "definitiveV2InputAvailable", "definitiveCertificatePresent"],
+      "properties": {
+        "status": { "const": "not-established" },
+        "subjects": { "const": 97 },
+        "ready": { "const": 0 },
+        "subjectDefinitive": { "const": 0 },
+        "openGapInstances": { "const": 589 },
+        "closedGapInstances": { "const": 0 },
+        "publicTrustedRelease": { "const": 0 },
+        "definitiveV2InputAvailable": { "const": 0 },
+        "definitiveCertificatePresent": { "const": 0 }
+      }
+    },
+    "evidenceRefresh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "staleWrappers", "inputsChangedSinceRun", "missingOutputs", "currentRerun"],
+      "properties": {
+        "status": { "enum": ["blocked", "ready"] },
+        "staleWrappers": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "inputsChangedSinceRun": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "missingOutputs": { "type": "integer", "minimum": 0 },
+        "currentRerun": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "ready" } } },
+          "then": {
+            "properties": {
+              "staleWrappers": { "const": 0 },
+              "inputsChangedSinceRun": { "const": 0 },
+              "missingOutputs": { "const": 0 },
+              "currentRerun": { "const": true }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "blocked" } } },
+          "then": {
+            "properties": {
+              "currentRerun": { "const": false }
+            }
+          }
+        }
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readOnly", "autoRun", "autoPromotion", "portalIsSubject", "rawCountsAreCompletion", "coreArtifactsAutoCreated", "boundedCertificateEffect", "subjectDefinitiveEffect", "distributionEffect", "rootDefinitiveEffect", "completionEffect"],
+      "properties": {
+        "readOnly": { "const": true },
+        "autoRun": { "const": false },
+        "autoPromotion": { "const": false },
+        "portalIsSubject": { "const": false },
+        "rawCountsAreCompletion": { "const": false },
+        "coreArtifactsAutoCreated": { "const": false },
+        "boundedCertificateEffect": { "const": "none" },
+        "subjectDefinitiveEffect": { "const": "none" },
+        "distributionEffect": { "const": "none" },
+        "rootDefinitiveEffect": { "const": "none" },
+        "completionEffect": { "const": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest", "valid"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "digest": { "$ref": "#/$defs/sha256" },
+        "valid": { "const": true }
+      }
+    }
+  }
+}

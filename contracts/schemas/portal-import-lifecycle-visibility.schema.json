@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-import-lifecycle-visibility.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "status", "source", "registry", "actual", "subjects", "fixtureCoverage", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-import-lifecycle-visibility" },
+    "status": { "const": "incomplete" },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["index", "importReport", "failureFixture", "registryNegativeFixture"],
+      "properties": {
+        "index": { "$ref": "#/$defs/sourceIndex" },
+        "importReport": { "$ref": "#/$defs/sourceImport" },
+        "failureFixture": { "$ref": "#/$defs/sourceFailure" },
+        "registryNegativeFixture": { "$ref": "#/$defs/sourceRegistry" }
+      }
+    },
+    "registry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["preflightResult", "lifecyclePolicy", "lastKnownGoodPolicy"],
+      "properties": {
+        "preflightResult": { "const": "pass" },
+        "lifecyclePolicy": { "const": "current-or-legacy-current-only-stale-and-revoked-rejected" },
+        "lastKnownGoodPolicy": { "const": "preserve-on-preflight-failure" }
+      }
+    },
+    "actual": { "$ref": "#/$defs/actual" },
+    "subjects": { "type": "array", "minItems": 97, "maxItems": 97, "items": { "$ref": "#/$defs/subject" } },
+    "fixtureCoverage": { "$ref": "#/$defs/fixtureCoverage" },
+    "boundary": { "$ref": "#/$defs/boundary" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "sourceBase": { "type": "object", "additionalProperties": false, "required": ["path", "digest"], "properties": { "path": { "type": "string" }, "digest": { "$ref": "#/$defs/sha256" } } },
+    "sourceIndex": { "allOf": [{ "$ref": "#/$defs/sourceBase" }, { "type": "object", "properties": { "path": { "const": "app/data/index.generated.json" } } }] },
+    "sourceImport": { "allOf": [{ "$ref": "#/$defs/sourceBase" }, { "type": "object", "properties": { "path": { "const": "evidence/import-report.json" } } }] },
+    "sourceFailure": { "allOf": [{ "$ref": "#/$defs/sourceBase" }, { "type": "object", "properties": { "path": { "const": "fixtures/failure-scenarios.json" } } }] },
+    "sourceRegistry": { "allOf": [{ "$ref": "#/$defs/sourceBase" }, { "type": "object", "properties": { "path": { "const": "fixtures/registry/invalid-registry-cases.json" } } }] },
+    "actual": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjects", "verified", "quarantined", "absent", "incompleteCurrentReleases", "publicTrustedCurrentReleases", "expiredHistoricalReleases", "supersededHistoricalReleases", "archivedHistoricalReleases", "staleHumanReviewHolds", "definitiveV2Imports"],
+      "properties": {
+        "subjects": { "const": 97 }, "verified": { "$ref": "#/$defs/count" }, "quarantined": { "$ref": "#/$defs/count" }, "absent": { "$ref": "#/$defs/count" },
+        "incompleteCurrentReleases": { "$ref": "#/$defs/count" }, "publicTrustedCurrentReleases": { "$ref": "#/$defs/count" }, "expiredHistoricalReleases": { "$ref": "#/$defs/count" },
+        "supersededHistoricalReleases": { "$ref": "#/$defs/count" }, "archivedHistoricalReleases": { "$ref": "#/$defs/count" }, "staleHumanReviewHolds": { "$ref": "#/$defs/count" }, "definitiveV2Imports": { "$ref": "#/$defs/count" }
+      }
+    },
+    "count": { "type": "integer", "minimum": 0, "maximum": 97 },
+    "subject": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjectId", "catalogStatus", "currentImportState", "currentReleaseStatus", "currentTrustUsage", "historicalReleaseStatuses", "incompleteVisible", "expiredVisible", "supersededVisible", "archivedVisible"],
+      "properties": {
+        "subjectId": { "type": "string", "minLength": 1 }, "catalogStatus": { "type": "string", "minLength": 1 }, "currentImportState": { "enum": ["verified", "quarantined", "absent"] },
+        "currentReleaseStatus": { "type": ["string", "null"] }, "currentTrustUsage": { "enum": ["public", "fixture-only", "none"] },
+        "historicalReleaseStatuses": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "incompleteVisible": { "type": "boolean" }, "expiredVisible": { "type": "boolean" }, "supersededVisible": { "type": "boolean" }, "archivedVisible": { "type": "boolean" }
+      }
+    },
+    "fixtureCoverage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fixtureOnly", "failureScenarios", "quarantineScenarios", "incompleteScenarios", "excludedScenarios", "infeasibleScenarios", "expiredScenarios", "supersededScenarios", "archivedScenarios", "registryNegativeCases", "staleLockCases", "revokedLockCases", "scenarios", "registryCases"],
+      "properties": {
+        "fixtureOnly": { "const": true }, "failureScenarios": { "const": 11 }, "quarantineScenarios": { "const": 3 }, "incompleteScenarios": { "const": 1 }, "excludedScenarios": { "const": 1 }, "infeasibleScenarios": { "const": 1 }, "expiredScenarios": { "const": 1 }, "supersededScenarios": { "const": 1 }, "archivedScenarios": { "const": 1 }, "registryNegativeCases": { "const": 14 }, "staleLockCases": { "const": 1 }, "revokedLockCases": { "const": 1 },
+        "scenarios": { "type": "array", "minItems": 11, "maxItems": 11, "items": { "$ref": "#/$defs/scenario" } },
+        "registryCases": { "type": "array", "minItems": 14, "maxItems": 14, "items": { "$ref": "#/$defs/registryCase" } }
+      }
+    },
+    "scenario": { "type": "object", "additionalProperties": false, "required": ["id", "expected", "state", "status", "verdict"], "properties": { "id": { "type": "string" }, "expected": { "type": "string" }, "state": { "type": ["string", "null"] }, "status": { "type": ["string", "null"] }, "verdict": { "type": ["string", "null"] } } },
+    "registryCase": { "type": "object", "additionalProperties": false, "required": ["id", "expectedDiagnostic", "expectedResult"], "properties": { "id": { "type": "string" }, "expectedDiagnostic": { "type": "string" }, "expectedResult": { "const": "last-known-good-preserved" } } },
+    "boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["readOnly", "fixtureIsActual", "negativeCoverageIsProgress", "staleLockAccepted", "revokedLockAccepted", "hideIncomplete", "hideExpired", "autoPromotion", "distributionStatus", "completionEffect"],
+      "properties": { "readOnly": { "const": true }, "fixtureIsActual": { "const": false }, "negativeCoverageIsProgress": { "const": false }, "staleLockAccepted": { "const": false }, "revokedLockAccepted": { "const": false }, "hideIncomplete": { "const": false }, "hideExpired": { "const": false }, "autoPromotion": { "const": false }, "distributionStatus": { "const": "not-established" }, "completionEffect": { "const": "none" } }
+    }
+  }
+}

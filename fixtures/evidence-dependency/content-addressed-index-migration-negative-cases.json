@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-content-addressed-index-migration-negative-cases",
+  "migrationCases": [
+    {
+      "caseId": "current-bootstrap-mismatch",
+      "mutation": "promote-old-as-current",
+      "expectedDiagnostic": "content-addressed-index-current-bootstrap-mismatch"
+    },
+    {
+      "caseId": "current-path-not-preserved",
+      "mutation": "drop-current-preserved",
+      "expectedDiagnostic": "content-addressed-index-current-not-preserved"
+    },
+    {
+      "caseId": "old-index-deletion-enabled",
+      "mutation": "allow-old-index-deletion",
+      "expectedDiagnostic": "content-addressed-index-policy-weakened"
+    },
+    {
+      "caseId": "digest-only-rebinding-enabled",
+      "mutation": "allow-digest-only-rebinding",
+      "expectedDiagnostic": "content-addressed-index-policy-weakened"
+    },
+    {
+      "caseId": "graph-first-refresh-allowed",
+      "mutation": "disable-graph-refresh-after-import",
+      "expectedDiagnostic": "content-addressed-index-policy-weakened"
+    },
+    {
+      "caseId": "shared-target-replacement",
+      "mutation": "shared-target",
+      "expectedDiagnostic": "content-addressed-index-shared-target"
+    },
+    {
+      "caseId": "append-only-history-broken",
+      "mutation": "drop-old-preserved",
+      "expectedDiagnostic": "content-addressed-index-not-append-only"
+    },
+    {
+      "caseId": "historical-artifact-missing",
+      "mutation": "rebind-old-to-missing-file",
+      "expectedDiagnostic": "content-addressed-index-history-artifact-missing:public/data/index/0000000000000000000000000000000000000000000000000000000000000000.json"
+    }
+  ],
+  "graphCases": [
+    {
+      "caseId": "required-output-missing",
+      "mutation": "drop-current-required-output",
+      "expectedDiagnostic": "content-addressed-index-required-output-missing"
+    },
+    {
+      "caseId": "historical-output-reintroduced",
+      "mutation": "add-historical-current-output",
+      "expectedDiagnostic": "historical output leaked into current graph: public/data/index/76090e9b725c469db2cfbe02a8c5f3ab8874b6422cba88d37bd7bec6e7aed3b0.json"
+    },
+    {
+      "caseId": "current-output-not-recorded-in-run",
+      "mutation": "drop-current-run-output",
+      "expectedDiagnostic": "current output run missing: public/data/index/25c8ba3c8b0560f1a99f992e097c853d0a594849fda2ad445768ee060583332f.json"
+    },
+    {
+      "caseId": "historical-required-output-reintroduced",
+      "mutation": "add-historical-required-output",
+      "expectedDiagnostic": "historical required output leaked into current graph: public/data/index/76090e9b725c469db2cfbe02a8c5f3ab8874b6422cba88d37bd7bec6e7aed3b0.json"
+    }
+  ]
+}

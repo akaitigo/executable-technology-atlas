@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-root-readiness-status.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "status", "classification", "sources", "root", "artifacts", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-root-readiness-status" },
+    "status": { "const": "blocked" },
+    "classification": { "const": "dynamic-read-only-root-artifact-observation" },
+    "sources": {
+      "type": "object",
+      "minProperties": 7,
+      "maxProperties": 7,
+      "additionalProperties": { "$ref": "#/$defs/source" }
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definitiveStatus", "requiredArtifacts", "missingArtifacts", "presentArtifacts", "distributionStatus"],
+      "properties": {
+        "definitiveStatus": { "const": "root-definitive-incomplete" },
+        "requiredArtifacts": { "const": 6 },
+        "missingArtifacts": { "const": 5 },
+        "presentArtifacts": { "const": 1 },
+        "distributionStatus": { "const": "not-established" }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        { "$ref": "#/$defs/declaration" },
+        { "$ref": "#/$defs/surfaceInventory" },
+        { "$ref": "#/$defs/verificationMatrix" },
+        { "$ref": "#/$defs/depthParity" },
+        { "$ref": "#/$defs/migration" },
+        { "$ref": "#/$defs/certificate" }
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readOnly", "portalIsSubject", "autoCreate", "autoPromotion", "digestOnlyClosure", "completionEffect"],
+      "properties": {
+        "readOnly": { "const": true },
+        "portalIsSubject": { "const": false },
+        "autoCreate": { "const": false },
+        "autoPromotion": { "const": false },
+        "digestOnlyClosure": { "const": false },
+        "completionEffect": { "const": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest", "valid"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "digest": { "$ref": "#/$defs/sha256" },
+        "valid": { "const": true }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactPath", "readinessId", "status", "prerequisites", "satisfied", "blocked", "coreArtifactPresent", "observedStatus", "completionEffect", "autoCreate", "autoPromotion"],
+      "properties": {
+        "artifactPath": { "type": "string", "minLength": 1 },
+        "readinessId": { "type": "string", "minLength": 1 },
+        "status": { "const": "blocked" },
+        "prerequisites": { "type": "integer", "minimum": 1 },
+        "satisfied": { "type": "integer", "minimum": 0 },
+        "blocked": { "type": "integer", "minimum": 0 },
+        "coreArtifactPresent": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "observedStatus": { "enum": ["missing", "present"] },
+        "completionEffect": { "const": "none" },
+        "autoCreate": { "const": false },
+        "autoPromotion": { "const": false }
+      }
+    },
+    "declaration": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "definitive.yaml" }, "prerequisites": { "const": 9 }, "satisfied": { "const": 1 }, "blocked": { "const": 8 } } }
+      ]
+    },
+    "surfaceInventory": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "surface.inventory.yaml" }, "prerequisites": { "const": 8 }, "satisfied": { "const": 2 }, "blocked": { "const": 6 } } }
+      ]
+    },
+    "verificationMatrix": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "verification.matrix.yaml" }, "prerequisites": { "const": 8 }, "satisfied": { "const": 3 }, "blocked": { "const": 5 }, "coreArtifactPresent": { "const": 1 }, "observedStatus": { "const": "present" } } }
+      ]
+    },
+    "depthParity": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "depth.parity.yaml" }, "prerequisites": { "const": 6 }, "satisfied": { "const": 1 }, "blocked": { "const": 5 } } }
+      ]
+    },
+    "migration": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "migrations/definitive-v2.yaml" }, "prerequisites": { "const": 9 }, "satisfied": { "const": 2 }, "blocked": { "const": 7 } } }
+      ]
+    },
+    "certificate": {
+      "allOf": [
+        { "$ref": "#/$defs/artifact" },
+        { "type": "object", "properties": { "artifactPath": { "const": "evidence/definitive-certificate.json" }, "prerequisites": { "const": 10 }, "satisfied": { "const": 1 }, "blocked": { "const": 9 } } }
+      ]
+    }
+  }
+}
