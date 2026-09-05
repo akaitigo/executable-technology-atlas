@@ -98,4 +98,4 @@ Workflowの権限は`contents: read`のみで、秘密情報、永続Credential�
 
 Repository admissionはengineering-control-plane commit `00fe010a…`からrolloutされた`repo.yaml`を正本とし、Portal自身のGitHub writeだけを許可します。cloud writeと他Repositoryへのwriteは拒否し、この境界をPublication GateとProvenanceで検証します。
 
-Commit署名は`e4e3e48f…`を非破壊な施行境界とします。それ以前のDCO付きunsigned履歴をamend、rebase、force pushせず、以後のcheckpointはDCOとSSH/GPG署名の両方を要求します。`security/allowed_signers`の公開鍵で各commitへ`git verify-commit`を実行し、Publication Gateとclean-room CIで検証します。
+Commit署名は`e4e3e48f…`を非破壊な施行境界とします。それ以前のDCO付きunsigned履歴をamend、rebase、force pushせず、以後のcheckpointはDCOとSSH/GPG署名の両方を要求します。`security/allowed_signers`には既存履歴の検証鍵と現在のGovernance鍵を併記し、各commitへ`git verify-commit`を実行してPublication Gateとclean-room CIで検証します。
