@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-root-artifact-gap-index.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "id", "atlasId", "scope", "status", "summary", "gaps", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 }, "id": { "const": "portal-root-core-v2-artifact-gap-index" }, "atlasId": { "const": "executable-technology-atlas" }, "scope": { "const": "portal-root-core-v2-required-artifacts" }, "status": { "enum": ["open", "closed"] },
+    "summary": { "type": "object", "additionalProperties": false, "required": ["requiredArtifacts", "missingArtifacts", "presentArtifacts", "openGaps", "closedGaps"], "properties": { "requiredArtifacts": { "const": 6 }, "missingArtifacts": { "type": "integer", "minimum": 0, "maximum": 6 }, "presentArtifacts": { "type": "integer", "minimum": 0, "maximum": 6 }, "openGaps": { "type": "integer", "minimum": 0, "maximum": 6 }, "closedGaps": { "type": "integer", "minimum": 0, "maximum": 6 } } },
+    "gaps": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "$ref": "#/$defs/gap" } },
+    "boundary": { "type": "object", "additionalProperties": false, "required": ["portalIsSubject", "readOnly", "autoCreate", "autoClose", "digestOnlyClosure", "rootDefinitiveStatus", "distributionStatus", "completionEffect"], "properties": { "portalIsSubject": { "const": false }, "readOnly": { "const": true }, "autoCreate": { "const": false }, "autoClose": { "const": false }, "digestOnlyClosure": { "const": false }, "rootDefinitiveStatus": { "const": "root-definitive-incomplete" }, "distributionStatus": { "const": "not-established" }, "completionEffect": { "const": "none" } } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "gap": { "type": "object", "additionalProperties": false, "required": ["gapId", "artifactPath", "status", "coreContract", "observed", "rootDefinitiveEffect", "distributionEffect", "completionEffect"], "properties": {
+      "gapId": { "type": "string", "pattern": "^portal-root-artifact-missing:[a-z0-9-]+$" }, "artifactPath": { "type": "string", "minLength": 1 }, "status": { "enum": ["missing", "present"] },
+      "coreContract": { "type": "object", "additionalProperties": false, "required": ["commit", "schemaPath", "schemaDigest", "validatorPath", "validatorDigest"], "properties": { "commit": { "const": "072d7ca77981f51754e824d70c6d4ecd55ea67e5" }, "schemaPath": { "type": "string", "pattern": "^schemas/.+\\.schema\\.json$" }, "schemaDigest": { "$ref": "#/$defs/sha256" }, "validatorPath": { "type": "string", "pattern": "^internal/.+\\.go$" }, "validatorDigest": { "$ref": "#/$defs/sha256" } } },
+      "observed": { "type": "object", "additionalProperties": false, "required": ["exists"], "properties": { "exists": { "type": "boolean" } } }, "rootDefinitiveEffect": { "const": "none" }, "distributionEffect": { "const": "none" }, "completionEffect": { "const": "none" }
+    } }
+  }
+}

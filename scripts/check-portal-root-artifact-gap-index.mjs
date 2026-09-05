@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { resolveCoreCheckout } from './lib/core-checkout.mjs';
+import { buildPortalRootArtifactGapIndex, validatePortalRootArtifactGapIndex } from './lib/portal-root-artifact-gap-index.mjs';
+
+const root=process.cwd();const mode=process.argv[2]??'--check';if(!['--check','--record'].includes(mode))throw new Error('使い方: node scripts/check-portal-root-artifact-gap-index.mjs --check|--record');const {coreDir,expectedCommit:coreCommit}=resolveCoreCheckout(root,'072d7ca77981f51754e824d70c6d4ecd55ea67e5');const schema=JSON.parse(await readFile(path.join(root,'contracts/schemas/portal-root-artifact-gap-index.schema.json'),'utf8'));const document=await buildPortalRootArtifactGapIndex(root,coreDir,coreCommit);const result=await validatePortalRootArtifactGapIndex(root,document,schema,{coreDir,coreCommit});if(!result.ok)throw new Error(result.errors.join(', '));const output=path.join(root,'evidence/portal-root-artifact-gap-index.json');const bytes=`${JSON.stringify(document,null,2)}\n`;if(mode==='--record')await writeFile(output,bytes);else if(await readFile(output,'utf8')!==bytes)throw new Error('Portal root Artifact Gap Indexが固定Core契約または実欠落状態と一致しません。--recordで再生成してください');console.log(`Portal root artifact gaps: PASS / missing=${document.summary.missingArtifacts}/${document.summary.requiredArtifacts} / root=${document.boundary.rootDefinitiveStatus}`);

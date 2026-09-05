@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+import { evaluatePortalIntegrationStatus } from './lib/portal-integration-status.mjs';
+const result=await evaluatePortalIntegrationStatus(process.cwd());const report=result.report;console.log(`Portal integration status: ${result.ok?'PASS':'FAIL'} / status=${report.status} / root missing=${report.root.artifactsMissing}/6 / matrix gap=${report.root.matrixGap} not-evaluated=${report.root.matrixNotEvaluated} / distribution ready=${report.distribution.ready}/97 open gaps=${report.distribution.openGapInstances} / refresh=${report.evidenceRefresh.status} / completion_effect=${report.boundary.completionEffect}`);if(!result.ok){for(const error of result.errors)console.error(error);process.exitCode=1;}

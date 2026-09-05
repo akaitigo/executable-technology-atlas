@@ -1,0 +1,84 @@
+schema_version: 2
+atlas_id: executable-technology-atlas
+epoch: "2026-08-28"
+rows:
+  - behavior_id: portal.root.catalog.fixed-release-index
+    scenario: normal
+    applicability: required
+    rationale: 固定Releaseと署名検証済みEnvelopeから97 Subject Indexを再現可能に生成する。
+    proof_obligation_id: portal.root.catalog.fixed-release-index.normal
+    evidence_ids: [portal.import.integrity]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.search.japanese-facets
+    scenario: boundary
+    applicability: required
+    rationale: 日本語Facet検索が境界条件でも未完了やGapを隠さず探索導線を維持する。
+    proof_obligation_id: portal.root.search.japanese-facets.boundary
+    evidence_ids: [portal.ui.build, portal.non-regression.baseline]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.quarantine.invalid-release-refusal
+    scenario: refusal
+    applicability: required
+    rationale: 署名不正やDigest不一致のRelease候補を公開済み入力として拒否し続ける。
+    proof_obligation_id: portal.root.quarantine.invalid-release-refusal.refusal
+    evidence_ids: [portal.import.integrity]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.quarantine.last-known-good
+    scenario: failure
+    applicability: required
+    rationale: import失敗時も空Dashboardへ崩さずlast-known-goodを保持したまま停止する。
+    proof_obligation_id: portal.root.quarantine.last-known-good.failure
+    evidence_ids: [portal.import.integrity, portal.evidence-dependency.own-closure]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.quarantine.last-known-good
+    scenario: recovery
+    applicability: required
+    rationale: Digest更新だけで復旧済みとせず実再実行後のEvidence世代へ復帰する。
+    proof_obligation_id: portal.root.quarantine.last-known-good.recovery
+    evidence_ids: [portal.evidence-dependency.own-closure]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.definitive-v2.read-model
+    scenario: migration
+    applicability: required
+    rationale: bounded履歴とsubject-definitiveを分離したCore v2移行状態をread-onlyで表示する。
+    proof_obligation_id: portal.root.definitive-v2.read-model.migration
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline, portal.router.eval]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.publication.closure-artifacts
+    scenario: operations
+    applicability: required
+    rationale: SBOMやPublication artifactを固定しつつ配布未成立を完成扱いへ昇格させない。
+    proof_obligation_id: portal.root.publication.closure-artifacts.operations
+    evidence_ids: [portal.publication.sbom, portal.non-regression.baseline]
+    execution_requirement: platform
+    profile: local
+  - behavior_id: portal.root.security.headers-boundary
+    scenario: security
+    applicability: required
+    rationale: 外部追跡や不要権限を拒否するSecurity Header境界を静的成果物で維持する。
+    proof_obligation_id: portal.root.security.headers-boundary.security
+    evidence_ids: [portal.security.headers]
+    execution_requirement: static-allowed
+    profile: local
+  - behavior_id: portal.root.performance.search-budget
+    scenario: performance
+    applicability: required
+    rationale: 97 Subject探索の性能予算を実測Evidenceで保持し件数達成と混同しない。
+    proof_obligation_id: portal.root.performance.search-budget.performance
+    evidence_ids: [portal.performance.budget]
+    execution_requirement: runtime
+    profile: local
+  - behavior_id: portal.root.fixed-commit-audit.visibility
+    scenario: compatibility
+    applicability: required
+    rationale: 固定clean commit監査をRelease未成立のまま表示し未完成Subjectを昇格させない。
+    proof_obligation_id: portal.root.fixed-commit-audit.visibility.compatibility
+    evidence_ids: [portal.import.integrity, portal.ui.build, portal.non-regression.baseline]
+    execution_requirement: runtime
+    profile: local

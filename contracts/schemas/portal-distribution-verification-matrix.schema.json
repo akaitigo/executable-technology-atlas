@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-distribution-verification-matrix.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "atlasId", "scope", "status", "source", "summary", "rows", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-subject-distribution-verification-matrix" },
+    "atlasId": { "const": "executable-technology-atlas" },
+    "scope": { "const": "97-subject-x-10-distribution-verification-classes" },
+    "status": { "const": "incomplete" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "indexDigest", "artifactDigest"],
+      "properties": {
+        "path": { "const": "app/data/index.generated.json" },
+        "indexDigest": { "$ref": "#/$defs/sha256" },
+        "artifactDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjects", "classes", "cells", "verified", "gap", "notEvaluated", "completionEffect"],
+      "properties": {
+        "subjects": { "const": 97 },
+        "classes": { "const": 10 },
+        "cells": { "const": 970 },
+        "verified": { "type": "integer", "minimum": 0, "maximum": 970 },
+        "gap": { "type": "integer", "minimum": 0, "maximum": 970 },
+        "notEvaluated": { "type": "integer", "minimum": 0, "maximum": 970 },
+        "completionEffect": { "const": "none" }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/row" }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["portalInfrastructureArtifact", "coreSubjectArtifact", "readOnly", "autoPromotion", "runtimeSubstitution", "rawCountsAreCompletion", "distributionStatus", "completionEffect"],
+      "properties": {
+        "portalInfrastructureArtifact": { "const": true },
+        "coreSubjectArtifact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "status", "effect"],
+          "properties": {
+            "path": { "const": "verification.matrix.yaml" },
+            "status": { "const": "present" },
+            "effect": { "const": "none" }
+          }
+        },
+        "readOnly": { "const": true },
+        "autoPromotion": { "const": false },
+        "runtimeSubstitution": { "const": false },
+        "rawCountsAreCompletion": { "const": false },
+        "distributionStatus": { "const": "not-established" },
+        "completionEffect": { "const": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjectId", "state", "basis", "gapIds"],
+      "properties": {
+        "subjectId": { "type": "string", "minLength": 1 },
+        "state": { "enum": ["verified", "gap", "not-evaluated"] },
+        "basis": { "type": "string", "minLength": 1 },
+        "gapIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classId", "subjects"],
+      "properties": {
+        "classId": { "enum": ["normal", "boundary", "refusal", "failure", "recovery", "migration", "operations", "security", "performance", "compatibility"] },
+        "subjects": { "type": "array", "minItems": 97, "maxItems": 97, "items": { "$ref": "#/$defs/cell" } }
+      }
+    }
+  }
+}

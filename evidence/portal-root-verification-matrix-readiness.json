@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "id": "portal-root-verification-matrix-readiness",
+  "status": "blocked",
+  "classification": "portal-infrastructure-readiness-only",
+  "source": {
+    "rootGapIndex": {
+      "path": "evidence/portal-root-artifact-gap-index.json",
+      "digest": "sha256:58b66d7265cafd1db2ddd48275c81c1318df639027f38a1bd1495352bd366e8d"
+    },
+    "distributionMatrix": {
+      "path": "evidence/portal-distribution-verification-matrix.json",
+      "digest": "sha256:be3c52bd9e31ab18d9790b25f36bf43b196dd2bec93c2adf313df250bec41be8"
+    },
+    "surfaceReadiness": {
+      "path": "evidence/portal-root-surface-inventory-readiness.json",
+      "digest": "sha256:be0fe2fb1865be423f94decc6f84275f28bb4e8d27895b57380837c600ed574d"
+    },
+    "declarationReadiness": {
+      "path": "evidence/portal-root-definitive-declaration-readiness.json",
+      "digest": "sha256:49390dc27a977b4c63ddbe47ac0d4674dd160d576bf64027c635b23ffc751c88"
+    },
+    "dependencyGraph": {
+      "path": "evidence/dependency-graph.json",
+      "digest": "sha256:2d699c574f6d94a3506a4ee2db604c89d83ce2d61738f3939ad255549055fca4"
+    },
+    "matrixArtifact": {
+      "path": "verification.matrix.yaml",
+      "digest": "sha256:a2306d76fd679628edeaba537245f6d9b4421c7d7d7f1d32ba95a9e42f98a038"
+    }
+  },
+  "coreContract": {
+    "commit": "072d7ca77981f51754e824d70c6d4ecd55ea67e5",
+    "artifactPath": "verification.matrix.yaml",
+    "schemaPath": "schemas/verification-matrix.schema.json",
+    "schemaDigest": "sha256:aad26d99e2faa3b8ec2fa07a4939935e7975cfe59dfce3128ce1b250227485cd",
+    "validatorPath": "internal/validate/definitive.go",
+    "validatorDigest": "sha256:fa43cafc6a94fe36cb92f5f3637ea1c4e7d882ba1d0ded361c6d2c7dc3d17ec6",
+    "observedStatus": "present"
+  },
+  "observed": {
+    "portalIsSubject": false,
+    "portalDistributionMatrix": {
+      "status": "incomplete",
+      "subjects": 97,
+      "classes": 10,
+      "cells": 970,
+      "verified": 201,
+      "gap": 478,
+      "notEvaluated": 291,
+      "coreSubjectArtifactStatus": "present",
+      "runtimeSubstitution": false,
+      "completionEffect": "none"
+    },
+    "surfaceInventory": {
+      "status": "blocked",
+      "satisfied": 2,
+      "blocked": 6,
+      "coreArtifactPresent": 0,
+      "authorityDerivedDenominatorAvailable": false
+    },
+    "declaration": {
+      "status": "blocked",
+      "present": 0,
+      "completionEffect": "none"
+    },
+    "dependencyGraph": {
+      "recordedStatus": "current",
+      "requiredOutputDenominator": 11,
+      "boundRequiredOutputs": 11,
+      "missingRequiredOutputs": []
+    }
+  },
+  "summary": {
+    "prerequisites": 8,
+    "satisfied": 3,
+    "blocked": 5,
+    "coreVerificationMatrixArtifactsPresent": 1,
+    "completionEffect": "none"
+  },
+  "prerequisites": [
+    {
+      "id": "fixed-core-verification-matrix-contract",
+      "state": "satisfied",
+      "evidence": [
+        "evidence/portal-root-artifact-gap-index.json"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "portal-distribution-matrix-denominator-preserved",
+      "state": "satisfied",
+      "evidence": [
+        "evidence/portal-distribution-verification-matrix.json"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "portal-root-verification-matrix-artifact",
+      "state": "satisfied",
+      "evidence": [
+        "verification.matrix.yaml"
+      ],
+      "gapIds": []
+    },
+    {
+      "id": "portal-subject-authority",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-root-artifact-gap-index.json"
+      ],
+      "gapIds": [
+        "portal-is-not-a-core-subject"
+      ]
+    },
+    {
+      "id": "authority-atomic-behavior-denominator",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-root-surface-inventory-readiness.json"
+      ],
+      "gapIds": [
+        "authority-atomic-behavior-denominator-missing"
+      ]
+    },
+    {
+      "id": "core-surface-inventory",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-root-surface-inventory-readiness.json"
+      ],
+      "gapIds": [
+        "surface.inventory.yaml-missing"
+      ]
+    },
+    {
+      "id": "authority-derived-runtime-matrix-coverage",
+      "state": "blocked",
+      "evidence": [
+        "evidence/portal-distribution-verification-matrix.json"
+      ],
+      "gapIds": [
+        "runtime-cells-not-evaluated"
+      ]
+    },
+    {
+      "id": "current-evidence-dependency-rerun",
+      "state": "blocked",
+      "evidence": [
+        "evidence/dependency-graph.json"
+      ],
+      "gapIds": [
+        "current-portal-derived-outputs-not-bound"
+      ]
+    }
+  ],
+  "boundary": {
+    "readOnly": true,
+    "autoCreate": false,
+    "autoPromotion": false,
+    "portalIsSubject": false,
+    "portalDistributionMatrixIsCoreSubjectArtifact": false,
+    "authorityAtomicBehaviorDenominatorAvailable": false,
+    "runtimeSubstitution": false,
+    "recordedGraphStatusIsCurrentProof": false,
+    "digestOnlyClosure": false,
+    "coreSubjectArtifact": {
+      "path": "verification.matrix.yaml",
+      "status": "present",
+      "effect": "none"
+    },
+    "rootDefinitiveStatus": "root-definitive-incomplete",
+    "distributionStatus": "not-established",
+    "completionEffect": "none"
+  }
+}

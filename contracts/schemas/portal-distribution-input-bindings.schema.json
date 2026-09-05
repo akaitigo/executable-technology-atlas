@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-distribution-input-bindings.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "atlasId", "scope", "status", "source", "summary", "subjects", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-subject-distribution-input-bindings" },
+    "atlasId": { "const": "executable-technology-atlas" },
+    "scope": { "const": "97-subject-fixed-input-provenance" },
+    "status": { "enum": ["incomplete", "bound"] },
+    "source": { "$ref": "#/$defs/source" },
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjects", "releaseBindings", "fixedCommitAuditBindings", "definitiveV2Bindings", "publicTrustedReleaseBindings", "unboundReleaseSubjects", "unboundDefinitiveSubjects"],
+      "properties": {
+        "subjects": { "const": 97 },
+        "releaseBindings": { "$ref": "#/$defs/count" },
+        "fixedCommitAuditBindings": { "$ref": "#/$defs/count" },
+        "definitiveV2Bindings": { "$ref": "#/$defs/count" },
+        "publicTrustedReleaseBindings": { "$ref": "#/$defs/count" },
+        "unboundReleaseSubjects": { "$ref": "#/$defs/count" },
+        "unboundDefinitiveSubjects": { "$ref": "#/$defs/count" }
+      }
+    },
+    "subjects": { "type": "array", "minItems": 97, "maxItems": 97, "items": { "$ref": "#/$defs/subject" } },
+    "boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["readOnly", "autoPromotion", "defaultBranchDependency", "activeSubjectTreeDependency", "distributionGapEffect", "completionEffect"],
+      "properties": {
+        "readOnly": { "const": true }, "autoPromotion": { "const": false },
+        "defaultBranchDependency": { "const": false }, "activeSubjectTreeDependency": { "const": false },
+        "distributionGapEffect": { "const": "none" }, "completionEffect": { "const": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "count": { "type": "integer", "minimum": 0, "maximum": 97 },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "indexDigest", "artifactDigest"],
+      "properties": { "path": { "const": "app/data/index.generated.json" }, "indexDigest": { "$ref": "#/$defs/sha256" }, "artifactDigest": { "$ref": "#/$defs/sha256" } }
+    },
+    "release": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "version", "digest", "commit", "detailUrl", "artifactDigest", "trustUsage"],
+      "properties": {
+        "kind": { "const": "fixed-release" }, "version": { "type": "string", "minLength": 1 }, "digest": { "$ref": "#/$defs/sha256" },
+        "commit": { "type": "string", "minLength": 1 }, "detailUrl": { "type": "string", "pattern": "^/data/releases/[^.]+/[a-f0-9]{64}\\.json$" },
+        "artifactDigest": { "$ref": "#/$defs/sha256" }, "trustUsage": { "enum": ["fixture-only", "public"] }
+      }
+    },
+    "audit": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "commit", "tree", "attestationDigest", "detailUrl", "artifactDigest"],
+      "properties": {
+        "kind": { "const": "attested-clean-commit" }, "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" }, "tree": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "attestationDigest": { "$ref": "#/$defs/sha256" }, "detailUrl": { "type": "string", "pattern": "^/data/fixed-commit-audits/[^.]+/[a-f0-9]{64}\\.json$" }, "artifactDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "definitive": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "digest", "certificateDigest"],
+      "properties": { "kind": { "const": "definitive-v2-release" }, "digest": { "$ref": "#/$defs/sha256" }, "certificateDigest": { "$ref": "#/$defs/sha256" } }
+    },
+    "subject": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjectId", "repository", "releaseBinding", "fixedCommitAuditBinding", "definitiveV2Binding", "gapIds"],
+      "properties": {
+        "subjectId": { "type": "string", "minLength": 1 }, "repository": { "type": "string", "minLength": 1 },
+        "releaseBinding": { "anyOf": [{ "$ref": "#/$defs/release" }, { "type": "null" }] },
+        "fixedCommitAuditBinding": { "anyOf": [{ "$ref": "#/$defs/audit" }, { "type": "null" }] },
+        "definitiveV2Binding": { "anyOf": [{ "$ref": "#/$defs/definitive" }, { "type": "null" }] },
+        "gapIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

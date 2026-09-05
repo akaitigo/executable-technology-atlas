@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/akaitigo/executable-technology-atlas/contracts/schemas/portal-distribution-readiness.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "atlasId", "scope", "status", "source", "summary", "subjects", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-subject-distribution-readiness" },
+    "atlasId": { "const": "executable-technology-atlas" },
+    "scope": { "const": "97-subject-fixed-input-distribution-read-model" },
+    "status": { "enum": ["not-established", "established"] },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "indexDigest", "artifactDigest"],
+      "properties": {
+        "path": { "const": "app/data/index.generated.json" },
+        "indexDigest": { "$ref": "#/$defs/sha256" },
+        "artifactDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjects", "distributionReady", "releasePresent", "publicTrustedRelease", "definitiveV2InputAvailable", "definitiveCoreGatePassed", "definitiveCertificatePresent", "fixedCommitAuditAvailable", "blockerInstances"],
+      "properties": {
+        "subjects": { "const": 97 },
+        "distributionReady": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "releasePresent": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "publicTrustedRelease": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "definitiveV2InputAvailable": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "definitiveCoreGatePassed": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "definitiveCertificatePresent": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "fixedCommitAuditAvailable": { "type": "integer", "minimum": 0, "maximum": 97 },
+        "blockerInstances": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "subjects": {
+      "type": "array", "minItems": 97, "maxItems": 97,
+      "items": { "$ref": "#/$defs/subject" }
+    },
+    "boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["readOnly", "autoPromotion", "rawCountsAreCompletion", "portalBoundedCertificateEffect", "subjectDefinitiveEffect", "distributionGapEffect", "completionEffect"],
+      "properties": {
+        "readOnly": { "const": true },
+        "autoPromotion": { "const": false },
+        "rawCountsAreCompletion": { "const": false },
+        "portalBoundedCertificateEffect": { "const": "none" },
+        "subjectDefinitiveEffect": { "const": "none" },
+        "distributionGapEffect": { "const": "none" },
+        "completionEffect": { "const": "none" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "nullableId": { "type": ["string", "null"] },
+    "stringArray": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "subject": {
+      "type": "object", "additionalProperties": false,
+      "required": ["subjectId", "atlasId", "repository", "catalogStatus", "release", "definitive", "fixedCommitAudit", "distribution"],
+      "properties": {
+        "subjectId": { "type": "string", "minLength": 1 },
+        "atlasId": { "$ref": "#/$defs/nullableId" },
+        "repository": { "type": "string", "minLength": 1 },
+        "catalogStatus": { "type": "string", "minLength": 1 },
+        "release": {
+          "type": "object", "additionalProperties": false,
+          "required": ["availability", "version", "manifestStatus", "verification", "trustUsage"],
+          "properties": {
+            "availability": { "enum": ["present", "missing"] },
+            "version": { "type": ["string", "null"] },
+            "manifestStatus": { "type": ["string", "null"] },
+            "verification": { "type": ["string", "null"] },
+            "trustUsage": { "enum": ["public", "fixture-only", "none"] }
+          }
+        },
+        "definitive": {
+          "type": "object", "additionalProperties": false,
+          "required": ["availability", "status", "completionClass", "coreGateResult", "inventoryStatus", "certificateStatus", "gapIds"],
+          "properties": {
+            "availability": { "type": "string", "minLength": 1 },
+            "status": { "type": "string", "minLength": 1 },
+            "completionClass": { "type": "string", "minLength": 1 },
+            "coreGateResult": { "type": "string", "minLength": 1 },
+            "inventoryStatus": { "type": "string", "minLength": 1 },
+            "certificateStatus": { "enum": ["present", "missing"] },
+            "gapIds": { "$ref": "#/$defs/stringArray" }
+          }
+        },
+        "fixedCommitAudit": {
+          "type": "object", "additionalProperties": false,
+          "required": ["availability", "status", "gapIds"],
+          "properties": {
+            "availability": { "type": "string", "minLength": 1 },
+            "status": { "type": "string", "minLength": 1 },
+            "gapIds": { "$ref": "#/$defs/stringArray" }
+          }
+        },
+        "distribution": {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "eligible", "blockerIds"],
+          "properties": {
+            "status": { "enum": ["blocked", "ready"] },
+            "eligible": { "type": "boolean" },
+            "blockerIds": { "$ref": "#/$defs/stringArray" }
+          }
+        }
+      }
+    }
+  }
+}

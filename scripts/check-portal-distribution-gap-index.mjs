@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { buildPortalDistributionGapIndex, loadPortalDistributionGapInputs, validatePortalDistributionGapIndex } from './lib/portal-distribution-gap-index.mjs';
+
+const root=process.cwd();const mode=process.argv[2]??'--check';if(!['--check','--record'].includes(mode))throw new Error('使い方: node scripts/check-portal-distribution-gap-index.mjs --check|--record');const output=path.join(root,'evidence/portal-distribution-gap-index.json');const{readinessBytes,readiness,schema}=await loadPortalDistributionGapInputs(root);const document=buildPortalDistributionGapIndex(readiness,readinessBytes);const result=await validatePortalDistributionGapIndex(root,document,schema);if(!result.ok)throw new Error(result.errors.join(', '));const bytes=`${JSON.stringify(document,null,2)}\n`;if(mode==='--record')await writeFile(output,bytes);else if(await readFile(output,'utf8')!==bytes)throw new Error('Portal Distribution Gap Indexが正本readinessと一致しません。--recordで再生成してください');console.log(`Portal Distribution gaps: PASS / open=${document.summary.openInstances} / blocker-types=${document.summary.blockerTypes} / closed=${document.summary.closedInstances}`);

@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { buildPortalDistributionVerificationMatrix, loadPortalDistributionVerificationInputs, validatePortalDistributionVerificationMatrix } from './lib/portal-distribution-verification-matrix.mjs';
+
+const root=process.cwd();const mode=process.argv[2]??'--check';if(!['--check','--record'].includes(mode))throw new Error('使い方: node scripts/check-portal-distribution-verification-matrix.mjs --check|--record');const output=path.join(root,'evidence/portal-distribution-verification-matrix.json');const{indexBytes,index,schema}=await loadPortalDistributionVerificationInputs(root);const document=buildPortalDistributionVerificationMatrix(index,indexBytes);const result=await validatePortalDistributionVerificationMatrix(root,document,schema);if(!result.ok)throw new Error(result.errors.join(', '));const bytes=`${JSON.stringify(document,null,2)}\n`;if(mode==='--record')await writeFile(output,bytes);else if(await readFile(output,'utf8')!==bytes)throw new Error('Portal Distribution Verification MatrixがImporter Indexと一致しません。--recordで再生成してください');console.log(`Portal Distribution matrix: PASS / cells=${document.summary.cells} / verified=${document.summary.verified} / gap=${document.summary.gap} / not-evaluated=${document.summary.notEvaluated}`);

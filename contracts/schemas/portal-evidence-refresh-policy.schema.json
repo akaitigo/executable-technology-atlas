@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas.example.invalid/schemas/portal-evidence-refresh-policy.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "graphPath", "graphSchemaPath", "requiredWrappers", "pipeline", "boundary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "const": "portal-evidence-refresh-policy" },
+    "graphPath": { "const": "evidence/dependency-graph.json" },
+    "graphSchemaPath": { "const": "contracts/schemas/evidence-dependency-graph.schema.json" },
+    "requiredWrappers": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^evidence/[a-z0-9.-]+\\.evidence\\.json$" }
+    },
+    "pipeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "entrypoint", "stages"],
+      "properties": {
+        "command": { "const": "npm run dependency:reproduce" },
+        "entrypoint": { "const": "node scripts/refresh-portal-dependency-graph.mjs --record" },
+        "stages": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "script"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z-]+$" },
+              "script": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readOnly", "autoRun", "digestOnlyClosure", "wrapperRewriteIsRerun", "stageSkipAllowed", "runtimeSubstitution", "recordedGraphStatusIsCurrentProof", "completionEffect"],
+      "properties": {
+        "readOnly": { "const": true },
+        "autoRun": { "const": false },
+        "digestOnlyClosure": { "const": false },
+        "wrapperRewriteIsRerun": { "const": false },
+        "stageSkipAllowed": { "const": false },
+        "runtimeSubstitution": { "const": false },
+        "recordedGraphStatusIsCurrentProof": { "const": false },
+        "completionEffect": { "const": "none" }
+      }
+    }
+  }
+}

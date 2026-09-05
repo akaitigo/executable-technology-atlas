@@ -10,6 +10,7 @@ import { missingDefinitiveV2, projectDefinitiveV2, validateDefinitiveV2Envelope 
 import { missingFixedCommitAudit, projectFixedCommitAudit, validateFixedCommitAudit } from './lib/fixed-commit-audit.mjs';
 import { neutralizeDisplayText } from './lib/neutral-language.mjs';
 import { recordRegistryPreflightFailure, validateRegistryPreflight } from './lib/registry.mjs';
+import { projectSubjectDistributionVerification, summarizeDistributionVerification } from './lib/portal-distribution-verification.mjs';
 
 const root = process.cwd();
 const fixtureRoot = path.resolve(process.argv[2] ?? path.join(root, 'fixtures'));
@@ -148,7 +149,7 @@ for (const domain of catalog.domains) for (const subject of domain.subjects) {
   let release = releaseHistory.at(-1) ?? null;
   const definitive=definitiveV2.get(subject.id)??missingDefinitiveV2(subject,release,definitiveV2Lock);
   if(definitive.status==='subject-definitive'&&release?.digest===definitive.source?.releaseDigest){const completion={classification:'subject-definitive',definitive:true,reason:'core-v2-definitive-gate-pass',certificateSchemaVersion:2,corePolicyVersion:'2.0.0',coverageEpoch:release.epoch,trustUsage:definitive.certificate.trust.usage};releaseHistory=releaseHistory.map((item)=>item.digest===release.digest?{...item,completion,definitiveCertificate:definitive.certificate}:item);release=releaseHistory.at(-1);}
-  subjects.push({
+  const projectedSubject={
     ...subject,
     domain: { id: domain.id, title: domain.title },
     release,
@@ -161,7 +162,10 @@ for (const domain of catalog.domains) for (const subject of domain.subjects) {
     fixedCommitAudit:fixedCommitAuditIndex,
     definitiveV2:definitive.availability==='available'?{...definitive,detailUrl:`/data/definitive-v2/${subject.id}.json`}:definitive,
     searchText: [subject.id,subject.title,subject.repository,subject.scope,subject.excludes.join(' '),domain.title,release?.atlasId,release?.skill?.router?.id,release?.outcomes?.join(' '),release?.surfaces?.map((item) => item.id).join(' '),depthReference?.axes.map((axis)=>`${axis.id} ${axis.title} ${axis.denominator}`).join(' '),authorityReview?'authority human review read-only packet projection machine proposal pending reviewed stale hold include exclude merge split defer':'',fixedCommitAudit?`fixed clean commit audit unpublished incomplete ${fixedCommitAudit.source.commit} ${fixedCommitAudit.gaps.map((gap)=>gap.id).join(' ')}`:'fixed clean commit audit input missing not evaluated',`evidence dependency graph ${evidenceDependency.status} input changed current impacted output stale rerun runtime identity missing required output proof closure structure drift core gate`,`definitive v2 ${definitive.status} bounded complete subject definitive authority inventory closure runtime profile gap excluded infeasible unclassified` ].filter(Boolean).join(' ').toLocaleLowerCase('ja'),
-  });
+  };
+  projectedSubject.distributionVerification=projectSubjectDistributionVerification(projectedSubject);
+  projectedSubject.searchText=`${projectedSubject.searchText} ${projectedSubject.distributionVerification.map((cell)=>`${cell.classId} ${cell.state} ${cell.gapIds.join(' ')}`).join(' ')}`;
+  subjects.push(projectedSubject);
 }
 
 const definitiveValues=subjects.map((item)=>item.definitiveV2);
@@ -179,6 +183,7 @@ const index = {
   evidenceDependencySummary:{coreCommit:evidenceDependencyLock.coreCommit,gateAuthority:evidenceDependencyLock.gateAuthority,subjects:subjects.length,available:subjects.filter((item)=>item.evidenceDependency.availability==='available').length,current:subjects.filter((item)=>item.evidenceDependency.status==='current').length,stale:subjects.filter((item)=>item.evidenceDependency.status==='stale-or-incomplete').length,missing:subjects.filter((item)=>item.evidenceDependency.status==='missing-required-output').length,autoPromotion:false},
   fixedCommitAuditSummary:{subjects:subjects.length,available:fixedCommitAudits.size,incomplete:subjects.filter((item)=>item.fixedCommitAudit.status==='fixed-commit-incomplete').length,missing:subjects.filter((item)=>item.fixedCommitAudit.status==='fixed-commit-input-missing').length,releaseEligible:0,gapInstances:[...fixedCommitAudits.values()].reduce((sum,item)=>sum+item.gaps.reduce((count,gap)=>count+gap.count,0),0),inputGapInstances:subjects.filter((item)=>item.fixedCommitAudit.status==='fixed-commit-input-missing').length,readOnly:true,autoPromotion:false},
   definitiveV2Summary:{coreCommit:definitiveV2Lock.coreCommit,contractStatus:'final',subjects:subjects.length,available:definitiveValues.filter((item)=>item.availability==='available').length,definitive:definitiveValues.filter((item)=>item.status==='subject-definitive').length,incomplete:definitiveValues.filter((item)=>item.status==='subject-definitive-incomplete').length,missing:definitiveValues.filter((item)=>item.status==='subject-definitive-input-missing').length,inventoryUnevaluated:definitiveValues.filter((item)=>item.inventoryClosure.status==='not-evaluated').length,openRequiredKnown:definitiveValues.reduce((sum,item)=>sum+(item.inventoryClosure.openRequired??0),0),excluded:definitiveValues.reduce((sum,item)=>sum+item.inventoryClosure.excluded,0),infeasible:definitiveValues.reduce((sum,item)=>sum+item.inventoryClosure.infeasible,0),runtimeProfiles:definitiveRuntimeProfiles.length,runtimeProfilesCurrent:definitiveRuntimeProfiles.filter((item)=>item.status==='current'&&item.runtimeIdentity).length,runtimeProfilesUnverified:definitiveRuntimeProfiles.filter((item)=>item.status!=='current'||!item.runtimeIdentity).length,gapInstances:definitiveGapCounts.reduce((sum,item)=>sum+item.count,0),gapCounts:definitiveGapCounts,autoPromotion:false},
+  distributionVerificationSummary:summarizeDistributionVerification(subjects),
   failureVisibility: { fixtureOnly: failureScenarios.fixtureOnly, scenarios: failureScenarios.scenarios },
   fallback: { strategy: 'last-known-good', message: '新規取込に失敗した場合は最後に検証済みのIndexを維持します。' },
   subjects,
@@ -200,6 +205,7 @@ const bootstrap={
   definitiveV2Summary:index.definitiveV2Summary,
   evidenceDependencySummary:index.evidenceDependencySummary,
   fixedCommitAuditSummary:index.fixedCommitAuditSummary,
+  distributionVerificationSummary:index.distributionVerificationSummary,
   readOnly:true,
   autoPromotion:false,
   fallback:{status:'index-unavailable-not-evaluated',message:'検証済みIndexを読み込めないため、Subject一覧と完成判定を表示しません。'},
