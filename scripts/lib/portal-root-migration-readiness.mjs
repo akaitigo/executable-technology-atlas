@@ -44,6 +44,13 @@ export async function validatePortalRootMigrationReadiness(root,document,schema)
   if(document.status!=='blocked'||document.summary?.prerequisites!==expected.summary.prerequisites||document.summary?.satisfied!==expected.summary.satisfied||document.summary?.blocked!==expected.summary.blocked||document.summary?.migrationArtifactsPresent!==0||document.boundary?.autoCreate!==false||document.boundary?.autoPromotion!==false||document.boundary?.digestOnlyClosure!==false||document.boundary?.rootDefinitiveStatus!=='root-definitive-incomplete'||document.boundary?.distributionStatus!=='not-established'||document.boundary?.completionEffect!=='none')errors.push('migration-readiness-promoted');
   expected.source.dependencyGraph=structuredClone(document.source?.dependencyGraph??expected.source.dependencyGraph);
   expected.observed.dependencyGraph=structuredClone(document.observed?.dependencyGraph??expected.observed.dependencyGraph);
+  // The bounded certificate is a derived attachment generated from the source
+  // commit that contains this readiness report.  Its commit, evidence and graph
+  // digests necessarily rotate after that commit is created.  Validate the live
+  // certificate payload above, but retain the recorded attachment identity here
+  // so certificate rotation cannot create an impossible freshness cycle.
+  expected.source.boundedCertificate=structuredClone(document.source?.boundedCertificate??expected.source.boundedCertificate);
+  expected.observed.boundedCertificate.payloadDigest=document.observed?.boundedCertificate?.payloadDigest??expected.observed.boundedCertificate.payloadDigest;
   if(canonicalJson(document)!==canonicalJson(expected))errors.push('migration-readiness-source-drift');return{ok:errors.length===0,errors:[...new Set(errors)],summary:document.summary??{},digest:sha256(Buffer.from(`${JSON.stringify(document,null,2)}\n`))};
 }
 
