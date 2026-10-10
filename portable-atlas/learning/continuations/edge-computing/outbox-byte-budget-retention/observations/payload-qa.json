@@ -1,0 +1,368 @@
+[
+  {
+    "case": "overwrite-oldest",
+    "utc": "2026-10-05T16:32:32.087814+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "🍎",
+      "budget": 4,
+      "policy": "OverwriteOldest"
+    },
+    "result": {
+      "status": "EVICTED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "new",
+          "payload_hex": "f09f8d8e",
+          "bytes": 4
+        }
+      ],
+      "used_bytes": 4,
+      "write_changes": 2,
+      "evicted": [
+        "old"
+      ],
+      "accepted": true,
+      "trace": [
+        "seed committed; mutation counter baseline recorded",
+        {
+          "budget": 4,
+          "decision_cost": 6,
+          "actual_combined_bytes": 6
+        }
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "new",
+          "payload_hex": "f09f8d8e",
+          "bytes": 4
+        }
+      ],
+      "used_bytes": 4,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "143cae9a9b3b854e7761110e61c40185f88c196dcbeb22ab14908f0b5f5cd10b",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  },
+  {
+    "case": "reject-new",
+    "utc": "2026-10-05T16:32:32.109327+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "éé",
+      "budget": 4,
+      "policy": "RejectNew"
+    },
+    "result": {
+      "status": "REJECTED",
+      "reason": "FULL",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false,
+      "trace": [
+        "seed committed; mutation counter baseline recorded",
+        {
+          "budget": 4,
+          "decision_cost": 6,
+          "actual_combined_bytes": 6
+        }
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "80a21726b2021b0a927a03a2dbda1809437f2156e26f6e58f70bb3bbc082730e",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  },
+  {
+    "case": "bad-char-count",
+    "utc": "2026-10-05T16:32:32.113345+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "éé",
+      "budget": 4,
+      "policy": "CharCountFault"
+    },
+    "result": {
+      "status": "BAD_ACCEPTED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "c3a9c3a9",
+          "bytes": 4
+        }
+      ],
+      "used_bytes": 6,
+      "write_changes": 1,
+      "evicted": [],
+      "accepted": true,
+      "trace": [
+        "seed committed; mutation counter baseline recorded",
+        {
+          "budget": 4,
+          "decision_cost": 3,
+          "actual_combined_bytes": 6
+        }
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "c3a9c3a9",
+          "bytes": 4
+        }
+      ],
+      "used_bytes": 6,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "e4420143eba118e809558b5c94e5720071cfd94e6d6a6d83877aa7b8e875a8da",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  },
+  {
+    "case": "overwrite-oldest",
+    "utc": "2026-10-05T16:32:32.116847+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "ééé",
+      "budget": 4,
+      "policy": "OverwriteOldest"
+    },
+    "result": {
+      "status": "REJECTED",
+      "reason": "SINGLE_PAYLOAD_EXCEEDS_BUDGET",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false,
+      "trace": [
+        "seed committed; mutation counter baseline recorded"
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "80a21726b2021b0a927a03a2dbda1809437f2156e26f6e58f70bb3bbc082730e",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  },
+  {
+    "case": "reject-new",
+    "utc": "2026-10-05T16:32:32.120872+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "a",
+      "budget": 4,
+      "policy": "RejectNew"
+    },
+    "result": {
+      "status": "APPENDED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "61",
+          "bytes": 1
+        }
+      ],
+      "used_bytes": 3,
+      "write_changes": 1,
+      "evicted": [],
+      "accepted": true,
+      "trace": [
+        "seed committed; mutation counter baseline recorded",
+        {
+          "budget": 4,
+          "decision_cost": 3,
+          "actual_combined_bytes": 3
+        }
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "61",
+          "bytes": 1
+        }
+      ],
+      "used_bytes": 3,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "ccb319fafcff9baee6f6b8d197afad02ac04067c4c2aa8f5c9e67b0b72134f8a",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  },
+  {
+    "case": "reject-new",
+    "utc": "2026-10-05T16:32:32.124354+00:00",
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "sqlite": "3.51.0",
+    "fixture": {
+      "seed": "é",
+      "payload": "",
+      "budget": 4,
+      "policy": "RejectNew"
+    },
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "EMPTY_PAYLOAD",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false,
+      "trace": [
+        "seed committed; mutation counter baseline recorded"
+      ],
+      "producer_connection_closed": true
+    },
+    "sql_readback": {
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "readonly": true,
+      "reopened_after_producer_close": true
+    },
+    "db_sha256_before_cleanup": "80a21726b2021b0a927a03a2dbda1809437f2156e26f6e58f70bb3bbc082730e",
+    "owned_tmp_cleaned": true,
+    "source_binding": {
+      "calculate.py": "6096b35e44119073f25beffc256e22706df55bad527380a93840575bfc5aedb1",
+      "runner.py": "2175ad19787b85b8607dba7702d65b758eb694981aa8d4ce1ef55cb6b2d0a8a5",
+      "readback.py": "1b9af20b93f9c0a56b333eea543726c6aa3f961e26cceb18441685be8e435dd3",
+      "fixtures.json": "e1c2ae8094690210e9708678f0f813ae3c984998ac19b293c4d210ded97d344c",
+      "hand-oracle.json": "0ed4be098639912a06d9463a393587e68e671f7ed5e663e72a80f05aa1f129c4",
+      "oracle.py": "5ded54f93670a13df4f136bec8a73f1bd66985be401edfce275f649b08e36ef9"
+    }
+  }
+]

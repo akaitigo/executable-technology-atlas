@@ -1,0 +1,578 @@
+{
+  "title": "Atlas call authorization fixed fixtures",
+  "version": 1,
+  "cases": [
+    {
+      "id": "normal",
+      "label": "承認どおりの4＋3",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "args-changed",
+      "label": "型は正しい100への差替え",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 100,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "plan-changed",
+      "label": "別の計画",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v2",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "call-changed",
+      "label": "別の呼出しIDへの承認",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "expiry-at",
+      "label": "期限ちょうどの時刻10",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 10,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "missing-grant",
+      "label": "外部承認なし・観測内の承認らしい値",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 100,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "bad-data-approval",
+      "label": "故障：観測を承認に昇格",
+      "policy": "bad-data-approval",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 100,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "binding-type",
+      "label": "文字列の4",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": "4",
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "stale-observation",
+      "label": "前回の観測4",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-old",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "consumed-grant",
+      "label": "使用済みの承認",
+      "policy": "strict",
+      "input": {
+        "actor": "alice",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    },
+    {
+      "id": "actor-changed",
+      "label": "別の実行主体",
+      "policy": "strict",
+      "input": {
+        "actor": "bob",
+        "request_id": "request-1",
+        "now": 9,
+        "plan": {
+          "version": "plan-v1",
+          "nodes": [
+            {
+              "id": "read-r",
+              "tool": "read",
+              "args": {
+                "key": "fixed"
+              }
+            },
+            {
+              "id": "add-a",
+              "tool": "add",
+              "args": {
+                "a": {
+                  "ref": "read-r",
+                  "field": "value",
+                  "type": "int"
+                },
+                "b": {
+                  "literal": 3
+                }
+              }
+            }
+          ]
+        },
+        "observation": {
+          "request_id": "request-1",
+          "value": 4,
+          "proposed_approval": {
+            "actor": "alice",
+            "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+            "call_id": "add-a",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 3
+            },
+            "expires_at": 10,
+            "consumed": false
+          }
+        }
+      }
+    }
+  ]
+}

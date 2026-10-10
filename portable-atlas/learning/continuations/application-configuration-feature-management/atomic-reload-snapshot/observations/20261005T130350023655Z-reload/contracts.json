@@ -1,0 +1,89 @@
+{
+  "scope": "synthetic JSON fixtures only; deterministic Event gates; no OS/application settings",
+  "version_contract": "finite labels v1/v2/v3, not a monotonic deployment policy",
+  "fields": {
+    "version": "exact str in v1,v2,v3",
+    "timeout_ms": "exact int 1..5000, bool excluded",
+    "retries": "exact int 0..5, bool excluded"
+  },
+  "publication": "validation before commit; normal frozen dataclass reference swap; fault validated field-by-field writes",
+  "cases": [
+    {
+      "id": "before-reload",
+      "label": "要求完了後にv2採用",
+      "fixture": "v2.json",
+      "candidate": "v2",
+      "schedule": "before-reload"
+    },
+    {
+      "id": "after-reload",
+      "label": "v2採用後に要求",
+      "fixture": "v2.json",
+      "candidate": "v2",
+      "schedule": "after-reload"
+    },
+    {
+      "id": "between-reads",
+      "label": "2field読取の間にv2採用",
+      "fixture": "v2.json",
+      "candidate": "v2",
+      "schedule": "between-reads"
+    },
+    {
+      "id": "before-commit",
+      "label": "commit直前 / 故障1field更新後に要求",
+      "fixture": "v2.json",
+      "candidate": "v2",
+      "schedule": "before-commit"
+    },
+    {
+      "id": "bad-type",
+      "label": "拒否 · timeout-type",
+      "fixture": "bad-type.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "bad-range",
+      "label": "拒否 · timeout-range",
+      "fixture": "bad-range.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "bad-bool",
+      "label": "拒否 · retries-type",
+      "fixture": "bad-bool.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "bad-version",
+      "label": "拒否 · version-type-or-value",
+      "fixture": "bad-version.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "bad-field",
+      "label": "拒否 · field-set",
+      "fixture": "bad-field.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "bad-syntax",
+      "label": "拒否 · json-syntax",
+      "fixture": "bad-syntax.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    },
+    {
+      "id": "read-failure",
+      "label": "実行失敗 · 候補ファイルなし",
+      "fixture": "absent.json",
+      "candidate": "v3",
+      "schedule": "candidate-after-v2"
+    }
+  ]
+}

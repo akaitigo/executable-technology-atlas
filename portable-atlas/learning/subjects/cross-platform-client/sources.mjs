@@ -1,0 +1,1 @@
+export const SOURCES=['vectors.json','oracle.json','validator.mjs','verify.py','oracle.mjs','check.mjs','lesson.mjs','index.html','styles.css','serve.mjs','sources.mjs','scope.json','skills/atlas-cross-platform-client/SKILL.md'];

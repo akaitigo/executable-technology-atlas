@@ -1,0 +1,1177 @@
+{
+  "passed": true,
+  "cases": 18,
+  "independence": "Fixed raw->typed, error, actor SHA256 and bucket table; imports no evaluator/runner",
+  "rollout_algorithm": "SHA256 UTF8 demo-v1 + NUL + actor; first8hex mod10000; bucket < percent*100 and master enabled",
+  "reports": [
+    {
+      "id": "defaults",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": true,
+        "rollout_percent": 50
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "default",
+          "raw": 50,
+          "typed": 50
+        }
+      },
+      "overrides": [],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 5000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 5000,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 5000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 5000,
+          "enabled": false,
+          "reason": "outside-rollout"
+        }
+      ],
+      "enabled_count": 2,
+      "bindings": {
+        "input_digest": "sha256:d1381f87db0587cc9b31fcd0daa108f86eedd963c5ed8f9a2b1328f33daf8c55",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "env-overrides",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 2000,
+        "retries": 2,
+        "flag_enabled": false,
+        "rollout_percent": 25
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "env-input",
+          "raw": "2000",
+          "typed": 2000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "env-input",
+          "raw": "false",
+          "typed": false
+        },
+        "rollout_percent": {
+          "layer": "env-input",
+          "raw": "25",
+          "typed": 25
+        }
+      },
+      "overrides": [
+        {
+          "layer": "env-input",
+          "source_field": "APP_TIMEOUT_MS",
+          "field": "timeout_ms",
+          "raw": "2000",
+          "typed": 2000,
+          "prior": 1000
+        },
+        {
+          "layer": "env-input",
+          "source_field": "APP_FLAG_ENABLED",
+          "field": "flag_enabled",
+          "raw": "false",
+          "typed": false,
+          "prior": true
+        },
+        {
+          "layer": "env-input",
+          "source_field": "APP_ROLLOUT_PERCENT",
+          "field": "rollout_percent",
+          "raw": "25",
+          "typed": 25,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 2500,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 2500,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 2500,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 2500,
+          "enabled": false,
+          "reason": "master-disabled"
+        }
+      ],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:ac5627f71ec32d8fada89d278fbd043cdae992092d77c7270c8be1c9048d97bb",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "task-over-env",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 3000,
+        "retries": 5,
+        "flag_enabled": true,
+        "rollout_percent": 75
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "task-json",
+          "raw": 3000,
+          "typed": 3000
+        },
+        "retries": {
+          "layer": "task-json",
+          "raw": 5,
+          "typed": 5
+        },
+        "flag_enabled": {
+          "layer": "task-json",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 75,
+          "typed": 75
+        }
+      },
+      "overrides": [
+        {
+          "layer": "env-input",
+          "source_field": "APP_TIMEOUT_MS",
+          "field": "timeout_ms",
+          "raw": "2000",
+          "typed": 2000,
+          "prior": 1000
+        },
+        {
+          "layer": "env-input",
+          "source_field": "APP_FLAG_ENABLED",
+          "field": "flag_enabled",
+          "raw": "false",
+          "typed": false,
+          "prior": true
+        },
+        {
+          "layer": "task-json",
+          "source_field": "timeout_ms",
+          "field": "timeout_ms",
+          "raw": 3000,
+          "typed": 3000,
+          "prior": 2000
+        },
+        {
+          "layer": "task-json",
+          "source_field": "flag_enabled",
+          "field": "flag_enabled",
+          "raw": true,
+          "typed": true,
+          "prior": false
+        },
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 75,
+          "typed": 75,
+          "prior": 50
+        },
+        {
+          "layer": "task-json",
+          "source_field": "retries",
+          "field": "retries",
+          "raw": 5,
+          "typed": 5,
+          "prior": 2
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 7500,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 7500,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 7500,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 7500,
+          "enabled": true,
+          "reason": "in-rollout"
+        }
+      ],
+      "enabled_count": 3,
+      "bindings": {
+        "input_digest": "sha256:c2517085359a312693fda472a4ec3675629bc1f2587ad9b6eab3afeec4923183",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "strict-false",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": false,
+        "rollout_percent": 100
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "env-input",
+          "raw": "false",
+          "typed": false
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 100,
+          "typed": 100
+        }
+      },
+      "overrides": [
+        {
+          "layer": "env-input",
+          "source_field": "APP_FLAG_ENABLED",
+          "field": "flag_enabled",
+          "raw": "false",
+          "typed": false,
+          "prior": true
+        },
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 100,
+          "typed": 100,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 10000,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 10000,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 10000,
+          "enabled": false,
+          "reason": "master-disabled"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 10000,
+          "enabled": false,
+          "reason": "master-disabled"
+        }
+      ],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:742f0aae7b0a1eb7f0daab02fc11ec25ce86dd54395dee0e89b8e1758f1d5158",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "truthiness-bug",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": true,
+        "rollout_percent": 100
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "env-input",
+          "raw": "false",
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 100,
+          "typed": 100
+        }
+      },
+      "overrides": [
+        {
+          "layer": "env-input",
+          "source_field": "APP_FLAG_ENABLED",
+          "field": "flag_enabled",
+          "raw": "false",
+          "typed": true,
+          "prior": true
+        },
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 100,
+          "typed": 100,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        }
+      ],
+      "enabled_count": 4,
+      "bindings": {
+        "input_digest": "sha256:65b3d597af84f91030dd98f41e7546ba6c94a05255d016ff5b2b45d0202e27f8",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "truthiness-bug"
+    },
+    {
+      "id": "zero-rollout",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": true,
+        "rollout_percent": 0
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 0,
+          "typed": 0
+        }
+      },
+      "overrides": [
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 0,
+          "typed": 0,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        }
+      ],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:7a2ee42e7bbf5ca430c09348414a4c2ef75db6fbb552e47a857cff46edee8677",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "full-rollout",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": true,
+        "rollout_percent": 100
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 100,
+          "typed": 100
+        }
+      },
+      "overrides": [
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 100,
+          "typed": 100,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        }
+      ],
+      "enabled_count": 4,
+      "bindings": {
+        "input_digest": "sha256:0575120d97380e79eda702bca26090e89020d8a99b0208c6e8b59ba06210d07b",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "stable-repeat",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1000,
+        "retries": 2,
+        "flag_enabled": true,
+        "rollout_percent": 50
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "default",
+          "raw": 1000,
+          "typed": 1000
+        },
+        "retries": {
+          "layer": "default",
+          "raw": 2,
+          "typed": 2
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "default",
+          "raw": 50,
+          "typed": 50
+        }
+      },
+      "overrides": [],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 5000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 5000,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 5000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 5000,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 5000,
+          "enabled": true,
+          "reason": "in-rollout"
+        }
+      ],
+      "enabled_count": 3,
+      "bindings": {
+        "input_digest": "sha256:a330c034414388077ffb67b33d25ab6b53f9d417ae0aaed5e4385c54c85c5583",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "invalid-env-bool",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "env-input",
+          "field": "APP_FLAG_ENABLED",
+          "reason": "strict-boolean-required"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:5bb7c3e20622ecb58fc61db556dcf616f3656a8bcf3539a9e3ebd362fd46115b",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "invalid-env-int",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "env-input",
+          "field": "APP_TIMEOUT_MS",
+          "reason": "integer-string-required"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:a7b070907e16ea473dffb2291f0aae7e58bb171f897488a3febd70b9ef2931c8",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "invalid-timeout-range",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "task-json",
+          "field": "timeout_ms",
+          "reason": "range"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:4f58441539ac2f26910950cae5d9f993be0ead213fe43becfe2ba0c86acbfeb5",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "invalid-rollout-range",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "task-json",
+          "field": "rollout_percent",
+          "reason": "range"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:d7f24560a70b0bffc37f554ef8d991ed7e7998981121d0cd8e329530eac045b0",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "bool-as-integer",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "task-json",
+          "field": "retries",
+          "reason": "integer-required"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:039663ef5d080dc2564f02d6f22fb55518445a60aa95a5648093fc7123fd4db8",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "unknown-secret-field",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "task-json",
+          "field": "api_key",
+          "reason": "unknown-field"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:cee1c02fcf6c5ca3df0a5d4b1330355616ab92a27c267fc7a5540c786c57f813",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "unknown-env-field",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "env-input",
+          "field": "APP_SECRET",
+          "reason": "unknown-field"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:6ae8bb292e46930d38d79089e7e22f94ea251d83c98d7619aaea60c156905aa1",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "task-string-false",
+      "decision": "refused",
+      "exit_code": 2,
+      "config": null,
+      "provenance": {},
+      "overrides": [],
+      "errors": [
+        {
+          "layer": "task-json",
+          "field": "flag_enabled",
+          "reason": "boolean-required"
+        }
+      ],
+      "actors": [],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:87662136eb0d2075dd72c07f4a8e8aee72ef9a7f86f40f793df36b79f7acd42a",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "lower-config-boundary",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 1,
+        "retries": 0,
+        "flag_enabled": true,
+        "rollout_percent": 0
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "task-json",
+          "raw": 1,
+          "typed": 1
+        },
+        "retries": {
+          "layer": "task-json",
+          "raw": 0,
+          "typed": 0
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 0,
+          "typed": 0
+        }
+      },
+      "overrides": [
+        {
+          "layer": "task-json",
+          "source_field": "timeout_ms",
+          "field": "timeout_ms",
+          "raw": 1,
+          "typed": 1,
+          "prior": 1000
+        },
+        {
+          "layer": "task-json",
+          "source_field": "retries",
+          "field": "retries",
+          "raw": 0,
+          "typed": 0,
+          "prior": 2
+        },
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 0,
+          "typed": 0,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 0,
+          "enabled": false,
+          "reason": "outside-rollout"
+        }
+      ],
+      "enabled_count": 0,
+      "bindings": {
+        "input_digest": "sha256:ff2dec98832fafec31999eb10f484b7d1f596b86377dc67a58ef123908cb29a3",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    },
+    {
+      "id": "upper-config-boundary",
+      "decision": "accepted",
+      "exit_code": 0,
+      "config": {
+        "timeout_ms": 5000,
+        "retries": 5,
+        "flag_enabled": true,
+        "rollout_percent": 100
+      },
+      "provenance": {
+        "timeout_ms": {
+          "layer": "task-json",
+          "raw": 5000,
+          "typed": 5000
+        },
+        "retries": {
+          "layer": "task-json",
+          "raw": 5,
+          "typed": 5
+        },
+        "flag_enabled": {
+          "layer": "default",
+          "raw": true,
+          "typed": true
+        },
+        "rollout_percent": {
+          "layer": "task-json",
+          "raw": 100,
+          "typed": 100
+        }
+      },
+      "overrides": [
+        {
+          "layer": "task-json",
+          "source_field": "timeout_ms",
+          "field": "timeout_ms",
+          "raw": 5000,
+          "typed": 5000,
+          "prior": 1000
+        },
+        {
+          "layer": "task-json",
+          "source_field": "retries",
+          "field": "retries",
+          "raw": 5,
+          "typed": 5,
+          "prior": 2
+        },
+        {
+          "layer": "task-json",
+          "source_field": "rollout_percent",
+          "field": "rollout_percent",
+          "raw": 100,
+          "typed": 100,
+          "prior": 50
+        }
+      ],
+      "errors": [],
+      "actors": [
+        {
+          "actor": "alpha",
+          "hash": "56e7a93697b573bf4b8f432aee27e7e31cc5543652ca711599183c5d65fb1c01",
+          "prefix_integer": 1458022710,
+          "bucket": 2710,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "beta",
+          "hash": "91f90af63a205512f8ace165338891e076f660dbb8997763b13588c479850677",
+          "prefix_integer": 2449017590,
+          "bucket": 7590,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "gamma",
+          "hash": "e06cc08a6e215fdca3069f05f9928d3774e7f46584793cf0c7e56423d564f7e3",
+          "prefix_integer": 3765223562,
+          "bucket": 3562,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        },
+        {
+          "actor": "delta",
+          "hash": "94ea556c5c0921cc484f21bfacee68179e78dfe83e5281915f72866ec0c0355e",
+          "prefix_integer": 2498385260,
+          "bucket": 5260,
+          "threshold": 10000,
+          "enabled": true,
+          "reason": "in-rollout"
+        }
+      ],
+      "enabled_count": 4,
+      "bindings": {
+        "input_digest": "sha256:32a558cdd079fbaa2716020711a91024dc71ec0a25683411554c3b7973b6139b",
+        "producer_digest": "sha256:dea07a51f58654e54da808849adcf3fa282f3fb53e4e1f7217c89754e37f88a9",
+        "defaults_digest": "sha256:8670e1ce2744aec75d27b479f718229801c27f12ac849f26365befc8364e7b28"
+      },
+      "mode": "strict"
+    }
+  ]
+}

@@ -1,0 +1,1172 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "verify.py",
+    "--record",
+    "attempt-01"
+  ],
+  "exit_status": 0,
+  "environment": {
+    "python": "3.9.6",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "source_hashes": {
+    "sources.json": "37b208d539ef2b779c6a5254f1e3e50cf418e7790db99287ea57c85e70f87550",
+    "runner.py": "38519497dcc70184bc6c066e77fee3649a2bbda327c98b76185e7218b249d7b8",
+    "index.html": "6a181bcb7d3e69cc4d8f5552ba3d09c9a301f98718a12b7a78c43158b2990569",
+    "route.py": "b8e57e993cfd15b0cdc7bd9df401a224fca677ea0e4c9a6b0a5ca6f08cf5e49b",
+    "serve.py": "031b54f4f41a2d5571f767482fa8b17850394c01826d636dd874efb77f96ed53",
+    "README.md": "cb375d9040da746b617cbd90130de649ceda56ce6080ba43d5758bc3e8a7513b",
+    "hand-oracle.json": "404d4bfde772ff4cf860effafc9ed24a405406233797adc95a9c175140c5e7d5",
+    "VERIFICATION.md": "fadbfb965a8baf77bfd1b280b6ade4e655046fbf8f2a7ad9dcb8d44f1dc7bc32",
+    "coverage.json": "c89a221439d4c5df230b18f13cee6734d9543a4c5df95c45c41e1691450247e2",
+    "oracle.py": "b68f00b3772f3b7e3a2c36ef82918b7c1516af9dc0dd903bc549580e6b7029d3",
+    "verify.py": "4211fcbae705ca1fba9a770b57ca70d1f3a961d50339f5d899b2a89745bb75cc",
+    "source.html": "a74c22d916db6a922724d8a9c2aeeaa4c0118dfcdd6033cbe2457c623e19a499",
+    "app.js": "a48f6361b70b62e42cc24cc6467e410722d3f7e0dc6e96edad77772223b6b0c9",
+    "skills/lease-takeover/SKILL.md": "7a5c4e27a3598d64b56614919103ccc287612423ffdb37d5e0917758455ed3e9"
+  },
+  "rows": [
+    {
+      "case": "takeover",
+      "started_utc": "2026-10-05T15:15:59.178390+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "claim",
+            "owner": "B",
+            "tick": 9
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "B",
+            19,
+            9
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "claim",
+            "owner": "B",
+            "tick": 10
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "B",
+            20,
+            10
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "B",
+            2,
+            20,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "B",
+            "generation": 2,
+            "tick": 11,
+            "result": 200
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            200,
+            "B",
+            2,
+            11
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "B",
+            2,
+            20,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "DONE",
+            "B",
+            2,
+            20,
+            200
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 12,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "A",
+            1,
+            12
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "DONE",
+            "B",
+            2,
+            20,
+            200
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "DONE",
+            "B",
+            2,
+            20,
+            200
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "DONE",
+        "B",
+        2,
+        20,
+        200
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.190451+00:00"
+    },
+    {
+      "case": "job-id-fault",
+      "started_utc": "2026-10-05T15:15:59.192102+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "claim",
+            "owner": "B",
+            "tick": 9
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "B",
+            19,
+            9
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "claim",
+            "owner": "B",
+            "tick": 10
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "B",
+            20,
+            10
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "B",
+            2,
+            20,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "B",
+            "generation": 2,
+            "tick": 11,
+            "result": 200
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            200,
+            "B",
+            2,
+            11
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "B",
+            2,
+            20,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "DONE",
+            "B",
+            2,
+            20,
+            200
+          ]
+        },
+        {
+          "input": {
+            "op": "fault-complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 12,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j'",
+          "params": [
+            100
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "DONE",
+            "B",
+            2,
+            20,
+            200
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "DONE",
+            "B",
+            2,
+            20,
+            100
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "DONE",
+        "B",
+        2,
+        20,
+        100
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.202467+00:00"
+    },
+    {
+      "case": "on-time",
+      "started_utc": "2026-10-05T15:15:59.204140+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 9,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "A",
+            1,
+            9
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "DONE",
+            "A",
+            1,
+            10,
+            100
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "DONE",
+        "A",
+        1,
+        10,
+        100
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.211244+00:00"
+    },
+    {
+      "case": "expiry-boundary",
+      "started_utc": "2026-10-05T15:15:59.213011+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 10,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "A",
+            1,
+            10
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "IN_PROGRESS",
+        "A",
+        1,
+        10,
+        null
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.218016+00:00"
+    },
+    {
+      "case": "owner-mismatch",
+      "started_utc": "2026-10-05T15:15:59.219487+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "B",
+            "generation": 1,
+            "tick": 9,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "B",
+            1,
+            9
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "IN_PROGRESS",
+        "A",
+        1,
+        10,
+        null
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.225448+00:00"
+    },
+    {
+      "case": "generation-mismatch",
+      "started_utc": "2026-10-05T15:15:59.227234+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 2,
+            "tick": 9,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "A",
+            2,
+            9
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "IN_PROGRESS",
+        "A",
+        1,
+        10,
+        null
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.232964+00:00"
+    },
+    {
+      "case": "done-replay",
+      "started_utc": "2026-10-05T15:15:59.234832+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 8,
+            "result": 100
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            100,
+            "A",
+            1,
+            8
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "DONE",
+            "A",
+            1,
+            10,
+            100
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "generation": 1,
+            "tick": 9,
+            "result": 200
+          },
+          "sql": "UPDATE jobs SET state='DONE', result=? WHERE job_id='j' AND owner=? AND generation=? AND state='IN_PROGRESS' AND ?<expiry",
+          "params": [
+            200,
+            "A",
+            1,
+            9
+          ],
+          "rowcount": 0,
+          "sql_issued": true,
+          "before": [
+            "DONE",
+            "A",
+            1,
+            10,
+            100
+          ],
+          "status": "SQL_ZERO_MATCH",
+          "after": [
+            "DONE",
+            "A",
+            1,
+            10,
+            100
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "DONE",
+        "A",
+        1,
+        10,
+        100
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.242527+00:00"
+    },
+    {
+      "case": "sql-error",
+      "started_utc": "2026-10-05T15:15:59.244493+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "sql-error",
+            "owner": "A",
+            "generation": 1,
+            "tick": 9,
+            "result": 100
+          },
+          "sql": "UPDATE missing_jobs SET result=?",
+          "params": [
+            100
+          ],
+          "rowcount": null,
+          "sql_issued": true,
+          "before": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ],
+          "status": "SQL_EXCEPTION",
+          "error_class": "OperationalError",
+          "error_message": "no such table: missing_jobs",
+          "error_code": null,
+          "error_name": null,
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "IN_PROGRESS",
+        "A",
+        1,
+        10,
+        null
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.250595+00:00"
+    },
+    {
+      "case": "refusal",
+      "started_utc": "2026-10-05T15:15:59.252590+00:00",
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "lease": 10,
+      "events": [
+        {
+          "input": {
+            "op": "claim",
+            "owner": "A",
+            "tick": 0
+          },
+          "sql": "UPDATE jobs SET owner=?, generation=generation+1, expiry=?, state='IN_PROGRESS', result=NULL WHERE job_id='j' AND (state='READY' OR (state='IN_PROGRESS' AND expiry<=?))",
+          "params": [
+            "A",
+            10,
+            0
+          ],
+          "rowcount": 1,
+          "sql_issued": true,
+          "before": [
+            "READY",
+            null,
+            0,
+            0,
+            null
+          ],
+          "status": "SQL_APPLIED",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        },
+        {
+          "input": {
+            "op": "complete",
+            "owner": "A",
+            "tick": 9,
+            "result": 100
+          },
+          "sql": null,
+          "params": [],
+          "rowcount": null,
+          "sql_issued": false,
+          "status": "REFUSED_INPUT",
+          "error": "owner/tick/generation/result contract",
+          "after": [
+            "IN_PROGRESS",
+            "A",
+            1,
+            10,
+            null
+          ]
+        }
+      ],
+      "status": "OK",
+      "model": "virtual ticks / sequential fresh SQLite connections",
+      "initial": [
+        "READY",
+        null,
+        0,
+        0,
+        null
+      ],
+      "final": [
+        "IN_PROGRESS",
+        "A",
+        1,
+        10,
+        null
+      ],
+      "tmp_cleanup": true,
+      "stage": "complete",
+      "ended_utc": "2026-10-05T15:15:59.257906+00:00"
+    }
+  ],
+  "invalid": [
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": null,
+        "tick": 9,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "C",
+        "generation": 1,
+        "tick": 9,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": 1,
+        "tick": true,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": 1,
+        "tick": -1,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": true,
+        "tick": 9,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": 0,
+        "tick": 9,
+        "result": 100
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    },
+    {
+      "input": {
+        "op": "complete",
+        "owner": "A",
+        "generation": 1,
+        "tick": 9,
+        "result": true
+      },
+      "sql": null,
+      "params": [],
+      "rowcount": null,
+      "sql_issued": false,
+      "status": "REFUSED_INPUT",
+      "error": "owner/tick/generation/result contract"
+    }
+  ],
+  "mutants": [
+    "stale-accepted",
+    "wrong-final",
+    "expiry-inclusive",
+    "owner-ignored",
+    "generation-ignored",
+    "done-reaccepted"
+  ]
+}

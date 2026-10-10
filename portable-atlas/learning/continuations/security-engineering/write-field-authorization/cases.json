@@ -1,0 +1,527 @@
+{
+  "Atlas": "実装前に固定した24要求",
+  "executionObserved": false,
+  "cases": [
+    {
+      "id": "operator-title",
+      "label": "operator / titleを更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "operator-contact",
+      "label": "operator / 連絡先を更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "contact_email": "updated@example.invalid"
+        }
+      }
+    },
+    {
+      "id": "operator-two",
+      "label": "operator / 許可2項目を更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル",
+          "contact_email": "updated@example.invalid"
+        }
+      }
+    },
+    {
+      "id": "auditor-note",
+      "label": "auditor / 内部メモを更新",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "更新した架空メモ"
+        }
+      }
+    },
+    {
+      "id": "read-not-write",
+      "label": "viewer / readだけではwrite不可",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": []
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "same-tenant-no-grant",
+      "label": "同tenantでもwrite grantなし",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-archive",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "cross-tenant",
+      "label": "別tenantの更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "blue-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "unknown-object",
+      "label": "存在しないrecord",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "missing",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "forbidden-note",
+      "label": "operator / 禁止内部メモ",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "変更してはいけない架空メモ"
+        }
+      }
+    },
+    {
+      "id": "allowed-then-forbidden",
+      "label": "許可title → 禁止内部メモ",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル",
+          "internal_note": "変更してはいけない架空メモ"
+        }
+      }
+    },
+    {
+      "id": "forbidden-then-allowed",
+      "label": "禁止内部メモ → 許可title",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "変更してはいけない架空メモ",
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "auditor-title-forbidden",
+      "label": "auditor / titleの書込は不可",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "protected-id",
+      "label": "保護項目 id",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "id": "synthetic-other-id"
+        }
+      }
+    },
+    {
+      "id": "protected-tenant",
+      "label": "保護項目 tenant_id",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "tenant_id": "tenant-blue"
+        }
+      }
+    },
+    {
+      "id": "protected-status",
+      "label": "保護項目 status",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "status": "closed"
+        }
+      }
+    },
+    {
+      "id": "unknown-field",
+      "label": "未知fieldの追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "unknown": "synthetic"
+        }
+      }
+    },
+    {
+      "id": "unknown-role",
+      "label": "不明roleのcontext",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "unknown",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "role-override",
+      "label": "requestへrole追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        },
+        "role": "auditor"
+      }
+    },
+    {
+      "id": "tenant-override",
+      "label": "requestへtenant追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        },
+        "tenant_id": "tenant-blue"
+      }
+    },
+    {
+      "id": "invalid-value",
+      "label": "値を整数にする",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": 42
+        }
+      }
+    },
+    {
+      "id": "empty-changes",
+      "label": "空のchanges",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {}
+      }
+    },
+    {
+      "id": "wrong-operation",
+      "label": "read操作で書込を要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "no-context",
+      "label": "contextなし",
+      "context": null,
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      }
+    },
+    {
+      "id": "changes-list",
+      "label": "changesをlistにする",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": [
+          {
+            "title": "synthetic"
+          }
+        ]
+      }
+    }
+  ]
+}

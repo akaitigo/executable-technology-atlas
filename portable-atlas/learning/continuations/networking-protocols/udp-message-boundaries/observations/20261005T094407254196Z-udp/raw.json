@@ -1,0 +1,642 @@
+{
+  "started_at": "2026-10-05T09:44:07.310955+00:00",
+  "ended_at": "2026-10-05T09:44:08.518537+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "api": "AF_INET / SOCK_DGRAM / recvfrom(flags=0)",
+    "dependencies": "stdlib"
+  },
+  "timeout_seconds": 0.3,
+  "attempts": 1,
+  "retries": 0,
+  "cases": [
+    {
+      "id": "two-datagrams",
+      "started_at": "2026-10-05T09:44:07.310955+00:00",
+      "events": [
+        {
+          "at": "2026-10-05T09:44:07.311274+00:00",
+          "kind": "bind",
+          "role": "receiver",
+          "address": [
+            "127.0.0.1",
+            52230
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.311299+00:00",
+          "kind": "bind",
+          "role": "sender",
+          "address": [
+            "127.0.0.1",
+            59318
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.311303+00:00",
+          "kind": "sendto-call",
+          "number": 1,
+          "payload_hex": "50494e47",
+          "byte_count": 4,
+          "destination": [
+            "127.0.0.1",
+            52230
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.311356+00:00",
+          "kind": "sendto-return",
+          "number": 1,
+          "returned_bytes": 4,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.311358+00:00",
+          "kind": "sendto-call",
+          "number": 2,
+          "payload_hex": "48454c4c4f",
+          "byte_count": 5,
+          "destination": [
+            "127.0.0.1",
+            52230
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.311379+00:00",
+          "kind": "sendto-return",
+          "number": 2,
+          "returned_bytes": 5,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.311382+00:00",
+          "kind": "recvfrom-call",
+          "number": 1,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.311554+00:00",
+          "kind": "recvfrom-return",
+          "number": 1,
+          "payload_hex": "50494e47",
+          "byte_count": 4,
+          "sender": [
+            "127.0.0.1",
+            59318
+          ],
+          "elapsed_ns": 171500
+        },
+        {
+          "at": "2026-10-05T09:44:07.311556+00:00",
+          "kind": "recvfrom-call",
+          "number": 2,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.311561+00:00",
+          "kind": "recvfrom-return",
+          "number": 2,
+          "payload_hex": "48454c4c4f",
+          "byte_count": 5,
+          "sender": [
+            "127.0.0.1",
+            59318
+          ],
+          "elapsed_ns": 4667
+        },
+        {
+          "at": "2026-10-05T09:44:07.311574+00:00",
+          "kind": "recvfrom-call",
+          "number": 3,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.613688+00:00",
+          "kind": "recvfrom-timeout",
+          "number": 3,
+          "exception": "timeout",
+          "message": "timed out",
+          "elapsed_ns": 302080500
+        },
+        {
+          "at": "2026-10-05T09:44:07.613740+00:00",
+          "kind": "close",
+          "role": "sender",
+          "fileno_after_close": -1
+        },
+        {
+          "at": "2026-10-05T09:44:07.613747+00:00",
+          "kind": "close",
+          "role": "receiver",
+          "fileno_after_close": -1
+        }
+      ],
+      "status": "observed",
+      "receiver": [
+        "127.0.0.1",
+        52230
+      ],
+      "sender": [
+        "127.0.0.1",
+        59318
+      ],
+      "cleanup": {
+        "created": 2,
+        "closed": 2,
+        "open_owned_sockets": 0,
+        "owned_threads": 0,
+        "method": "same-thread finite calls; finally close"
+      },
+      "ended_at": "2026-10-05T09:44:07.613754+00:00",
+      "consumer_prototypes": {
+        "scope": "offline faulty consumer prototypes on actual API returns",
+        "datagram_candidates": [
+          "50494e47",
+          "48454c4c4f"
+        ],
+        "tcp_eof_fault": [
+          "50494e47",
+          "48454c4c4f"
+        ],
+        "stream_join_fault": "50494e4748454c4c4f",
+        "warning": "Candidates are not validated business messages. recvfrom alone has no returned truncation flag; source identity is not authentication."
+      }
+    },
+    {
+      "id": "empty-datagram",
+      "started_at": "2026-10-05T09:44:07.613771+00:00",
+      "events": [
+        {
+          "at": "2026-10-05T09:44:07.613821+00:00",
+          "kind": "bind",
+          "role": "receiver",
+          "address": [
+            "127.0.0.1",
+            64990
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.613841+00:00",
+          "kind": "bind",
+          "role": "sender",
+          "address": [
+            "127.0.0.1",
+            50450
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.613847+00:00",
+          "kind": "sendto-call",
+          "number": 1,
+          "payload_hex": "",
+          "byte_count": 0,
+          "destination": [
+            "127.0.0.1",
+            64990
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.613882+00:00",
+          "kind": "sendto-return",
+          "number": 1,
+          "returned_bytes": 0,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.613885+00:00",
+          "kind": "sendto-call",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "destination": [
+            "127.0.0.1",
+            64990
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.613909+00:00",
+          "kind": "sendto-return",
+          "number": 2,
+          "returned_bytes": 4,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.613912+00:00",
+          "kind": "recvfrom-call",
+          "number": 1,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.614067+00:00",
+          "kind": "recvfrom-return",
+          "number": 1,
+          "payload_hex": "",
+          "byte_count": 0,
+          "sender": [
+            "127.0.0.1",
+            50450
+          ],
+          "elapsed_ns": 155333
+        },
+        {
+          "at": "2026-10-05T09:44:07.614069+00:00",
+          "kind": "recvfrom-call",
+          "number": 2,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.614075+00:00",
+          "kind": "recvfrom-return",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "sender": [
+            "127.0.0.1",
+            50450
+          ],
+          "elapsed_ns": 6250
+        },
+        {
+          "at": "2026-10-05T09:44:07.614076+00:00",
+          "kind": "recvfrom-call",
+          "number": 3,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.915034+00:00",
+          "kind": "recvfrom-timeout",
+          "number": 3,
+          "exception": "timeout",
+          "message": "timed out",
+          "elapsed_ns": 300949875
+        },
+        {
+          "at": "2026-10-05T09:44:07.915069+00:00",
+          "kind": "close",
+          "role": "sender",
+          "fileno_after_close": -1
+        },
+        {
+          "at": "2026-10-05T09:44:07.915074+00:00",
+          "kind": "close",
+          "role": "receiver",
+          "fileno_after_close": -1
+        }
+      ],
+      "status": "observed",
+      "receiver": [
+        "127.0.0.1",
+        64990
+      ],
+      "sender": [
+        "127.0.0.1",
+        50450
+      ],
+      "cleanup": {
+        "created": 2,
+        "closed": 2,
+        "open_owned_sockets": 0,
+        "owned_threads": 0,
+        "method": "same-thread finite calls; finally close"
+      },
+      "ended_at": "2026-10-05T09:44:07.915080+00:00",
+      "consumer_prototypes": {
+        "scope": "offline faulty consumer prototypes on actual API returns",
+        "datagram_candidates": [
+          "",
+          "4e455854"
+        ],
+        "tcp_eof_fault": [],
+        "stream_join_fault": "4e455854",
+        "warning": "Candidates are not validated business messages. recvfrom alone has no returned truncation flag; source identity is not authentication."
+      }
+    },
+    {
+      "id": "small-buffer",
+      "started_at": "2026-10-05T09:44:07.915086+00:00",
+      "events": [
+        {
+          "at": "2026-10-05T09:44:07.915146+00:00",
+          "kind": "bind",
+          "role": "receiver",
+          "address": [
+            "127.0.0.1",
+            52858
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.915174+00:00",
+          "kind": "bind",
+          "role": "sender",
+          "address": [
+            "127.0.0.1",
+            64499
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:07.915178+00:00",
+          "kind": "sendto-call",
+          "number": 1,
+          "payload_hex": "4142434445464748494a",
+          "byte_count": 10,
+          "destination": [
+            "127.0.0.1",
+            52858
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.915227+00:00",
+          "kind": "sendto-return",
+          "number": 1,
+          "returned_bytes": 10,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.915230+00:00",
+          "kind": "sendto-call",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "destination": [
+            "127.0.0.1",
+            52858
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:07.915253+00:00",
+          "kind": "sendto-return",
+          "number": 2,
+          "returned_bytes": 4,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:07.915254+00:00",
+          "kind": "recvfrom-call",
+          "number": 1,
+          "bufsize": 3,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.915489+00:00",
+          "kind": "recvfrom-return",
+          "number": 1,
+          "payload_hex": "414243",
+          "byte_count": 3,
+          "sender": [
+            "127.0.0.1",
+            64499
+          ],
+          "elapsed_ns": 230708
+        },
+        {
+          "at": "2026-10-05T09:44:07.915498+00:00",
+          "kind": "recvfrom-call",
+          "number": 2,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:07.915507+00:00",
+          "kind": "recvfrom-return",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "sender": [
+            "127.0.0.1",
+            64499
+          ],
+          "elapsed_ns": 8958
+        },
+        {
+          "at": "2026-10-05T09:44:07.915509+00:00",
+          "kind": "recvfrom-call",
+          "number": 3,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:08.217100+00:00",
+          "kind": "recvfrom-timeout",
+          "number": 3,
+          "exception": "timeout",
+          "message": "timed out",
+          "elapsed_ns": 301581167
+        },
+        {
+          "at": "2026-10-05T09:44:08.217136+00:00",
+          "kind": "close",
+          "role": "sender",
+          "fileno_after_close": -1
+        },
+        {
+          "at": "2026-10-05T09:44:08.217142+00:00",
+          "kind": "close",
+          "role": "receiver",
+          "fileno_after_close": -1
+        }
+      ],
+      "status": "observed",
+      "receiver": [
+        "127.0.0.1",
+        52858
+      ],
+      "sender": [
+        "127.0.0.1",
+        64499
+      ],
+      "cleanup": {
+        "created": 2,
+        "closed": 2,
+        "open_owned_sockets": 0,
+        "owned_threads": 0,
+        "method": "same-thread finite calls; finally close"
+      },
+      "ended_at": "2026-10-05T09:44:08.217147+00:00",
+      "consumer_prototypes": {
+        "scope": "offline faulty consumer prototypes on actual API returns",
+        "datagram_candidates": [
+          "414243",
+          "4e455854"
+        ],
+        "tcp_eof_fault": [
+          "414243",
+          "4e455854"
+        ],
+        "stream_join_fault": "4142434e455854",
+        "warning": "Candidates are not validated business messages. recvfrom alone has no returned truncation flag; source identity is not authentication."
+      }
+    },
+    {
+      "id": "exact-fit",
+      "started_at": "2026-10-05T09:44:08.217156+00:00",
+      "events": [
+        {
+          "at": "2026-10-05T09:44:08.217218+00:00",
+          "kind": "bind",
+          "role": "receiver",
+          "address": [
+            "127.0.0.1",
+            54242
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:08.217240+00:00",
+          "kind": "bind",
+          "role": "sender",
+          "address": [
+            "127.0.0.1",
+            60493
+          ],
+          "timeout_seconds": 0.3
+        },
+        {
+          "at": "2026-10-05T09:44:08.217263+00:00",
+          "kind": "sendto-call",
+          "number": 1,
+          "payload_hex": "414243",
+          "byte_count": 3,
+          "destination": [
+            "127.0.0.1",
+            54242
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:08.217328+00:00",
+          "kind": "sendto-return",
+          "number": 1,
+          "returned_bytes": 3,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:08.217331+00:00",
+          "kind": "sendto-call",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "destination": [
+            "127.0.0.1",
+            54242
+          ]
+        },
+        {
+          "at": "2026-10-05T09:44:08.217352+00:00",
+          "kind": "sendto-return",
+          "number": 2,
+          "returned_bytes": 4,
+          "business_ack": false
+        },
+        {
+          "at": "2026-10-05T09:44:08.217355+00:00",
+          "kind": "recvfrom-call",
+          "number": 1,
+          "bufsize": 3,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:08.217575+00:00",
+          "kind": "recvfrom-return",
+          "number": 1,
+          "payload_hex": "414243",
+          "byte_count": 3,
+          "sender": [
+            "127.0.0.1",
+            60493
+          ],
+          "elapsed_ns": 218458
+        },
+        {
+          "at": "2026-10-05T09:44:08.217581+00:00",
+          "kind": "recvfrom-call",
+          "number": 2,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:08.217588+00:00",
+          "kind": "recvfrom-return",
+          "number": 2,
+          "payload_hex": "4e455854",
+          "byte_count": 4,
+          "sender": [
+            "127.0.0.1",
+            60493
+          ],
+          "elapsed_ns": 6709
+        },
+        {
+          "at": "2026-10-05T09:44:08.217590+00:00",
+          "kind": "recvfrom-call",
+          "number": 3,
+          "bufsize": 64,
+          "flags": 0
+        },
+        {
+          "at": "2026-10-05T09:44:08.518476+00:00",
+          "kind": "recvfrom-timeout",
+          "number": 3,
+          "exception": "timeout",
+          "message": "timed out",
+          "elapsed_ns": 300876917
+        },
+        {
+          "at": "2026-10-05T09:44:08.518515+00:00",
+          "kind": "close",
+          "role": "sender",
+          "fileno_after_close": -1
+        },
+        {
+          "at": "2026-10-05T09:44:08.518521+00:00",
+          "kind": "close",
+          "role": "receiver",
+          "fileno_after_close": -1
+        }
+      ],
+      "status": "observed",
+      "receiver": [
+        "127.0.0.1",
+        54242
+      ],
+      "sender": [
+        "127.0.0.1",
+        60493
+      ],
+      "cleanup": {
+        "created": 2,
+        "closed": 2,
+        "open_owned_sockets": 0,
+        "owned_threads": 0,
+        "method": "same-thread finite calls; finally close"
+      },
+      "ended_at": "2026-10-05T09:44:08.518527+00:00",
+      "consumer_prototypes": {
+        "scope": "offline faulty consumer prototypes on actual API returns",
+        "datagram_candidates": [
+          "414243",
+          "4e455854"
+        ],
+        "tcp_eof_fault": [
+          "414243",
+          "4e455854"
+        ],
+        "stream_join_fault": "4142434e455854",
+        "warning": "Candidates are not validated business messages. recvfrom alone has no returned truncation flag; source identity is not authentication."
+      }
+    }
+  ]
+}

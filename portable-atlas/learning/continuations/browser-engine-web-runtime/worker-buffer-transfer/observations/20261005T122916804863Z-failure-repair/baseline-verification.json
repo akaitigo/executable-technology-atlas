@@ -1,0 +1,102 @@
+{
+  "checked_utc": "2026-10-05T12:21:14.388941+00:00",
+  "record_action": {
+    "ui": "IAB condition/prediction → Workerへ送信 → 新原票を保存",
+    "endpoint": "POST /record",
+    "http_success": 200,
+    "fresh_records": [
+      "observations/20261005T121932771177Z/raw.json",
+      "observations/20261005T121933512760Z/raw.json",
+      "observations/20261005T121934379621Z/raw.json"
+    ],
+    "cli_record_unrun": true
+  },
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "check.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"recorded_runs\": 3,\n  \"normal_cases\": 2,\n  \"expected_serialization_refusals\": 1,\n  \"oracle\": \"independent byte arithmetic/ownership + explicit protocol IDs/counts, hand table before runs\",\n  \"mutations_rejected\": [\n    \"transfer still owned\",\n    \"wrong worker sum\",\n    \"worker mutation leaked into sender\",\n    \"function was received\",\n    \"missing after-probe ACK\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-worker-buffer-transfer/route.py",
+        "worker-buffer"
+      ],
+      "exit": 0,
+      "stdout": "{\"supported\": true, \"checker\": {\"recorded_runs\": 3, \"normal_cases\": 2, \"expected_serialization_refusals\": 1, \"oracle\": \"independent byte arithmetic/ownership + explicit protocol IDs/counts, hand table before runs\", \"mutations_rejected\": [\"transfer still owned\", \"wrong worker sum\", \"worker mutation leaked into sender\", \"function was received\", \"missing after-probe ACK\"]}, \"scope\": \"fixed actual Dedicated Worker buffer ownership and serialization\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-worker-buffer-transfer/route.py",
+        "shared-memory"
+      ],
+      "exit": 2,
+      "stdout": "{\"supported\": false, \"route\": \"README unimplemented speed/process/SAB/Atomics/SW/security boundary\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "installed quick_validate.py",
+        "skills/atlas-worker-buffer-transfer"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    }
+  ],
+  "readonly": {
+    "files": 17,
+    "hash_and_mtime_equal": true
+  },
+  "ui_source_bindings_match": true,
+  "ui_oracle_matches": 3,
+  "raw_returned_by_actual_browser": true,
+  "source_artifact_sha256": {
+    "sources.json": "3b0d7e0faaa80ab0768b79c059ac83f0d5ea1f42da89120f2653824492027f3f",
+    "server.py": "3ee90f043556a5043e281427b28550a2b87e581b477b26c14b6fb10540d25155",
+    "index.html": "e3444ea42d6a8e32f64b0d1cea7082ec6be1ba8ed474d2c78a769c6d27f8aad2",
+    "check.py": "e0d3a27c0d960dfffdafaaba83bdb85a08832add82e63e13d535334c376fb36d",
+    "worker.js": "9d3b99239e01bd3507ea1d43d4771f910d60de408ec5dc858c8e1a0d8d3289eb",
+    "oracle.json": "05f94b755f6620f0a93c0313383391c5586163057d09be224b9a3fb76d761593",
+    "README.md": "b3564e2ed6d65ed6140a6f50da721289b1a97d92da261d2c026f744f3137004b",
+    "COVERAGE.md": "3eb53ffb1dad554e9608e8e52e4bd20d81bc662820c00ba1c8f115e821dd9a54",
+    "fixtures.json": "8501e8a3c84a020db24075a7e1be028c348220038e5a461bf955436a38f2bacd",
+    "experiment.js": "33c193f5678111bfb1f7e47be21c2c87dc0c6ac405a5cf87ef2861838560e9fb",
+    "skills/atlas-worker-buffer-transfer/route.py": "edc57f2f3495168d1d77304f6482571ada8c2ce7e28a7d5abf16b9c102fc5e96",
+    "skills/atlas-worker-buffer-transfer/SKILL.md": "052ef02337647e9556befa0105788a5fd759a08341b67413a329d28e8a22afd0",
+    "observations/sandbox-preview-failure.txt": "233a9165a98c335b2dc415830d3a10d599e56852a5a85ce9425af8b26b054542",
+    "observations/qa.json": "67d2fc7b0fec882cb74663adfcaf098c1ac7d4fd19cfe6007b22418481f4bc9e",
+    "observations/20261005T121933512760Z/raw.json": "236c031966c38ba70bd5c1c739595218508812815646576c2cecf0c4d2a603c3",
+    "observations/20261005T121932771177Z/raw.json": "e52f1c86158d1a22451566f658005506812faf684f5c2c702147ddd5eb0e8ccf",
+    "observations/20261005T121934379621Z/raw.json": "2d088403be79d271cc18d55d4b276c95e4acea90808c765c2926a8a431aef2d9"
+  },
+  "cleanup": {
+    "owned_tab": 19,
+    "closed": true,
+    "worker_terminated_each_record": true,
+    "preview_session": 12446,
+    "exit": 0,
+    "port": 50905,
+    "lsof_exit": 1,
+    "other_resources_touched": false
+  },
+  "execution_failures": {
+    "sandbox_preview_bind_exit": 1,
+    "artifact": "observations/sandbox-preview-failure.txt",
+    "distinct_from_expected_DataCloneError": true
+  },
+  "relative_learning_links_exist": true,
+  "scope": "fixed real Dedicated Worker; normal clone/transfer2, expected function serialization refusal1; no speed/physical-zero-copy/process/SAB/Atomics/SW/sandbox guarantee; capture displayed unsaved; Core/fullGate/commit/push unrun"
+}

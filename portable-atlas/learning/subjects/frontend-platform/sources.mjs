@@ -1,0 +1,1 @@
+export const SOURCES=['index.html','lesson.mjs','journal.mjs','counter.mjs','importer-a.mjs','importer-b.mjs','bad-syntax.mjs','failed-case.html','failed-case.mjs','sources.mjs','serve.mjs','verify.mjs','scope.json'];

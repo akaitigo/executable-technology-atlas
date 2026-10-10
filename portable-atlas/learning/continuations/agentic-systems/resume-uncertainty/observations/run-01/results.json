@@ -1,0 +1,731 @@
+{
+  "Atlas": "有限な再開判断と、別のobserverの合成効果",
+  "kind": "synthetic_not_real_restart",
+  "cases": [
+    {
+      "id": "ready-valid",
+      "resume_input_bytes": "{\n  \"checkpoint\": {\n    \"call\": {\n      \"actor\": \"alice\",\n      \"args\": {\n        \"counter_id\": \"toy\",\n        \"delta\": 1\n      },\n      \"call_id\": \"increment-1\",\n      \"plan_sha256\": \"09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f\",\n      \"tool\": \"counter.increment\"\n    },\n    \"completion\": null,\n    \"phase\": \"READY\"\n  },\n  \"now\": 9\n}\n",
+      "resume_input_sha256": "c8cb32ba58b2376029d1dca54685b37b5ab86e6168af87246f370814f0c0425e",
+      "input_before": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "READY"
+        },
+        "now": 9
+      },
+      "input_after": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "READY"
+        },
+        "now": 9
+      },
+      "strict": {
+        "resume_output": {
+          "decision": "DISPATCH",
+          "known_effect_before": "NOT_APPLIED",
+          "dispatches": 1,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          }
+        },
+        "observer": {
+          "effect_before": 0,
+          "effect_after": 1
+        },
+        "final": {
+          "decision": "DISPATCH",
+          "known_effect_before": "NOT_APPLIED",
+          "dispatches": 1,
+          "result": 1,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": {
+              "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+              "operation_id": "increment-1",
+              "result": 1
+            },
+            "phase": "COMPLETED"
+          }
+        }
+      }
+    },
+    {
+      "id": "consumed-before-effect",
+      "resume_input_bytes": "{\n  \"checkpoint\": {\n    \"call\": {\n      \"actor\": \"alice\",\n      \"args\": {\n        \"counter_id\": \"toy\",\n        \"delta\": 1\n      },\n      \"call_id\": \"increment-1\",\n      \"plan_sha256\": \"09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f\",\n      \"tool\": \"counter.increment\"\n    },\n    \"completion\": null,\n    \"phase\": \"PENDING\"\n  },\n  \"now\": 9\n}\n",
+      "resume_input_sha256": "c0ce4fcf860a0a7871700bb1351dc968e4763ea1c243d873cf7f0c20feb67cc2",
+      "input_before": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "PENDING"
+        },
+        "now": 9
+      },
+      "input_after": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "PENDING"
+        },
+        "now": 9
+      },
+      "strict": {
+        "resume_output": {
+          "decision": "HOLD_UNKNOWN",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          }
+        },
+        "observer": {
+          "effect_before": 0,
+          "effect_after": 0
+        },
+        "final": {
+          "decision": "HOLD_UNKNOWN",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          }
+        }
+      },
+      "fault": {
+        "resume_output": {
+          "decision": "BAD_REDISPATCH",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 1,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          },
+          "fault_reset": {
+            "consumed_before": true,
+            "consumed_forged": false
+          }
+        },
+        "observer": {
+          "effect_before": 0,
+          "effect_after": 1
+        },
+        "final": {
+          "decision": "BAD_REDISPATCH",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 1,
+          "result": 1,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": {
+              "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+              "operation_id": "increment-1",
+              "result": 1
+            },
+            "phase": "COMPLETED"
+          },
+          "fault_reset": {
+            "consumed_before": true,
+            "consumed_forged": false
+          }
+        }
+      }
+    },
+    {
+      "id": "effect-without-result",
+      "resume_input_bytes": "{\n  \"checkpoint\": {\n    \"call\": {\n      \"actor\": \"alice\",\n      \"args\": {\n        \"counter_id\": \"toy\",\n        \"delta\": 1\n      },\n      \"call_id\": \"increment-1\",\n      \"plan_sha256\": \"09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f\",\n      \"tool\": \"counter.increment\"\n    },\n    \"completion\": null,\n    \"phase\": \"PENDING\"\n  },\n  \"now\": 9\n}\n",
+      "resume_input_sha256": "c0ce4fcf860a0a7871700bb1351dc968e4763ea1c243d873cf7f0c20feb67cc2",
+      "input_before": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "PENDING"
+        },
+        "now": 9
+      },
+      "input_after": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "PENDING"
+        },
+        "now": 9
+      },
+      "strict": {
+        "resume_output": {
+          "decision": "HOLD_UNKNOWN",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          }
+        },
+        "observer": {
+          "effect_before": 1,
+          "effect_after": 1
+        },
+        "final": {
+          "decision": "HOLD_UNKNOWN",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          }
+        }
+      },
+      "fault": {
+        "resume_output": {
+          "decision": "BAD_REDISPATCH",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 1,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "PENDING"
+          },
+          "fault_reset": {
+            "consumed_before": true,
+            "consumed_forged": false
+          }
+        },
+        "observer": {
+          "effect_before": 1,
+          "effect_after": 2
+        },
+        "final": {
+          "decision": "BAD_REDISPATCH",
+          "known_effect_before": "UNKNOWN",
+          "dispatches": 1,
+          "result": 2,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": true,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": {
+              "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+              "operation_id": "increment-1",
+              "result": 2
+            },
+            "phase": "COMPLETED"
+          },
+          "fault_reset": {
+            "consumed_before": true,
+            "consumed_forged": false
+          }
+        }
+      }
+    },
+    {
+      "id": "ready-expired",
+      "resume_input_bytes": "{\n  \"checkpoint\": {\n    \"call\": {\n      \"actor\": \"alice\",\n      \"args\": {\n        \"counter_id\": \"toy\",\n        \"delta\": 1\n      },\n      \"call_id\": \"increment-1\",\n      \"plan_sha256\": \"09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f\",\n      \"tool\": \"counter.increment\"\n    },\n    \"completion\": null,\n    \"phase\": \"READY\"\n  },\n  \"now\": 10\n}\n",
+      "resume_input_sha256": "9b1328401e3f702c862a512140de10816eeddcf176898c25e3586c9b2209cec2",
+      "input_before": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "READY"
+        },
+        "now": 10
+      },
+      "input_after": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": null,
+          "phase": "READY"
+        },
+        "now": 10
+      },
+      "strict": {
+        "resume_output": {
+          "decision": "REJECT_EXPIRED",
+          "known_effect_before": "NOT_APPLIED",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": false,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "READY"
+          }
+        },
+        "observer": {
+          "effect_before": 0,
+          "effect_after": 0
+        },
+        "final": {
+          "decision": "REJECT_EXPIRED",
+          "known_effect_before": "NOT_APPLIED",
+          "dispatches": 0,
+          "result": null,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": false,
+          "unused_check": true,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": null,
+            "phase": "READY"
+          }
+        }
+      }
+    },
+    {
+      "id": "completed",
+      "resume_input_bytes": "{\n  \"checkpoint\": {\n    \"call\": {\n      \"actor\": \"alice\",\n      \"args\": {\n        \"counter_id\": \"toy\",\n        \"delta\": 1\n      },\n      \"call_id\": \"increment-1\",\n      \"plan_sha256\": \"09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f\",\n      \"tool\": \"counter.increment\"\n    },\n    \"completion\": {\n      \"call_sha256\": \"ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00\",\n      \"operation_id\": \"increment-1\",\n      \"result\": 1\n    },\n    \"phase\": \"COMPLETED\"\n  },\n  \"now\": 11\n}\n",
+      "resume_input_sha256": "a3ab0122703ee4a8b37de8dec59a1e8111f4e649e122c3faf4b2c21b66d1ba24",
+      "input_before": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": {
+            "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+            "operation_id": "increment-1",
+            "result": 1
+          },
+          "phase": "COMPLETED"
+        },
+        "now": 11
+      },
+      "input_after": {
+        "checkpoint": {
+          "call": {
+            "actor": "alice",
+            "args": {
+              "counter_id": "toy",
+              "delta": 1
+            },
+            "call_id": "increment-1",
+            "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+            "tool": "counter.increment"
+          },
+          "completion": {
+            "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+            "operation_id": "increment-1",
+            "result": 1
+          },
+          "phase": "COMPLETED"
+        },
+        "now": 11
+      },
+      "strict": {
+        "resume_output": {
+          "decision": "RETURN_SAVED",
+          "known_effect_before": "RECORDED_APPLIED",
+          "dispatches": 0,
+          "result": 1,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": {
+              "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+              "operation_id": "increment-1",
+              "result": 1
+            },
+            "phase": "COMPLETED"
+          }
+        },
+        "observer": {
+          "effect_before": 1,
+          "effect_after": 1
+        },
+        "final": {
+          "decision": "RETURN_SAVED",
+          "known_effect_before": "RECORDED_APPLIED",
+          "dispatches": 0,
+          "result": 1,
+          "scope_checks": {
+            "source": true,
+            "actor": true,
+            "plan_sha256": true,
+            "call_id": true,
+            "tool": true,
+            "args": true
+          },
+          "expiry_check": null,
+          "unused_check": null,
+          "checkpoint_after": {
+            "call": {
+              "actor": "alice",
+              "args": {
+                "counter_id": "toy",
+                "delta": 1
+              },
+              "call_id": "increment-1",
+              "plan_sha256": "09dccddf8e34249d3d20c87922067c29e59da33432e63eeb9303d7b8fcce9b6f",
+              "tool": "counter.increment"
+            },
+            "completion": {
+              "call_sha256": "ca2df56badf48abba863e240137e52012ccc006487e78a33eae934666211dc00",
+              "operation_id": "increment-1",
+              "result": 1
+            },
+            "phase": "COMPLETED"
+          }
+        }
+      }
+    }
+  ],
+  "startedAt": "2026-10-06T22:23:02.290416+00:00",
+  "calculationSeconds": 0.0011958330000000003,
+  "toolchain": {
+    "python": "3.9.6",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "platform": "macOS-26.1-arm64-arm-64bit"
+  },
+  "actualNice": 10,
+  "sourceSha256": {
+    "CONTRACT.md": "852634b7b7fd0857bb24682c2d739d5989436d1547e4a93ab78a85f0a9cd9e52",
+    "SOURCES.md": "0d86ea9a727dff9f61f5972b49b7d57173be5766791ccdf3e00500a53a0c159d",
+    "plan.json": "d8ade2bb262a49ba9000c32ea0bb8076716914cc83c7c781d231bc0bbe058f4c",
+    "cases.json": "9efdc20bc371af065800050920d3a4c649065ebe92b9ce1d103328bee51a3eb9",
+    "expected.json": "784bdfde9ffbfd111ec4fe3e825acf96fbb7491c5fb310ff02978e0d8a284b86",
+    "model.py": "5b4fc5a6f331100c9c651f909dd6f76cfa445659e8d422ca7374b49372314824",
+    "produce.py": "8d6efd4b4a0f923c82745d36370f84b5b594b443f145e9b64814eab6ce3a7115",
+    "verify.py": "c89a920db34bb8157e135d69c78d535a858c700bdb3e185c8bf1cd4643f8a9fe",
+    "run.py": "e192317cb7a9fa9798a798d9d9e6266708295f555ddc436c06fb8551f0b3d37d",
+    "execute_once.py": "9f998826f41445000f475f55467c4afc7fa5c77fdf825d03d307c0c46d08b33f",
+    "inputs/ready-valid.json": "c8cb32ba58b2376029d1dca54685b37b5ab86e6168af87246f370814f0c0425e",
+    "inputs/pending-shared.json": "c0ce4fcf860a0a7871700bb1351dc968e4763ea1c243d873cf7f0c20feb67cc2",
+    "inputs/ready-expired.json": "9b1328401e3f702c862a512140de10816eeddcf176898c25e3586c9b2209cec2",
+    "inputs/completed.json": "a3ab0122703ee4a8b37de8dec59a1e8111f4e649e122c3faf4b2c21b66d1ba24"
+  }
+}

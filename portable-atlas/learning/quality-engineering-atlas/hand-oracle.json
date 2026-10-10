@@ -1,0 +1,536 @@
+{
+  "fixed_before_implementation": true,
+  "unit": "integer milliseconds",
+  "arrival_ms": 0,
+  "request_ids": [
+    "r1",
+    "r2",
+    "r3",
+    "r4",
+    "r5",
+    "r6"
+  ],
+  "delays": {
+    "slow": [
+      100,
+      200,
+      400,
+      800,
+      1800,
+      2200
+    ],
+    "boundary": [
+      100,
+      200,
+      400,
+      800,
+      1800,
+      2000
+    ],
+    "healthy": [
+      100,
+      200,
+      400,
+      800,
+      1000,
+      1200
+    ]
+  },
+  "percentile_definition": "sorted x[ceil(p*n)-1], no interpolation; empty=>undefined",
+  "deadline_boundary": "delay<=timeout in finite model; actual wall time boundary not equated",
+  "window_boundary": "event completion<=window",
+  "denominators": {
+    "client": "all 6 issued requests",
+    "client_status": "only client-received responses",
+    "server_status": "observed server200 generation/attempts; never client receipt"
+  },
+  "censoring": "timeout or pending: full response latency unknown; observation endpoint is lower bound, not substituted true latency",
+  "cases": [
+    {
+      "case": "slow",
+      "timeout_ms": 1000,
+      "window_ms": 1500,
+      "success": 4,
+      "timeout": 2,
+      "pending": 0,
+      "server_seen": 4,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "slow",
+      "timeout_ms": 1000,
+      "window_ms": 2500,
+      "success": 4,
+      "timeout": 2,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "slow",
+      "timeout_ms": 2000,
+      "window_ms": 1500,
+      "success": 4,
+      "timeout": 0,
+      "pending": 2,
+      "server_seen": 4,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1500,
+        1500
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "750",
+        "p50_ms": 400,
+        "p95_ms": 1500
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "slow",
+      "timeout_ms": 2000,
+      "window_ms": 2500,
+      "success": 5,
+      "timeout": 1,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1800
+      ],
+      "received_stats": {
+        "n": 5,
+        "mean_ms": "660",
+        "p50_ms": 400,
+        "p95_ms": 1800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1800,
+        2000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "2650/3",
+        "p50_ms": 400,
+        "p95_ms": 2000
+      },
+      "censored_ids": [
+        "r6"
+      ]
+    },
+    {
+      "case": "boundary",
+      "timeout_ms": 1000,
+      "window_ms": 1500,
+      "success": 4,
+      "timeout": 2,
+      "pending": 0,
+      "server_seen": 4,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "boundary",
+      "timeout_ms": 1000,
+      "window_ms": 2500,
+      "success": 4,
+      "timeout": 2,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "boundary",
+      "timeout_ms": 2000,
+      "window_ms": 1500,
+      "success": 4,
+      "timeout": 0,
+      "pending": 2,
+      "server_seen": 4,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800
+      ],
+      "received_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1500,
+        1500
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "750",
+        "p50_ms": 400,
+        "p95_ms": 1500
+      },
+      "censored_ids": [
+        "r5",
+        "r6"
+      ]
+    },
+    {
+      "case": "boundary",
+      "timeout_ms": 2000,
+      "window_ms": 2500,
+      "success": 6,
+      "timeout": 0,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1800,
+        2000
+      ],
+      "received_stats": {
+        "n": 6,
+        "mean_ms": "2650/3",
+        "p50_ms": 400,
+        "p95_ms": 2000
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1800,
+        2000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "2650/3",
+        "p50_ms": 400,
+        "p95_ms": 2000
+      },
+      "censored_ids": []
+    },
+    {
+      "case": "healthy",
+      "timeout_ms": 1000,
+      "window_ms": 1500,
+      "success": 5,
+      "timeout": 1,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1000
+      ],
+      "received_stats": {
+        "n": 5,
+        "mean_ms": "500",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r6"
+      ]
+    },
+    {
+      "case": "healthy",
+      "timeout_ms": 1000,
+      "window_ms": 2500,
+      "success": 5,
+      "timeout": 1,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1000
+      ],
+      "received_stats": {
+        "n": 5,
+        "mean_ms": "500",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1000
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1750/3",
+        "p50_ms": 400,
+        "p95_ms": 1000
+      },
+      "censored_ids": [
+        "r6"
+      ]
+    },
+    {
+      "case": "healthy",
+      "timeout_ms": 2000,
+      "window_ms": 1500,
+      "success": 6,
+      "timeout": 0,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1200
+      ],
+      "received_stats": {
+        "n": 6,
+        "mean_ms": "1850/3",
+        "p50_ms": 400,
+        "p95_ms": 1200
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1200
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1850/3",
+        "p50_ms": 400,
+        "p95_ms": 1200
+      },
+      "censored_ids": []
+    },
+    {
+      "case": "healthy",
+      "timeout_ms": 2000,
+      "window_ms": 2500,
+      "success": 6,
+      "timeout": 0,
+      "pending": 0,
+      "server_seen": 6,
+      "received_latencies": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1200
+      ],
+      "received_stats": {
+        "n": 6,
+        "mean_ms": "1850/3",
+        "p50_ms": 400,
+        "p95_ms": 1200
+      },
+      "wait": [
+        100,
+        200,
+        400,
+        800,
+        1000,
+        1200
+      ],
+      "wait_stats": {
+        "n": 6,
+        "mean_ms": "1850/3",
+        "p50_ms": 400,
+        "p95_ms": 1200
+      },
+      "censored_ids": []
+    }
+  ],
+  "nearest_rank_caveat": {
+    "n": 20,
+    "fast_count": 19,
+    "fast_ms": 100,
+    "tail_ms": 2200,
+    "p95_ms": 100,
+    "p100_ms": 2200
+  },
+  "actual_plan": {
+    "fast_delay_ms": 100,
+    "slow_delay_ms": 2200,
+    "client_socket_timeout_s": 2.0,
+    "request_ids": [
+      "qe-fast-01",
+      "qe-timeout-01"
+    ],
+    "independent_server_client_processes": true,
+    "expected_fast": "received HTTP200 body ID",
+    "expected_slow": "client timeout then server200 generation/send attempt, BrokenPipe may occur",
+    "measurement_window": "wait for bounded server log, no p95 population generalization"
+  }
+}

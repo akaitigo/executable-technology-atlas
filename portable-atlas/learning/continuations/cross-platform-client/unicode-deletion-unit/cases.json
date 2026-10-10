@@ -1,0 +1,109 @@
+{
+  "Atlas": "\u5148\u306b\u56fa\u5b9a\u3057\u305f\u5165\u529b",
+  "cases": [
+    {
+      "id": "ascii",
+      "label": "ASCII\u306e\u5bfe\u7167",
+      "request": {
+        "text": "AB",
+        "normalization": "none"
+      }
+    },
+    {
+      "id": "combining-raw",
+      "label": "\u7d50\u5408\u6587\u5b57\u3092\u305d\u306e\u307e\u307e\u524a\u9664",
+      "request": {
+        "text": "Ae\u0301",
+        "normalization": "none"
+      }
+    },
+    {
+      "id": "combining-nfc",
+      "label": "\u7d50\u5408\u6587\u5b57\u3092NFC\u306b\u3057\u3066\u524a\u9664",
+      "request": {
+        "text": "Ae\u0301",
+        "normalization": "NFC"
+      }
+    },
+    {
+      "id": "precomposed-nfd",
+      "label": "\u5408\u6210\u6e08\u307f\u6587\u5b57\u3092NFD\u306b\u3057\u3066\u524a\u9664",
+      "request": {
+        "text": "A\u00e9",
+        "normalization": "NFD"
+      }
+    },
+    {
+      "id": "supplementary",
+      "label": "BMP\u5916\u306eemoji\u3092\u524a\u9664",
+      "request": {
+        "text": "A\ud83d\ude00",
+        "normalization": "none"
+      }
+    },
+    {
+      "id": "zwj",
+      "label": "ZWJ\u3067\u3064\u306a\u304c\u3063\u305femoji\u3092\u524a\u9664",
+      "request": {
+        "text": "A\ud83d\udc69\u200d\ud83d\udcbb",
+        "normalization": "none"
+      }
+    },
+    {
+      "id": "empty",
+      "label": "\u7a7a\u6587\u5b57\u306f\u4f55\u3082\u524a\u9664\u3057\u306a\u3044",
+      "request": {
+        "text": "",
+        "normalization": "none"
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "null-request",
+      "request": null,
+      "reason": "request-invalid"
+    },
+    {
+      "id": "unknown-key",
+      "request": {
+        "text": "AB",
+        "normalization": "none",
+        "repair": true
+      },
+      "reason": "request-invalid"
+    },
+    {
+      "id": "number-text",
+      "request": {
+        "text": 1,
+        "normalization": "none"
+      },
+      "reason": "text-invalid"
+    },
+    {
+      "id": "too-long",
+      "request": {
+        "text": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "normalization": "none"
+      },
+      "reason": "text-too-long"
+    },
+    {
+      "id": "unpaired-high",
+      "request": {
+        "text": "\ud83d",
+        "normalization": "none"
+      },
+      "reason": "unpaired-surrogate"
+    },
+    {
+      "id": "unsupported-form",
+      "request": {
+        "text": "AB",
+        "normalization": "NFKC"
+      },
+      "reason": "normalization-invalid"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+export const SOURCES=['cases.json','model.mjs','oracle.mjs','validation.mjs','verify.mjs','check.mjs','sources.mjs','serve.mjs','index.html','styles.css','lesson.mjs','scope.json','skills/atlas-game-engine-interactive-simulation/SKILL.md'];

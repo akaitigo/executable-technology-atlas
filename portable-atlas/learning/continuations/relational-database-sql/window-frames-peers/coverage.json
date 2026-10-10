@@ -1,0 +1,18 @@
+{
+ "continuation_of":"relational-database-sql LEARNING_PATH experiment 2",
+ "added":["default RANGE versus explicit ROWS","partition-local peer membership","sort_key-only RANGE versus sort_key,id total order","explicit RANGE/default equality","NULL sort keys / NULL amount / NULL partition","frame ID sets and cumulative SUM/COUNT","empty filtered partition has no window output row","invalid reversed/negative frame refusal","saved DB read-only query evidence","independent Python frame membership plus literal anchors"],
+ "uncovered":[
+  {"concept":"bounded RANGE / GROUPS / EXCLUDE","question":"値幅、peer group幅、現在行やpeer除外でframeがどう変わるか","sources":["window"]},
+  {"concept":"DESC / collation / mixed type sort","question":"逆順や文字列collationの違いでpeerと境界をどう定義するか","sources":["window","select"]},
+  {"concept":"ranking / navigation / FILTER","question":"rank/dense_rank/lag/leadと集計frameは同じ契約か","sources":["window"]},
+  {"concept":"aggregate denominators / JOIN amplification","question":"NULLとJOINの多重度を集計前後でどう扱うか","sources":["sum","select"]},
+  {"concept":"transaction isolation / locks / migration","question":"別connectionの更新、拒否後state、schema変更をどう追うか","sources":["sqlite-python"]},
+  {"concept":"normalization / index planner / recursion / operations","question":"設計、計画と性能、停止性、backup/権限をどう検証するか","sources":["select","sqlite-python"]}
+ ],
+ "next_experiments":[
+  {"title":"bounded frame comparison","operation":"同じ表でROWS 1 PRECEDING、RANGE 1 PRECEDING、GROUPS 1 PRECEDINGをID集合とsumへ独立列挙","sources":["window"]},
+  {"title":"EXCLUDE peers","operation":"EXCLUDE CURRENT ROW/GROUP/TIES/NO OTHERSを同peer表に適用し空frame/NULL集計を比較","sources":["window","sum"]},
+  {"title":"DESC and NULL order","operation":"明示NULLS FIRST/LASTとDESCでframe/order/peerを手計算しASC契約との差を比較","sources":["window","select"]},
+  {"title":"FILTER versus WHERE","operation":"同じamount条件をwindow FILTERと事前WHEREへ置き、残る行とframe集合/known countの差を比較","sources":["window","select","sum"]}
+ ]
+}

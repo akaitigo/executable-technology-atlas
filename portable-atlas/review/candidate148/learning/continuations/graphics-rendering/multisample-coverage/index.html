@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas — 中心だけでは見えない境界</title><link rel="stylesheet" href="reader.css"></head>
+<body><main>
+<div class="eyebrow">ATLAS / GRAPHICS / SAMPLING</div>
+<h1>pixelの中心だけでは<br>見えない境界</h1>
+<p class="lead">面がpixelを横切るとき、中心1点と固定4点ではどの色が残るでしょう。<strong>位置が面に属するか</strong>、<strong>その位置に残す面</strong>、<strong>色の集約</strong>を順に比べます。</p>
+<p class="muted">有理数の固定模型です。実GPUやMSAA品質の測定ではありません。4点は各pixelの1/4・3/4位置。固定面色を背景込みで平均する独自規約です。</p>
+<section class="panel" aria-labelledby="conditions-title"><h2 id="conditions-title">1. 条件を選び、最後にAが残る点数を予想する</h2>
+<div id="scenes" class="buttons"></div><p id="condition-note"></p>
+<p>pixelを選ぶ（xは右、yは下）：</p><div id="pixels" class="buttons"></div>
+<div class="two"><fieldset id="prediction-center"><legend>中心1点で、赤いAが残る点数</legend></fieldset><fieldset id="prediction-four"><legend>固定4点で、赤いAが残る点数</legend></fieldset></div>
+<div class="row"><button id="load" class="primary">保存した計算を開く</button><button id="reset">最初に戻す</button></div>
+<p id="error" class="error" role="alert"></p>
+<details id="record-controls"><summary>保存記録の読取拒否を試す</summary><p class="small">固定データの複製に欠落・改変・別条件を入れます。実ネットワーク障害の測定ではありません。</p><fieldset id="modes"><legend>読み込む記録</legend></fieldset></details>
+</section>
+<section id="result" class="panel" hidden><h2>2. sampleごとの保存値と、集約した色を比べる</h2>
+<p id="provenance"></p><div class="row"><button id="previous">前の段階</button><button id="next">次の段階</button><strong id="stage-label" aria-live="polite"></strong></div>
+<p>図の輪郭は固定した全ての面です。点と色は選んだ描画段階を示します。選択pixelの値と、全pixelの色を分けて読みます。</p>
+<div class="two"><article id="center-card" class="card"><h3>中心1点</h3><dl id="center-stats" class="stats"></dl><svg id="center-diagram" class="diagram" viewBox="0 0 300 290" role="img" aria-label="中心sampleと面の輪郭"></svg><div id="center-swatches" class="swatches"></div></article><article id="four-card" class="card"><h3>固定4点</h3><dl id="four-stats" class="stats"></dl><svg id="four-diagram" class="diagram" viewBox="0 0 300 290" role="img" aria-label="四つのsampleと面の輪郭"></svg><div id="four-swatches" class="swatches"></div></article></div>
+<p class="small">色チップはRGB成分×255を丸めた説明用表示です。色空間・表示装置の検証ではありません。深度は平均せず、sample別に残します。</p>
+<h3>選択pixel・選択段階のsample</h3><p class="small">表は横にスクロールできます。「未到達」は非coverageで比較していない状態です。</p><div id="samples-scroll" class="scroll" tabindex="0" aria-label="sample表を横へスクロール"><table><thead><tr><th>配置 / 点</th><th>位置</th><th>今回の所属</th><th>比較する深度</th><th>採用</th><th>残る面</th><th>保存深度</th><th>sample RGB</th></tr></thead><tbody id="sample-rows"></tbody></table></div>
+<h3>全pixel・選択段階</h3><div id="pixels-scroll" class="scroll" tabindex="0" aria-label="全pixel表を横へスクロール"><table><thead><tr><th>配置</th><th>pixel</th><th>残る面の列</th><th>深度の列</th><th>集約RGB（分母は全点数）</th></tr></thead><tbody id="pixel-rows"></tbody></table></div>
+<h3>全描画の比較経路</h3><p class="small">以下は保存済みの全描画です。選んだ途中段階までの記録とは区別します。</p><div id="trace-scroll" class="scroll" tabindex="0" aria-label="全描画表を横へスクロール"><table><thead><tr><th>配置</th><th>描画</th><th>面</th><th>所属mask</th><th>採用mask</th><th>未到達 / 拒否 / 採用</th></tr></thead><tbody id="trace-rows"></tbody></table></div>
+<details id="raw-details"><summary>選択した条件の詳細JSON</summary><pre id="raw"></pre></details>
+<div class="row"><button id="answer-button">予想と最終結果を照合する</button></div><div id="answer" class="answer" aria-live="polite"></div>
+</section>
+<section class="panel"><h2>3. 原典・実装から判断へ戻る</h2><p>1/4の点が所属しても、幾何学的な面積の1/4とは限りません。面の所属、sampleの深度、平均の分母がそれぞれ妥当かを確かめます。textureのaliasingやsampleごとのshadingは、この固定色の比較では評価していません。</p>
+<p><a href="README.md">読む順と利用方法</a> · <a href="PREREQUISITES.md">前提</a> · <a href="CONTRACT.md">有限契約</a> · <a href="HAND-CALCULATION.md">実装前の手計算</a> · <a href="model.py">計算の実装</a> · <a href="skills/atlas-graphics-multisample-coverage/SKILL.md">限定Skill</a></p>
+<p><a href="https://learn.microsoft.com/en-us/windows/win32/direct3d11/d3d10-graphics-programming-guide-rasterizer-stage-rules">Microsoft Rasterization Rules</a>は複数位置のcoverage/depthを学ぶ入口です。sample位置と算術平均の規約は<a href="SOURCE-MAP.md">原典と独自規約の対応</a>で区別します。</p>
+</section><footer class="small">Atlas：固定5sceneと2配置の説明用教材。計算・実画面・独立受入の現在状態は<a href="status.json">保存した状態</a>を参照してください。</footer>
+</main><script src="reader-data.js"></script><script src="reader-expectations.js"></script><script src="reader-state.js"></script><script src="reader-app.js"></script></body></html>

@@ -1,0 +1,732 @@
+{
+  "startedUtc": "2026-10-05T14:11:58.003604+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "model": "synthetic inode path; not Linux kernel measurement"
+  },
+  "sourceHashes": {
+    "preview.py": "60e70385303adb9a25885ffa4b51c759f9b06ef1a7aa0da514fa5879a8825edc",
+    "test_negative.py": "27a627fe4be9730d2fc09bb586edce22b91aa41c7d0d39db66689edd4add8d34",
+    "runner.py": "eeda6b56a76a2947f55c8410a16fa09a4e70a8dbb40b9297718808d245ebf279",
+    "index.html": "18543765e3082da1cfd4d450a416d0aa05ceefc6d203f9292f099275479deb95",
+    "walker.py": "38fea7f64feaa8373de7c3f214e77114e53daac8fcabec1b56e3044d1953369d",
+    "route.py": "84a0323a54bea5342fefa4432a3b2886f6284249b883a189774ca11de23894cb",
+    "oracle.json": "666555632d09e1ad773cb5c43bf8f29201ece52b656323db30d5590a983c75d5",
+    "README.md": "c1ffc95835fd6d26967e8205f0e3a7f83d619697418080aed2f73d9ce73e1532",
+    "requests.json": "2632a4f03a85c76b698c5e6447fb5b9f371ab14277a8d56b4e797f7e5db69059",
+    "COVERAGE.md": "88456d26e1afc6a852382a79449d4fa08c9bbc772bfefb3238170497d8acb444",
+    "checker.py": "24476a7f21d685dcb80d81f64fb39a0d2e78a9263bc81cfab9fe17ced0860fc5",
+    "skills/pathname-directory-search/SKILL.md": "2ca4b9d88f380f63139d1e0fed2161eef8b57d04c04496829857490550bc05d0"
+  },
+  "cases": [
+    {
+      "id": "search-only-read",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.009353+00:00",
+      "endedUtc": "2026-10-05T14:11:58.041553+00:00",
+      "inputSha256": "2a7832b2d9cdaa2a4b0eea52be0801fa281adaa3f271f7f59d5f3307cb67975a",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ALLOW\", \"allowed\": true, \"firstStop\": null, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"owner\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault/report\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"file\"}, {\"stage\": \"READ\", \"node\": \"/vault/report\", \"selectedClass\": \"owner\", \"selectedBits\": \"100\", \"required\": \"r\", \"passed\": true, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ALLOW",
+        "allowed": true,
+        "firstStop": null,
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "owner",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/report",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "file"
+          },
+          {
+            "stage": "READ",
+            "node": "/vault/report",
+            "selectedClass": "owner",
+            "selectedBits": "100",
+            "required": "r",
+            "passed": true,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "directory-read-no-search",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.042063+00:00",
+      "endedUtc": "2026-10-05T14:11:58.072821+00:00",
+      "inputSha256": "b6eed12c6ac38451706868dcd2c0dd5b1d17ba205368a1e87004c03540cc3c29",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"EACCES\", \"allowed\": false, \"firstStop\": {\"node\": \"/vault\", \"stage\": \"SEARCH\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"owner\", \"selectedBits\": \"100\", \"required\": \"x\", \"passed\": false, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "EACCES",
+        "allowed": false,
+        "firstStop": {
+          "node": "/vault",
+          "stage": "SEARCH"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "owner",
+            "selectedBits": "100",
+            "required": "x",
+            "passed": false,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "leaf-only-fault",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.073253+00:00",
+      "endedUtc": "2026-10-05T14:11:58.104136+00:00",
+      "inputSha256": "8e418784ea358324a66e941b92190683d91e4d99eb559aa2569507dbed7a12df",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ALLOW\", \"allowed\": true, \"firstStop\": null, \"gates\": [{\"stage\": \"LOOKUP\", \"node\": \"/vault/report\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"file\"}, {\"stage\": \"READ\", \"node\": \"/vault/report\", \"selectedClass\": \"owner\", \"selectedBits\": \"100\", \"required\": \"r\", \"passed\": true, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ALLOW",
+        "allowed": true,
+        "firstStop": null,
+        "gates": [
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/report",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "file"
+          },
+          {
+            "stage": "READ",
+            "node": "/vault/report",
+            "selectedClass": "owner",
+            "selectedBits": "100",
+            "required": "r",
+            "passed": true,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "file-no-read",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.104632+00:00",
+      "endedUtc": "2026-10-05T14:11:58.135299+00:00",
+      "inputSha256": "dce86fef76f0f48e8bcf2a79997806c85cae0e31d2fef3c3a53df74e8638d0f5",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"EACCES\", \"allowed\": false, \"firstStop\": {\"node\": \"/vault/report\", \"stage\": \"READ\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"owner\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault/report\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"file\"}, {\"stage\": \"READ\", \"node\": \"/vault/report\", \"selectedClass\": \"owner\", \"selectedBits\": \"000\", \"required\": \"r\", \"passed\": false, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "EACCES",
+        "allowed": false,
+        "firstStop": {
+          "node": "/vault/report",
+          "stage": "READ"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "owner",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/report",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "file"
+          },
+          {
+            "stage": "READ",
+            "node": "/vault/report",
+            "selectedClass": "owner",
+            "selectedBits": "000",
+            "required": "r",
+            "passed": false,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "root-no-search",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.135903+00:00",
+      "endedUtc": "2026-10-05T14:11:58.167194+00:00",
+      "inputSha256": "dc37ae1895479a654ab5f71545e19a1c671829c9903bfe22a9673b364aded289",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"EACCES\", \"allowed\": false, \"firstStop\": {\"node\": \"/\", \"stage\": \"SEARCH\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"000\", \"required\": \"x\", \"passed\": false, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "EACCES",
+        "allowed": false,
+        "firstStop": {
+          "node": "/",
+          "stage": "SEARCH"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "000",
+            "required": "x",
+            "passed": false,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "missing-first",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.167619+00:00",
+      "endedUtc": "2026-10-05T14:11:58.198225+00:00",
+      "inputSha256": "8c5516e4ab3d90c124d21bf22baa8a43d1f50f0e7d1e8709e10d4b170db312bc",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ENOENT\", \"allowed\": false, \"firstStop\": {\"node\": \"/missing\", \"stage\": \"LOOKUP\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/missing\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": false, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ENOENT",
+        "allowed": false,
+        "firstStop": {
+          "node": "/missing",
+          "stage": "LOOKUP"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/missing",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": false,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "missing-final",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.198638+00:00",
+      "endedUtc": "2026-10-05T14:11:58.230041+00:00",
+      "inputSha256": "5f558d755cb651d6baf48729581a53bd1d885368663d775b892a61b899a95c15",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ENOENT\", \"allowed\": false, \"firstStop\": {\"node\": \"/vault/missing\", \"stage\": \"LOOKUP\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"owner\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault/missing\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": false, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ENOENT",
+        "allowed": false,
+        "firstStop": {
+          "node": "/vault/missing",
+          "stage": "LOOKUP"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "owner",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/missing",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": false,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "non-directory",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.230540+00:00",
+      "endedUtc": "2026-10-05T14:11:58.264741+00:00",
+      "inputSha256": "8ed581359f8dbfed00d2778e91efae2f386bac1c57b233ec973326cdc9d56dc3",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ENOTDIR\", \"allowed\": false, \"firstStop\": {\"node\": \"/vault\", \"stage\": \"LOOKUP\"}, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": false, \"kind\": \"file\"}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ENOTDIR",
+        "allowed": false,
+        "firstStop": {
+          "node": "/vault",
+          "stage": "LOOKUP"
+        },
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": false,
+            "kind": "file"
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "supplementary-group",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.265171+00:00",
+      "endedUtc": "2026-10-05T14:11:58.298646+00:00",
+      "inputSha256": "e80bfb565bb725dce2653aeace37453d634a20bebcb9e0c42b481b8f602c3d7c",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ALLOW\", \"allowed\": true, \"firstStop\": null, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"group\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault/report\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"file\"}, {\"stage\": \"READ\", \"node\": \"/vault/report\", \"selectedClass\": \"group\", \"selectedBits\": \"100\", \"required\": \"r\", \"passed\": true, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ALLOW",
+        "allowed": true,
+        "firstStop": null,
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "group",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/report",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "file"
+          },
+          {
+            "stage": "READ",
+            "node": "/vault/report",
+            "selectedClass": "group",
+            "selectedBits": "100",
+            "required": "r",
+            "passed": true,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "other-class",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.299095+00:00",
+      "endedUtc": "2026-10-05T14:11:58.331523+00:00",
+      "inputSha256": "b332af16610618c4de82d2a4180442ecb1c7b94338a42be1a90fd85c79219362",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"result\": \"ALLOW\", \"allowed\": true, \"firstStop\": null, \"gates\": [{\"stage\": \"SEARCH\", \"node\": \"/\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"directory\"}, {\"stage\": \"SEARCH\", \"node\": \"/vault\", \"selectedClass\": \"other\", \"selectedBits\": \"001\", \"required\": \"x\", \"passed\": true, \"kind\": null}, {\"stage\": \"LOOKUP\", \"node\": \"/vault/report\", \"selectedClass\": null, \"selectedBits\": null, \"required\": null, \"passed\": true, \"kind\": \"file\"}, {\"stage\": \"READ\", \"node\": \"/vault/report\", \"selectedClass\": \"other\", \"selectedBits\": \"100\", \"required\": \"r\", \"passed\": true, \"kind\": null}]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "result": "ALLOW",
+        "allowed": true,
+        "firstStop": null,
+        "gates": [
+          {
+            "stage": "SEARCH",
+            "node": "/",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "directory"
+          },
+          {
+            "stage": "SEARCH",
+            "node": "/vault",
+            "selectedClass": "other",
+            "selectedBits": "001",
+            "required": "x",
+            "passed": true,
+            "kind": null
+          },
+          {
+            "stage": "LOOKUP",
+            "node": "/vault/report",
+            "selectedClass": null,
+            "selectedBits": null,
+            "required": null,
+            "passed": true,
+            "kind": "file"
+          },
+          {
+            "stage": "READ",
+            "node": "/vault/report",
+            "selectedClass": "other",
+            "selectedBits": "100",
+            "required": "r",
+            "passed": true,
+            "kind": null
+          }
+        ]
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "refused-root",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.331974+00:00",
+      "endedUtc": "2026-10-05T14:11:58.364908+00:00",
+      "inputSha256": "b847ae1ab74d2b2b3b472a70fb76941d8d2f00873d11df9c2788c39dfe5318dd",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported privileged principal\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported privileged principal"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-acl",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.365366+00:00",
+      "endedUtc": "2026-10-05T14:11:58.398566+00:00",
+      "inputSha256": "75ed8c77013eb41c8a0896fd5b6118aeb0e64a4664058884aacc552df45f9177",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported security layer\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported security layer"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-symlink",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.399090+00:00",
+      "endedUtc": "2026-10-05T14:11:58.431237+00:00",
+      "inputSha256": "d4947ac16f06d79a39338c4b4aad1a61e01da1667ad35a0a93d86d14451ee617",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported security layer\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported security layer"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-capability",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.431671+00:00",
+      "endedUtc": "2026-10-05T14:11:58.461233+00:00",
+      "inputSha256": "b8f865b2d69183a553e4b526516d3b352fbfbd14ee160bb8018e6555b7ba469c",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported security layer\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported security layer"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-mount",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.461773+00:00",
+      "endedUtc": "2026-10-05T14:11:58.493813+00:00",
+      "inputSha256": "a7d4a4dd94948fea2e479070d7ac41e841eda3e4111e0df044578ac38e715c26",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported security layer\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported security layer"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-namespace",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.494547+00:00",
+      "endedUtc": "2026-10-05T14:11:58.526492+00:00",
+      "inputSha256": "b9e96120ee89d8984f26eaa12d17108930302556c22cc8ed9a53ee2368c7d2d6",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"result\": \"REFUSED\", \"allowed\": null, \"firstStop\": null, \"gates\": [], \"reason\": \"unsupported security layer\"}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "result": "REFUSED",
+        "allowed": null,
+        "firstStop": null,
+        "gates": [],
+        "reason": "unsupported security layer"
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "execution-failure",
+      "argv": [
+        "python3",
+        "-B",
+        "../walker.py"
+      ],
+      "startedUtc": "2026-10-05T14:11:58.526987+00:00",
+      "endedUtc": "2026-10-05T14:11:58.560552+00:00",
+      "inputSha256": "ab5c0540535178f395b866a8fa301a3adf29eca5a5e63b8eae470c4acdcf3940",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 9 (char 8)\n",
+      "observation": null,
+      "outcome": "EXECUTION_FAILURE"
+    }
+  ]
+}

@@ -1,0 +1,510 @@
+{
+  "skillValidation": "Skill is valid!",
+  "executor": "main agent read Skill and invoked existing runner commands",
+  "forwardAgentEval": "not-run",
+  "smoke": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py"
+      ],
+      "exit": 0,
+      "actual": {
+        "input": {
+          "mode": "004",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1001,
+            "gid": 3001,
+            "supplementary": []
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "none"
+        },
+        "inputSha256": "349df92b2f1fc2ab26fcbcd2ee1a1e213b2739bf1fd84ebb383d607a74a933bf",
+        "protected": {
+          "status": "decided",
+          "selected": "owner",
+          "selectedBits": 0,
+          "requestMask": 4,
+          "allowed": false,
+          "fallback": false,
+          "trace": [
+            {
+              "phase": "decode-mode",
+              "octal": "004",
+              "decimal": 4,
+              "nineBits": "000000100",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 4
+              }
+            },
+            {
+              "phase": "select-once",
+              "ownerMatch": true,
+              "primaryMatch": false,
+              "supplementaryMatch": false,
+              "selected": "owner",
+              "reason": "uid matches owner",
+              "fallback": false
+            },
+            {
+              "phase": "check-selected",
+              "selectedBits": 0,
+              "requestMask": 4,
+              "intersection": 0,
+              "allowed": false
+            }
+          ],
+          "error": null
+        },
+        "bad": {
+          "mode": "intentional any-class union",
+          "unionBits": 4,
+          "requestMask": 4,
+          "allowed": true,
+          "trace": [
+            {
+              "phase": "union-all-classes",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 4
+              },
+              "union": 4
+            }
+          ]
+        },
+        "traceSha256": "d3054641e8be0a319734fef6c83dba0f184de861357b7ccf6a9a5491e0ad5b59",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "owner"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--principal",
+        "other"
+      ],
+      "exit": 0,
+      "actual": {
+        "input": {
+          "mode": "004",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1002,
+            "gid": 3001,
+            "supplementary": []
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "none"
+        },
+        "inputSha256": "9e6fff0c9b1916b5d099bd6ac83a6a09a88828434ba79f2673604c5571237e29",
+        "protected": {
+          "status": "decided",
+          "selected": "other",
+          "selectedBits": 4,
+          "requestMask": 4,
+          "allowed": true,
+          "fallback": false,
+          "trace": [
+            {
+              "phase": "decode-mode",
+              "octal": "004",
+              "decimal": 4,
+              "nineBits": "000000100",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 4
+              }
+            },
+            {
+              "phase": "select-once",
+              "ownerMatch": false,
+              "primaryMatch": false,
+              "supplementaryMatch": false,
+              "selected": "other",
+              "reason": "no owner/group match",
+              "fallback": false
+            },
+            {
+              "phase": "check-selected",
+              "selectedBits": 4,
+              "requestMask": 4,
+              "intersection": 4,
+              "allowed": true
+            }
+          ],
+          "error": null
+        },
+        "bad": {
+          "mode": "intentional any-class union",
+          "unionBits": 4,
+          "requestMask": 4,
+          "allowed": true,
+          "trace": [
+            {
+              "phase": "union-all-classes",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 4
+              },
+              "union": 4
+            }
+          ]
+        },
+        "traceSha256": "1f131b17d4772c39fc90a85a02d1673499c020552e3122d297fa1971d52b3965",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "other"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--mode",
+        "040",
+        "--principal",
+        "supplementary"
+      ],
+      "exit": 0,
+      "actual": {
+        "input": {
+          "mode": "040",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1002,
+            "gid": 3001,
+            "supplementary": [
+              2001
+            ]
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "none"
+        },
+        "inputSha256": "33569ca6546d6fc2d6736e7955289946d24c879d70cef0ab1e85ef95b64da335",
+        "protected": {
+          "status": "decided",
+          "selected": "group",
+          "selectedBits": 4,
+          "requestMask": 4,
+          "allowed": true,
+          "fallback": false,
+          "trace": [
+            {
+              "phase": "decode-mode",
+              "octal": "040",
+              "decimal": 32,
+              "nineBits": "000100000",
+              "triplets": {
+                "owner": 0,
+                "group": 4,
+                "other": 0
+              }
+            },
+            {
+              "phase": "select-once",
+              "ownerMatch": false,
+              "primaryMatch": false,
+              "supplementaryMatch": true,
+              "selected": "group",
+              "reason": "supplementary gid matches",
+              "fallback": false
+            },
+            {
+              "phase": "check-selected",
+              "selectedBits": 4,
+              "requestMask": 4,
+              "intersection": 4,
+              "allowed": true
+            }
+          ],
+          "error": null
+        },
+        "bad": {
+          "mode": "intentional any-class union",
+          "unionBits": 4,
+          "requestMask": 4,
+          "allowed": true,
+          "trace": [
+            {
+              "phase": "union-all-classes",
+              "triplets": {
+                "owner": 0,
+                "group": 4,
+                "other": 0
+              },
+              "union": 4
+            }
+          ]
+        },
+        "traceSha256": "a28294a2a692ecdc91327ff030086bad2a645ad303052d3b7240e3011ca55d36",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "supplementary"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--mode",
+        "001",
+        "--principal",
+        "other",
+        "--operation",
+        "search",
+        "--kind",
+        "directory"
+      ],
+      "exit": 0,
+      "actual": {
+        "input": {
+          "mode": "001",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1002,
+            "gid": 3001,
+            "supplementary": []
+          },
+          "operation": "search",
+          "kind": "directory",
+          "security": "none"
+        },
+        "inputSha256": "90951ce9a0664b273211fe5b2be66cdf2fbdeb7453abb0685b4def1eee228e49",
+        "protected": {
+          "status": "decided",
+          "selected": "other",
+          "selectedBits": 1,
+          "requestMask": 1,
+          "allowed": true,
+          "fallback": false,
+          "trace": [
+            {
+              "phase": "decode-mode",
+              "octal": "001",
+              "decimal": 1,
+              "nineBits": "000000001",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 1
+              }
+            },
+            {
+              "phase": "select-once",
+              "ownerMatch": false,
+              "primaryMatch": false,
+              "supplementaryMatch": false,
+              "selected": "other",
+              "reason": "no owner/group match",
+              "fallback": false
+            },
+            {
+              "phase": "check-selected",
+              "selectedBits": 1,
+              "requestMask": 1,
+              "intersection": 1,
+              "allowed": true
+            }
+          ],
+          "error": null
+        },
+        "bad": {
+          "mode": "intentional any-class union",
+          "unionBits": 1,
+          "requestMask": 1,
+          "allowed": true,
+          "trace": [
+            {
+              "phase": "union-all-classes",
+              "triplets": {
+                "owner": 0,
+                "group": 0,
+                "other": 1
+              },
+              "union": 1
+            }
+          ]
+        },
+        "traceSha256": "5d28e8cd130ba2bf7543b84a629cd8080b0080079885b9d760ac9ef6a3906363",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "other"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--principal",
+        "root"
+      ],
+      "exit": 2,
+      "actual": {
+        "input": {
+          "mode": "004",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 0,
+            "gid": 0,
+            "supplementary": []
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "none"
+        },
+        "inputSha256": "0bb5d7daf779d3989a0cf40f7b58aeb2190d2b55d7ed0aea5da609d52f1d96ce",
+        "protected": {
+          "status": "rejected",
+          "selected": null,
+          "selectedBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "fallback": false,
+          "trace": [],
+          "error": "root uid0 unsupported; no bypass modeled"
+        },
+        "bad": {
+          "mode": "not-run for unsupported input",
+          "unionBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "trace": []
+        },
+        "traceSha256": "8df03d22f287139c76be3ff8025bada7daf226a23ff5502e5f127c91dbaa92e0",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "root"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--security",
+        "acl"
+      ],
+      "exit": 2,
+      "actual": {
+        "input": {
+          "mode": "004",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1001,
+            "gid": 3001,
+            "supplementary": []
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "acl"
+        },
+        "inputSha256": "61dd5c5754e2ce8232d3d6adfed7da82f00e1b4a9a542fa91897a75488a91fc9",
+        "protected": {
+          "status": "rejected",
+          "selected": null,
+          "selectedBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "fallback": false,
+          "trace": [],
+          "error": "unsupported security profile: root/ACL/capabilities/LSM/fsuid override outside subset"
+        },
+        "bad": {
+          "mode": "not-run for unsupported input",
+          "unionBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "trace": []
+        },
+        "traceSha256": "8df03d22f287139c76be3ff8025bada7daf226a23ff5502e5f127c91dbaa92e0",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "owner"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "run.py",
+        "--mode",
+        "1777"
+      ],
+      "exit": 2,
+      "actual": {
+        "input": {
+          "mode": "1777",
+          "inode": {
+            "ownerUid": 1001,
+            "ownerGid": 2001
+          },
+          "actor": {
+            "uid": 1001,
+            "gid": 3001,
+            "supplementary": []
+          },
+          "operation": "read",
+          "kind": "file",
+          "security": "none"
+        },
+        "inputSha256": "d5c28e91bd63dfd2aa150219da000b3332f77db4899346309313dd93ea8637f5",
+        "protected": {
+          "status": "rejected",
+          "selected": null,
+          "selectedBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "fallback": false,
+          "trace": [],
+          "error": "mode must be exactly three octal digits 000..777; special bits unsupported"
+        },
+        "bad": {
+          "mode": "not-run for unsupported input",
+          "unionBits": null,
+          "requestMask": null,
+          "allowed": null,
+          "trace": []
+        },
+        "traceSha256": "8df03d22f287139c76be3ff8025bada7daf226a23ff5502e5f127c91dbaa92e0",
+        "kernelObserved": false,
+        "filesChanged": false,
+        "principal": "owner"
+      }
+    }
+  ]
+}

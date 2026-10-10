@@ -1,0 +1,274 @@
+{
+  "sqlite_version": "3.51.0",
+  "query_only": 1,
+  "db_digest_before": "sha256:7a363898c60479f57bf9818905c03e1713cba9a9c50c521b23d6c9161def7afb",
+  "db_digest_after": "sha256:7a363898c60479f57bf9818905c03e1713cba9a9c50c521b23d6c9161def7afb",
+  "observations": [
+    {
+      "mode": "range-default",
+      "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key) ORDER BY part,sort_key,id",
+      "params": [],
+      "started_at": "2026-10-05T09:27:45.282685+00:00",
+      "completed_at": "2026-10-05T09:27:45.282979+00:00",
+      "outcome": "rows",
+      "columns": [
+        "id",
+        "part",
+        "sort_key",
+        "amount",
+        "total",
+        "known_values",
+        "frame_ids_raw"
+      ],
+      "raw_rows": [
+        [
+          1,
+          "A",
+          null,
+          10,
+          30,
+          2,
+          "2,1"
+        ],
+        [
+          2,
+          "A",
+          null,
+          20,
+          30,
+          2,
+          "2,1"
+        ],
+        [
+          3,
+          "A",
+          1,
+          5,
+          35,
+          3,
+          "2,1,3"
+        ]
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "part": "A",
+          "sort_key": null,
+          "amount": 10,
+          "total": 30,
+          "known_values": 2,
+          "frame_ids_raw": "2,1",
+          "frame_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "part": "A",
+          "sort_key": null,
+          "amount": 20,
+          "total": 30,
+          "known_values": 2,
+          "frame_ids_raw": "2,1",
+          "frame_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": 3,
+          "part": "A",
+          "sort_key": 1,
+          "amount": 5,
+          "total": 35,
+          "known_values": 3,
+          "frame_ids_raw": "2,1,3",
+          "frame_ids": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "mode": "rows-explicit",
+      "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key,id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ORDER BY part,sort_key,id",
+      "params": [],
+      "started_at": "2026-10-05T09:27:45.283009+00:00",
+      "completed_at": "2026-10-05T09:27:45.283057+00:00",
+      "outcome": "rows",
+      "columns": [
+        "id",
+        "part",
+        "sort_key",
+        "amount",
+        "total",
+        "known_values",
+        "frame_ids_raw"
+      ],
+      "raw_rows": [
+        [
+          1,
+          "A",
+          null,
+          10,
+          10,
+          1,
+          "1"
+        ],
+        [
+          2,
+          "A",
+          null,
+          20,
+          30,
+          2,
+          "1,2"
+        ],
+        [
+          3,
+          "A",
+          1,
+          5,
+          35,
+          3,
+          "1,2,3"
+        ]
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "part": "A",
+          "sort_key": null,
+          "amount": 10,
+          "total": 10,
+          "known_values": 1,
+          "frame_ids_raw": "1",
+          "frame_ids": [
+            1
+          ]
+        },
+        {
+          "id": 2,
+          "part": "A",
+          "sort_key": null,
+          "amount": 20,
+          "total": 30,
+          "known_values": 2,
+          "frame_ids_raw": "1,2",
+          "frame_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": 3,
+          "part": "A",
+          "sort_key": 1,
+          "amount": 5,
+          "total": 35,
+          "known_values": 3,
+          "frame_ids_raw": "1,2,3",
+          "frame_ids": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "error": null
+    },
+    {
+      "mode": "range-explicit",
+      "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ORDER BY part,sort_key,id",
+      "params": [],
+      "started_at": "2026-10-05T09:27:45.283074+00:00",
+      "completed_at": "2026-10-05T09:27:45.283120+00:00",
+      "outcome": "rows",
+      "columns": [
+        "id",
+        "part",
+        "sort_key",
+        "amount",
+        "total",
+        "known_values",
+        "frame_ids_raw"
+      ],
+      "raw_rows": [
+        [
+          1,
+          "A",
+          null,
+          10,
+          30,
+          2,
+          "2,1"
+        ],
+        [
+          2,
+          "A",
+          null,
+          20,
+          30,
+          2,
+          "2,1"
+        ],
+        [
+          3,
+          "A",
+          1,
+          5,
+          35,
+          3,
+          "2,1,3"
+        ]
+      ],
+      "rows": [
+        {
+          "id": 1,
+          "part": "A",
+          "sort_key": null,
+          "amount": 10,
+          "total": 30,
+          "known_values": 2,
+          "frame_ids_raw": "2,1",
+          "frame_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": 2,
+          "part": "A",
+          "sort_key": null,
+          "amount": 20,
+          "total": 30,
+          "known_values": 2,
+          "frame_ids_raw": "2,1",
+          "frame_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": 3,
+          "part": "A",
+          "sort_key": 1,
+          "amount": 5,
+          "total": 35,
+          "known_values": 3,
+          "frame_ids_raw": "2,1,3",
+          "frame_ids": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "error": null
+    }
+  ]
+}

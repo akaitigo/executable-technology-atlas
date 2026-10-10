@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="保存された実Widget観測で、GlobalKeyの同frame移動と削除後の再追加、ValueKey対照を比べる。">
+<title>Flutter｜親を移るStateはいつまで同じか</title><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body><a class="skip" href="#lesson">教材へ移動</a>
+<header><span class="brand">ATLAS <small>Flutter / GlobalKey</small></span><span class="badge">保存実測のリーダー</span></header>
+<main id="lesson">
+  <section class="hero"><div><p class="eyebrow">IDENTITY / REPARENTING</p><h1>親が変わっても、<br>同じStateでいられる？</h1><p class="lead">「移す」と「一度なくしてから置く」を分けます。<br>Key・Element・State・回数を、3条件で比べましょう。</p></div><aside><b>今回の要求</b><p>左のAを右へ。<br>増やした1回も保ちたい。</p><span>3条件 × 4時点の実Widget観測</span></aside></section>
+  <div class="notice" role="note"><strong>この画面はFlutterのライブ実行ではありません。</strong>GUI操作は保存した実Widget原票の選択・再生です。左右の親とカードは原票の関係を表す図で、Flutter描画のスクリーンショットではありません。nativeの操作はStateメソッドで行いました。</div>
+  <div class="load-bar"><p id="load-status" role="status">実測と実行時ソースを確認しています…</p><button id="reload" type="button">原票を読み直す</button></div>
+  <div id="load-error" class="error" role="alert" hidden></div>
+  <div id="lesson-body" hidden>
+    <nav class="steps" aria-label="読む順番"><a href="#predict">1 条件と予想</a><a href="#observe">2 移動と対照</a><a href="#sources">3 原典と実装</a><a href="#answer-section">4 答えと限界</a></nav>
+    <section id="predict" class="panel"><p class="eyebrow">01 / PREDICT</p><h2>右に置いたAは、元のAと同じ？</h2><p>準備時点は左のA：State S1・Element E2・1回。<br>左右の親は固定し、同じ型の子1つだけを動かします。</p>
+      <fieldset><legend>移し方を選ぶ</legend><div class="choices three">
+        <label><input type="radio" name="condition" value="globalSameFrame" checked><span><b>GlobalKey・同frame移動</b><small>1回の更新で左から右へ</small></span></label>
+        <label><input type="radio" name="condition" value="globalGap"><span><b>GlobalKey・一度除去</b><small>frame終了後に右へ再追加</small></span></label>
+        <label><input type="radio" name="condition" value="valueSameFrame"><span><b>ValueKey・同frame移動</b><small>同じ値のKeyで別の親へ</small></span></label>
+      </div></fieldset>
+      <fieldset><legend>右に置いた後のState・Element・回数を予想する</legend><div class="choices three">
+        <label><input type="radio" name="prediction" value="retained"><span><b>同じStateとElement・1回</b><small>同じ生存期間を継続する</small></span></label>
+        <label><input type="radio" name="prediction" value="fresh"><span><b>新しいStateとElement・0回</b><small>作り直して初期値になる</small></span></label>
+        <label><input type="radio" name="prediction" value="sameZero"><span><b>同じStateとElement・0回</b><small>同一性だけ保ち、値は消える</small></span></label>
+      </div></fieldset><p class="hint">条件変更・やり直しは予想も消します。予想変更は新しい予想だけ残し、前の再生・対照・答えを消します。</p>
+    </section>
+    <section id="observe" class="panel"><p class="eyebrow">02 / OBSERVE</p><h2>親の移動と、Stateの作り直しを分ける</h2><p id="observation-status" role="status"></p>
+      <div class="actions"><button id="replay" class="primary" disabled>移動・除去の保存実測を再生</button><button id="reset">予想からやり直す</button></div>
+      <div id="timeline" class="timeline" aria-label="保存した操作時点"></div>
+      <div class="state-heading"><h3 id="selected-title"></h3><span id="phase-label" class="badge"></span></div>
+      <p id="state-summary" class="state-summary"></p><p class="hint">IDは条件内だけで有効です。別条件の同じS1/E2は別オブジェクトです。「親Slot」と「直親Element」はtreeの異なる階層です。</p>
+      <div id="selected-rows" class="parent-groups"></div><p id="event-summary" class="event-summary"></p>
+      <div id="comparison" class="comparison" hidden><h3 id="comparison-title"></h3><p>同じ列の時点を並べます。transitionでは、移動する条件と一度除去する条件で操作が異なります。</p><div id="comparison-rows"></div></div>
+      <div id="boundary" class="boundary" hidden></div>
+      <details id="raw-details"><summary>この時点の実観測JSONを読む</summary><pre id="raw-observation"></pre></details>
+    </section>
+    <section id="sources" class="panel"><p class="eyebrow">03 / EXPLAIN</p><h2>deactivateだけでは、寿命の終わりとは限らない</h2>
+      <div class="mechanism"><span>deactivate</span><b aria-hidden="true">→</b><span>同frameで再挿入：activate</span><span>除去したままframe終了：dispose</span></div><p class="hint">仕組みを説明する分岐図です。すべてのcallback順序を保証する図ではありません。</p>
+      <ol><li>GlobalKeyはHostStateで一度だけ作ります。同じframeで別の親へ挿し直すと、同じElementとStateを引き継げます。</li><li>子を外したままframe終了を通ると、inactiveのElementはunmountされ、Stateはdisposeされます。同じKeyは破棄済みStateの保存先ではありません。</li><li>ValueKeyは同じ親の子同士を対応付けるために使います。このfixtureの別parent移動ではGlobalKeyの再取得経路を通りません。</li></ol>
+      <p class="fixture">固定条件：左右2親、同型のAだけ、幅400・高さ160、回数は子Stateのみが所有。<br>Flutter 3.47.1 / Dart 3.13.1。外部保存・restoration・keep-aliveは使いません。</p>
+      <div class="source-links"><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/framework.dart#L115-L150" target="_blank" rel="noopener noreferrer">公式：GlobalKeyと同frame ↗</a><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/framework.dart#L1230-L1292" target="_blank" rel="noopener noreferrer">公式：deactivate / activate ↗</a><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/framework.dart#L3352-L3360" target="_blank" rel="noopener noreferrer">公式：frame終端と破棄 ↗</a></div>
+      <p class="hint">外部リンクは自分で開いた時だけ接続します。教材読込に外部通信はありません。</p>
+      <details id="implementation"><summary>今回実行したWidgetソースを読む</summary><pre id="source-code"></pre></details>
+    </section>
+    <section id="answer-section" class="panel"><p class="eyebrow">04 / CHECK</p><h2>右に置いた後で、予想と照合する</h2><p>答え合わせは「右に置いた後」の時点で行います。回数とStateだけでなく、Elementの同一性も見てください。</p><button id="reveal" class="primary" disabled>予想と実測を照合</button><div id="answer" class="answer" aria-live="polite" hidden></div>
+      <div class="limits"><h3>Keyの同一性と、保存方法を分ける</h3><p>同じtree内の再配置と、削除後にデータを取り戻す仕組みは別です。必要な業務データを子Stateだけに持たせてよいか、親や外部モデルへ移すかを判断します。</p><p>同型の子1つ・固定2親の有限な観測です。重複GlobalKey例外、型変更、InheritedWidgetの依存・費用、Route/Overlay、process復元、ライブGUI/pointer/dragとFlutter描画画像は未確認です。</p></div>
+    </section>
+  </div>
+  <footer><b>証拠の範囲</b><p>実Widget：2026-10-06、3条件・12時点。操作はStateメソッド。今回のreader操作はFlutterライブGUIのpointer/drag確認ではありません。</p><a href="README.md">教材と記録</a> · <a href="REPRODUCE.md">再現手順</a> · <a href="SKILL.md">案内用Skill</a> · <a href="COVERAGE.md">残る範囲</a></footer>
+</main></body></html>

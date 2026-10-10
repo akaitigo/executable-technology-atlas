@@ -1,0 +1,1286 @@
+{
+  "status": "passed",
+  "started": "2026-10-05T04:31:44.041Z",
+  "completed": "2026-10-05T04:31:44.048Z",
+  "environment": {
+    "node": "v25.2.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "implementation": "binary-range-lesson/1",
+  "command": "node verify.mjs observations/node-20261005-attempt-03",
+  "oracle": "independent linear findIndex/indexOf over sorted arrays; not bisect runtime",
+  "cases": [
+    {
+      "name": "sorted arrays length0..8, values0..2, targets-1..3",
+      "passed": 825
+    }
+  ],
+  "examples": [
+    {
+      "name": "lost",
+      "input": [
+        1,
+        3,
+        5
+      ],
+      "target": 3,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          1,
+          3,
+          5
+        ],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 2,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 3,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 1,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              3
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 1,
+            "hi": 1,
+            "mid": 0,
+            "probe": 1,
+            "comparisons": 2,
+            "previous": [
+              0,
+              1
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 2,
+        "searchComparisons": 2,
+        "exactComparisons": 1,
+        "position": 1,
+        "index": 1,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "off-by-one",
+        "input": [
+          1,
+          3,
+          5
+        ],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 2,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 3,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 0,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              3
+            ],
+            "action": "hi = mid - 1（異常）",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": false
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 1,
+        "searchComparisons": 1,
+        "exactComparisons": 1,
+        "position": 0,
+        "index": null,
+        "diagnostics": [
+          "不変条件破れ：iteration 1"
+        ],
+        "status": "incorrect"
+      },
+      "linear": {
+        "index": 1,
+        "comparisons": 2,
+        "visited": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "loop",
+      "input": [
+        1,
+        3
+      ],
+      "target": 4,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          1,
+          3
+        ],
+        "target": 4,
+        "sorted": true,
+        "preconditionComparisons": 1,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 2,
+            "hi": 2,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 1,
+        "searchComparisons": 1,
+        "exactComparisons": 0,
+        "position": 2,
+        "index": null,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "stalled",
+        "input": [
+          1,
+          3
+        ],
+        "target": 4,
+        "sorted": true,
+        "preconditionComparisons": 1,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 1,
+            "hi": 2,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "lo = mid（異常）",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 1,
+            "hi": 2,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 2,
+            "previous": [
+              1,
+              2
+            ],
+            "action": "lo = mid（異常）",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": false
+          }
+        ],
+        "iterations": 2,
+        "searchComparisons": 2,
+        "exactComparisons": 0,
+        "position": null,
+        "index": null,
+        "diagnostics": [
+          "範囲が縮まらない。教材の診断器が停止した（本来の異常ループは継続する）"
+        ],
+        "status": "stalled"
+      },
+      "linear": {
+        "index": null,
+        "comparisons": 2,
+        "visited": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "duplicates",
+      "input": [
+        1,
+        3,
+        3,
+        3,
+        5
+      ],
+      "target": 3,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          1,
+          3,
+          3,
+          3,
+          5
+        ],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 4,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 5,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": 2,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              5
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 1,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 2,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 1,
+            "hi": 1,
+            "mid": 0,
+            "probe": 1,
+            "comparisons": 3,
+            "previous": [
+              0,
+              1
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 3,
+        "searchComparisons": 3,
+        "exactComparisons": 1,
+        "position": 1,
+        "index": 1,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          1,
+          3,
+          3,
+          3,
+          5
+        ],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 4,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 5,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": 2,
+            "probe": 3,
+            "comparisons": 1,
+            "previous": [
+              0,
+              5
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 1,
+            "mid": 1,
+            "probe": 3,
+            "comparisons": 2,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 1,
+            "hi": 1,
+            "mid": 0,
+            "probe": 1,
+            "comparisons": 3,
+            "previous": [
+              0,
+              1
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 3,
+        "searchComparisons": 3,
+        "exactComparisons": 1,
+        "position": 1,
+        "index": 1,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "linear": {
+        "index": 1,
+        "comparisons": 2,
+        "visited": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "target": 3,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 0,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 0,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          }
+        ],
+        "iterations": 0,
+        "searchComparisons": 0,
+        "exactComparisons": 0,
+        "position": 0,
+        "index": null,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [],
+        "target": 3,
+        "sorted": true,
+        "preconditionComparisons": 0,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 0,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          }
+        ],
+        "iterations": 0,
+        "searchComparisons": 0,
+        "exactComparisons": 0,
+        "position": 0,
+        "index": null,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "linear": {
+        "index": null,
+        "comparisons": 0,
+        "visited": []
+      }
+    },
+    {
+      "name": "unsorted",
+      "input": [
+        3,
+        1,
+        2
+      ],
+      "target": 3,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          3,
+          1,
+          2
+        ],
+        "target": 3,
+        "sorted": false,
+        "preconditionComparisons": 2,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 3,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          }
+        ],
+        "iterations": 0,
+        "searchComparisons": 0,
+        "exactComparisons": 0,
+        "position": null,
+        "index": null,
+        "diagnostics": [
+          "未整列：二分探索の前提を満たさない"
+        ],
+        "status": "refused"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "unchecked",
+        "input": [
+          3,
+          1,
+          2
+        ],
+        "target": 3,
+        "sorted": false,
+        "preconditionComparisons": 2,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 3,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 2,
+            "hi": 3,
+            "mid": 1,
+            "probe": 1,
+            "comparisons": 1,
+            "previous": [
+              0,
+              3
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": false,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 3,
+            "hi": 3,
+            "mid": 2,
+            "probe": 2,
+            "comparisons": 2,
+            "previous": [
+              2,
+              3
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": false,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 2,
+        "searchComparisons": 2,
+        "exactComparisons": 0,
+        "position": 3,
+        "index": null,
+        "diagnostics": [
+          "不変条件破れ：iteration 1",
+          "不変条件破れ：iteration 2"
+        ],
+        "status": "incorrect"
+      },
+      "linear": {
+        "index": 0,
+        "comparisons": 1,
+        "visited": [
+          0
+        ]
+      }
+    },
+    {
+      "name": "missing",
+      "input": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "target": 31,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "target": 31,
+        "sorted": true,
+        "preconditionComparisons": 15,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 16,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 9,
+            "hi": 16,
+            "mid": 8,
+            "probe": 16,
+            "comparisons": 1,
+            "previous": [
+              0,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 13,
+            "hi": 16,
+            "mid": 12,
+            "probe": 24,
+            "comparisons": 2,
+            "previous": [
+              9,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 15,
+            "hi": 16,
+            "mid": 14,
+            "probe": 28,
+            "comparisons": 3,
+            "previous": [
+              13,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 16,
+            "hi": 16,
+            "mid": 15,
+            "probe": 30,
+            "comparisons": 4,
+            "previous": [
+              15,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 4,
+        "searchComparisons": 4,
+        "exactComparisons": 0,
+        "position": 16,
+        "index": null,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "target": 31,
+        "sorted": true,
+        "preconditionComparisons": 15,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 16,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 9,
+            "hi": 16,
+            "mid": 8,
+            "probe": 16,
+            "comparisons": 1,
+            "previous": [
+              0,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 13,
+            "hi": 16,
+            "mid": 12,
+            "probe": 24,
+            "comparisons": 2,
+            "previous": [
+              9,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 15,
+            "hi": 16,
+            "mid": 14,
+            "probe": 28,
+            "comparisons": 3,
+            "previous": [
+              13,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 16,
+            "hi": 16,
+            "mid": 15,
+            "probe": 30,
+            "comparisons": 4,
+            "previous": [
+              15,
+              16
+            ],
+            "action": "lo = mid + 1",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 4,
+        "searchComparisons": 4,
+        "exactComparisons": 0,
+        "position": 16,
+        "index": null,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "linear": {
+        "index": null,
+        "comparisons": 16,
+        "visited": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "name": "early",
+      "input": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "target": 0,
+      "normal": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "target": 0,
+        "sorted": true,
+        "preconditionComparisons": 15,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 16,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 8,
+            "mid": 8,
+            "probe": 16,
+            "comparisons": 1,
+            "previous": [
+              0,
+              16
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 4,
+            "mid": 4,
+            "probe": 8,
+            "comparisons": 2,
+            "previous": [
+              0,
+              8
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": 2,
+            "probe": 4,
+            "comparisons": 3,
+            "previous": [
+              0,
+              4
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 1,
+            "mid": 1,
+            "probe": 2,
+            "comparisons": 4,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 0,
+            "mid": 0,
+            "probe": 0,
+            "comparisons": 5,
+            "previous": [
+              0,
+              1
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 5,
+        "searchComparisons": 5,
+        "exactComparisons": 1,
+        "position": 0,
+        "index": 0,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "comparison": {
+        "version": "binary-range-lesson/1",
+        "mode": "correct",
+        "input": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "target": 0,
+        "sorted": true,
+        "preconditionComparisons": 15,
+        "states": [
+          {
+            "lo": 0,
+            "hi": 16,
+            "mid": null,
+            "probe": null,
+            "comparisons": 0,
+            "action": "初期化",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            }
+          },
+          {
+            "lo": 0,
+            "hi": 8,
+            "mid": 8,
+            "probe": 16,
+            "comparisons": 1,
+            "previous": [
+              0,
+              16
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 4,
+            "mid": 4,
+            "probe": 8,
+            "comparisons": 2,
+            "previous": [
+              0,
+              8
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 2,
+            "mid": 2,
+            "probe": 4,
+            "comparisons": 3,
+            "previous": [
+              0,
+              4
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 1,
+            "mid": 1,
+            "probe": 2,
+            "comparisons": 4,
+            "previous": [
+              0,
+              2
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          },
+          {
+            "lo": 0,
+            "hi": 0,
+            "mid": 0,
+            "probe": 0,
+            "comparisons": 5,
+            "previous": [
+              0,
+              1
+            ],
+            "action": "hi = mid",
+            "invariant": {
+              "bounds": true,
+              "left": true,
+              "right": true
+            },
+            "progress": true
+          }
+        ],
+        "iterations": 5,
+        "searchComparisons": 5,
+        "exactComparisons": 1,
+        "position": 0,
+        "index": 0,
+        "diagnostics": [],
+        "status": "completed"
+      },
+      "linear": {
+        "index": 0,
+        "comparisons": 1,
+        "visited": [
+          0
+        ]
+      }
+    }
+  ],
+  "invalidInputCases": 4,
+  "sourceHashes": {
+    "search.js": "ac40be53ace504204ed91200daa6243a91b629efa2bad91aa7402cee3a245516",
+    "index.html": "bc3f0ec8c2d20fca445cda233c1694482a7f70c1cd333ad4e51d69deeced8341",
+    "verify.mjs": "ec93e5308e9d590103804773edd40f7f654917a046b7cc088e9ac78bb6ca729b",
+    "serve.mjs": "716f26c07a486a2693dc7cca0325c8e1f11c52942788bf2656bd53da0e7196cd"
+  }
+}

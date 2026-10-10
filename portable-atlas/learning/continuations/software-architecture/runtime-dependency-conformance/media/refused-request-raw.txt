@@ -1,0 +1,116 @@
+Browser tab: 19, Title: "同じ業務辺、違う生成責務 — runtime dependency", URL: "http://127.0.0.1:59045/".
+0 AXWebArea 同じ業務辺、違う生成責務 — runtime dependency, URL: 127.0.0.1:59045/
+	1 container
+		2 text SOFTWARE ARCHITECTURE · 専用4fixture
+		3 heading core → adapter.addは同じ。 誰がadapterを選び、生成した？, Value: 1
+			4 text core → adapter.addは同じ。
+			5 text 誰がadapterを選び、生成した？
+		6 text 業務辺と出力だけから責務適合を決めません。Import限定ASTと専用childの実caller/calleeを分け、独自契約で判定します。
+		7 heading 前提と読む順番, Value: 2
+			8 text 前提と読む順番
+		9 text Pythonの関数/class、Import/ImportFrom、DI、caller/calleeが前提です。
+		10 content list
+			11 container
+				12 AXListMarker 1. 
+				13 link Description: 元Subject：source依存とruntime port呼出し, Value: 127.0.0.1:59045/subjects/software-architecture/README.md
+				14 text のN2を読む。
+			15 container
+				16 AXListMarker 2. 
+				17 link Description: 事前literal source・trace・責務表, Value: 127.0.0.1:59045/oracle.json
+				18 text で予想。
+			19 container
+				20 AXListMarker 3. 
+				21 text root-static→root-dynamic→core-static→core-dynamic→trace-off→拒否/実行失敗を操作。
+			22 container
+				23 AXListMarker 4. 
+				24 link Description: 関連Cloud教材：観測と独自契約, Value: 127.0.0.1:59045/cloud-architecture/replica-lag-failover-read/README.md
+				25 text 、
+				26 link Description: 再現・実務判断, Value: 127.0.0.1:59045/README.md
+				27 text 、
+				28 link Description: 未教材, Value: 127.0.0.1:59045/COVERAGE.md
+				29 text へ。
+		30 text 契約：
+		31 text 具体adapterの選択・生成はroot、coreによる注入portのadd呼出しは許可
+		32 text 。source ASTはImport/ImportFromだけ。動的adapter先を抽出しません。実profile trace欠落は判定不能で、DI labelや同じ業務出力から適合を補いません。
+		33 heading 予想 → 操作, Value: 2
+			34 text 予想 → 操作
+		35 text 条件
+		36 pop up button (collapsed, settable) Description: 条件, Value: 拒否：allowlist外request, ID: case, Secondary Actions: Expand
+			37 menu
+				38 1 root通常import + DI
+				39 2 root動的import + DI
+				40 3 core直接import + 生成
+				41 4 core動的import + 生成
+				42 trace欠落対照：root-static
+				43 trace欠落対照：root-dynamic
+				44 trace欠落対照：core-static
+				45 trace欠落対照：core-dynamic
+				46 (selected) 拒否：allowlist外request
+				47 実行失敗：malformed JSON
+		48 text ASTの具体adapter辺
+		49 pop up button (collapsed, settable) Description: AST予想, Value: 未観測, ID: astGuess, Secondary Actions: Expand
+			50 menu
+				51 選択
+				52 root→adapter
+				53 core→adapter
+				54 具体辺なし
+				55 (selected) 未観測
+		56 text 実constructor caller
+		57 pop up button (collapsed, settable) Description: caller予想, Value: 未観測, ID: ownerGuess, Secondary Actions: Expand
+			58 menu
+				59 選択
+				60 root
+				61 core
+				62 (selected) 未観測
+		63 text 独自契約の判定
+		64 pop up button (collapsed, settable) Description: 判定予想, Value: request拒否, ID: verdictGuess, Secondary Actions: Expand
+			65 menu
+				66 選択
+				67 適合
+				68 責務違反
+				69 判定不能
+				70 (selected) request拒否
+				71 実行失敗
+		72 button 保存rawと比較, ID: compare
+		89 text 予想一致：AST=not-observed / constructor caller=not-observed / 判定=REFUSED
+		90 container results
+			91 heading request拒否：fixtureをimportしない, Value: 2, ID: status
+				92 text request拒否：fixtureをimportしない
+			93 text exit=2 / request outside fixed fixture allowlist
+			94 text 正常な責務適合の答えはありません。拒否/実行失敗を適合へ変換しません。
+			95 container
+				96 button (expanded) 原票：input・command・exit・stdout・stderr, Secondary Actions: Collapse
+					97 text 原票：input・command・exit・stdout・stderr
+				98 text {
+  "input": {
+    "fixture": "os",
+    "profile": true
+  },
+  "argv": [
+    "python3",
+    "-B",
+    "worker.py"
+  ],
+  "inputSha256": "d2c66c9839ad18c68f152eaaf934980e9121f3f1acbe48e94e008867bdc65e19",
+  "exitCode": 2,
+  "stdout": "{\"outcome\": \"REFUSED\", \"reason\": \"request outside fixed fixture allowlist\", \"output\": null, \"edges\": null, \"trace\": null, \"judgment\": null}\n",
+  "stderr": ""
+}
+		73 heading 原典 → 実装 → 答え → 実務判断, Value: 2
+			74 text 原典 → 実装 → 答え → 実務判断
+		75 link Description: C4 Dynamic diagram, Value: c4model.com/diagrams/dynamic
+		76 text のruntime協調と順序、
+		77 link Description: Python import_module, Value: docs.python.org/3.9/library/importlib.html#importlib.import_module
+		78 text のmodule解決、
+		79 link Description: sys.setprofile, Value: docs.python.org/3.9/library/sys.html#sys.setprofile
+		80 text のcall/returnを読む。図は特定fixtureのsource/runtime viewで、正式なcontext/component/deployment全図ではありません。
+		81 link Description: 実profile観測, Value: 127.0.0.1:59045/worker.py
+		82 text ・
+		83 link Description: 観測に対する独自policy, Value: 127.0.0.1:59045/policy.py
+		84 text ・
+		85 link Description: 独立literal checker, Value: 127.0.0.1:59045/checker.py
+		86 text ・
+		87 link Description: raw保存runner, Value: 127.0.0.1:59045/runner.py
+		88 text を分けて読みます。fixture/mode labelだけで判定しません。 全4fixtureでcore→adapter.addと出力5は同じ。root選択・生成の1/2は適合、core選択・生成の3/4は責務違反。動的importそのものを違反とせず、callerの責務を見ます。trace-offの出力も5ですが判定不能です。 全AST/全経路、未実行reflection、network/deploy、C extension、thread/async、任意module、一般architecture適合は未実証。trace欠落は適合の証拠ではありません。
+
+The focused UI element is 96 button (expanded) 原票：input・command・exit・stdout・stderr, Secondary Actions: Collapse

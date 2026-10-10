@@ -1,0 +1,316 @@
+{
+  "oracle": "literal schedules/rows/native code expectations fixed before producer, no evaluator import",
+  "rows": [
+    {
+      "id": "stale",
+      "label": "読んだsnapshotの昇格",
+      "input_json": "{\"schedule\":\"stale\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "category": "stale",
+        "first_row": 10,
+        "upgrade_code": 517,
+        "upgrade_name": "SQLITE_BUSY_SNAPSHOT",
+        "after_attempt_row": 10,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 1
+        },
+        "recovery_before": 20,
+        "final_row": 21,
+        "recovery_done": true,
+        "status": "observed",
+        "input": {
+          "schedule": "stale",
+          "initial": 10,
+          "writer": 20,
+          "delta": 1,
+          "busy_ms": 50
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "fresh",
+      "label": "BEGINだけ・SELECTはcommit後",
+      "input_json": "{\"schedule\":\"fresh\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "category": "success",
+        "first_row": 20,
+        "upgrade_code": 0,
+        "upgrade_name": "SQLITE_OK",
+        "after_attempt_row": 21,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 2
+        },
+        "recovery_before": null,
+        "final_row": 21,
+        "recovery_done": false,
+        "status": "observed",
+        "input": {
+          "schedule": "fresh",
+          "initial": 10,
+          "writer": 20,
+          "delta": 1,
+          "busy_ms": 50
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "rollback",
+      "label": "writer rollbackでsnapshot維持",
+      "input_json": "{\"schedule\":\"rollback\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "category": "success",
+        "first_row": 10,
+        "upgrade_code": 0,
+        "upgrade_name": "SQLITE_OK",
+        "after_attempt_row": 11,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 2
+        },
+        "recovery_before": null,
+        "final_row": 11,
+        "recovery_done": false,
+        "status": "observed",
+        "input": {
+          "schedule": "rollback",
+          "initial": 10,
+          "writer": 20,
+          "delta": 1,
+          "busy_ms": 50
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "busy",
+      "label": "writer lock保持・一般BUSY",
+      "input_json": "{\"schedule\":\"busy\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "category": "busy",
+        "first_row": 10,
+        "upgrade_code": 5,
+        "upgrade_name": "SQLITE_BUSY",
+        "after_attempt_row": 10,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 1
+        },
+        "recovery_before": 10,
+        "final_row": 11,
+        "recovery_done": true,
+        "status": "observed",
+        "input": {
+          "schedule": "busy",
+          "initial": 10,
+          "writer": 20,
+          "delta": 1,
+          "busy_ms": 50
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "stale-small",
+      "label": "0→7、rollback後+3",
+      "input_json": "{\"schedule\":\"stale\",\"initial\":0,\"writer\":7,\"delta\":3,\"busy_ms\":0}",
+      "expected": {
+        "category": "stale",
+        "first_row": 0,
+        "upgrade_code": 517,
+        "upgrade_name": "SQLITE_BUSY_SNAPSHOT",
+        "after_attempt_row": 0,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 1
+        },
+        "recovery_before": 7,
+        "final_row": 10,
+        "recovery_done": true,
+        "status": "observed",
+        "input": {
+          "schedule": "stale",
+          "initial": 0,
+          "writer": 7,
+          "delta": 3,
+          "busy_ms": 0
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "fresh-high",
+      "label": "90→100、fresh +2",
+      "input_json": "{\"schedule\":\"fresh\",\"initial\":90,\"writer\":100,\"delta\":2,\"busy_ms\":0}",
+      "expected": {
+        "category": "success",
+        "first_row": 100,
+        "upgrade_code": 0,
+        "upgrade_name": "SQLITE_OK",
+        "after_attempt_row": 102,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 2
+        },
+        "recovery_before": null,
+        "final_row": 102,
+        "recovery_done": false,
+        "status": "observed",
+        "input": {
+          "schedule": "fresh",
+          "initial": 90,
+          "writer": 100,
+          "delta": 2,
+          "busy_ms": 0
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "busy-zero",
+      "label": "busy timeout設定0の対照",
+      "input_json": "{\"schedule\":\"busy\",\"initial\":0,\"writer\":1,\"delta\":2,\"busy_ms\":0}",
+      "expected": {
+        "category": "busy",
+        "first_row": 0,
+        "upgrade_code": 5,
+        "upgrade_name": "SQLITE_BUSY",
+        "after_attempt_row": 0,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 1
+        },
+        "recovery_before": 0,
+        "final_row": 2,
+        "recovery_done": true,
+        "status": "observed",
+        "input": {
+          "schedule": "busy",
+          "initial": 0,
+          "writer": 1,
+          "delta": 2,
+          "busy_ms": 0
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "rollback-high",
+      "label": "writer rollback後+10",
+      "input_json": "{\"schedule\":\"rollback\",\"initial\":100,\"writer\":99,\"delta\":10,\"busy_ms\":5}",
+      "expected": {
+        "category": "success",
+        "first_row": 100,
+        "upgrade_code": 0,
+        "upgrade_name": "SQLITE_OK",
+        "after_attempt_row": 110,
+        "attempt_state": {
+          "autocommit": 0,
+          "txn_state": 2
+        },
+        "recovery_before": null,
+        "final_row": 110,
+        "recovery_done": false,
+        "status": "observed",
+        "input": {
+          "schedule": "rollback",
+          "initial": 100,
+          "writer": 99,
+          "delta": 10,
+          "busy_ms": 5
+        },
+        "final_state": {
+          "autocommit": 1,
+          "txn_state": 0
+        },
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "bool",
+      "label": "入力拒否 bool",
+      "input_json": "{\"schedule\":\"stale\",\"initial\":true,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "integer_range",
+        "summary": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "schedule",
+      "label": "入力拒否 schedule",
+      "input_json": "{\"schedule\":\"unknown\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "schedule",
+        "summary": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "same",
+      "label": "入力拒否 same",
+      "input_json": "{\"schedule\":\"stale\",\"initial\":10,\"writer\":10,\"delta\":1,\"busy_ms\":50}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "writer_must_change",
+        "summary": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "path",
+      "label": "入力拒否 path",
+      "input_json": "{\"schedule\":\"stale\",\"initial\":10,\"writer\":20,\"delta\":1,\"busy_ms\":50,\"path\":\"device\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape",
+        "summary": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "malformed",
+      "label": "壊れたJSON",
+      "input_json": "{",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax",
+        "summary": null,
+        "temporary_cleanup": "not-created"
+      }
+    }
+  ]
+}

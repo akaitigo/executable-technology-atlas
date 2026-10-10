@@ -1,0 +1,110 @@
+{
+  "sources": {
+    "products": [
+      {
+        "id": "p1",
+        "category": "c9",
+        "amount": 100,
+        "class": "public"
+      },
+      {
+        "id": "p2",
+        "category": "c2",
+        "amount": 0,
+        "class": "internal"
+      }
+    ],
+    "categories": [
+      {
+        "id": "c1"
+      },
+      {
+        "id": "c2"
+      }
+    ]
+  },
+  "graph": {
+    "products": {
+      "parents": [],
+      "columns": [
+        "id",
+        "category",
+        "amount",
+        "class"
+      ]
+    },
+    "categories": {
+      "parents": [],
+      "columns": [
+        "id"
+      ]
+    },
+    "validated": {
+      "parents": [
+        "products",
+        "categories"
+      ],
+      "columns": [
+        "id",
+        "category",
+        "amount",
+        "class"
+      ]
+    },
+    "totals": {
+      "parents": [
+        "validated"
+      ],
+      "columns": [
+        "category",
+        "amount_sum",
+        "class"
+      ]
+    }
+  },
+  "column_lineage": [
+    {
+      "target": "validated.id",
+      "sources": [
+        "products.id"
+      ]
+    },
+    {
+      "target": "validated.category",
+      "sources": [
+        "products.category",
+        "categories.id"
+      ]
+    },
+    {
+      "target": "validated.amount",
+      "sources": [
+        "products.amount"
+      ]
+    },
+    {
+      "target": "validated.class",
+      "sources": [
+        "products.class"
+      ]
+    },
+    {
+      "target": "totals.category",
+      "sources": [
+        "validated.category"
+      ]
+    },
+    {
+      "target": "totals.amount_sum",
+      "sources": [
+        "validated.amount"
+      ]
+    },
+    {
+      "target": "totals.class",
+      "sources": [
+        "validated.class"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-05T09:05:03.696034+00:00",
+  "method": "actual IAB 9case selector/button execution and 4job selector bindings; rendered raw/oracle/detail values transcribed",
+  "title": "有限queueと観測境界 | Performance capacity engineering",
+  "prediction": "未完了jobの窓内滞在があるので完了平均の積はLと違う",
+  "sourceArtifactDigests": {
+    "fixture.json": "1ce923c51e9fc7067f22ad29ebb84ec84954c0a035a5778b679bb7cb2fc94a1b",
+    "runner.py": "eb2b61690615312272e18afe237d9e301cfedc9ded6bf999847ecfe1262eab69",
+    "oracle.py": "5c90bb72c02ee257bbc3821a7e04ed4c1925a24b041e5c4012d1c8d86765621d",
+    "checker.py": "d4ae23edc5832f94cc10136e10a1c7e72ad19e048ca42694eaa585a1e9505480",
+    "server.py": "cf1d62ddbc1768ca94551a6b7a7e298a1bbf0f8fee0c5d9f196b485b5867ca37",
+    "index.html": "e87be8c42742cc7a7d2ef090767c564aaf0803a561ca49d75794b2711a2b0730",
+    "app.js": "d2e17d25b147910133302aa3d44c51f049d7f2e38f22947b3d0e7bef47f1be2a",
+    "README.md": "6a7c02b8b593953f076b3df2ef1b6c4bcbfaf7933fbb791b4fd15279e81b1dd6",
+    "sources.json": "ae73b619e848b3103fccd8dc9c2e2cc6639b7254dcf0e2e02aa493e0e5b8408c",
+    "skills/atlas-performance-capacity-engineering/SKILL.md": "32cff20ff78dcea8814c4b09532b1f31c3fdcdfcc80069e9c167c1b56aab2054"
+  },
+  "cases": [
+    {
+      "case": "below-capacity",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 6,
+        "queueArea": 0,
+        "L": "3/5",
+        "unfinished": [],
+        "carryIn": [],
+        "completedProductMatchesL": true
+      }
+    },
+    {
+      "case": "at-capacity",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 10,
+        "queueArea": 0,
+        "L": "1",
+        "unfinished": [],
+        "carryIn": [],
+        "completedProductMatchesL": true
+      }
+    },
+    {
+      "case": "overload-drained",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 20,
+        "queueArea": 10,
+        "L": "2",
+        "unfinished": [],
+        "carryIn": [],
+        "completedProductMatchesL": true
+      }
+    },
+    {
+      "case": "censored",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 14,
+        "queueArea": 8,
+        "L": "7/3",
+        "unfinished": [
+          "j4",
+          "j5"
+        ],
+        "carryIn": [],
+        "completedProductMatchesL": false
+      }
+    },
+    {
+      "case": "cropped",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 11,
+        "queueArea": 7,
+        "L": "11/4",
+        "unfinished": [
+          "j4",
+          "j5"
+        ],
+        "carryIn": [
+          "j2"
+        ],
+        "completedProductMatchesL": false
+      }
+    },
+    {
+      "case": "arrival-at-end",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 2,
+        "queueArea": 0,
+        "L": "1/3",
+        "unfinished": [],
+        "carryIn": [],
+        "completedProductMatchesL": true
+      }
+    },
+    {
+      "case": "empty",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "systemArea": 0,
+        "queueArea": 0,
+        "L": "0",
+        "unfinished": [],
+        "carryIn": [],
+        "completedProductMatchesL": null
+      }
+    },
+    {
+      "case": "invalid-service",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "invalid-service"
+      }
+    },
+    {
+      "case": "invalid-window",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "invalid-window"
+      }
+    }
+  ],
+  "jobBindings": [
+    {
+      "case": "censored",
+      "jobId": "j4",
+      "observed": {
+        "job": {
+          "id": "j4",
+          "arrival": 3,
+          "start": 6,
+          "finish": 8,
+          "wait": 3,
+          "response": 5
+        },
+        "intersection": {
+          "id": "j4",
+          "systemIntersection": 3,
+          "queueIntersection": 3
+        }
+      }
+    },
+    {
+      "case": "censored",
+      "jobId": "j5",
+      "observed": {
+        "job": {
+          "id": "j5",
+          "arrival": 4,
+          "start": 8,
+          "finish": 10,
+          "wait": 4,
+          "response": 6
+        },
+        "intersection": {
+          "id": "j5",
+          "systemIntersection": 2,
+          "queueIntersection": 2
+        }
+      }
+    },
+    {
+      "case": "cropped",
+      "jobId": "j2",
+      "observed": {
+        "job": {
+          "id": "j2",
+          "arrival": 1,
+          "start": 2,
+          "finish": 4,
+          "wait": 1,
+          "response": 3
+        },
+        "intersection": {
+          "id": "j2",
+          "systemIntersection": 2,
+          "queueIntersection": 0
+        }
+      }
+    },
+    {
+      "case": "arrival-at-end",
+      "jobId": "j2",
+      "observed": {
+        "job": {
+          "id": "j2",
+          "arrival": 6,
+          "start": 6,
+          "finish": 8,
+          "wait": 0,
+          "response": 2
+        },
+        "intersection": {
+          "id": "j2",
+          "systemIntersection": 0,
+          "queueIntersection": 0
+        }
+      }
+    }
+  ],
+  "rawExpanded": true,
+  "answerExpanded": true,
+  "roadmapTopics": [
+    "Workload / resource",
+    "Measurement / benchmark",
+    "Capacity / scaling",
+    "Overload / resilience"
+  ],
+  "capture": {
+    "format": "JPEG",
+    "displayedInTool": true,
+    "saved": false,
+    "reason": "documented IAB screenshot API supplies tool image bytes; no supported local export used; no reconstruction",
+    "views": [
+      "censored input and summary",
+      "censored wait/service timeline with window and finite exposure vs completed product"
+    ]
+  },
+  "cleanup": {
+    "serverClosed": true,
+    "serverExit": 0,
+    "port": 63184,
+    "listenerCheck": "exact-port lsof empty output exit1",
+    "tabClosed": true
+  },
+  "skillRouting": {
+    "quickValidate": "PASS",
+    "supportedCase": "censored",
+    "unsupportedCase": "production-capacity",
+    "unsupportedExit": 2,
+    "forwardAgentEvaluation": false
+  },
+  "qaDigest": "aa34ca42ba65246601f79d4b57e1b61478cf253394a396884953f3eb0737e9ea"
+}

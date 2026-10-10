@@ -1,0 +1,1838 @@
+{
+  "weighted": {
+    "case": "weighted",
+    "utc": "2026-10-05T13:34:35.012304+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "G",
+          10
+        ],
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "A",
+          "G",
+          1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 2,
+        "A": 1,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "COMPARED",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 10,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "G",
+              "parent": "S",
+              "cost": 10,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 10,
+              "hops": 1
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                10
+              ],
+              "candidate": 10,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 10,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        },
+        "astar": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 2,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                10
+              ],
+              "candidate": 10,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 1,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 10,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "G",
+            10
+          ],
+          "left": 2,
+          "right": 10,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "S",
+            "A",
+            1
+          ],
+          "left": 2,
+          "right": 2,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": false,
+        "claims_bfs_min_cost": false,
+        "rule_failed": false
+      }
+    }
+  },
+  "unit-cost": {
+    "case": "unit-cost",
+    "utc": "2026-10-05T13:34:35.013094+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "G",
+          1
+        ],
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "A",
+          "G",
+          1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 1,
+        "A": 1,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "COMPARED",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 1,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "G",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 1,
+              "hops": 1
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 1,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            }
+          ]
+        },
+        "astar": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 1,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 1,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "S",
+            "A",
+            1
+          ],
+          "left": 1,
+          "right": 2,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": false,
+        "claims_bfs_min_cost": false,
+        "rule_failed": false
+      }
+    }
+  },
+  "zero-cost": {
+    "case": "zero-cost",
+    "utc": "2026-10-05T13:34:35.013660+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "G",
+          3
+        ],
+        [
+          "S",
+          "A",
+          0
+        ],
+        [
+          "A",
+          "G",
+          0
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 0,
+        "A": 0,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "COMPARED",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 3,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "G",
+              "parent": "S",
+              "cost": 3,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 0,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 3,
+              "hops": 1
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 0,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                3
+              ],
+              "candidate": 3,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                0
+              ],
+              "candidate": 0,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                0
+              ],
+              "candidate": 0,
+              "previous": 3,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            }
+          ]
+        },
+        "astar": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 0,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                3
+              ],
+              "candidate": 3,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                0
+              ],
+              "candidate": 0,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                0
+              ],
+              "candidate": 0,
+              "previous": 3,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "G",
+            3
+          ],
+          "left": 0,
+          "right": 3,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "S",
+            "A",
+            0
+          ],
+          "left": 0,
+          "right": 0,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "G",
+            0
+          ],
+          "left": 0,
+          "right": 0,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": false,
+        "claims_bfs_min_cost": false,
+        "rule_failed": false
+      }
+    }
+  },
+  "equal-paths": {
+    "case": "equal-paths",
+    "utc": "2026-10-05T13:34:35.014317+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "B",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "S",
+          "B",
+          1
+        ],
+        [
+          "A",
+          "G",
+          1
+        ],
+        [
+          "B",
+          "G",
+          1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 2,
+        "A": 1,
+        "B": 1,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "COMPARED",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "B",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "G",
+              "parent": "A",
+              "cost": 2,
+              "hops": 2
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "B"
+              ],
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "hops": 2
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "B",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "B"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "B",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 2,
+              "improved": false
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        },
+        "astar": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 2,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "B",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 1,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "B"
+              ],
+              "cost": 1,
+              "h": 1,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "B",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 2,
+              "improved": false
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "A",
+            1
+          ],
+          "left": 2,
+          "right": 2,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "S",
+            "B",
+            1
+          ],
+          "left": 2,
+          "right": 2,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "B",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": false,
+        "claims_bfs_min_cost": false,
+        "rule_failed": false
+      }
+    }
+  },
+  "unreachable": {
+    "case": "unreachable",
+    "utc": "2026-10-05T13:34:35.014864+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "B",
+        "X",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "A",
+          "B",
+          1
+        ],
+        [
+          "B",
+          "A",
+          1
+        ],
+        [
+          "X",
+          "G",
+          1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 0,
+        "A": 0,
+        "B": 0,
+        "X": 0,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "UNREACHABLE",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": null,
+          "cost": null,
+          "hops": null,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "B",
+              "parent": "A",
+              "cost": 2,
+              "hops": 2
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "A",
+                "B"
+              ],
+              "cost": 2,
+              "hops": 2
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": null,
+          "cost": null,
+          "hops": null,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "B",
+                1
+              ],
+              "candidate": 2,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "A",
+                "B"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "B",
+                "A",
+                1
+              ],
+              "candidate": 3,
+              "previous": 1,
+              "improved": false
+            }
+          ]
+        },
+        "astar": {
+          "path": null,
+          "cost": null,
+          "hops": null,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "B",
+                1
+              ],
+              "candidate": 2,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "B",
+              "path": [
+                "S",
+                "A",
+                "B"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "B",
+                "A",
+                1
+              ],
+              "candidate": 3,
+              "previous": 1,
+              "improved": false
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "A",
+            1
+          ],
+          "left": 0,
+          "right": 1,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "B",
+            1
+          ],
+          "left": 0,
+          "right": 1,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "B",
+            "A",
+            1
+          ],
+          "left": 0,
+          "right": 1,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "X",
+            "G",
+            1
+          ],
+          "left": 0,
+          "right": 1,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": false,
+        "claims_bfs_min_cost": false,
+        "rule_failed": false
+      }
+    }
+  },
+  "bad-bfs-cost-claim": {
+    "case": "bad-bfs-cost-claim",
+    "utc": "2026-10-05T13:34:35.015250+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "G",
+          10
+        ],
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "A",
+          "G",
+          1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 2,
+        "A": 1,
+        "G": 0
+      },
+      "policy": "bfs-is-mincost"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "BAD_ACCEPTED",
+      "search_started": true,
+      "algorithms": {
+        "bfs": {
+          "path": [
+            "S",
+            "G"
+          ],
+          "cost": 10,
+          "hops": 1,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "hops": 0
+            },
+            {
+              "event": "enqueue",
+              "node": "G",
+              "parent": "S",
+              "cost": 10,
+              "hops": 1
+            },
+            {
+              "event": "enqueue",
+              "node": "A",
+              "parent": "S",
+              "cost": 1,
+              "hops": 1
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "G"
+              ],
+              "cost": 10,
+              "hops": 1
+            }
+          ]
+        },
+        "dijkstra": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 0,
+              "priority": 0
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                10
+              ],
+              "candidate": 10,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 0,
+              "priority": 1
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 10,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        },
+        "astar": {
+          "path": [
+            "S",
+            "A",
+            "G"
+          ],
+          "cost": 2,
+          "hops": 2,
+          "trace": [
+            {
+              "event": "pop",
+              "node": "S",
+              "path": [
+                "S"
+              ],
+              "cost": 0,
+              "h": 2,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "G",
+                10
+              ],
+              "candidate": 10,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "S",
+                "A",
+                1
+              ],
+              "candidate": 1,
+              "previous": null,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "A",
+              "path": [
+                "S",
+                "A"
+              ],
+              "cost": 1,
+              "h": 1,
+              "priority": 2
+            },
+            {
+              "event": "relax",
+              "edge": [
+                "A",
+                "G",
+                1
+              ],
+              "candidate": 2,
+              "previous": 10,
+              "improved": true
+            },
+            {
+              "event": "pop",
+              "node": "G",
+              "path": [
+                "S",
+                "A",
+                "G"
+              ],
+              "cost": 2,
+              "h": 0,
+              "priority": 2
+            }
+          ]
+        }
+      },
+      "heuristic_checks": [
+        {
+          "edge": [
+            "S",
+            "G",
+            10
+          ],
+          "left": 2,
+          "right": 10,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "S",
+            "A",
+            1
+          ],
+          "left": 2,
+          "right": 2,
+          "consistent": true
+        },
+        {
+          "edge": [
+            "A",
+            "G",
+            1
+          ],
+          "left": 1,
+          "right": 1,
+          "consistent": true
+        }
+      ],
+      "bad_judgment": {
+        "enabled": true,
+        "claims_bfs_min_cost": true,
+        "rule_failed": true
+      }
+    }
+  },
+  "negative-cost": {
+    "case": "negative-cost",
+    "utc": "2026-10-05T13:34:35.015796+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "machine": "arm64"
+    },
+    "fixture": {
+      "nodes": [
+        "S",
+        "A",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "G",
+          10
+        ],
+        [
+          "S",
+          "A",
+          1
+        ],
+        [
+          "A",
+          "G",
+          -1
+        ]
+      ],
+      "start": "S",
+      "goal": "G",
+      "h": {
+        "S": 2,
+        "A": 1,
+        "G": 0
+      },
+      "policy": "strict"
+    },
+    "source_binding": {
+      "search.py": "fa85c557cab44db35d7c463ee5855c6a4ff3857d47c7cecf4df0d865916c7641",
+      "runner.py": "e98a97cd055519578ccc0daff7c729481be54a35c97877b11113f41fbe94c069",
+      "fixtures.json": "af0cf458f6c9d19b08a2d38e47abd7a2ce3478136e721f9ef06546a1f9266096",
+      "hand-oracle.json": "20ab1ef26f3c71b49ec7ead8cad68eec4c456a563397c09abd894f579725fdee"
+    },
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "NEGATIVE_COST",
+      "search_started": false,
+      "algorithms": {}
+    }
+  }
+}

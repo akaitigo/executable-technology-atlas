@@ -1,0 +1,17 @@
+{
+  "field_id": "container-orchestration",
+  "accessed_at": "2026-10-05",
+  "third_party_body_saved": false,
+  "product_executed": false,
+  "sources": [
+    {"id":"kubernetes-scheduler","url":"https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/#node-selection-in-kube-scheduler","locator":"Node selection in kube-scheduler / Filtering / Scoring","binding":"capacity feasibility concept; model uses equal slots and deterministic least-used/name tie-break, not real scheduler scoring/random tie"},
+    {"id":"kubernetes-replicaset","url":"https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#how-a-replicaset-works","locator":"How a ReplicaSet works / Replicas / Scaling a ReplicaSet","binding":"desired count/create/delete concept; model removes highest ID, preserves/rebinds IDs; actual pod UID/replacement/controller deletion policy not reproduced"},
+    {"id":"kubernetes-nodes","url":"https://kubernetes.io/docs/concepts/architecture/nodes/#node-controller","locator":"Node controller / Resource capacity tracking","binding":"health and capacity concept; model health is boolean input, unbind immediate; real detection/eviction delays and safety are not reproduced"},
+    {"id":"kubernetes-resources","url":"https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/","locator":"Requests and limits / How Pods with resource requests are scheduled","binding":"next experiment only: multidimensional requests and allocatable; no actual CPU/memory/runtime limits"},
+    {"id":"kubernetes-taints","url":"https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/","locator":"Concepts / NoSchedule / NoExecute","binding":"next experiment only: feasibility constraints beyond spare slots"},
+    {"id":"kubernetes-pod-lifecycle","url":"https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/","locator":"Pod phase / Container probes / Pod lifetime","binding":"next experiment only: Bound is not Running or Ready; real replacement pod identities differ"},
+    {"id":"kubernetes-service","url":"https://kubernetes.io/docs/concepts/services-networking/service/","locator":"Defining a Service / EndpointSlices","binding":"next experiment only: reachable ready endpoints; no CNI/DNS/service traffic executed"}
+  ],
+  "implemented_subset": ["single-process synthetic JSON", "2 nodes with fixed 2 slots each", "1 slot per model pod", "desired replicas integer 0..6", "boolean health", "preserve healthy assignments", "immediate failed-node unbind/rebind", "deterministic filter/least-used placement", "Pending", "revision guard", "idempotent state", "intentional capacity-ignore defect", "independent enumeration"],
+  "not_taught": ["real Kubernetes API/control plane/etcd", "kubelet/CRI/container execution", "actual health detection/eviction timing", "real pod UID/replacement", "requests/limits/allocatable/overhead", "affinity/taints/topology/priority/preemption", "Deployment/rollout/PDB/StatefulSet/DaemonSet/Job", "probes/Running/Ready", "CNI/DNS/Service/Ingress/NetworkPolicy", "CSI/PVC/durable storage", "RBAC/authn/secrets/admission", "distributed watch/resourceVersion/concurrency", "autoscaling/multitenancy", "observability/upgrade/backup/production reliability"]
+}

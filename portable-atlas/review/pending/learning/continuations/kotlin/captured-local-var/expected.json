@@ -1,0 +1,23 @@
+{
+  "schema": "atlas.kotlin-captured-local-var.expected.v1",
+  "evidence_kind": "fixed_expectations_written_before_execution",
+  "compiler_version": "2.4.10",
+  "jdk_version": "17.0.17",
+  "compiler_archive_sha256": "473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+  "compiler_launcher_sha256": "7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92",
+  "compiles": [
+    {"id": "local-control-and-snapshot", "source": "src/CapturedLocalVar.kt", "exit_code": 0, "artifact_created": true, "diagnostic": null},
+    {"id": "captured-write-rejected", "source": "src/CapturedWriteRejected.kt", "exit_code": 1, "artifact_created": false, "diagnostic": "SMARTCAST_IMPOSSIBLE"}
+  ],
+  "runs": [
+    {"mode": "local-control", "input": "ada", "exit_code": 0, "stdout": "CONTROL_INITIAL=Ada\nRESULT=3\nCONTROL_FINAL=Ada\n", "stderr_contains": null, "classification": "unmodified-local-var"},
+    {"mode": "local-control", "input": "null", "exit_code": 0, "stdout": "CONTROL_INITIAL=<null>\nRESULT=SKIPPED\nCONTROL_FINAL=<null>\n", "stderr_contains": null, "classification": "null-branch-skipped"},
+    {"mode": "captured-snapshot", "input": "ada", "exit_code": 0, "stdout": "CAPTURED_INITIAL=Ada\nSNAPSHOT=Ada\nMUTATION_APPLIED\nCAPTURED_NOW=<null>\nRESULT=3\n", "stderr_contains": null, "classification": "snapshot-keeps-earlier-value"},
+    {"mode": "captured-snapshot", "input": "null", "exit_code": 0, "stdout": "CAPTURED_INITIAL=<null>\nSNAPSHOT=<null>\nMUTATION_APPLIED\nCAPTURED_NOW=Ada\nRESULT=SKIPPED\n", "stderr_contains": null, "classification": "snapshot-null-branch-skipped"}
+  ],
+  "expected_normal_runtime_count": 4,
+  "expected_runtime_failure_count": 0,
+  "expected_compile_rejection_count": 1,
+  "global_concurrency_guarantee": false,
+  "all_capture_cases_covered": false
+}

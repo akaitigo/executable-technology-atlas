@@ -1,0 +1,1300 @@
+{
+  "startedUtc": "2026-10-05T14:53:40.246176+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "model": "fixed first-fit integer request units; not Kubernetes scheduler or usage/limits"
+  },
+  "sourceHashes": {
+    "preview.py": "a8338fbcb8e155d5b4ee57e9396ab67b1803bc4fae59ded60fd89ec1ec822cdc",
+    "test_negative.py": "c49afec55a523ace2db926847bfc06ff26eac719d03385eba4cbccaed05c413e",
+    "runner.py": "b49d8100dd8b149acdaf0fe55e50e5911dde7f4c6535119a3b98759a53bdd5ab",
+    "index.html": "dba418001ebdf02e7854e3371c21137d504054e23eed321b1bda70f76bbb13d2",
+    "route.py": "84a0323a54bea5342fefa4432a3b2886f6284249b883a189774ca11de23894cb",
+    "oracle.json": "4924663372b36109b1dea322eb11cc32be81e4ef086eba553a310d67b5910b88",
+    "model.py": "35e604a1fa44795818ce29101bd3438aad5d901a54ed47976de78f2e5491dc2e",
+    "README.md": "387cac2b2b478c5684faa6d131ecfe2dcbd822702d01f7b28af108d73adc8e0c",
+    "requests.json": "7db7205a0a80801cb6ff9a96ba80f33051aa88ba57704be5dcbc9698b9772985",
+    "COVERAGE.md": "e88142be83de3dbef0741dfd76b005df58de9b6d7f066b58657860e40ca238c3",
+    "checker.py": "f8b3bb6d97c2cbdd34d618c5f02f5fe032f66e8d5d2c9ed8aaa49f51b1843829",
+    "REVISION": "350a6ff4d7f54984e34db960fa1fd7791c093b735ed5a3eabadd5ec7baa806db",
+    "skills/cpu-memory-request-placement/SKILL.md": "a53acbf6b7673c83db479fe5201d9a8e9f943ac4ea7857344c396503415a380c"
+  },
+  "cases": [
+    {
+      "id": "memory-overhead",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.257269+00:00",
+      "endedUtc": "2026-10-05T14:53:40.295570+00:00",
+      "inputSha256": "2011937bdf7635a86d384d7c63c121a7fa968e8af3cfc55546e02ab04bdfaa9f",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"pod\": \"p1\", \"demand\": {\"cpu\": 2, \"memory\": 3}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 4, \"memory\": 4}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}, {\"pod\": \"p2\", \"demand\": {\"cpu\": 2, \"memory\": 3}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 2, \"memory\": 1}, \"cpuFits\": true, \"memoryFits\": false, \"acceptedByAlgorithm\": false}, {\"node\": \"nodeB\", \"remaining\": {\"cpu\": 4, \"memory\": 2}, \"cpuFits\": true, \"memoryFits\": false, \"acceptedByAlgorithm\": false}], \"placement\": null, \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}], \"placements\": [{\"pod\": \"p1\", \"node\": \"nodeA\"}, {\"pod\": \"p2\", \"node\": null}], \"remaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"summary\": {\"bound\": 1, \"pending\": 1, \"outcome\": \"PENDING\"}}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "trace": [
+          {
+            "pod": "p1",
+            "demand": {
+              "cpu": 2,
+              "memory": 3
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 4
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          },
+          {
+            "pod": "p2",
+            "demand": {
+              "cpu": 2,
+              "memory": 3
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 2,
+                  "memory": 1
+                },
+                "cpuFits": true,
+                "memoryFits": false,
+                "acceptedByAlgorithm": false
+              },
+              {
+                "node": "nodeB",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 2
+                },
+                "cpuFits": true,
+                "memoryFits": false,
+                "acceptedByAlgorithm": false
+              }
+            ],
+            "placement": null,
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          }
+        ],
+        "placements": [
+          {
+            "pod": "p1",
+            "node": "nodeA"
+          },
+          {
+            "pod": "p2",
+            "node": null
+          }
+        ],
+        "remaining": {
+          "nodeA": {
+            "cpu": 2,
+            "memory": 1
+          },
+          "nodeB": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "summary": {
+          "bound": 1,
+          "pending": 1,
+          "outcome": "PENDING"
+        }
+      },
+      "outcome": "OBSERVED",
+      "audit": {
+        "observed": true,
+        "assignmentCount": 9,
+        "maxBound": 1,
+        "capacityFeasible": true,
+        "feasibleAssignments": [
+          {
+            "assignment": [
+              "nodeA",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null
+            ],
+            "bound": 0
+          }
+        ],
+        "violations": []
+      }
+    },
+    {
+      "id": "ignore-memory-fault",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.338467+00:00",
+      "endedUtc": "2026-10-05T14:53:40.371992+00:00",
+      "inputSha256": "fab8a2d5daf55c6a3efecb7030d5c649d0787fe4822446512787fa87f014188a",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"pod\": \"p1\", \"demand\": {\"cpu\": 2, \"memory\": 3}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 4, \"memory\": 4}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}, {\"pod\": \"p2\", \"demand\": {\"cpu\": 2, \"memory\": 3}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 1}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 2, \"memory\": 1}, \"cpuFits\": true, \"memoryFits\": false, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": -2}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}], \"placements\": [{\"pod\": \"p1\", \"node\": \"nodeA\"}, {\"pod\": \"p2\", \"node\": \"nodeA\"}], \"remaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": -2}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"summary\": {\"bound\": 2, \"pending\": 0, \"outcome\": \"BOUND\"}}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "trace": [
+          {
+            "pod": "p1",
+            "demand": {
+              "cpu": 2,
+              "memory": 3
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 4
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          },
+          {
+            "pod": "p2",
+            "demand": {
+              "cpu": 2,
+              "memory": 3
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 2,
+                  "memory": 1
+                },
+                "cpuFits": true,
+                "memoryFits": false,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": -2
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          }
+        ],
+        "placements": [
+          {
+            "pod": "p1",
+            "node": "nodeA"
+          },
+          {
+            "pod": "p2",
+            "node": "nodeA"
+          }
+        ],
+        "remaining": {
+          "nodeA": {
+            "cpu": 0,
+            "memory": -2
+          },
+          "nodeB": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "summary": {
+          "bound": 2,
+          "pending": 0,
+          "outcome": "BOUND"
+        }
+      },
+      "outcome": "OBSERVED",
+      "audit": {
+        "observed": true,
+        "assignmentCount": 9,
+        "maxBound": 1,
+        "capacityFeasible": false,
+        "feasibleAssignments": [
+          {
+            "assignment": [
+              "nodeA",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null
+            ],
+            "bound": 0
+          }
+        ],
+        "violations": [
+          {
+            "node": "nodeA",
+            "resource": "memory",
+            "used": 6,
+            "capacity": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": "no-overhead",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.413189+00:00",
+      "endedUtc": "2026-10-05T14:53:40.446003+00:00",
+      "inputSha256": "4fd46e32310b60e039ed9913dc7bec87cdc6eb39aa4b520780f46eee0d0dfd3f",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"pod\": \"p1\", \"demand\": {\"cpu\": 2, \"memory\": 2}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 4, \"memory\": 4}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 2}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}, {\"pod\": \"p2\", \"demand\": {\"cpu\": 2, \"memory\": 2}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 2}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 2, \"memory\": 2}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 0}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}], \"placements\": [{\"pod\": \"p1\", \"node\": \"nodeA\"}, {\"pod\": \"p2\", \"node\": \"nodeA\"}], \"remaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 0}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"summary\": {\"bound\": 2, \"pending\": 0, \"outcome\": \"BOUND\"}}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "trace": [
+          {
+            "pod": "p1",
+            "demand": {
+              "cpu": 2,
+              "memory": 2
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 4
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 2
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          },
+          {
+            "pod": "p2",
+            "demand": {
+              "cpu": 2,
+              "memory": 2
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 2
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 2,
+                  "memory": 2
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 0
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          }
+        ],
+        "placements": [
+          {
+            "pod": "p1",
+            "node": "nodeA"
+          },
+          {
+            "pod": "p2",
+            "node": "nodeA"
+          }
+        ],
+        "remaining": {
+          "nodeA": {
+            "cpu": 0,
+            "memory": 0
+          },
+          "nodeB": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "summary": {
+          "bound": 2,
+          "pending": 0,
+          "outcome": "BOUND"
+        }
+      },
+      "outcome": "OBSERVED",
+      "audit": {
+        "observed": true,
+        "assignmentCount": 9,
+        "maxBound": 2,
+        "capacityFeasible": true,
+        "feasibleAssignments": [
+          {
+            "assignment": [
+              "nodeA",
+              "nodeA"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeA",
+              "nodeB"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeA",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              "nodeB",
+              "nodeA"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeB",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeB"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null
+            ],
+            "bound": 0
+          }
+        ],
+        "violations": []
+      }
+    },
+    {
+      "id": "cpu-limited",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.488240+00:00",
+      "endedUtc": "2026-10-05T14:53:40.519627+00:00",
+      "inputSha256": "1af597ea4969fb13d7d89d4764db4e15fbc7769f8940338db2a67b8c05fd623b",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"pod\": \"p1\", \"demand\": {\"cpu\": 4, \"memory\": 1}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 4, \"memory\": 4}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}, {\"pod\": \"p2\", \"demand\": {\"cpu\": 4, \"memory\": 1}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 0, \"memory\": 3}, \"cpuFits\": false, \"memoryFits\": true, \"acceptedByAlgorithm\": false}, {\"node\": \"nodeB\", \"remaining\": {\"cpu\": 4, \"memory\": 2}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeB\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 0, \"memory\": 1}}}, {\"pod\": \"p3\", \"demand\": {\"cpu\": 4, \"memory\": 1}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 0, \"memory\": 1}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 0, \"memory\": 3}, \"cpuFits\": false, \"memoryFits\": true, \"acceptedByAlgorithm\": false}, {\"node\": \"nodeB\", \"remaining\": {\"cpu\": 0, \"memory\": 1}, \"cpuFits\": false, \"memoryFits\": true, \"acceptedByAlgorithm\": false}], \"placement\": null, \"afterRemaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 0, \"memory\": 1}}}], \"placements\": [{\"pod\": \"p1\", \"node\": \"nodeA\"}, {\"pod\": \"p2\", \"node\": \"nodeB\"}, {\"pod\": \"p3\", \"node\": null}], \"remaining\": {\"nodeA\": {\"cpu\": 0, \"memory\": 3}, \"nodeB\": {\"cpu\": 0, \"memory\": 1}}, \"summary\": {\"bound\": 2, \"pending\": 1, \"outcome\": \"PENDING\"}}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "trace": [
+          {
+            "pod": "p1",
+            "demand": {
+              "cpu": 4,
+              "memory": 1
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 4
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          },
+          {
+            "pod": "p2",
+            "demand": {
+              "cpu": 4,
+              "memory": 1
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 0,
+                  "memory": 3
+                },
+                "cpuFits": false,
+                "memoryFits": true,
+                "acceptedByAlgorithm": false
+              },
+              {
+                "node": "nodeB",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 2
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeB",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 0,
+                "memory": 1
+              }
+            }
+          },
+          {
+            "pod": "p3",
+            "demand": {
+              "cpu": 4,
+              "memory": 1
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 0,
+                "memory": 1
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 0,
+                  "memory": 3
+                },
+                "cpuFits": false,
+                "memoryFits": true,
+                "acceptedByAlgorithm": false
+              },
+              {
+                "node": "nodeB",
+                "remaining": {
+                  "cpu": 0,
+                  "memory": 1
+                },
+                "cpuFits": false,
+                "memoryFits": true,
+                "acceptedByAlgorithm": false
+              }
+            ],
+            "placement": null,
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 0,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 0,
+                "memory": 1
+              }
+            }
+          }
+        ],
+        "placements": [
+          {
+            "pod": "p1",
+            "node": "nodeA"
+          },
+          {
+            "pod": "p2",
+            "node": "nodeB"
+          },
+          {
+            "pod": "p3",
+            "node": null
+          }
+        ],
+        "remaining": {
+          "nodeA": {
+            "cpu": 0,
+            "memory": 3
+          },
+          "nodeB": {
+            "cpu": 0,
+            "memory": 1
+          }
+        },
+        "summary": {
+          "bound": 2,
+          "pending": 1,
+          "outcome": "PENDING"
+        }
+      },
+      "outcome": "OBSERVED",
+      "audit": {
+        "observed": true,
+        "assignmentCount": 27,
+        "maxBound": 2,
+        "capacityFeasible": true,
+        "feasibleAssignments": [
+          {
+            "assignment": [
+              "nodeA",
+              "nodeB",
+              null
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeA",
+              null,
+              "nodeB"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeA",
+              null,
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              "nodeB",
+              "nodeA",
+              null
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeB",
+              null,
+              "nodeA"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeB",
+              null,
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA",
+              "nodeB"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeB",
+              "nodeA"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              null,
+              "nodeB",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null,
+              "nodeA"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null,
+              "nodeB"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null,
+              null
+            ],
+            "bound": 0
+          }
+        ],
+        "violations": []
+      }
+    },
+    {
+      "id": "greedy-trap",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.559357+00:00",
+      "endedUtc": "2026-10-05T14:53:40.591103+00:00",
+      "inputSha256": "563e0a9dbe3e23431497b5a4e7c9dc581a84aca9bb4a93d73213ab406f6c8d55",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"pod\": \"p1\", \"demand\": {\"cpu\": 2, \"memory\": 1}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 4, \"memory\": 4}, \"cpuFits\": true, \"memoryFits\": true, \"acceptedByAlgorithm\": true}], \"placement\": \"nodeA\", \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}, {\"pod\": \"p2\", \"demand\": {\"cpu\": 2, \"memory\": 4}, \"beforeRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"candidates\": [{\"node\": \"nodeA\", \"remaining\": {\"cpu\": 2, \"memory\": 3}, \"cpuFits\": true, \"memoryFits\": false, \"acceptedByAlgorithm\": false}, {\"node\": \"nodeB\", \"remaining\": {\"cpu\": 4, \"memory\": 2}, \"cpuFits\": true, \"memoryFits\": false, \"acceptedByAlgorithm\": false}], \"placement\": null, \"afterRemaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}}], \"placements\": [{\"pod\": \"p1\", \"node\": \"nodeA\"}, {\"pod\": \"p2\", \"node\": null}], \"remaining\": {\"nodeA\": {\"cpu\": 2, \"memory\": 3}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"summary\": {\"bound\": 1, \"pending\": 1, \"outcome\": \"PENDING\"}}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "trace": [
+          {
+            "pod": "p1",
+            "demand": {
+              "cpu": 2,
+              "memory": 1
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 4
+                },
+                "cpuFits": true,
+                "memoryFits": true,
+                "acceptedByAlgorithm": true
+              }
+            ],
+            "placement": "nodeA",
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          },
+          {
+            "pod": "p2",
+            "demand": {
+              "cpu": 2,
+              "memory": 4
+            },
+            "beforeRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            },
+            "candidates": [
+              {
+                "node": "nodeA",
+                "remaining": {
+                  "cpu": 2,
+                  "memory": 3
+                },
+                "cpuFits": true,
+                "memoryFits": false,
+                "acceptedByAlgorithm": false
+              },
+              {
+                "node": "nodeB",
+                "remaining": {
+                  "cpu": 4,
+                  "memory": 2
+                },
+                "cpuFits": true,
+                "memoryFits": false,
+                "acceptedByAlgorithm": false
+              }
+            ],
+            "placement": null,
+            "afterRemaining": {
+              "nodeA": {
+                "cpu": 2,
+                "memory": 3
+              },
+              "nodeB": {
+                "cpu": 4,
+                "memory": 2
+              }
+            }
+          }
+        ],
+        "placements": [
+          {
+            "pod": "p1",
+            "node": "nodeA"
+          },
+          {
+            "pod": "p2",
+            "node": null
+          }
+        ],
+        "remaining": {
+          "nodeA": {
+            "cpu": 2,
+            "memory": 3
+          },
+          "nodeB": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "summary": {
+          "bound": 1,
+          "pending": 1,
+          "outcome": "PENDING"
+        }
+      },
+      "outcome": "OBSERVED",
+      "audit": {
+        "observed": true,
+        "assignmentCount": 9,
+        "maxBound": 2,
+        "capacityFeasible": true,
+        "feasibleAssignments": [
+          {
+            "assignment": [
+              "nodeA",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              "nodeB",
+              "nodeA"
+            ],
+            "bound": 2
+          },
+          {
+            "assignment": [
+              "nodeB",
+              null
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              "nodeA"
+            ],
+            "bound": 1
+          },
+          {
+            "assignment": [
+              null,
+              null
+            ],
+            "bound": 0
+          }
+        ],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-negative",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.634524+00:00",
+      "endedUtc": "2026-10-05T14:53:40.666067+00:00",
+      "inputSha256": "dc3f92c8534abb7faad01896fd154ac8047e7dbfe64f765a3410e7f225289b22",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-bool",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.706406+00:00",
+      "endedUtc": "2026-10-05T14:53:40.738593+00:00",
+      "inputSha256": "fa08004292b564619b7b127859c21e14a33a5db469af926a99cb5d9aac5500e9",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-fractional",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.779015+00:00",
+      "endedUtc": "2026-10-05T14:53:40.811157+00:00",
+      "inputSha256": "9f9cd8a749802c70a5e036fd74a49db183781ceb167e02a96a0413d124bbfb15",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-duplicate-id",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.853070+00:00",
+      "endedUtc": "2026-10-05T14:53:40.884711+00:00",
+      "inputSha256": "afe0840980fd46128bd7dddac68a30b73741985001c28da47e17aee2c57590a5",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-topology",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:40.931464+00:00",
+      "endedUtc": "2026-10-05T14:53:40.961885+00:00",
+      "inputSha256": "6e24f8ef653ae6c4ae4093ff20e6939dec28c6543af812191d2e98de1ae8a533",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-overhead",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:41.003008+00:00",
+      "endedUtc": "2026-10-05T14:53:41.034168+00:00",
+      "inputSha256": "b6b1a45035caf87db354ecbd54c643d2c00bef561022a49e8ce31e34fb7e014c",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-schema",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:41.076307+00:00",
+      "endedUtc": "2026-10-05T14:53:41.109083+00:00",
+      "inputSha256": "f48cd0ef67ff28f1aeb7246dfc608705b30c0b72886aaeeb34454206db62f1ee",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "refused-nonfinite",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:41.149912+00:00",
+      "endedUtc": "2026-10-05T14:53:41.182545+00:00",
+      "inputSha256": "982972525d692e4a608cf36924e168b83a709c66c15534d4a6cd5a5bb031ad95",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid bounded placement request\", \"trace\": [], \"placements\": null, \"remaining\": null, \"summary\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid bounded placement request",
+        "trace": [],
+        "placements": null,
+        "remaining": null,
+        "summary": null
+      },
+      "outcome": "REFUSED",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    },
+    {
+      "id": "execution-failure",
+      "argv": [
+        "python3",
+        "-B",
+        "../model.py"
+      ],
+      "startedUtc": "2026-10-05T14:53:41.227628+00:00",
+      "endedUtc": "2026-10-05T14:53:41.259555+00:00",
+      "inputSha256": "294a863c7e7b1f790df19efc16810c93e2c3b3ba167f56d9181f516303136026",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 14 (char 13)\n",
+      "observation": null,
+      "outcome": "EXECUTION_FAILURE",
+      "audit": {
+        "observed": false,
+        "assignmentCount": null,
+        "maxBound": null,
+        "capacityFeasible": null,
+        "feasibleAssignments": [],
+        "violations": []
+      }
+    }
+  ]
+}

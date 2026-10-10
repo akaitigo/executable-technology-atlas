@@ -1,0 +1,17 @@
+'use strict';
+const $=id=>document.getElementById(id),data=window.TOCTOU_OBSERVATION;
+const labels={unchanged:'変更なし → alpha payload','move-after-check':'alpha check → beta commit → read','payload-after-check':'alphaのままpayload更新','move-before-check':'beta commit → alpha check → read','beta-after-check':'beta actor：旧check deny後betaへ変更','unknown-resource':'未知resource → 返却なし','unknown-actor':'未知actor拒否','actor-type':'actor型拒否','resource-type':'resource型拒否','sql-error':'実SQL読取失敗'};
+for(const row of data.rows){const o=document.createElement('option');o.value=row.id;o.textContent=labels[row.id];$('scenario').appendChild(o);}
+$('run').textContent=`保存run: ${data.run_id} / Python ${data.environment.python} / SQLite ${data.rows[0].sqlite_version} / 6観測・3入力拒否・1実SQL失敗`;
+$('raw').href=`observations/${data.run_id}/raw.json`;$('command').href=`observations/${data.run_id}/command.json`;
+function clear(message){$('results').hidden=true;$('answer').hidden=true;$('answer').open=false;$('trace-disclosure').open=false;for(const id of ['request','check','normal-result','faulty-result','classification','before','after','trace','answer-body'])$(id).textContent='';$('database').removeAttribute('href');$('database').hidden=true;$('prediction-result').textContent=message;}
+$('scenario').addEventListener('change',()=>{$('prediction').value='';clear('予想してから比較する。');});
+$('prediction').addEventListener('change',()=>clear('予想を変更しました。比較するで照合してください。'));
+const explain={'both-read':'現tenant条件が一致して両版返却。この条件の一致だけでcheck/read間の変更に安全だと判断しない。','both-deny':'現在条件に合わず返却なし。故障版も旧checkがdenyなのでreadをskipする。',boundary:'旧alpha checkはread時の許可にならない。正常条件SELECTはbeta行を返さず、ID-only故障はBETA payloadを返す。','late-allow':'旧deny後に所属がbetaへ変わった。正常は現tenant条件で返却し、故障は旧denyを使い読取をskipする。',refused:'未知actor/型をSQL前に拒否し、初期行を保持。context文字列の照合は認証の実装ではない。',error:'実SQL OperationalErrorを記録してrollback。payloadなしで、正常答えを表示しない。'};
+function category(r){return r.status==='execution-error'?'error':r.status==='expected-refusal'?'refused':r.normal.decision==='allow'&&r.faulty.decision==='allow'?'both-read':r.normal.decision==='deny'&&r.faulty.decision==='deny'?'both-deny':r.normal.decision==='deny'?'boundary':'late-allow';}
+$('compare').addEventListener('click',()=>{const r=data.rows.find(x=>x.id===$('scenario').value),c=category(r);
+ $('prediction-result').textContent=$('prediction').value===''?'予想未選択。選んで結果と照合する。':$('prediction').value===c?'予想と一致。payloadとtransaction境界を照合しよう。':'予想と不一致。旧checkと現条件の読取を読み直そう。';
+ $('request').textContent=`要求actor: ${JSON.stringify(r.request.actor)} / resource: ${JSON.stringify(r.request.resource)} / trusted tenant: ${r.actor_tenant??'未解決'}`;$('check').textContent=`旧check許可: ${r.check_allowed===null?'未実行':r.check_allowed} / 観測状態: ${r.status}`;
+ $('normal-result').textContent=JSON.stringify(r.normal,null,2);$('faulty-result').textContent=JSON.stringify(r.faulty,null,2);$('classification').textContent=explain[c];$('before').textContent='初期commit行: '+JSON.stringify(r.before_rows);$('after').textContent='最終commit行: '+JSON.stringify(r.after_rows);$('trace').textContent=JSON.stringify(r.trace,null,2);$('results').hidden=false;$('trace-disclosure').open=false;
+ $('database').href=`observations/${data.run_id}/${r.id}/state.sqlite`;$('database').hidden=false;$('answer').hidden=c==='error';$('answer').open=false;$('answer-body').textContent=c==='error'?'':explain[c]+' 単一tenant条件はこの固定scheduleの取得を限定する。認証・全失効・実並行race・製品policy保証は未実証。';
+});

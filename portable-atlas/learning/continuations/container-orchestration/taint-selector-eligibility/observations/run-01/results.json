@@ -1,0 +1,1825 @@
+{
+  "Atlas": "Finite node eligibility and selection",
+  "kind": "synthetic_preplacement_model",
+  "cases": [
+    {
+      "id": "no-constraint",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [
+            "A"
+          ],
+          "selectionCandidates": [
+            "A"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "A",
+          "outcome": "BOUND"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [
+            "A"
+          ],
+          "selectionCandidates": [
+            "A",
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "A",
+          "outcome": "BOUND"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "selector-only",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": []
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": null,
+          "outcome": "PENDING"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "B",
+          "outcome": "BOUND"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": []
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "toleration-only",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [
+            "A",
+            "B"
+          ],
+          "selectionCandidates": [
+            "A",
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "A",
+          "outcome": "BOUND"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [
+            "A",
+            "B"
+          ],
+          "selectionCandidates": [
+            "A",
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "A",
+          "outcome": "BOUND"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "selector-and-toleration",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [
+            "B"
+          ],
+          "selectionCandidates": [
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "B",
+          "outcome": "BOUND"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [
+            "B"
+          ],
+          "selectionCandidates": [
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "B",
+          "outcome": "BOUND"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "wrong-toleration-value",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-b",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": null,
+          "outcome": "PENDING"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 4,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": false
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [
+            "B"
+          ],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": "B",
+          "outcome": "BOUND"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-b",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "capacity-block",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 1,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "strict": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 1,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": false,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": null,
+          "outcome": "PENDING"
+        }
+      },
+      "fault": {
+        "kind": "evaluated",
+        "payload": {
+          "nodeChecks": [
+            {
+              "node": "A",
+              "available": {
+                "cpu": 4,
+                "memory": 4
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": true,
+              "memoryFits": true,
+              "selectorFits": false,
+              "taintFits": true
+            },
+            {
+              "node": "B",
+              "available": {
+                "cpu": 1,
+                "memory": 2
+              },
+              "demand": {
+                "cpu": 2,
+                "memory": 1
+              },
+              "cpuFits": false,
+              "memoryFits": true,
+              "selectorFits": true,
+              "taintFits": true
+            }
+          ],
+          "feasibleNodes": [],
+          "selectionCandidates": [],
+          "selectionOrder": [
+            "A",
+            "B"
+          ],
+          "selectedNode": null,
+          "outcome": "PENDING"
+        }
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 1,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "unknown-request-key",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [],
+        "force": true
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "result": {
+        "kind": "input-refused",
+        "reason": "invalid-request-schema",
+        "payload": null
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [],
+        "force": true
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "boolean-resource",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": true,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "result": {
+        "kind": "input-refused",
+        "reason": "invalid-available",
+        "payload": null
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": true,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "unknown-selector-key",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "zone": "special"
+        },
+        "tolerations": []
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "result": {
+        "kind": "input-refused",
+        "reason": "invalid-selector",
+        "payload": null
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "zone": "special"
+        },
+        "tolerations": []
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    },
+    {
+      "id": "unsupported-exists",
+      "request_before": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Exists",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_before": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      },
+      "result": {
+        "kind": "input-refused",
+        "reason": "invalid-toleration",
+        "payload": null
+      },
+      "request_after": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Exists",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "topology_after": {
+        "nodes": {
+          "A": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 4
+            },
+            "labels": {
+              "pool": "general"
+            },
+            "taints": []
+          },
+          "B": {
+            "capacity": {
+              "cpu": 4,
+              "memory": 2
+            },
+            "labels": {
+              "pool": "special"
+            },
+            "taints": [
+              {
+                "key": "reserved",
+                "value": "team-a",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "podDemand": {
+          "cpu": 2,
+          "memory": 1
+        },
+        "selectionOrder": [
+          "A",
+          "B"
+        ],
+        "resourceUnits": "synthetic-integer",
+        "healthAssumption": "both-available"
+      }
+    }
+  ],
+  "startedAt": "2026-10-07T00:15:01.289604+00:00",
+  "calculationSeconds": 0.001003416,
+  "toolchain": {
+    "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "platform": "macOS-26.1-arm64-arm-64bit"
+  },
+  "actualNice": 10,
+  "sourceSha256": {
+    "CONTRACT.md": "6584b0868a9c12326afdd5703371b9529219347f376d3b7a02b3207aaad70b5e",
+    "SOURCES.md": "c51ce99986e67b8707eae05fdf6986902e4e48edbcd1da1dc6a6b6aec146d8c0",
+    "topology.json": "f948f8d56272425c8cdb1f925ab02c2e8221c6289cf490f00cc50b9e8b2dbfff",
+    "cases.json": "f566f5195edb4b0d583a2525b72a8ec09f310e6047a053b2d8411f3e0b135a62",
+    "expected.json": "d0e403e5f00a15ecf644a2acd165ce32e68f26820cf7b47cb7e3cdb8b4884483",
+    "placement.py": "165503e63349da5e1ac021a154ada9ea0530c635e1b0fd7df264e8c49ec1a921",
+    "produce.py": "45f6b8bfdaf8976c5b7442eeceb8c3161e5b1814daea39923964d31202e5cbbe",
+    "verify.py": "138715b6f24ec51ab711e51495612938fd4c897569ee4c1dc4c065886af45c92",
+    "run.py": "ab5a1c3301ad0aef5afb0a8c84728c3aea7396a3ea71e6dca4b77f2aeb9f6414",
+    "execute_once.py": "840ab359430d942ee7e8e150455147f326343727a7de45efa2d5aac636eee0bc",
+    "resource_parse.py": "cee0eeb080c4987b6195a389f9b70e272b4c029164f47ea26a1cbcae15ddaea4",
+    "resource_observe.py": "97d9e76990a2d852f8f85dac4b896f9e5258e3652f95533a445bd3af2233ae6a"
+  }
+}

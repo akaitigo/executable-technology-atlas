@@ -1,0 +1,93 @@
+{
+  "verified_at_utc": "2026-10-05T07:44:32.593980+00:00",
+  "normal_checker_route_observe_read_only": true,
+  "runner_only_owned_temp_and_no_persistent_changes": true,
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"saved_cases\": 10,\n  \"actual_file_cases\": 7,\n  \"independent_reader_snapshots\": 28,\n  \"falsified_evidence_rejected\": 6,\n  \"additional_input_rejections\": 12,\n  \"skill_routes\": \"4 supported / 8 unsupported\",\n  \"local_links\": 44,\n  \"binding\": \"input/source/raw/reader SVG/artifacts matched\",\n  \"cleanup\": \"no owned temp remains / held readers closed / server closed\",\n  \"durability_proven\": false,\n  \"subject_complete\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "route.py",
+        "replace"
+      ],
+      "exit": 0,
+      "stdout": "{\"status\": \"supported\", \"target\": \"runner.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "route.py",
+        "power-loss"
+      ],
+      "exit": 2,
+      "stdout": "{\"status\": \"unsupported\", \"target\": \"COVERAGE.md\", \"reason\": \"block-CoW/crash durability/RAID/fs repair/kernel storage driver等は今回未教材\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "observe.py"
+      ],
+      "exit": 0,
+      "stdout": "read-only: explicit --write-evidence required\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{\"mode\":\"truncate-fail\",\"old\":\"old\",\"new\":\"new\",\"cut\":0}"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"observed\",\n  \"input\": {\n    \"mode\": \"truncate-fail\",\n    \"old\": \"old\",\n    \"new\": \"new\",\n    \"cut\": 0\n  },\n  \"pid\": 75385,\n  \"events\": [\n    {\n      \"seq\": 0,\n      \"event\": \"owned_temp_created\",\n      \"wall_ns\": 1791186272382502000,\n      \"mono_ns\": 42448666,\n      \"relative_directory\": \".owned-lzd1cufs\",\n      \"pid\": 75385\n    },\n    {\n      \"seq\": 1,\n      \"event\": \"flush_returned\",\n      \"wall_ns\": 1791186272382652000,\n      \"mono_ns\": 42598000,\n      \"role\": \"initial-old\"\n    },\n    {\n      \"seq\": 2,\n      \"event\": \"fsync_called\",\n      \"wall_ns\": 1791186272382653000,\n      \"mono_ns\": 42599041,\n      \"role\": \"initial-old\",\n      \"fd\": 4\n    },\n    {\n      \"seq\": 3,\n      \"event\": \"fsync_returned\",\n      \"wall_ns\": 1791186272382977000,\n      \"mono_ns\": 42923208,\n      \"role\": \"initial-old\"\n    },\n    {\n      \"seq\": 4,\n      \"event\": \"held_reader_opened\",\n      \"wall_ns\": 1791186272383914000,\n      \"mono_ns\": 43860375,\n      \"fd\": 4\n    },\n    {\n      \"seq\": 5,\n      \"event\": \"old_ready\",\n      \"wall_ns\": 1791186272384033000,\n      \"mono_ns\": 43979291,\n      \"path\": {\n        \"length\": 3,\n        \"sha256\": \"cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4\",\n        \"hex\": \"6f6c64\"\n      },\n      \"held_reader\": {\n        \"length\": 3,\n        \"sha256\": \"cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4\",\n        \"hex\": \"6f6c64\"\n      },\n      \"candidate\": null,\n      \"path_inode\": 117468418,\n      \"held_inode\": 117468418,\n      \"path_device\": 16777232,\n      \"held_device\": 16777232,\n      \"candidate_inode\": null,\n      \"candidate_device\": null\n    },\n    {\n      \"seq\": 6,\n      \"event\": \"truncate_open_returned\",\n      \"wall_ns\": 1791186272384122000,\n      \"mono_ns\": 44068333,\n      \"filename\": \"target.bin\"\n    },\n    {\n      \"seq\": 7,\n      \"event\": \"after_truncate\",\n      \"wall_ns\": 1791186272385003000,\n      \"mono_ns\": 44949041,\n      \"path\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"held_reader\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"candidate\": null,\n      \"path_inode\": 117468418,\n      \"held_inode\": 117468418,\n      \"path_device\": 16777232,\n      \"held_device\": 16777232,\n      \"candidate_inode\": null,\n      \"candidate_device\": null\n    },\n    {\n      \"seq\": 8,\n      \"event\": \"flush_returned\",\n      \"wall_ns\": 1791186272385007000,\n      \"mono_ns\": 44953041,\n      \"role\": \"in-place-target\"\n    },\n    {\n      \"seq\": 9,\n      \"event\": \"fsync_called\",\n      \"wall_ns\": 1791186272385007000,\n      \"mono_ns\": 44953625,\n      \"role\": \"in-place-target\",\n      \"fd\": 5\n    },\n    {\n      \"seq\": 10,\n      \"event\": \"fsync_returned\",\n      \"wall_ns\": 1791186272385009000,\n      \"mono_ns\": 44954875,\n      \"role\": \"in-place-target\"\n    },\n    {\n      \"seq\": 11,\n      \"event\": \"partial_overwrite\",\n      \"wall_ns\": 1791186272385131000,\n      \"mono_ns\": 45077333,\n      \"path\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"held_reader\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"candidate\": null,\n      \"path_inode\": 117468418,\n      \"held_inode\": 117468418,\n      \"path_device\": 16777232,\n      \"held_device\": 16777232,\n      \"candidate_inode\": null,\n      \"candidate_device\": null\n    },\n    {\n      \"seq\": 12,\n      \"event\": \"injected_exception\",\n      \"wall_ns\": 1791186272385138000,\n      \"mono_ns\": 45083958,\n      \"type\": \"InjectedFailure\",\n      \"message\": \"after truncate and prefix overwrite\"\n    },\n    {\n      \"seq\": 13,\n      \"event\": \"after_exception\",\n      \"wall_ns\": 1791186272385217000,\n      \"mono_ns\": 45162791,\n      \"path\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"held_reader\": {\n        \"length\": 0,\n        \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n        \"hex\": \"\"\n      },\n      \"candidate\": null,\n      \"path_inode\": 117468418,\n      \"held_inode\": 117468418,\n      \"path_device\": 16777232,\n      \"held_device\": 16777232,\n      \"candidate_inode\": null,\n      \"candidate_device\": null\n    },\n    {\n      \"seq\": 14,\n      \"event\": \"held_reader_closed\",\n      \"wall_ns\": 1791186272385222000,\n      \"mono_ns\": 45167875\n    },\n    {\n      \"seq\": 15,\n      \"event\": \"owned_temp_removed\",\n      \"wall_ns\": 1791186272385612000,\n      \"mono_ns\": 45558000,\n      \"relative_directory\": \".owned-lzd1cufs\",\n      \"existed_before\": true,\n      \"exists_after\": false\n    }\n  ],\n  \"committed\": false,\n  \"injected_exception\": true,\n  \"unexpected\": null,\n  \"cleanup\": {\n    \"held_reader_closed\": true,\n    \"temp_removed\": true\n  },\n  \"durability_proven\": false,\n  \"durability\": \"power-loss/crash durability not tested; fsync call/return evidence only\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{\"mode\":\"atomic-commit\",\"old\":\"old\",\"new\":\"new\",\"cut\":3,\"path\":\"../other.bin\"}"
+      ],
+      "exit": 2,
+      "stdout": "{\n  \"status\": \"rejected\",\n  \"error\": \"mode/old/new/cutだけを持つobjectが必要（外部path不可）\",\n  \"temp_created\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{"
+      ],
+      "exit": 2,
+      "stdout": "{\n  \"status\": \"rejected\",\n  \"error\": \"invalid JSON\",\n  \"temp_created\": false\n}\n",
+      "stderr": ""
+    }
+  ],
+  "quick_validate": {
+    "command": "skill-creator/scripts/quick_validate.py <module skill>",
+    "exit": 0,
+    "stdout": "Skill is valid!\n",
+    "stderr": ""
+  },
+  "scope": "finite module verification only; no old Portal/Core/Graph gates",
+  "delivery": "local-only; no commit/push/publication; no new Goal"
+}

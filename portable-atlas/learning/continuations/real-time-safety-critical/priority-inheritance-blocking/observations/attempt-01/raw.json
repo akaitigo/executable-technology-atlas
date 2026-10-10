@@ -1,0 +1,2310 @@
+{
+  "fixture": {
+    "cpu": 1,
+    "locks": [
+      "K"
+    ],
+    "tick": 1,
+    "priority_order": [
+      "H",
+      "M",
+      "L"
+    ],
+    "tasks": [
+      {
+        "id": "L",
+        "arrival": 0,
+        "work": 3,
+        "lock": "K",
+        "base": 1,
+        "deadline": 8
+      },
+      {
+        "id": "H",
+        "arrival": 1,
+        "work": 1,
+        "lock": "K",
+        "base": 3,
+        "deadline": 4
+      },
+      {
+        "id": "M",
+        "arrival": 1,
+        "work": 4,
+        "lock": null,
+        "base": 2,
+        "deadline": 8
+      }
+    ],
+    "deadline_cases": [
+      4,
+      2
+    ],
+    "contract": [
+      "boundary completion/release from previous tick",
+      "arrivals",
+      "lock attempts in priority order; block if occupied",
+      "ready waiter acquisition after release",
+      "effective priorities reset to base, then inherit highest blocked waiter",
+      "dispatch highest effective; ID tie-break",
+      "execute one tick [t,t+1)",
+      "finish/release at t+1 before deadline evaluation"
+    ],
+    "deadline_rule": "finish <= absolute deadline is on time; due unfinished is miss; latched",
+    "scope": "fixed fictional finite model, not Linux or actual WCET"
+  },
+  "runs": [
+    {
+      "mode": "none",
+      "h_deadline": 4,
+      "rows": [
+        {
+          "time": 0,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 3,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 1,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 2,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 3,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 3,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 2,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 4,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 1,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 5,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 6,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 1,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 7,
+          "dispatch": "H",
+          "owner": "H",
+          "ready": [
+            "H"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 7,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "ready",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 8,
+          "dispatch": null,
+          "owner": null,
+          "ready": [],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 7,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 8,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        }
+      ],
+      "cpu": [
+        "L",
+        "M",
+        "M",
+        "M",
+        "M",
+        "L",
+        "L",
+        "H"
+      ],
+      "events": [
+        {
+          "time": 0,
+          "event": "arrival",
+          "task": "L"
+        },
+        {
+          "time": 0,
+          "event": "acquire",
+          "task": "L"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "H"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "M"
+        },
+        {
+          "time": 1,
+          "event": "block",
+          "task": "H"
+        },
+        {
+          "time": 5,
+          "event": "finish",
+          "task": "M"
+        },
+        {
+          "time": 7,
+          "event": "finish",
+          "task": "L"
+        },
+        {
+          "time": 7,
+          "event": "release",
+          "task": "L"
+        },
+        {
+          "time": 7,
+          "event": "acquire",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "finish",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "release",
+          "task": "H"
+        }
+      ],
+      "block_start": 1,
+      "block_end": 7,
+      "blocking": 6,
+      "finish": {
+        "L": 7,
+        "H": 8,
+        "M": 5
+      },
+      "work": {
+        "L": 3,
+        "H": 1,
+        "M": 4
+      },
+      "lateness": {
+        "L": -1,
+        "H": 4,
+        "M": -3
+      },
+      "misses": [
+        "H"
+      ]
+    },
+    {
+      "mode": "none",
+      "h_deadline": 2,
+      "rows": [
+        {
+          "time": 0,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 3,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 1,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 2,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 3,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 3,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 2,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 4,
+          "dispatch": "M",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 1,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 5,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 6,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 1,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 7,
+          "dispatch": "H",
+          "owner": "H",
+          "ready": [
+            "H"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 7,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "ready",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 8,
+          "dispatch": null,
+          "owner": null,
+          "ready": [],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 7,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 8,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 5,
+              "miss": false
+            }
+          }
+        }
+      ],
+      "cpu": [
+        "L",
+        "M",
+        "M",
+        "M",
+        "M",
+        "L",
+        "L",
+        "H"
+      ],
+      "events": [
+        {
+          "time": 0,
+          "event": "arrival",
+          "task": "L"
+        },
+        {
+          "time": 0,
+          "event": "acquire",
+          "task": "L"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "H"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "M"
+        },
+        {
+          "time": 1,
+          "event": "block",
+          "task": "H"
+        },
+        {
+          "time": 5,
+          "event": "finish",
+          "task": "M"
+        },
+        {
+          "time": 7,
+          "event": "finish",
+          "task": "L"
+        },
+        {
+          "time": 7,
+          "event": "release",
+          "task": "L"
+        },
+        {
+          "time": 7,
+          "event": "acquire",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "finish",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "release",
+          "task": "H"
+        }
+      ],
+      "block_start": 1,
+      "block_end": 7,
+      "blocking": 6,
+      "finish": {
+        "L": 7,
+        "H": 8,
+        "M": 5
+      },
+      "work": {
+        "L": 3,
+        "H": 1,
+        "M": 4
+      },
+      "lateness": {
+        "L": -1,
+        "H": 6,
+        "M": -3
+      },
+      "misses": [
+        "H"
+      ]
+    },
+    {
+      "mode": "pi",
+      "h_deadline": 4,
+      "rows": [
+        {
+          "time": 0,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 3,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 1,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 3,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 2,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 1,
+              "lock": "K",
+              "base": 1,
+              "effective": 3,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 3,
+          "dispatch": "H",
+          "owner": "H",
+          "ready": [
+            "H",
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 4,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 4,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 5,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 4,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 3,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 6,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 4,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 2,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 7,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 4,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 1,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 8,
+          "dispatch": null,
+          "owner": null,
+          "ready": [],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 4,
+              "state": "done",
+              "finish": 4,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 8,
+              "miss": false
+            }
+          }
+        }
+      ],
+      "cpu": [
+        "L",
+        "L",
+        "L",
+        "H",
+        "M",
+        "M",
+        "M",
+        "M"
+      ],
+      "events": [
+        {
+          "time": 0,
+          "event": "arrival",
+          "task": "L"
+        },
+        {
+          "time": 0,
+          "event": "acquire",
+          "task": "L"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "H"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "M"
+        },
+        {
+          "time": 1,
+          "event": "block",
+          "task": "H"
+        },
+        {
+          "time": 3,
+          "event": "finish",
+          "task": "L"
+        },
+        {
+          "time": 3,
+          "event": "release",
+          "task": "L"
+        },
+        {
+          "time": 3,
+          "event": "acquire",
+          "task": "H"
+        },
+        {
+          "time": 4,
+          "event": "finish",
+          "task": "H"
+        },
+        {
+          "time": 4,
+          "event": "release",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "finish",
+          "task": "M"
+        }
+      ],
+      "block_start": 1,
+      "block_end": 3,
+      "blocking": 2,
+      "finish": {
+        "L": 3,
+        "H": 4,
+        "M": 8
+      },
+      "work": {
+        "L": 3,
+        "H": 1,
+        "M": 4
+      },
+      "lateness": {
+        "L": -5,
+        "H": 0,
+        "M": 0
+      },
+      "misses": []
+    },
+    {
+      "mode": "pi",
+      "h_deadline": 2,
+      "rows": [
+        {
+          "time": 0,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 3,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "unreleased",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 1,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 2,
+              "lock": "K",
+              "base": 1,
+              "effective": 3,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": false
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 2,
+          "dispatch": "L",
+          "owner": "L",
+          "ready": [
+            "L",
+            "M"
+          ],
+          "blocked": [
+            "H"
+          ],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 1,
+              "lock": "K",
+              "base": 1,
+              "effective": 3,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "blocked",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 3,
+          "dispatch": "H",
+          "owner": "H",
+          "ready": [
+            "H",
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 1,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "ready",
+              "finish": null,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 4,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 4,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 4,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 5,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 4,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 3,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 6,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 4,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 2,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 7,
+          "dispatch": "M",
+          "owner": null,
+          "ready": [
+            "M"
+          ],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 4,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 1,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "ready",
+              "finish": null,
+              "miss": false
+            }
+          }
+        },
+        {
+          "time": 8,
+          "dispatch": null,
+          "owner": null,
+          "ready": [],
+          "blocked": [],
+          "tasks": {
+            "L": {
+              "arrival": 0,
+              "work": 3,
+              "remaining": 0,
+              "lock": "K",
+              "base": 1,
+              "effective": 1,
+              "deadline": 8,
+              "state": "done",
+              "finish": 3,
+              "miss": false
+            },
+            "H": {
+              "arrival": 1,
+              "work": 1,
+              "remaining": 0,
+              "lock": "K",
+              "base": 3,
+              "effective": 3,
+              "deadline": 2,
+              "state": "done",
+              "finish": 4,
+              "miss": true
+            },
+            "M": {
+              "arrival": 1,
+              "work": 4,
+              "remaining": 0,
+              "lock": null,
+              "base": 2,
+              "effective": 2,
+              "deadline": 8,
+              "state": "done",
+              "finish": 8,
+              "miss": false
+            }
+          }
+        }
+      ],
+      "cpu": [
+        "L",
+        "L",
+        "L",
+        "H",
+        "M",
+        "M",
+        "M",
+        "M"
+      ],
+      "events": [
+        {
+          "time": 0,
+          "event": "arrival",
+          "task": "L"
+        },
+        {
+          "time": 0,
+          "event": "acquire",
+          "task": "L"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "H"
+        },
+        {
+          "time": 1,
+          "event": "arrival",
+          "task": "M"
+        },
+        {
+          "time": 1,
+          "event": "block",
+          "task": "H"
+        },
+        {
+          "time": 3,
+          "event": "finish",
+          "task": "L"
+        },
+        {
+          "time": 3,
+          "event": "release",
+          "task": "L"
+        },
+        {
+          "time": 3,
+          "event": "acquire",
+          "task": "H"
+        },
+        {
+          "time": 4,
+          "event": "finish",
+          "task": "H"
+        },
+        {
+          "time": 4,
+          "event": "release",
+          "task": "H"
+        },
+        {
+          "time": 8,
+          "event": "finish",
+          "task": "M"
+        }
+      ],
+      "block_start": 1,
+      "block_end": 3,
+      "blocking": 2,
+      "finish": {
+        "L": 3,
+        "H": 4,
+        "M": 8
+      },
+      "work": {
+        "L": 3,
+        "H": 1,
+        "M": 4
+      },
+      "lateness": {
+        "L": -5,
+        "H": 2,
+        "M": 0
+      },
+      "misses": [
+        "H"
+      ]
+    }
+  ],
+  "invalid_inputs": [
+    {
+      "input": {
+        "mode": "unknown",
+        "h_deadline": 4
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "mode must be none or pi"
+    },
+    {
+      "input": {
+        "mode": null,
+        "h_deadline": 4
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "mode must be none or pi"
+    },
+    {
+      "input": {
+        "mode": true,
+        "h_deadline": 4
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "mode must be none or pi"
+    },
+    {
+      "input": {
+        "mode": "",
+        "h_deadline": 4
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "mode must be none or pi"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": true
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": null
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": "4"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": -1
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": 0
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": 3
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    },
+    {
+      "input": {
+        "mode": "pi",
+        "h_deadline": 100
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "H deadline must be integer 2 or 4"
+    }
+  ],
+  "evidence_mutations": [
+    {
+      "id": "cpu",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "owner",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "effective",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "blocked",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "blocking",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "deadline",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "author_smoke": {
+    "supported": {
+      "status": "supported",
+      "runner": "python3 verify.py",
+      "ui": "index.html",
+      "guide": "README.md"
+    },
+    "unsupported": {
+      "status": "unsupported",
+      "coverage": "coverage.json",
+      "reason": "finite 1CPU/1lock/tick model; no actual OS, WCET or safety certification"
+    }
+  },
+  "scope": "finite abstract 1CPU 1lock; no real OS timing or safety certification",
+  "attempt": {
+    "command": "python3 verify.py --record attempt-01",
+    "started_at_utc": "2026-10-05T12:38:13.183523+00:00",
+    "completed_at_utc": "2026-10-05T12:38:13.186198+00:00",
+    "exit_code": 0,
+    "toolchain": {
+      "python": "3.9.6",
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "input_sha256": "0fdf9092dd3049d5f4f7c1f45e8edc6a510da51e42ae8f25fd3862e4b3689492",
+    "hand_oracle_sha256": "797b750ab5a9b6d68c65b9e352330faa9608166ca6d2ce0737393f8e3375c237",
+    "executed_source_sha256": {
+      "model.py": "c2624cfaf4f1cd57ea28c6becd34968eb905a3efb0e880ca776aaaee7f871bcb",
+      "oracle.py": "d7b7d493fc6521044c3e08571f4b02ec7125abd1a619fc95c4a2b4f045f4acb2",
+      "verify.py": "ce1fc1184685764f66ff25ae8a8ed5694d475b61f33786d41b44e3f9f9dee6e1"
+    }
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "startedUtc": "2026-10-05T15:33:29.523172+00:00",
+  "completedUtc": "2026-10-05T15:33:33.504962+00:00",
+  "scope": "Resilience finite WAL live-backup boundary only; original/shared modules unchanged; no Core/fullGate/install/commit/push/publication",
+  "current": "observations/20261005T152632291389Z",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "platform": "Darwin",
+    "scope": "own TemporaryDirectory SQLite only; no shared DB or system settings"
+  },
+  "actualChildren": 8,
+  "outcomes": {
+    "OBSERVED": 3,
+    "REFUSED": 2,
+    "EXECUTION_FAILURE": 3
+  },
+  "sqlReceipts": 89,
+  "capturedSQLiteFiles": 18,
+  "backupNewConnectionRows": [
+    1,
+    2
+  ],
+  "mainOnlyCopyNewConnectionRows": [
+    1
+  ],
+  "missingCommittedRows": [
+    2
+  ],
+  "readonlyDefaultCommands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "runner.py"
+      ],
+      "exitCode": 0,
+      "stdout": "Saved evidence observations/20261005T152632291389Z; no mutation\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS 8 conditions; literal row table + independent read-only SQL/WAL; worker not imported\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "test_negative.py"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"readonlySHA256MtimeNs\": true,\n  \"negativeTests\": [\n    {\n      \"test\": \"backup-loses-row2\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"copy-invents-row2\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"wal-missing\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"source-stability-false\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"copy-success-as-complete\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"failure-normal-answer\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"checkpoint-order\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    },\n    {\n      \"test\": \"wal-header-metadata\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrReadOnlySQLRejected\": true\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "inspect"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS 8 conditions; literal row table + independent read-only SQL/WAL; worker not imported\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "lesson"
+      ],
+      "exitCode": 0,
+      "stdout": "index.html; evidence observations/20261005T152632291389Z\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "unknown"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "unsupported route\n"
+    }
+  ],
+  "allModuleSHA256MtimeNsUnchanged": true,
+  "literalOracleAuthoredBeforeWorker": true,
+  "workerImportedByChecker": false,
+  "independentOracle": "Fixed literal row table + separate RO SQL. Captured WAL pair cloned to owned temp to preserve original shm byte/mtime; immutable main read separated from WAL read. Exact successful SQL sequence and binary WAL frame metadata checked.",
+  "negativeTests": {
+    "readonlySHA256MtimeNs": true,
+    "negativeTests": [
+      {
+        "test": "backup-loses-row2",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "copy-invents-row2",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "wal-missing",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "source-stability-false",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "copy-success-as-complete",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "failure-normal-answer",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "checkpoint-order",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      },
+      {
+        "test": "wal-header-metadata",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrReadOnlySQLRejected": true
+      }
+    ]
+  },
+  "actualTerminalStdoutMatchesSaved": true,
+  "oldRawPreserved": {
+    "files": 54,
+    "sha256AndMtimeNs": true,
+    "historicalIssue": "Initial checker assumed failed SQL prepare appeared in trace_callback. Actual OperationalError attempt remained in receipt; only successful executes matched to callback. Old failed check evidence/raw untouched."
+  },
+  "ui": {
+    "conditions": 8,
+    "predictionChangesAfterAnswerAndRawOpened": 24,
+    "retainedNewPredictionsClearedOldFieldsClosedDetails": true,
+    "conditionReset": true,
+    "referencesExactSourceBodies": 3,
+    "console": [],
+    "tabId": "25",
+    "tabClosed": true,
+    "screenshots": [
+      {
+        "path": "media/backup-only.jpg",
+        "width": 1280,
+        "height": 2821,
+        "sha256": "f540fe2ff9d894d31230cde09dffb0354f11adeaff683fdc71d25b063927195b",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/compare.jpg",
+        "width": 1280,
+        "height": 3001,
+        "sha256": "3e1f172047bfcdf4223786bc45ad0112477e0d4eb1f341776f1cf996f5f24086",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/execution-failure.jpg",
+        "width": 1280,
+        "height": 1676,
+        "sha256": "bdd5a98b6610823ff89b2ef32fb87470ab4b9fe8fdd6378f216102e6323b28ad",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/main-only.jpg",
+        "width": 1280,
+        "height": 2696,
+        "sha256": "f30fabe34c5147fa69dbe5a39dd17c82b7ace8f6e1f5525b3b3d04aeaa1aa330",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/refused-mode.jpg",
+        "width": 1280,
+        "height": 1676,
+        "sha256": "9c792f7bf487392a08b7a88a1a93502c0ca24210aeba889fa66b4a83fe2f4264",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/sql-error.jpg",
+        "width": 1280,
+        "height": 1891,
+        "sha256": "0db06f58cb767a8be7ed4920b3a44aa17af32095136cdff05cab5558af6bb157",
+        "unalteredActualIAB": true
+      },
+      {
+        "path": "media/wal-unavailable.jpg",
+        "width": 1280,
+        "height": 1891,
+        "sha256": "533685d0d6f46063c905a56d530bf31b61832fe81b0de943886a75d824234f7a",
+        "unalteredActualIAB": true
+      }
+    ],
+    "compareScreenshotVisuallyInspected": true
+  },
+  "resources": {
+    "ownedPreviewPort": 54603,
+    "ownedSession": 36936,
+    "ownedPreviewStopped": true,
+    "ownedTabClosed": true,
+    "sandboxBindFailure": "PermissionError EPERM observed; identical local-only preview launched after host permission review",
+    "protectedListeners": [
+      {
+        "command": "node",
+        "address": "127.0.0.1:53478"
+      },
+      {
+        "command": "node",
+        "address": "127.0.0.1:60285"
+      }
+    ],
+    "externalPIDChange": "60285 PID changed externally from previously read 57821 to 69836; no action performed on that listener",
+    "workerOwnTempsCleaned": true
+  },
+  "limits": [
+    "Fixed committed snapshot; no further writes between capture and copies",
+    "WAL-unavailable uses actual private memory DB PRAGMA result memory; not arbitrary disk/VFS failure coverage",
+    "No power loss, in-flight process stop, concurrent backup/write, offsite, fsync/flash durability, RPO/RTO guarantee or all-Subject completion"
+  ],
+  "primarySources": [
+    "https://www.sqlite.org/wal.html",
+    "https://www.sqlite.org/backup.html",
+    "https://docs.python.org/3.9/library/sqlite3.html#sqlite3.Connection.backup"
+  ]
+}

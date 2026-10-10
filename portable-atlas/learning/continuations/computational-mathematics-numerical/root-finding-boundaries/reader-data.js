@@ -1,0 +1,631 @@
+window.ROOT_BOUNDARY_DATA = {
+  "schema": "atlas-root-boundaries-reader-v1",
+  "run_id": "root-boundaries-20261007T053953376474Z",
+  "observed_at_utc": "2026-10-07T05:39:53.376474+00:00",
+  "result_sha256": "1c94cf34ae5b589e560eadec1970abc5104d5420e6eba78e1f0951e5431f4a46",
+  "fixture": {
+    "arithmetic": "exact-rational",
+    "cases": [
+      {
+        "bracket": [
+          "-2",
+          "0"
+        ],
+        "id": "cubic-cycle",
+        "polynomial": "cubic",
+        "x0": "0"
+      },
+      {
+        "bracket": [
+          "-2",
+          "0"
+        ],
+        "id": "cubic-local",
+        "polynomial": "cubic",
+        "x0": "-2"
+      },
+      {
+        "bracket": [
+          "1",
+          "2"
+        ],
+        "id": "zero-derivative",
+        "polynomial": "quadratic",
+        "x0": "0"
+      },
+      {
+        "bracket": [
+          "2",
+          "3"
+        ],
+        "id": "bad-bracket",
+        "polynomial": "quadratic",
+        "x0": "1"
+      },
+      {
+        "bracket": [
+          "0",
+          "1"
+        ],
+        "id": "exact-endpoint",
+        "polynomial": "square",
+        "x0": "0"
+      }
+    ],
+    "max_updates": 4,
+    "residual_tolerance": "1/16",
+    "schema": "atlas-root-boundaries-fixture-v1",
+    "step_tolerance": "1/16",
+    "width_tolerance": "1/8"
+  },
+  "values": {
+    "cases": [
+      {
+        "bisection": {
+          "estimate": "-29/16",
+          "radius": "1/16",
+          "residual": "1349/4096",
+          "rows": [
+            {
+              "a": "-2",
+              "b": "0",
+              "estimate": "-1",
+              "f": "3",
+              "fa": "-2",
+              "fb": "2",
+              "k": 0,
+              "probe": null,
+              "probe_f": null,
+              "radius": "1",
+              "residual": "3",
+              "status": "CONTINUE",
+              "width": "2",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-1",
+              "estimate": "-3/2",
+              "f": "13/8",
+              "fa": "-2",
+              "fb": "3",
+              "k": 1,
+              "probe": "-1",
+              "probe_f": "3",
+              "radius": "1/2",
+              "residual": "13/8",
+              "status": "CONTINUE",
+              "width": "1",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-3/2",
+              "estimate": "-7/4",
+              "f": "9/64",
+              "fa": "-2",
+              "fb": "13/8",
+              "k": 2,
+              "probe": "-3/2",
+              "probe_f": "13/8",
+              "radius": "1/4",
+              "residual": "9/64",
+              "status": "CONTINUE",
+              "width": "1/2",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-7/4",
+              "estimate": "-15/8",
+              "f": "-431/512",
+              "fa": "-2",
+              "fb": "9/64",
+              "k": 3,
+              "probe": "-7/4",
+              "probe_f": "9/64",
+              "radius": "1/8",
+              "residual": "431/512",
+              "status": "CONTINUE",
+              "width": "1/4",
+              "width_met": false
+            },
+            {
+              "a": "-15/8",
+              "b": "-7/4",
+              "estimate": "-29/16",
+              "f": "-1349/4096",
+              "fa": "-431/512",
+              "fb": "9/64",
+              "k": 4,
+              "probe": "-15/8",
+              "probe_f": "-431/512",
+              "radius": "1/16",
+              "residual": "1349/4096",
+              "status": "BRACKET_WIDTH_MET",
+              "width": "1/8",
+              "width_met": true
+            }
+          ],
+          "status": "BRACKET_WIDTH_MET",
+          "updates": 4,
+          "validation": {
+            "a": "-2",
+            "b": "0",
+            "bracket_valid": true,
+            "endpoint_root": null,
+            "fa": "-2",
+            "fb": "2"
+          },
+          "width": "1/8"
+        },
+        "id": "cubic-cycle",
+        "newton": {
+          "estimate": "0",
+          "residual": "2",
+          "rows": [
+            {
+              "delta": null,
+              "df": "-2",
+              "f": "2",
+              "k": 0,
+              "residual": "2",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": null,
+              "step_met": null,
+              "x": "0"
+            },
+            {
+              "delta": "1",
+              "df": "1",
+              "f": "1",
+              "k": 1,
+              "residual": "1",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": "1",
+              "step_met": false,
+              "x": "1"
+            },
+            {
+              "delta": "-1",
+              "df": "-2",
+              "f": "2",
+              "k": 2,
+              "residual": "2",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": "1",
+              "step_met": false,
+              "x": "0"
+            },
+            {
+              "delta": "1",
+              "df": "1",
+              "f": "1",
+              "k": 3,
+              "residual": "1",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": "1",
+              "step_met": false,
+              "x": "1"
+            },
+            {
+              "delta": "-1",
+              "df": "-2",
+              "f": "2",
+              "k": 4,
+              "residual": "2",
+              "residual_met": false,
+              "status": "ITERATION_LIMIT",
+              "step": "1",
+              "step_met": false,
+              "x": "0"
+            }
+          ],
+          "status": "ITERATION_LIMIT",
+          "step": "1",
+          "updates": 4
+        }
+      },
+      {
+        "bisection": {
+          "estimate": "-29/16",
+          "radius": "1/16",
+          "residual": "1349/4096",
+          "rows": [
+            {
+              "a": "-2",
+              "b": "0",
+              "estimate": "-1",
+              "f": "3",
+              "fa": "-2",
+              "fb": "2",
+              "k": 0,
+              "probe": null,
+              "probe_f": null,
+              "radius": "1",
+              "residual": "3",
+              "status": "CONTINUE",
+              "width": "2",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-1",
+              "estimate": "-3/2",
+              "f": "13/8",
+              "fa": "-2",
+              "fb": "3",
+              "k": 1,
+              "probe": "-1",
+              "probe_f": "3",
+              "radius": "1/2",
+              "residual": "13/8",
+              "status": "CONTINUE",
+              "width": "1",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-3/2",
+              "estimate": "-7/4",
+              "f": "9/64",
+              "fa": "-2",
+              "fb": "13/8",
+              "k": 2,
+              "probe": "-3/2",
+              "probe_f": "13/8",
+              "radius": "1/4",
+              "residual": "9/64",
+              "status": "CONTINUE",
+              "width": "1/2",
+              "width_met": false
+            },
+            {
+              "a": "-2",
+              "b": "-7/4",
+              "estimate": "-15/8",
+              "f": "-431/512",
+              "fa": "-2",
+              "fb": "9/64",
+              "k": 3,
+              "probe": "-7/4",
+              "probe_f": "9/64",
+              "radius": "1/8",
+              "residual": "431/512",
+              "status": "CONTINUE",
+              "width": "1/4",
+              "width_met": false
+            },
+            {
+              "a": "-15/8",
+              "b": "-7/4",
+              "estimate": "-29/16",
+              "f": "-1349/4096",
+              "fa": "-431/512",
+              "fb": "9/64",
+              "k": 4,
+              "probe": "-15/8",
+              "probe_f": "-431/512",
+              "radius": "1/16",
+              "residual": "1349/4096",
+              "status": "BRACKET_WIDTH_MET",
+              "width": "1/8",
+              "width_met": true
+            }
+          ],
+          "status": "BRACKET_WIDTH_MET",
+          "updates": 4,
+          "validation": {
+            "a": "-2",
+            "b": "0",
+            "bracket_valid": true,
+            "endpoint_root": null,
+            "fa": "-2",
+            "fb": "2"
+          },
+          "width": "1/8"
+        },
+        "id": "cubic-local",
+        "newton": {
+          "estimate": "-1708/965",
+          "residual": "4358062/898632125",
+          "rows": [
+            {
+              "delta": null,
+              "df": "10",
+              "f": "-2",
+              "k": 0,
+              "residual": "2",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": null,
+              "step_met": null,
+              "x": "-2"
+            },
+            {
+              "delta": "1/5",
+              "df": "193/25",
+              "f": "-29/125",
+              "k": 1,
+              "residual": "29/125",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": "1/5",
+              "step_met": false,
+              "x": "-9/5"
+            },
+            {
+              "delta": "29/965",
+              "df": "6889342/931225",
+              "f": "-4358062/898632125",
+              "k": 2,
+              "residual": "4358062/898632125",
+              "residual_met": true,
+              "status": "LOCAL_TOLERANCES_MET",
+              "step": "29/965",
+              "step_met": true,
+              "x": "-1708/965"
+            }
+          ],
+          "status": "LOCAL_TOLERANCES_MET",
+          "step": "29/965",
+          "updates": 2
+        }
+      },
+      {
+        "bisection": {
+          "estimate": "23/16",
+          "radius": "1/16",
+          "residual": "17/256",
+          "rows": [
+            {
+              "a": "1",
+              "b": "2",
+              "estimate": "3/2",
+              "f": "1/4",
+              "fa": "-1",
+              "fb": "2",
+              "k": 0,
+              "probe": null,
+              "probe_f": null,
+              "radius": "1/2",
+              "residual": "1/4",
+              "status": "CONTINUE",
+              "width": "1",
+              "width_met": false
+            },
+            {
+              "a": "1",
+              "b": "3/2",
+              "estimate": "5/4",
+              "f": "-7/16",
+              "fa": "-1",
+              "fb": "1/4",
+              "k": 1,
+              "probe": "3/2",
+              "probe_f": "1/4",
+              "radius": "1/4",
+              "residual": "7/16",
+              "status": "CONTINUE",
+              "width": "1/2",
+              "width_met": false
+            },
+            {
+              "a": "5/4",
+              "b": "3/2",
+              "estimate": "11/8",
+              "f": "-7/64",
+              "fa": "-7/16",
+              "fb": "1/4",
+              "k": 2,
+              "probe": "5/4",
+              "probe_f": "-7/16",
+              "radius": "1/8",
+              "residual": "7/64",
+              "status": "CONTINUE",
+              "width": "1/4",
+              "width_met": false
+            },
+            {
+              "a": "11/8",
+              "b": "3/2",
+              "estimate": "23/16",
+              "f": "17/256",
+              "fa": "-7/64",
+              "fb": "1/4",
+              "k": 3,
+              "probe": "11/8",
+              "probe_f": "-7/64",
+              "radius": "1/16",
+              "residual": "17/256",
+              "status": "BRACKET_WIDTH_MET",
+              "width": "1/8",
+              "width_met": true
+            }
+          ],
+          "status": "BRACKET_WIDTH_MET",
+          "updates": 3,
+          "validation": {
+            "a": "1",
+            "b": "2",
+            "bracket_valid": true,
+            "endpoint_root": null,
+            "fa": "-1",
+            "fb": "2"
+          },
+          "width": "1/8"
+        },
+        "id": "zero-derivative",
+        "newton": {
+          "estimate": "0",
+          "residual": "2",
+          "rows": [
+            {
+              "delta": null,
+              "df": "0",
+              "f": "-2",
+              "k": 0,
+              "residual": "2",
+              "residual_met": false,
+              "status": "ZERO_DERIVATIVE",
+              "step": null,
+              "step_met": null,
+              "x": "0"
+            }
+          ],
+          "status": "ZERO_DERIVATIVE",
+          "step": null,
+          "updates": 0
+        }
+      },
+      {
+        "bisection": {
+          "estimate": null,
+          "radius": null,
+          "residual": null,
+          "rows": [],
+          "status": "INVALID_BRACKET",
+          "updates": 0,
+          "validation": {
+            "a": "2",
+            "b": "3",
+            "bracket_valid": false,
+            "endpoint_root": null,
+            "fa": "2",
+            "fb": "7"
+          },
+          "width": null
+        },
+        "id": "bad-bracket",
+        "newton": {
+          "estimate": "577/408",
+          "residual": "1/166464",
+          "rows": [
+            {
+              "delta": null,
+              "df": "2",
+              "f": "-1",
+              "k": 0,
+              "residual": "1",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": null,
+              "step_met": null,
+              "x": "1"
+            },
+            {
+              "delta": "1/2",
+              "df": "3",
+              "f": "1/4",
+              "k": 1,
+              "residual": "1/4",
+              "residual_met": false,
+              "status": "CONTINUE",
+              "step": "1/2",
+              "step_met": false,
+              "x": "3/2"
+            },
+            {
+              "delta": "-1/12",
+              "df": "17/6",
+              "f": "1/144",
+              "k": 2,
+              "residual": "1/144",
+              "residual_met": true,
+              "status": "CONTINUE",
+              "step": "1/12",
+              "step_met": false,
+              "x": "17/12"
+            },
+            {
+              "delta": "-1/408",
+              "df": "577/204",
+              "f": "1/166464",
+              "k": 3,
+              "residual": "1/166464",
+              "residual_met": true,
+              "status": "LOCAL_TOLERANCES_MET",
+              "step": "1/408",
+              "step_met": true,
+              "x": "577/408"
+            }
+          ],
+          "status": "LOCAL_TOLERANCES_MET",
+          "step": "1/408",
+          "updates": 3
+        }
+      },
+      {
+        "bisection": {
+          "estimate": "0",
+          "radius": "0",
+          "residual": "0",
+          "rows": [
+            {
+              "a": "0",
+              "b": "0",
+              "estimate": "0",
+              "f": "0",
+              "fa": "0",
+              "fb": "0",
+              "k": 0,
+              "probe": null,
+              "probe_f": null,
+              "radius": "0",
+              "residual": "0",
+              "status": "EXACT_ROOT",
+              "width": "0",
+              "width_met": true
+            }
+          ],
+          "status": "EXACT_ROOT",
+          "updates": 0,
+          "validation": {
+            "a": "0",
+            "b": "1",
+            "bracket_valid": true,
+            "endpoint_root": "0",
+            "fa": "0",
+            "fb": "1"
+          },
+          "width": "0"
+        },
+        "id": "exact-endpoint",
+        "newton": {
+          "estimate": "0",
+          "residual": "0",
+          "rows": [
+            {
+              "delta": null,
+              "df": "0",
+              "f": "0",
+              "k": 0,
+              "residual": "0",
+              "residual_met": true,
+              "status": "EXACT_ROOT",
+              "step": null,
+              "step_met": null,
+              "x": "0"
+            }
+          ],
+          "status": "EXACT_ROOT",
+          "step": null,
+          "updates": 0
+        }
+      }
+    ],
+    "counts": {
+      "bisection_updates": 11,
+      "cases": 5,
+      "methods": 10,
+      "newton_updates": 9,
+      "rows": 29,
+      "updates": 20
+    },
+    "schema": "atlas-root-boundaries-values-v1"
+  }
+};

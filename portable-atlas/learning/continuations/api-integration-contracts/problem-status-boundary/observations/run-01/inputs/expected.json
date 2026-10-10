@@ -1,0 +1,211 @@
+{
+  "Atlas": "実装前の作者手期待",
+  "method": "literal table fixed before producer exists",
+  "cases": [
+    {
+      "id": "custom-error",
+      "strict": {
+        "format": "custom",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "not-applicable",
+        "chosenStatus": 422,
+        "problemType": null,
+        "title": "数量を確認してください。",
+        "customCode": "invalid_quantity",
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "custom",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "not-applicable",
+        "chosenStatus": 422,
+        "problemType": null,
+        "title": "数量を確認してください。",
+        "customCode": "invalid_quantity",
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      }
+    },
+    {
+      "id": "problem-matching",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      }
+    },
+    {
+      "id": "problem-omitted",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "absent",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "absent",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      }
+    },
+    {
+      "id": "problem-mismatch",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 200,
+        "statusRelation": "mismatch",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "hold",
+        "reason": "local-status-mismatch-policy"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 200,
+        "statusRelation": "mismatch",
+        "chosenStatus": 200,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "success",
+        "reason": "body-status-overrode-transport"
+      }
+    },
+    {
+      "id": "problem-status-string",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "ignored-type",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [
+          "status"
+        ],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "ignored-type",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [
+          "status"
+        ],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      }
+    },
+    {
+      "id": "problem-title-extension",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "数量が正しくありません",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [
+          "traceHint"
+        ],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "数量が正しくありません",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [
+          "traceHint"
+        ],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      }
+    }
+  ],
+  "summary": {
+    "strictBusinessError": 5,
+    "strictHold": 1,
+    "faultBusinessError": 5,
+    "faultSuccess": 1,
+    "transportStatusUnchanged": 422,
+    "typeIdentityEqual": [
+      "problem-matching",
+      "problem-title-extension"
+    ]
+  }
+}

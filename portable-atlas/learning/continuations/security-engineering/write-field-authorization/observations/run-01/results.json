@@ -1,0 +1,4663 @@
+{
+  "Atlas": "書込項目と拒否時storeのPython実行結果",
+  "executionStatus": "executed",
+  "startedAt": "2026-10-06T16:22:09.993486+00:00",
+  "finishedAt": "2026-10-06T16:22:09.999260+00:00",
+  "elapsedSeconds": 0.005774,
+  "nice": 10,
+  "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+  "platform": "macOS-26.1-arm64-arm-64bit",
+  "caseCount": 24,
+  "modeCount": 3,
+  "freshStoreForEachCaseAndMode": true,
+  "realAuthentication": false,
+  "realDatabaseTransaction": false,
+  "httpHandlerStarted": false,
+  "inputs": {
+    "CONTRACT.md": "17f03fdc5613104a78cd6816d23b0aca23664a6ce9c7340cc23913ba6d9b0556",
+    "fixture.json": "6dd9c6905a5250ecf7b4b2a5cb10938241ff038bba4db17008f4d53398b125c1",
+    "cases.json": "04320d6c72d11048e6fd806f29d5268cca8eefdaf1b1d9adcb055c8effcfbe4c",
+    "expected.json": "18a435d8d940d5101a2b62d7d9f9f24aa3a6ea6c267b07754528ebf65f61ff07",
+    "handler.py": "50aa18fb21f626da20d98fa5c7290f4a365e4aa6168f60bc19d296a78decea2b",
+    "run.py": "793c4a84f32d32a24673f1858b179208ce6045a58efa1b112b43ee675f4c5a90",
+    "verify.py": "cc38b1bd62fb5a9ea40b5924bf405df136d34d87f37d811ff54a189d6b1da447"
+  },
+  "cases": [
+    {
+      "id": "operator-title",
+      "label": "operator / titleを更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "apply:title"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "build-candidate",
+            "replace-target-record"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "operator-contact",
+      "label": "operator / 連絡先を更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "contact_email": "updated@example.invalid"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:contact_email",
+            "apply:contact_email"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:contact_email",
+            "build-candidate",
+            "replace-target-record"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "operator-two",
+      "label": "operator / 許可2項目を更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル",
+          "contact_email": "updated@example.invalid"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title",
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            },
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title",
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "apply:title",
+            "check:contact_email",
+            "apply:contact_email"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            },
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title",
+                "contact_email"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "check:contact_email",
+            "build-candidate",
+            "replace-target-record"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "updated@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            },
+            {
+              "object_id": "red-report",
+              "field": "contact_email",
+              "before": "red-report@example.invalid",
+              "after": "updated@example.invalid"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "auditor-note",
+      "label": "auditor / 内部メモを更新",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "更新した架空メモ"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "internal_note"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "更新した架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "更新した架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "internal_note"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "apply:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "更新した架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "更新した架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "internal_note"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "build-candidate",
+            "replace-target-record"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "更新した架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "更新した架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "read-not-write",
+      "label": "viewer / readだけではwrite不可",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": []
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "same-tenant-no-grant",
+      "label": "同tenantでもwrite grantなし",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-archive",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "no-write-grant",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "cross-tenant",
+      "label": "別tenantの更新",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "blue-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 403,
+            "reason": "tenant-mismatch",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "tenant-mismatch",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "tenant-mismatch",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "unknown-object",
+      "label": "存在しないrecord",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "missing",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 404,
+            "reason": "not-found",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 404,
+            "reason": "not-found",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 404,
+            "reason": "not-found",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "forbidden-note",
+      "label": "operator / 禁止内部メモ",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "変更してはいけない架空メモ"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "internal_note"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "変更してはいけない架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "変更してはいけない架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "allowed-then-forbidden",
+      "label": "許可title → 禁止内部メモ",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル",
+          "internal_note": "変更してはいけない架空メモ"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title",
+                "internal_note"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "変更してはいけない架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            },
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "変更してはいけない架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "apply:title",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "forbidden-then-allowed",
+      "label": "禁止内部メモ → 許可title",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "internal_note": "変更してはいけない架空メモ",
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "internal_note",
+                "title"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "変更してはいけない架空メモ",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            },
+            {
+              "object_id": "red-report",
+              "field": "internal_note",
+              "before": "架空メモ:red-report",
+              "after": "変更してはいけない架空メモ"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:internal_note",
+            "deny:internal_note"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "auditor-title-forbidden",
+      "label": "auditor / titleの書込は不可",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "title"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "更新した架空タイトル",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "title",
+              "before": "赤の報告",
+              "after": "更新した架空タイトル"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "deny:title"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:title",
+            "deny:title"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "protected-id",
+      "label": "保護項目 id",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "id": "synthetic-other-id"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "id"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "synthetic-other-id",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "id",
+              "before": "red-report",
+              "after": "synthetic-other-id"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:id",
+            "deny:id"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:id",
+            "deny:id"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "protected-tenant",
+      "label": "保護項目 tenant_id",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "tenant_id"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-blue"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "tenant_id",
+              "before": "tenant-red",
+              "after": "tenant-blue"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:tenant_id",
+            "deny:tenant_id"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:tenant_id",
+            "deny:tenant_id"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "protected-status",
+      "label": "保護項目 status",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "status": "closed"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 200,
+            "reason": "ok",
+            "payload": {
+              "object_id": "red-report",
+              "accepted_fields": [
+                "status"
+              ]
+            }
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "assign-all-requested-fields"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "closed",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [
+            {
+              "object_id": "red-report",
+              "field": "status",
+              "before": "open",
+              "after": "closed"
+            }
+          ],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:status",
+            "deny:status"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "field-forbidden",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation",
+            "object-lookup",
+            "tenant",
+            "write-grant",
+            "check:status",
+            "deny:status"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "unknown-field",
+      "label": "未知fieldの追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "unknown": "synthetic"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "unknown-role",
+      "label": "不明roleのcontext",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "unknown",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "role-override",
+      "label": "requestへrole追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        },
+        "role": "auditor"
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "tenant-override",
+      "label": "requestへtenant追加",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        },
+        "tenant_id": "tenant-blue"
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "invalid-value",
+      "label": "値を整数にする",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": 42
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "empty-changes",
+      "label": "空のchanges",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {}
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "wrong-operation",
+      "label": "read操作で書込を要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 403,
+            "reason": "unsupported-operation",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 403,
+            "reason": "unsupported-operation",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 403,
+            "reason": "unsupported-operation",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape",
+            "operation"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "no-context",
+      "label": "contextなし",
+      "context": null,
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": {
+          "title": "更新した架空タイトル"
+        }
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 401,
+            "reason": "untrusted-context",
+            "payload": null
+          },
+          "trace": [
+            "request-schema",
+            "trusted-context-shape"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    },
+    {
+      "id": "changes-list",
+      "label": "changesをlistにする",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ],
+        "write_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "update",
+        "changes": [
+          {
+            "title": "synthetic"
+          }
+        ]
+      },
+      "beforeStore": {
+        "red-report": {
+          "id": "red-report",
+          "title": "赤の報告",
+          "status": "open",
+          "contact_email": "red-report@example.invalid",
+          "internal_note": "架空メモ:red-report",
+          "tenant_id": "tenant-red"
+        },
+        "red-archive": {
+          "id": "red-archive",
+          "title": "赤の保管",
+          "status": "open",
+          "contact_email": "red-archive@example.invalid",
+          "internal_note": "架空メモ:red-archive",
+          "tenant_id": "tenant-red"
+        },
+        "blue-report": {
+          "id": "blue-report",
+          "title": "青の報告",
+          "status": "open",
+          "contact_email": "blue-report@example.invalid",
+          "internal_note": "架空メモ:blue-report",
+          "tenant_id": "tenant-blue"
+        }
+      },
+      "outcomes": {
+        "bulk_assign": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "incremental_check": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        },
+        "validate_then_apply": {
+          "response": {
+            "status": 400,
+            "reason": "invalid-request",
+            "payload": null
+          },
+          "trace": [
+            "request-schema"
+          ],
+          "afterStore": {
+            "red-report": {
+              "id": "red-report",
+              "title": "赤の報告",
+              "status": "open",
+              "contact_email": "red-report@example.invalid",
+              "internal_note": "架空メモ:red-report",
+              "tenant_id": "tenant-red"
+            },
+            "red-archive": {
+              "id": "red-archive",
+              "title": "赤の保管",
+              "status": "open",
+              "contact_email": "red-archive@example.invalid",
+              "internal_note": "架空メモ:red-archive",
+              "tenant_id": "tenant-red"
+            },
+            "blue-report": {
+              "id": "blue-report",
+              "title": "青の報告",
+              "status": "open",
+              "contact_email": "blue-report@example.invalid",
+              "internal_note": "架空メモ:blue-report",
+              "tenant_id": "tenant-blue"
+            }
+          },
+          "storeDelta": [],
+          "contextUnchanged": true,
+          "requestUnchanged": true,
+          "fixtureUnchanged": true
+        }
+      }
+    }
+  ]
+}

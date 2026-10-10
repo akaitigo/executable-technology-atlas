@@ -1,0 +1,455 @@
+{
+  "oracle": "literal full traces fixed before evaluator; no evaluator import",
+  "rows": [
+    {
+      "id": "trusted-22",
+      "label": "trusted tcp/22: accept後drop",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 22
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=true verdict=drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "trusted-8080",
+      "label": "trusted tcp/8080: 両chain accept",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":8080},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 8080
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=false",
+            "policy accept",
+            "accept: next base chain",
+            "final accept"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "trusted-udp22",
+      "label": "trusted udp/22: protocol対照",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"udp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "udp",
+          "dport": 22
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=false",
+            "policy accept",
+            "accept: next base chain",
+            "final accept"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "unknown-22",
+      "label": "unknown tcp/22: 最初のpolicy drop",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.2\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.2",
+          "protocol": "tcp",
+          "dport": 22
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=false",
+            "policy drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        },
+        "faulty": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=false",
+            "policy drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        }
+      }
+    },
+    {
+      "id": "unknown-8080",
+      "label": "unknown tcp/8080: 後chain未訪問",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.2\",\"protocol\":\"tcp\",\"dport\":8080},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.2",
+          "protocol": "tcp",
+          "dport": 8080
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=false",
+            "policy drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        },
+        "faulty": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=false",
+            "policy drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        }
+      }
+    },
+    {
+      "id": "disabled-22",
+      "label": "chain10無効: 最終accept",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":false,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 22
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "skip service disabled",
+            "final accept"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "reversed-22",
+      "label": "JSON逆順: priority 0→10",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"},{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 22
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "drop",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=true verdict=drop",
+            "drop: stop ruleset",
+            "final drop"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "reversed-8080",
+      "label": "JSON逆順 tcp/8080",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":8080},\"chains\":[{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"},{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 8080
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=false",
+            "policy accept",
+            "accept: next base chain",
+            "final accept"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "port-zero",
+      "label": "port 0: 範囲下限",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":0},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "observed",
+        "packet": {
+          "source": "10.0.0.1",
+          "protocol": "tcp",
+          "dport": 0
+        },
+        "ordered_chains": [
+          "source",
+          "service"
+        ],
+        "normal": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "accept: next base chain",
+            "chain service priority=10",
+            "rule tcp-dport-22 match=false",
+            "policy accept",
+            "accept: next base chain",
+            "final accept"
+          ]
+        },
+        "faulty": {
+          "final": "accept",
+          "trace": [
+            "chain source priority=0",
+            "rule trusted-source match=true verdict=accept",
+            "BUG accept: stop ruleset",
+            "final accept"
+          ]
+        }
+      }
+    },
+    {
+      "id": "duplicate-priority",
+      "label": "重複priority: subset拒否",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "duplicate_priority",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "unknown-verdict",
+      "label": "continue: このsubset外",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"continue\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "unsupported_verdict",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "nonfinite",
+      "label": "NaN: nonfinite拒否",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":NaN,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "nonfinite_json",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "bool-priority",
+      "label": "bool priority: intとして扱わない",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":false,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "priority_type",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "bool-port",
+      "label": "bool port: packet拒否",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":true},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "packet_port",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "invalid-source",
+      "label": "先頭zero IPv4: packet拒否",
+      "input_json": "{\"packet\":{\"source\":\"010.0.0.1\",\"protocol\":\"tcp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "packet_source",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "invalid-protocol",
+      "label": "icmp: packet subset外",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"icmp\",\"dport\":22},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "packet_protocol",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "over-port",
+      "label": "port 65536: 範囲外",
+      "input_json": "{\"packet\":{\"source\":\"10.0.0.1\",\"protocol\":\"tcp\",\"dport\":65536},\"chains\":[{\"id\":\"source\",\"hook\":\"input\",\"priority\":0,\"enabled\":true,\"verdict\":\"accept\",\"policy\":\"drop\"},{\"id\":\"service\",\"hook\":\"input\",\"priority\":10,\"enabled\":true,\"verdict\":\"drop\",\"policy\":\"accept\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "packet_port",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    },
+    {
+      "id": "malformed",
+      "label": "壊れたJSON",
+      "input_json": "{",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax",
+        "normal": null,
+        "faulty": null,
+        "trace": []
+      }
+    }
+  ]
+}

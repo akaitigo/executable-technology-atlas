@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "id": "immediate",
+      "label": "循環Bが即時read",
+      "entry": "fixtures/immediate/entry.mjs",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true
+    },
+    {
+      "id": "delayed",
+      "label": "循環Bの関数をentryからread",
+      "entry": "fixtures/delayed/entry.mjs",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true
+    },
+    {
+      "id": "early-call",
+      "label": "関数にしたがB評価中にcall",
+      "entry": "fixtures/early-call/entry.mjs",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true
+    },
+    {
+      "id": "acyclic",
+      "label": "循環なしの即時read",
+      "entry": "fixtures/acyclic/entry.mjs",
+      "graph": {
+        "entry": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ],
+        "a": []
+      },
+      "cycle": false
+    },
+    {
+      "id": "live-update",
+      "label": "循環の遅延readとlive更新",
+      "entry": "fixtures/live-update/entry.mjs",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true
+    }
+  ],
+  "prediction_options": [
+    "",
+    "throws",
+    "one",
+    "live"
+  ],
+  "editable_prediction_value": {
+    "valid": "空欄または1桁0..9",
+    "reject": [
+      "abc",
+      "10",
+      "-1"
+    ],
+    "execution_input": false
+  }
+}

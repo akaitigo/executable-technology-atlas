@@ -1,0 +1,673 @@
+{
+  "execution_id": "20261005T064625734593Z",
+  "started_at": "2026-10-05T06:46:25.735215+00:00",
+  "completed_at": "2026-10-05T06:46:26.309138+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64"
+  },
+  "source_bindings": {
+    "service.py": "sha256:a1bbe4952d10de34bf76ad3ad60ac613ffa74477d2f3517200130ba610d9e84a",
+    "runner.py": "sha256:a3af2fe40b1756783c0b74c56297f1a7b34700b2fc8fc2f236318cb9200b3f6a",
+    "checker.py": "sha256:a94eeed3208e1c2f1f684e474d0c4a1d86bb43c9377289961c84eda324da85f9",
+    "preview.py": "sha256:6269443f5b3e9597f5d8da8fd5bb54dfb7f8c463becc1083de75b66460ce5c1e",
+    "index.html": "sha256:eb9f029abebec52e7332b40e0ccfae0f20a9c6ddf7dcd4a9843d970bdc464bc0",
+    "README.md": "sha256:bcb79aa8948757d1327b8983fa4b3eaf6a446cc44ff8b4b417846a9ec55ce7f6",
+    "coverage.json": "sha256:405f2fa7a438925aa681e9591ecdb08a6b6e855ceda353b1faa4f4c1f10d91e7",
+    "sources.json": "sha256:1debee92ed921d7641c17ee652d5dcab0d24c9b1d7b2767df39fb36989f2968d",
+    "skills/atlas-backend-application-engineering/SKILL.md": "sha256:060df76f8cf4adcef1312150f3223086fa6ccda6470f3e46ef989b02911b9ab1",
+    "skills/atlas-backend-application-engineering/route.py": "sha256:d60d37dd17d9f6e9525eacff705af3f0e38dc411c264899a17ade2807c2575ef"
+  },
+  "scenarios": [
+    {
+      "id": "atomic-normal",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', '{\"quantity\": 2}')"
+        },
+        {
+          "event": "sql",
+          "sql": "COMMIT"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "nonatomic-normal",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "nonatomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": false
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', '{\"quantity\": 2}')"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "atomic-second-failure",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": true
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', NULL)"
+        },
+        {
+          "event": "database-error",
+          "error": "NOT NULL constraint failed: outbox.payload",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "ROLLBACK"
+        },
+        {
+          "event": "response",
+          "status": 500,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "nonatomic-second-failure",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "nonatomic",
+          "fail_second": true
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": false
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', NULL)"
+        },
+        {
+          "event": "database-error",
+          "error": "NOT NULL constraint failed: outbox.payload",
+          "in_transaction": false
+        },
+        {
+          "event": "response",
+          "status": 500,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "quantity-one",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 1,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 1)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', '{\"quantity\": 1}')"
+        },
+        {
+          "event": "sql",
+          "sql": "COMMIT"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "quantity-hundred",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 100,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 100)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', '{\"quantity\": 100}')"
+        },
+        {
+          "event": "sql",
+          "sql": "COMMIT"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "quantity-zero",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 0,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-rejected",
+          "status": 422
+        }
+      ]
+    },
+    {
+      "id": "quantity-over",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 101,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-rejected",
+          "status": 422
+        }
+      ]
+    },
+    {
+      "id": "quantity-bool",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": true,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-rejected",
+          "status": 422
+        }
+      ]
+    },
+    {
+      "id": "blank-name",
+      "input": [
+        {
+          "id": "a",
+          "name": " ",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-rejected",
+          "status": 422
+        }
+      ]
+    },
+    {
+      "id": "duplicate-id",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": false
+        },
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', '{\"quantity\": 2}')"
+        },
+        {
+          "event": "sql",
+          "sql": "COMMIT"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        },
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "database-error",
+          "error": "UNIQUE constraint failed: orders.id",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "ROLLBACK"
+        },
+        {
+          "event": "response",
+          "status": 409,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    },
+    {
+      "id": "failure-then-next-request",
+      "input": [
+        {
+          "id": "a",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": true
+        },
+        {
+          "id": "b",
+          "name": "教材",
+          "quantity": 2,
+          "mode": "atomic",
+          "fail_second": false
+        }
+      ],
+      "trace": [
+        {
+          "event": "validation-accepted",
+          "id": "a"
+        },
+        {
+          "event": "connection-opened",
+          "id": "a"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', NULL)"
+        },
+        {
+          "event": "database-error",
+          "error": "NOT NULL constraint failed: outbox.payload",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "ROLLBACK"
+        },
+        {
+          "event": "response",
+          "status": 500,
+          "id": "a"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        },
+        {
+          "event": "validation-accepted",
+          "id": "b"
+        },
+        {
+          "event": "connection-opened",
+          "id": "b"
+        },
+        {
+          "event": "sql",
+          "sql": "PRAGMA foreign_keys=ON"
+        },
+        {
+          "event": "sql",
+          "sql": "BEGIN IMMEDIATE"
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO orders VALUES ('b', '教材', 2)"
+        },
+        {
+          "event": "order-created",
+          "in_transaction": true
+        },
+        {
+          "event": "sql",
+          "sql": "INSERT INTO outbox VALUES ('b', 'OrderCreated', '{\"quantity\": 2}')"
+        },
+        {
+          "event": "sql",
+          "sql": "COMMIT"
+        },
+        {
+          "event": "response",
+          "status": 201,
+          "id": "b"
+        },
+        {
+          "event": "transaction-after-request",
+          "active": false
+        },
+        {
+          "event": "connection-closed",
+          "probe": "ProgrammingError"
+        }
+      ]
+    }
+  ],
+  "external_services": 0,
+  "framework_executed": false,
+  "concurrency_measured": false
+}

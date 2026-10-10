@@ -1,0 +1,23 @@
+'use strict';
+const $=s=>document.querySelector(s);let fixtures=[],version=0,last=null;
+const files=['CONTRACT.md','solver.py','oracle.py','lesson.py','fixtures.py','verify.py','serve.py','app.js','index.html','README.md','COVERAGE.md','skills/quadratic-cancellation/SKILL.md'];
+for(const file of files){const a=document.createElement('a');a.textContent=file;a.href='/source.html?file='+encodeURIComponent(file);$('#sources').append(a);}
+function table(headers,rows){const t=document.createElement('table');const h=t.insertRow();for(const label of headers){const th=document.createElement('th');th.textContent=label;h.append(th);}for(const data of rows){const row=t.insertRow();for(const value of data)row.insertCell().textContent=value;}return t;}
+function approx(value){if(value===null)return '未定義';const [n,d]=String(value).split('/');const v=Number(n)/(d?Number(d):1);return v===0?'0':v.toExponential(5);}
+function highExcerpt(value){const parts=value.split('E');const mantissa=parts[0];return (mantissa.length>65?mantissa.slice(0,65)+'…':mantissa)+(parts.length>1?'E'+parts[1]:'');}
+function showConditions(){const f=fixtures.find(v=>v.id===$('#fixture').value);$('#conditions').textContent=`既知の十進根: ${f.roots.join(', ')}\na = ${f.scale}、b = -a(u+v)、c = auv（Fractionで構築してからfloat変換）`;}
+function clear(){version++;last=null;for(const id of ['#raw','#peer-raw','#answer'])$(id).textContent='';for(const id of ['#roots','#errors','#peers','#residuals','#coefficients'])$(id).replaceChildren();$('#summary').textContent='未実行';$('#status').textContent='条件が変わりました。実行して結果を更新してください。';showConditions();}
+function render(r){last=r;$('#raw').textContent=JSON.stringify(r,null,2);$('#status').textContent='実行済み：'+r.fixture+' / '+r.method;
+ const collapsed=r.metrics.some(v=>v.original_root!=='0'&&v.computed===0);$('#summary').textContent='float解: '+r.roots.join(', ')+'。非zeroの元の根が0へ変わる: '+(collapsed?'あり':'なし');
+ const prediction=$('#prediction').value;$('#answer').textContent=prediction?((prediction==='yes')===collapsed?'予測は一致しました。':'予測と結果が違います。3層の根と減算過程を比べてください。'):'予測は未回答です。結果の理由を説明してから次の条件へ進んでください。';
+ $('#roots').replaceChildren(table(['根の対応（数値昇順）','元の厳密根','float係数の高精度根（抜粋）','実float解'],r.metrics.map(v=>[v.index+1,v.original_root,highExcerpt(v.rounded_coefficient_root),v.computed])));
+ $('#errors').replaceChildren(table(['根','総forward絶対 / 相対','演算forward絶対 / 相対','係数変換による根の絶対差'],r.metrics.map(v=>[v.index+1,approx(v.total_abs)+' / '+approx(v.total_rel),approx(v.arithmetic_abs)+' / '+approx(v.arithmetic_rel),approx(v.conversion_root_abs)])));
+ const residualRows=[];for(const v of r.metrics)for(const layer of ['original','rounded']){const q=v['residual_'+layer];residualRows.push([v.index+1,layer==='original'?'元の多項式':'float係数の多項式',approx(q.absolute),approx(q.term_scaled),approx(q.coefficient_scaled)]);}$('#residuals').replaceChildren(table(['根','対象多項式','絶対residual','term尺度','係数尺度'],residualRows));
+ $('#coefficients').replaceChildren(table(['係数','元の厳密値','実float値','変換差（絶対 / 相対）'],['a','b','c'].map((n,i)=>[n,r.original_coefficients[i],r.float_coefficients[i],approx(r.coefficient_differences[i].absolute)+' / '+approx(r.coefficient_differences[i].relative)])));
+}
+async function request(method){const response=await fetch('/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fixture:$('#fixture').value,method})});const data=await response.json();if(!response.ok)throw Error(data.error);return data;}
+$('#fixture').addEventListener('change',clear);$('#method').addEventListener('change',clear);$('#prediction').addEventListener('change',()=>{if(last)render(last);});
+$('#run').onclick=async()=>{const v=version;try{const r=await request($('#method').value);if(v===version)render(r);}catch(e){if(v!==version)return;clear();$('#status').textContent='実行失敗: '+e.message;}};
+$('#compare').onclick=async()=>{const v=version;try{const rows=[];for(const m of ['standard','product'])rows.push(await request(m));if(v!==version)return;$('#peer-raw').textContent=JSON.stringify(rows,null,2);$('#peers').replaceChildren(table(['方式','実float解','総相対forward error（各根）'],rows.map(r=>[r.method,r.roots.join(', '),r.metrics.map(v=>approx(v.total_rel)).join(', ')])));$('#status').textContent='2方式比較済み：'+$('#fixture').value;}catch(e){if(v!==version)return;clear();$('#status').textContent='比較失敗: '+e.message;}};
+$('#reset').onclick=()=>{$('#fixture').value='severe';$('#method').value='standard';$('#prediction').value='';clear();};
+fetch('/fixtures').then(r=>r.json()).then(data=>{fixtures=data;for(const f of data){const o=document.createElement('option');o.value=f.id;o.textContent=f.id;$('#fixture').append(o);}$('#fixture').value='severe';showConditions();}).catch(e=>$('#status').textContent='初期化失敗: '+e.message);

@@ -1,0 +1,944 @@
+{
+  "utc": "2026-10-05T15:49:46.035896+00:00",
+  "port": 57095,
+  "source_sha256": {
+    "fixture.json": "b2e2912bd6142ad0ade2d2f133dfe306b0fee0a11591b669cc98681c04f35add",
+    "oracle.json": "f41d04723e75a2cfa7e500f9f585080b92c058d177cae2ae2e90357ae064b095",
+    "EXPECTATIONS.md": "0878ae3e1b573bada212683fc2a4fa39df7870ced04d41a7000106cb8f5d0bc6",
+    "producer.py": "9e75f1d9a755d7bb4be4c6369cea7066ef9ac2a46ab2150c8e7f12b71924dae1",
+    "runner.py": "fdf6473b6567bb4601c0835364badac807f07dc969090d9373ee9b57f68b3a6f",
+    "server.py": "bae139887822b4150516bd2dde80d437db418990cee2de3fecc62b0a6a741cb3",
+    "index.html": "6dee3090c54407ef087837f5046135a0955c45b37592853f9f079c3f8c0caf38",
+    "ui.js": "31174388c30de9b8834ef8f765eb470bb9d6febb5d335ccf54fd408b2025dcb9"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "plain8",
+        "label": "plain / encoded budget8",
+        "encoding": "plain",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip8",
+        "label": "gzip / encoded budget8",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip-decoded-fault",
+        "label": "故障: decoded3をencoded budget8へ流用",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip23",
+        "label": "gzip23受入境界",
+        "encoding": "gzip",
+        "budget": 23,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip22",
+        "label": "gzip22拒否境界",
+        "encoding": "gzip",
+        "budget": 22,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "plain3",
+        "label": "plain3受入境界",
+        "encoding": "plain",
+        "budget": 3,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "plain2",
+        "label": "plain2拒否境界",
+        "encoding": "plain",
+        "budget": 2,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip-decoded3",
+        "label": "故障: decoded budget3でgzip誤受入",
+        "encoding": "gzip",
+        "budget": 3,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      {
+        "id": "budget0",
+        "label": "budget0 / plain拒否",
+        "encoding": "plain",
+        "budget": 0,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-negative",
+        "label": "負budget入力拒否",
+        "encoding": "plain",
+        "budget": -1,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-bool",
+        "label": "bool budget入力拒否",
+        "encoding": "plain",
+        "budget": true,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-large",
+        "label": "budget24は契約外",
+        "encoding": "gzip",
+        "budget": 24,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "encoding-unknown",
+        "label": "brは未対応",
+        "encoding": "br",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "policy-unknown",
+        "label": "未知policy拒否",
+        "encoding": "plain",
+        "budget": 8,
+        "policy": "unknown",
+        "variant": "normal"
+      },
+      {
+        "id": "timing-missing",
+        "label": "注入: timing lookup欠測 / unsupported",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "timing-missing"
+      },
+      {
+        "id": "http-failure",
+        "label": "実HTTP500 / 正常答えなし",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "http-failure"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "case": "plain8",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain8",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.481756+00:00",
+      "ended_utc": "2026-10-05T15:49:44.577929+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain8\",\n    \"input\": {\n      \"id\": \"plain8\",\n      \"label\": \"plain / encoded budget8\",\n      \"encoding\": \"plain\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 3,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": true\n  },\n  \"wire\": {\n    \"path\": \"/body/plain?request=5789724e273d4e47aa56ad4cb741e982\",\n    \"request_id\": \"5789724e273d4e47aa56ad4cb741e982\",\n    \"started_utc\": \"2026-10-05T15:49:44.569897+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:44.574671+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:44 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"3\",\n      \"x-request-id\": \"5789724e273d4e47aa56ad4cb741e982\",\n      \"x-body-sha256\": \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"616263\",\n    \"body_bytes\": 3,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip8",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip8",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.577993+00:00",
+      "ended_utc": "2026-10-05T15:49:44.674907+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip8\",\n    \"input\": {\n      \"id\": \"gzip8\",\n      \"label\": \"gzip / encoded budget8\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 23,\n      \"decoded\": 3\n    },\n    \"used\": 23,\n    \"accepted\": false\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=a8de18087edd4fd58cec47a12e8eeddb\",\n    \"request_id\": \"a8de18087edd4fd58cec47a12e8eeddb\",\n    \"started_utc\": \"2026-10-05T15:49:44.667431+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:44.671081+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:44 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"a8de18087edd4fd58cec47a12e8eeddb\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip-decoded-fault",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip-decoded-fault",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.674972+00:00",
+      "ended_utc": "2026-10-05T15:49:44.771815+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip-decoded-fault\",\n    \"input\": {\n      \"id\": \"gzip-decoded-fault\",\n      \"label\": \"故障: decoded3をencoded budget8へ流用\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"decoded-fault\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"FAULT_DECODED_BUDGET\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 23,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": true\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=23064bb446d44c378941b9ba290a814d\",\n    \"request_id\": \"23064bb446d44c378941b9ba290a814d\",\n    \"started_utc\": \"2026-10-05T15:49:44.764394+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:44.767977+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:44 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"23064bb446d44c378941b9ba290a814d\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip23",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip23",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.771908+00:00",
+      "ended_utc": "2026-10-05T15:49:44.874718+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip23\",\n    \"input\": {\n      \"id\": \"gzip23\",\n      \"label\": \"gzip23受入境界\",\n      \"encoding\": \"gzip\",\n      \"budget\": 23,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 23,\n      \"decoded\": 3\n    },\n    \"used\": 23,\n    \"accepted\": true\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=fcbec687c94e4da7a17102fd3793c2cc\",\n    \"request_id\": \"fcbec687c94e4da7a17102fd3793c2cc\",\n    \"started_utc\": \"2026-10-05T15:49:44.866371+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:44.870072+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:44 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"fcbec687c94e4da7a17102fd3793c2cc\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip22",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip22",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.874791+00:00",
+      "ended_utc": "2026-10-05T15:49:44.975035+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip22\",\n    \"input\": {\n      \"id\": \"gzip22\",\n      \"label\": \"gzip22拒否境界\",\n      \"encoding\": \"gzip\",\n      \"budget\": 22,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 23,\n      \"decoded\": 3\n    },\n    \"used\": 23,\n    \"accepted\": false\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=54594607abdd4f14a09f29f09a34ae50\",\n    \"request_id\": \"54594607abdd4f14a09f29f09a34ae50\",\n    \"started_utc\": \"2026-10-05T15:49:44.967985+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:44.971586+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:44 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"54594607abdd4f14a09f29f09a34ae50\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "plain3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain3",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:44.975098+00:00",
+      "ended_utc": "2026-10-05T15:49:45.071909+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain3\",\n    \"input\": {\n      \"id\": \"plain3\",\n      \"label\": \"plain3受入境界\",\n      \"encoding\": \"plain\",\n      \"budget\": 3,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 3,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": true\n  },\n  \"wire\": {\n    \"path\": \"/body/plain?request=c554f3e11b7b4a7b86324c77dc6bcf14\",\n    \"request_id\": \"c554f3e11b7b4a7b86324c77dc6bcf14\",\n    \"started_utc\": \"2026-10-05T15:49:45.064384+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:45.067948+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:45 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"3\",\n      \"x-request-id\": \"c554f3e11b7b4a7b86324c77dc6bcf14\",\n      \"x-body-sha256\": \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"616263\",\n    \"body_bytes\": 3,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "plain2",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain2",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.071975+00:00",
+      "ended_utc": "2026-10-05T15:49:45.167894+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain2\",\n    \"input\": {\n      \"id\": \"plain2\",\n      \"label\": \"plain2拒否境界\",\n      \"encoding\": \"plain\",\n      \"budget\": 2,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 3,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": false\n  },\n  \"wire\": {\n    \"path\": \"/body/plain?request=76a4b356a96c45b687386643c28b7c4d\",\n    \"request_id\": \"76a4b356a96c45b687386643c28b7c4d\",\n    \"started_utc\": \"2026-10-05T15:49:45.161034+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:45.164546+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:45 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"3\",\n      \"x-request-id\": \"76a4b356a96c45b687386643c28b7c4d\",\n      \"x-body-sha256\": \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"616263\",\n    \"body_bytes\": 3,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip-decoded3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip-decoded3",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.167958+00:00",
+      "ended_utc": "2026-10-05T15:49:45.264648+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip-decoded3\",\n    \"input\": {\n      \"id\": \"gzip-decoded3\",\n      \"label\": \"故障: decoded budget3でgzip誤受入\",\n      \"encoding\": \"gzip\",\n      \"budget\": 3,\n      \"policy\": \"decoded-fault\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"FAULT_DECODED_BUDGET\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 23,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": true\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=f6e105dbe91a4d69b372db55b2bfe386\",\n    \"request_id\": \"f6e105dbe91a4d69b372db55b2bfe386\",\n    \"started_utc\": \"2026-10-05T15:49:45.256709+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:45.260468+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:45 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"f6e105dbe91a4d69b372db55b2bfe386\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget0",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget0",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.264728+00:00",
+      "ended_utc": "2026-10-05T15:49:45.366568+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget0\",\n    \"input\": {\n      \"id\": \"budget0\",\n      \"label\": \"budget0 / plain拒否\",\n      \"encoding\": \"plain\",\n      \"budget\": 0,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"NORMAL\",\n    \"reason\": \"\",\n    \"measurement\": {\n      \"encoded\": 3,\n      \"decoded\": 3\n    },\n    \"used\": 3,\n    \"accepted\": false\n  },\n  \"wire\": {\n    \"path\": \"/body/plain?request=2a95db1aa72740c3b50483d3c2b9f802\",\n    \"request_id\": \"2a95db1aa72740c3b50483d3c2b9f802\",\n    \"started_utc\": \"2026-10-05T15:49:45.359209+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:45.363185+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:45 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"3\",\n      \"x-request-id\": \"2a95db1aa72740c3b50483d3c2b9f802\",\n      \"x-body-sha256\": \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"616263\",\n    \"body_bytes\": 3,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-negative",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-negative",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.366634+00:00",
+      "ended_utc": "2026-10-05T15:49:45.462088+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-negative\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-bool",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-bool",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.462160+00:00",
+      "ended_utc": "2026-10-05T15:49:45.555251+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-bool\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-large",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-large",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.555320+00:00",
+      "ended_utc": "2026-10-05T15:49:45.647373+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-large\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "encoding-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "encoding-unknown",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.647455+00:00",
+      "ended_utc": "2026-10-05T15:49:45.740759+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"encoding-unknown\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"ENCODING\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "policy-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "policy-unknown",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.740819+00:00",
+      "ended_utc": "2026-10-05T15:49:45.834836+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"policy-unknown\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"POLICY\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "timing-missing",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "timing-missing",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.834892+00:00",
+      "ended_utc": "2026-10-05T15:49:45.938856+00:00",
+      "exit": 3,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"timing-missing\",\n    \"input\": {\n      \"id\": \"timing-missing\",\n      \"label\": \"注入: timing lookup欠測 / unsupported\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"timing-missing\"\n    },\n    \"status\": \"BROWSER_REQUIRED\",\n    \"reason\": \"TIMING_LOOKUP_MUST_BE_OBSERVED_IN_BROWSER\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": {\n    \"path\": \"/body/gzip?request=9d65b134c5fb49ebbb6ffcbfd620b875\",\n    \"request_id\": \"9d65b134c5fb49ebbb6ffcbfd620b875\",\n    \"started_utc\": \"2026-10-05T15:49:45.931332+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:45.934796+00:00\",\n    \"http_status\": 200,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:45 GMT\",\n      \"content-type\": \"application/octet-stream\",\n      \"content-length\": \"23\",\n      \"content-encoding\": \"gzip\",\n      \"x-request-id\": \"9d65b134c5fb49ebbb6ffcbfd620b875\",\n      \"x-body-sha256\": \"a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"1f8b08000000000000034b4c4a0600c241243503000000\",\n    \"body_bytes\": 23,\n    \"decoded_hex\": \"616263\",\n    \"decoded_bytes\": 3,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "http-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "http-failure",
+        "--port",
+        "57095"
+      ],
+      "started_utc": "2026-10-05T15:49:45.938926+00:00",
+      "ended_utc": "2026-10-05T15:49:46.035839+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"http-failure\",\n    \"input\": {\n      \"id\": \"http-failure\",\n      \"label\": \"実HTTP500 / 正常答えなし\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"http-failure\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"HTTP_500\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": {\n    \"path\": \"/body/error?request=1019f8ad374749e99313d9bf6ee1bea1\",\n    \"request_id\": \"1019f8ad374749e99313d9bf6ee1bea1\",\n    \"started_utc\": \"2026-10-05T15:49:46.029059+00:00\",\n    \"ended_utc\": \"2026-10-05T15:49:46.032539+00:00\",\n    \"http_status\": 500,\n    \"headers\": {\n      \"server\": \"SimpleHTTP/0.6 Python/3.9.6\",\n      \"date\": \"Mon, 05 Oct 2026 15:49:46 GMT\",\n      \"content-type\": \"text/plain\",\n      \"content-length\": \"21\",\n      \"x-request-id\": \"1019f8ad374749e99313d9bf6ee1bea1\",\n      \"x-body-sha256\": \"fcb473c292a47bcde763817ddd48b72e3d7c5a635842753743885b067f43272e\",\n      \"cache-control\": \"no-store\"\n    },\n    \"body_hex\": \"696e6a65637465642048545450206661696c757265\",\n    \"body_bytes\": 21,\n    \"decoded_hex\": null,\n    \"decoded_bytes\": null,\n    \"source\": \"actual http.client raw response; no Browser ResourceTiming\"\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "cases": [
+    {
+      "result": {
+        "case": "plain8",
+        "input": {
+          "id": "plain8",
+          "label": "plain / encoded budget8",
+          "encoding": "plain",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 3,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": true
+      },
+      "wire": {
+        "path": "/body/plain?request=5789724e273d4e47aa56ad4cb741e982",
+        "request_id": "5789724e273d4e47aa56ad4cb741e982",
+        "started_utc": "2026-10-05T15:49:44.569897+00:00",
+        "ended_utc": "2026-10-05T15:49:44.574671+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:44 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "3",
+          "x-request-id": "5789724e273d4e47aa56ad4cb741e982",
+          "x-body-sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+          "cache-control": "no-store"
+        },
+        "body_hex": "616263",
+        "body_bytes": 3,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "gzip8",
+        "input": {
+          "id": "gzip8",
+          "label": "gzip / encoded budget8",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 23,
+          "decoded": 3
+        },
+        "used": 23,
+        "accepted": false
+      },
+      "wire": {
+        "path": "/body/gzip?request=a8de18087edd4fd58cec47a12e8eeddb",
+        "request_id": "a8de18087edd4fd58cec47a12e8eeddb",
+        "started_utc": "2026-10-05T15:49:44.667431+00:00",
+        "ended_utc": "2026-10-05T15:49:44.671081+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:44 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "a8de18087edd4fd58cec47a12e8eeddb",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "gzip-decoded-fault",
+        "input": {
+          "id": "gzip-decoded-fault",
+          "label": "故障: decoded3をencoded budget8へ流用",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "decoded-fault",
+          "variant": "normal"
+        },
+        "status": "FAULT_DECODED_BUDGET",
+        "reason": "",
+        "measurement": {
+          "encoded": 23,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": true
+      },
+      "wire": {
+        "path": "/body/gzip?request=23064bb446d44c378941b9ba290a814d",
+        "request_id": "23064bb446d44c378941b9ba290a814d",
+        "started_utc": "2026-10-05T15:49:44.764394+00:00",
+        "ended_utc": "2026-10-05T15:49:44.767977+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:44 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "23064bb446d44c378941b9ba290a814d",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "gzip23",
+        "input": {
+          "id": "gzip23",
+          "label": "gzip23受入境界",
+          "encoding": "gzip",
+          "budget": 23,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 23,
+          "decoded": 3
+        },
+        "used": 23,
+        "accepted": true
+      },
+      "wire": {
+        "path": "/body/gzip?request=fcbec687c94e4da7a17102fd3793c2cc",
+        "request_id": "fcbec687c94e4da7a17102fd3793c2cc",
+        "started_utc": "2026-10-05T15:49:44.866371+00:00",
+        "ended_utc": "2026-10-05T15:49:44.870072+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:44 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "fcbec687c94e4da7a17102fd3793c2cc",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "gzip22",
+        "input": {
+          "id": "gzip22",
+          "label": "gzip22拒否境界",
+          "encoding": "gzip",
+          "budget": 22,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 23,
+          "decoded": 3
+        },
+        "used": 23,
+        "accepted": false
+      },
+      "wire": {
+        "path": "/body/gzip?request=54594607abdd4f14a09f29f09a34ae50",
+        "request_id": "54594607abdd4f14a09f29f09a34ae50",
+        "started_utc": "2026-10-05T15:49:44.967985+00:00",
+        "ended_utc": "2026-10-05T15:49:44.971586+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:44 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "54594607abdd4f14a09f29f09a34ae50",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "plain3",
+        "input": {
+          "id": "plain3",
+          "label": "plain3受入境界",
+          "encoding": "plain",
+          "budget": 3,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 3,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": true
+      },
+      "wire": {
+        "path": "/body/plain?request=c554f3e11b7b4a7b86324c77dc6bcf14",
+        "request_id": "c554f3e11b7b4a7b86324c77dc6bcf14",
+        "started_utc": "2026-10-05T15:49:45.064384+00:00",
+        "ended_utc": "2026-10-05T15:49:45.067948+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:45 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "3",
+          "x-request-id": "c554f3e11b7b4a7b86324c77dc6bcf14",
+          "x-body-sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+          "cache-control": "no-store"
+        },
+        "body_hex": "616263",
+        "body_bytes": 3,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "plain2",
+        "input": {
+          "id": "plain2",
+          "label": "plain2拒否境界",
+          "encoding": "plain",
+          "budget": 2,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 3,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": false
+      },
+      "wire": {
+        "path": "/body/plain?request=76a4b356a96c45b687386643c28b7c4d",
+        "request_id": "76a4b356a96c45b687386643c28b7c4d",
+        "started_utc": "2026-10-05T15:49:45.161034+00:00",
+        "ended_utc": "2026-10-05T15:49:45.164546+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:45 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "3",
+          "x-request-id": "76a4b356a96c45b687386643c28b7c4d",
+          "x-body-sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+          "cache-control": "no-store"
+        },
+        "body_hex": "616263",
+        "body_bytes": 3,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "gzip-decoded3",
+        "input": {
+          "id": "gzip-decoded3",
+          "label": "故障: decoded budget3でgzip誤受入",
+          "encoding": "gzip",
+          "budget": 3,
+          "policy": "decoded-fault",
+          "variant": "normal"
+        },
+        "status": "FAULT_DECODED_BUDGET",
+        "reason": "",
+        "measurement": {
+          "encoded": 23,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": true
+      },
+      "wire": {
+        "path": "/body/gzip?request=f6e105dbe91a4d69b372db55b2bfe386",
+        "request_id": "f6e105dbe91a4d69b372db55b2bfe386",
+        "started_utc": "2026-10-05T15:49:45.256709+00:00",
+        "ended_utc": "2026-10-05T15:49:45.260468+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:45 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "f6e105dbe91a4d69b372db55b2bfe386",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "budget0",
+        "input": {
+          "id": "budget0",
+          "label": "budget0 / plain拒否",
+          "encoding": "plain",
+          "budget": 0,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "NORMAL",
+        "reason": "",
+        "measurement": {
+          "encoded": 3,
+          "decoded": 3
+        },
+        "used": 3,
+        "accepted": false
+      },
+      "wire": {
+        "path": "/body/plain?request=2a95db1aa72740c3b50483d3c2b9f802",
+        "request_id": "2a95db1aa72740c3b50483d3c2b9f802",
+        "started_utc": "2026-10-05T15:49:45.359209+00:00",
+        "ended_utc": "2026-10-05T15:49:45.363185+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:45 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "3",
+          "x-request-id": "2a95db1aa72740c3b50483d3c2b9f802",
+          "x-body-sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+          "cache-control": "no-store"
+        },
+        "body_hex": "616263",
+        "body_bytes": 3,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "budget-negative",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget-bool",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget-large",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "encoding-unknown",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "ENCODING",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "policy-unknown",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "POLICY",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "timing-missing",
+        "input": {
+          "id": "timing-missing",
+          "label": "注入: timing lookup欠測 / unsupported",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "timing-missing"
+        },
+        "status": "BROWSER_REQUIRED",
+        "reason": "TIMING_LOOKUP_MUST_BE_OBSERVED_IN_BROWSER",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": {
+        "path": "/body/gzip?request=9d65b134c5fb49ebbb6ffcbfd620b875",
+        "request_id": "9d65b134c5fb49ebbb6ffcbfd620b875",
+        "started_utc": "2026-10-05T15:49:45.931332+00:00",
+        "ended_utc": "2026-10-05T15:49:45.934796+00:00",
+        "http_status": 200,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:45 GMT",
+          "content-type": "application/octet-stream",
+          "content-length": "23",
+          "content-encoding": "gzip",
+          "x-request-id": "9d65b134c5fb49ebbb6ffcbfd620b875",
+          "x-body-sha256": "a058a4f3405f909f3a49df0cb75d96198d371ae7913e5ef6b8114a382746ee5a",
+          "cache-control": "no-store"
+        },
+        "body_hex": "1f8b08000000000000034b4c4a0600c241243503000000",
+        "body_bytes": 23,
+        "decoded_hex": "616263",
+        "decoded_bytes": 3,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    },
+    {
+      "result": {
+        "case": "http-failure",
+        "input": {
+          "id": "http-failure",
+          "label": "実HTTP500 / 正常答えなし",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "http-failure"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "HTTP_500",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": {
+        "path": "/body/error?request=1019f8ad374749e99313d9bf6ee1bea1",
+        "request_id": "1019f8ad374749e99313d9bf6ee1bea1",
+        "started_utc": "2026-10-05T15:49:46.029059+00:00",
+        "ended_utc": "2026-10-05T15:49:46.032539+00:00",
+        "http_status": 500,
+        "headers": {
+          "server": "SimpleHTTP/0.6 Python/3.9.6",
+          "date": "Mon, 05 Oct 2026 15:49:46 GMT",
+          "content-type": "text/plain",
+          "content-length": "21",
+          "x-request-id": "1019f8ad374749e99313d9bf6ee1bea1",
+          "x-body-sha256": "fcb473c292a47bcde763817ddd48b72e3d7c5a635842753743885b067f43272e",
+          "cache-control": "no-store"
+        },
+        "body_hex": "696e6a65637465642048545450206661696c757265",
+        "body_bytes": 21,
+        "decoded_hex": null,
+        "decoded_bytes": null,
+        "source": "actual http.client raw response; no Browser ResourceTiming"
+      }
+    }
+  ]
+}

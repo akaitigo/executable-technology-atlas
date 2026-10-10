@@ -1,0 +1,70 @@
+{
+  "method": "actual IAB normal3 + synthetic second-constructor throw after previous normal + deterministic startup fault + held probe",
+  "normal_runs": [
+    {
+      "case": "clone",
+      "raw": "observations/20261005T125009807247Z/raw.json",
+      "oracle": "一致"
+    },
+    {
+      "case": "transfer",
+      "raw": "observations/20261005T125010706665Z/raw.json",
+      "oracle": "一致"
+    },
+    {
+      "case": "function-refusal",
+      "raw": "observations/20261005T125011372863Z/raw.json",
+      "oracle": "一致"
+    }
+  ],
+  "constructor": {
+    "harness": "qa-preview.py constructor",
+    "synthetic_injection": true,
+    "sequence": [
+      "first clone DELIVERED oracle一致",
+      "second same-case constructor throws SecurityError QA_WORKER_CONSTRUCTOR_FAULT"
+    ],
+    "raw": "observations/failures/20261005T125114521071Z/failure.json",
+    "phase": "worker-constructor",
+    "partial": {},
+    "worker_terminated": false,
+    "old_session_replaced": true,
+    "rows": 0,
+    "answerOpen": false,
+    "success_save_replaced_by_failure_only": true
+  },
+  "before_probe": {
+    "harness": "qa-preview.py fault",
+    "raw": "observations/failures/20261005T125638485711Z/failure.json",
+    "phase": "before-probe",
+    "error": "WorkerError",
+    "partial": {},
+    "rows": 0,
+    "answerOpen": false
+  },
+  "prediction_reset": {
+    "prediction": "保持4 bytes",
+    "status": "function-refusal / 未実行",
+    "raw": "未実行",
+    "answerOpen": false,
+    "saveDisabled": true
+  },
+  "case_reset": "clone / 未実行",
+  "held_probe": {
+    "harness": "qa-preview.py held",
+    "qa_timeout_ms": 30000,
+    "sequence": [
+      "old probe held",
+      "prediction changed detach 0 bytes",
+      "explicit stdin release",
+      "server old_probe_released",
+      "actual DOM clone / 未実行, raw 未実行, rows0, closed answer, save disabled"
+    ],
+    "not_normal_record": true
+  },
+  "capture": {
+    "displayed": true,
+    "saved": false,
+    "view": "previous normal → synthetic constructor failure / no comparison / separate failed record"
+  }
+}

@@ -1,0 +1,2510 @@
+{
+  "startedUtc": "2026-10-05T13:47:13.305753+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "sqlite": "3.51.0",
+    "ticks": "virtual ordered integers; no sleeps; seed at -1"
+  },
+  "sourceHashes": {
+    "runner.py": "9be0a83f1d44c762cbcb05ec15910ac45ddc9a38b7d0871fdb496b0ce2839601",
+    "oracle.json": "a644e22e81973355e8a8b25ea63501291ed1c0514bffb2bacf7688afabe54983",
+    "consumer.py": "be559abfd3e45b84f9daf0608e363a1e7acd9df12e5e92215d2c0a713b25eb3d",
+    "requests.json": "30139f58705c6af637095dac27bbe3e7284405e9d5bf0729e5ef64633e92991d",
+    "driver.py": "b5c5613eeb70baedeae2bba7d9c4757d534cf6dc23e0fc3a4a05f5db0859eee2",
+    "checker.py": "9706ff19d4fcdb94d1e643492bcf1696e0719a8c1b7e10743b599530c98d0585"
+  },
+  "cases": [
+    {
+      "id": "poison-only",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "e1cc0e283316d0b7f4c0e3fb424618689f50883b982ba3ae629f8bbae9a89c82",
+      "startedUtc": "2026-10-05T13:47:13.310518+00:00",
+      "endedUtc": "2026-10-05T13:47:13.490964+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.361196+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.404827+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.405538+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.446194+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.446858+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.486224+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [], \"effects\": [], \"account\": [[1, 0]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [], \"effects\": [], \"account\": [[1, 0]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null]], \"redrive\": []}, \"summary\": {\"effectCount\": 0, \"baselineEffects\": 0, \"addedEffects\": 0, \"balance\": 0, \"terminalRedrive\": \"NONE\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (2,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[1,2,3]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.361196+00:00",
+            "endedUtc": "2026-10-05T13:47:13.404827+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.405538+00:00",
+            "endedUtc": "2026-10-05T13:47:13.446194+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.446858+00:00",
+            "endedUtc": "2026-10-05T13:47:13.486224+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [],
+          "effects": [],
+          "account": [
+            [
+              1,
+              0
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [],
+          "effects": [],
+          "account": [
+            [
+              1,
+              0
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "summary": {
+          "effectCount": 0,
+          "baselineEffects": 0,
+          "addedEffects": 0,
+          "balance": 0,
+          "terminalRedrive": "NONE",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (2,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[1,2,3]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "poison-only/state.sqlite"
+    },
+    {
+      "id": "poison-corrected",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "8ba1aaf1c8ff4da6791389ed4ec72454793151e42046796978bb4a4a3919ffa7",
+      "startedUtc": "2026-10-05T13:47:13.491231+00:00",
+      "endedUtc": "2026-10-05T13:47:13.736361+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.542035+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.585034+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.585822+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.627891+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.628582+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.684593+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 4, \"tick\": 4, \"generation\": 1, \"ordinal\": 1, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"4\", \"1\"], \"stdin\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.687264+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.731810+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"COMMITTED\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 1, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}')\\\", \\\"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}',4,1)\\\", \\\"UPDATE account SET balance=balance+7 WHERE singleton=1\\\", \\\"COMMIT\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',4,1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [], \"effects\": [], \"account\": [[1, 0]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", 4, 1]], \"account\": [[1, 7]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 4, 1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, 1]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null]], \"redrive\": [[1, 1, 1, 4, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"[4]\", null, \"COMMITTED\"]]}, \"summary\": {\"effectCount\": 1, \"baselineEffects\": 0, \"addedEffects\": 1, \"balance\": 7, \"terminalRedrive\": \"COMMITTED\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [4], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (2,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[1,2,3]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"INSERT INTO redrive VALUES (1,1,1,4,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','[]',NULL,'STARTED')\", \"INSERT INTO attempts VALUES (4,4,1,1,'m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','COMMITTED',0,1)\", \"UPDATE redrive SET attempt_ids='[4]',terminal_dlq=NULL,terminal_outcome='COMMITTED' WHERE redrive_id=1\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.542035+00:00",
+            "endedUtc": "2026-10-05T13:47:13.585034+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.585822+00:00",
+            "endedUtc": "2026-10-05T13:47:13.627891+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.628582+00:00",
+            "endedUtc": "2026-10-05T13:47:13.684593+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 4,
+            "tick": 4,
+            "generation": 1,
+            "ordinal": 1,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "4",
+              "1"
+            ],
+            "stdin": "{\"delta\":7,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.687264+00:00",
+            "endedUtc": "2026-10-05T13:47:13.731810+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',4,1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "COMMITTED",
+              "ackModel": true,
+              "payload": "{\"delta\":7,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 1,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "INSERT INTO inbox(id,payload) VALUES ('m1','{\"delta\":7,\"id\":\"m1\"}')",
+                "INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\"delta\":7,\"id\":\"m1\"}',4,1)",
+                "UPDATE account SET balance=balance+7 WHERE singleton=1",
+                "COMMIT",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [],
+          "effects": [],
+          "account": [
+            [
+              1,
+              0
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              4,
+              1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              4,
+              1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              1
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ]
+          ],
+          "redrive": [
+            [
+              1,
+              1,
+              1,
+              4,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "[4]",
+              null,
+              "COMMITTED"
+            ]
+          ]
+        },
+        "summary": {
+          "effectCount": 1,
+          "baselineEffects": 0,
+          "addedEffects": 1,
+          "balance": 7,
+          "terminalRedrive": "COMMITTED",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [
+            4
+          ],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (2,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[1,2,3]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "INSERT INTO redrive VALUES (1,1,1,4,'{\"delta\":7,\"id\":\"m1\"}','[]',NULL,'STARTED')",
+          "INSERT INTO attempts VALUES (4,4,1,1,'m1','{\"delta\":7,\"id\":\"m1\"}','COMMITTED',0,1)",
+          "UPDATE redrive SET attempt_ids='[4]',terminal_dlq=NULL,terminal_outcome='COMMITTED' WHERE redrive_id=1",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "poison-corrected/state.sqlite"
+    },
+    {
+      "id": "poison-unchanged",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "46efd8ef6a6fec7639645c99be5caaa187c62f9a88dc65becf78814207aec8bd",
+      "startedUtc": "2026-10-05T13:47:13.736619+00:00",
+      "endedUtc": "2026-10-05T13:47:14.052645+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.786953+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.833595+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.834385+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.874087+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.874746+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.914923+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 4, \"tick\": 4, \"generation\": 1, \"ordinal\": 1, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"4\", \"1\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.916637+00:00\", \"endedUtc\": \"2026-10-05T13:47:13.961846+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 5, \"tick\": 5, \"generation\": 1, \"ordinal\": 2, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"5\", \"1\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:13.962549+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.005308+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 6, \"tick\": 7, \"generation\": 1, \"ordinal\": 3, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"7\", \"1\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.006640+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.047577+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 0, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [], \"effects\": [], \"account\": [[1, 0]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [], \"effects\": [], \"account\": [[1, 0]], \"attempts\": [[1, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [2, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 4, 1, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, 1], [5, 5, 1, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, 1], [6, 7, 1, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, 1]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[1,2,3]\", null], [2, 1, 7, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[4,5,6]\", 1]], \"redrive\": [[1, 1, 1, 4, \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"[4,5,6]\", 2, \"POISON_EXHAUSTED\"]]}, \"summary\": {\"effectCount\": 0, \"baselineEffects\": 0, \"addedEffects\": 0, \"balance\": 0, \"terminalRedrive\": \"POISON_EXHAUSTED\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [4, 5, 7], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (2,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[1,2,3]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"INSERT INTO redrive VALUES (1,1,1,4,'{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','[]',NULL,'STARTED')\", \"INSERT INTO attempts VALUES (4,4,1,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,1)\", \"INSERT INTO attempts VALUES (5,5,1,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,1)\", \"INSERT INTO attempts VALUES (6,7,1,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,1)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (2,1,7,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[4,5,6]',1)\", \"UPDATE redrive SET attempt_ids='[4,5,6]',terminal_dlq=2,terminal_outcome='POISON_EXHAUSTED' WHERE redrive_id=1\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.786953+00:00",
+            "endedUtc": "2026-10-05T13:47:13.833595+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.834385+00:00",
+            "endedUtc": "2026-10-05T13:47:13.874087+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.874746+00:00",
+            "endedUtc": "2026-10-05T13:47:13.914923+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 4,
+            "tick": 4,
+            "generation": 1,
+            "ordinal": 1,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "4",
+              "1"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.916637+00:00",
+            "endedUtc": "2026-10-05T13:47:13.961846+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 5,
+            "tick": 5,
+            "generation": 1,
+            "ordinal": 2,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "5",
+              "1"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:13.962549+00:00",
+            "endedUtc": "2026-10-05T13:47:14.005308+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 6,
+            "tick": 7,
+            "generation": 1,
+            "ordinal": 3,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "7",
+              "1"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.006640+00:00",
+            "endedUtc": "2026-10-05T13:47:14.047577+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 0, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 0,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [],
+          "effects": [],
+          "account": [
+            [
+              1,
+              0
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [],
+          "effects": [],
+          "account": [
+            [
+              1,
+              0
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              2,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              4,
+              1,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              1
+            ],
+            [
+              5,
+              5,
+              1,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              1
+            ],
+            [
+              6,
+              7,
+              1,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              1
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[1,2,3]",
+              null
+            ],
+            [
+              2,
+              1,
+              7,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[4,5,6]",
+              1
+            ]
+          ],
+          "redrive": [
+            [
+              1,
+              1,
+              1,
+              4,
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "[4,5,6]",
+              2,
+              "POISON_EXHAUSTED"
+            ]
+          ]
+        },
+        "summary": {
+          "effectCount": 0,
+          "baselineEffects": 0,
+          "addedEffects": 0,
+          "balance": 0,
+          "terminalRedrive": "POISON_EXHAUSTED",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [
+            4,
+            5,
+            7
+          ],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (2,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[1,2,3]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "INSERT INTO redrive VALUES (1,1,1,4,'{\"delta\":\"poison\",\"id\":\"m1\"}','[]',NULL,'STARTED')",
+          "INSERT INTO attempts VALUES (4,4,1,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,1)",
+          "INSERT INTO attempts VALUES (5,5,1,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,1)",
+          "INSERT INTO attempts VALUES (6,7,1,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,1)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (2,1,7,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[4,5,6]',1)",
+          "UPDATE redrive SET attempt_ids='[4,5,6]',terminal_dlq=2,terminal_outcome='POISON_EXHAUSTED' WHERE redrive_id=1",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "poison-unchanged/state.sqlite"
+    },
+    {
+      "id": "committed-same",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "7b22b14d1cb30f54941c729351032e1867b3380a9cf84ef942ff179e343d3023",
+      "startedUtc": "2026-10-05T13:47:14.052894+00:00",
+      "endedUtc": "2026-10-05T13:47:14.315426+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": -1, \"generation\": -1, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"-1\", \"-1\"], \"stdin\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.102162+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.144254+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"COMMITTED\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 1, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}')\\\", \\\"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}',-1,-1)\\\", \\\"UPDATE account SET balance=balance+7 WHERE singleton=1\\\", \\\"COMMIT\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.144832+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.185485+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.186231+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.229990+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 4, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.230662+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.270395+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 5, \"tick\": 4, \"generation\": 1, \"ordinal\": 1, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"4\", \"1\"], \"stdin\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.272001+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.311651+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"DUPLICATE\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"DUPLICATE\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [5, 4, 1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"DUPLICATE\", 0, 1]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null]], \"redrive\": [[1, 1, 1, 4, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"[5]\", null, \"DUPLICATE\"]]}, \"summary\": {\"effectCount\": 1, \"baselineEffects\": 1, \"addedEffects\": 0, \"balance\": 7, \"terminalRedrive\": \"DUPLICATE\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [4], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','COMMITTED',0,NULL)\", \"INSERT INTO attempts VALUES (2,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (4,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[2,3,4]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"INSERT INTO redrive VALUES (1,1,1,4,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','[]',NULL,'STARTED')\", \"INSERT INTO attempts VALUES (5,4,1,1,'m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','DUPLICATE',0,1)\", \"UPDATE redrive SET attempt_ids='[5]',terminal_dlq=NULL,terminal_outcome='DUPLICATE' WHERE redrive_id=1\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": -1,
+            "generation": -1,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "-1",
+              "-1"
+            ],
+            "stdin": "{\"delta\":7,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.102162+00:00",
+            "endedUtc": "2026-10-05T13:47:14.144254+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "COMMITTED",
+              "ackModel": true,
+              "payload": "{\"delta\":7,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 1,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "INSERT INTO inbox(id,payload) VALUES ('m1','{\"delta\":7,\"id\":\"m1\"}')",
+                "INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\"delta\":7,\"id\":\"m1\"}',-1,-1)",
+                "UPDATE account SET balance=balance+7 WHERE singleton=1",
+                "COMMIT",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.144832+00:00",
+            "endedUtc": "2026-10-05T13:47:14.185485+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.186231+00:00",
+            "endedUtc": "2026-10-05T13:47:14.229990+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 4,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.230662+00:00",
+            "endedUtc": "2026-10-05T13:47:14.270395+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 5,
+            "tick": 4,
+            "generation": 1,
+            "ordinal": 1,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "4",
+              "1"
+            ],
+            "stdin": "{\"delta\":7,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.272001+00:00",
+            "endedUtc": "2026-10-05T13:47:14.311651+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"DUPLICATE\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "DUPLICATE",
+              "ackModel": true,
+              "payload": "{\"delta\":7,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              5,
+              4,
+              1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "DUPLICATE",
+              0,
+              1
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ]
+          ],
+          "redrive": [
+            [
+              1,
+              1,
+              1,
+              4,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "[5]",
+              null,
+              "DUPLICATE"
+            ]
+          ]
+        },
+        "summary": {
+          "effectCount": 1,
+          "baselineEffects": 1,
+          "addedEffects": 0,
+          "balance": 7,
+          "terminalRedrive": "DUPLICATE",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [
+            4
+          ],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\"delta\":7,\"id\":\"m1\"}','COMMITTED',0,NULL)",
+          "INSERT INTO attempts VALUES (2,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (4,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[2,3,4]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "INSERT INTO redrive VALUES (1,1,1,4,'{\"delta\":7,\"id\":\"m1\"}','[]',NULL,'STARTED')",
+          "INSERT INTO attempts VALUES (5,4,1,1,'m1','{\"delta\":7,\"id\":\"m1\"}','DUPLICATE',0,1)",
+          "UPDATE redrive SET attempt_ids='[5]',terminal_dlq=NULL,terminal_outcome='DUPLICATE' WHERE redrive_id=1",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "committed-same/state.sqlite"
+    },
+    {
+      "id": "committed-changed",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "9861237241242f096c9617b745e68a2a847f21a74daf6df51a47023c0cf13049",
+      "startedUtc": "2026-10-05T13:47:14.315673+00:00",
+      "endedUtc": "2026-10-05T13:47:14.581326+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": -1, \"generation\": -1, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"-1\", \"-1\"], \"stdin\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.364847+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.405877+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"COMMITTED\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 1, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}')\\\", \\\"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}',-1,-1)\\\", \\\"UPDATE account SET balance=balance+7 WHERE singleton=1\\\", \\\"COMMIT\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.406418+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.446659+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.447373+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.491489+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 4, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.492414+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.534819+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 5, \"tick\": 4, \"generation\": 1, \"ordinal\": 1, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"strict\", \"4\", \"1\"], \"stdin\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.536624+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.577109+00:00\", \"exitCode\": 66, \"stdout\": \"{\\\"status\\\": \\\"CONFLICT\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":9,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"CONFLICT\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [5, 4, 1, 1, \"m1\", \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"CONFLICT\", 66, 1]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null], [2, 1, 4, \"m1\", \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"identity-conflict\", \"[5]\", 1]], \"redrive\": [[1, 1, 1, 4, \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"[5]\", 2, \"CONFLICT\"]]}, \"summary\": {\"effectCount\": 1, \"baselineEffects\": 1, \"addedEffects\": 0, \"balance\": 7, \"terminalRedrive\": \"CONFLICT\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [4], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','COMMITTED',0,NULL)\", \"INSERT INTO attempts VALUES (2,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (4,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[2,3,4]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"INSERT INTO redrive VALUES (1,1,1,4,'{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}','[]',NULL,'STARTED')\", \"INSERT INTO attempts VALUES (5,4,1,1,'m1','{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}','CONFLICT',66,1)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (2,1,4,'m1','{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}','identity-conflict','[5]',1)\", \"UPDATE redrive SET attempt_ids='[5]',terminal_dlq=2,terminal_outcome='CONFLICT' WHERE redrive_id=1\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": -1,
+            "generation": -1,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "-1",
+              "-1"
+            ],
+            "stdin": "{\"delta\":7,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.364847+00:00",
+            "endedUtc": "2026-10-05T13:47:14.405877+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "COMMITTED",
+              "ackModel": true,
+              "payload": "{\"delta\":7,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 1,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "INSERT INTO inbox(id,payload) VALUES ('m1','{\"delta\":7,\"id\":\"m1\"}')",
+                "INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\"delta\":7,\"id\":\"m1\"}',-1,-1)",
+                "UPDATE account SET balance=balance+7 WHERE singleton=1",
+                "COMMIT",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.406418+00:00",
+            "endedUtc": "2026-10-05T13:47:14.446659+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.447373+00:00",
+            "endedUtc": "2026-10-05T13:47:14.491489+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 4,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.492414+00:00",
+            "endedUtc": "2026-10-05T13:47:14.534819+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 5,
+            "tick": 4,
+            "generation": 1,
+            "ordinal": 1,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "strict",
+              "4",
+              "1"
+            ],
+            "stdin": "{\"delta\":9,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.536624+00:00",
+            "endedUtc": "2026-10-05T13:47:14.577109+00:00",
+            "exitCode": 66,
+            "stdout": "{\"status\": \"CONFLICT\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "CONFLICT",
+              "ackModel": false,
+              "payload": "{\"delta\":9,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              5,
+              4,
+              1,
+              1,
+              "m1",
+              "{\"delta\":9,\"id\":\"m1\"}",
+              "CONFLICT",
+              66,
+              1
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ],
+            [
+              2,
+              1,
+              4,
+              "m1",
+              "{\"delta\":9,\"id\":\"m1\"}",
+              "identity-conflict",
+              "[5]",
+              1
+            ]
+          ],
+          "redrive": [
+            [
+              1,
+              1,
+              1,
+              4,
+              "{\"delta\":9,\"id\":\"m1\"}",
+              "[5]",
+              2,
+              "CONFLICT"
+            ]
+          ]
+        },
+        "summary": {
+          "effectCount": 1,
+          "baselineEffects": 1,
+          "addedEffects": 0,
+          "balance": 7,
+          "terminalRedrive": "CONFLICT",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [
+            4
+          ],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\"delta\":7,\"id\":\"m1\"}','COMMITTED',0,NULL)",
+          "INSERT INTO attempts VALUES (2,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (4,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[2,3,4]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "INSERT INTO redrive VALUES (1,1,1,4,'{\"delta\":9,\"id\":\"m1\"}','[]',NULL,'STARTED')",
+          "INSERT INTO attempts VALUES (5,4,1,1,'m1','{\"delta\":9,\"id\":\"m1\"}','CONFLICT',66,1)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (2,1,4,'m1','{\"delta\":9,\"id\":\"m1\"}','identity-conflict','[5]',1)",
+          "UPDATE redrive SET attempt_ids='[5]',terminal_dlq=2,terminal_outcome='CONFLICT' WHERE redrive_id=1",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "committed-changed/state.sqlite"
+    },
+    {
+      "id": "committed-changed-id-only",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "369a0575e4ffa54d02b7ee3c84182d58b266d958a2b13c6fefbe72632cbf95d6",
+      "startedUtc": "2026-10-05T13:47:14.581596+00:00",
+      "endedUtc": "2026-10-05T13:47:14.846943+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"commands\": [{\"attemptId\": 1, \"tick\": -1, \"generation\": -1, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"id-only\", \"-1\", \"-1\"], \"stdin\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.631199+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.672877+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"COMMITTED\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 1, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}')\\\", \\\"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}',-1,-1)\\\", \\\"UPDATE account SET balance=balance+7 WHERE singleton=1\\\", \\\"COMMIT\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 2, \"tick\": 0, \"generation\": 0, \"ordinal\": 1, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"id-only\", \"0\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.673572+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.714098+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 3, \"tick\": 1, \"generation\": 0, \"ordinal\": 2, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"id-only\", \"1\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.714782+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.759186+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 4, \"tick\": 3, \"generation\": 0, \"ordinal\": 3, \"sourceDLQ\": null, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"id-only\", \"3\", \"0\"], \"stdin\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.760193+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.801431+00:00\", \"exitCode\": 65, \"stdout\": \"{\\\"status\\\": \\\"POISON\\\", \\\"ackModel\\\": false, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":\\\\\\\"poison\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": null, \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}, {\"attemptId\": 5, \"tick\": 4, \"generation\": 1, \"ordinal\": 1, \"sourceDLQ\": 1, \"argv\": [\"python3\", \"-B\", \"../consumer.py\", \"state.sqlite\", \"id-only\", \"4\", \"1\"], \"stdin\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\\n\", \"startedUtc\": \"2026-10-05T13:47:14.803675+00:00\", \"endedUtc\": \"2026-10-05T13:47:14.843123+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"status\\\": \\\"DUPLICATE_ID_ONLY\\\", \\\"ackModel\\\": true, \\\"payload\\\": \\\"{\\\\\\\"delta\\\\\\\":9,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"storedPayload\\\": \\\"{\\\\\\\"delta\\\\\\\":7,\\\\\\\"id\\\\\\\":\\\\\\\"m1\\\\\\\"}\\\", \\\"effectAdded\\\": 0, \\\"balance\\\": 7, \\\"sql\\\": [\\\"BEGIN IMMEDIATE\\\", \\\"SELECT payload FROM inbox WHERE id='m1'\\\", \\\"ROLLBACK\\\", \\\"SELECT balance FROM account WHERE singleton=1\\\"]}\\n\", \"stderr\": \"\", \"observation\": {\"status\": \"DUPLICATE_ID_ONLY\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}}], \"beforeRedrive\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null]], \"redrive\": []}, \"final\": {\"inbox\": [[\"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\"]], \"effects\": [[1, \"m1\", 7, \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", -1, -1]], \"account\": [[1, 7]], \"attempts\": [[1, -1, -1, 1, \"m1\", \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"COMMITTED\", 0, null], [2, 0, 0, 1, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [3, 1, 0, 2, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [4, 3, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"POISON\", 65, null], [5, 4, 1, 1, \"m1\", \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"DUPLICATE_ID_ONLY\", 0, 1]], \"dlq\": [[1, 0, 3, \"m1\", \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"poison-exhausted\", \"[2,3,4]\", null]], \"redrive\": [[1, 1, 1, 4, \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"[5]\", null, \"DUPLICATE_ID_ONLY\"]]}, \"summary\": {\"effectCount\": 1, \"baselineEffects\": 1, \"addedEffects\": 0, \"balance\": 7, \"terminalRedrive\": \"DUPLICATE_ID_ONLY\", \"initialAttemptTicks\": [0, 1, 3], \"redriveAttemptTicks\": [4], \"originalDLQPreserved\": true}, \"driverSQL\": [\"CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)\", \"CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)\", \"CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)\", \"INSERT INTO account VALUES (1,0)\", \"CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)\", \"CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)\", \"CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)\", \"INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}','COMMITTED',0,NULL)\", \"INSERT INTO attempts VALUES (2,0,0,1,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (3,1,0,2,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"INSERT INTO attempts VALUES (4,3,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','POISON',65,NULL)\", \"SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq\", \"INSERT INTO dlq VALUES (1,0,3,'m1','{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}','poison-exhausted','[2,3,4]',NULL)\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\", \"INSERT INTO redrive VALUES (1,1,1,4,'{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}','[]',NULL,'STARTED')\", \"INSERT INTO attempts VALUES (5,4,1,1,'m1','{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}','DUPLICATE_ID_ONLY',0,1)\", \"UPDATE redrive SET attempt_ids='[5]',terminal_dlq=NULL,terminal_outcome='DUPLICATE_ID_ONLY' WHERE redrive_id=1\", \"SELECT id,payload FROM inbox ORDER BY id\", \"SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no\", \"SELECT singleton,balance FROM account\", \"SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id\", \"SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id\", \"SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id\"]}\n",
+      "stderr": "",
+      "observation": {
+        "observed": true,
+        "reason": null,
+        "commands": [
+          {
+            "attemptId": 1,
+            "tick": -1,
+            "generation": -1,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "id-only",
+              "-1",
+              "-1"
+            ],
+            "stdin": "{\"delta\":7,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.631199+00:00",
+            "endedUtc": "2026-10-05T13:47:14.672877+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"COMMITTED\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 1, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"INSERT INTO inbox(id,payload) VALUES ('m1','{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}')\", \"INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}',-1,-1)\", \"UPDATE account SET balance=balance+7 WHERE singleton=1\", \"COMMIT\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "COMMITTED",
+              "ackModel": true,
+              "payload": "{\"delta\":7,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 1,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "INSERT INTO inbox(id,payload) VALUES ('m1','{\"delta\":7,\"id\":\"m1\"}')",
+                "INSERT INTO effects(message_id,delta,payload,tick,generation) VALUES ('m1',7,'{\"delta\":7,\"id\":\"m1\"}',-1,-1)",
+                "UPDATE account SET balance=balance+7 WHERE singleton=1",
+                "COMMIT",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 2,
+            "tick": 0,
+            "generation": 0,
+            "ordinal": 1,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "id-only",
+              "0",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.673572+00:00",
+            "endedUtc": "2026-10-05T13:47:14.714098+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 3,
+            "tick": 1,
+            "generation": 0,
+            "ordinal": 2,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "id-only",
+              "1",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.714782+00:00",
+            "endedUtc": "2026-10-05T13:47:14.759186+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 4,
+            "tick": 3,
+            "generation": 0,
+            "ordinal": 3,
+            "sourceDLQ": null,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "id-only",
+              "3",
+              "0"
+            ],
+            "stdin": "{\"delta\":\"poison\",\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.760193+00:00",
+            "endedUtc": "2026-10-05T13:47:14.801431+00:00",
+            "exitCode": 65,
+            "stdout": "{\"status\": \"POISON\", \"ackModel\": false, \"payload\": \"{\\\"delta\\\":\\\"poison\\\",\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": null, \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "POISON",
+              "ackModel": false,
+              "payload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "storedPayload": null,
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          },
+          {
+            "attemptId": 5,
+            "tick": 4,
+            "generation": 1,
+            "ordinal": 1,
+            "sourceDLQ": 1,
+            "argv": [
+              "python3",
+              "-B",
+              "../consumer.py",
+              "state.sqlite",
+              "id-only",
+              "4",
+              "1"
+            ],
+            "stdin": "{\"delta\":9,\"id\":\"m1\"}\n",
+            "startedUtc": "2026-10-05T13:47:14.803675+00:00",
+            "endedUtc": "2026-10-05T13:47:14.843123+00:00",
+            "exitCode": 0,
+            "stdout": "{\"status\": \"DUPLICATE_ID_ONLY\", \"ackModel\": true, \"payload\": \"{\\\"delta\\\":9,\\\"id\\\":\\\"m1\\\"}\", \"storedPayload\": \"{\\\"delta\\\":7,\\\"id\\\":\\\"m1\\\"}\", \"effectAdded\": 0, \"balance\": 7, \"sql\": [\"BEGIN IMMEDIATE\", \"SELECT payload FROM inbox WHERE id='m1'\", \"ROLLBACK\", \"SELECT balance FROM account WHERE singleton=1\"]}\n",
+            "stderr": "",
+            "observation": {
+              "status": "DUPLICATE_ID_ONLY",
+              "ackModel": true,
+              "payload": "{\"delta\":9,\"id\":\"m1\"}",
+              "storedPayload": "{\"delta\":7,\"id\":\"m1\"}",
+              "effectAdded": 0,
+              "balance": 7,
+              "sql": [
+                "BEGIN IMMEDIATE",
+                "SELECT payload FROM inbox WHERE id='m1'",
+                "ROLLBACK",
+                "SELECT balance FROM account WHERE singleton=1"
+              ]
+            }
+          }
+        ],
+        "beforeRedrive": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ]
+          ],
+          "redrive": []
+        },
+        "final": {
+          "inbox": [
+            [
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}"
+            ]
+          ],
+          "effects": [
+            [
+              1,
+              "m1",
+              7,
+              "{\"delta\":7,\"id\":\"m1\"}",
+              -1,
+              -1
+            ]
+          ],
+          "account": [
+            [
+              1,
+              7
+            ]
+          ],
+          "attempts": [
+            [
+              1,
+              -1,
+              -1,
+              1,
+              "m1",
+              "{\"delta\":7,\"id\":\"m1\"}",
+              "COMMITTED",
+              0,
+              null
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              3,
+              1,
+              0,
+              2,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              4,
+              3,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "POISON",
+              65,
+              null
+            ],
+            [
+              5,
+              4,
+              1,
+              1,
+              "m1",
+              "{\"delta\":9,\"id\":\"m1\"}",
+              "DUPLICATE_ID_ONLY",
+              0,
+              1
+            ]
+          ],
+          "dlq": [
+            [
+              1,
+              0,
+              3,
+              "m1",
+              "{\"delta\":\"poison\",\"id\":\"m1\"}",
+              "poison-exhausted",
+              "[2,3,4]",
+              null
+            ]
+          ],
+          "redrive": [
+            [
+              1,
+              1,
+              1,
+              4,
+              "{\"delta\":9,\"id\":\"m1\"}",
+              "[5]",
+              null,
+              "DUPLICATE_ID_ONLY"
+            ]
+          ]
+        },
+        "summary": {
+          "effectCount": 1,
+          "baselineEffects": 1,
+          "addedEffects": 0,
+          "balance": 7,
+          "terminalRedrive": "DUPLICATE_ID_ONLY",
+          "initialAttemptTicks": [
+            0,
+            1,
+            3
+          ],
+          "redriveAttemptTicks": [
+            4
+          ],
+          "originalDLQPreserved": true
+        },
+        "driverSQL": [
+          "CREATE TABLE inbox(id TEXT PRIMARY KEY,payload TEXT NOT NULL)",
+          "CREATE TABLE effects(effect_no INTEGER PRIMARY KEY AUTOINCREMENT,message_id TEXT,delta INTEGER,payload TEXT,tick INTEGER,generation INTEGER)",
+          "CREATE TABLE account(singleton INTEGER PRIMARY KEY,balance INTEGER)",
+          "INSERT INTO account VALUES (1,0)",
+          "CREATE TABLE attempts(attempt_id INTEGER PRIMARY KEY,tick INTEGER,generation INTEGER,ordinal INTEGER,message_id TEXT,payload TEXT,outcome TEXT,exit_code INTEGER,source_dlq INTEGER)",
+          "CREATE TABLE dlq(dlq_id INTEGER PRIMARY KEY,generation INTEGER,tick INTEGER,message_id TEXT,payload TEXT,reason TEXT,attempt_ids TEXT,source_dlq INTEGER)",
+          "CREATE TABLE redrive(redrive_id INTEGER PRIMARY KEY,source_dlq INTEGER,generation INTEGER,start_tick INTEGER,payload TEXT,attempt_ids TEXT,terminal_dlq INTEGER,terminal_outcome TEXT)",
+          "INSERT INTO attempts VALUES (1,-1,-1,1,'m1','{\"delta\":7,\"id\":\"m1\"}','COMMITTED',0,NULL)",
+          "INSERT INTO attempts VALUES (2,0,0,1,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (3,1,0,2,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "INSERT INTO attempts VALUES (4,3,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','POISON',65,NULL)",
+          "SELECT COALESCE(MAX(dlq_id),0)+1 FROM dlq",
+          "INSERT INTO dlq VALUES (1,0,3,'m1','{\"delta\":\"poison\",\"id\":\"m1\"}','poison-exhausted','[2,3,4]',NULL)",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id",
+          "INSERT INTO redrive VALUES (1,1,1,4,'{\"delta\":9,\"id\":\"m1\"}','[]',NULL,'STARTED')",
+          "INSERT INTO attempts VALUES (5,4,1,1,'m1','{\"delta\":9,\"id\":\"m1\"}','DUPLICATE_ID_ONLY',0,1)",
+          "UPDATE redrive SET attempt_ids='[5]',terminal_dlq=NULL,terminal_outcome='DUPLICATE_ID_ONLY' WHERE redrive_id=1",
+          "SELECT id,payload FROM inbox ORDER BY id",
+          "SELECT effect_no,message_id,delta,payload,tick,generation FROM effects ORDER BY effect_no",
+          "SELECT singleton,balance FROM account",
+          "SELECT attempt_id,tick,generation,ordinal,message_id,payload,outcome,exit_code,source_dlq FROM attempts ORDER BY attempt_id",
+          "SELECT dlq_id,generation,tick,message_id,payload,reason,attempt_ids,source_dlq FROM dlq ORDER BY dlq_id",
+          "SELECT redrive_id,source_dlq,generation,start_tick,payload,attempt_ids,terminal_dlq,terminal_outcome FROM redrive ORDER BY redrive_id"
+        ]
+      },
+      "outcome": "OBSERVED",
+      "db": "committed-changed-id-only/state.sqlite"
+    },
+    {
+      "id": "refused-new-id",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "db6c5cc34c281467321cece79ec2fb953f4adf5e7c0f4dec61964643a0f97b52",
+      "startedUtc": "2026-10-05T13:47:14.847189+00:00",
+      "endedUtc": "2026-10-05T13:47:14.894019+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"same-ID redrive required\", \"summary\": null, \"final\": null, \"commands\": []}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "same-ID redrive required",
+        "summary": null,
+        "final": null,
+        "commands": []
+      },
+      "outcome": "REFUSED",
+      "db": null
+    },
+    {
+      "id": "refused-mode",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "22801d4b3bff756b3664e566827331cbd7fc2c09d9d701742f55f9d4556ab84f",
+      "startedUtc": "2026-10-05T13:47:14.894294+00:00",
+      "endedUtc": "2026-10-05T13:47:14.941136+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"invalid mode\", \"summary\": null, \"final\": null, \"commands\": []}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "invalid mode",
+        "summary": null,
+        "final": null,
+        "commands": []
+      },
+      "outcome": "REFUSED",
+      "db": null
+    },
+    {
+      "id": "execution-failure",
+      "argv": [
+        "python3",
+        "-B",
+        "../driver.py",
+        "state.sqlite"
+      ],
+      "inputSha256": "bca4d91b46ad8074b4202ed5f4b1dab35c1aa2272ebcafc687453a60689f7ee7",
+      "startedUtc": "2026-10-05T13:47:14.941451+00:00",
+      "endedUtc": "2026-10-05T13:47:14.988437+00:00",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 9 (char 8)\n",
+      "observation": null,
+      "outcome": "EXECUTION_FAILURE",
+      "db": null
+    }
+  ]
+}

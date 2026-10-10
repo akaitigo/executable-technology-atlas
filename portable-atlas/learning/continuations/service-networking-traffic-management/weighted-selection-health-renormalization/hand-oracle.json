@@ -1,0 +1,442 @@
+{
+  "fixed_before_implementation": true,
+  "inputs": {
+    "normal": [
+      1,
+      3,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "b-down": [
+      1,
+      3,
+      true,
+      false,
+      null,
+      false,
+      false
+    ],
+    "a-zero": [
+      0,
+      3,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "a-down": [
+      1,
+      3,
+      false,
+      true,
+      null,
+      false,
+      false
+    ],
+    "late-health-fault": [
+      1,
+      3,
+      true,
+      false,
+      null,
+      true,
+      false
+    ],
+    "both-down": [
+      1,
+      3,
+      false,
+      false,
+      null,
+      false,
+      false
+    ],
+    "zero-total": [
+      0,
+      0,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "negative": [
+      -1,
+      3,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "fractional": [
+      1.5,
+      3,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "bool-weight": [
+      true,
+      3,
+      true,
+      true,
+      null,
+      false,
+      false
+    ],
+    "slot-negative": [
+      1,
+      3,
+      true,
+      true,
+      -1,
+      false,
+      false
+    ],
+    "slot-total": [
+      1,
+      3,
+      true,
+      true,
+      4,
+      false,
+      false
+    ],
+    "slot-fractional": [
+      1,
+      3,
+      true,
+      true,
+      0.5,
+      false,
+      false
+    ],
+    "slot-bool": [
+      1,
+      3,
+      true,
+      true,
+      true,
+      false,
+      false
+    ],
+    "failure": [
+      1,
+      3,
+      true,
+      true,
+      0,
+      false,
+      true
+    ]
+  },
+  "expected": {
+    "normal": {
+      "status": "SELECTED",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [
+        "A",
+        "B",
+        "B",
+        "B"
+      ],
+      "outcomes": [
+        "SELECTED",
+        "SELECTED",
+        "SELECTED",
+        "SELECTED"
+      ]
+    },
+    "b-down": {
+      "status": "SELECTED",
+      "candidates": [
+        "A"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ]
+      ],
+      "total": 1,
+      "picks": [
+        "A"
+      ],
+      "outcomes": [
+        "SELECTED"
+      ]
+    },
+    "a-zero": {
+      "status": "SELECTED",
+      "candidates": [
+        "B"
+      ],
+      "bounds": [
+        [
+          "B",
+          0,
+          3
+        ]
+      ],
+      "total": 3,
+      "picks": [
+        "B",
+        "B",
+        "B"
+      ],
+      "outcomes": [
+        "SELECTED",
+        "SELECTED",
+        "SELECTED"
+      ]
+    },
+    "a-down": {
+      "status": "SELECTED",
+      "candidates": [
+        "B"
+      ],
+      "bounds": [
+        [
+          "B",
+          0,
+          3
+        ]
+      ],
+      "total": 3,
+      "picks": [
+        "B",
+        "B",
+        "B"
+      ],
+      "outcomes": [
+        "SELECTED",
+        "SELECTED",
+        "SELECTED"
+      ]
+    },
+    "late-health-fault": {
+      "status": "SELECTED",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [
+        "A",
+        "B",
+        "B",
+        "B"
+      ],
+      "outcomes": [
+        "SELECTED",
+        "LOSS",
+        "LOSS",
+        "LOSS"
+      ]
+    },
+    "both-down": {
+      "status": "REFUSED",
+      "reason": "no healthy positive weight",
+      "candidates": [],
+      "bounds": [],
+      "total": 0,
+      "picks": [],
+      "outcomes": []
+    },
+    "zero-total": {
+      "status": "REFUSED",
+      "reason": "no healthy positive weight",
+      "candidates": [],
+      "bounds": [],
+      "total": 0,
+      "picks": [],
+      "outcomes": []
+    },
+    "negative": {
+      "status": "REFUSED",
+      "reason": "integer weights 0..4 and boolean health required",
+      "candidates": [],
+      "bounds": [],
+      "total": null,
+      "picks": [],
+      "outcomes": []
+    },
+    "fractional": {
+      "status": "REFUSED",
+      "reason": "integer weights 0..4 and boolean health required",
+      "candidates": [],
+      "bounds": [],
+      "total": null,
+      "picks": [],
+      "outcomes": []
+    },
+    "bool-weight": {
+      "status": "REFUSED",
+      "reason": "integer weights 0..4 and boolean health required",
+      "candidates": [],
+      "bounds": [],
+      "total": null,
+      "picks": [],
+      "outcomes": []
+    },
+    "slot-negative": {
+      "status": "REFUSED",
+      "reason": "integer slot in [0,total) required",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [],
+      "outcomes": []
+    },
+    "slot-total": {
+      "status": "REFUSED",
+      "reason": "integer slot in [0,total) required",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [],
+      "outcomes": []
+    },
+    "slot-fractional": {
+      "status": "REFUSED",
+      "reason": "integer slot in [0,total) required",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [],
+      "outcomes": []
+    },
+    "slot-bool": {
+      "status": "REFUSED",
+      "reason": "integer slot in [0,total) required",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [],
+      "outcomes": []
+    },
+    "failure": {
+      "status": "EXECUTION_FAILURE",
+      "candidates": [
+        "A",
+        "B"
+      ],
+      "bounds": [
+        [
+          "A",
+          0,
+          1
+        ],
+        [
+          "B",
+          1,
+          4
+        ]
+      ],
+      "total": 4,
+      "picks": [],
+      "outcomes": [],
+      "error_class": "RuntimeError",
+      "error_message": "injected selector failure"
+    }
+  },
+  "boundaries": {
+    "normal_slot0": "A",
+    "normal_last3": "B",
+    "normal_total4": "REFUSED",
+    "renormalized_slot0": "A",
+    "renormalized_total1": "REFUSED"
+  }
+}

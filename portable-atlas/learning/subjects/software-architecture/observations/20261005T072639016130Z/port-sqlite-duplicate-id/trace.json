@@ -1,0 +1,102 @@
+[
+  {
+    "event": "composition",
+    "variant": "port",
+    "storage": "sqlite",
+    "usecase": "PlaceOrder"
+  },
+  {
+    "event": "request-start",
+    "index": 0,
+    "payload": {
+      "id": "a",
+      "sku": "book",
+      "quantity": 2
+    }
+  },
+  {
+    "event": "port-add",
+    "adapter": "sqlite",
+    "row": [
+      "a",
+      "book",
+      2,
+      240
+    ]
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN "
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders VALUES ('a', 'book', 2, 240)"
+  },
+  {
+    "event": "sql",
+    "sql": "COMMIT"
+  },
+  {
+    "event": "response",
+    "index": 0,
+    "status": 201,
+    "body": [
+      "a",
+      "book",
+      2,
+      240
+    ]
+  },
+  {
+    "event": "request-start",
+    "index": 1,
+    "payload": {
+      "id": "a",
+      "sku": "book",
+      "quantity": 3
+    }
+  },
+  {
+    "event": "port-add",
+    "adapter": "sqlite",
+    "row": [
+      "a",
+      "book",
+      3,
+      360
+    ]
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN "
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders VALUES ('a', 'book', 3, 360)"
+  },
+  {
+    "event": "sql",
+    "sql": "ROLLBACK"
+  },
+  {
+    "event": "response",
+    "index": 1,
+    "status": 409,
+    "error": "duplicate-order"
+  },
+  {
+    "event": "adapter-closed",
+    "adapter": "sqlite"
+  },
+  {
+    "event": "final-state",
+    "rows": [
+      [
+        "a",
+        "book",
+        2,
+        240
+      ]
+    ]
+  }
+]

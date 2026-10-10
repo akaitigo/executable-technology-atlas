@@ -1,0 +1,12 @@
+{
+  "domain": "n,budget: exact JSON integers 0..8; body: normal or double-y; exactly these three keys",
+  "initial": "x=n,y=0",
+  "body": "while x>0: x-=1; y+=1 (normal) or y+=2 (double-y)",
+  "boundary": "initial and after both assignments; after_x is explicitly not a loop boundary",
+  "invariant": "x+y=n at boundaries",
+  "variant": "natural x decreases strictly after each whole body in both programs",
+  "budget": "whole-body count; inspect guard before budget; n=0,budget=0 exits",
+  "postcondition": "y=n only evaluated at guard exit; otherwise null (unobserved)",
+  "category_precedence": ["input_refused", "invariant_violation", "budget_exhausted", "observed_correct"],
+  "limits": "finite simulation is not a mechanized arbitrary-n proof; partial correctness alone does not establish termination"
+}

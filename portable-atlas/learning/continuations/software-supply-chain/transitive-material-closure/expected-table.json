@@ -1,0 +1,135 @@
+{
+  "method": "fixed reachable sets and literal byte strings before producer execution; checker does not traverse graph or import producer",
+  "literal_materials": {
+    "root": "524f4f540a",
+    "A": "41310a",
+    "B": "42310a",
+    "B-new": "42320a"
+  },
+  "literal_artifacts": {
+    "base": "413a333a41310a423a333a42310a726f6f743a353a524f4f540a",
+    "changed": "413a333a41310a423a333a42320a726f6f743a353a524f4f540a",
+    "unused": "413a333a41310a726f6f743a353a524f4f540a"
+  },
+  "rows": [
+    {
+      "id": "baseline",
+      "reachable": [
+        "A",
+        "B",
+        "root"
+      ],
+      "artifact_literal": "base",
+      "normal": "allow",
+      "normal_reason": "all-materials-match",
+      "faulty": "allow",
+      "category": "agree",
+      "mismatched": [],
+      "missing": null
+    },
+    {
+      "id": "B-changed",
+      "reachable": [
+        "A",
+        "B",
+        "root"
+      ],
+      "artifact_literal": "changed",
+      "normal": "deny",
+      "normal_reason": "material-digest",
+      "faulty": "allow",
+      "category": "changed",
+      "mismatched": [
+        "B"
+      ],
+      "missing": null
+    },
+    {
+      "id": "B-undeclared",
+      "reachable": [
+        "A",
+        "B",
+        "root"
+      ],
+      "artifact_literal": "base",
+      "normal": "refuse",
+      "normal_reason": "declared-material-set",
+      "faulty": "allow",
+      "category": "undeclared",
+      "mismatched": null,
+      "missing": [
+        "B"
+      ]
+    },
+    {
+      "id": "changed-undeclared",
+      "reachable": [
+        "A",
+        "B",
+        "root"
+      ],
+      "artifact_literal": "changed",
+      "normal": "refuse",
+      "normal_reason": "declared-material-set",
+      "faulty": "allow",
+      "category": "undeclared",
+      "mismatched": null,
+      "missing": [
+        "B"
+      ]
+    },
+    {
+      "id": "B-unreachable",
+      "reachable": [
+        "A",
+        "root"
+      ],
+      "artifact_literal": "unused",
+      "normal": "refuse",
+      "normal_reason": "expected-closure",
+      "faulty": "allow",
+      "category": "closure",
+      "mismatched": null,
+      "missing": [
+        "B"
+      ]
+    },
+    {
+      "id": "unknown-node",
+      "reachable": null,
+      "artifact_literal": null,
+      "normal": "refuse",
+      "normal_reason": "unknown-node",
+      "faulty": "refuse",
+      "category": "refused",
+      "mismatched": null,
+      "missing": null
+    },
+    {
+      "id": "cycle",
+      "reachable": null,
+      "artifact_literal": null,
+      "normal": "refuse",
+      "normal_reason": "cycle",
+      "faulty": "refuse",
+      "category": "refused",
+      "mismatched": null,
+      "missing": null
+    },
+    {
+      "id": "read-failure",
+      "reachable": [
+        "A",
+        "B",
+        "root"
+      ],
+      "artifact_literal": null,
+      "normal": "error",
+      "normal_reason": "material-read-failed:B",
+      "faulty": "error",
+      "category": "error",
+      "mismatched": null,
+      "missing": null
+    }
+  ]
+}

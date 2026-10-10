@@ -1,0 +1,169 @@
+{
+  "subject_status": "部分教材: ローカル2worker整数sum・分割・終了処理・結合則境界。MPI/SIMD/cluster・性能保証は未実行。",
+  "areas": [
+    {
+      "area": "並列モデル・分解",
+      "status": "部分教材",
+      "concepts": [
+        "task/data parallelism",
+        "fork/join",
+        "dependency DAG",
+        "granularity",
+        "partition"
+      ],
+      "question": "仕事の依存と分割の完全性を、worker数と別に説明できるか？",
+      "source": "performance-map"
+    },
+    {
+      "area": "reduction・数値再現性",
+      "status": "部分教材",
+      "concepts": [
+        "associativity",
+        "commutativity",
+        "integer/float",
+        "tree reduction",
+        "determinism"
+      ],
+      "question": "同じ要素なら加算順序を変えても同じと言えるか？",
+      "source": "reduction"
+    },
+    {
+      "area": "process・IPC・同期",
+      "status": "部分教材",
+      "concepts": [
+        "spawn",
+        "serialization",
+        "Pipe",
+        "barrier",
+        "lock",
+        "race",
+        "deadlock"
+      ],
+      "question": "結果が届かないとき有限時間で誰を終了させるか？",
+      "source": "ipc"
+    },
+    {
+      "area": "性能モデル・測定",
+      "status": "未教材",
+      "concepts": [
+        "Amdahl/Gustafson",
+        "speedup/efficiency",
+        "strong/weak scaling",
+        "overhead",
+        "warmup",
+        "variance"
+      ],
+      "question": "1回のelapsedを性能優位やscalingへ読み替えていないか？",
+      "source": "performance-map"
+    },
+    {
+      "area": "load balance・scheduler",
+      "status": "部分教材",
+      "concepts": [
+        "static/dynamic scheduling",
+        "work stealing",
+        "stragglers",
+        "cost imbalance",
+        "chunk size"
+      ],
+      "question": "要素数が均等なら処理時間も均等か？",
+      "source": "performance-map"
+    },
+    {
+      "area": "memory・locality",
+      "status": "未教材",
+      "concepts": [
+        "cache",
+        "NUMA",
+        "bandwidth",
+        "false sharing",
+        "layout",
+        "shared memory"
+      ],
+      "question": "演算を増やすよりデータ移動が支配的になる条件は？",
+      "source": "performance-map"
+    },
+    {
+      "area": "SIMD・thread・accelerator",
+      "status": "未教材",
+      "concepts": [
+        "vector lanes",
+        "OpenMP",
+        "GIL",
+        "GPU kernel",
+        "transfer",
+        "occupancy"
+      ],
+      "question": "2processの結果からSIMD/GPU性能まで判断できるか？",
+      "source": "openmp-map"
+    },
+    {
+      "area": "MPI・分散通信",
+      "status": "未教材",
+      "concepts": [
+        "rank",
+        "point-to-point",
+        "collective",
+        "communicator",
+        "topology",
+        "latency/bandwidth"
+      ],
+      "question": "同じhostのPipeとcluster通信で故障やコストはどう違うか？",
+      "source": "mpi-map"
+    },
+    {
+      "area": "HPC算法・科学計算",
+      "status": "未教材",
+      "concepts": [
+        "stencil",
+        "sparse/dense algebra",
+        "domain decomposition",
+        "halo",
+        "conditioning",
+        "mixed precision"
+      ],
+      "question": "sum成功を別の科学計算の正しさへ拡大していないか？",
+      "source": "performance-map"
+    },
+    {
+      "area": "運用・I/O・故障",
+      "status": "部分教材",
+      "concepts": [
+        "timeout",
+        "checkpoint/restart",
+        "distributed I/O",
+        "job scheduler",
+        "resource ownership",
+        "reproducibility"
+      ],
+      "question": "途中のpartialを完成結果にせず資源を回収できるか？",
+      "source": "mpi-map"
+    }
+  ],
+  "next_experiments": [
+    {
+      "id": "cost-imbalance",
+      "question": "同じ要素数でもworker時間が偏るのはなぜか？",
+      "experiment": "固定で異なる仕事量の整数taskを2workerへ割当て、静的chunkと有限dynamic配分を比較。独立task coverageと結果oracleを保持し、elapsedは観測分布として記録。",
+      "source": "performance-map"
+    },
+    {
+      "id": "reduction-order",
+      "question": "floatの分割/加算順と誤差はどう結びつくか？",
+      "experiment": "固定float列でsequential/tree/compensated sumを比較、Fraction exact targetで誤差を検査。実MPIは導入せず順序の影響を先に確かめる。",
+      "source": "numeric"
+    },
+    {
+      "id": "ipc-granularity",
+      "question": "taskが小さいと通信/起動が支配するか？",
+      "experiment": "有限chunk sizeを変えて起動/計算/IPCを分離した反復観測を保存。warmup/環境/分散を記録し、1回の勝敗を保証にしない。",
+      "source": "ipc"
+    },
+    {
+      "id": "failure-retry",
+      "question": "失敗taskの再試行が重複/欠落を起こさないか？",
+      "experiment": "固定task IDの部分失敗を限定再試行し、独立coverage/count oracleとexactly-once集計を比較。owned worker2個上限を保つ。",
+      "source": "process"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "checked_at_utc": "2026-10-05T06:49:07.254242+00:00",
+  "normal_operations_read_only": true,
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"single_step_states\": 128,\n  \"variants_vs_independent_table\": [\n    \"sync\",\n    \"async\"\n  ],\n  \"mutant_witnesses\": 16,\n  \"saved_cases\": 9,\n  \"extra_rejections\": 9,\n  \"skill_routes\": \"4 supported / 8 unsupported\",\n  \"local_links\": 47,\n  \"provenance\": \"input/source/raw/waveform/artifact digest matched\",\n  \"UI_QA\": \"saved IAB observations; capture status recorded\",\n  \"subject_completion\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{\"events\":[]}"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"accepted\",\n  \"initial\": [\n    0,\n    0\n  ],\n  \"traces\": {\n    \"sync\": [],\n    \"next-state-bug\": [],\n    \"async\": []\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{\"events\":[{\"t\":0,\"edge\":1,\"en\":true,\"rst\":0}]}"
+      ],
+      "exit": 2,
+      "stdout": "{\n  \"status\": \"rejected\",\n  \"error\": \"edge/en/rstはinteger 0/1（bool不可）\",\n  \"traces\": {}\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--input-json",
+        "{"
+      ],
+      "exit": 2,
+      "stdout": "{\n  \"status\": \"rejected\",\n  \"error\": \"invalid JSON\",\n  \"traces\": {}\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "route.py",
+        "counter"
+      ],
+      "exit": 0,
+      "stdout": "{\"status\": \"supported\", \"target\": \"runner.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "route.py",
+        "synthesis"
+      ],
+      "exit": 2,
+      "stdout": "{\"status\": \"unsupported\", \"reason\": \"今回未教材: synthesis/timing/CDC/AXI/HLS/実機等はCOVERAGE.md参照\", \"target\": \"COVERAGE.md\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "observe.py"
+      ],
+      "exit": 0,
+      "stdout": "read-only: explicit --write-evidence required to refresh observations\n",
+      "stderr": ""
+    }
+  ],
+  "skill_quick_validate": {
+    "exit": 0,
+    "stdout": "Skill is valid!\n",
+    "stderr": ""
+  },
+  "verification_scope": "focused module verification; no Portal/Core/Graph/old gate",
+  "goal": "none; no new goal created"
+}

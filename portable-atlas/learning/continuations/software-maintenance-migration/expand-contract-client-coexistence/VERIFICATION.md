@@ -1,0 +1,5 @@
+# 有限検証と画面観測
+
+rawには8条件の実SQLite trace、入力、段階別direct SQL、schema、全行、旧新clientのSQL/rows/error、guard、UTC、環境、記録source hash、command、終了コードを保存する。独立oracleは手表とdirect SQLを併用し、producerのDecimal計算を再利用しない。予定されたcontract後の旧client SQL_FAILUREと、注入writeのEXECUTION_FAILUREを区別する。
+
+通常verify/routeは再計算と保存原票・receipt照合だけ。全ファイルSHA-256とmtimeを前後比較し、proofはその後だけ書く。recordは未使用attemptのみ、sealでは初回receiptを保存し生原票を変更しない。IABで条件reset、予想だけの変更clear、位置拒否保持、実行失敗の正常答え破棄、原教材・関連・実装・oracle・raw・READMEリンクを操作する。実capture表示と画像ファイル保存を区別する。専有server/tabだけcleanupし、保護listenerを変更しない。

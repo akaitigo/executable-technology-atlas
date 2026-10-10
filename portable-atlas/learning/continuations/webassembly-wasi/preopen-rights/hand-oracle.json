@@ -1,0 +1,67 @@
+{
+  "title": "Atlas 実装前の独立期待表",
+  "errno": {
+    "SUCCESS": 0,
+    "BADF": 8,
+    "NOENT": 44,
+    "NOTCAPABLE": 76
+  },
+  "rights": {
+    "FD_READ": 2,
+    "PATH_OPEN": 8192
+  },
+  "cases": [
+    {
+      "id": "no-preopen",
+      "prestat_errno": 8,
+      "guest_name": null,
+      "reduce_errno": null,
+      "path_open_errno": null,
+      "read_status": "not_reached",
+      "hex": null,
+      "nread_total": null,
+      "classification": "descriptor_unavailable"
+    },
+    {
+      "id": "granted",
+      "prestat_errno": 0,
+      "guest_name": "/lesson",
+      "reduce_errno": null,
+      "path_open_errno": 0,
+      "read_status": "success_then_eof",
+      "hex": "41746c61730a",
+      "nread_total": 6,
+      "classification": "bytes_observed"
+    },
+    {
+      "id": "rights-reduced",
+      "prestat_errno": 0,
+      "guest_name": "/lesson",
+      "reduce_errno": 0,
+      "path_open_errno": 76,
+      "read_status": "not_reached",
+      "hex": null,
+      "nread_total": null,
+      "classification": "rights_refusal"
+    },
+    {
+      "id": "missing-file",
+      "prestat_errno": 0,
+      "guest_name": "/lesson",
+      "reduce_errno": null,
+      "path_open_errno": 44,
+      "read_status": "not_reached",
+      "hex": null,
+      "nread_total": null,
+      "classification": "missing_entry"
+    }
+  ],
+  "relations": [
+    "rights-reduced base_after = base_before & ~8192; inheriting_after = inheriting_before",
+    "before base includes PATH_OPEN; before inheriting includes FD_READ",
+    "opened FD is only valid on path_open errno 0; never assume numeric FD 4",
+    "nread and buffer bytes are only valid on fd_read errno 0",
+    "no-preopen stops after prestat BADF; path_open is not invoked or asserted BADF",
+    "all reached cleanup fd_close returns 0; parent verifies child exited and removes its fixture directory"
+  ]
+}

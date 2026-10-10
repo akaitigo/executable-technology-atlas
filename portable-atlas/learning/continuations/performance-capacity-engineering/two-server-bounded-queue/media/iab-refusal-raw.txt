@@ -1,0 +1,104 @@
+Browser tab: 17, Title: "2台serverと待機容量 — 待ちはどこへ移る？", URL: "http://127.0.0.1:55125/".
+1 AXWebArea 2台serverと待機容量 — 待ちはどこへ移る？, URL: 127.0.0.1:55125/
+	2 container
+		3 text PERFORMANCE / CAPACITY · 有限抽象モデル
+		4 heading 2台serverと待機容量 backpressureで、待ちは消える？, Value: 1
+			5 text 2台serverと待機容量
+			6 text backpressureで、待ちは消える？
+		7 text tick 0にA–Eの5job、service2tick。同じ入力でserver数とpolicyを比べます。tickは秒ではなく、実serverの性能測定ではありません。
+		8 heading 前提と読む順番, Value: 2
+			9 text 前提と読む順番
+		10 text arrival/start/finish、FIFO、平均の分母が前提です。
+		11 content list
+			12 container
+				13 AXListMarker 1. 
+				14 link Description: 元Subject：有限窓と未完了job, Value: 127.0.0.1:55125/subjects/performance-capacity-engineering/README.md
+				15 text で分母を確認。関連する
+				16 link Description: multiwindow alertの窓と分母, Value: 127.0.0.1:55125/sre-incident-operations/multiwindow-burn-alert/README.md
+				17 text も比較。
+			18 container
+				19 AXListMarker 2. 
+				20 link Description: 先固定の定義・手書きtimeline, Value: 127.0.0.1:55125/oracle.json
+				21 text から予想。
+			22 container
+				23 AXListMarker 3. 
+				24 text 1台→2台→drop→backpressure→入力拒否の順に操作。
+			25 container
+				26 AXListMarker 4. 
+				27 link Description: 再現手順・実務判断, Value: 127.0.0.1:55125/README.md
+				28 text と
+				29 link Description: 未教材の次実験, Value: 127.0.0.1:55125/COVERAGE.md
+				30 text を読む。
+		31 text 同時刻は
+		32 text 完了（server番号順）→既存queue FIFOを開始→producer FIFOを受理
+		33 text 。空serverで即開始、なければqueueへ。capacityは待機だけで稼働中jobを含みません。IDは識別子で優先順位ではなく入力順A–Eを守ります。
+		34 heading 予想 → 操作, Value: 2
+			35 text 予想 → 操作
+		36 text 条件
+		37 pop up button (collapsed, settable) Description: 条件, Value: 入力拒否：service=0, ID: case, Secondary Actions: Expand
+			38 menu
+				39 1台 / 待機容量5
+				40 2台 / 待機容量5
+				41 2台 / 待機容量1 / drop
+				42 2台 / 待機容量1 / backpressure
+				43 入力拒否：server=true
+				44 (selected) 入力拒否：service=0
+				45 入力拒否：capacity=-1
+				46 入力拒否：ID重複
+				47 入力拒否：unknown policy
+		48 text 最終drop数
+		49 pop up button (collapsed, settable) Description: drop予想, Value: 入力拒否, ID: drops, Secondary Actions: Expand
+			50 menu
+				51 選択
+				52 0
+				53 2
+				54 (selected) 入力拒否
+		55 text 最後finish tick
+		56 pop up button (collapsed, settable) Description: finish予想, Value: 入力拒否, ID: finish, Secondary Actions: Expand
+			57 menu
+				58 選択
+				59 4
+				60 6
+				61 10
+				62 (selected) 入力拒否
+		63 button 保存rawと比較, ID: compare
+		74 text 予想一致：実際 drop=refused、最後finish=refused
+		75 container results
+			76 heading 入力拒否：モデルを実行しない, Value: 2, ID: status
+				77 text 入力拒否：モデルを実行しない
+			78 text invalid service。jobs・states・metricsはnull。0job成功に置き換えません。
+			79 container
+				80 button (expanded) 原票：入力・exit・stdout・event順序, Secondary Actions: Collapse
+					81 text 原票：入力・exit・stdout・event順序
+				82 text {
+  "input": {
+    "jobs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "offeredAt": 0,
+    "service": 0,
+    "servers": 2,
+    "capacity": 5,
+    "policy": "drop"
+  },
+  "inputSha256": "5b173cce5dbe21c2aae34249079fcd0b5d382e2a159ad37ba40775955dd86c9f",
+  "exitCode": 2,
+  "stdout": "{\"accepted\": false, \"reason\": \"invalid service\", \"jobs\": null, \"events\": null, \"states\": null, \"metrics\": null}\n",
+  "stderr": ""
+}
+		64 heading 原典 → 実装 → 答え → 実務判断, Value: 2
+			65 text 原典 → 実装 → 答え → 実務判断
+		66 link Description: Google SRE Handling Overload, Value: sre.google/sre-book/handling-overload/
+		67 text のPitfalls of QPS / Client-Side Throttlingで要求cost・受理・拒否の区別を確認。今回のbackpressureはadaptive throttlingの実装ではありません。
+		68 link Description: event-driven実装, Value: 127.0.0.1:55125/worker.py
+		69 text ・
+		70 link Description: 独立unit-tick検査, Value: 127.0.0.1:55125/checker.py
+		71 text ・
+		72 link Description: 実行と原票保存, Value: 127.0.0.1:55125/runner.py
+		73 text を比較。1台finishは2/4/6/8/10、2台は2/2/4/4/6。容量1dropはA/B/C受理、D/E drop。受理cohort3jobの平均だけでは全要求5jobを説明できません。 backpressureではD/Eがproducerで各2tick待ちます。queue平均4/5に加えproducer平均4/5があり、admitted→finish平均14/5に対しoffered→finish平均18/5。待ちは消えず観測境界の外へ移ります。実務では受理率・全要求cohort・時間の起点をそろえます。 有限FIFO・一定service・最大20job・server1/2台・非preemptive・無retry/deadline。実serverperformance/TCP/productioncapacity/autoscaling/優先度公平性は未実証です。
+
+The focused UI element is 80 button (expanded) 原票：入力・exit・stdout・event順序, Secondary Actions: Collapse

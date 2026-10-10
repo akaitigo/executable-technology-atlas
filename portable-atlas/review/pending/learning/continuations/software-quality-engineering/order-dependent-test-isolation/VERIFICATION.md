@@ -1,0 +1,11 @@
+# 実行経路と証拠
+
+hand-oracleを実装前に固定し、oracle.pyはworker/modelをimportせずliteral手表とrunner結果を比較します。各childはstdlib unittest.TestSuiteとTextTestRunnerを実行。成功/失敗はunittestのResult callbackから記録。手書きの成功flagだけでtest実行を偽称しません。
+
+4条件×2 child、13拒否、7mutantを検査します。有利attemptだけを残す、exit1の0化、期待値10を8へ弱める、state漏れを隠す、fixture非reset、teardown欠落、実runner未実行を拒否します。故障版のtest失敗は保存すべき期待観測で、検証器は手表との一致を成功として報告します。
+
+core-first-attemptは最初の8 child出力と当時のsource hashes。attempt-01はUI/document整備後のCLI全8 child原票。initial-receiptは元receiptを保存し、receiptはUI証拠とsourceを封印します。ブラウザ4条件の8 childは別の実processで、PID/UTC・trace・exit・stderr種別を観測転記します。全文stdout/stderrの保存はCLI原票で、browser compact投影を全文取得と呼びません。UI後の再現チェックは新しい8 childを実行してsemantic照合し、原票を書き換えません。
+
+worker sourceを相対filename worker.pyとしてcompileしているため、unittest tracebackはworker.py行番号を保持し、私的absolute pathを含みません。shell経由のworker実行やuser code入力はありません。5秒上限のtimeout経路は実誘発していません。source viewerの文字数付き抜粋と全文リンクを区別します。
+
+sandbox bind拒否は元tool出力をchatに残し、owned module pathだけ置換した抜粋を保存。自身のport/server/tabだけ終了。最後にverify/route/Skill/private-path検索の前後SHA256/mtime_ns不変を確認し、proofを最後に書きます。global/Core gateは未実行です。

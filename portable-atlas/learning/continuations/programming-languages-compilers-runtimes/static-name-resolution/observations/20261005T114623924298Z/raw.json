@@ -1,0 +1,1218 @@
+{
+  "shadow": {
+    "case": "shadow",
+    "utc": "2026-10-05T11:46:23.925461+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "let",
+            "id": "d-outer",
+            "name": "x",
+            "value": 10
+          },
+          {
+            "kind": "use",
+            "id": "u-before",
+            "name": "x"
+          },
+          {
+            "kind": "block",
+            "id": "inner",
+            "body": [
+              {
+                "kind": "let",
+                "id": "d-inner",
+                "name": "x",
+                "value": 20
+              },
+              {
+                "kind": "use",
+                "id": "u-inner",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-after",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "COMPLETED",
+      "bindings": {
+        "u-before": "d-outer",
+        "u-inner": "d-inner",
+        "u-after": "d-outer"
+      },
+      "declarations": {
+        "d-outer": {
+          "name": "x",
+          "scope": "root",
+          "value": 10
+        },
+        "d-inner": {
+          "name": "x",
+          "scope": "inner",
+          "value": 20
+        }
+      },
+      "values": [
+        10,
+        20,
+        10
+      ],
+      "observations": [
+        {
+          "use": "u-before",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        }
+      ],
+      "failure": null,
+      "evaluation_started": true,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "declare",
+          "node": "d-outer",
+          "name": "x",
+          "scope": "root"
+        },
+        {
+          "event": "bind",
+          "use": "u-before",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "declare",
+          "node": "d-inner",
+          "name": "x",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-inner",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-after",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        }
+      ],
+      "evaluation_trace": [
+        {
+          "event": "enter_block",
+          "node": "root"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "use",
+          "use": "u-before",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "enter_block",
+          "node": "inner"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "use",
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "leave_block",
+          "node": "inner"
+        },
+        {
+          "event": "use",
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "leave_block",
+          "node": "root"
+        }
+      ]
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "before-inner-let": {
+    "case": "before-inner-let",
+    "utc": "2026-10-05T11:46:23.926285+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "let",
+            "id": "d-outer",
+            "name": "x",
+            "value": 10
+          },
+          {
+            "kind": "block",
+            "id": "inner",
+            "body": [
+              {
+                "kind": "use",
+                "id": "u-pre-inner",
+                "name": "x"
+              },
+              {
+                "kind": "let",
+                "id": "d-inner",
+                "name": "x",
+                "value": 20
+              },
+              {
+                "kind": "use",
+                "id": "u-inner",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-after",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "COMPLETED",
+      "bindings": {
+        "u-pre-inner": "d-outer",
+        "u-inner": "d-inner",
+        "u-after": "d-outer"
+      },
+      "declarations": {
+        "d-outer": {
+          "name": "x",
+          "scope": "root",
+          "value": 10
+        },
+        "d-inner": {
+          "name": "x",
+          "scope": "inner",
+          "value": 20
+        }
+      },
+      "values": [
+        10,
+        20,
+        10
+      ],
+      "observations": [
+        {
+          "use": "u-pre-inner",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        }
+      ],
+      "failure": null,
+      "evaluation_started": true,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "declare",
+          "node": "d-outer",
+          "name": "x",
+          "scope": "root"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-pre-inner",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "declare",
+          "node": "d-inner",
+          "name": "x",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-inner",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-after",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        }
+      ],
+      "evaluation_trace": [
+        {
+          "event": "enter_block",
+          "node": "root"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "enter_block",
+          "node": "inner"
+        },
+        {
+          "event": "use",
+          "use": "u-pre-inner",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "initialize",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "use",
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "leave_block",
+          "node": "inner"
+        },
+        {
+          "event": "use",
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "leave_block",
+          "node": "root"
+        }
+      ]
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "sibling-scope": {
+    "case": "sibling-scope",
+    "utc": "2026-10-05T11:46:23.926914+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "let",
+            "id": "d-outer",
+            "name": "x",
+            "value": 10
+          },
+          {
+            "kind": "block",
+            "id": "first",
+            "body": [
+              {
+                "kind": "let",
+                "id": "d-first",
+                "name": "x",
+                "value": 20
+              },
+              {
+                "kind": "use",
+                "id": "u-first",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "block",
+            "id": "second",
+            "body": [
+              {
+                "kind": "use",
+                "id": "u-second",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-after",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "COMPLETED",
+      "bindings": {
+        "u-first": "d-first",
+        "u-second": "d-outer",
+        "u-after": "d-outer"
+      },
+      "declarations": {
+        "d-outer": {
+          "name": "x",
+          "scope": "root",
+          "value": 10
+        },
+        "d-first": {
+          "name": "x",
+          "scope": "first",
+          "value": 20
+        }
+      },
+      "values": [
+        20,
+        10,
+        10
+      ],
+      "observations": [
+        {
+          "use": "u-first",
+          "decl": "d-first",
+          "value": 20
+        },
+        {
+          "use": "u-second",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        }
+      ],
+      "failure": null,
+      "evaluation_started": true,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "declare",
+          "node": "d-outer",
+          "name": "x",
+          "scope": "root"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "first"
+        },
+        {
+          "event": "declare",
+          "node": "d-first",
+          "name": "x",
+          "scope": "first"
+        },
+        {
+          "event": "bind",
+          "use": "u-first",
+          "name": "x",
+          "decl": "d-first"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "first"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "second"
+        },
+        {
+          "event": "bind",
+          "use": "u-second",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "second"
+        },
+        {
+          "event": "bind",
+          "use": "u-after",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        }
+      ],
+      "evaluation_trace": [
+        {
+          "event": "enter_block",
+          "node": "root"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "enter_block",
+          "node": "first"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-first",
+          "value": 20
+        },
+        {
+          "event": "use",
+          "use": "u-first",
+          "decl": "d-first",
+          "value": 20
+        },
+        {
+          "event": "leave_block",
+          "node": "first"
+        },
+        {
+          "event": "enter_block",
+          "node": "second"
+        },
+        {
+          "event": "use",
+          "use": "u-second",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "leave_block",
+          "node": "second"
+        },
+        {
+          "event": "use",
+          "use": "u-after",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "leave_block",
+          "node": "root"
+        }
+      ]
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "scope-escape": {
+    "case": "scope-escape",
+    "utc": "2026-10-05T11:46:23.927555+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "block",
+            "id": "inner",
+            "body": [
+              {
+                "kind": "let",
+                "id": "d-y",
+                "name": "y",
+                "value": 30
+              },
+              {
+                "kind": "use",
+                "id": "u-inside",
+                "name": "y"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-outside",
+            "name": "y"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "RESOLUTION_REJECTED",
+      "bindings": {
+        "u-inside": "d-y"
+      },
+      "declarations": {
+        "d-y": {
+          "name": "y",
+          "scope": "inner",
+          "value": 30
+        }
+      },
+      "values": [],
+      "observations": [],
+      "failure": {
+        "phase": "resolution",
+        "reason": "UNDECLARED",
+        "node": "u-outside",
+        "name": "y"
+      },
+      "evaluation_started": false,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "declare",
+          "node": "d-y",
+          "name": "y",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-inside",
+          "name": "y",
+          "decl": "d-y"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        },
+        {
+          "event": "rejected",
+          "phase": "resolution",
+          "reason": "UNDECLARED",
+          "node": "u-outside",
+          "name": "y"
+        }
+      ],
+      "evaluation_trace": []
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "undeclared": {
+    "case": "undeclared",
+    "utc": "2026-10-05T11:46:23.928293+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "use",
+            "id": "u-z",
+            "name": "z"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "RESOLUTION_REJECTED",
+      "bindings": {},
+      "declarations": {},
+      "values": [],
+      "observations": [],
+      "failure": {
+        "phase": "resolution",
+        "reason": "UNDECLARED",
+        "node": "u-z",
+        "name": "z"
+      },
+      "evaluation_started": false,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        },
+        {
+          "event": "rejected",
+          "phase": "resolution",
+          "reason": "UNDECLARED",
+          "node": "u-z",
+          "name": "z"
+        }
+      ],
+      "evaluation_trace": []
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "before-local-let": {
+    "case": "before-local-let",
+    "utc": "2026-10-05T11:46:23.928917+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "strict",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "use",
+            "id": "u-early",
+            "name": "x"
+          },
+          {
+            "kind": "let",
+            "id": "d-late",
+            "name": "x",
+            "value": 20
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "RESOLUTION_REJECTED",
+      "bindings": {},
+      "declarations": {},
+      "values": [],
+      "observations": [],
+      "failure": {
+        "phase": "resolution",
+        "reason": "UNDECLARED",
+        "node": "u-early",
+        "name": "x"
+      },
+      "evaluation_started": false,
+      "violation": false,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        },
+        {
+          "event": "rejected",
+          "phase": "resolution",
+          "reason": "UNDECLARED",
+          "node": "u-early",
+          "name": "x"
+        }
+      ],
+      "evaluation_trace": []
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "bad-pre-register": {
+    "case": "bad-pre-register",
+    "utc": "2026-10-05T11:46:23.929501+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "pre-register",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "let",
+            "id": "d-outer",
+            "name": "x",
+            "value": 10
+          },
+          {
+            "kind": "block",
+            "id": "inner",
+            "body": [
+              {
+                "kind": "use",
+                "id": "u-pre-inner",
+                "name": "x"
+              },
+              {
+                "kind": "let",
+                "id": "d-inner",
+                "name": "x",
+                "value": 20
+              },
+              {
+                "kind": "use",
+                "id": "u-inner",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-after",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "BAD_EVALUATION_REJECTED",
+      "bindings": {
+        "u-pre-inner": "d-inner",
+        "u-inner": "d-inner",
+        "u-after": "d-outer"
+      },
+      "declarations": {
+        "d-outer": {
+          "name": "x",
+          "scope": "root",
+          "value": 10
+        },
+        "d-inner": {
+          "name": "x",
+          "scope": "inner",
+          "value": 20
+        }
+      },
+      "values": [],
+      "observations": [],
+      "failure": {
+        "phase": "evaluation",
+        "reason": "UNINITIALIZED_DECL",
+        "node": "u-pre-inner",
+        "decl": "d-inner"
+      },
+      "evaluation_started": true,
+      "violation": true,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "declare",
+          "node": "d-outer",
+          "name": "x",
+          "scope": "root"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "declare",
+          "node": "d-inner",
+          "name": "x",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-pre-inner",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-inner",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-after",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        }
+      ],
+      "evaluation_trace": [
+        {
+          "event": "enter_block",
+          "node": "root"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "enter_block",
+          "node": "inner"
+        },
+        {
+          "event": "leave_block",
+          "node": "inner"
+        },
+        {
+          "event": "leave_block",
+          "node": "root"
+        },
+        {
+          "event": "rejected",
+          "phase": "evaluation",
+          "reason": "UNINITIALIZED_DECL",
+          "node": "u-pre-inner",
+          "decl": "d-inner"
+        }
+      ]
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  },
+  "bad-flat-scope": {
+    "case": "bad-flat-scope",
+    "utc": "2026-10-05T11:46:23.930091+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "mode": "flat",
+      "ast": {
+        "kind": "block",
+        "id": "root",
+        "body": [
+          {
+            "kind": "let",
+            "id": "d-outer",
+            "name": "x",
+            "value": 10
+          },
+          {
+            "kind": "use",
+            "id": "u-before",
+            "name": "x"
+          },
+          {
+            "kind": "block",
+            "id": "inner",
+            "body": [
+              {
+                "kind": "let",
+                "id": "d-inner",
+                "name": "x",
+                "value": 20
+              },
+              {
+                "kind": "use",
+                "id": "u-inner",
+                "name": "x"
+              }
+            ]
+          },
+          {
+            "kind": "use",
+            "id": "u-after",
+            "name": "x"
+          }
+        ]
+      }
+    },
+    "result": {
+      "status": "BAD_COMPLETED",
+      "bindings": {
+        "u-before": "d-outer",
+        "u-inner": "d-inner",
+        "u-after": "d-inner"
+      },
+      "declarations": {
+        "d-outer": {
+          "name": "x",
+          "scope": "root",
+          "value": 10
+        },
+        "d-inner": {
+          "name": "x",
+          "scope": "inner",
+          "value": 20
+        }
+      },
+      "values": [
+        10,
+        20,
+        20
+      ],
+      "observations": [
+        {
+          "use": "u-before",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "use": "u-after",
+          "decl": "d-inner",
+          "value": 20
+        }
+      ],
+      "failure": null,
+      "evaluation_started": true,
+      "violation": true,
+      "resolution_trace": [
+        {
+          "event": "enter_scope",
+          "scope": "root"
+        },
+        {
+          "event": "declare",
+          "node": "d-outer",
+          "name": "x",
+          "scope": "root"
+        },
+        {
+          "event": "bind",
+          "use": "u-before",
+          "name": "x",
+          "decl": "d-outer"
+        },
+        {
+          "event": "enter_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "declare",
+          "node": "d-inner",
+          "name": "x",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-inner",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "inner"
+        },
+        {
+          "event": "bind",
+          "use": "u-after",
+          "name": "x",
+          "decl": "d-inner"
+        },
+        {
+          "event": "leave_scope",
+          "scope": "root"
+        }
+      ],
+      "evaluation_trace": [
+        {
+          "event": "enter_block",
+          "node": "root"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "use",
+          "use": "u-before",
+          "decl": "d-outer",
+          "value": 10
+        },
+        {
+          "event": "enter_block",
+          "node": "inner"
+        },
+        {
+          "event": "initialize",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "use",
+          "use": "u-inner",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "leave_block",
+          "node": "inner"
+        },
+        {
+          "event": "use",
+          "use": "u-after",
+          "decl": "d-inner",
+          "value": 20
+        },
+        {
+          "event": "leave_block",
+          "node": "root"
+        }
+      ]
+    },
+    "source_binding": {
+      "language.py": "4de886665b7eaf1a9cb064d92c577472f1ce84c0fc7d626633082b285c619aca",
+      "runner.py": "ac5cec0012bb9e6dc658a311cbd661e1873394847c954dbfb749aeb6147153c9",
+      "fixtures.json": "82268027b2c1e8ebefba0eb9d5b48ea9b7b34488a80eb0ac3e57521e7d8d2141",
+      "oracle.json": "daa34a3a127b3eab64d07bc829b5e2780bbc322e305bb5924f7b43577569972f"
+    }
+  }
+}

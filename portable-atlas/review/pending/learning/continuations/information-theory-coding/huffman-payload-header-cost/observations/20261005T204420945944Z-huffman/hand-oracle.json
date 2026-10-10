@@ -1,0 +1,225 @@
+{
+  "authoring": "literal manual arithmetic fixed before producer",
+  "shared_alphabet": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "header_bits": {
+    "fixed": 8,
+    "huffman": 16
+  },
+  "skew_tree": "C1+D1→CD2; B2+CD2→BCD4; A4+BCD4→ABCD8",
+  "uniform_tree": "A1+B1→AB2; C1+D1→CD2; AB2+CD2→ABCD4",
+  "canonical_rule": "length then alphabet order; length field encodes length-1",
+  "optimal_tree_length_shapes": [
+    [
+      2,
+      2,
+      2,
+      2
+    ],
+    [
+      1,
+      2,
+      3,
+      3
+    ]
+  ],
+  "full_four_leaf_length_assignments": 13,
+  "cases": {
+    "skew-short": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          4,
+          2,
+          1,
+          1
+        ],
+        "message": "AAAABBCD",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 8,
+      "payload_bits": 14,
+      "fixed_payload_bits": 16,
+      "huffman_total_bits": 30,
+      "fixed_total_bits": 24,
+      "category": "overhead",
+      "weighted_mean_length": "7/4",
+      "entropy": 1.75,
+      "codebook": {
+        "A": "0",
+        "B": "10",
+        "C": "110",
+        "D": "111"
+      }
+    },
+    "skew-break-even": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          4,
+          2,
+          1,
+          1
+        ],
+        "message": "AAAABBCDAAAABBCDAAAABBCDAAAABBCD",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 32,
+      "payload_bits": 56,
+      "fixed_payload_bits": 64,
+      "huffman_total_bits": 72,
+      "fixed_total_bits": 72,
+      "category": "equal",
+      "weighted_mean_length": "7/4",
+      "entropy": 1.75,
+      "codebook": {
+        "A": "0",
+        "B": "10",
+        "C": "110",
+        "D": "111"
+      }
+    },
+    "skew-long": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          4,
+          2,
+          1,
+          1
+        ],
+        "message": "AAAABBCDAAAABBCDAAAABBCDAAAABBCDAAAABBCD",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 40,
+      "payload_bits": 70,
+      "fixed_payload_bits": 80,
+      "huffman_total_bits": 86,
+      "fixed_total_bits": 88,
+      "category": "saved",
+      "weighted_mean_length": "7/4",
+      "entropy": 1.75,
+      "codebook": {
+        "A": "0",
+        "B": "10",
+        "C": "110",
+        "D": "111"
+      }
+    },
+    "uniform": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "message": "AAAABBCD",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 8,
+      "payload_bits": 16,
+      "fixed_payload_bits": 16,
+      "huffman_total_bits": 32,
+      "fixed_total_bits": 24,
+      "category": "overhead",
+      "weighted_mean_length": "2",
+      "entropy": 2,
+      "codebook": {
+        "A": "00",
+        "B": "01",
+        "C": "10",
+        "D": "11"
+      }
+    },
+    "mismatch": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          4,
+          2,
+          1,
+          1
+        ],
+        "message": "CDCD",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 4,
+      "payload_bits": 12,
+      "fixed_payload_bits": 8,
+      "huffman_total_bits": 28,
+      "fixed_total_bits": 16,
+      "category": "overhead",
+      "weighted_mean_length": "7/4",
+      "entropy": 1.75,
+      "codebook": {
+        "A": "0",
+        "B": "10",
+        "C": "110",
+        "D": "111"
+      }
+    },
+    "empty": {
+      "input": {
+        "alphabet": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "weights": [
+          4,
+          2,
+          1,
+          1
+        ],
+        "message": "",
+        "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+      },
+      "length": 0,
+      "payload_bits": 0,
+      "fixed_payload_bits": 0,
+      "huffman_total_bits": 16,
+      "fixed_total_bits": 8,
+      "category": "overhead",
+      "weighted_mean_length": "7/4",
+      "entropy": 1.75,
+      "codebook": {
+        "A": "0",
+        "B": "10",
+        "C": "110",
+        "D": "111"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "atlas.kotlin-smart-cast-boundaries.expected.v1",
+  "evidence_kind": "fixed_expectations_not_runtime_observations",
+  "compiler_version": "2.4.10",
+  "jdk_version": "17.0.17",
+  "compiler_archive_sha256": "473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+  "compiler_launcher_sha256": "7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92",
+  "compiles": [
+    {"id": "snapshot-and-contrast", "source": "src/SnapshotAndContrast.kt", "exit_code": 0, "artifact_created": true, "diagnostic": null},
+    {"id": "mutable-property-rejected", "source": "src/MutablePropertyRejected.kt", "exit_code": 1, "artifact_created": false, "diagnostic": "SMARTCAST_IMPOSSIBLE"},
+    {"id": "custom-getter-rejected", "source": "src/CustomGetterRejected.kt", "exit_code": 1, "artifact_created": false, "diagnostic": "SMARTCAST_IMPOSSIBLE"}
+  ],
+  "runs": [
+    {"mode": "mutable-snapshot", "input": "ada", "exit_code": 0, "stdout": "SOURCE_INITIAL=Ada\nSOURCE_NOW=<null>\nSNAPSHOT=Ada\nRESULT=3\n", "stderr_contains": null, "classification": "stable-local-snapshot"},
+    {"mode": "mutable-snapshot", "input": "null", "exit_code": 0, "stdout": "SOURCE_INITIAL=<null>\nSOURCE_NOW=Ada\nSNAPSHOT=<null>\nRESULT=SKIPPED\n", "stderr_contains": null, "classification": "snapshot-null-guard"},
+    {"mode": "getter-snapshot", "input": "ada", "exit_code": 0, "stdout": "GET#1=Ada\nSNAPSHOT=Ada\nRESULT=3\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n", "stderr_contains": null, "classification": "one-read-for-decision"},
+    {"mode": "getter-snapshot", "input": "null", "exit_code": 0, "stdout": "GET#1=<null>\nSNAPSHOT=<null>\nRESULT=SKIPPED\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n", "stderr_contains": null, "classification": "snapshot-null-guard"},
+    {"mode": "getter-repeated-assertion", "input": "ada", "exit_code": 1, "stdout": "GET#1=Ada\nGUARD=non-null\nGET#2=<null>\n", "stderr_contains": "java.lang.NullPointerException", "classification": "expected-failure/runtime-npe"},
+    {"mode": "getter-repeated-assertion", "input": "null", "exit_code": 0, "stdout": "GET#1=<null>\nGUARD=null\nRESULT=SKIPPED\nREADS=1\n", "stderr_contains": null, "classification": "guard-skipped"}
+  ],
+  "expected_normal_runtime_count": 5,
+  "expected_runtime_failure_count": 1,
+  "expected_compile_rejection_count": 2,
+  "global_concurrency_guarantee": false,
+  "all_properties_covered": false
+}

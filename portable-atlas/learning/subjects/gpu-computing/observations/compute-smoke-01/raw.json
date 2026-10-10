@@ -1,0 +1,292 @@
+{
+  "kind": "actual-browser-gpu-lesson",
+  "started": "2026-10-05T08:22:43.013Z",
+  "completed": "2026-10-05T08:22:43.211Z",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "language": "ja",
+    "secureContext": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "action": "selected",
+  "prediction": "complete",
+  "sourceHashes": {
+    "sources.mjs": "e3bcca4bc7b3ce8f879835a6a7f69e0c784576234920df66d29353621d61036a",
+    "serve.mjs": "ed5d17d611cf04fa7498cc49cc0dc22c7559d067fcc80f0837bac78a9c6863d3",
+    "probe.html": "011dc90c9be0ce0a3a6fc5f3b28bd4c3695600220dd471a7e917e13e7ddfb971",
+    "probe.mjs": "619b3c2a03f7f6a4ac57c37d1abce1370e9f5f7c0bc5e7e6ae61da22ea0b6040",
+    "cases.json": "f871ab842d0495db1953c4d6b5f3fa9f6c03ac001e7200616cf0da3b840c45cc",
+    "add.wgsl": "47563d145050284e31c9ca972aa7c4dd18bb00b5ffb7c99f1f6fdd6caba72dfe",
+    "experiment.mjs": "b4cc2466e9c7a08813fcb41f07e692d5630d359d6848f87f43792195c216a3bf",
+    "oracle.mjs": "c604bf994079caedd7b15aa067d535febfc2ebc3fc488ed2a796b45c943f0c91",
+    "verify.mjs": "3b07436377d6483d2e62feeb5e290ed0c1a76564dc800ea6da507da17e44ab7e",
+    "check.mjs": "9ed2168bbba1933c869a7014ea0706b2910f3faf2a897f995d4280aedad02dda",
+    "index.html": "bcf86596fa70d7fcc9fe6714f8ae0fa8538ee93f55fc310f53bc20e65b30e5e7",
+    "styles.css": "80c2eea3877416819533c2c52201defc2efefaf0c87a663d9af60051e5fd7ef4",
+    "lesson.mjs": "87bf830c88f01cf61ace49163fd6246c3dbcb51f4c8682ff74eaa9e25ef9610e",
+    "scope.json": "abc7073c79072f28f9cf4c6206de3484d610e9917edcd8d1294248dd6db81ea8",
+    "skills/atlas-gpu-computing/SKILL.md": "8df38cf18ee0dd6a65451f2fc6a0b40fdf794dcd9e48af4fcaf9625b806c2999"
+  },
+  "fixtureDigest": "f871ab842d0495db1953c4d6b5f3fa9f6c03ac001e7200616cf0da3b840c45cc",
+  "shaderDigest": "47563d145050284e31c9ca972aa7c4dd18bb00b5ffb7c99f1f6fdd6caba72dfe",
+  "results": [
+    {
+      "id": "normal",
+      "gpu": {
+        "kind": "actual-browser-webgpu-compute",
+        "id": "normal",
+        "input": {
+          "fixture": {
+            "a": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "b": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70
+            ],
+            "sentinel": 99999999,
+            "workgroupSize": 4,
+            "outputLength": 9,
+            "markLength": 12,
+            "cases": [
+              {
+                "id": "normal",
+                "label": "正常：2 group / 8 lane",
+                "groups": 2,
+                "mode": "compute"
+              },
+              {
+                "id": "under-dispatch",
+                "label": "不足：1 group / 4 lane",
+                "groups": 1,
+                "mode": "compute"
+              },
+              {
+                "id": "over-dispatch",
+                "label": "過剰：3 group / 12 lane、guard",
+                "groups": 3,
+                "mode": "compute"
+              },
+              {
+                "id": "zero-dispatch",
+                "label": "境界：0 group",
+                "groups": 0,
+                "mode": "compute"
+              },
+              {
+                "id": "short-binding",
+                "label": "異常：A buffer 24byte、必要28byte",
+                "groups": 2,
+                "mode": "short-binding"
+              },
+              {
+                "id": "dispatch-limit",
+                "label": "異常：device dispatch上限＋1",
+                "groups": null,
+                "mode": "dispatch-limit"
+              }
+            ]
+          },
+          "case": {
+            "id": "normal",
+            "label": "正常：2 group / 8 lane",
+            "groups": 2,
+            "mode": "compute"
+          }
+        },
+        "started": "2026-10-05T08:22:43.013Z",
+        "shaderDigest": "47563d145050284e31c9ca972aa7c4dd18bb00b5ffb7c99f1f6fdd6caba72dfe",
+        "inputDigest": "1068fdd9599ce0633d69973c1fb1150fedd9a41eadce7ed0f85b5d246c49d190",
+        "adapterObtained": true,
+        "deviceRequested": true,
+        "submitted": true,
+        "mapped": true,
+        "output": [
+          11,
+          22,
+          33,
+          44,
+          55,
+          66,
+          77,
+          99999999,
+          99999999
+        ],
+        "marks": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "error": null,
+        "events": [
+          {
+            "name": "adapter",
+            "time": "2026-10-05T08:22:43.025Z",
+            "detail": {
+              "obtained": true
+            }
+          },
+          {
+            "name": "device",
+            "time": "2026-10-05T08:22:43.028Z",
+            "detail": {
+              "maxComputeWorkgroupsPerDimension": 65535,
+              "maxComputeWorkgroupSizeX": 256
+            }
+          },
+          {
+            "name": "buffers",
+            "time": "2026-10-05T08:22:43.029Z",
+            "detail": {
+              "aBytes": 28,
+              "bBytes": 28,
+              "outputBytes": 36,
+              "markBytes": 48
+            }
+          },
+          {
+            "name": "bind-group",
+            "time": "2026-10-05T08:22:43.209Z",
+            "detail": {
+              "mode": "compute"
+            }
+          },
+          {
+            "name": "dispatch-encoded",
+            "time": "2026-10-05T08:22:43.209Z",
+            "detail": {
+              "groups": 2
+            }
+          },
+          {
+            "name": "submitted",
+            "time": "2026-10-05T08:22:43.209Z",
+            "detail": {
+              "copyBytes": 84
+            }
+          },
+          {
+            "name": "mapped",
+            "time": "2026-10-05T08:22:43.211Z",
+            "detail": {
+              "output": [
+                11,
+                22,
+                33,
+                44,
+                55,
+                66,
+                77,
+                99999999,
+                99999999
+              ],
+              "marks": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "name": "cleanup",
+            "time": "2026-10-05T08:22:43.211Z",
+            "detail": {
+              "created": 6,
+              "destroyed": 6,
+              "deviceDestroyed": true
+            }
+          }
+        ],
+        "resources": {
+          "created": 6,
+          "destroyed": 6,
+          "deviceDestroyed": true
+        },
+        "adapterInfo": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "limits": {
+          "maxComputeWorkgroupsPerDimension": 65535,
+          "maxComputeWorkgroupSizeX": 256
+        },
+        "compilationMessages": [],
+        "dispatchGroups": 2,
+        "completed": "2026-10-05T08:22:43.211Z"
+      },
+      "cpu": {
+        "full": [
+          11,
+          22,
+          33,
+          44,
+          55,
+          66,
+          77
+        ],
+        "output": [
+          11,
+          22,
+          33,
+          44,
+          55,
+          66,
+          77,
+          99999999,
+          99999999
+        ],
+        "marks": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "errorName": null
+      },
+      "simulator": null
+    }
+  ]
+}

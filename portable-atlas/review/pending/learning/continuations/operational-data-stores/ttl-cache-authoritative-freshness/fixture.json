@@ -1,0 +1,390 @@
+[
+  {
+    "id": "strict-timeline",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "inclusive-timeline",
+    "input": {
+      "ttl": 5,
+      "policy": "inclusive",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "just-before",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "equal-deadline",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "after-deadline",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "short-ttl",
+    "input": {
+      "ttl": 1,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "long-ttl",
+    "input": {
+      "ttl": 10,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "notification-received",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 2,
+          "op": "invalidate",
+          "key": "item"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "same-value-new-version",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "red"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty-cache",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": []
+    }
+  },
+  {
+    "id": "reverse-clock",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 2,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 1,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ttl-zero",
+    "input": {
+      "ttl": 0,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "bool-time",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": true,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "missing"
+        }
+      ]
+    }
+  },
+  {
+    "id": "model-error",
+    "input": {
+      "ttl": 5,
+      "policy": "strict",
+      "events": [
+        {
+          "t": 0,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 2,
+          "op": "update",
+          "key": "item",
+          "value": "blue"
+        },
+        {
+          "t": 4,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 5,
+          "op": "read",
+          "key": "item"
+        },
+        {
+          "t": 6,
+          "op": "read",
+          "key": "item"
+        }
+      ]
+    },
+    "inject_failure": true
+  }
+]

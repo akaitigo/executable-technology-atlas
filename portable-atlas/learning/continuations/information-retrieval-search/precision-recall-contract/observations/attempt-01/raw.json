@@ -1,0 +1,8352 @@
+{
+  "fixture": {
+    "corpus": [
+      {
+        "id": "d1",
+        "text": "Blue green guide"
+      },
+      {
+        "id": "d2",
+        "text": "Blue field manual"
+      },
+      {
+        "id": "d3",
+        "text": "Green inventory log"
+      },
+      {
+        "id": "d4",
+        "text": "Blue glossary"
+      },
+      {
+        "id": "d5",
+        "text": "Gold audit memo"
+      }
+    ],
+    "information_need": "合成の案内文書探索。作者がd1とd2を関連と指定する。token一致からlabelを導出しない。",
+    "relevant": [
+      "d1",
+      "d2"
+    ],
+    "label_source": "作者がproducer実行前に指定した外部合成label。実利用者判断ではない。",
+    "cases": [
+      {
+        "id": "and",
+        "mode": "AND",
+        "query": "blue green"
+      },
+      {
+        "id": "or",
+        "mode": "OR",
+        "query": "blue green"
+      },
+      {
+        "id": "empty",
+        "mode": "AND",
+        "query": ""
+      },
+      {
+        "id": "unknown",
+        "mode": "OR",
+        "query": "violet"
+      },
+      {
+        "id": "all",
+        "mode": "ALL_DIAGNOSTIC",
+        "query": "blue green"
+      },
+      {
+        "id": "duplicate",
+        "mode": "AND",
+        "query": "BLUE blue GREEN"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "id": "and",
+      "input": {
+        "id": "and",
+        "mode": "AND",
+        "query": "blue green"
+      },
+      "scan": {
+        "returned": [
+          "d1"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [
+              true,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [
+              false,
+              true
+            ],
+            "returned": false
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [
+              false,
+              false
+            ],
+            "returned": false
+          }
+        ]
+      },
+      "index": {
+        "returned": [
+          "d1"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": [
+          {
+            "term": "blue",
+            "posting": [
+              "d1",
+              "d2",
+              "d4"
+            ],
+            "accumulated": [
+              "d1",
+              "d2",
+              "d4"
+            ]
+          },
+          {
+            "term": "green",
+            "posting": [
+              "d1",
+              "d3"
+            ],
+            "accumulated": [
+              "d1"
+            ]
+          }
+        ]
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 1,
+            "FP": 0,
+            "FN": 1,
+            "TN": 3
+          },
+          "precision": {
+            "value": "1",
+            "numerator": 1,
+            "denominator": 1,
+            "status": "defined"
+          },
+          "recall": {
+            "value": "1/2",
+            "numerator": 1,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 1,
+            "FN": 0,
+            "TN": 4
+          },
+          "precision": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 1,
+            "status": "defined"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 1,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    },
+    {
+      "id": "or",
+      "input": {
+        "id": "or",
+        "mode": "OR",
+        "query": "blue green"
+      },
+      "scan": {
+        "returned": [
+          "d1",
+          "d2",
+          "d3",
+          "d4"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [
+              true,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": true
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [
+              false,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": true
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [
+              false,
+              false
+            ],
+            "returned": false
+          }
+        ]
+      },
+      "index": {
+        "returned": [
+          "d1",
+          "d2",
+          "d3",
+          "d4"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": [
+          {
+            "term": "blue",
+            "posting": [
+              "d1",
+              "d2",
+              "d4"
+            ],
+            "accumulated": [
+              "d1",
+              "d2",
+              "d4"
+            ]
+          },
+          {
+            "term": "green",
+            "posting": [
+              "d1",
+              "d3"
+            ],
+            "accumulated": [
+              "d1",
+              "d2",
+              "d3",
+              "d4"
+            ]
+          }
+        ]
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 2,
+            "FP": 2,
+            "FN": 0,
+            "TN": 1
+          },
+          "precision": {
+            "value": "1/2",
+            "numerator": 2,
+            "denominator": 4,
+            "status": "defined"
+          },
+          "recall": {
+            "value": "1",
+            "numerator": 2,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 4,
+            "FN": 0,
+            "TN": 1
+          },
+          "precision": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 4,
+            "status": "defined"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 4,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    },
+    {
+      "id": "empty",
+      "input": {
+        "id": "empty",
+        "mode": "AND",
+        "query": ""
+      },
+      "scan": {
+        "returned": [],
+        "terms": [],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [],
+            "returned": false
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [],
+            "returned": false
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [],
+            "returned": false
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [],
+            "returned": false
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [],
+            "returned": false
+          }
+        ]
+      },
+      "index": {
+        "returned": [],
+        "terms": [],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": []
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 0,
+            "FN": 2,
+            "TN": 3
+          },
+          "precision": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "recall": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 0,
+            "FN": 0,
+            "TN": 5
+          },
+          "precision": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 0,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    },
+    {
+      "id": "unknown",
+      "input": {
+        "id": "unknown",
+        "mode": "OR",
+        "query": "violet"
+      },
+      "scan": {
+        "returned": [],
+        "terms": [
+          "violet"
+        ],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [
+              false
+            ],
+            "returned": false
+          }
+        ]
+      },
+      "index": {
+        "returned": [],
+        "terms": [
+          "violet"
+        ],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": [
+          {
+            "term": "violet",
+            "posting": [],
+            "accumulated": []
+          }
+        ]
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 0,
+            "FN": 2,
+            "TN": 3
+          },
+          "precision": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "recall": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 0,
+            "FN": 0,
+            "TN": 5
+          },
+          "precision": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 0,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    },
+    {
+      "id": "all",
+      "input": {
+        "id": "all",
+        "mode": "ALL_DIAGNOSTIC",
+        "query": "blue green"
+      },
+      "scan": {
+        "returned": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [
+              true,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": true
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [
+              false,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": true
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [
+              false,
+              false
+            ],
+            "returned": true
+          }
+        ]
+      },
+      "index": {
+        "returned": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": []
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d5",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            }
+          ],
+          "counts": {
+            "TP": 2,
+            "FP": 3,
+            "FN": 0,
+            "TN": 0
+          },
+          "precision": {
+            "value": "2/5",
+            "numerator": 2,
+            "denominator": 5,
+            "status": "defined"
+          },
+          "recall": {
+            "value": "1",
+            "numerator": 2,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d5",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 5,
+            "FN": 0,
+            "TN": 0
+          },
+          "precision": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 5,
+            "status": "defined"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 5,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    },
+    {
+      "id": "duplicate",
+      "input": {
+        "id": "duplicate",
+        "mode": "AND",
+        "query": "BLUE blue GREEN"
+      },
+      "scan": {
+        "returned": [
+          "d1"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "rows": [
+          {
+            "id": "d1",
+            "tokens": [
+              "blue",
+              "green",
+              "guide"
+            ],
+            "term_matches": [
+              true,
+              true
+            ],
+            "returned": true
+          },
+          {
+            "id": "d2",
+            "tokens": [
+              "blue",
+              "field",
+              "manual"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d3",
+            "tokens": [
+              "green",
+              "inventory",
+              "log"
+            ],
+            "term_matches": [
+              false,
+              true
+            ],
+            "returned": false
+          },
+          {
+            "id": "d4",
+            "tokens": [
+              "blue",
+              "glossary"
+            ],
+            "term_matches": [
+              true,
+              false
+            ],
+            "returned": false
+          },
+          {
+            "id": "d5",
+            "tokens": [
+              "audit",
+              "gold",
+              "memo"
+            ],
+            "term_matches": [
+              false,
+              false
+            ],
+            "returned": false
+          }
+        ]
+      },
+      "index": {
+        "returned": [
+          "d1"
+        ],
+        "terms": [
+          "blue",
+          "green"
+        ],
+        "postings": {
+          "audit": [
+            "d5"
+          ],
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "field": [
+            "d2"
+          ],
+          "glossary": [
+            "d4"
+          ],
+          "gold": [
+            "d5"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "guide": [
+            "d1"
+          ],
+          "inventory": [
+            "d3"
+          ],
+          "log": [
+            "d3"
+          ],
+          "manual": [
+            "d2"
+          ],
+          "memo": [
+            "d5"
+          ]
+        },
+        "steps": [
+          {
+            "term": "blue",
+            "posting": [
+              "d1",
+              "d2",
+              "d4"
+            ],
+            "accumulated": [
+              "d1",
+              "d2",
+              "d4"
+            ]
+          },
+          {
+            "term": "green",
+            "posting": [
+              "d1",
+              "d3"
+            ],
+            "accumulated": [
+              "d1"
+            ]
+          }
+        ]
+      },
+      "implementation_match": true,
+      "evaluations": {
+        "specified": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": true,
+              "classification": "TP"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": true,
+              "classification": "FN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 1,
+            "FP": 0,
+            "FN": 1,
+            "TN": 3
+          },
+          "precision": {
+            "value": "1",
+            "numerator": 1,
+            "denominator": 1,
+            "status": "defined"
+          },
+          "recall": {
+            "value": "1/2",
+            "numerator": 1,
+            "denominator": 2,
+            "status": "defined"
+          },
+          "label_status": "judged"
+        },
+        "empty-relevant": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": false,
+              "classification": "FP"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": false,
+              "classification": "TN"
+            }
+          ],
+          "counts": {
+            "TP": 0,
+            "FP": 1,
+            "FN": 0,
+            "TN": 4
+          },
+          "precision": {
+            "value": "0",
+            "numerator": 0,
+            "denominator": 1,
+            "status": "defined"
+          },
+          "recall": {
+            "value": null,
+            "numerator": 0,
+            "denominator": 0,
+            "status": "undefined-zero-denominator"
+          },
+          "label_status": "judged"
+        },
+        "missing-labels": {
+          "rows": [
+            {
+              "id": "d1",
+              "returned": true,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d2",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d3",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d4",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            },
+            {
+              "id": "d5",
+              "returned": false,
+              "relevant": null,
+              "classification": "UNJUDGED"
+            }
+          ],
+          "counts": {
+            "TP": null,
+            "FP": null,
+            "FN": null,
+            "TN": null
+          },
+          "precision": {
+            "value": null,
+            "numerator": null,
+            "denominator": 1,
+            "status": "unjudged"
+          },
+          "recall": {
+            "value": null,
+            "numerator": null,
+            "denominator": null,
+            "status": "unjudged"
+          },
+          "label_status": "missing"
+        }
+      }
+    }
+  ],
+  "all_returned_subsets": [
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 2,
+          "TN": 3
+        },
+        "precision": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 0,
+          "FN": 0,
+          "TN": 5
+        },
+        "precision": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 0,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 2,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "TN": 4
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 1,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 2,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "TN": 4
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 1,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 2,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 2,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "TN": 4
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 1,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 2,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 2,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 2,
+          "TN": 0
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 1,
+          "TN": 3
+        },
+        "precision": {
+          "value": "1",
+          "numerator": 1,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "TN": 4
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 1,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 3,
+          "FN": 1,
+          "TN": 0
+        },
+        "precision": {
+          "value": "1/4",
+          "numerator": 1,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 4,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 0,
+          "FN": 1,
+          "TN": 3
+        },
+        "precision": {
+          "value": "1",
+          "numerator": 1,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 1,
+          "FN": 0,
+          "TN": 4
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 1,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 1,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 1,
+          "FN": 1,
+          "TN": 2
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 2,
+          "FN": 1,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/3",
+          "numerator": 1,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": true,
+            "classification": "FN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 1,
+          "FP": 3,
+          "FN": 1,
+          "TN": 0
+        },
+        "precision": {
+          "value": "1/4",
+          "numerator": 1,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1/2",
+          "numerator": 1,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 4,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 0,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 2,
+          "FN": 0,
+          "TN": 3
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 2,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 1,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "2/3",
+          "numerator": 2,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 1,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "2/3",
+          "numerator": 2,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 2,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 2,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 4,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 1,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "2/3",
+          "numerator": 2,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 3,
+          "FN": 0,
+          "TN": 2
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 3,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 3,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 2,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 2,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 4,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 2,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "1/2",
+          "numerator": 2,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": false,
+            "classification": "TN"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 4,
+          "FN": 0,
+          "TN": 1
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 4,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": false,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 4,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "specified",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": true,
+            "classification": "TP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 2,
+          "FP": 3,
+          "FN": 0,
+          "TN": 0
+        },
+        "precision": {
+          "value": "2/5",
+          "numerator": 2,
+          "denominator": 5,
+          "status": "defined"
+        },
+        "recall": {
+          "value": "1",
+          "numerator": 2,
+          "denominator": 2,
+          "status": "defined"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "empty-relevant",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": false,
+            "classification": "FP"
+          }
+        ],
+        "counts": {
+          "TP": 0,
+          "FP": 5,
+          "FN": 0,
+          "TN": 0
+        },
+        "precision": {
+          "value": "0",
+          "numerator": 0,
+          "denominator": 5,
+          "status": "defined"
+        },
+        "recall": {
+          "value": null,
+          "numerator": 0,
+          "denominator": 0,
+          "status": "undefined-zero-denominator"
+        },
+        "label_status": "judged"
+      }
+    },
+    {
+      "returned_bits": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_mode": "missing-labels",
+      "result": {
+        "rows": [
+          {
+            "id": "d1",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d2",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d3",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d4",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          },
+          {
+            "id": "d5",
+            "returned": true,
+            "relevant": null,
+            "classification": "UNJUDGED"
+          }
+        ],
+        "counts": {
+          "TP": null,
+          "FP": null,
+          "FN": null,
+          "TN": null
+        },
+        "precision": {
+          "value": null,
+          "numerator": null,
+          "denominator": 5,
+          "status": "unjudged"
+        },
+        "recall": {
+          "value": null,
+          "numerator": null,
+          "denominator": null,
+          "status": "unjudged"
+        },
+        "label_status": "missing"
+      }
+    }
+  ],
+  "invalid_inputs": [
+    {
+      "id": "corpus-type",
+      "input": {
+        "corpus": null,
+        "query": "blue",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "corpus list length1..32 required"
+    },
+    {
+      "id": "empty-corpus",
+      "input": {
+        "corpus": [],
+        "query": "blue",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "corpus list length1..32 required"
+    },
+    {
+      "id": "duplicate-id",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d1",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": "blue",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "unique IDs required"
+    },
+    {
+      "id": "document-text",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": null
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": "blue",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "ASCII document text required"
+    },
+    {
+      "id": "query-type",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": null,
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "ASCII query string length0..128 required"
+    },
+    {
+      "id": "query-bool",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": true,
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "ASCII query string length0..128 required"
+    },
+    {
+      "id": "query-too-long",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "ASCII query string length0..128 required"
+    },
+    {
+      "id": "non-ascii",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": "青",
+        "mode": "AND"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "ASCII query string length0..128 required"
+    },
+    {
+      "id": "unknown-mode",
+      "input": {
+        "corpus": [
+          {
+            "id": "d1",
+            "text": "Blue green guide"
+          },
+          {
+            "id": "d2",
+            "text": "Blue field manual"
+          },
+          {
+            "id": "d3",
+            "text": "Green inventory log"
+          },
+          {
+            "id": "d4",
+            "text": "Blue glossary"
+          },
+          {
+            "id": "d5",
+            "text": "Gold audit memo"
+          }
+        ],
+        "query": "blue",
+        "mode": "X"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "unknown retrieval mode"
+    },
+    {
+      "id": "retrieved-unknown",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          "d9"
+        ],
+        "relevant": [
+          "d1"
+        ]
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "unique retrieved corpus IDs required"
+    },
+    {
+      "id": "retrieved-duplicate",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          "d1",
+          "d1"
+        ],
+        "relevant": [
+          "d1"
+        ]
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "unique retrieved corpus IDs required"
+    },
+    {
+      "id": "retrieved-bool",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          true
+        ],
+        "relevant": [
+          "d1"
+        ]
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "unique retrieved corpus IDs required"
+    },
+    {
+      "id": "label-unknown",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          "d1"
+        ],
+        "relevant": [
+          "d9"
+        ]
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "labels must be None or unique corpus IDs"
+    },
+    {
+      "id": "label-duplicate",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          "d1"
+        ],
+        "relevant": [
+          "d1",
+          "d1"
+        ]
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "labels must be None or unique corpus IDs"
+    },
+    {
+      "id": "label-type",
+      "input": {
+        "ids": [
+          "d1",
+          "d2",
+          "d3",
+          "d4",
+          "d5"
+        ],
+        "returned": [
+          "d1"
+        ],
+        "relevant": "d1"
+      },
+      "status": "EXPECTED_REFUSAL",
+      "error": "labels must be None or unique corpus IDs"
+    }
+  ],
+  "evidence_mutations": [
+    {
+      "id": "precision-one",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "recall-half",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "wrong-FP",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "row-label",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "missing-denominator",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "id": "undefined-as-one",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "fixed_evaluations": 18,
+  "subset_evaluations": 96,
+  "author_routing": {
+    "precision": {
+      "status": "supported",
+      "runner": "python3 verify.py",
+      "ui": "index.html",
+      "guide": "README.md"
+    },
+    "ranking": {
+      "status": "unsupported",
+      "coverage": "coverage.json",
+      "reason": "finite synthetic unranked sets; no ranking, user study, product search or performance guarantee"
+    }
+  },
+  "scope": "synthetic labels; implementation correctness and quality are separate; no ranking/users/products/performance",
+  "attempt": {
+    "command": "python3 verify.py --record attempt-01",
+    "started_at_utc": "2026-10-05T12:23:18.940095+00:00",
+    "completed_at_utc": "2026-10-05T12:23:18.942435+00:00",
+    "exit_code": 0,
+    "toolchain": {
+      "python": "3.9.6",
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "input_sha256": "02ec3d5fa90f445fe9280852eceadee7a7ee609b664aa023a169b087e4391516",
+    "hand_oracle_sha256": "28b4d6f9c718529ecc66203fdfc2d1043aa2500b47ca06bfa3cf0ddabd2fc307",
+    "executed_source_sha256": {
+      "retrieval.py": "bafb473653127ae8f0942f61d46e74fa1ae09f8829bfed277ba8923ca47371d3",
+      "oracle.py": "05fb2f50ecfe11061a01a5fd3d86a32b0e2baf54897ed909c8f598269872b158",
+      "verify.py": "ccbfe827de26b30ca09d604f5943648d20dc6572505d4d95ce2a63300e8642e3"
+    }
+  }
+}

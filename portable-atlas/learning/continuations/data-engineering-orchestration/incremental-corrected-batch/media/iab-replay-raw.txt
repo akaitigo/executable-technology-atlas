@@ -1,0 +1,362 @@
+Browser tab: 12, Title: "差分batch — update / delete / replay", URL: "http://127.0.0.1:63420/".
+0 AXWebArea 差分batch — update / delete / replay, URL: 127.0.0.1:63420/
+	1 heading 差分batchは、snapshotと同じように扱える？, Value: 1
+		2 text 差分batchは、snapshotと同じように扱える？
+	3 text 前提：key・price・更新／削除・transaction。初期 a100 / b200 / c300。別batchで a110更新・b削除・d400追加。
+	4 container
+		5 heading 1 · 予測する, Value: 2
+			6 text 1 · 予測する
+		7 text ケース
+		8 pop up button (collapsed, settable) Description: ケース, Value: keyed / keyed, ID: case, Secondary Actions: Expand
+			9 menu
+				10 replace / replace
+				11 append / append
+				12 (selected) keyed / keyed
+				13 unknown-delete / keyed
+				14 duplicate-id / keyed
+				15 id-collision / keyed
+				16 same-key-order / keyed
+				17 same-key-reverse / keyed
+		18 text 試行
+		19 pop up button (collapsed, settable) Description: 試行, Value: 2回目, ID: attempt, Secondary Actions: Expand
+			20 menu
+				130 1回目
+				131 (selected) 2回目
+		22 text 最終合計
+		23 pop up button (collapsed, settable) Description: 合計の予測, Value: 810, ID: sumguess, Secondary Actions: Expand
+			24 menu
+				25 (selected) 810
+				26 510
+				27 1110
+				28 600
+				29 820
+		30 text 終了状態
+		31 pop up button (collapsed, settable) Description: 終了状態の予測, Value: 処理完了 exit0, ID: exitguess, Secondary Actions: Expand
+			32 menu
+				33 (selected) 処理完了 exit0
+				34 契約拒否 exit2
+		35 button 観測と比較, ID: compare
+		132 text 予測と一致 — 合計=810、件数=3、exit=0
+	37 container
+		38 heading 2 · 初期 → 操作順 → 実結果, Value: 2
+			39 text 2 · 初期 → 操作順 → 実結果
+		40 text 実件数
+		133 text 3
+		42 text 実合計
+		134 text 810
+		44 text 終了code
+		135 text 0
+		136 text 処理完了（結果の正しさは独立期待値と比較する）
+		47 heading before, Value: 3
+			48 text before
+		137 text [
+  [
+    "a",
+    110
+  ],
+  [
+    "c",
+    300
+  ],
+  [
+    "d",
+    400
+  ]
+]
+		50 heading after, Value: 3
+			51 text after
+		138 text [
+  [
+    "a",
+    110
+  ],
+  [
+    "c",
+    300
+  ],
+  [
+    "d",
+    400
+  ]
+]
+		139 text 実適用順: e1 → e2 → e3
+		54 table
+			55 row
+				56 cell
+					57 text event ID
+				58 cell
+					59 text op / key
+				60 cell
+					61 text price
+				62 cell
+					63 text sourceVersion
+			129 container events
+				140 row
+					141 cell
+						142 text e1
+					143 cell
+						144 text upsert / a
+					145 cell
+						146 text 110
+					147 cell
+						148 text 2
+				149 row
+					150 cell
+						151 text e2
+					152 cell
+						153 text delete / b
+					154 cell
+						155 text 削除
+					156 cell
+						157 text 2
+				158 row
+					159 cell
+						160 text e3
+					161 cell
+						162 text upsert / d
+					163 cell
+						164 text 400
+					165 cell
+						166 text 1
+		167 text 処理記録: [{"eventId":"e1","action":"already-applied"},{"eventId":"e2","action":"already-applied"},{"eventId":"e3","action":"already-applied"}]
+		168 text DB before=2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6 / after=2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6
+		94 text event IDは識別とpayload binding。sourceVersionは記録用で鮮度guardではありません。同keyの更新は入力list順の最後が勝ちます。
+	95 container
+		96 heading 3 · 原典・実装・raw, Value: 2
+			97 text 3 · 原典・実装・raw
+		98 text 実行UTC 2026-10-05T11:33:50.090239+00:00 · SQLite 3.51.0 · Python 3.9.6 · Darwin
+		99 button (expanded) command / exit / SQL / 原入力と原記録, Secondary Actions: Collapse
+			100 text command / exit / SQL / 原入力と原記録
+		169 text {
+  "index": 1,
+  "argv": [
+    "python3",
+    "-B",
+    "worker.py",
+    "--db",
+    "keyed/data.sqlite",
+    "--input",
+    "keyed/batch-1.json",
+    "--strategy",
+    "keyed"
+  ],
+  "executablePathNormalized": true,
+  "startedUtc": "2026-10-05T11:33:50.280194+00:00",
+  "endedUtc": "2026-10-05T11:33:50.334974+00:00",
+  "exitCode": 0,
+  "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+  "beforeDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+  "afterDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+  "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]], \"actions\": [{\"eventId\": \"e1\", \"action\": \"already-applied\"}, {\"eventId\": \"e2\", \"action\": \"already-applied\"}, {\"eventId\": \"e3\", \"action\": \"already-applied\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": [[\"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"]]}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": [[\"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"]]}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": [[\"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}]}\n",
+  "stderr": "",
+  "observation": {
+    "strategy": "keyed",
+    "before": [
+      [
+        "a",
+        110
+      ],
+      [
+        "c",
+        300
+      ],
+      [
+        "d",
+        400
+      ]
+    ],
+    "events": [
+      {
+        "eventId": "e1",
+        "op": "upsert",
+        "key": "a",
+        "price": 110,
+        "sourceVersion": 2
+      },
+      {
+        "eventId": "e2",
+        "op": "delete",
+        "key": "b",
+        "sourceVersion": 2
+      },
+      {
+        "eventId": "e3",
+        "op": "upsert",
+        "key": "d",
+        "price": 400,
+        "sourceVersion": 1
+      }
+    ],
+    "order": [
+      "e1",
+      "e2",
+      "e3"
+    ],
+    "after": [
+      [
+        "a",
+        110
+      ],
+      [
+        "c",
+        300
+      ],
+      [
+        "d",
+        400
+      ]
+    ],
+    "count": 3,
+    "sum": 810,
+    "ledger": [
+      [
+        "e1",
+        "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+      ],
+      [
+        "e2",
+        "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+      ],
+      [
+        "e3",
+        "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+      ]
+    ],
+    "actions": [
+      {
+        "eventId": "e1",
+        "action": "already-applied"
+      },
+      {
+        "eventId": "e2",
+        "action": "already-applied"
+      },
+      {
+        "eventId": "e3",
+        "action": "already-applied"
+      }
+    ],
+    "reason": null,
+    "exitCode": 0,
+    "sqlTrace": [
+      {
+        "sql": "SELECT key,price FROM items ORDER BY key,price",
+        "params": [],
+        "rows": [
+          [
+            "a",
+            110
+          ],
+          [
+            "c",
+            300
+          ],
+          [
+            "d",
+            400
+          ]
+        ]
+      },
+      {
+        "sql": "BEGIN IMMEDIATE",
+        "params": [],
+        "rows": []
+      },
+      {
+        "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+        "params": [
+          "e1"
+        ],
+        "rows": [
+          [
+            "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+          ]
+        ]
+      },
+      {
+        "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+        "params": [
+          "e2"
+        ],
+        "rows": [
+          [
+            "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+          ]
+        ]
+      },
+      {
+        "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+        "params": [
+          "e3"
+        ],
+        "rows": [
+          [
+            "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+          ]
+        ]
+      },
+      {
+        "sql": "COMMIT",
+        "params": [],
+        "rows": []
+      },
+      {
+        "sql": "SELECT key,price FROM items ORDER BY key,price",
+        "params": [],
+        "rows": [
+          [
+            "a",
+            110
+          ],
+          [
+            "c",
+            300
+          ],
+          [
+            "d",
+            400
+          ]
+        ]
+      },
+      {
+        "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+        "params": [],
+        "rows": [
+          [
+            "e1",
+            "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+          ],
+          [
+            "e2",
+            "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+          ],
+          [
+            "e3",
+            "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+          ]
+        ]
+      }
+    ]
+  }
+}
+		101 link Description: 再現と判断, Value: 127.0.0.1:63420/README.md
+		102 text  · 
+		103 link Description: 事前の手書き期待値, Value: 127.0.0.1:63420/expectations.json
+		104 text  · 
+		105 link Description: 実処理実装, Value: 127.0.0.1:63420/worker.py
+		106 text  · 
+		107 link Description: 観測runner, Value: 127.0.0.1:63420/runner.py
+		108 text  · 
+		109 link Description: 独立oracle, Value: 127.0.0.1:63420/checker.py
+		110 text  · 
+		111 link Description: 到達範囲, Value: 127.0.0.1:63420/COVERAGE.md
+		112 text  · 
+		113 link Description: SQLite UPSERT §2, Value: sqlite.org/lang_upsert.html
+		114 text  · 
+		115 link Description: transaction §2, Value: sqlite.org/lang_transaction.html
+	116 container
+		117 heading 4 · 答えと実務判断, Value: 2
+			118 text 4 · 答えと実務判断
+		119 text replaceはa110,d400だけになり未変更cを失います（2件／510）。appendはa重複・b削除未反映（5件／1110）。keyed upsert＋deleteはa110,c300,d400（3件／810）。同batch再適用では既存event IDを照合してskipし、rowとDB bytesが不変です。 未知delete・batch内重複ID・同ID異payloadはexit2の契約拒否。成功件数へ混ぜません。未知delete前に行ったa更新もtransaction rollbackで元に戻ります。 同keyを110→120と更新すると820、順序を120→110へ入れ替えると810。再適用のidempotenceは、順序を入れ替えてよいことを意味しません。sourceVersionを記録するだけでは遅着更新を防げません。 次：version guardと遅着訂正、削除tombstone／再作成、ack喪失と再試行。実framework、CDC connector、production exactly-onceは未検証です。
+
+The focused UI element is 99 button (expanded) command / exit / SQL / 原入力と原記録, Secondary Actions: Collapse

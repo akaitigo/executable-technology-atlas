@@ -1,0 +1,17 @@
+{
+  "project": "Atlas",
+  "schema_version": 1,
+  "fixed_before_implementation": true,
+  "payload_hex": "41544c41532d4644",
+  "payload_bytes": 8,
+  "phases": ["parent_before_fork", "child_after_fork", "child_after_exec", "parent_after_wait"],
+  "cases": [
+    {"id":"guarded_single","cloexec":{"original":true},"fork":{"original":"target"},"exec":{"original":"EBADF"},"parent":{"original":"target"},"unintended_inheritance_example":false},
+    {"id":"unguarded_single","cloexec":{"original":false},"fork":{"original":"target"},"exec":{"original":"target"},"parent":{"original":"target"},"unintended_inheritance_example":true},
+    {"id":"dup_original_guarded","cloexec":{"original":true,"duplicate":false},"fork":{"original":"target","duplicate":"target"},"exec":{"original":"EBADF","duplicate":"target"},"parent":{"original":"target","duplicate":"target"},"unintended_inheritance_example":false},
+    {"id":"dup_duplicate_guarded","cloexec":{"original":false,"duplicate":true},"fork":{"original":"target","duplicate":"target"},"exec":{"original":"target","duplicate":"EBADF"},"parent":{"original":"target","duplicate":"target"},"unintended_inheritance_example":false}
+  ],
+  "relations": {"parent_pid_stable":true,"fork_child_pid_differs":true,"exec_child_pid_same":true,"target_identity_same_within_case":true,"duplicate_fd_differs":true,"python_dup_initial_cloexec":true},
+  "totals": {"cases":4,"fork_children":4,"max_concurrent_children":1,"exec_success":4,"expected_EBADF_observations":3,"unintended_inheritance_examples":1,"unexpected_execution_failures":0},
+  "limits": {"child_timeout_seconds":2,"batch_timeout_seconds":10,"minimum_nice":10,"offset_sharing_measured":false,"c_dup_syscall_measured":false}
+}

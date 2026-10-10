@@ -1,0 +1,85 @@
+{
+  "repair": "prediction-only stale comparison",
+  "utc": "2026-10-05T12:49:12.650Z",
+  "controls": [
+    "shortguess",
+    "longguess",
+    "guess"
+  ],
+  "changedSource": [
+    "index.html"
+  ],
+  "behavior": "Keep new prediction group; clear old feedback class, results, refusal, trace, raw, answer; close details; preserve case/method reset",
+  "checks": [
+    {
+      "check": "checker",
+      "exitCode": 0,
+      "output": "PASS 11 cases; independent event ID sets, literal Fraction burn and AND/refusal\n"
+    },
+    {
+      "check": "negative",
+      "exitCode": 0,
+      "output": "[\n  {\n    \"test\": \"read-only SHA256 + mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"short-only-as-and\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"AND vs short-only literal\"\n  },\n  {\n    \"test\": \"wrong-long-fraction\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"handwritten burn fraction\"\n  },\n  {\n    \"test\": \"wrong-denominator\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"integer counts\"\n  },\n  {\n    \"test\": \"boundary-100-included\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"independent ID sets\"\n  },\n  {\n    \"test\": \"missing-failed-id\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"independent ID sets\"\n  },\n  {\n    \"test\": \"empty-as-false\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"AND vs short-only literal\"\n  },\n  {\n    \"test\": \"refusal-as-success\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"exit/refusal literal\"\n  }\n]\n"
+    },
+    {
+      "check": "skill",
+      "exitCode": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "check": "ports",
+      "exitCode": 0,
+      "output": "3901\n80282\n"
+    },
+    {
+      "check": "dimensions",
+      "exitCode": 0,
+      "output": "<module>/media/refusal-before-prediction-change.jpg\n  pixelWidth: 1280\n  pixelHeight: 1874\n<module>/media/refusal-short4-after-change.jpg\n  pixelWidth: 1280\n  pixelHeight: 1508\n<module>/media/refusal-prediction-changed.jpg\n  pixelWidth: 1280\n  pixelHeight: 1508\n"
+    }
+  ],
+  "ui": {
+    "normalAndRefusalControlChanges": 6,
+    "caseMethodResets": 2,
+    "newWrongPredictionRefusalPreserved": true,
+    "consoleErrors": 0,
+    "evidence": [
+      "media/iab-prediction-only-repair.json",
+      "media/iab-condition-repair.json",
+      "media/iab-repair-console.json"
+    ]
+  },
+  "preview": {
+    "normalExitCode": 1,
+    "normalOutput": "Traceback (most recent call last):\n  File \"<module>/preview.py\", line 10, in <module>\n    with http.server.ThreadingHTTPServer(('127.0.0.1',0),Handler) as s:\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 452, in __init__\n    self.server_bind()\n  File \"<python-runtime>/lib/python3.9/http/server.py\", line 138, in server_bind\n    socketserver.TCPServer.server_bind(self)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 466, in server_bind\n    self.socket.bind(self.server_address)\nPermissionError: [Errno 1] Operation not permitted\n",
+    "port": 54270,
+    "ownedServerExitCode": 0,
+    "tab16Closed": true,
+    "protectedListeners": {
+      "53478": 3901,
+      "60285": 80282
+    }
+  },
+  "limitations": "Local SRE UI repair only; no fullGate/Core or production alert claim",
+  "currentRun": "observations/20261005T124450107451Z",
+  "sourceHashes": {
+    "runner.py": "4aa166651eda632116c0a46e21cd533f30ed7f86e59ee8999631169372dab3de",
+    "worker.py": "80e7f2b96538cee0c9713105d377483952b4e52b1e121597d47a22ef451f2395",
+    "checker.py": "5b0d6a752cb096d5bf28055a20cc473b19e56abb5d910b91a93f06bfb198137c",
+    "expected.json": "a3703e4f8939f77ba77ee6fca019e4b640774435459ee2bbf6b44242d41383ed",
+    "index.html": "b89d50ccc6a1819edc87a5073c0d46d5b8eb77f788be0dd1f38c9e20f23559b2",
+    "preview.py": "ded5802ffca92a2bc3726aa2fff8920ea2f64b3a68de5e254e4c4c4ad5c4c935",
+    "route.py": "fd4fc127ca5e3a7878cac14317d07a4ca46099eeec5323ca6eb7804b5704853b",
+    "test_negative.py": "95e56f01da95e59222957d37f3f64c93445a232e40c11217c92c8c71c4b7eada",
+    "README.md": "a1f5f7ba252c831fba6c1889b317df2973a3d615eae9fa0198a374141fdc4248",
+    "COVERAGE.md": "4c698b39f78f3731098ce5a882e6528cd5dc6395bbb7df55485f3ab4afc24b2d",
+    "skills/multiwindow-burn-alert/SKILL.md": "1da7ed371012a96b9ddf094d4a28ebfd738c583a5a0e40db0a00fb4c3173b24c"
+  },
+  "historicalReceipt": {
+    "path": "revisions/prediction-reset-20261005T124449Z",
+    "files": 63,
+    "originalRawUnchanged": true,
+    "oldQAAndVerificationPreserved": true,
+    "oldReceiptRemainsHistoricalNotCurrentSource": true
+  },
+  "actualStdoutMatches": true
+}

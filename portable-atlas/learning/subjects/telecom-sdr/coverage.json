@@ -1,0 +1,22 @@
+{
+ "subject_status":"部分教材: finite BPSK complex baseband、固定noise/quadrant phase、known pilot補正。実RF/SDR機器/規格適合・統計BERは未実行。",
+ "implemented":["計算した複素I/Q samples","BPSK mapping/rectangular symbol hold/ideal averaging","exact quadrant phase反例","known pilot phase correction/無推定境界","固定vector BER/誤り位置/trace"],
+ "areas":[
+  {"area":"信号・sampling・I/Q","status":"部分教材","concepts":["complex baseband","sample/symbol rate","Nyquist/aliasing","quantization","I/Q convention"],"question":"I/Qの数値列、sample clock、実RF波形を区別できるか？","source":"signal-space"},
+  {"area":"変調・pulse shaping","status":"部分教材","concepts":["BPSK/QPSK/QAM","mapping","pulse shape","matched filter","ISI","spectrum"],"question":"constellationの点と帯域制限された波形は同じか？","source":"modulation"},
+  {"area":"channel・noise・link budget","status":"部分教材","concepts":["AWGN","Eb/N0/SNR","fading","multipath","path loss","interference"],"question":"固定noiseの16bit BERを一般の誤り確率に拡大していないか？","source":"noise-detection"},
+  {"area":"同期・carrier/timing","status":"部分教材","concepts":["phase ambiguity","pilot","frequency offset","timing recovery","Costas/PLL","drift"],"question":"既知pilotが壊れたり位相が時間変化したら補正は成立するか？","source":"modulation"},
+  {"area":"検出・equalization・FEC","status":"部分教材","concepts":["hard/soft decision","threshold/tie","equalizer","LLR","channel coding","interleaving"],"question":"位相を合わせた後のnoise誤りをどう検出/訂正するか？","source":"noise-detection"},
+  {"area":"framing・packet・protocol","status":"未教材","concepts":["preamble","frame sync","CRC","scrambler","ARQ","MAC"],"question":"bit列をpacketとして見つけ、完全性をどう確認するか？","source":"sdr-map"},
+  {"area":"RF front-end・antenna","status":"未教材","concepts":["mixer/LO","ADC/DAC","gain/AGC","filter","antenna","DC/IQ imbalance"],"question":"計算上のphase/gain以外に実機は何を変えるか？","source":"sdr-map"},
+  {"area":"SDR実装・real-time","status":"未教材","concepts":["GNU Radio/driver","sample stream","buffer","clock","underflow/overrun","device calibration"],"question":"有限arrayと連続streamでどこに失敗境界があるか？","source":"gnu-pilot-sync"},
+  {"area":"通信方式・system design","status":"未教材","concepts":["OFDM","multiple access","cellular/WLAN","duplex","scheduler","latency"],"question":"BPSK1列の成功で何の通信規格まで言えるか？","source":"sdr-map"},
+  {"area":"測定・規格・運用","status":"未教材","concepts":["BER confidence","EVM","spectral mask","calibration","traceability","RF permissions"],"question":"実測・統計・規格/運用をこの固定計算と分けて記録できるか？","source":"noise-detection"}
+ ],
+ "next_experiments":[
+  {"id":"phase-drift","question":"一回のpilot補正で時間変化する位相を追えるか？","experiment":"固定frequency offset/phase rampを加え、一回補正と小さな追従toyを独立有理数/手計算symbol oracleで比較。実PLL性能とはしない。","source":"modulation"},
+  {"id":"pilot-quality","question":"pilotが小さい/汚れたとき無理なphase推定を拒否できるか？","experiment":"固定pilot相関magnitudeとresidual/品質閾値を加え、推定拒否とnaive補正を比較。pilotがpayload noiseを訂正しないことを保つ。","source":"noise-detection"},
+  {"id":"pulse-timing","question":"symbol境界がずれると平均検出はどう変わるか？","experiment":"固定pulse shape/ISIとsample offsetを加え、ideal timingとずれたwindowを独立離散convolution oracleで比較する。","source":"signal-space"},
+  {"id":"noise-statistics","question":"固定vector BERと繰返し推定の信頼区間は何が違うか？","experiment":"明示seed/noise distribution/energy normalizationのMonte Carloを小さく追加し、count/試行数/信頼区間を独立算術で確認。AWGN公式と比較する前に仮定を固定する。","source":"noise-detection"}
+ ]
+}

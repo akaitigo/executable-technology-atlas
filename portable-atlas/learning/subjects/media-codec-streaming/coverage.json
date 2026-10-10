@@ -1,0 +1,22 @@
+{
+ "subject_status":"部分教材: 実mono16 PCM WAV bytesと固定arrivalの有限jitter buffer模型。製品圧縮codec・実ネットワーク・実配信timingは未実行。",
+ "implemented":["実WAV生成/読取とRIFF/sample独立oracle","PTS/cadenceと到着順の比較","deadline underflow/late drop/zero fill","固定startup delayのtradeoff","未知format/短いPCM/unsupported subset境界"],
+ "areas":[
+  {"area":"信号・PCM・sample clock","status":"部分教材","concepts":["sample rate","channel","bit depth","signed PCM","resampling","aliasing"],"question":"sample数・byte数・時間を同じ単位として数えていないか？","source":"pcm"},
+  {"area":"codec・圧縮","status":"未教材","concepts":["lossless/lossy","quantization","prediction","H264/HEVC/AV1","AAC/Opus","bitrate/quality"],"question":"PCM包装と圧縮による情報量/品質変化は何が違うか？","source":"webcodecs"},
+  {"area":"container・mux/demux","status":"部分教材","concepts":["RIFF/WAV","fmt/data","MP4/WebM","track/metadata","interleaving","seek"],"question":"codecのbytesとcontainer metadataを分けて検査できるか？","source":"riff"},
+  {"area":"timestamp・同期","status":"部分教材","concepts":["PTS/DTS","sample clock","timebase","A/V sync","clock drift","discontinuity"],"question":"到着順と提示時刻、sample時刻を混同していないか？","source":"rtp"},
+  {"area":"packetization・transport","status":"部分教材","concepts":["sequence number","loss/reorder","RTP/RTCP","congestion","retransmit/FEC"],"question":"packet未到着と内容の並び違いを別に観測できるか？","source":"rtp"},
+  {"area":"buffer・latency・concealment","status":"部分教材","concepts":["startup delay","jitter buffer","deadline","underflow","adaptive delay","PLC"],"question":"待機を増やすと何を救えて、何は救えないか？","source":"rtp"},
+  {"area":"streaming・配信設計","status":"未教材","concepts":["HLS/DASH","segment/playlist","ABR","CDN/cache","live/VOD","end-to-end latency"],"question":"manifest/segment取得とcodec decodingはどこで分かれるか？","source":"hls"},
+  {"area":"再生・pipeline・device","status":"未教材","concepts":["decode queue","render scheduling","audio device clock","hardware acceleration","backpressure","resource lifecycle"],"question":"模型のdeadlineと実デバイスでの提示時刻は同じか？","source":"webcodecs"},
+  {"area":"品質・性能・運用","status":"部分教材","concepts":["byte/sample exactness","latency distribution","perceptual quality","bitrate","QoE","trace/failure"],"question":"sample一致だけで視聴品質や安定配信を保証できるか？","source":"webcodecs"},
+  {"area":"暗号・権限・delivery security","status":"未教材","concepts":["key/IV","encrypted segment","DRM","origin/CORS","privacy","integrity"],"question":"暗号/権限と配信mediaの正しさを別々に確認できるか？","source":"hls"}
+ ],
+ "next_experiments":[
+  {"id":"timebase-drift","question":"異なるsample clockやtimestamp単位でdeadlineはずれないか？","experiment":"固定clock drift/timebase換算を有理数toyへ加え、丸め/累積誤差/同期ずれを独立手計算timelineと比較する。","source":"rtp"},
+  {"id":"capacity-adaptive","question":"delayを増やしたとき有限capacityとlate lossをどう扱うか？","experiment":"固定burstと容量上限/簡単なdelay適応を加え、overflow・underflow・待機量を別metricで比較。RTP準拠jitter estimatorとは分ける。","source":"rtp"},
+  {"id":"container-chunks","question":"未知chunkやpadding、短いdataを安全に読み飛ばせるか？","experiment":"固定JUNK/odd-length chunkや不正lengthのRIFF bytesを作り、独立offset oracleでchunk traversalを比較。汎用format対応へ拡大しない。","source":"riff"},
+  {"id":"loss-concealment","question":"lossにzero fill以外を使うとsample/品質はどう変わるか？","experiment":"固定PCM欠落に前chunk反復と線形補間を加え、波形/MSEを独立算術oracleで比較する。主観音質やcodec PLC性能とは呼ばない。","source":"pcm"}
+ ]
+}

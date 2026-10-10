@@ -1,0 +1,315 @@
+{
+  "startedUtc": "2026-10-05T16:43:34.145074+00:00",
+  "finishedUtc": "2026-10-05T16:43:38.565765+00:00",
+  "scope": "cancel-completion finite module only; original/frozen units unchanged; no Win32/VM/install/Core/fullGate/OS/shared/publication/commit/push",
+  "current": "observations/20261005T163627820003Z",
+  "canonicalReceiptSha256": "7056ff3eb35b86e29f03e46218e8627eaab770fb1a87ead78cfc195493ae8630",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "dependencies": "stdlib only; no Win32 runtime used"
+  },
+  "cases": {
+    "OBSERVED": 10,
+    "REFUSED": 6,
+    "EXECUTION_FAILURE": 1
+  },
+  "actualSavedModelChildren": 17,
+  "actualSavedAuditChildren": 17,
+  "sourceHashes": {
+    "preview.py": "dff13f11871946a54a6eb6b7cab8edc7a2cfa32d3dbdc629d89efc32b0234f93",
+    "test_negative.py": "6773fc02614c759763cda72106900b21f96cc2a6d42b54052bad81fba055ea3f",
+    "runner.py": "4635f2b25d166b623ad43aad336681cb933ee201d41e4a87526d66337390b93a",
+    "index.html": "0aa3ab054b99074d11e8973af305e05b1663d94e088fc4ceb530529323e9308c",
+    "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd",
+    "route.py": "4297ec430278914d918646704cba04d6584a3ad7ab3edc94131175c99584f773",
+    "oracle.json": "ef3c4c8d70adfafabe016b1a5e5b2447164ce1cff06c9168511b58d482ed75e7",
+    "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+    "README.md": "3a0539de31317dfc93cdfe66bc28fc27e80487649eda9ed832b3cf4319ec9460",
+    "requests.json": "7321e5668ce624aa62026329545ce959a77edf0f226fc21bc259a6b2bf8397d6",
+    "COVERAGE.md": "7a521b471f4d76fde3fb8d2525b243966efdc0139d000df31a11aa17bf65e438",
+    "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+    "skills/cancel-completion-buffer-lifetime/SKILL.md": "411d5e53c6716b65c6b1a23de50fec95de3c56f2235f329f741fd8891d57637d"
+  },
+  "literalOperationBufferTableBeforeProducer": true,
+  "independentOracle": "No producer import; fixed literal action/result/buffer/operation ownership table and final state, independent closed-form order positions.",
+  "orderMatrix": {
+    "inputs": 48,
+    "orders": 6,
+    "policies": 2,
+    "completionStatuses": 2,
+    "generations": [
+      1,
+      9
+    ],
+    "actualModelAndAuditChildren": 48,
+    "allReceiptsRechecked": true
+  },
+  "normalFaultComparison": "Guard retains ownerA/pending after cancel until complete. Fault releases owner after cancel, reuse moves generation; old completion touches new slot. Success payload/status/owner vs aborted status/owner only.",
+  "negativeTests": {
+    "readonlySHA256MtimeNs": true,
+    "negativeTests": [
+      {
+        "test": "cancel-as-complete",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      },
+      {
+        "test": "guard-reuse-allowed",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      },
+      {
+        "test": "generation-reset",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      },
+      {
+        "test": "interference-hidden",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      },
+      {
+        "test": "aborted-payload-write",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      },
+      {
+        "test": "failure-normal-state",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrOrderOracleRejected": true
+      }
+    ]
+  },
+  "actualAuditFailure": {
+    "argv": [
+      "python3",
+      "-B",
+      "checker.py",
+      "--audit"
+    ],
+    "inputRaw": "{\"inputRaw\": \"{\\n  \\\"policy\\\": \\\"guarded\\\",\\n  \\\"completion\\\": \\\"success\\\",\\n  \\\"order\\\": [\\n    \\\"submit\\\",\\n    \\\"cancel\\\",\\n    \\\"reuse\\\",\\n    \\\"complete\\\"\\n  ],\\n  \\\"generation\\\": 1,\\n  \\\"oldPayload\\\": \\\"A-result\\\",\\n  \\\"newPayload\\\": \\\"B-data\\\"\\n}\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:37:37.037162+00:00\", \"endedUtc\": \"2026-10-05T16:37:37.076207+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_REJECTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\", \"stderr\": \"\", \"auditExitCode\": 0, \"auditStdout\": \"{\\\"outcome\\\": \\\"OBSERVED\\\", \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\\n\", \"auditStderr\": \"\", \"auditCommand\": {\"argv\": [\"python3\", \"-B\", \"checker.py\", \"--audit\"], \"inputRaw\": \"{\\\"inputRaw\\\": \\\"{\\\\n  \\\\\\\"policy\\\\\\\": \\\\\\\"guarded\\\\\\\",\\\\n  \\\\\\\"completion\\\\\\\": \\\\\\\"success\\\\\\\",\\\\n  \\\\\\\"order\\\\\\\": [\\\\n    \\\\\\\"submit\\\\\\\",\\\\n    \\\\\\\"cancel\\\\\\\",\\\\n    \\\\\\\"reuse\\\\\\\",\\\\n    \\\\\\\"complete\\\\\\\"\\\\n  ],\\\\n  \\\\\\\"generation\\\\\\\": 1,\\\\n  \\\\\\\"oldPayload\\\\\\\": \\\\\\\"A-result\\\\\\\",\\\\n  \\\\\\\"newPayload\\\\\\\": \\\\\\\"B-data\\\\\\\"\\\\n}\\\", \\\"argv\\\": [\\\"python3\\\", \\\"-B\\\", \\\"model.py\\\"], \\\"startedUtc\\\": \\\"2026-10-05T16:37:37.037162+00:00\\\", \\\"endedUtc\\\": \\\"2026-10-05T16:37:37.076207+00:00\\\", \\\"exitCode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"observed\\\\\\\": true, \\\\\\\"reason\\\\\\\": null, \\\\\\\"trace\\\\\\\": [{\\\\\\\"action\\\\\\\": \\\\\\\"submit\\\\\\\", \\\\\\\"result\\\\\\\": \\\\\\\"SUBMITTED\\\\\\\", \\\\\\\"state\\\\\\\": {\\\\\\\"buffer\\\\\\\": {\\\\\\\"generation\\\\\\\": 1, \\\\\\\"owner\\\\\\\": \\\\\\\"A\\\\\\\", \\\\\\\"status\\\\\\\": null, \\\\\\\"payload\\\\\\\": \\\\\\\"empty\\\\\\\"}, \\\\\\\"operationA\\\\\\\": {\\\\\\\"submittedGeneration\\\\\\\": 1, \\\\\\\"pending\\\\\\\": true, \\\\\\\"cancelRequested\\\\\\\": false, \\\\\\\"status\\\\\\\": null}, \\\\\\\"interference\\\\\\\": false, \\\\\\\"reuseAllowed\\\\\\\": null}}, {\\\\\\\"action\\\\\\\": \\\\\\\"cancel\\\\\\\", \\\\\\\"result\\\\\\\": \\\\\\\"REQUESTED\\\\\\\", \\\\\\\"state\\\\\\\": {\\\\\\\"buffer\\\\\\\": {\\\\\\\"generation\\\\\\\": 1, \\\\\\\"owner\\\\\\\": \\\\\\\"A\\\\\\\", \\\\\\\"status\\\\\\\": null, \\\\\\\"payload\\\\\\\": \\\\\\\"empty\\\\\\\"}, \\\\\\\"operationA\\\\\\\": {\\\\\\\"submittedGeneration\\\\\\\": 1, \\\\\\\"pending\\\\\\\": true, \\\\\\\"cancelRequested\\\\\\\": true, \\\\\\\"status\\\\\\\": null}, \\\\\\\"interference\\\\\\\": false, \\\\\\\"reuseAllowed\\\\\\\": null}}, {\\\\\\\"action\\\\\\\": \\\\\\\"reuse\\\\\\\", \\\\\\\"result\\\\\\\": \\\\\\\"REUSE_REJECTED\\\\\\\", \\\\\\\"state\\\\\\\": {\\\\\\\"buffer\\\\\\\": {\\\\\\\"generation\\\\\\\": 1, \\\\\\\"owner\\\\\\\": \\\\\\\"A\\\\\\\", \\\\\\\"status\\\\\\\": null, \\\\\\\"payload\\\\\\\": \\\\\\\"empty\\\\\\\"}, \\\\\\\"operationA\\\\\\\": {\\\\\\\"submittedGeneration\\\\\\\": 1, \\\\\\\"pending\\\\\\\": true, \\\\\\\"cancelRequested\\\\\\\": true, \\\\\\\"status\\\\\\\": null}, \\\\\\\"interference\\\\\\\": false, \\\\\\\"reuseAllowed\\\\\\\": false}}, {\\\\\\\"action\\\\\\\": \\\\\\\"complete\\\\\\\", \\\\\\\"result\\\\\\\": \\\\\\\"COMPLETED_SUCCESS\\\\\\\", \\\\\\\"state\\\\\\\": {\\\\\\\"buffer\\\\\\\": {\\\\\\\"generation\\\\\\\": 1, \\\\\\\"owner\\\\\\\": null, \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"payload\\\\\\\": \\\\\\\"A-result\\\\\\\"}, \\\\\\\"operationA\\\\\\\": {\\\\\\\"submittedGeneration\\\\\\\": 1, \\\\\\\"pending\\\\\\\": false, \\\\\\\"cancelRequested\\\\\\\": true, \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\"}, \\\\\\\"interference\\\\\\\": false, \\\\\\\"reuseAllowed\\\\\\\": false}}], \\\\\\\"summary\\\\\\\": {\\\\\\\"buffer\\\\\\\": {\\\\\\\"generation\\\\\\\": 1, \\\\\\\"owner\\\\\\\": null, \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\", \\\\\\\"payload\\\\\\\": \\\\\\\"A-result\\\\\\\"}, \\\\\\\"operationA\\\\\\\": {\\\\\\\"submittedGeneration\\\\\\\": 1, \\\\\\\"pending\\\\\\\": false, \\\\\\\"cancelRequested\\\\\\\": true, \\\\\\\"status\\\\\\\": \\\\\\\"success\\\\\\\"}, \\\\\\\"interference\\\\\\\": false, \\\\\\\"reuseAllowed\\\\\\\": false}}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}\", \"startedUtc\": \"2026-10-05T16:37:37.076275+00:00\", \"endedUtc\": \"2026-10-05T16:37:37.114452+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"outcome\\\": \\\"OBSERVED\\\", \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\\n\", \"stderr\": \"\"}, \"sourceHashes\": {\"model.py\": \"e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78\", \"checker.py\": \"0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3\", \"execute.py\": \"624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd\"}, \"responseUtc\": \"2026-10-05T16:37:37.115197+00:00\"}",
+    "startedUtc": "2026-10-05T16:43:36.654638+00:00",
+    "endedUtc": "2026-10-05T16:43:36.702640+00:00",
+    "exitCode": 5,
+    "stdout": "",
+    "stderr": "AuditError: AssertionError\n"
+  },
+  "readonlyCommands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "runner.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:34.203698+00:00",
+      "endedUtc": "2026-10-05T16:43:34.259533+00:00",
+      "exitCode": 0,
+      "stdout": "Saved evidence observations/20261005T163627820003Z; no mutation\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:34.259543+00:00",
+      "endedUtc": "2026-10-05T16:43:34.331569+00:00",
+      "exitCode": 0,
+      "stdout": "PASS 17 conditions; literal operation/buffer ownership + independent order-position oracle\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "test_negative.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:34.331587+00:00",
+      "endedUtc": "2026-10-05T16:43:36.393694+00:00",
+      "exitCode": 0,
+      "stdout": "{\n  \"readonlySHA256MtimeNs\": true,\n  \"negativeTests\": [\n    {\n      \"test\": \"cancel-as-complete\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    },\n    {\n      \"test\": \"guard-reuse-allowed\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    },\n    {\n      \"test\": \"generation-reset\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    },\n    {\n      \"test\": \"interference-hidden\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    },\n    {\n      \"test\": \"aborted-payload-write\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    },\n    {\n      \"test\": \"failure-normal-state\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrOrderOracleRejected\": true\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "inspect"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:36.393724+00:00",
+      "endedUtc": "2026-10-05T16:43:36.497069+00:00",
+      "exitCode": 0,
+      "stdout": "PASS 17 conditions; literal operation/buffer ownership + independent order-position oracle\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "lesson"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:36.497089+00:00",
+      "endedUtc": "2026-10-05T16:43:36.539865+00:00",
+      "exitCode": 0,
+      "stdout": "index.html; evidence observations/20261005T163627820003Z\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "unknown"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:43:36.539885+00:00",
+      "endedUtc": "2026-10-05T16:43:36.582605+00:00",
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "unsupported route\n"
+    }
+  ],
+  "allModuleSHA256MtimeNsUnchanged": true,
+  "runnerActualStdoutExact": true,
+  "oldRaw": {
+    "files": 122,
+    "sha256MtimeNsPreserved": true
+  },
+  "iab": {
+    "cases": 17,
+    "predictionChangesAfterAnswerRawOpened": 51,
+    "variableInputs": 3,
+    "currentSourceReceipts": 75,
+    "allLiveReceiptsIndependentlyRechecked": true,
+    "singleEditsReset": "generation/payload/completion/order change keeps new input and predictions, empties old status/counts/trace/answer/raw, closes both details",
+    "answersFollowActual": "generation4->5, late-A4/live-B5; aborted retains live-B5 but status/owner interfered; complete before reuse preserves live-B5/application/null status with interferencefalse",
+    "stale": "2sec transport delay; fault->guarded during pending; old reply discarded with all old fields empty; next actual guarded response shown",
+    "discardedReceiptScope": "one discarded response is observed by UI, not in retained75 raw receipts",
+    "httpFailure": "actual30001byte request HTTP413 before child processes, old fields empty/closed",
+    "originalReferenceBodyMatches": true,
+    "console": [],
+    "tab": "29 closed",
+    "images": [
+      {
+        "path": "media/complete-before-reuse.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "038f02e1888cd521751f3fa157a52c8cd2d38aa8f70c6dcf77f82a730e099c9a",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/execution-failure.jpg",
+        "width": 1280,
+        "height": 1853,
+        "sha256": "9ed53982744a0d6ad18e9dd8cd17a1a0654dcf65801db7394ad801b363b2946d",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/fault-aborted.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "100b056eb1fe02cb2169f9e877d091259ed63f4620faae548321bafddc293273",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/fault-success.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "9fd94a8b848dbbd365e1488fa2a5549df450234ee46e52e3990b23838691b9fc",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/generation4-payload.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "9c25c8b1c38643270a1a2894e84f72f9fc822901f242c1475963e6b9f8c4aefb",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/guarded-success.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "64cfbbf5f814afb1c040da201b6a8e3b17c054e14aa0baa8e8e6ca20f1c405a8",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/input-cleared.jpg",
+        "width": 1280,
+        "height": 1548,
+        "sha256": "d5e87db7827fae6932bf6ee167985a3f6c4ff29bdf3d819d18ee37f529715466",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/refused-order.jpg",
+        "width": 1280,
+        "height": 1853,
+        "sha256": "765da451016c643df75fc59a51f92f509288cdd0ae34d1dc9ffb5605537e037a",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/stale-discarded.jpg",
+        "width": 1280,
+        "height": 1548,
+        "sha256": "12a79cc49493f748eaba3a079196bae3b8d6877010ba5d4ccf85fc94ff858329",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/variable-aborted.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "f6610c1da7d308da1cb6426b2af6f2ec0f2a407663e956291ecafffd94f1a6bc",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/variable-generation4.jpg",
+        "width": 1280,
+        "height": 3447,
+        "sha256": "8df86fa778861ae6b6392372ee89a5f34992b4c73321c18bae87c1f3cc343474",
+        "actualIABUnedited": true
+      }
+    ],
+    "faultAbortedCaptureVisuallyInspected": true
+  },
+  "resources": {
+    "ownedPort": 62412,
+    "ownedSession": 45817,
+    "ownedServerStopped": true,
+    "ownedTabClosed": true,
+    "protectedListeners": {
+      "53478": 3901,
+      "60285": 83318
+    },
+    "protectedListenersPresent": true,
+    "noProtectedResourcesTouched": true,
+    "sandboxBind": "Actual normal sandbox EPERM; identical loopback-only command started after host permission review"
+  },
+  "primarySources": {
+    "confirmed": [
+      "https://learn.microsoft.com/en-us/windows/win32/fileio/canceling-pending-i-o-operations",
+      "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-readfile"
+    ],
+    "unverifiedFetch": "CancelIoEx individual API page returned Internal Error; not used as sole support"
+  },
+  "limits": [
+    "Finite Mac stdlib state model; real Win32/Windows/driver/IOCP/VM/memory corruption unrun",
+    "Aborted completion interference is unguarded callback metadata/ownership model, not claimed canceled read DMA corruption",
+    "Completion status synthetic and cancel request no guarantee; reuse refusal no automatic retry",
+    "No production safety or whole Windows Subject completion"
+  ],
+  "skillValidation": "PASS"
+}

@@ -1,0 +1,728 @@
+{
+  "startedUtc": "2026-10-05T16:26:06.251434+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "dependencies": "stdlib only; no Flink runtime used"
+  },
+  "sourceHashes": {
+    "preview.py": "ed950feeba071bdc4c5dc9993fcdb8efa2d12ee497a85269f67c7f644ec2b999",
+    "test_negative.py": "d8015a6c50316313dddeecb0d7322404c1b2594027842d42113db2ba30a7596f",
+    "runner.py": "2f4c80466e2e8f814ee18ad2e679eafedfe64c65e5915934f67dd41dfc31c8b7",
+    "index.html": "4508fd44e656fc6431ab42dbb5a2f360f4f3bdf7f50652fe2005a560d3b85dc6",
+    "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd",
+    "route.py": "4297ec430278914d918646704cba04d6584a3ad7ab3edc94131175c99584f773",
+    "oracle.json": "cc3f7590ab0c6760e1f931b23780d118fe7147462e2d98c07c7aef09cf758df7",
+    "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+    "README.md": "fb07eb6246a2536aca848b9c92600aa211c80bd46e5bc99206f84ac7a485017f",
+    "requests.json": "fa57a0f3268423f1926f53fc55f68525f72855513dc90120c6a6e78ed9796e2c",
+    "COVERAGE.md": "37dd9fdc615af67990afdae7f481a8359549da4673d4e40ab1b722f7052c43ed",
+    "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+    "skills/bounded-watermark-window-finalization/SKILL.md": "5c2387c809eb239737212472c19d428e85c35b3f1a4bca21ece9504c92f76481"
+  },
+  "cases": [
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.268767+00:00",
+      "endedUtc": "2026-10-05T16:26:06.301677+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": -1}, \"watermark\": -1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": -1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": -1}, \"watermark\": -1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, \"windowStart\": 0, \"beforeWatermark\": -1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 6}, \"watermark\": 6, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}, \"windowStart\": 20, \"beforeWatermark\": 6, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 20}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 18}, \"watermark\": 18, \"firedNow\": [{\"start\": 0, \"sum\": 7, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.268767+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.301677+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 18}, \\\"watermark\\\": 18, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 7, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.301708+00:00",
+        "endedUtc": "2026-10-05T16:26:06.340186+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.340762+00:00",
+      "id": "min-complete"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"max-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.342324+00:00",
+      "endedUtc": "2026-10-05T16:26:06.374182+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": null}, \"watermark\": 0, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": 0, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": -1}, \"watermark\": 0, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": 0, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": -1}, \"watermark\": 18, \"firedNow\": [{\"start\": 0, \"sum\": 3, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, \"windowStart\": 0, \"beforeWatermark\": 18, \"late\": true, \"decision\": \"DROP_FINALIZED\", \"maxSeen\": {\"p0\": 20, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 6}, \"watermark\": 18, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}, \"windowStart\": 20, \"beforeWatermark\": 18, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 20}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 18}, \"watermark\": 18, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e5\"], \"dropped\": [\"e4\"], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"max-fault\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e5\"], \"dropped\": [\"e4\"], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"max-fault\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [\"e4\"], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"max-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.342324+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.374182+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": 0, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 0, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": -1}, \\\"watermark\\\": 0, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 0, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": -1}, \\\"watermark\\\": 18, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 3, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 3}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 18, \\\"late\\\": true, \\\"decision\\\": \\\"DROP_FINALIZED\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 6}, \\\"watermark\\\": 18, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 3}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 18, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 18}, \\\"watermark\\\": 18, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 3}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e5\\\"], \\\"dropped\\\": [\\\"e4\\\"], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 3}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"max-fault\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.374233+00:00",
+        "endedUtc": "2026-10-05T16:26:06.412904+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e5\"], \"dropped\": [\"e4\"], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 3}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"max-fault\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [\"e4\"], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.413256+00:00",
+      "id": "max-fault"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.414450+00:00",
+      "endedUtc": "2026-10-05T16:26:06.446523+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": -1}, \"watermark\": -1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": -1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": -1}, \"watermark\": -1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": -1, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": -1, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": -1, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.414450+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.446523+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": -1, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.446564+00:00",
+        "endedUtc": "2026-10-05T16:26:06.486634+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": -1, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": -1, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.487016+00:00",
+      "id": "stalled-partition"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.488119+00:00",
+      "endedUtc": "2026-10-05T16:26:06.521240+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": null, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": null, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": null, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.488119+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.521240+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e3\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": null, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.521297+00:00",
+        "endedUtc": "2026-10-05T16:26:06.563566+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": null, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e3\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": null, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.563999+00:00",
+      "id": "unseen-partition"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 0, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.565320+00:00",
+      "endedUtc": "2026-10-05T16:26:06.601111+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": 1}, \"watermark\": 1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": 1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 20, \"p1\": 1}, \"watermark\": 1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, \"windowStart\": 0, \"beforeWatermark\": 1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 20, \"p1\": 8}, \"watermark\": 8, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}, \"windowStart\": 20, \"beforeWatermark\": 8, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 20}, \"partitionWatermarks\": {\"p0\": 20, \"p1\": 20}, \"watermark\": 20, \"firedNow\": [{\"start\": 0, \"sum\": 7, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 20, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 20, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 20, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 0, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.565320+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.601111+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"watermark\\\": 1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"watermark\\\": 1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"watermark\\\": 8, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 8, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"watermark\\\": 20, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 7, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 20, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 0, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.601166+00:00",
+        "endedUtc": "2026-10-05T16:26:06.642734+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 20, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 20, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.643267+00:00",
+      "id": "lag0"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.644869+00:00",
+      "endedUtc": "2026-10-05T16:26:06.682674+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 1}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": -1}, \"watermark\": -1, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, \"windowStart\": 0, \"beforeWatermark\": -1, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 0, \"p1\": 6}, \"watermark\": 0, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, \"windowStart\": 20, \"beforeWatermark\": 0, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 6}, \"watermark\": 6, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}, \"windowStart\": 20, \"beforeWatermark\": 6, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 20}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 18}, \"watermark\": 18, \"firedNow\": [{\"start\": 0, \"sum\": 7, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e4\", \"e3\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e4\", \"e3\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e4\", \"e3\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.644869+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.682674+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": 6}, \\\"watermark\\\": 0, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 0, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 18}, \\\"watermark\\\": 18, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 7, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\", \\\"e3\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.682719+00:00",
+        "endedUtc": "2026-10-05T16:26:06.721677+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e4\", \"e3\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e4\", \"e3\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 7, \"ids\": [\"e1\", \"e2\", \"e4\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 8, \"ids\": [\"e3\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.722053+00:00",
+      "id": "reordered"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 3, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}, {\"id\": \"e6\", \"partition\": \"p0\", \"time\": 13, \"value\": 6}, {\"id\": \"e7\", \"partition\": \"p1\", \"time\": 13, \"value\": 7}], \"lag\": 0, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.723235+00:00",
+      "endedUtc": "2026-10-05T16:26:06.754627+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [{\"start\": 0, \"sum\": 3, \"kind\": \"initial\"}], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}, \"windowStart\": 0, \"beforeWatermark\": 10, \"late\": true, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [{\"start\": 0, \"sum\": 8, \"kind\": \"late-update\"}], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 6, \"event\": {\"id\": \"e6\", \"partition\": \"p0\", \"time\": 13, \"value\": 6}, \"windowStart\": 10, \"beforeWatermark\": 10, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 13, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 13, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 13, \"ids\": [\"e3\", \"e4\", \"e6\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 7, \"event\": {\"id\": \"e7\", \"partition\": \"p1\", \"time\": 13, \"value\": 7}, \"windowStart\": 10, \"beforeWatermark\": 10, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 13, \"p1\": 13}, \"partitionWatermarks\": {\"p0\": 13, \"p1\": 13}, \"watermark\": 13, \"firedNow\": [], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 3, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}, {\\\"id\\\": \\\"e6\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 13, \\\"value\\\": 6}, {\\\"id\\\": \\\"e7\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 13, \\\"value\\\": 7}], \\\"lag\\\": 0, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.723235+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.754627+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 3, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 10, \\\"late\\\": true, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 8, \\\"kind\\\": \\\"late-update\\\"}], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 6, \\\"event\\\": {\\\"id\\\": \\\"e6\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 13, \\\"value\\\": 6}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 10, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 13, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 13, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 13, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 7, \\\"event\\\": {\\\"id\\\": \\\"e7\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 13, \\\"value\\\": 7}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 10, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"watermark\\\": 13, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 7}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 20, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\", \\\"e7\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\", \\\"e6\\\", \\\"e7\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [\\\"e5\\\"], \\\"watermark\\\": 13, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 7}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 20, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\", \\\"e7\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 0, \\\"allowedLateness\\\": 3, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.754675+00:00",
+        "endedUtc": "2026-10-05T16:26:06.794102+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.794469+00:00",
+      "id": "grace-late-update"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 3, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}, {\"id\": \"e6\", \"partition\": \"p0\", \"time\": 13, \"value\": 6}, {\"id\": \"e7\", \"partition\": \"p1\", \"time\": 13, \"value\": 7}, {\"id\": \"e8\", \"partition\": \"p1\", \"time\": 9, \"value\": 8}], \"lag\": 0, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.795801+00:00",
+      "endedUtc": "2026-10-05T16:26:06.828230+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [{\"start\": 0, \"sum\": 3, \"kind\": \"initial\"}], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}, \"windowStart\": 0, \"beforeWatermark\": 10, \"late\": true, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [{\"start\": 0, \"sum\": 8, \"kind\": \"late-update\"}], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 6, \"event\": {\"id\": \"e6\", \"partition\": \"p0\", \"time\": 13, \"value\": 6}, \"windowStart\": 10, \"beforeWatermark\": 10, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 13, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 13, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 13, \"ids\": [\"e3\", \"e4\", \"e6\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 7, \"event\": {\"id\": \"e7\", \"partition\": \"p1\", \"time\": 13, \"value\": 7}, \"windowStart\": 10, \"beforeWatermark\": 10, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 13, \"p1\": 13}, \"partitionWatermarks\": {\"p0\": 13, \"p1\": 13}, \"watermark\": 13, \"firedNow\": [], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 8, \"event\": {\"id\": \"e8\", \"partition\": \"p1\", \"time\": 9, \"value\": 8}, \"windowStart\": 0, \"beforeWatermark\": 13, \"late\": true, \"decision\": \"DROP_FINALIZED\", \"maxSeen\": {\"p0\": 13, \"p1\": 13}, \"partitionWatermarks\": {\"p0\": 13, \"p1\": 13}, \"watermark\": 13, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [\"e8\"], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [\"e8\"], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [\"e8\"], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 3, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}, {\\\"id\\\": \\\"e6\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 13, \\\"value\\\": 6}, {\\\"id\\\": \\\"e7\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 13, \\\"value\\\": 7}, {\\\"id\\\": \\\"e8\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 9, \\\"value\\\": 8}], \\\"lag\\\": 0, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.795801+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.828230+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 3, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 10, \\\"late\\\": true, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 8, \\\"kind\\\": \\\"late-update\\\"}], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 6, \\\"event\\\": {\\\"id\\\": \\\"e6\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 13, \\\"value\\\": 6}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 10, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 13, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 13, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 13, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 7, \\\"event\\\": {\\\"id\\\": \\\"e7\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 13, \\\"value\\\": 7}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 10, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"watermark\\\": 13, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 7}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 20, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\", \\\"e7\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 8, \\\"event\\\": {\\\"id\\\": \\\"e8\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 9, \\\"value\\\": 8}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 13, \\\"late\\\": true, \\\"decision\\\": \\\"DROP_FINALIZED\\\", \\\"maxSeen\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 13, \\\"p1\\\": 13}, \\\"watermark\\\": 13, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 7}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 20, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\", \\\"e7\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\", \\\"e6\\\", \\\"e7\\\"], \\\"dropped\\\": [\\\"e8\\\"], \\\"lateAccepted\\\": [\\\"e5\\\"], \\\"watermark\\\": 13, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e5\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 7}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 20, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\", \\\"e6\\\", \\\"e7\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 0, \\\"allowedLateness\\\": 3, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.828284+00:00",
+        "endedUtc": "2026-10-05T16:26:06.867632+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [\"e8\"], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\", \"e6\", \"e7\"], \"dropped\": [\"e8\"], \"lateAccepted\": [\"e5\"], \"watermark\": 13, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 8, \"ids\": [\"e1\", \"e2\", \"e5\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 7}, {\"start\": 10, \"end\": 20, \"sum\": 20, \"ids\": [\"e3\", \"e4\", \"e6\", \"e7\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 3, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.868018+00:00",
+      "id": "deadline-boundary"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}], \"lag\": 0, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.869236+00:00",
+      "endedUtc": "2026-10-05T16:26:06.901255+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 2, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 2, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 2, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 10, \"value\": 3}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 2}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 2}, \"watermark\": 2, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 10, \"end\": 20, \"sum\": 3, \"ids\": [\"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 10, \"value\": 4}, \"windowStart\": 10, \"beforeWatermark\": 2, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [{\"start\": 0, \"sum\": 3, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p0\", \"time\": 9, \"value\": 5}, \"windowStart\": 0, \"beforeWatermark\": 10, \"late\": true, \"decision\": \"DROP_FINALIZED\", \"maxSeen\": {\"p0\": 10, \"p1\": 10}, \"partitionWatermarks\": {\"p0\": 10, \"p1\": 10}, \"watermark\": 10, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"dropped\": [\"e5\"], \"lateAccepted\": [], \"watermark\": 10, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"dropped\": [\"e5\"], \"lateAccepted\": [], \"watermark\": 10, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"dropped\": [\"e5\"], \"lateAccepted\": [], \"watermark\": 10, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}], \\\"lag\\\": 0, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.869236+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.901255+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 2, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 2, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 10, \\\"value\\\": 3}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 2}, \\\"watermark\\\": 2, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 10, \\\"value\\\": 4}, \\\"windowStart\\\": 10, \\\"beforeWatermark\\\": 2, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 3, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 4}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 9, \\\"value\\\": 5}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 10, \\\"late\\\": true, \\\"decision\\\": \\\"DROP_FINALIZED\\\", \\\"maxSeen\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 10, \\\"p1\\\": 10}, \\\"watermark\\\": 10, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 4}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\"], \\\"dropped\\\": [\\\"e5\\\"], \\\"lateAccepted\\\": [], \\\"watermark\\\": 10, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 4}, {\\\"start\\\": 10, \\\"end\\\": 20, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e3\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 0, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.901298+00:00",
+        "endedUtc": "2026-10-05T16:26:06.940955+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"dropped\": [\"e5\"], \"lateAccepted\": [], \"watermark\": 10, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"dropped\": [\"e5\"], \"lateAccepted\": [], \"watermark\": 10, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 4}, {\"start\": 10, \"end\": 20, \"sum\": 7, \"ids\": [\"e3\", \"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 0, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:06.941384+00:00",
+      "id": "no-grace-boundary"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 8, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 8, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 6, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p0\", \"time\": 20, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:06.942639+00:00",
+      "endedUtc": "2026-10-05T16:26:06.974628+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"step\": 1, \"event\": {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 8, \"value\": 1}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 8, \"p1\": null}, \"partitionWatermarks\": {\"p0\": 6, \"p1\": null}, \"watermark\": null, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 1, \"ids\": [\"e1\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 2, \"event\": {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 8, \"value\": 2}, \"windowStart\": 0, \"beforeWatermark\": null, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 8, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 6, \"p1\": 6}, \"watermark\": 6, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 3, \"ids\": [\"e1\", \"e2\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 3, \"event\": {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 6, \"value\": 3}, \"windowStart\": 0, \"beforeWatermark\": 6, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 8, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 6, \"p1\": 6}, \"watermark\": 6, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 4, \"event\": {\"id\": \"e4\", \"partition\": \"p0\", \"time\": 20, \"value\": 4}, \"windowStart\": 20, \"beforeWatermark\": 6, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 8}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 6}, \"watermark\": 6, \"firedNow\": [], \"finalizedNow\": [], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}, {\"start\": 20, \"end\": 30, \"sum\": 4, \"ids\": [\"e4\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}, {\"step\": 5, \"event\": {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}, \"windowStart\": 20, \"beforeWatermark\": 6, \"late\": false, \"decision\": \"ACCEPT\", \"maxSeen\": {\"p0\": 20, \"p1\": 20}, \"partitionWatermarks\": {\"p0\": 18, \"p1\": 18}, \"watermark\": 18, \"firedNow\": [{\"start\": 0, \"sum\": 6, \"kind\": \"initial\"}], \"finalizedNow\": [0], \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}]}], \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 8, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 6, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:06.942639+00:00\", \"endedUtc\": \"2026-10-05T16:26:06.974628+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 8, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 8, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 6, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 8, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 6, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 6, \\\"value\\\": 3}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 8, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 6, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 6, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 4}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 6, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 4, \\\"ids\\\": [\\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 18}, \\\"watermark\\\": 18, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 6, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 6, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 9, \\\"ids\\\": [\\\"e4\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 6, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 9, \\\"ids\\\": [\\\"e4\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:06.974670+00:00",
+        "endedUtc": "2026-10-05T16:26:07.013804+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}, \"maxFaultLoss\": [], \"minReferenceSummary\": {\"accepted\": [\"e1\", \"e2\", \"e3\", \"e4\", \"e5\"], \"dropped\": [], \"lateAccepted\": [], \"watermark\": 18, \"windows\": [{\"start\": 0, \"end\": 10, \"sum\": 6, \"ids\": [\"e1\", \"e2\", \"e3\"], \"initialFired\": true, \"finalized\": true, \"finalizedStep\": 5}, {\"start\": 20, \"end\": 30, \"sum\": 9, \"ids\": [\"e4\", \"e5\"], \"initialFired\": false, \"finalized\": false, \"finalizedStep\": null}], \"mode\": \"min\", \"lag\": 2, \"allowedLateness\": 0, \"endFlush\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.014164+00:00",
+      "id": "within-lag"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.015783+00:00",
+      "endedUtc": "2026-10-05T16:26:07.047619+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"finite event count1..12\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.015783+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.047619+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"finite event count1..12\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.047662+00:00",
+        "endedUtc": "2026-10-05T16:26:07.086975+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.087362+00:00",
+      "id": "refused-empty"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.088630+00:00",
+      "endedUtc": "2026-10-05T16:26:07.122936+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"unique nonempty ID\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.088630+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.122936+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"unique nonempty ID\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.123004+00:00",
+        "endedUtc": "2026-10-05T16:26:07.162878+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.163180+00:00",
+      "id": "refused-duplicate"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p2\", \"time\": 2, \"value\": 1}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.164082+00:00",
+      "endedUtc": "2026-10-05T16:26:07.195299+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"fixed partitions p0/p1 only\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p2\\\", \\\"time\\\": 2, \\\"value\\\": 1}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.164082+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.195299+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"fixed partitions p0/p1 only\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.195343+00:00",
+        "endedUtc": "2026-10-05T16:26:07.237904+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.238244+00:00",
+      "id": "refused-partition"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": true, \"value\": 1}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.239976+00:00",
+      "endedUtc": "2026-10-05T16:26:07.269485+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"time/value integer0..100; bool/nonfinite forbidden\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": true, \\\"value\\\": 1}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.239976+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.269485+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"time/value integer0..100; bool/nonfinite forbidden\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.269525+00:00",
+        "endedUtc": "2026-10-05T16:26:07.310875+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.311246+00:00",
+      "id": "refused-bool"
+    },
+    {
+      "inputRaw": "{\"mode\":\"min\",\"lag\":2,\"allowedLateness\":0,\"events\":[{\"id\":\"e1\",\"partition\":\"p0\",\"time\":Infinity,\"value\":1}]}",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.312527+00:00",
+      "endedUtc": "2026-10-05T16:26:07.344336+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"time/value integer0..100; bool/nonfinite forbidden\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"mode\\\":\\\"min\\\",\\\"lag\\\":2,\\\"allowedLateness\\\":0,\\\"events\\\":[{\\\"id\\\":\\\"e1\\\",\\\"partition\\\":\\\"p0\\\",\\\"time\\\":Infinity,\\\"value\\\":1}]}\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.312527+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.344336+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"time/value integer0..100; bool/nonfinite forbidden\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.344385+00:00",
+        "endedUtc": "2026-10-05T16:26:07.387766+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.388300+00:00",
+      "id": "refused-nonfinite"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": -1, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.389211+00:00",
+      "endedUtc": "2026-10-05T16:26:07.420135+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"lag/allowedLateness integer0..20; bool forbidden\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": -1, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.389211+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.420135+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"lag/allowedLateness integer0..20; bool forbidden\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.420173+00:00",
+        "endedUtc": "2026-10-05T16:26:07.458189+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.458606+00:00",
+      "id": "refused-negative-lag"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": -1, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"min\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.459680+00:00",
+      "endedUtc": "2026-10-05T16:26:07.488793+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"lag/allowedLateness integer0..20; bool forbidden\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": -1, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"min\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.459680+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.488793+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"lag/allowedLateness integer0..20; bool forbidden\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.488830+00:00",
+        "endedUtc": "2026-10-05T16:26:07.525368+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.525780+00:00",
+      "id": "refused-negative-allowed"
+    },
+    {
+      "inputRaw": "{\"allowedLateness\": 0, \"events\": [{\"id\": \"e1\", \"partition\": \"p0\", \"time\": 2, \"value\": 1}, {\"id\": \"e2\", \"partition\": \"p1\", \"time\": 1, \"value\": 2}, {\"id\": \"e3\", \"partition\": \"p0\", \"time\": 20, \"value\": 3}, {\"id\": \"e4\", \"partition\": \"p1\", \"time\": 8, \"value\": 4}, {\"id\": \"e5\", \"partition\": \"p1\", \"time\": 20, \"value\": 5}], \"lag\": 2, \"mode\": \"idle-auto\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.526935+00:00",
+      "endedUtc": "2026-10-05T16:26:07.555883+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"schema/mode; idle-auto not supported\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"allowedLateness\\\": 0, \\\"events\\\": [{\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}], \\\"lag\\\": 2, \\\"mode\\\": \\\"idle-auto\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.526935+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.555883+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"schema/mode; idle-auto not supported\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:26:07.555916+00:00",
+        "endedUtc": "2026-10-05T16:26:07.594792+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.595093+00:00",
+      "id": "refused-schema"
+    },
+    {
+      "inputRaw": "{\"mode\":",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:26:07.596142+00:00",
+      "endedUtc": "2026-10-05T16:26:07.626339+00:00",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 9 (char 8)\n",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"EXECUTION_FAILURE\", \"summary\": null, \"maxFaultLoss\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"mode\\\":\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:26:07.596142+00:00\", \"endedUtc\": \"2026-10-05T16:26:07.626339+00:00\", \"exitCode\": 3, \"stdout\": \"\", \"stderr\": \"JSONDecodeError: Expecting value: line 1 column 9 (char 8)\\n\"}",
+        "startedUtc": "2026-10-05T16:26:07.626387+00:00",
+        "endedUtc": "2026-10-05T16:26:07.664629+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"EXECUTION_FAILURE\", \"summary\": null, \"maxFaultLoss\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+        "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:26:07.664972+00:00",
+      "id": "execution-failure"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "scope": "Synthetic local JSON resource store; no Terraform, provider, cloud or transaction guarantee",
+  "desired": {
+    "resources": [
+      {
+        "id": "base",
+        "depends_on": [],
+        "value": {
+          "zone": "task-local"
+        }
+      },
+      {
+        "id": "config",
+        "depends_on": [
+          "base"
+        ],
+        "value": {
+          "text": "v2"
+        }
+      },
+      {
+        "id": "service",
+        "depends_on": [
+          "config"
+        ],
+        "value": {
+          "replicas": 2
+        }
+      }
+    ]
+  },
+  "initial": {
+    "revision": 0,
+    "resources": {}
+  },
+  "cases": [
+    {
+      "id": "normal",
+      "fault": "none",
+      "expected_first_exit": 0,
+      "expected_partial_ids": [
+        "base",
+        "config",
+        "service"
+      ],
+      "expected_partial_revision": 3,
+      "expected_recovery_ids": []
+    },
+    {
+      "id": "before-second",
+      "fault": "before-second",
+      "expected_first_exit": 70,
+      "expected_partial_ids": [
+        "base"
+      ],
+      "expected_partial_revision": 1,
+      "expected_recovery_ids": [
+        "config",
+        "service"
+      ]
+    },
+    {
+      "id": "after-second",
+      "fault": "after-second",
+      "expected_first_exit": 71,
+      "expected_partial_ids": [
+        "base",
+        "config"
+      ],
+      "expected_partial_revision": 2,
+      "expected_recovery_ids": [
+        "service"
+      ]
+    }
+  ]
+}

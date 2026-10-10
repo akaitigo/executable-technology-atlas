@@ -1,0 +1,371 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-05T07:32:46.370964+00:00",
+  "surface": "real Codex IAB via cua_repl",
+  "url": "http://127.0.0.1:54923/index.html",
+  "title": "宣言へ戻すloop | GitOps継続的デリバリー",
+  "cases": [
+    {
+      "case": "desired-change",
+      "final": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "apply",
+        "in-sync"
+      ]
+    },
+    {
+      "case": "drift-restore",
+      "final": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "apply",
+        "manual",
+        "apply",
+        "in-sync"
+      ]
+    },
+    {
+      "case": "observe-only",
+      "final": {
+        "image": "demo:manual",
+        "replicas": 5,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "apply",
+        "manual",
+        "observe",
+        "observe"
+      ]
+    },
+    {
+      "case": "stale-revision",
+      "final": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "refuse",
+        "apply"
+      ]
+    },
+    {
+      "case": "rollback",
+      "final": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "apply",
+        "new-desired",
+        "apply",
+        "in-sync"
+      ]
+    },
+    {
+      "case": "ignore-note",
+      "final": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "operator"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "manual",
+        "apply",
+        "in-sync"
+      ]
+    },
+    {
+      "case": "manage-note",
+      "final": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "manual",
+        "apply",
+        "in-sync"
+      ]
+    },
+    {
+      "case": "tampered-bytes",
+      "final": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "refuse"
+      ]
+    },
+    {
+      "case": "invalid-ignore",
+      "final": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "refuse"
+      ]
+    },
+    {
+      "case": "invalid-state",
+      "final": {
+        "image": "demo:v1",
+        "replicas": -1,
+        "note": "declared"
+      },
+      "actions": [
+        "in-sync",
+        "new-desired",
+        "manual",
+        "refuse"
+      ]
+    }
+  ],
+  "sourceArtifactDigests": {
+    "runner.py": "ba7949fbdd57a29bd8c9437a7ff4bc3e4e800039833cd4b7fba409820e1726a6",
+    "oracle.py": "7d9d94f0938c5d0cae4ae6616acda879a694624b51ee5ca81f772ca9ea9535a1",
+    "checker.py": "12891d93ab6cf122f665254a2eb640a0d841b4abb01e5cbbd56233dbce8bbcd3",
+    "server.py": "709d4237871a9c95975c59a993b7cadd9e61e4b50ed51e8c86d696df6d3480ef",
+    "manifest.json": "44dd54e5e4291a58dc17f9efd93f9626c136f83a0ac77379ec7227592a52caa9",
+    "desired/v1.json": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+    "desired/v2.json": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+    "desired/rollback-v3.json": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+    "README.md": "f1a5ac15ce0a0eb001c8d627bf023e44f938cb303638e2ee6d9343b0aaafbb56",
+    "index.html": "6b83c1c0969493355fb5e27e380147ba1ea8a193a8e9e49f00b0fa11705081e8",
+    "app.js": "d0c1f76fe35a2f4223ed28090e990fc745b2a2a14ee50d7e7c455993ce6cdb0f",
+    "sources.json": "8beb5d5a09a3e04430c65bd6f0891ed65351a08caefb517f12c83ee0b0d8cfcf",
+    "skills/atlas-gitops-continuous-delivery/SKILL.md": "c3305b299f4fba352b2c624ea6a5143bac5cf2344af02016c41863c5cb3afbe8"
+  },
+  "stepChecks": 10,
+  "stepObservations": [
+    {
+      "case": "desired-change",
+      "step": 2,
+      "action": "new-desired",
+      "before": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      }
+    },
+    {
+      "case": "desired-change",
+      "step": 3,
+      "action": "apply",
+      "before": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      }
+    },
+    {
+      "case": "drift-restore",
+      "step": 4,
+      "action": "manual",
+      "before": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:manual",
+        "replicas": 5,
+        "note": "declared"
+      }
+    },
+    {
+      "case": "drift-restore",
+      "step": 5,
+      "action": "apply",
+      "before": {
+        "image": "demo:manual",
+        "replicas": 5,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      }
+    },
+    {
+      "case": "stale-revision",
+      "step": 3,
+      "action": "refuse",
+      "before": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "status": "拒否理由：stale-revision",
+      "packetGeneration": 1,
+      "authoritativeGeneration": 2
+    },
+    {
+      "case": "rollback",
+      "step": 4,
+      "action": "new-desired",
+      "before": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "packetGeneration": 3
+    },
+    {
+      "case": "rollback",
+      "step": 5,
+      "action": "apply",
+      "before": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "declared"
+      },
+      "packetGeneration": 3
+    },
+    {
+      "case": "ignore-note",
+      "step": 4,
+      "action": "apply",
+      "before": {
+        "image": "demo:v1",
+        "replicas": 2,
+        "note": "operator"
+      },
+      "after": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "operator"
+      },
+      "status": "managed一致 true ／ exact一致 false ／ mode apply ／ ignore note",
+      "ignoredDiff": "note operator → declared"
+    },
+    {
+      "case": "ignore-note",
+      "step": 5,
+      "action": "in-sync",
+      "before": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "operator"
+      },
+      "after": {
+        "image": "demo:v2",
+        "replicas": 3,
+        "note": "operator"
+      },
+      "status": "managed一致 true ／ exact一致 false ／ mode apply ／ ignore note",
+      "ignoredDiff": "note operator → declared"
+    },
+    {
+      "case": "observe-only",
+      "step": 5,
+      "action": "observe",
+      "before": {
+        "image": "demo:manual",
+        "replicas": 5,
+        "note": "declared"
+      },
+      "after": {
+        "image": "demo:manual",
+        "replicas": 5,
+        "note": "declared"
+      },
+      "status": "managed一致 false ／ exact一致 false ／ mode observe ／ ignore なし"
+    }
+  ],
+  "rawStepExpanded": true,
+  "answerExpanded": true,
+  "predictionEcho": "applyなら手動driftを戻し、observeでは残る",
+  "roadmapTopics": [
+    "source integrity",
+    "field所有",
+    "健康と段階release",
+    "障害復旧"
+  ],
+  "capture": {
+    "format": "JPEG",
+    "displayed": true,
+    "saved": false,
+    "reason": "documented cua_repl API has screenshot bytes/tool images but no documented local file export; not reconstructed",
+    "views": [
+      "answer and roadmap",
+      "stale-revision selected step"
+    ]
+  },
+  "cleanup": {
+    "serverClosed": true,
+    "serverExitCode": 0,
+    "tabClosed": true,
+    "port": 54923,
+    "listenerInventory": "lsof exact port returned no listener exit1"
+  },
+  "skill": {
+    "quickValidate": "PASS",
+    "normalRouting": "drift-restore CLI exit0 -> runner/checker/UI",
+    "unsupportedRouting": "deploy-argo CLI exit2 -> README uncovered scope",
+    "kind": "author main-agent routing smoke; independent forwardAgentEval not performed"
+  },
+  "notes": [
+    "UI authoritative revision display added then all 10 cases rerun",
+    "only checker metadata comparisons strengthened after final UI QA; runner/server/UI unchanged",
+    "favicon.ico404 recorded, all /api case requests200"
+  ],
+  "qaDigest": "c47ec173e6f447093528182f77374322d070db44b81baa230b42409936875a40"
+}

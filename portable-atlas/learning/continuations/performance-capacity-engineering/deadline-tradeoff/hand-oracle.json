@@ -1,0 +1,13 @@
+{
+  "schema":1,
+  "method":"模型とvalidator実装前に人手で固定した7slot列、A/B/C順の開始・完了・遅れ。slot文字は区間[t,t+1)に実行するjob。平均待ちはstart合計/3、期限等値は成功。",
+  "cases":[
+    {"order":"ABC","slots":"AAAABBC","start":[0,4,6],"finish":[4,6,7],"lateness":[-2,3,0],"tardiness":[0,3,0],"on_time":[true,false,true],"missed":["B"],"equal_deadline":["C"],"sum_wait":10,"mean_wait":"10/3","mean_completion":"17/3","max_tardiness":3,"makespan":7},
+    {"order":"ACB","slots":"AAAACBB","start":[0,5,4],"finish":[4,7,5],"lateness":[-2,4,-2],"tardiness":[0,4,0],"on_time":[true,false,true],"missed":["B"],"equal_deadline":[],"sum_wait":9,"mean_wait":"3","mean_completion":"16/3","max_tardiness":4,"makespan":7},
+    {"order":"BAC","slots":"BBAAAAC","start":[2,0,6],"finish":[6,2,7],"lateness":[0,-1,0],"tardiness":[0,0,0],"on_time":[true,true,true],"missed":[],"equal_deadline":["A","C"],"sum_wait":8,"mean_wait":"8/3","mean_completion":"5","max_tardiness":0,"makespan":7},
+    {"order":"BCA","slots":"BBCAAAA","start":[3,0,2],"finish":[7,2,3],"lateness":[1,-1,-4],"tardiness":[1,0,0],"on_time":[false,true,true],"missed":["A"],"equal_deadline":[],"sum_wait":5,"mean_wait":"5/3","mean_completion":"4","max_tardiness":1,"makespan":7},
+    {"order":"CAB","slots":"CAAAABB","start":[1,5,0],"finish":[5,7,1],"lateness":[-1,4,-6],"tardiness":[0,4,0],"on_time":[true,false,true],"missed":["B"],"equal_deadline":[],"sum_wait":6,"mean_wait":"2","mean_completion":"13/3","max_tardiness":4,"makespan":7},
+    {"order":"CBA","slots":"CBBAAAA","start":[3,1,0],"finish":[7,3,1],"lateness":[1,0,-6],"tardiness":[1,0,0],"on_time":[false,true,true],"missed":["A"],"equal_deadline":["B"],"sum_wait":4,"mean_wait":"4/3","mean_completion":"11/3","max_tardiness":1,"makespan":7}
+  ],
+  "finite_conclusions":{"minimum_mean_wait_orders":["CBA"],"all_on_time_orders":["BAC"],"minimum_mean_wait":"4/3","all_on_time_order_mean_wait":"8/3","general_optimality_claim":false}
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "id": "quoted-space",
+    "input": {
+      "tail": "\"a b c\" d e"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "escaped-quote-and-slash",
+    "input": {
+      "tail": "\"ab\\\"c\" \"\\\\\" d"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "literal-slashes-embedded-quotes",
+    "input": {
+      "tail": "a\\\\\\b d\"e f\"g h"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "odd-three-slashes",
+    "input": {
+      "tail": "a\\\\\\\"b c d"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "even-four-slashes",
+    "input": {
+      "tail": "a\\\\\\\\\"b c\" d e"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "empty-argument",
+    "input": {
+      "tail": "\"\" x"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "two-empty-arguments",
+    "input": {
+      "tail": "\"\" \"\""
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "tail-leading-trailing-space",
+    "input": {
+      "tail": "  a  b\t "
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "tab-in-quotes",
+    "input": {
+      "tail": "\"a\tb\"\tc"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "literal-quote",
+    "input": {
+      "tail": "a\\\"b"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "trailing-backslashes",
+    "input": {
+      "tail": "a\\\\"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "single-quote-not-special",
+    "input": {
+      "tail": "'a b'"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "metachar-not-shell",
+    "input": {
+      "tail": "^&%VAR%"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "empty-tail",
+    "input": {
+      "tail": ""
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "max128-literal",
+    "input": {
+      "tail": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "unbalanced-subset",
+    "input": {
+      "tail": "\"a b"
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "CRT-adjacent-outside-subset",
+    "input": {
+      "tail": "a\"b\"\" c d"
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-too-long",
+    "input": {
+      "tail": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-newline",
+    "input": {
+      "tail": "a\nb"
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-nul",
+    "input": {
+      "tail": "a\u0000b"
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-unicode",
+    "input": {
+      "tail": "\u65e5\u672c\u8a9e"
+    },
+    "expect": "rejected"
+  }
+]

@@ -1,0 +1,1141 @@
+{
+  "project": "Atlas",
+  "lesson": "evaluation-threshold-curves",
+  "started_at": "2026-10-06T19:11:25.246Z",
+  "passed": true,
+  "budget_ms": 15000,
+  "base_url": "http://127.0.0.1:58002/",
+  "source_before": {
+    "index.html": "10c1dbb6f607d556c5a5d95e33442674b0b714fccc13874564c87aab7ae5ccba",
+    "style.css": "4b8e545f372888eceba241b39e3cfa07ef8a304123c4c76ce081ac5cc55ee329",
+    "lesson.js": "312ece90ad4e34e04ad90e547f845510cc53a91a9589783e27e53d5b3e56f20f",
+    "README.md": "9195f45839cd3e4071d72c3c122b0d88f1ac395acc82d68cb9a823719bb15a49",
+    "COVERAGE.md": "306b5a4a817f0d4cca302c97899cf895775948e752d6022ad09848b228e720ab",
+    "GUI_VERIFICATION.md": "0052d521293bb84ed3e03255ceecf36b7ab1663b1e486cbbfe4ab826cd0784b9"
+  },
+  "source_after": {
+    "index.html": "10c1dbb6f607d556c5a5d95e33442674b0b714fccc13874564c87aab7ae5ccba",
+    "style.css": "4b8e545f372888eceba241b39e3cfa07ef8a304123c4c76ce081ac5cc55ee329",
+    "lesson.js": "312ece90ad4e34e04ad90e547f845510cc53a91a9589783e27e53d5b3e56f20f",
+    "README.md": "9195f45839cd3e4071d72c3c122b0d88f1ac395acc82d68cb9a823719bb15a49",
+    "COVERAGE.md": "306b5a4a817f0d4cca302c97899cf895775948e752d6022ad09848b228e720ab",
+    "GUI_VERIFICATION.md": "0052d521293bb84ed3e03255ceecf36b7ab1663b1e486cbbfe4ab826cd0784b9"
+  },
+  "checks": [
+    {
+      "name": "1280 entry wording/current scope/layout",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "390 entry wording/current scope/layout",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "390 metric table raw values unchanged; fixed columns and decimal wrap",
+      "passed": true,
+      "detail": {
+        "table_width": 335.21875,
+        "table_layout": "fixed",
+        "headers": [
+          {
+            "text": "割合",
+            "width": 86.890625,
+            "height": 67.40625
+          },
+          {
+            "text": "分子 / 分母",
+            "width": 73.515625,
+            "height": 67.40625
+          },
+          {
+            "text": "厳密な分数",
+            "width": 76.859375,
+            "height": 67.40625
+          },
+          {
+            "text": "表示用の小数",
+            "width": 96.953125,
+            "height": 67.40625
+          }
+        ],
+        "decimals": [
+          {
+            "text": "1",
+            "overflow_wrap": "anywhere",
+            "width": 96.953125,
+            "height": 42.203125
+          },
+          {
+            "text": "1",
+            "overflow_wrap": "anywhere",
+            "width": 96.953125,
+            "height": 42.203125
+          },
+          {
+            "text": "0.6666666666666666",
+            "overflow_wrap": "anywhere",
+            "width": 96.953125,
+            "height": 92.609375
+          }
+        ]
+      }
+    }
+  ],
+  "dom": [
+    {
+      "label": "1280 entry after wording revision",
+      "viewport": 1280,
+      "primary": true,
+      "url": "http://127.0.0.1:58002/index.html",
+      "body_text": "Atlas · AI評価の計算と意味を分ける\n\n閾値を下げると、誰が加わる？\n\n陽性 ID の集合から、混同行列と ROC / PR の点まで辿る。\n\nこの画面は保存した合成データの計算結果を読みます。操作記録・画像と別担当の受入範囲は状態記録で確認できます。学習済みモデルや API は使いません。計算の現在状態は 状態記録 へ。\n1　ID と score を見て、予想する\n\nscore が閾値以上なら陽性とします。score は人が作った数値で、正解 label とは別です。元データは陽性2件・陰性18件。同点の対照は別の3件です。\n\n元の20件 · 同点の3件\n\n元の20件\n同点の対照3件\n元の20件 · 境界 0 / 20\n\n最大 score 0.8 より大きい閾値。数値を旧プログラムへ渡さない数学上の端点です。\n\n前の閾値\n次の閾値\nリセット\n追加される ID と、割合の変化を予想\nこの境界の保存結果を読む\n\n予想を書いてから保存結果を読めます。条件や予想の変更で古い結果を消します。\n\n3　原典と実装へ戻る\nGoogle公式の規則と独自の選択 · 実装前の契約\n閾値とID集合の計算 · 記録を保存する処理\n実装前の手計算 · 手書きの期待表 · 表示データと元記録の対応\n4　答え合わせ\n予想と固定期待を比べる\n5　実務の問いと、この教材の限界\n\n陽性集合は閾値を下げるほど広がりますが、Precision が必ず下がるわけではありません。ROC と PR は分母と軸が違います。見逃しと誤警報のどちらを重く見るかは、用途と損失を別に考える必要があります。\n\n全陰性では Precision の分母が0です。この教材は未定義を保持し、PR の (0,0) や (0,1) へ補いません。同 score の陽性と陰性を閾値だけで別々に取り出すこともできません。\n\n合成 score の計算が合っていても、学習済みモデルの性能、確率較正、実世界での汎化、公平性、安全性は証明しません。既存 Brier 教材や旧少数閾値の実績は再加算しません。\n\nAtlas の入口と保存資料 · 前提と未対応 · 限定 Skill\n\nAtlas｜画面確認・受入の範囲は状態記録へ。保存結果の閲覧で、新しい計算やブラウザーを自動起動しません。",
+      "ids": {
+        "main-fixture": {
+          "text": "元の20件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "true"
+        },
+        "tie-fixture": {
+          "text": "同点の対照3件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "false"
+        },
+        "boundary-title": {
+          "text": "元の20件 · 境界 0 / 20",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "boundary-explanation": {
+          "text": "最大 score 0.8 より大きい閾値。数値を旧プログラムへ渡さない数学上の端点です。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "previous": {
+          "text": "前の閾値",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "next": {
+          "text": "次の閾値",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "prediction": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "read": {
+          "text": "この境界の保存結果を読む",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "load-state": {
+          "text": "予想を書いてから保存結果を読めます。条件や予想の変更で古い結果を消します。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "result": {
+          "text": "2　ID集合・分母・曲線の点を対照する分類件数ID割合分子 / 分母厳密な分数表示用の小数ROC：FPR → TPRPR：Recall → Precision図は保存した計算値から組み立てた模型です。現在の境界までの点を描き、線は読む順の案内として結びます。途中の全座標を実現する閾値の存在や、面積を意味しません。AUC は計算していません。この境界の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "measurement": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "sets": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "inclusion": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "counts": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "metrics": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "coordinate-note": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "roc": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "pr": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "prior-comparison": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "raw-details": {
+          "text": "この境界の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "raw": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer-button": {
+          "text": "予想と固定期待を比べる",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        }
+      },
+      "tables": {
+        "counts": [],
+        "metrics": []
+      },
+      "svg": [
+        {
+          "id": "roc",
+          "outer_html": "<svg id=\"roc\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの ROC 点の説明図\"></svg>",
+          "text": [],
+          "circles": []
+        },
+        {
+          "id": "pr",
+          "outer_html": "<svg id=\"pr\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの定義された PR 点の説明図\"></svg>",
+          "text": [],
+          "circles": []
+        }
+      ],
+      "raw_text": "",
+      "raw_parsed": null,
+      "heading_order": [
+        "1　ID と score を見て、予想する",
+        "2　ID集合・分母・曲線の点を対照する",
+        "3　原典と実装へ戻る",
+        "4　答え合わせ",
+        "5　実務の問いと、この教材の限界"
+      ],
+      "choices": [],
+      "width": 1280
+    },
+    {
+      "label": "390 entry after wording revision",
+      "viewport": 390,
+      "primary": true,
+      "url": "http://127.0.0.1:58002/index.html",
+      "body_text": "Atlas · AI評価の計算と意味を分ける\n\n閾値を下げると、誰が加わる？\n\n陽性 ID の集合から、混同行列と ROC / PR の点まで辿る。\n\nこの画面は保存した合成データの計算結果を読みます。操作記録・画像と別担当の受入範囲は状態記録で確認できます。学習済みモデルや API は使いません。計算の現在状態は 状態記録 へ。\n1　ID と score を見て、予想する\n\nscore が閾値以上なら陽性とします。score は人が作った数値で、正解 label とは別です。元データは陽性2件・陰性18件。同点の対照は別の3件です。\n\n元の20件 · 同点の3件\n\n元の20件\n同点の対照3件\n元の20件 · 境界 0 / 20\n\n最大 score 0.8 より大きい閾値。数値を旧プログラムへ渡さない数学上の端点です。\n\n前の閾値\n次の閾値\nリセット\n追加される ID と、割合の変化を予想\nこの境界の保存結果を読む\n\n予想を書いてから保存結果を読めます。条件や予想の変更で古い結果を消します。\n\n3　原典と実装へ戻る\nGoogle公式の規則と独自の選択 · 実装前の契約\n閾値とID集合の計算 · 記録を保存する処理\n実装前の手計算 · 手書きの期待表 · 表示データと元記録の対応\n4　答え合わせ\n予想と固定期待を比べる\n5　実務の問いと、この教材の限界\n\n陽性集合は閾値を下げるほど広がりますが、Precision が必ず下がるわけではありません。ROC と PR は分母と軸が違います。見逃しと誤警報のどちらを重く見るかは、用途と損失を別に考える必要があります。\n\n全陰性では Precision の分母が0です。この教材は未定義を保持し、PR の (0,0) や (0,1) へ補いません。同 score の陽性と陰性を閾値だけで別々に取り出すこともできません。\n\n合成 score の計算が合っていても、学習済みモデルの性能、確率較正、実世界での汎化、公平性、安全性は証明しません。既存 Brier 教材や旧少数閾値の実績は再加算しません。\n\nAtlas の入口と保存資料 · 前提と未対応 · 限定 Skill\n\nAtlas｜画面確認・受入の範囲は状態記録へ。保存結果の閲覧で、新しい計算やブラウザーを自動起動しません。",
+      "ids": {
+        "main-fixture": {
+          "text": "元の20件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "true"
+        },
+        "tie-fixture": {
+          "text": "同点の対照3件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "false"
+        },
+        "boundary-title": {
+          "text": "元の20件 · 境界 0 / 20",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "boundary-explanation": {
+          "text": "最大 score 0.8 より大きい閾値。数値を旧プログラムへ渡さない数学上の端点です。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "previous": {
+          "text": "前の閾値",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "next": {
+          "text": "次の閾値",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "prediction": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "read": {
+          "text": "この境界の保存結果を読む",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "load-state": {
+          "text": "予想を書いてから保存結果を読めます。条件や予想の変更で古い結果を消します。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "result": {
+          "text": "2　ID集合・分母・曲線の点を対照する分類件数ID割合分子 / 分母厳密な分数表示用の小数ROC：FPR → TPRPR：Recall → Precision図は保存した計算値から組み立てた模型です。現在の境界までの点を描き、線は読む順の案内として結びます。途中の全座標を実現する閾値の存在や、面積を意味しません。AUC は計算していません。この境界の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "measurement": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "sets": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "inclusion": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "counts": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "metrics": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "coordinate-note": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "roc": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "pr": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "prior-comparison": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "raw-details": {
+          "text": "この境界の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "raw": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer-button": {
+          "text": "予想と固定期待を比べる",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        }
+      },
+      "tables": {
+        "counts": [],
+        "metrics": []
+      },
+      "svg": [
+        {
+          "id": "roc",
+          "outer_html": "<svg id=\"roc\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの ROC 点の説明図\"></svg>",
+          "text": [],
+          "circles": []
+        },
+        {
+          "id": "pr",
+          "outer_html": "<svg id=\"pr\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの定義された PR 点の説明図\"></svg>",
+          "text": [],
+          "circles": []
+        }
+      ],
+      "raw_text": "",
+      "raw_parsed": null,
+      "heading_order": [
+        "1　ID と score を見て、予想する",
+        "2　ID集合・分母・曲線の点を対照する",
+        "3　原典と実装へ戻る",
+        "4　答え合わせ",
+        "5　実務の問いと、この教材の限界"
+      ],
+      "choices": [],
+      "width": 390
+    },
+    {
+      "label": "390 tie boundary 2 after CSS revision",
+      "viewport": 390,
+      "primary": true,
+      "url": "http://127.0.0.1:58002/index.html",
+      "body_text": "Atlas · AI評価の計算と意味を分ける\n\n閾値を下げると、誰が加わる？\n\n陽性 ID の集合から、混同行列と ROC / PR の点まで辿る。\n\nこの画面は保存した合成データの計算結果を読みます。操作記録・画像と別担当の受入範囲は状態記録で確認できます。学習済みモデルや API は使いません。計算の現在状態は 状態記録 へ。\n1　ID と score を見て、予想する\n\nscore が閾値以上なら陽性とします。score は人が作った数値で、正解 label とは別です。元データは陽性2件・陰性18件。同点の対照は別の3件です。\n\n元の20件 · 同点の3件\n\n元の20件\n同点の対照3件\n同点の3件 · 境界 2 / 2\n\nscore >= 0.5 を陽性とする。同じ score は一緒に判定します。\n\n前の閾値\n次の閾値\nリセット\n追加される ID と、割合の変化を予想\nこの境界の保存結果を読む\n\n保存した計算結果を照合しました。新しい計算は起動していません。\n\n2　ID集合・分母・曲線の点を対照する\n\nAtlas の保存計算日時 2026-10-06T18:31:01.904619+00:00。実モデルの推論ではありません。\n\n前までの陽性 t-high\n追加 t-negative, t-positive\n現在 t-high, t-negative, t-positive\n\n前の集合 ⊆ 現在の集合：true / 外れた ID：なし\n\n分類\t件数\tID\nTP\t2\tt-high, t-positive\nFP\t1\tt-negative\nFN\t0\tなし\nTN\t0\tなし\n割合\t分子 / 分母\t厳密な分数\t表示用の小数\nrecall\t2 / 2\t1\t1\nfpr\t1 / 1\t1\t1\nprecision\t2 / 3\t2/3\t0.6666666666666666\n\nROC (FPR, TPR) = (1, 1)。PR (Recall, Precision) = (1, 2/3)。\n\nROC：FPR → TPR\n0\n0\n0.5\n0.5\n1\n1\nFPR\nTPR / Recall\nPR：Recall → Precision\n0\n0\n0.5\n0.5\n1\n1\nRecall\nPrecision\n\n図は保存した計算値から組み立てた模型です。現在の境界までの点を描き、線は読む順の案内として結びます。途中の全座標を実現する閾値の存在や、面積を意味しません。AUC は計算していません。\n\n直前の Precision：1 → 今回：2/3。集合の拡大と、この割合の増減を分けて読みます。\n\nこの境界の保存した記録\n3　原典と実装へ戻る\nGoogle公式の規則と独自の選択 · 実装前の契約\n閾値とID集合の計算 · 記録を保存する処理\n実装前の手計算 · 手書きの期待表 · 表示データと元記録の対応\n4　答え合わせ\n予想と固定期待を比べる\n5　実務の問いと、この教材の限界\n\n陽性集合は閾値を下げるほど広がりますが、Precision が必ず下がるわけではありません。ROC と PR は分母と軸が違います。見逃しと誤警報のどちらを重く見るかは、用途と損失を別に考える必要があります。\n\n全陰性では Precision の分母が0です。この教材は未定義を保持し、PR の (0,0) や (0,1) へ補いません。同 score の陽性と陰性を閾値だけで別々に取り出すこともできません。\n\n合成 score の計算が合っていても、学習済みモデルの性能、確率較正、実世界での汎化、公平性、安全性は証明しません。既存 Brier 教材や旧少数閾値の実績は再加算しません。\n\nAtlas の入口と保存資料 · 前提と未対応 · 限定 Skill\n\nAtlas｜画面確認・受入の範囲は状態記録へ。保存結果の閲覧で、新しい計算やブラウザーを自動起動しません。",
+      "ids": {
+        "main-fixture": {
+          "text": "元の20件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "false"
+        },
+        "tie-fixture": {
+          "text": "同点の対照3件",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": "true"
+        },
+        "boundary-title": {
+          "text": "同点の3件 · 境界 2 / 2",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "boundary-explanation": {
+          "text": "score >= 0.5 を陽性とする。同じ score は一緒に判定します。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "previous": {
+          "text": "前の閾値",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "next": {
+          "text": "次の閾値",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "prediction": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "value": "同点の陽性と陰性が一緒に入る",
+          "open": null,
+          "aria_pressed": null
+        },
+        "read": {
+          "text": "この境界の保存結果を読む",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "load-state": {
+          "text": "保存した計算結果を照合しました。新しい計算は起動していません。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "result": {
+          "text": "2　ID集合・分母・曲線の点を対照するAtlas の保存計算日時 2026-10-06T18:31:01.904619+00:00。実モデルの推論ではありません。前までの陽性 t-high追加 t-negative, t-positive現在 t-high, t-negative, t-positive前の集合 ⊆ 現在の集合：true / 外れた ID：なし分類件数IDTP2t-high, t-positiveFP1t-negativeFN0なしTN0なし割合分子 / 分母厳密な分数表示用の小数recall2 / 211fpr1 / 111precision2 / 32/30.6666666666666666ROC (FPR, TPR) = (1, 1)。PR (Recall, Precision) = (1, 2/3)。ROC：FPR → TPR000.50.511FPRTPR / Recall境界 0 (0, 0)境界 1 (0, 1/2)境界 2 (1, 1)PR：Recall → Precision000.50.511RecallPrecision境界 1 (1/2, 1)境界 2 (1, 2/3)図は保存した計算値から組み立てた模型です。現在の境界までの点を描き、線は読む順の案内として結びます。途中の全座標を実現する閾値の存在や、面積を意味しません。AUC は計算していません。直前の Precision：1 → 今回：2/3。集合の拡大と、この割合の増減を分けて読みます。この境界の保存した記録{\n  \"kind\": \"state\",\n  \"fixture\": \"tie\",\n  \"ordinal\": 2,\n  \"threshold\": {\n    \"kind\": \"at-score\",\n    \"value\": \"0.5\",\n    \"above_score\": null\n  },\n  \"rule\": \"score >= threshold\",\n  \"positive_ids\": [\n    \"t-high\",\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"added_ids\": [\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"removed_ids\": [],\n  \"prior_is_subset\": true,\n  \"ids\": {\n    \"TP\": [\n      \"t-high\",\n      \"t-positive\"\n    ],\n    \"FP\": [\n      \"t-negative\"\n    ],\n    \"FN\": [],\n    \"TN\": []\n  },\n  \"counts\": {\n    \"TP\": 2,\n    \"FP\": 1,\n    \"FN\": 0,\n    \"TN\": 0\n  },\n  \"metrics\": {\n    \"recall\": {\n      \"numerator\": 2,\n      \"denominator\": 2,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"fpr\": {\n      \"numerator\": 1,\n      \"denominator\": 1,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"precision\": {\n      \"numerator\": 2,\n      \"denominator\": 3,\n      \"fraction\": \"2/3\",\n      \"value\": 0.6666666666666666,\n      \"status\": \"defined\"\n    }\n  },\n  \"roc\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"1\",\n    \"x\": 1,\n    \"y\": 1\n  },\n  \"roc_status\": \"defined\",\n  \"pr\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"2/3\",\n    \"x\": 1,\n    \"y\": 0.6666666666666666\n  },\n  \"pr_status\": \"defined\"\n}",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "measurement": {
+          "text": "Atlas の保存計算日時 2026-10-06T18:31:01.904619+00:00。実モデルの推論ではありません。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "sets": {
+          "text": "前までの陽性 t-high追加 t-negative, t-positive現在 t-high, t-negative, t-positive",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "inclusion": {
+          "text": "前の集合 ⊆ 現在の集合：true / 外れた ID：なし",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "counts": {
+          "text": "TP2t-high, t-positiveFP1t-negativeFN0なしTN0なし",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "metrics": {
+          "text": "recall2 / 211fpr1 / 111precision2 / 32/30.6666666666666666",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "coordinate-note": {
+          "text": "ROC (FPR, TPR) = (1, 1)。PR (Recall, Precision) = (1, 2/3)。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "roc": {
+          "text": "000.50.511FPRTPR / Recall境界 0 (0, 0)境界 1 (0, 1/2)境界 2 (1, 1)",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "pr": {
+          "text": "000.50.511RecallPrecision境界 1 (1/2, 1)境界 2 (1, 2/3)",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "prior-comparison": {
+          "text": "直前の Precision：1 → 今回：2/3。集合の拡大と、この割合の増減を分けて読みます。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "raw-details": {
+          "text": "この境界の保存した記録{\n  \"kind\": \"state\",\n  \"fixture\": \"tie\",\n  \"ordinal\": 2,\n  \"threshold\": {\n    \"kind\": \"at-score\",\n    \"value\": \"0.5\",\n    \"above_score\": null\n  },\n  \"rule\": \"score >= threshold\",\n  \"positive_ids\": [\n    \"t-high\",\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"added_ids\": [\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"removed_ids\": [],\n  \"prior_is_subset\": true,\n  \"ids\": {\n    \"TP\": [\n      \"t-high\",\n      \"t-positive\"\n    ],\n    \"FP\": [\n      \"t-negative\"\n    ],\n    \"FN\": [],\n    \"TN\": []\n  },\n  \"counts\": {\n    \"TP\": 2,\n    \"FP\": 1,\n    \"FN\": 0,\n    \"TN\": 0\n  },\n  \"metrics\": {\n    \"recall\": {\n      \"numerator\": 2,\n      \"denominator\": 2,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"fpr\": {\n      \"numerator\": 1,\n      \"denominator\": 1,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"precision\": {\n      \"numerator\": 2,\n      \"denominator\": 3,\n      \"fraction\": \"2/3\",\n      \"value\": 0.6666666666666666,\n      \"status\": \"defined\"\n    }\n  },\n  \"roc\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"1\",\n    \"x\": 1,\n    \"y\": 1\n  },\n  \"roc_status\": \"defined\",\n  \"pr\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"2/3\",\n    \"x\": 1,\n    \"y\": 0.6666666666666666\n  },\n  \"pr_status\": \"defined\"\n}",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "raw": {
+          "text": "{\n  \"kind\": \"state\",\n  \"fixture\": \"tie\",\n  \"ordinal\": 2,\n  \"threshold\": {\n    \"kind\": \"at-score\",\n    \"value\": \"0.5\",\n    \"above_score\": null\n  },\n  \"rule\": \"score >= threshold\",\n  \"positive_ids\": [\n    \"t-high\",\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"added_ids\": [\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"removed_ids\": [],\n  \"prior_is_subset\": true,\n  \"ids\": {\n    \"TP\": [\n      \"t-high\",\n      \"t-positive\"\n    ],\n    \"FP\": [\n      \"t-negative\"\n    ],\n    \"FN\": [],\n    \"TN\": []\n  },\n  \"counts\": {\n    \"TP\": 2,\n    \"FP\": 1,\n    \"FN\": 0,\n    \"TN\": 0\n  },\n  \"metrics\": {\n    \"recall\": {\n      \"numerator\": 2,\n      \"denominator\": 2,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"fpr\": {\n      \"numerator\": 1,\n      \"denominator\": 1,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"precision\": {\n      \"numerator\": 2,\n      \"denominator\": 3,\n      \"fraction\": \"2/3\",\n      \"value\": 0.6666666666666666,\n      \"status\": \"defined\"\n    }\n  },\n  \"roc\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"1\",\n    \"x\": 1,\n    \"y\": 1\n  },\n  \"roc_status\": \"defined\",\n  \"pr\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"2/3\",\n    \"x\": 1,\n    \"y\": 0.6666666666666666\n  },\n  \"pr_status\": \"defined\"\n}",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer-button": {
+          "text": "予想と固定期待を比べる",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        }
+      },
+      "tables": {
+        "counts": [
+          [
+            "TP",
+            "2",
+            "t-high, t-positive"
+          ],
+          [
+            "FP",
+            "1",
+            "t-negative"
+          ],
+          [
+            "FN",
+            "0",
+            "なし"
+          ],
+          [
+            "TN",
+            "0",
+            "なし"
+          ]
+        ],
+        "metrics": [
+          [
+            "recall",
+            "2 / 2",
+            "1",
+            "1"
+          ],
+          [
+            "fpr",
+            "1 / 1",
+            "1",
+            "1"
+          ],
+          [
+            "precision",
+            "2 / 3",
+            "2/3",
+            "0.6666666666666666"
+          ]
+        ]
+      },
+      "svg": [
+        {
+          "id": "roc",
+          "outer_html": "<svg id=\"roc\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの ROC 点の説明図\"><line x1=\"56\" y1=\"36\" x2=\"56\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"242\" x2=\"388\" y2=\"242\" stroke=\"#d1dddd\"></line><text x=\"56\" y=\"265\" text-anchor=\"middle\">0</text><text x=\"45\" y=\"247\" text-anchor=\"end\">0</text><line x1=\"222\" y1=\"36\" x2=\"222\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"139\" x2=\"388\" y2=\"139\" stroke=\"#d1dddd\"></line><text x=\"222\" y=\"265\" text-anchor=\"middle\">0.5</text><text x=\"45\" y=\"144\" text-anchor=\"end\">0.5</text><line x1=\"388\" y1=\"36\" x2=\"388\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"36\" x2=\"388\" y2=\"36\" stroke=\"#d1dddd\"></line><text x=\"388\" y=\"265\" text-anchor=\"middle\">1</text><text x=\"45\" y=\"41\" text-anchor=\"end\">1</text><text x=\"222\" y=\"290\" text-anchor=\"middle\">FPR</text><text x=\"58\" y=\"22\">TPR / Recall</text><polyline points=\"56,242 56,139 388,36\" fill=\"none\" stroke=\"#89a9ac\" stroke-width=\"2\" stroke-dasharray=\"5 4\" data-role=\"reading-guide-not-interpolation\"></polyline><circle cx=\"56\" cy=\"242\" r=\"4\" fill=\"#12636e\" data-ordinal=\"0\" data-x-fraction=\"0\" data-y-fraction=\"0\"><title>境界 0 (0, 0)</title></circle><circle cx=\"56\" cy=\"139\" r=\"4\" fill=\"#12636e\" data-ordinal=\"1\" data-x-fraction=\"0\" data-y-fraction=\"1/2\"><title>境界 1 (0, 1/2)</title></circle><circle cx=\"388\" cy=\"36\" r=\"7\" fill=\"#b05400\" data-ordinal=\"2\" data-x-fraction=\"1\" data-y-fraction=\"1\"><title>境界 2 (1, 1)</title></circle></svg>",
+          "text": [
+            "0",
+            "0",
+            "0.5",
+            "0.5",
+            "1",
+            "1",
+            "FPR",
+            "TPR / Recall"
+          ],
+          "circles": [
+            {
+              "cx": "56",
+              "cy": "242",
+              "r": "4",
+              "fill": "#12636e",
+              "data-ordinal": "0",
+              "data-x-fraction": "0",
+              "data-y-fraction": "0"
+            },
+            {
+              "cx": "56",
+              "cy": "139",
+              "r": "4",
+              "fill": "#12636e",
+              "data-ordinal": "1",
+              "data-x-fraction": "0",
+              "data-y-fraction": "1/2"
+            },
+            {
+              "cx": "388",
+              "cy": "36",
+              "r": "7",
+              "fill": "#b05400",
+              "data-ordinal": "2",
+              "data-x-fraction": "1",
+              "data-y-fraction": "1"
+            }
+          ]
+        },
+        {
+          "id": "pr",
+          "outer_html": "<svg id=\"pr\" viewBox=\"0 0 420 300\" role=\"img\" aria-label=\"現在までの定義された PR 点の説明図\"><line x1=\"56\" y1=\"36\" x2=\"56\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"242\" x2=\"388\" y2=\"242\" stroke=\"#d1dddd\"></line><text x=\"56\" y=\"265\" text-anchor=\"middle\">0</text><text x=\"45\" y=\"247\" text-anchor=\"end\">0</text><line x1=\"222\" y1=\"36\" x2=\"222\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"139\" x2=\"388\" y2=\"139\" stroke=\"#d1dddd\"></line><text x=\"222\" y=\"265\" text-anchor=\"middle\">0.5</text><text x=\"45\" y=\"144\" text-anchor=\"end\">0.5</text><line x1=\"388\" y1=\"36\" x2=\"388\" y2=\"242\" stroke=\"#d1dddd\"></line><line x1=\"56\" y1=\"36\" x2=\"388\" y2=\"36\" stroke=\"#d1dddd\"></line><text x=\"388\" y=\"265\" text-anchor=\"middle\">1</text><text x=\"45\" y=\"41\" text-anchor=\"end\">1</text><text x=\"222\" y=\"290\" text-anchor=\"middle\">Recall</text><text x=\"58\" y=\"22\">Precision</text><polyline points=\"222,36 388,104.66666666666669\" fill=\"none\" stroke=\"#89a9ac\" stroke-width=\"2\" stroke-dasharray=\"5 4\" data-role=\"reading-guide-not-interpolation\"></polyline><circle cx=\"222\" cy=\"36\" r=\"4\" fill=\"#12636e\" data-ordinal=\"1\" data-x-fraction=\"1/2\" data-y-fraction=\"1\"><title>境界 1 (1/2, 1)</title></circle><circle cx=\"388\" cy=\"104.66666666666669\" r=\"7\" fill=\"#b05400\" data-ordinal=\"2\" data-x-fraction=\"1\" data-y-fraction=\"2/3\"><title>境界 2 (1, 2/3)</title></circle></svg>",
+          "text": [
+            "0",
+            "0",
+            "0.5",
+            "0.5",
+            "1",
+            "1",
+            "Recall",
+            "Precision"
+          ],
+          "circles": [
+            {
+              "cx": "222",
+              "cy": "36",
+              "r": "4",
+              "fill": "#12636e",
+              "data-ordinal": "1",
+              "data-x-fraction": "1/2",
+              "data-y-fraction": "1"
+            },
+            {
+              "cx": "388",
+              "cy": "104.66666666666669",
+              "r": "7",
+              "fill": "#b05400",
+              "data-ordinal": "2",
+              "data-x-fraction": "1",
+              "data-y-fraction": "2/3"
+            }
+          ]
+        }
+      ],
+      "raw_text": "{\n  \"kind\": \"state\",\n  \"fixture\": \"tie\",\n  \"ordinal\": 2,\n  \"threshold\": {\n    \"kind\": \"at-score\",\n    \"value\": \"0.5\",\n    \"above_score\": null\n  },\n  \"rule\": \"score >= threshold\",\n  \"positive_ids\": [\n    \"t-high\",\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"added_ids\": [\n    \"t-negative\",\n    \"t-positive\"\n  ],\n  \"removed_ids\": [],\n  \"prior_is_subset\": true,\n  \"ids\": {\n    \"TP\": [\n      \"t-high\",\n      \"t-positive\"\n    ],\n    \"FP\": [\n      \"t-negative\"\n    ],\n    \"FN\": [],\n    \"TN\": []\n  },\n  \"counts\": {\n    \"TP\": 2,\n    \"FP\": 1,\n    \"FN\": 0,\n    \"TN\": 0\n  },\n  \"metrics\": {\n    \"recall\": {\n      \"numerator\": 2,\n      \"denominator\": 2,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"fpr\": {\n      \"numerator\": 1,\n      \"denominator\": 1,\n      \"fraction\": \"1\",\n      \"value\": 1,\n      \"status\": \"defined\"\n    },\n    \"precision\": {\n      \"numerator\": 2,\n      \"denominator\": 3,\n      \"fraction\": \"2/3\",\n      \"value\": 0.6666666666666666,\n      \"status\": \"defined\"\n    }\n  },\n  \"roc\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"1\",\n    \"x\": 1,\n    \"y\": 1\n  },\n  \"roc_status\": \"defined\",\n  \"pr\": {\n    \"x_fraction\": \"1\",\n    \"y_fraction\": \"2/3\",\n    \"x\": 1,\n    \"y\": 0.6666666666666666\n  },\n  \"pr_status\": \"defined\"\n}",
+      "raw_parsed": {
+        "kind": "state",
+        "fixture": "tie",
+        "ordinal": 2,
+        "threshold": {
+          "kind": "at-score",
+          "value": "0.5",
+          "above_score": null
+        },
+        "rule": "score >= threshold",
+        "positive_ids": [
+          "t-high",
+          "t-negative",
+          "t-positive"
+        ],
+        "added_ids": [
+          "t-negative",
+          "t-positive"
+        ],
+        "removed_ids": [],
+        "prior_is_subset": true,
+        "ids": {
+          "TP": [
+            "t-high",
+            "t-positive"
+          ],
+          "FP": [
+            "t-negative"
+          ],
+          "FN": [],
+          "TN": []
+        },
+        "counts": {
+          "TP": 2,
+          "FP": 1,
+          "FN": 0,
+          "TN": 0
+        },
+        "metrics": {
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "fraction": "1",
+            "value": 1,
+            "status": "defined"
+          },
+          "fpr": {
+            "numerator": 1,
+            "denominator": 1,
+            "fraction": "1",
+            "value": 1,
+            "status": "defined"
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 3,
+            "fraction": "2/3",
+            "value": 0.6666666666666666,
+            "status": "defined"
+          }
+        },
+        "roc": {
+          "x_fraction": "1",
+          "y_fraction": "1",
+          "x": 1,
+          "y": 1
+        },
+        "roc_status": "defined",
+        "pr": {
+          "x_fraction": "1",
+          "y_fraction": "2/3",
+          "x": 1,
+          "y": 0.6666666666666666
+        },
+        "pr_status": "defined"
+      },
+      "heading_order": [
+        "1　ID と score を見て、予想する",
+        "2　ID集合・分母・曲線の点を対照する",
+        "3　原典と実装へ戻る",
+        "4　答え合わせ",
+        "5　実務の問いと、この教材の限界"
+      ],
+      "choices": [],
+      "width": 390
+    }
+  ],
+  "pointer_actions": [
+    {
+      "selector": "#tie-fixture",
+      "x": 191.7109375,
+      "y": 806.109375,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "selector": "#next",
+      "x": 169.265625,
+      "y": 422.40625,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "selector": "#next",
+      "x": 169.265625,
+      "y": 422.40625,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "selector": "#prediction",
+      "x": 195,
+      "y": 550.96875,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "selector": "#read",
+      "x": 131.265625,
+      "y": 646.59375,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "keyboard_actions": [
+    {
+      "kind": "insertText",
+      "selector": "#prediction",
+      "text": "同点の陽性と陰性が一緒に入る"
+    }
+  ],
+  "api_actions": [
+    {
+      "kind": "viewport",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:58002/index.html"
+    },
+    {
+      "kind": "viewport",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:58002/index.html"
+    }
+  ],
+  "faults": [],
+  "captures": [
+    {
+      "file": "1280-entry-revised.png",
+      "sha256": "590c1b88a8bd0072e923a4bc64c8bfdac3e8b3e9665ad572a7ae80a971168e11",
+      "width": 1280,
+      "height": 900,
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "actual_capture": true
+    },
+    {
+      "file": "390-entry-revised.png",
+      "sha256": "e09df882e4d6d2e4b7e903881f7de6eb44f62c1280b43650866985656e3524be",
+      "width": 390,
+      "height": 844,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actual_capture": true
+    },
+    {
+      "file": "390-tied-metrics-revised.png",
+      "sha256": "baa96c4da6bc5523284e2b2de09eb8d1309b63ce60b431752e28fea9281645d4",
+      "width": 390,
+      "height": 844,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actual_capture": true
+    }
+  ],
+  "references": [],
+  "errors": [],
+  "new_browser": 0,
+  "new_context": 0,
+  "new_tab": 0,
+  "new_server": 0,
+  "new_target_execution": 0,
+  "cleanup": {
+    "routes_removed": true,
+    "hooks_restored": true,
+    "viewport_restored": true,
+    "page_left_open": true
+  },
+  "scope": "Atlas entry wording follow-up and optional metric-table CSS only; full GUI not repeated",
+  "full_gui_repeated": false,
+  "previous_full_report": {
+    "path": "../browser-qa/nine-lessons-2026-10-06/session-2026-10-06T185545132Z/evaluation-threshold-curves-2026-10-06T190256348Z/report.json",
+    "sha256": "7c6d569c8e68026e9cde3d24ad540a1f22f9370e7275fba37a1f2b75c6fd58bb",
+    "passed": true,
+    "dom_count": 138,
+    "captures": 10
+  },
+  "checker_sha256": "a1db3d8e8e2721087ed8d5a46753e24b69fe11dcdf0aa8209c7cb610759efb25",
+  "metric_table_layout": {
+    "table_width": 335.21875,
+    "table_layout": "fixed",
+    "headers": [
+      {
+        "text": "割合",
+        "width": 86.890625,
+        "height": 67.40625
+      },
+      {
+        "text": "分子 / 分母",
+        "width": 73.515625,
+        "height": 67.40625
+      },
+      {
+        "text": "厳密な分数",
+        "width": 76.859375,
+        "height": 67.40625
+      },
+      {
+        "text": "表示用の小数",
+        "width": 96.953125,
+        "height": 67.40625
+      }
+    ],
+    "decimals": [
+      {
+        "text": "1",
+        "overflow_wrap": "anywhere",
+        "width": 96.953125,
+        "height": 42.203125
+      },
+      {
+        "text": "1",
+        "overflow_wrap": "anywhere",
+        "width": 96.953125,
+        "height": 42.203125
+      },
+      {
+        "text": "0.6666666666666666",
+        "overflow_wrap": "anywhere",
+        "width": 96.953125,
+        "height": 92.609375
+      }
+    ]
+  },
+  "sources_unchanged": true,
+  "finished_at": "2026-10-06T19:11:25.559Z",
+  "elapsed_ms": 313,
+  "select_option_calls": 0
+}

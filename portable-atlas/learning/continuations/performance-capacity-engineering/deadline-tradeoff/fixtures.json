@@ -1,0 +1,8 @@
+{
+  "schema":1,
+  "scope":{"servers":1,"arrival":0,"nonpreemptive":true,"switch_cost":0,"cancel_at_deadline":false,"time_unit":"model tick"},
+  "jobs":[{"id":"A","service":4,"deadline":6},{"id":"B","service":2,"deadline":3},{"id":"C","service":1,"deadline":7}],
+  "policies":{"fifo":"ABC","shortest":"CBA","deadline":"BAC"},
+  "orders":["ABC","ACB","BAC","BCA","CAB","CBA"],
+  "conventions":{"on_time":"finish <= deadline","lateness":"finish - deadline","tardiness":"max(0, lateness)","wait":"start - arrival","execution_interval":"[start, finish)","deadline":"absolute model tick","ties":"registration order A,B,C; fixed fixture has no service/deadline tie","late_work":"期限後も比較のため最後まで処理する。取消し/拒否はしない。"}
+}

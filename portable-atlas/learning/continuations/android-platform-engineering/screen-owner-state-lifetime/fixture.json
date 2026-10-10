@@ -1,0 +1,302 @@
+{
+  "cases": [
+    {
+      "id": "initial",
+      "label": "A=2 / B=1 初期状態",
+      "mode": "scoped",
+      "events": [],
+      "variant": "normal"
+    },
+    {
+      "id": "rotate-b",
+      "label": "B回転 / 同owner保持",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "finish-b",
+      "label": "B終了 / owner除去",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "finish",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "recreate-b",
+      "label": "B終了→新Bは0",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "finish",
+          "target": "B"
+        },
+        {
+          "op": "create",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "process-death",
+      "label": "process death / 全in-memory消去",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "death",
+          "target": null
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "new-process-b",
+      "label": "death→新process模型→B作成",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "death",
+          "target": null
+        },
+        {
+          "op": "restart",
+          "target": null
+        },
+        {
+          "op": "create",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "rotate-a",
+      "label": "A回転 / Bは独立",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "A"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "rotate-b-twice",
+      "label": "B2回転 / view generation3",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "tap-b",
+      "label": "B増分 / Aは2のまま",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "tap",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "global-leak",
+      "label": "故障: 回転Bのglobal値をAへ漏らす",
+      "mode": "global-leak",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "dead-owner-reuse",
+      "label": "故障: 終了Bのownerを再利用",
+      "mode": "dead-owner-reuse",
+      "events": [
+        {
+          "op": "finish",
+          "target": "B"
+        },
+        {
+          "op": "create",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "events-type",
+      "label": "event list型不正",
+      "mode": "scoped",
+      "events": {},
+      "variant": "normal"
+    },
+    {
+      "id": "event-fields",
+      "label": "event余分field拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "B",
+          "extra": true
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "target-unknown",
+      "label": "owner Cは未対応",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "C"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "op-unknown",
+      "label": "未知op拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "background",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "create-existing",
+      "label": "既存Bのcreate拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "create",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "rotate-finished",
+      "label": "終了Bのrotate拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "finish",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "restart-alive",
+      "label": "生きたprocessのrestart拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "restart",
+          "target": null
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "create-after-death",
+      "label": "death後create拒否",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "death",
+          "target": null
+        },
+        {
+          "op": "create",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "too-many-events",
+      "label": "9eventは契約外",
+      "mode": "scoped",
+      "events": [
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        },
+        {
+          "op": "rotate",
+          "target": "B"
+        }
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "execution-failure",
+      "label": "実Error注入 / 正常答えなし",
+      "mode": "scoped",
+      "events": [],
+      "variant": "execution-failure"
+    }
+  ]
+}

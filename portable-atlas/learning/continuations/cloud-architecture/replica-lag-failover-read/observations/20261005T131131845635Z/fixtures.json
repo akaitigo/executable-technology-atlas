@@ -1,0 +1,183 @@
+{
+  "baseline": {
+    "steps": [
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "ack-a": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "failover-before-delivery": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "delivered-before-failover": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "deliver"
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "partition-read": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "partition",
+        "enabled": true
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "deliver"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "heal-deliver": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "partition",
+        "enabled": true
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "deliver"
+      },
+      {
+        "op": "read"
+      },
+      {
+        "op": "partition",
+        "enabled": false
+      },
+      {
+        "op": "deliver"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "two-writes-one-delivery": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "write",
+        "value": "v2"
+      },
+      {
+        "op": "deliver"
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "invalid-target": {
+    "steps": [
+      {
+        "op": "route",
+        "target": "C"
+      }
+    ]
+  },
+  "unknown-operation": {
+    "steps": [
+      {
+        "op": "promote"
+      }
+    ]
+  },
+  "invalid-write": {
+    "steps": [
+      {
+        "op": "write",
+        "value": true
+      }
+    ]
+  },
+  "invalid-partition": {
+    "steps": [
+      {
+        "op": "partition",
+        "enabled": "yes"
+      }
+    ]
+  },
+  "unavailable-b": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "availability",
+        "target": "B",
+        "available": false
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "execution-failure": {
+    "rawInput": "{\"steps\":"
+  }
+}

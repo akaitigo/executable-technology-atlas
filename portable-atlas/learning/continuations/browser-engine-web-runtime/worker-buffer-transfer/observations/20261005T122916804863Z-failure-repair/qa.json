@@ -1,0 +1,64 @@
+{
+  "method": "actual IAB new source normal3/save + deterministic fault Worker/startup throw + explicit held probe release",
+  "runs": [
+    {
+      "case": "clone",
+      "raw": "observations/20261005T123128428601Z/raw.json",
+      "visible_oracle": "一致"
+    },
+    {
+      "case": "transfer",
+      "raw": "observations/20261005T123129069227Z/raw.json",
+      "visible_oracle": "一致"
+    },
+    {
+      "case": "function-refusal",
+      "raw": "observations/20261005T123129702662Z/raw.json",
+      "visible_oracle": "一致"
+    }
+  ],
+  "failure": {
+    "raw": "observations/failures/20261005T123239788754Z/failure.json",
+    "status": "function-refusal / EXECUTION_FAILURE / oracle=未判定",
+    "phase": "before-probe",
+    "error": "Error",
+    "message": "WorkerError",
+    "acks": [],
+    "rows": 0,
+    "answerOpen": false,
+    "answer": "実行失敗：before-probe / Error / WorkerError。正常・期待拒否の判定は未確認。",
+    "saved_ack": "失敗原票保存済み observations/failures/20261005T123239788754Z/failure.json"
+  },
+  "prediction_reset": {
+    "prediction": "保持4 bytes",
+    "status": "function-refusal / 未実行",
+    "raw": "未実行",
+    "answerOpen": false,
+    "saveDisabled": true
+  },
+  "case_reset": {
+    "prediction": "unknown",
+    "status": "transfer / 未実行",
+    "raw": "未実行",
+    "answerOpen": false
+  },
+  "held_probe": {
+    "harness": "qa-preview.py held",
+    "sequence": [
+      "real clone run before-probe request",
+      "prediction changed to detach 0 bytes",
+      "server old_probe_held",
+      "explicit stdin release",
+      "server old_probe_released",
+      "actual DOM clone / 未実行, raw 未実行, rows0, closed answer, save disabled"
+    ],
+    "qa_timeout_ms": 30000,
+    "normal_producer_timeout_ms": 5000,
+    "not_normal_evidence": true
+  },
+  "capture": {
+    "displayed": true,
+    "saved": false,
+    "view": "execution failure / no normal judgment / separate failure save"
+  }
+}

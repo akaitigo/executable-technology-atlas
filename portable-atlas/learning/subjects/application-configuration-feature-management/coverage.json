@@ -1,0 +1,19 @@
+{
+ "subject":"application-configuration-feature-management",
+ "implemented":["default/env-input/task JSON precedence","strict boolean/integer parsing and field provenance","bool false string truthiness bug comparison","typed/range and unknown field refusal","fixed actor SHA256 bucket rollout with master gate","0/100 percent and repeated actor stability","independent fixed config/error/hash/bucket oracle"],
+ "uncovered":[
+  {"concept":"config schema evolution / migration","question":"field renameやdefault変更で旧task configをどのversionで拒否/移行するか","sources":["json"]},
+  {"concept":"dynamic reload / atomic snapshots / last known good","question":"処理中の設定変更や不正更新でどのversionを採用するか","sources":["json","openfeature"]},
+  {"concept":"remote provider / cache / outage fallback","question":"provider timeoutやstale cacheにどのtyped fallbackとerror理由を返すか","sources":["openfeature"]},
+  {"concept":"targeting / evaluation context / variants","question":"actor key以外の条件やmulti-variant割当をどの順で評価するか","sources":["openfeature"]},
+  {"concept":"rollout stability / salt and identity changes","question":"salt変更、actor ID変更、flag別saltでどれだけ対象集合が変わるか","sources":["hash"]},
+  {"concept":"flag lifecycle / audit / observability / experiments","question":"誰がflagを変更し、期限・owner・実験結果・削除をどう追跡するか","sources":["openfeature"]},
+  {"concept":"secret handling / access / configuration governance","question":"secret storeと公開configをどの権限・検証境界で分離するか","sources":["json","openfeature"]}
+ ],
+ "next_experiments":[
+  {"title":"shadowed invalid layer","operation":"不正env値を有効task値で上書きする入力を追加し、全layer検証による拒否と最終値だけ検証する方針を比較","sources":["truth","json"]},
+  {"title":"salt and rollout growth","operation":"固定actorを増やしsalt変更と25→50→75percentで対象集合の安定性と包含を独立bucket表で比較","sources":["hash"]},
+  {"title":"atomic reload snapshot","operation":"架空config version更新途中と不正更新を入力列として適用し、last known goodと拒否の観測を比較","sources":["json"]},
+  {"title":"typed fallback model","operation":"架空providerのtimeout/unknown flag/type mismatchをstdlib modelで注入しdefault値と詳細reasonを比較。外部providerは実行しない","sources":["openfeature"]}
+ ]
+}

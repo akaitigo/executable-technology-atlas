@@ -1,0 +1,14 @@
+# Windows platform engineeringの道筋と未教材coverage
+
+前提: textとargv配列の違い、state machine、escapingのconsumer依存。今回の仕組みは有限tailのquote/backslash parity。まず[UI](index.html)で予想→字符操作→比較→[契約](SPEC.md)/[原典](SOURCES.md)→答えへ。全Windows分野の完成ではない。
+
+| 主要概念・未教材coverage | 今回から判断できること / 次の問い | 次の具体的実験 | 公式locator |
+|---|---|---|---|
+| Win32 process/CreateProcess/GetCommandLine/CommandLineToArgvW、CRT main/argv[0]、UTF-16/Unicode、cmd.exe/PowerShell/parserconsumer、environment/path/registry | 一つのstringを全consumer共通argvと考えない。API/CRT/shellを分ける。program名・adjacentquotes・Unicodeはどう違うか | **次1:** 手計算tableをfull-command/argv[0]/paired quotes/Unicodeへ分割。既存Windows環境が用意された将来、native APIとCRT helperを別々に実runしmodel差を保存 | [API](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-commandlinetoargvw)（本文確認）, [CreateProcessW](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw)（locatorのみ） |
+| Win32 HANDLE/resource lifetime、wait/event/threadpool、overlapped I/O/IOCP、COM apartment/reference count/HRESULT、message loop、services/SCM、IPC/named pipes/RPC | quoteが正しくてもprocess/handleの所有権やasync寿命は別。cancel/close/late completionで何が起きるか | **次2:** stdlibの有限handle/async queue模型にowner/refcount/cancellationを追加し、二重close/遅延completion/COM apartment境界を独立oracleで比較 | [Windows system services](https://learn.microsoft.com/en-us/windows/win32/sysinfo/system-information), [COM](https://learn.microsoft.com/en-us/windows/win32/com/component-object-model--com--portal)（locatorのみ） |
+| Windows security/token/SID/UAC/ACL/integrity level、AppContainer/privilege、kernel/driver/object manager/virtual memory、PE/ABI/DLL loader/package/signing/sandbox | argument parsingの一致は権限境界の安全性を証明しない。object accessとtokenは何を比較するか | **次3:** 有限token/ACL/object tableでallow/deny、inheritance/owner差を比較。native security/driver/privilege変更は将来の別scopeに留める | [Access control](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-control), [PE format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)（locatorのみ） |
+| WinUI/WPF/.NET/UI automation/accessibility、DPI/window lifecycle、MSVC/SDK/build/toolset、debugging/ETW/WinDbg/profiling、deployment/MSIX/updates、storage/network/performance | Mac模型は実OS/API/UI/OEM/SDKの挙動を保証しない。consumer/version/API/targetの差をどう測定するか | **次4:** 既存対応環境で小native helperのcase matrixとETW/diagnosticを収集、文字列/Unicode/SDK差を記録。UI・署名・配布は個別scopeで | [Windows app development](https://learn.microsoft.com/en-us/windows/apps/), [ETW](https://learn.microsoft.com/en-us/windows/win32/etw/event-tracing-portal)（locatorのみ） |
+
+実務判断: 最終consumerの契約でcommandlineを構成し、shell文字列とargv配列を混同しない。tail/argv[0]/Unicode/empty/adjacentの境界を明示して実対象で検証する。今回のsubset拒否はWindowsの拒否を意味しない。
+
+限界: 21展示case、ASCII tail128、39parity検査、Python実行のみ。実Windows API/VM、full argv[0]、UTF-16、shell、CreateProcess、CRT、Win32 resource/COM/security/kernel/GUI/.NET/native tooling/性能は未実行・未教材。次1–4は学習計画で、install/VM/権限/OS設定/課金/外部サービス/公開へ自動拡張しない。

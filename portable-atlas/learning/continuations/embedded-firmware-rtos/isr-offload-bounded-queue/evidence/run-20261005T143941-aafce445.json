@@ -1,0 +1,1859 @@
+{
+  "utc": "2026-10-05T14:39:41.500494+00:00",
+  "command": "python3 -B runner.py --record",
+  "source_sha256": {
+    "fixture.json": "1454dee90a4e1f1839ec87184df3cc6214077dffaa30ae87dbec778f1cb00645",
+    "oracle.json": "77264ad6955780d8f32ac921bc1da2061f8038902ddba3684639eddfbce705b5",
+    "EXPECTATIONS.md": "efe8067383f64d34fd2b67268854b6b030a38dc41b9ca9ff142a023d5950ecb9",
+    "producer.py": "e3c7e7a1e49b10b3cac4f21fab066d46f02964195fbf7168b9eab7dc5c3aedce",
+    "runner.py": "4f20b09d52184e72f04c16d2dbecce2edd01788557887dc99f95cb3d0f5e4d33",
+    "server.py": "f47dbbbcf520cb3ad34e17dcb7ae24ed904bcd01ae323c9dbad9447bb4f4438c",
+    "index.html": "1ba61629aa1b7686a79e55f96cf8ff47d51b18cd69aecfec9b3ed0568a053434",
+    "ui.js": "52df709abc6f27d1409e8f605e968640bd0a30d95cdb961846aea4244afca309"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "capacity2",
+        "label": "capacity2 / reject-newest",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity3",
+        "label": "capacity3 / 全処理",
+        "capacity": 3,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "slot-overwrite",
+        "label": "故障: 単一slot上書き",
+        "capacity": 2,
+        "mode": "slot-overwrite",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "empty",
+        "label": "到着なし / empty",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity0",
+        "label": "capacity0 / 全reject",
+        "capacity": 0,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity1",
+        "label": "capacity1 / 2drop",
+        "capacity": 1,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity-negative",
+        "label": "capacity負数拒否",
+        "capacity": -1,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity-bool",
+        "label": "capacity bool拒否",
+        "capacity": true,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "capacity4",
+        "label": "capacity4は契約外",
+        "capacity": 4,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "event-id-bool",
+        "label": "event ID bool拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": false,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "event-tick-bool",
+        "label": "event tick bool拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": false
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "events-type",
+        "label": "event list型不正",
+        "capacity": 2,
+        "mode": "queue",
+        "events": {},
+        "variant": "normal"
+      },
+      {
+        "id": "duplicate-id",
+        "label": "event ID重複拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 0,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "extra-event-field",
+        "label": "event field過剰拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0,
+            "payload": "not in subset"
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "duplicate-tick",
+        "label": "同tick到着は契約外",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 0
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "event-order",
+        "label": "到着順不正拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 2,
+            "tick": 2
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 0,
+            "tick": 0
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "event-tick3",
+        "label": "tick3到着は契約外",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 3
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "execution-failure"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "capacity2",
+      "input": {
+        "id": "capacity2",
+        "label": "capacity2 / reject-newest",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [
+            0,
+            1
+          ],
+          "arrived": [
+            0,
+            1
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [
+            0,
+            1
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [
+            1
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [
+            2
+          ],
+          "processed": [
+            0
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3
+          }
+        },
+        {
+          "tick": 4,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [
+            2
+          ],
+          "processed": [
+            0,
+            1
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3,
+            "1": 4
+          }
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [
+            2
+          ],
+          "processed": [
+            0,
+            1
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3,
+            "1": 4
+          }
+        }
+      ],
+      "counts": {
+        "arrived": 3,
+        "accepted": 2,
+        "dropped": 1,
+        "processed": 2,
+        "lost": 0,
+        "pending": 0
+      }
+    },
+    {
+      "case": "capacity3",
+      "input": {
+        "id": "capacity3",
+        "label": "capacity3 / 全処理",
+        "capacity": 3,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [
+            0,
+            1
+          ],
+          "arrived": [
+            0,
+            1
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [
+            0,
+            1,
+            2
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [
+            1,
+            2
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            0
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3
+          }
+        },
+        {
+          "tick": 4,
+          "queue": [
+            2
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            0,
+            1
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3,
+            "1": 4
+          }
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            0,
+            1,
+            2
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3,
+            "1": 4,
+            "2": 5
+          }
+        }
+      ],
+      "counts": {
+        "arrived": 3,
+        "accepted": 3,
+        "dropped": 0,
+        "processed": 3,
+        "lost": 0,
+        "pending": 0
+      }
+    },
+    {
+      "case": "slot-overwrite",
+      "input": {
+        "id": "slot-overwrite",
+        "label": "故障: 単一slot上書き",
+        "capacity": 2,
+        "mode": "slot-overwrite",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "FAULT_OVERWRITE",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [
+            1
+          ],
+          "arrived": [
+            0,
+            1
+          ],
+          "accepted": [
+            0,
+            1
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [
+            0
+          ],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [
+            2
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [
+            0,
+            1
+          ],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            2
+          ],
+          "lost": [
+            0,
+            1
+          ],
+          "completions": {
+            "2": 3
+          }
+        },
+        {
+          "tick": 4,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            2
+          ],
+          "lost": [
+            0,
+            1
+          ],
+          "completions": {
+            "2": 3
+          }
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0,
+            1,
+            2
+          ],
+          "dropped": [],
+          "processed": [
+            2
+          ],
+          "lost": [
+            0,
+            1
+          ],
+          "completions": {
+            "2": 3
+          }
+        }
+      ],
+      "counts": {
+        "arrived": 3,
+        "accepted": 3,
+        "dropped": 0,
+        "processed": 1,
+        "lost": 2,
+        "pending": 0
+      }
+    },
+    {
+      "case": "empty",
+      "input": {
+        "id": "empty",
+        "label": "到着なし / empty",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 4,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [],
+          "accepted": [],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        }
+      ],
+      "counts": {
+        "arrived": 0,
+        "accepted": 0,
+        "dropped": 0,
+        "processed": 0,
+        "lost": 0,
+        "pending": 0
+      }
+    },
+    {
+      "case": "capacity0",
+      "input": {
+        "id": "capacity0",
+        "label": "capacity0 / 全reject",
+        "capacity": 0,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [],
+          "arrived": [
+            0
+          ],
+          "accepted": [],
+          "dropped": [
+            0
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [],
+          "arrived": [
+            0,
+            1
+          ],
+          "accepted": [],
+          "dropped": [
+            0,
+            1
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [],
+          "dropped": [
+            0,
+            1,
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [],
+          "dropped": [
+            0,
+            1,
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 4,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [],
+          "dropped": [
+            0,
+            1,
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [],
+          "dropped": [
+            0,
+            1,
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        }
+      ],
+      "counts": {
+        "arrived": 3,
+        "accepted": 0,
+        "dropped": 3,
+        "processed": 0,
+        "lost": 0,
+        "pending": 0
+      }
+    },
+    {
+      "case": "capacity1",
+      "input": {
+        "id": "capacity1",
+        "label": "capacity1 / 2drop",
+        "capacity": 1,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "tick": 0,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 1,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0,
+            1
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [
+            1
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 2,
+          "queue": [
+            0
+          ],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [
+            1,
+            2
+          ],
+          "processed": [],
+          "lost": [],
+          "completions": {}
+        },
+        {
+          "tick": 3,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [
+            1,
+            2
+          ],
+          "processed": [
+            0
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3
+          }
+        },
+        {
+          "tick": 4,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [
+            1,
+            2
+          ],
+          "processed": [
+            0
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3
+          }
+        },
+        {
+          "tick": 5,
+          "queue": [],
+          "arrived": [
+            0,
+            1,
+            2
+          ],
+          "accepted": [
+            0
+          ],
+          "dropped": [
+            1,
+            2
+          ],
+          "processed": [
+            0
+          ],
+          "lost": [],
+          "completions": {
+            "0": 3
+          }
+        }
+      ],
+      "counts": {
+        "arrived": 3,
+        "accepted": 1,
+        "dropped": 2,
+        "processed": 1,
+        "lost": 0,
+        "pending": 0
+      }
+    },
+    {
+      "case": "capacity-negative",
+      "input": {
+        "id": "capacity-negative",
+        "label": "capacity負数拒否",
+        "capacity": -1,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "CAPACITY",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "capacity-bool",
+      "input": {
+        "id": "capacity-bool",
+        "label": "capacity bool拒否",
+        "capacity": true,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "CAPACITY",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "capacity4",
+      "input": {
+        "id": "capacity4",
+        "label": "capacity4は契約外",
+        "capacity": 4,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "CAPACITY",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "event-id-bool",
+      "input": {
+        "id": "event-id-bool",
+        "label": "event ID bool拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": false,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_ID",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "event-tick-bool",
+      "input": {
+        "id": "event-tick-bool",
+        "label": "event tick bool拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": false
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_TICK",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "events-type",
+      "input": {
+        "id": "events-type",
+        "label": "event list型不正",
+        "capacity": 2,
+        "mode": "queue",
+        "events": {},
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENTS_TYPE",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "duplicate-id",
+      "input": {
+        "id": "duplicate-id",
+        "label": "event ID重複拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 0,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "DUPLICATE_ID",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "extra-event-field",
+      "input": {
+        "id": "extra-event-field",
+        "label": "event field過剰拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0,
+            "payload": "not in subset"
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_FIELDS",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "duplicate-tick",
+      "input": {
+        "id": "duplicate-tick",
+        "label": "同tick到着は契約外",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 0
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "DUPLICATE_TICK",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "event-order",
+      "input": {
+        "id": "event-order",
+        "label": "到着順不正拒否",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 2,
+            "tick": 2
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 0,
+            "tick": 0
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_ORDER",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "event-tick3",
+      "input": {
+        "id": "event-tick3",
+        "label": "tick3到着は契約外",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 3
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_TICK",
+      "timeline": null,
+      "counts": null
+    },
+    {
+      "case": "execution-failure",
+      "input": {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "capacity": 2,
+        "mode": "queue",
+        "events": [
+          {
+            "id": 0,
+            "tick": 0
+          },
+          {
+            "id": 1,
+            "tick": 1
+          },
+          {
+            "id": 2,
+            "tick": 2
+          }
+        ],
+        "variant": "execution-failure"
+      },
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected offload model failure",
+      "timeline": null,
+      "counts": null
+    }
+  ],
+  "attempts": [
+    {
+      "case": "capacity2",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity2"
+      ],
+      "started_utc": "2026-10-05T14:39:40.369952+00:00",
+      "ended_utc": "2026-10-05T14:39:40.431714+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"capacity2\",\n  \"input\": {\n    \"id\": \"capacity2\",\n    \"label\": \"capacity2 / reject-newest\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [\n        0,\n        1\n      ],\n      \"arrived\": [\n        0,\n        1\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [\n        0,\n        1\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [\n        1\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [\n        2\n      ],\n      \"processed\": [\n        0\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3\n      }\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [\n        2\n      ],\n      \"processed\": [\n        0,\n        1\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3,\n        \"1\": 4\n      }\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [\n        2\n      ],\n      \"processed\": [\n        0,\n        1\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3,\n        \"1\": 4\n      }\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 3,\n    \"accepted\": 2,\n    \"dropped\": 1,\n    \"processed\": 2,\n    \"lost\": 0,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity3"
+      ],
+      "started_utc": "2026-10-05T14:39:40.431778+00:00",
+      "ended_utc": "2026-10-05T14:39:40.494784+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"capacity3\",\n  \"input\": {\n    \"id\": \"capacity3\",\n    \"label\": \"capacity3 / 全処理\",\n    \"capacity\": 3,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [\n        0,\n        1\n      ],\n      \"arrived\": [\n        0,\n        1\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [\n        0,\n        1,\n        2\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [\n        1,\n        2\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        0\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3\n      }\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [\n        2\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        0,\n        1\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3,\n        \"1\": 4\n      }\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        0,\n        1,\n        2\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3,\n        \"1\": 4,\n        \"2\": 5\n      }\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 3,\n    \"accepted\": 3,\n    \"dropped\": 0,\n    \"processed\": 3,\n    \"lost\": 0,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "slot-overwrite",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "slot-overwrite"
+      ],
+      "started_utc": "2026-10-05T14:39:40.494844+00:00",
+      "ended_utc": "2026-10-05T14:39:40.559082+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"slot-overwrite\",\n  \"input\": {\n    \"id\": \"slot-overwrite\",\n    \"label\": \"故障: 単一slot上書き\",\n    \"capacity\": 2,\n    \"mode\": \"slot-overwrite\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"FAULT_OVERWRITE\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [\n        1\n      ],\n      \"arrived\": [\n        0,\n        1\n      ],\n      \"accepted\": [\n        0,\n        1\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [\n        0\n      ],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [\n        2\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [\n        0,\n        1\n      ],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        2\n      ],\n      \"lost\": [\n        0,\n        1\n      ],\n      \"completions\": {\n        \"2\": 3\n      }\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        2\n      ],\n      \"lost\": [\n        0,\n        1\n      ],\n      \"completions\": {\n        \"2\": 3\n      }\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0,\n        1,\n        2\n      ],\n      \"dropped\": [],\n      \"processed\": [\n        2\n      ],\n      \"lost\": [\n        0,\n        1\n      ],\n      \"completions\": {\n        \"2\": 3\n      }\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 3,\n    \"accepted\": 3,\n    \"dropped\": 0,\n    \"processed\": 1,\n    \"lost\": 2,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "empty",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "empty"
+      ],
+      "started_utc": "2026-10-05T14:39:40.559149+00:00",
+      "ended_utc": "2026-10-05T14:39:40.622003+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"empty\",\n  \"input\": {\n    \"id\": \"empty\",\n    \"label\": \"到着なし / empty\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [],\n      \"accepted\": [],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 0,\n    \"accepted\": 0,\n    \"dropped\": 0,\n    \"processed\": 0,\n    \"lost\": 0,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity0",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity0"
+      ],
+      "started_utc": "2026-10-05T14:39:40.622042+00:00",
+      "ended_utc": "2026-10-05T14:39:40.686355+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"capacity0\",\n  \"input\": {\n    \"id\": \"capacity0\",\n    \"label\": \"capacity0 / 全reject\",\n    \"capacity\": 0,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [],\n      \"arrived\": [\n        0\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0,\n        1\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0,\n        1,\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0,\n        1,\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0,\n        1,\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [],\n      \"dropped\": [\n        0,\n        1,\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 3,\n    \"accepted\": 0,\n    \"dropped\": 3,\n    \"processed\": 0,\n    \"lost\": 0,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity1",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity1"
+      ],
+      "started_utc": "2026-10-05T14:39:40.686399+00:00",
+      "ended_utc": "2026-10-05T14:39:40.751403+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"capacity1\",\n  \"input\": {\n    \"id\": \"capacity1\",\n    \"label\": \"capacity1 / 2drop\",\n    \"capacity\": 1,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"tick\": 0,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 1,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0,\n        1\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [\n        1\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 2,\n      \"queue\": [\n        0\n      ],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [\n        1,\n        2\n      ],\n      \"processed\": [],\n      \"lost\": [],\n      \"completions\": {}\n    },\n    {\n      \"tick\": 3,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [\n        1,\n        2\n      ],\n      \"processed\": [\n        0\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3\n      }\n    },\n    {\n      \"tick\": 4,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [\n        1,\n        2\n      ],\n      \"processed\": [\n        0\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3\n      }\n    },\n    {\n      \"tick\": 5,\n      \"queue\": [],\n      \"arrived\": [\n        0,\n        1,\n        2\n      ],\n      \"accepted\": [\n        0\n      ],\n      \"dropped\": [\n        1,\n        2\n      ],\n      \"processed\": [\n        0\n      ],\n      \"lost\": [],\n      \"completions\": {\n        \"0\": 3\n      }\n    }\n  ],\n  \"counts\": {\n    \"arrived\": 3,\n    \"accepted\": 1,\n    \"dropped\": 2,\n    \"processed\": 1,\n    \"lost\": 0,\n    \"pending\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity-negative",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity-negative"
+      ],
+      "started_utc": "2026-10-05T14:39:40.751450+00:00",
+      "ended_utc": "2026-10-05T14:39:40.813823+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"capacity-negative\",\n  \"input\": {\n    \"id\": \"capacity-negative\",\n    \"label\": \"capacity負数拒否\",\n    \"capacity\": -1,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"CAPACITY\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity-bool",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity-bool"
+      ],
+      "started_utc": "2026-10-05T14:39:40.813855+00:00",
+      "ended_utc": "2026-10-05T14:39:40.877438+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"capacity-bool\",\n  \"input\": {\n    \"id\": \"capacity-bool\",\n    \"label\": \"capacity bool拒否\",\n    \"capacity\": true,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"CAPACITY\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "capacity4",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capacity4"
+      ],
+      "started_utc": "2026-10-05T14:39:40.877483+00:00",
+      "ended_utc": "2026-10-05T14:39:40.939965+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"capacity4\",\n  \"input\": {\n    \"id\": \"capacity4\",\n    \"label\": \"capacity4は契約外\",\n    \"capacity\": 4,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"CAPACITY\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "event-id-bool",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "event-id-bool"
+      ],
+      "started_utc": "2026-10-05T14:39:40.939995+00:00",
+      "ended_utc": "2026-10-05T14:39:41.001753+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"event-id-bool\",\n  \"input\": {\n    \"id\": \"event-id-bool\",\n    \"label\": \"event ID bool拒否\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": false,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_ID\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "event-tick-bool",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "event-tick-bool"
+      ],
+      "started_utc": "2026-10-05T14:39:41.001804+00:00",
+      "ended_utc": "2026-10-05T14:39:41.066811+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"event-tick-bool\",\n  \"input\": {\n    \"id\": \"event-tick-bool\",\n    \"label\": \"event tick bool拒否\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": false\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_TICK\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "events-type",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "events-type"
+      ],
+      "started_utc": "2026-10-05T14:39:41.066843+00:00",
+      "ended_utc": "2026-10-05T14:39:41.129548+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"events-type\",\n  \"input\": {\n    \"id\": \"events-type\",\n    \"label\": \"event list型不正\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": {},\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENTS_TYPE\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "duplicate-id",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "duplicate-id"
+      ],
+      "started_utc": "2026-10-05T14:39:41.129582+00:00",
+      "ended_utc": "2026-10-05T14:39:41.191859+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"duplicate-id\",\n  \"input\": {\n    \"id\": \"duplicate-id\",\n    \"label\": \"event ID重複拒否\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 0,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"DUPLICATE_ID\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "extra-event-field",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "extra-event-field"
+      ],
+      "started_utc": "2026-10-05T14:39:41.191892+00:00",
+      "ended_utc": "2026-10-05T14:39:41.253913+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"extra-event-field\",\n  \"input\": {\n    \"id\": \"extra-event-field\",\n    \"label\": \"event field過剰拒否\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0,\n        \"payload\": \"not in subset\"\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_FIELDS\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "duplicate-tick",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "duplicate-tick"
+      ],
+      "started_utc": "2026-10-05T14:39:41.253950+00:00",
+      "ended_utc": "2026-10-05T14:39:41.316822+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"duplicate-tick\",\n  \"input\": {\n    \"id\": \"duplicate-tick\",\n    \"label\": \"同tick到着は契約外\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 0\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"DUPLICATE_TICK\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "event-order",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "event-order"
+      ],
+      "started_utc": "2026-10-05T14:39:41.316855+00:00",
+      "ended_utc": "2026-10-05T14:39:41.378696+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"event-order\",\n  \"input\": {\n    \"id\": \"event-order\",\n    \"label\": \"到着順不正拒否\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 2,\n        \"tick\": 2\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 0,\n        \"tick\": 0\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_ORDER\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "event-tick3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "event-tick3"
+      ],
+      "started_utc": "2026-10-05T14:39:41.378735+00:00",
+      "ended_utc": "2026-10-05T14:39:41.439415+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"event-tick3\",\n  \"input\": {\n    \"id\": \"event-tick3\",\n    \"label\": \"tick3到着は契約外\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 3\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_TICK\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "execution-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "execution-failure"
+      ],
+      "started_utc": "2026-10-05T14:39:41.439447+00:00",
+      "ended_utc": "2026-10-05T14:39:41.500451+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"case\": \"execution-failure\",\n  \"input\": {\n    \"id\": \"execution-failure\",\n    \"label\": \"実Error注入 / 正常答えなし\",\n    \"capacity\": 2,\n    \"mode\": \"queue\",\n    \"events\": [\n      {\n        \"id\": 0,\n        \"tick\": 0\n      },\n      {\n        \"id\": 1,\n        \"tick\": 1\n      },\n      {\n        \"id\": 2,\n        \"tick\": 2\n      }\n    ],\n    \"variant\": \"execution-failure\"\n  },\n  \"status\": \"EXECUTION_FAILURE\",\n  \"reason\": \"injected offload model failure\",\n  \"timeline\": null,\n  \"counts\": null\n}\n",
+      "stderr": ""
+    }
+  ]
+}

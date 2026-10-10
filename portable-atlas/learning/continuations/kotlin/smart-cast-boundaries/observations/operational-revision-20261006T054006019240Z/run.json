@@ -1,0 +1,799 @@
+{
+  "schema": "atlas.kotlin-smart-cast-boundaries.observation.v1",
+  "started_at": "2026-10-06T05:46:42.223658+00:00",
+  "source_sha256": {
+    "expected.json": "dbf866edb1797dbd856c4c8612216540388087848c8cc0e05347d2729f6d6181",
+    "sources.json": "b8ff6929901b054574b5994099834b9d0d51c1639234575c474ad971340638cd",
+    "run.py": "75dbbfd7311b66359c3da66cf959d2f9b33e4662b6ae0205298d4a945a827b85",
+    "resource_gate.py": "9995f36f36573ec775bf62002f1cf8724a7f173365aa19c97e98dd8250d0f1ed",
+    "src/SnapshotAndContrast.kt": "2e5846c76e4508906ebc6e4dac9a44d66233d0fa362aac22e20aade407449968",
+    "src/MutablePropertyRejected.kt": "f6588e16b025057730c9df76eabac69d34688fe340f3c419f515f0a507bb656b",
+    "src/CustomGetterRejected.kt": "07f03e6f1970ffca61ba373463b5d69d8677d1c593ac915306a28853bc6259f3"
+  },
+  "compiles": [
+    {
+      "label": "snapshot-and-contrast",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/SnapshotAndContrast.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 2.121553,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50563,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "snapshot-and-contrast",
+      "artifact_created": true,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar",
+      "artifact_sha256": "7bd13157d96d2ffe165ccdd8fef7809fdbfac2d9b605614fbc3e63f46a6f682a"
+    },
+    {
+      "label": "mutable-property-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/MutablePropertyRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/mutable-property-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/MutablePropertyRejected.kt:6:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'value' is a mutable property that could be mutated concurrently.\n        return box.value.length\n               ^^^^^^^^^\n",
+      "elapsed_seconds": 1.723446,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50589,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "mutable-property-rejected",
+      "artifact_created": false,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/mutable-property-rejected.jar",
+      "artifact_sha256": null
+    },
+    {
+      "label": "custom-getter-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CustomGetterRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/custom-getter-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/CustomGetterRejected.kt:13:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'value' is a property that has an open or custom getter.\n        return box.value.length\n               ^^^^^^^^^\n",
+      "elapsed_seconds": 1.690452,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50600,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "custom-getter-rejected",
+      "artifact_created": false,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/custom-getter-rejected.jar",
+      "artifact_sha256": null
+    }
+  ],
+  "runs": [
+    {
+      "label": "mutable-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "mutable-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "SOURCE_INITIAL=Ada\nSOURCE_NOW=<null>\nSNAPSHOT=Ada\nRESULT=3\n",
+      "stderr": "",
+      "elapsed_seconds": 0.140582,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50577,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "mutable-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "mutable-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "mutable-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "SOURCE_INITIAL=<null>\nSOURCE_NOW=Ada\nSNAPSHOT=<null>\nRESULT=SKIPPED\n",
+      "stderr": "",
+      "elapsed_seconds": 0.121107,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50610,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "mutable-snapshot",
+      "input": "null"
+    },
+    {
+      "label": "getter-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=Ada\nSNAPSHOT=Ada\nRESULT=3\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n",
+      "stderr": "",
+      "elapsed_seconds": 0.124961,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50611,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "getter-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=<null>\nSNAPSHOT=<null>\nRESULT=SKIPPED\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n",
+      "stderr": "",
+      "elapsed_seconds": 0.136434,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50612,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-snapshot",
+      "input": "null"
+    },
+    {
+      "label": "getter-repeated-assertion-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-repeated-assertion",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "GET#1=Ada\nGUARD=non-null\nGET#2=<null>\n",
+      "stderr": "Exception in thread \"main\" java.lang.NullPointerException\n\tat SnapshotAndContrastKt.getterRepeatedAssertion(SnapshotAndContrast.kt:55)\n\tat SnapshotAndContrastKt.main(SnapshotAndContrast.kt:73)\n",
+      "elapsed_seconds": 0.146484,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50613,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-repeated-assertion",
+      "input": "ada"
+    },
+    {
+      "label": "getter-repeated-assertion-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-repeated-assertion",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=<null>\nGUARD=null\nRESULT=SKIPPED\nREADS=1\n",
+      "stderr": "",
+      "elapsed_seconds": 0.136244,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50614,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-repeated-assertion",
+      "input": "null"
+    }
+  ],
+  "commands": [
+    {
+      "label": "compiler-version",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "-version"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "info: kotlinc-jvm 2.4.10 (JRE 17.0.17+0)\n",
+      "elapsed_seconds": 1.493443,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50549,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      }
+    },
+    {
+      "label": "java-version",
+      "command": [
+        "<java-17>",
+        "-version"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "openjdk version \"17.0.17\" 2025-10-21\nOpenJDK Runtime Environment Homebrew (build 17.0.17+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.17+0, mixed mode, sharing)\n",
+      "elapsed_seconds": 0.103092,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50562,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      }
+    },
+    {
+      "label": "snapshot-and-contrast",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/SnapshotAndContrast.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 2.121553,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50563,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "snapshot-and-contrast",
+      "artifact_created": true,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar",
+      "artifact_sha256": "7bd13157d96d2ffe165ccdd8fef7809fdbfac2d9b605614fbc3e63f46a6f682a"
+    },
+    {
+      "label": "mutable-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "mutable-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "SOURCE_INITIAL=Ada\nSOURCE_NOW=<null>\nSNAPSHOT=Ada\nRESULT=3\n",
+      "stderr": "",
+      "elapsed_seconds": 0.140582,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50577,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "mutable-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "mutable-property-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/MutablePropertyRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/mutable-property-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/MutablePropertyRejected.kt:6:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'value' is a mutable property that could be mutated concurrently.\n        return box.value.length\n               ^^^^^^^^^\n",
+      "elapsed_seconds": 1.723446,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50589,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "mutable-property-rejected",
+      "artifact_created": false,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/mutable-property-rejected.jar",
+      "artifact_sha256": null
+    },
+    {
+      "label": "custom-getter-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CustomGetterRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/operational-revision-20261006T054006019240Z/custom-getter-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/CustomGetterRejected.kt:13:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'value' is a property that has an open or custom getter.\n        return box.value.length\n               ^^^^^^^^^\n",
+      "elapsed_seconds": 1.690452,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50600,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "custom-getter-rejected",
+      "artifact_created": false,
+      "artifact": "observations/operational-revision-20261006T054006019240Z/custom-getter-rejected.jar",
+      "artifact_sha256": null
+    },
+    {
+      "label": "mutable-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "mutable-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "SOURCE_INITIAL=<null>\nSOURCE_NOW=Ada\nSNAPSHOT=<null>\nRESULT=SKIPPED\n",
+      "stderr": "",
+      "elapsed_seconds": 0.121107,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50610,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "mutable-snapshot",
+      "input": "null"
+    },
+    {
+      "label": "getter-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=Ada\nSNAPSHOT=Ada\nRESULT=3\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n",
+      "stderr": "",
+      "elapsed_seconds": 0.124961,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50611,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "getter-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=<null>\nSNAPSHOT=<null>\nRESULT=SKIPPED\nGET#2=<null>\nNEXT_READ=<null>\nREADS=2\n",
+      "stderr": "",
+      "elapsed_seconds": 0.136434,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50612,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-snapshot",
+      "input": "null"
+    },
+    {
+      "label": "getter-repeated-assertion-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-repeated-assertion",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "GET#1=Ada\nGUARD=non-null\nGET#2=<null>\n",
+      "stderr": "Exception in thread \"main\" java.lang.NullPointerException\n\tat SnapshotAndContrastKt.getterRepeatedAssertion(SnapshotAndContrast.kt:55)\n\tat SnapshotAndContrastKt.main(SnapshotAndContrast.kt:73)\n",
+      "elapsed_seconds": 0.146484,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50613,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-repeated-assertion",
+      "input": "ada"
+    },
+    {
+      "label": "getter-repeated-assertion-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/operational-revision-20261006T054006019240Z/snapshot-and-contrast.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "SnapshotAndContrastKt",
+        "getter-repeated-assertion",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "GET#1=<null>\nGUARD=null\nRESULT=SKIPPED\nREADS=1\n",
+      "stderr": "",
+      "elapsed_seconds": 0.136244,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 50614,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "getter-repeated-assertion",
+      "input": "null"
+    }
+  ],
+  "errors": [],
+  "global_concurrency_guarantee": false,
+  "all_properties_covered": false,
+  "execution_policy": {
+    "sequential": true,
+    "nice_increment": 10,
+    "compiler_heap_mib": 256,
+    "active_processor_count": 1,
+    "batch_budget_seconds": 45,
+    "per_command_timeout_seconds": 15,
+    "runtime_heap_mib": 64,
+    "representative_first": true,
+    "retries": 0
+  },
+  "toolchain": {
+    "tree_matches_archive": true,
+    "tree_file_count": 125,
+    "archive_sha256": "473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+    "launcher_sha256": "7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92"
+  },
+  "compiler_probe": {
+    "label": "compiler-version",
+    "command": [
+      "<kotlinc-2.4.10>",
+      "-version"
+    ],
+    "nice_increment": 10,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "info: kotlinc-jvm 2.4.10 (JRE 17.0.17+0)\n",
+    "elapsed_seconds": 1.493443,
+    "attempt": 1,
+    "retry": 0,
+    "timed_out": false,
+    "owned_process_group_remaining_after_exit": false,
+    "priority_observation": {
+      "pgid": 50549,
+      "before": 0,
+      "after": 10,
+      "verified_before_exec": true
+    }
+  },
+  "java_probe": {
+    "label": "java-version",
+    "command": [
+      "<java-17>",
+      "-version"
+    ],
+    "nice_increment": 10,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "openjdk version \"17.0.17\" 2025-10-21\nOpenJDK Runtime Environment Homebrew (build 17.0.17+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.17+0, mixed mode, sharing)\n",
+    "elapsed_seconds": 0.103092,
+    "attempt": 1,
+    "retry": 0,
+    "timed_out": false,
+    "owned_process_group_remaining_after_exit": false,
+    "priority_observation": {
+      "pgid": 50562,
+      "before": 0,
+      "after": 10,
+      "verified_before_exec": true
+    }
+  },
+  "representative_passed": true,
+  "collection_complete": true,
+  "resource_gate_after_representative": {
+    "observed_at": "2026-10-06T05:46:46.580783+00:00",
+    "policy": "aggregate-headroom-for-one-limited-child-v2",
+    "cpu_count": 12,
+    "limits": {
+      "minimum_cpu_idle_percent": 30,
+      "maximum_load_per_cpu": 0.75,
+      "minimum_memory_free_percent": 15,
+      "minimum_available_estimate_bytes": 2147483648
+    },
+    "reads": {
+      "cpu": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "memory-pressure-query": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "vm-stat": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "physical-memory": {
+        "exit_code": 0,
+        "stderr": ""
+      }
+    },
+    "allowed": true,
+    "compiler_started": false,
+    "browser_started": false,
+    "blockers": [],
+    "known_work_context": "Parent reports SRE local runtime repair, cloud zero; Flutter compiler waiting.",
+    "protected_deepseek_ui": {
+      "cpu_limit": 0.5,
+      "ram_mib": 768,
+      "modified": false
+    },
+    "observation_limit": "Instantaneous OS readings. Free + speculative + inactive is a reclaimable-memory estimate, not an allocation guarantee. Process names cannot prove absence of all unknown workloads.",
+    "cpu_samples": [
+      {
+        "user_percent": 13.35,
+        "system_percent": 23.39,
+        "idle_percent": 63.24
+      },
+      {
+        "user_percent": 17.98,
+        "system_percent": 27.53,
+        "idle_percent": 54.47
+      }
+    ],
+    "memory_pressure_query": "The system has 25769803776 (1572864 pages with a page size of 16384).\nSystem-wide memory free percentage: 39%",
+    "memory_free_percent": 39,
+    "vm_memory": {
+      "page_size": 16384,
+      "free_bytes": 65929216,
+      "speculative_bytes": 12746752,
+      "inactive_bytes": 4910071808,
+      "available_estimate_bytes": 4988747776
+    },
+    "physical_memory_bytes": 25769803776,
+    "process_read_count": 778,
+    "known_heavy_workloads": [],
+    "top_cpu_diagnostics": [
+      {
+        "cpu_percent": 97.5,
+        "rss_kib": 1822144,
+        "name": "Codex (Renderer)"
+      },
+      {
+        "cpu_percent": 64.6,
+        "rss_kib": 17616,
+        "name": "ApplicationsStorageExtension"
+      },
+      {
+        "cpu_percent": 59.6,
+        "rss_kib": 334080,
+        "name": "com.apple.Virtualization.VirtualMachine"
+      },
+      {
+        "cpu_percent": 52.3,
+        "rss_kib": 15888,
+        "name": "StorageManagementService"
+      },
+      {
+        "cpu_percent": 52.2,
+        "rss_kib": 73072,
+        "name": "aws"
+      },
+      {
+        "cpu_percent": 47.6,
+        "rss_kib": 16000,
+        "name": "com.eset.endpoint"
+      }
+    ],
+    "reason": "Observed headroom permits one nice 10, 1 active processor, 256 MiB heap child."
+  },
+  "finished_at": "2026-10-06T05:46:53.059487+00:00",
+  "batch_elapsed_seconds": 10.834617,
+  "source_unchanged": true
+}

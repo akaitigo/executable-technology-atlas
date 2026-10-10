@@ -1,0 +1,385 @@
+{
+  "schema": 1,
+  "started_at_utc": "2026-10-06T05:34:44.780996+00:00",
+  "kind": "finite-python-model-validation",
+  "python": "3.9.6",
+  "machine": "arm64",
+  "platform": "Darwin",
+  "artifact_sha256": {
+    "fixtures.json": "a8603254b759d508f9aa1b9ed7a6999ba2f46ffa7513c8cb2e2cf8f76b05d8cf",
+    "hand-oracle.json": "8eed335ee94fda1a9c9421ddc649f782d88bc458d59f4995fc685e1ce0e8d33a",
+    "hand-oracle-lock.json": "a7575cc0fac860d8cd53f19ef40f30824ba3d5980d71d149a4905a35f1304acb",
+    "model.py": "2d1c7ac841ecd283d8b825a18f99c2d8b82fc55f2a3582d5c139883d21909149",
+    "verify.py": "a9387ea0772989f4b22b5aa24566280c83135bfcf4229f559a139f6aadc7c99b",
+    "source-review.json": "5bb08ee6590ae06ba0ce4be3ab9ec40e60d13c9d2289342dd02ef3fd0db5e9e5"
+  },
+  "upstream_code_executed": false,
+  "live_executed": false,
+  "browser_executed": false,
+  "image_qa_executed": false,
+  "compiler_executed": false,
+  "attempt": 1,
+  "retry": 0,
+  "model_check_seconds": 0.001112,
+  "status": "pass",
+  "cases": 5,
+  "task_inputs": 15,
+  "outcomes": {
+    "apply-ascending": {
+      "declared_order": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "effective_waves": {
+        "high": 8,
+        "low": -3,
+        "mid": 1
+      },
+      "batches": [
+        {
+          "wave": -3,
+          "prune": [],
+          "apply": [
+            "low"
+          ]
+        },
+        {
+          "wave": 1,
+          "prune": [],
+          "apply": [
+            "mid"
+          ]
+        },
+        {
+          "wave": 8,
+          "prune": [],
+          "apply": [
+            "high"
+          ]
+        }
+      ],
+      "started": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "results": {
+        "low": {
+          "result": "Synced",
+          "observation": "ready"
+        },
+        "mid": {
+          "result": "Synced",
+          "observation": "ready"
+        },
+        "high": {
+          "result": "Synced",
+          "observation": "unobserved"
+        }
+      },
+      "unstarted": [],
+      "stop": {
+        "reason": "plan-consumed",
+        "wave": 8
+      }
+    },
+    "prune-descending": {
+      "declared_order": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "effective_waves": {
+        "high": -3,
+        "low": 8,
+        "mid": 1
+      },
+      "batches": [
+        {
+          "wave": -3,
+          "prune": [
+            "high"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 1,
+          "prune": [
+            "mid"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 8,
+          "prune": [
+            "low"
+          ],
+          "apply": []
+        }
+      ],
+      "started": [
+        "high",
+        "mid",
+        "low"
+      ],
+      "results": {
+        "high": {
+          "result": "Pruned",
+          "observation": "absent"
+        },
+        "mid": {
+          "result": "Pruned",
+          "observation": "absent"
+        },
+        "low": {
+          "result": "Pruned",
+          "observation": "unobserved"
+        }
+      },
+      "unstarted": [],
+      "stop": {
+        "reason": "plan-consumed",
+        "wave": 8
+      }
+    },
+    "prune-waiting": {
+      "declared_order": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "effective_waves": {
+        "high": -3,
+        "low": 8,
+        "mid": 1
+      },
+      "batches": [
+        {
+          "wave": -3,
+          "prune": [
+            "high"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 1,
+          "prune": [
+            "mid"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 8,
+          "prune": [
+            "low"
+          ],
+          "apply": []
+        }
+      ],
+      "started": [
+        "high"
+      ],
+      "results": {
+        "high": {
+          "result": "Pruned",
+          "observation": "terminating"
+        }
+      },
+      "unstarted": [
+        "mid",
+        "low"
+      ],
+      "stop": {
+        "reason": "next-reconciliation-waits-for-deletion",
+        "wave": -3
+      }
+    },
+    "prune-failed": {
+      "declared_order": [
+        "low",
+        "mid",
+        "high"
+      ],
+      "effective_waves": {
+        "high": -3,
+        "low": 8,
+        "mid": 1
+      },
+      "batches": [
+        {
+          "wave": -3,
+          "prune": [
+            "high"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 1,
+          "prune": [
+            "mid"
+          ],
+          "apply": []
+        },
+        {
+          "wave": 8,
+          "prune": [
+            "low"
+          ],
+          "apply": []
+        }
+      ],
+      "started": [
+        "high",
+        "mid"
+      ],
+      "results": {
+        "high": {
+          "result": "Pruned",
+          "observation": "absent"
+        },
+        "mid": {
+          "result": "SyncFailed",
+          "observation": "unobserved"
+        }
+      },
+      "unstarted": [
+        "low"
+      ],
+      "stop": {
+        "reason": "runTasks-prune-failed",
+        "wave": 1
+      }
+    },
+    "mixed-same-wave-failed": {
+      "declared_order": [
+        "new",
+        "old",
+        "later"
+      ],
+      "effective_waves": {
+        "old": 0,
+        "new": 0,
+        "later": 2
+      },
+      "batches": [
+        {
+          "wave": 0,
+          "prune": [
+            "old"
+          ],
+          "apply": [
+            "new"
+          ]
+        },
+        {
+          "wave": 2,
+          "prune": [],
+          "apply": [
+            "later"
+          ]
+        }
+      ],
+      "started": [
+        "old"
+      ],
+      "results": {
+        "old": {
+          "result": "SyncFailed",
+          "observation": "unobserved"
+        }
+      },
+      "unstarted": [
+        "new",
+        "later"
+      ],
+      "stop": {
+        "reason": "runTasks-prune-failed",
+        "wave": 0
+      }
+    }
+  },
+  "expected_refusals": [
+    "prune_last",
+    "dry_run",
+    "prune",
+    "hooks",
+    "unknown-scope-field",
+    "boolean-wave",
+    "duplicate-id",
+    "unknown-action",
+    "missing-observation-before-later-wave",
+    "multiple-prunes-same-wave",
+    "failure-with-inferred-absence",
+    "empty-tasks"
+  ],
+  "altered_output_detections": [
+    "wave-sign-negation",
+    "prune-ascending",
+    "pruned-assumed-absent",
+    "continue-after-failure",
+    "same-wave-apply-after-prune-failure"
+  ],
+  "cli_checks": [
+    {
+      "name": "input-before-answer",
+      "arguments": [
+        "--case",
+        "prune-waiting",
+        "--view",
+        "input"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "pass": true,
+      "stdout_sha256": "c59ecce407f44a220055e05b3c709e3690a9bc4f15f408377cfc63e5d9fd0906"
+    },
+    {
+      "name": "correct-prediction",
+      "arguments": [
+        "--case",
+        "prune-waiting",
+        "--predict",
+        "high",
+        "--expect-stop",
+        "wait",
+        "--json"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "pass": true,
+      "stdout_sha256": "7b1d7bbc1fe8f41401df9121d8e5f8dff8759805d6a53ace9015e7e559facc46"
+    },
+    {
+      "name": "wrong-prediction",
+      "arguments": [
+        "--case",
+        "mixed-same-wave-failed",
+        "--predict",
+        "old,new",
+        "--expect-stop",
+        "consumed",
+        "--json"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "pass": true,
+      "stdout_sha256": "ab2ca29ef5c554d070c1b838deb58c8430b353b5a44a0573d26dccfa636cc4ac"
+    },
+    {
+      "name": "unknown-prediction-id",
+      "arguments": [
+        "--case",
+        "prune-waiting",
+        "--predict",
+        "ghost"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "pass": true,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "finished_at_utc": "2026-10-06T05:34:44.985839+00:00",
+  "total_seconds": 0.204976
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas — 別クロックへ事象は届く？</title><link rel="stylesheet" href="style.css"><script defer src="app.js"></script></head>
+<body><main>
+<header><p class="eyebrow">Atlas · FPGA / CDC · 理想0/1模型</p><h1>別クロックへ<br>事象は届く？</h1><p class="lead">送った回数と、宛先で検出した回数を分けて読む。</p><p>保存したPython計算を再生します。図は整数時刻の説明図です。実RTL・測定器の波形・物理的なmetastabilityの実測ではありません。</p></header>
+<section aria-labelledby="choose"><h2 id="choose">1. 条件と検出数を予想する</h2><p>時刻25までに宛先で何回検出するでしょう。levelを0へ戻す操作は送信事象に数えません。</p>
+<div id="cases" class="buttons" aria-label="条件">
+<button data-case="short-pulse" aria-pressed="true">短いpulse</button>
+<button data-case="held-level" aria-pressed="false">保持するlevel</button>
+<button data-case="toggle-single" aria-pressed="false">1回のtoggle</button>
+<button data-case="toggle-spaced" aria-pressed="false">間隔を置く2toggle</button>
+<button data-case="toggle-close" aria-pressed="false">近接する2toggle</button>
+</div><div id="predictions" class="buttons" aria-label="最終検出数の予想">
+<button data-prediction="0" aria-pressed="false">0回と予想</button>
+<button data-prediction="1" aria-pressed="false">1回と予想</button>
+<button data-prediction="2" aria-pressed="false">2回と予想</button>
+</div><div class="buttons"><button id="play" class="primary" disabled>保存した計算を再生</button><button id="reset">予想を消して戻る</button><button id="reload">保存資料を読み直す</button></div>
+<p id="status" role="status" aria-live="polite"></p><details id="input-detail"><summary>固定した入力を読む</summary><pre id="input"></pre></details></section>
+<section id="result" hidden><h2>2. 旧値から同時に更新する</h2><p id="case-title"></p><p>宛先edgeでは <code>ff1←送信bit、ff2←旧ff1、history←旧ff2</code>。その後の組合せ出力は、pulse/levelでは立上り、toggleでは両方向の変化を検出します。</p>
+<div class="cards" id="summary"></div><p class="note">送信件数・未観測数・時刻対応は、送信側も知る教材の診断です。宛先の論理にその情報を渡していません。</p>
+<h3>時刻を選ぶ</h3><div id="times" class="buttons time-buttons"></div><p id="current"></p><pre id="row-json"></pre>
+<p>出力がt=9から13まで1でも、途中のsource t=10,12で検出数を増やしません。destination edgeの出力1だけを数えます。</p>
+<p class="scroll-hint">狭い画面では図と表を横へ動かせます。送信bit、2FF、検出用historyは別の行です。</p><div id="wave-scroll" class="scroll" tabindex="0"><svg id="wave" role="img" aria-label="保存した理想0/1時系列"></svg></div>
+<details id="timeline-detail"><summary>全20時点の計算結果</summary><div id="table-scroll" class="scroll" tabindex="0"><table id="timeline"><thead><tr><th>時刻</th><th>edge</th><th>送信bit</th><th>sample</th><th>ff1</th><th>ff2</th><th>history</th><th>出力</th><th>この時点の検出</th><th>累計</th></tr></thead><tbody></tbody></table></div></details></section>
+<section id="comparison" hidden><h2>3. 同じ宛先clockで比較する</h2><div id="comparison-scroll" class="scroll"><table id="compare"><thead><tr><th>条件</th><th>送信件数</th><th>検出時刻</th><th>検出件数</th><th>終了時の未観測</th></tr></thead><tbody></tbody></table></div><p>近接2toggleと短pulseは同じsample列になっても、元の事象は異なります。全0の受信だけではその違いを復元できません。間隔12の成功は一般の最小間隔の証明ではありません。</p></section>
+<section><h2>4. 原典と実装へ戻る</h2><p><a class="official" href="https://docs.amd.com/r/en-US/pg382-xpm-cdc-generator/XPM_CDC_PULSE">AMD PG382 XPM_CDC_PULSE</a> はfeedback・reset・段数・最小gapに固有条件のある製品macroです。今回の単純なtoggle模型と同一ではありません。</p><div class="buttons"><button id="show-source" disabled>実行時の実装を読む</button></div><details id="source-detail"><summary>保存した実装本文</summary><pre id="source"></pre></details>
+<nav aria-label="前提と資料"><a href="related.html?doc=counter">counterの旧値更新</a><a href="related.html?doc=coverage">元の次課題</a><a href="related.html?doc=ready-valid">ready-validの保持</a><a href="related.html?doc=ready-valid-code">前提の実装</a><a href="related.html?doc=prior-skill">前提Skill</a><a href="README.md">読む順と起動</a><a href="CONTRACT.md">固定した規約</a><a href="SOURCES.md">原典対応</a><a href="COVERAGE.md">対応範囲</a><a href="REPRODUCE.md">再現の区別</a><a href="SKILL.md">3つの問い</a></nav></section>
+<section><h2>5. 答えと実務の判断</h2><button id="answer-button" disabled>予想と答えを照合する</button><div id="answer" hidden></div><p>実務では事象/levelの意味と発生間隔、reset、ackやFIFOの必要性を別々に決めます。2FFの理想論理だけからMTBF、setup/hold、実FPGAの安全性を保証できません。</p></section>
+<footer><p>Atlas の実施状況は<a href="qa/reader-acceptance.json">確認状態</a>へ。契約と手表は実装前に固定した記録です。</p></footer>
+</main></body></html>

@@ -1,0 +1,21 @@
+{
+  "subject_status":"部分教材: 固定plan/dummy toolの有限状態機械1単位。AI推論/LLM自律動作/外部tool未実行。",
+  "implemented":["固定著者planの状態遷移","dummy read/add allowlistと引数検査","step budget","loop/終了/エラー境界","tool resultのdata-only guardとbad promotion","状態・tool callのraw audit"],
+  "areas":[
+    {"area":"agentとworkflow・自律性","status":"部分教材","concepts":["目標/観測/行動","固定workflowとmodel planner","plan repair","不確実性"],"question":"固定planの実行と、観測からplanを選び直す推論は何が違うか？","source":"react"},
+    {"area":"tool schemaとdataflow","status":"部分教材","concepts":["allowlist","型/範囲","typed result binding","structured output","外部tool接続"],"question":"tool名が許可されていても、この引数と呼出し意図は許可されているか？","source":"agent-security"},
+    {"area":"状態・停止・実行制御","status":"部分教材","concepts":["状態遷移","end/abort","budget/timeout","loop detection","cancel"],"question":"tool回数だけでなくplan制御にも停止上限を設けられるか？","source":"state-machine"},
+    {"area":"memory・context","status":"未教材","concepts":["会話履歴","working/long-term memory","provenance","stale context","retrieval"],"question":"保存されたtool情報を次回の許可に昇格しないで使えるか？","source":"injection"},
+    {"area":"権限と人の介入","status":"部分教材","concepts":["capability","scope","approval","action integrity","least privilege"],"question":"誰がこの実操作を許可し、どこで停止/人への引継ぎを行うか？","source":"agent-security"},
+    {"area":"tool resultと攻撃境界","status":"部分教材","concepts":["data/instruction分離","indirect injection","output検査","poisoning"],"question":"有効な形式のtool resultでも新しいplanを決める権限を持つか？","source":"injection"},
+    {"area":"durable実行・復旧","status":"未教材","concepts":["retry/backoff","idempotency","checkpoint","compensation","resume"],"question":"中断と再試行で副作用が重複しないか？","source":"state-machine"},
+    {"area":"multi-agentとdelegation","status":"未教材","concepts":["役割/責務","handoff","共有状態","通信の権限","競合"],"question":"他agentの提案を誰の権限で採用するか？","source":"agent-security"},
+    {"area":"評価・監査・運用","status":"部分教材","concepts":["transition trace","task成功とpolicy違反","failure taxonomy","privacy","資源/cost/SLO"],"question":"正しい数値でも許可境界を破っていないことを検証できるか？","source":"agent-security"}
+  ],
+  "next_experiments":[
+    {"id":"typed-binding","question":"toolの値を次の引数へ使うとき、値と命令を分離できるか？","experiment":"固定result参照をtyped expressionで加え、欠損/型違反/参照cycleを独立dataflow oracleと比較する。evalや任意codeは使わない。","source":"agent-security"},
+    {"id":"call-authorization","question":"同じallowlisted addでも未承認の引数変更を拒否できるか？","experiment":"著者plan hashとcallごとの固定承認scopeを結び、tool-data由来の差替えをdispatch前に拒否するローカルtoy比較を作る。","source":"injection"},
+    {"id":"retry-idempotency","question":"同じstepを再実行すると副作用を重複させないか？","experiment":"外部writeの代わりにin-memory counterとoperation IDを使い、再試行あり/なしとcheckpoint再開を手動state oracleで比較する。","source":"state-machine"},
+    {"id":"pause-handoff","question":"予算不足やtool errorで停止した後、安全に再開できるか？","experiment":"固定pause/approve/cancel入力を持つtoy状態機械へ拡張し、失効plan/予算/再開位置を比較。実ユーザー権限やLLMの自律判断は別範囲とする。","source":"agent-security"}
+  ]
+}

@@ -1,0 +1,716 @@
+{
+  "title": "Atlas retry readiness saved calculation",
+  "schema": 1,
+  "status": "observed",
+  "observed_at_utc": "2026-10-06T22:31:46.861430+00:00",
+  "runtime": {
+    "python": "3.9.6",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "priority_observed": 10,
+  "fixture_sha256": "df13159e817ba661b698f1ad628c8e47b626f9ef13808a400c58da26b910935d",
+  "cases": [
+    {
+      "id": "retryable-resume",
+      "boundaries": [
+        {
+          "t": 0,
+          "b_state": "running",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 1,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 2,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 3,
+          "b_state": "running",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": 3,
+          "retry_time_met": true,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 4,
+          "b_state": "succeeded",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "running",
+          "b_value": 7,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 5,
+          "b_state": "succeeded",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "succeeded",
+          "b_value": 7,
+          "d_value": 14,
+          "policy_violation": false
+        }
+      ],
+      "b_attempts": [
+        {
+          "attempt": 1,
+          "start": 0,
+          "end": 1,
+          "outcome": "TRANSIENT",
+          "value": null
+        },
+        {
+          "attempt": 2,
+          "start": 3,
+          "end": 4,
+          "outcome": "SUCCESS",
+          "value": 7
+        }
+      ],
+      "d_attempts": [
+        {
+          "attempt": 1,
+          "start": 4,
+          "end": 5,
+          "input": 7,
+          "value": 14
+        }
+      ],
+      "failure_decisions": [
+        {
+          "at": 1,
+          "attempt": 1,
+          "error": "TRANSIENT",
+          "retryable": true,
+          "remaining_retries": 2,
+          "retry_planned": true,
+          "next_due": 3,
+          "terminal_reason": null
+        }
+      ],
+      "retry_checks": [
+        {
+          "at": 1,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 2,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 3,
+          "due": 3,
+          "eligible": true
+        }
+      ],
+      "workflow_status": "succeeded",
+      "classification": "NORMAL",
+      "unreached_outcomes": [],
+      "policy_violations": [],
+      "b_calls": 2,
+      "d_calls": 1
+    },
+    {
+      "id": "nonretryable-stop",
+      "boundaries": [
+        {
+          "t": 0,
+          "b_state": "running",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 1,
+          "b_state": "failed",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "blocked",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        }
+      ],
+      "b_attempts": [
+        {
+          "attempt": 1,
+          "start": 0,
+          "end": 1,
+          "outcome": "PERMANENT",
+          "value": null
+        }
+      ],
+      "d_attempts": [],
+      "failure_decisions": [
+        {
+          "at": 1,
+          "attempt": 1,
+          "error": "PERMANENT",
+          "retryable": false,
+          "remaining_retries": 2,
+          "retry_planned": false,
+          "next_due": null,
+          "terminal_reason": "nonretryable"
+        }
+      ],
+      "retry_checks": [],
+      "workflow_status": "failed",
+      "classification": "EXPECTED_TERMINAL_FAILURE",
+      "unreached_outcomes": [
+        "SUCCESS"
+      ],
+      "policy_violations": [],
+      "b_calls": 1,
+      "d_calls": 0
+    },
+    {
+      "id": "retry-budget-exhausted",
+      "boundaries": [
+        {
+          "t": 0,
+          "b_state": "running",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 1,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 2,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 3,
+          "b_state": "running",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": 3,
+          "retry_time_met": true,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 4,
+          "b_state": "retry-wait",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": 6,
+          "retry_due_checked": 6,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 5,
+          "b_state": "retry-wait",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": 6,
+          "retry_due_checked": 6,
+          "retry_time_met": false,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 6,
+          "b_state": "running",
+          "attempts_started": 3,
+          "retries_left": 0,
+          "waiting_until": null,
+          "retry_due_checked": 6,
+          "retry_time_met": true,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 7,
+          "b_state": "failed",
+          "attempts_started": 3,
+          "retries_left": 0,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "blocked",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        }
+      ],
+      "b_attempts": [
+        {
+          "attempt": 1,
+          "start": 0,
+          "end": 1,
+          "outcome": "TRANSIENT",
+          "value": null
+        },
+        {
+          "attempt": 2,
+          "start": 3,
+          "end": 4,
+          "outcome": "TRANSIENT",
+          "value": null
+        },
+        {
+          "attempt": 3,
+          "start": 6,
+          "end": 7,
+          "outcome": "TRANSIENT",
+          "value": null
+        }
+      ],
+      "d_attempts": [],
+      "failure_decisions": [
+        {
+          "at": 1,
+          "attempt": 1,
+          "error": "TRANSIENT",
+          "retryable": true,
+          "remaining_retries": 2,
+          "retry_planned": true,
+          "next_due": 3,
+          "terminal_reason": null
+        },
+        {
+          "at": 4,
+          "attempt": 2,
+          "error": "TRANSIENT",
+          "retryable": true,
+          "remaining_retries": 1,
+          "retry_planned": true,
+          "next_due": 6,
+          "terminal_reason": null
+        },
+        {
+          "at": 7,
+          "attempt": 3,
+          "error": "TRANSIENT",
+          "retryable": true,
+          "remaining_retries": 0,
+          "retry_planned": false,
+          "next_due": null,
+          "terminal_reason": "budget-exhausted"
+        }
+      ],
+      "retry_checks": [
+        {
+          "at": 1,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 2,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 3,
+          "due": 3,
+          "eligible": true
+        },
+        {
+          "at": 4,
+          "due": 6,
+          "eligible": false
+        },
+        {
+          "at": 5,
+          "due": 6,
+          "eligible": false
+        },
+        {
+          "at": 6,
+          "due": 6,
+          "eligible": true
+        }
+      ],
+      "workflow_status": "failed",
+      "classification": "EXPECTED_TERMINAL_FAILURE",
+      "unreached_outcomes": [],
+      "policy_violations": [],
+      "b_calls": 3,
+      "d_calls": 0
+    },
+    {
+      "id": "premature-downstream-block",
+      "boundaries": [
+        {
+          "t": 0,
+          "b_state": "running",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "pending",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": false
+        },
+        {
+          "t": 1,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "blocked",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": true
+        },
+        {
+          "t": 2,
+          "b_state": "retry-wait",
+          "attempts_started": 1,
+          "retries_left": 2,
+          "waiting_until": 3,
+          "retry_due_checked": 3,
+          "retry_time_met": false,
+          "d_state": "blocked",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": true
+        },
+        {
+          "t": 3,
+          "b_state": "running",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": 3,
+          "retry_time_met": true,
+          "d_state": "blocked",
+          "b_value": null,
+          "d_value": null,
+          "policy_violation": true
+        },
+        {
+          "t": 4,
+          "b_state": "succeeded",
+          "attempts_started": 2,
+          "retries_left": 1,
+          "waiting_until": null,
+          "retry_due_checked": null,
+          "retry_time_met": null,
+          "d_state": "blocked",
+          "b_value": 7,
+          "d_value": null,
+          "policy_violation": true
+        }
+      ],
+      "b_attempts": [
+        {
+          "attempt": 1,
+          "start": 0,
+          "end": 1,
+          "outcome": "TRANSIENT",
+          "value": null
+        },
+        {
+          "attempt": 2,
+          "start": 3,
+          "end": 4,
+          "outcome": "SUCCESS",
+          "value": 7
+        }
+      ],
+      "d_attempts": [],
+      "failure_decisions": [
+        {
+          "at": 1,
+          "attempt": 1,
+          "error": "TRANSIENT",
+          "retryable": true,
+          "remaining_retries": 2,
+          "retry_planned": true,
+          "next_due": 3,
+          "terminal_reason": null
+        }
+      ],
+      "retry_checks": [
+        {
+          "at": 1,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 2,
+          "due": 3,
+          "eligible": false
+        },
+        {
+          "at": 3,
+          "due": 3,
+          "eligible": true
+        }
+      ],
+      "workflow_status": "policy-violation",
+      "classification": "INTENTIONAL_FAULT",
+      "unreached_outcomes": [],
+      "policy_violations": [
+        {
+          "at": 1,
+          "kind": "downstream-finalized-before-upstream-terminal",
+          "downstream": "D"
+        }
+      ],
+      "b_calls": 2,
+      "d_calls": 0
+    }
+  ],
+  "input_refusals": [
+    {
+      "id": "schema-bool",
+      "status": "INPUT_REFUSED",
+      "reason": "INTEGER_REQUIRED",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "budget-float",
+      "status": "INPUT_REFUSED",
+      "reason": "INTEGER_REQUIRED",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "delay-bool",
+      "status": "INPUT_REFUSED",
+      "reason": "INTEGER_REQUIRED",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "missing-field",
+      "status": "INPUT_REFUSED",
+      "reason": "SCHEMA",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "extra-field",
+      "status": "INPUT_REFUSED",
+      "reason": "SCHEMA",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "reverse-edge",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_INPUT",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "negative-budget",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_INPUT",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "zero-delay",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_INPUT",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "different-duration",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_INPUT",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "different-result",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_INPUT",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "missing-case",
+      "status": "INPUT_REFUSED",
+      "reason": "CASE_SCHEMA",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "unknown-error",
+      "status": "INPUT_REFUSED",
+      "reason": "FAILURE_LABEL",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "nonstring-error",
+      "status": "INPUT_REFUSED",
+      "reason": "FAILURE_LABEL",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "future-success-changed",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_CASE",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "unknown-mode",
+      "status": "INPUT_REFUSED",
+      "reason": "FIXED_CASE",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "case-extra-field",
+      "status": "INPUT_REFUSED",
+      "reason": "CASE_SCHEMA",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    },
+    {
+      "id": "unknown-case",
+      "status": "INPUT_REFUSED",
+      "reason": "UNKNOWN_CASE",
+      "b_calls": 0,
+      "d_calls": 0,
+      "boundaries": [],
+      "value": null
+    }
+  ],
+  "scope": {
+    "model_only": true,
+    "logical_time": true,
+    "real_sleep_calls": 0,
+    "network_requests": 0,
+    "worker_runs": 0,
+    "airflow_runs": 0,
+    "browser_executed": false,
+    "server_started": false
+  }
+}

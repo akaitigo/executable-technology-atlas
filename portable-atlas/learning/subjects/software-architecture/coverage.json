@@ -1,0 +1,24 @@
+{
+  "subject": "software-architecture",
+  "scope": "有限1教材: same usecase, 2 adapters, contract, exception and source dependency; 全quality attribute未実証",
+  "areas": [
+    {"concept": "ports/adapters・依存方向", "status": "今回限定実測", "question": "coreが具体adapterのimportや内部DBを知っているか", "source": "hexagonal"},
+    {"concept": "interface・契約・置換可能性", "status": "固定12scenarioのみ実測", "question": "同じ応答と行を返すだけでなく業務契約にも適合しているか", "source": "protocol"},
+    {"concept": "例外変換・入力境界", "status": "今回限定実測", "question": "storage例外をportの語彙へ変換し、invalid入力でportを呼ばずに済むか", "source": "python-sqlite"},
+    {"concept": "stakeholder・concern・viewpoint", "status": "未教材", "question": "誰のどの懸念を、どのviewと証拠で説明するか", "source": "architecture-description"},
+    {"concept": "context・component・runtime・deployment view", "status": "AST import図のみ; 他view未教材", "question": "コード依存と実行時呼び出し、process配置を混同していないか", "source": "c4"},
+    {"concept": "quality attribute scenario・tradeoff", "status": "未教材", "question": "modifiability、performance、availability、安全性を測る刺激と応答尺度は何か", "source": "atam"},
+    {"concept": "ADR・選択理由・evolution・technical debt", "status": "未教材", "question": "portを追加する価値とinterface維持コストをどう記録し、いつ再評価するか", "source": "adr"},
+    {"concept": "layered・modular monolith・microservice・event-driven styles", "status": "未教材", "question": "どの境界をmodule/process/networkへ置くと目的を満たすか", "source": "c4"},
+    {"concept": "domain境界・bounded context・data ownership", "status": "単一注文のみ; 未教材", "question": "変更理由とデータ所有をどこで分け、跨る不変条件をどう維持するか", "source": "hexagonal"},
+    {"concept": "consistency・failure boundary・distributed contract", "status": "単一storeのみ; 未教材", "question": "遅延、再送、部分失敗を跨ぐ契約とtransaction境界は何か", "source": "atam"},
+    {"concept": "security・resilience・observability・operability", "status": "一種類のstorage故障のみ; 未教材", "question": "認可、復旧、trace、運用手順をarchitectureの懸念へどう結ぶか", "source": "architecture-description"},
+    {"concept": "architecture fitness function・conformance・review", "status": "AST importと固定契約だけ実測", "question": "禁止依存検査にdynamic importや実行時違反の見落としはないか", "source": "adr"}
+  ],
+  "next_experiments": [
+    {"id": "N1", "title": "変更可能性を測りADRを残す", "experiment": "価格規則を120から別規則へ変える。port設計とtied設計の変更ファイル、誤差ケース、修正時間を同じ条件で記録し、port維持コストと採用理由をADRへまとめる。現教材だけで変更容易性の定量改善を主張しない。", "source": ["hexagonal", "adr", "atam"]},
+    {"id": "N2", "title": "viewと実行時境界を照合", "experiment": "context/component/deployment図を描き、実呼び出しtraceとsource import図を別々に比較する。dynamic importによる禁止依存を注入し、AST検査が見落とす範囲を実測する。", "source": ["architecture-description", "c4"]},
+    {"id": "N3", "title": "quality attributeを一つずつ評価", "experiment": "遅いstore、閉じたstore、負荷増加を別シナリオにし、環境・刺激・応答・尺度を固定してtimeout/availability/latencyを測る。memoryの速さから本番DB性能を推論せず、代替設計のtradeoffを比較する。", "source": ["atam", "python-sqlite"]},
+    {"id": "N4", "title": "複数境界の契約と進化", "experiment": "注文/在庫を別moduleへ分けてdata ownershipを定義し、次にprocess境界を跨ぐ再送・部分失敗・schema変更を小実験にする。認可と運用のconcernをviewへ対応させ、modular monolithとnetwork分割の選択をADRで判断する。", "source": ["architecture-description", "c4", "adr", "atam"]}
+  ]
+}

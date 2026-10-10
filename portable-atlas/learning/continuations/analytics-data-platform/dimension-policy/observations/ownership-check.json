@@ -1,0 +1,103 @@
+{
+  "title": "Atlas injected ownership checks",
+  "passed": true,
+  "checks": [
+    {
+      "case": "reaped",
+      "observed": {
+        "child_reaped": true,
+        "output_complete": true,
+        "owned_group_kill_sent": true,
+        "exit_code": -9
+      },
+      "passed": true
+    },
+    {
+      "case": "kill_failed_but_reaped",
+      "observed": {
+        "child_reaped": true,
+        "output_complete": true,
+        "kill_error": "kill injected",
+        "exit_code": -9
+      },
+      "passed": true
+    },
+    {
+      "case": "kill_and_reap_failed",
+      "observed": {
+        "child_reaped": false,
+        "output_complete": false,
+        "kill_error": "kill injected",
+        "reap_error": "reap injected",
+        "remaining_owned_pid": 123456789,
+        "further_launches_allowed": false
+      },
+      "passed": true
+    },
+    {
+      "case": "partial_after_timeout",
+      "observed": {
+        "child_reaped": false,
+        "output_complete": false,
+        "owned_group_kill_sent": true,
+        "reap_error": "Command 'fake' timed out after 2 seconds",
+        "remaining_owned_pid": 123456789,
+        "further_launches_allowed": false
+      },
+      "passed": true
+    },
+    {
+      "case": "priority_ready",
+      "observed": {
+        "title": "Atlas priority guard",
+        "ready": true,
+        "requested_nice": 10,
+        "observed_nice": 10,
+        "target_started": "exec follows"
+      },
+      "passed": true
+    },
+    {
+      "case": "set_failed",
+      "observed": {
+        "title": "Atlas priority guard",
+        "ready": false,
+        "requested_nice": 10,
+        "error": "injected set failure",
+        "target_started": false
+      },
+      "passed": true
+    },
+    {
+      "case": "get_failed",
+      "observed": {
+        "title": "Atlas priority guard",
+        "ready": false,
+        "requested_nice": 10,
+        "error": "injected get failure",
+        "target_started": false
+      },
+      "passed": true
+    },
+    {
+      "case": "value_mismatch",
+      "observed": {
+        "title": "Atlas priority guard",
+        "ready": false,
+        "requested_nice": 10,
+        "error": "requested nice 10, observed 0",
+        "target_started": false
+      },
+      "passed": true
+    }
+  ],
+  "real_processes_started": 0,
+  "real_signals_sent": 0,
+  "actual_priority_changed": false,
+  "model_executed": false,
+  "source_sha256": {
+    "run.py": "74213b967ab72fd6116a7cf1336be14ebfe9d8022fde8cacd514de1e56432504",
+    "priority_exec.py": "59dafc8108c12b90d1769f78f552a369cba81601395da774fd77ba89c54b4b25",
+    "check-ownership.py": "3b9862f966f18b27d692c51d91db44a4fed8d7d08343a781f85553b36364b317"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "authorship": "manual literal/expected table; not parser-generated",
+  "vectors": {
+    "quoted-space": {
+      "tail": "\"a b c\" d e",
+      "args": [
+        "a b c",
+        "d",
+        "e"
+      ],
+      "source": "MS CRT table row1: common subset, not native API evidence",
+      "reject_reason": null
+    },
+    "escaped-quote-and-slash": {
+      "tail": "\"ab\\\"c\" \"\\\\\" d",
+      "args": [
+        "ab\"c",
+        "\\",
+        "d"
+      ],
+      "source": "MS CRT table row2: common subset",
+      "reject_reason": null
+    },
+    "literal-slashes-embedded-quotes": {
+      "tail": "a\\\\\\b d\"e f\"g h",
+      "args": [
+        "a\\\\\\b",
+        "de fg",
+        "h"
+      ],
+      "source": "MS CRT table row3: common subset",
+      "reject_reason": null
+    },
+    "odd-three-slashes": {
+      "tail": "a\\\\\\\"b c d",
+      "args": [
+        "a\\\"b",
+        "c",
+        "d"
+      ],
+      "source": "MS CRT table row4: common subset",
+      "reject_reason": null
+    },
+    "even-four-slashes": {
+      "tail": "a\\\\\\\\\"b c\" d e",
+      "args": [
+        "a\\\\b c",
+        "d",
+        "e"
+      ],
+      "source": "MS CRT table row5: common subset",
+      "reject_reason": null
+    },
+    "empty-argument": {
+      "tail": "\"\" x",
+      "args": [
+        "",
+        "x"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "two-empty-arguments": {
+      "tail": "\"\" \"\"",
+      "args": [
+        "",
+        ""
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "tail-leading-trailing-space": {
+      "tail": "  a  b\t ",
+      "args": [
+        "a",
+        "b"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "tab-in-quotes": {
+      "tail": "\"a\tb\"\tc",
+      "args": [
+        "a\tb",
+        "c"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "literal-quote": {
+      "tail": "a\\\"b",
+      "args": [
+        "a\"b"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "trailing-backslashes": {
+      "tail": "a\\\\",
+      "args": [
+        "a\\\\"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "single-quote-not-special": {
+      "tail": "'a b'",
+      "args": [
+        "'a",
+        "b'"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "metachar-not-shell": {
+      "tail": "^&%VAR%",
+      "args": [
+        "^&%VAR%"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "empty-tail": {
+      "tail": "",
+      "args": [],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "max128-literal": {
+      "tail": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "args": [
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ],
+      "source": "author manual",
+      "reject_reason": null
+    },
+    "unbalanced-subset": {
+      "tail": "\"a b",
+      "args": null,
+      "source": "author manual",
+      "reject_reason": "unbalanced_quote_outside_subset"
+    },
+    "CRT-adjacent-outside-subset": {
+      "tail": "a\"b\"\" c d",
+      "args": null,
+      "source": "MS CRT table row6 intentionally excluded",
+      "reject_reason": "adjacent_syntactic_quotes_outside_subset"
+    },
+    "input-too-long": {
+      "tail": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "args": null,
+      "source": "author manual",
+      "reject_reason": "tail_max128"
+    },
+    "input-newline": {
+      "tail": "a\nb",
+      "args": null,
+      "source": "author manual",
+      "reject_reason": "ASCII_printable_or_tab_only"
+    },
+    "input-nul": {
+      "tail": "a\u0000b",
+      "args": null,
+      "source": "author manual",
+      "reject_reason": "ASCII_printable_or_tab_only"
+    },
+    "input-unicode": {
+      "tail": "\u65e5\u672c\u8a9e",
+      "args": null,
+      "source": "author manual",
+      "reject_reason": "ASCII_printable_or_tab_only"
+    }
+  }
+}

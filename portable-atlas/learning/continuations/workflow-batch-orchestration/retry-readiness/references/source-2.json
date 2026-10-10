@@ -1,0 +1,195 @@
+{
+  "title": "Atlas workflow remaining document navigation",
+  "started_at_utc": "2026-10-06T22:41:57.593Z",
+  "passed": true,
+  "errors": [],
+  "checks": [
+    {
+      "name": "document-CONTRACT.md",
+      "passed": true
+    },
+    {
+      "name": "document-PREREQUISITES.md",
+      "passed": true
+    },
+    {
+      "name": "document-model.py",
+      "passed": true
+    },
+    {
+      "name": "document-SOURCE-MAP.md",
+      "passed": true
+    },
+    {
+      "name": "document-SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "external-pointer-request-blocked",
+      "passed": true
+    }
+  ],
+  "actions": [
+    {
+      "kind": "pointer",
+      "selector": "a[href=\"CONTRACT.md\"]",
+      "x": 123,
+      "y": 422.1875,
+      "hit": true,
+      "href": "CONTRACT.md",
+      "text": "固定した時刻と予算の規約"
+    },
+    {
+      "kind": "pointer",
+      "selector": "a[href=\"PREREQUISITES.md\"]",
+      "x": 212.53125,
+      "y": 394.875,
+      "hit": true,
+      "href": "PREREQUISITES.md",
+      "text": "既存の前提"
+    },
+    {
+      "kind": "pointer",
+      "selector": "a[href=\"model.py\"]",
+      "x": 331,
+      "y": 408.1875,
+      "hit": true,
+      "href": "model.py",
+      "text": "計算の実装"
+    },
+    {
+      "kind": "pointer",
+      "selector": "a[href=\"SOURCE-MAP.md\"]",
+      "x": 75,
+      "y": 422.4375,
+      "hit": true,
+      "href": "SOURCE-MAP.md",
+      "text": "原典との対応"
+    },
+    {
+      "kind": "pointer",
+      "selector": "a[href=\"SKILL.md\"]",
+      "x": 97.6875,
+      "y": 740.796875,
+      "hit": true,
+      "href": "SKILL.md",
+      "text": "この教材を使うSkill"
+    },
+    {
+      "kind": "pointer",
+      "selector": "#official-source",
+      "x": 219.234375,
+      "y": 422.4375,
+      "hit": true,
+      "href": "https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html",
+      "text": "Airflow 3.3.2のTasks"
+    }
+  ],
+  "documents": [
+    {
+      "file": "CONTRACT.md",
+      "url": "http://127.0.0.1:63148/CONTRACT.md",
+      "body": "# Atlas — 再試行できる失敗でも、今始めてよいか\n\n目標27の学習経路・実験2を扱います。既存のDAGで、試行中や再試行待ちの下流はpending、上流の最終失敗後はblockedになることを学びました。この状態規則や再試行上限、指数待機、締切、結果再利用を新しい原理として数えません。今回の問いは、**失敗の分類・再開可能時刻・残る再試行予算を同時に満たすか**です。下流の状態は、その判断を確かめる既存の対照として再利用します。\n\n## 固定した前提と時刻\n\n仕事はB→Dの2つだけです。Bが成功すると7を返し、Dは受け取った値の2倍で14を返す純粋な計算です。入力の失敗は合成のラベル `TRANSIENT`（今回の方針で再試行可能）、`PERMANENT`（今回の方針で再試行しない）です。実際のネットワークやHTTP状態から失敗の性質を推定する実験ではありません。未知ラベルは実行前に入力拒否します。\n\n- 仮想時刻0から始めます。1 tickは秒ではありません。各試行は半開区間 `[start,start+1)` を占め、終了境界で結果を状態へ反映します。実時間sleep・外部要求・実worker・一般schedulerは使いません。\n- 再試行予算は2。これは初回を除く追加開始2回で、最大attempt総数は3です。初回開始では減らさず、追加attemptを開始する時点で残数を1減らします。待機予定を作るだけでは減らしません。\n- 再試行を許すには、失敗がTRANSIENTで、追加開始予算が残っている必要があります。PERMANENTなら予算が残っていても終端失敗です。予算0ならTRANSIENTでも終端です。\n- 再開可能時刻 `due = 失敗した試行の完了時刻 + 2`。開始時刻に2を足す規則ではありません。固定delay2は既存待機原理を使う教材値で、本番推奨ではありません。\n- `now < due` は待機、`now == due` から開始可能です。本模型は容量が常に空いているのでその境界で開始しますが、実schedulerの即時実行を保証しません。全体deadline・実timeout・取消は今回追加しません。\n- 同じ時刻では、完了結果→失敗分類と予算判定→下流状態→再開時刻判定→開始→状態保存の順です。DはB成功時だけ1回開始します。再試行待ちを、最終失敗と取り違えません。\n\n時刻0から最終境界までの全整数tickを保存します。再開時刻判定は、待機予定を作った失敗完了境界でも行い、直前・ちょうどを残します。`waiting_until` は待機中だけ非null、`retry_due_checked` と `retry_time_met` はその境界で判定した場合だけ値を持ちます。dueちょうどで開始した後はwaiting_until=nullですが、判定したdueとtrueはその境界に残します。\n\n## 4条件の先に固定する手予定\n\n| 条件 | Bの結果列 | Bの区間 | Dの区間・結果 | 判断 |\n|---|---|---|---|---|\n| retryable-resume | TRANSIENT, SUCCESS | [0,1), [3,4) | [4,5)、14 | t=1,2は待機、t=3から追加開始、残予算2→1 |\n| nonretryable-stop | PERMANENT, SUCCESS（未到達） | [0,1) | 実行0、t=1でblocked | 残予算2でも再試行せず、将来SUCCESSを先読みしない |\n| retry-budget-exhausted | TRANSIENT, TRANSIENT, TRANSIENT | [0,1), [3,4), [6,7) | 実行0、t=7でblocked | 初回を含む3試行で停止、4回目のdueは作らない |\n| premature-downstream-block | TRANSIENT, SUCCESS | [0,1), [3,4) | 実行0、t=1で誤ってblocked | 故障比較。Bは正常対照と同じだが、Dを最終blockedへ固定してB成功後も戻さない |\n\n故障例だけDのblockedを保持し続けます。故障の分類は `policy-violation` であり、Dを早く止めた正常な最適化とはしません。PERMANENTと予算枯渇は正しい方針で観測された終端失敗で、模型の実行失敗とは分けます。正常完了は1条件、期待どおりの終端失敗は2条件、意図的な方針違反は1条件です。\n\n全4条件でBの開始8回、Dの開始1回、計9回。21境界を手表へ固定します。B/D値がまだない場合はnullで、0や後の成功値に置換しません。入力ごとに状態を初期化し、成功結果を他条件へ再利用しません。\n\n## 入力・観測・独立照合\n\n入力は固定の2仕事、整数の予算2・delay2・duration1と4条件だけ。bool/floatを整数として受け入れず、未知条件・ラベル・余分なkey・別の辺や値・故障モードは開始前に拒否します。拒否はB/D呼出し0・境界なし・結果値nullです。\n\n保存結果には、全試行のstart/end/結果、失敗ごとの分類・残予算・due、全21境界の状態・値・再開判定、終端理由、下流の開始数、未到達の合成結果を分けます。全試行一覧は実行全体の記録であり、選択境界時点で既に観測済みの内容とは限りません。\n\n実装は整数tickの状態遷移で進めます。検査は実装をimportせず、固定した区間・literal状態表と、半開区間の包含、失敗完了+2の等式で照合します。別担当の独立期待を実装前に保存し、旧資料の状態原理と新しい合同判定を混同しません。\n\n## 原典と限界\n\nAirflow 3.3.2のTasks本文で、再試行の可否と上限、例外別方針、上流成功条件、up_for_retryを読みました。原典の `FAIL` / `RETRY` と分類する観点を参照しますが、固定ラベル・tick・delay2・now>=due・状態名は本教材の契約です。Airflowの実装互換、正確な待機式、永続workerや再開保証ではありません。[原典対応](SOURCE-MAP.md)に既存範囲を差し引いた根拠を残します。\n\nPython標準ライブラリの有限模型を予定します。対象計算は独立実行前確認・資源確認・専有枠の後に、実nice10の単一子、5秒と別回収2秒、再試行0で1回だけ行います。ブラウザーは既存の同じページを後で確認し、この契約段階では計算・ブラウザー・配信の開始0です。\n",
+      "source_sha256": "39d49374831f0f578bf7d3ee52fa8934a95a41953e4079f4afb08251bf89f136"
+    },
+    {
+      "file": "PREREQUISITES.md",
+      "url": "http://127.0.0.1:63148/PREREQUISITES.md",
+      "body": "Private execution context omitted from migration copy.",
+      "source_sha256": "eee09916bad78a05e678a50ea359700aaa9981643ce4289e0a7391c58cb90592"
+    },
+    {
+      "file": "model.py",
+      "url": "http://127.0.0.1:63148/model.py",
+      "body": "\"\"\"Atlas: finite retry classification, budget and logical-time readiness model.\"\"\"\n\nSPECS = [\n    ('retryable-resume', ['TRANSIENT', 'SUCCESS'], 'on-terminal-failure'),\n    ('nonretryable-stop', ['PERMANENT', 'SUCCESS'], 'on-terminal-failure'),\n    ('retry-budget-exhausted', ['TRANSIENT', 'TRANSIENT', 'TRANSIENT'], 'on-terminal-failure'),\n    ('premature-downstream-block', ['TRANSIENT', 'SUCCESS'], 'on-any-failure-sticky'),\n]\n\n\ndef require(condition, reason):\n    if not condition:\n        raise ValueError(reason)\n\n\ndef validate(fixture, case_id):\n    require(type(fixture) is dict and set(fixture) == {\n        'title', 'schema', 'edge', 'b_success_value', 'd_multiplier',\n        'retry_budget', 'retry_delay', 'attempt_duration', 'cases'}, 'SCHEMA')\n    for name in ['schema', 'b_success_value', 'd_multiplier', 'retry_budget', 'retry_delay', 'attempt_duration']:\n        require(type(fixture[name]) is int, 'INTEGER_REQUIRED')\n    require(fixture['title'] == 'Atlas fixed retry readiness inputs' and\n            fixture['schema'] == 1 and type(fixture['edge']) is list and fixture['edge'] == ['B', 'D'] and\n            (fixture['b_success_value'], fixture['d_multiplier'], fixture['retry_budget'],\n             fixture['retry_delay'], fixture['attempt_duration']) == (7, 2, 2, 2, 1), 'FIXED_INPUT')\n    require(type(fixture['cases']) is list and len(fixture['cases']) == 4, 'CASE_SCHEMA')\n    for case, (name, outcomes, mode) in zip(fixture['cases'], SPECS):\n        require(type(case) is dict and set(case) == {'id', 'outcomes', 'downstream_mode'}, 'CASE_SCHEMA')\n        require(type(case['outcomes']) is list and all(type(x) is str and x in\n                ['TRANSIENT', 'PERMANENT', 'SUCCESS'] for x in case['outcomes']), 'FAILURE_LABEL')\n        require(case['id'] == name and case['outcomes'] == outcomes and\n                case['downstream_mode'] == mode, 'FIXED_CASE')\n    require(type(case_id) is str and case_id in [s[0] for s in SPECS], 'UNKNOWN_CASE')\n    return next(c for c in fixture['cases'] if c['id'] == case_id)\n\n\ndef execute(fixture, case_id):\n    case = validate(fixture, case_id)  # No task start occurs before every input check.\n    b_state, d_state = 'pending', 'pending'\n    b_value = d_value = None\n    remaining = fixture['retry_budget']\n    due = b_active = d_active = None\n    attempts = []; downstream = []; boundaries = []; failures = []; checks = []; violations = []\n    for now in range(16):  # A hard finite bound, not a real-time scheduler.\n        checked = met = None\n        if b_active is not None and now == b_active['end']:\n            outcome = b_active['outcome']\n            if outcome == 'SUCCESS':\n                b_value = fixture['b_success_value']\n                b_active['value'] = b_value\n                b_state = 'succeeded'\n            else:\n                retryable = outcome == 'TRANSIENT'\n                planned = retryable and remaining > 0\n                due = now + fixture['retry_delay'] if planned else None\n                failures.append({'at': now, 'attempt': b_active['attempt'], 'error': outcome,\n                    'retryable': retryable, 'remaining_retries': remaining, 'retry_planned': planned,\n                    'next_due': due, 'terminal_reason': None if planned else\n                    ('nonretryable' if not retryable else 'budget-exhausted')})\n                b_state = 'retry-wait' if planned else 'failed'\n                if planned and case['downstream_mode'] == 'on-any-failure-sticky':\n                    d_state = 'blocked'\n                    violations.append({'at': now, 'kind': 'downstream-finalized-before-upstream-terminal', 'downstream': 'D'})\n            b_active = None\n        if d_active is not None and now == d_active['end']:\n            d_value = d_active['input'] * fixture['d_multiplier']\n            d_active['value'] = d_value\n            d_state = 'succeeded'; d_active = None\n        if b_state == 'failed' and d_state == 'pending':\n            d_state = 'blocked'\n        if b_state == 'retry-wait':\n            checked = due; met = now >= due\n            checks.append({'at': now, 'due': due, 'eligible': met})\n        if b_state == 'pending' or (b_state == 'retry-wait' and met):\n            if attempts:\n                require(remaining > 0, 'INTERNAL_BUDGET')\n                remaining -= 1\n            number = len(attempts) + 1\n            require(number <= len(case['outcomes']), 'INTERNAL_OUTCOME')\n            b_active = {'attempt': number, 'start': now, 'end': now + fixture['attempt_duration'],\n                        'outcome': case['outcomes'][number - 1], 'value': None}\n            attempts.append(b_active)\n            b_state = 'running'; due = None\n        if b_state == 'succeeded' and d_state == 'pending':\n            d_active = {'attempt': 1, 'start': now, 'end': now + fixture['attempt_duration'],\n                        'input': b_value, 'value': None}\n            downstream.append(d_active); d_state = 'running'\n        boundaries.append({'t': now, 'b_state': b_state, 'attempts_started': len(attempts),\n            'retries_left': remaining, 'waiting_until': due, 'retry_due_checked': checked,\n            'retry_time_met': met, 'd_state': d_state, 'b_value': b_value, 'd_value': d_value,\n            'policy_violation': bool(violations)})\n        if b_state in ['succeeded', 'failed'] and d_state in ['succeeded', 'blocked']:\n            break\n    else:\n        raise RuntimeError('finite model did not terminate')\n    status = 'policy-violation' if violations else ('succeeded' if d_state == 'succeeded' else 'failed')\n    classification = 'INTENTIONAL_FAULT' if violations else ('NORMAL' if status == 'succeeded' else 'EXPECTED_TERMINAL_FAILURE')\n    return {'id': case_id, 'boundaries': boundaries, 'b_attempts': attempts, 'd_attempts': downstream,\n            'failure_decisions': failures, 'retry_checks': checks, 'workflow_status': status,\n            'classification': classification, 'unreached_outcomes': case['outcomes'][len(attempts):],\n            'policy_violations': violations, 'b_calls': len(attempts), 'd_calls': len(downstream)}\n",
+      "source_sha256": "98c4aaf2337741c08eaf6174e9ba97044986e4d00d77d38a2f97eea35bd224ed"
+    },
+    {
+      "file": "SOURCE-MAP.md",
+      "url": "http://127.0.0.1:63148/SOURCE-MAP.md",
+      "body": "Private execution context omitted from migration copy.",
+      "source_sha256": "a4df8978f5807c64e4f0234ff420a35e2d42fe3a3ccce722036c177003dc00ec"
+    },
+    {
+      "file": "SKILL.md",
+      "url": "http://127.0.0.1:63148/SKILL.md",
+      "body": "---\nname: atlas-workflow-retry-readiness\ndescription: Atlasの固定B→D模型で、失敗分類・残る追加試行予算・再開可能時刻を同時に確認する判断を案内する。実Airflowや外部要求、実障害の自動分類には使わない。\n---\n\n# Atlas — 再試行の問いを比較へつなぐ\n\n[README](README.md)と[前提](PREREQUISITES.md)から始める。現在の実行・画面確認状況をREADMEで確認し、未実行の予想を観測済みと説明しない。\n\n- 「予算が残るなら何でも再試行できるか」にはnonretryable-stopを案内する。PERMANENTは今回の方針で非対象で、SUCCESSという未到達の入力を先読みして再試行を正当化しない。\n- 「再試行が予定されたら、すぐ始められるか」にはretryable-resumeの失敗完了t=1、due=3、t=2/3の対照へ。dueは失敗開始ではなく完了から計算する。時刻条件と実schedulerの即実行を分ける。\n- 「retry2は全部で何回か、いつ減るか」にはretry-budget-exhaustedへ。初回を含む3試行、追加開始時の残数2→1→0、最後の失敗後に新dueを作らないことを手表で確かめる。上限の原理自体は既存教材へ戻す。\n- 「失敗を見た下流は直ちにblockedか」には正常とpremature-downstream-blockを比較する。既存のpending/最終blocked規則を再利用し、Bが回復しても故障版のDは実行0であることを読む。\n- 「POSTや業務処理を安全に再送できるか」には[前提のAPI再送](PREREQUISITES.md)へ戻す。純粋な計算だけを行う今回の結果で副作用の重複防止を証明しない。\n\n予想→保存結果の操作→正常/終端失敗/故障比較→[原典対応](SOURCE-MAP.md)・[固定契約](CONTRACT.md)・[手表](hand-oracle.json)→答え→実務判断の順に案内する。未知の失敗分類、実workerの導入、外部送信、設定変更をこのSkillだけで行わない。[範囲](COVERAGE.md)に残る製品・実時間・永続化の検証へ一般化しない。\n",
+      "source_sha256": "954a4a7c24bea691a018ce83bf1045b23b1ea59645aa562620f86c10769dbc5f"
+    }
+  ],
+  "captures": [],
+  "source_before": {
+    "index.html": "b641b4281e292234f83fae3f399667981cec0e5fdc5ed9ab9a2cf9828278ce8d",
+    "reader.css": "024fc145246a982b7e442b6c2015b97bb87cab71ad2cb6deb29ec06284d797ef",
+    "reader-app.js": "29b98fe9664b5c23d4d46b16759774fff494697d398be0277fb5970c4547030e",
+    "reader-state.js": "3b6ee5f2b3018db73ddec507e2c633025a4f02714aabf8ed035b6d0bd1a0d748",
+    "reader-data.js": "aa2091e144122c14881c50462e0999d1fb8151571e358a97ec9307c7136f7a2f",
+    "reader-expectations.js": "ccb4ee31a7b366302204e6430cbde1d70658f584dc41891eb3f7de7601ea946c",
+    "check-browser.cjs": "55142d391deee8f6c4d4fd5621c96280164c99b84826cba7aaaaaa41999aa9f0",
+    "serve.py": "a42b94d27663ce20061d5a951992d202815537c4cfe93bcf7c69f09fb636969c",
+    "README.md": "773bcfb5300363311d92341f2f157764bb980466dead0dbbccb302eaa0b7a33b",
+    "CONTRACT.md": "39d49374831f0f578bf7d3ee52fa8934a95a41953e4079f4afb08251bf89f136",
+    "COVERAGE.md": "183fa3e7403ccda5e011e43c84aafaeb247750d844b9297023e1499ac740c73b",
+    "PREREQUISITES.md": "eee09916bad78a05e678a50ea359700aaa9981643ce4289e0a7391c58cb90592",
+    "SKILL.md": "954a4a7c24bea691a018ce83bf1045b23b1ea59645aa562620f86c10769dbc5f",
+    "SOURCE-MAP.md": "a4df8978f5807c64e4f0234ff420a35e2d42fe3a3ccce722036c177003dc00ec",
+    "GUI-QA.md": "ee2e837494638dee31a80e7e3fde68ee9b9cc405a7f84fe3c7f1c1e59c587382"
+  },
+  "previous_full_report": {
+    "path": "ATLAS_WORKSPACE/independent-learning/browser-qa/recovery-causality-2026-10-06/runs/workflow-retry-readiness-20261006t223826z-full-01/report.json",
+    "sha256": "5d408b15af901548c2c4ea42635e5f84e8c2a7d1a8c4a1616bad663c3e475c03",
+    "passed": false,
+    "calculation_repeated": false,
+    "learning_operations_repeated": false,
+    "captures_repeated": false
+  },
+  "ownership": {
+    "browser_started": 0,
+    "context_started": 0,
+    "page_started": 0,
+    "server_started": 0,
+    "page_closed": false,
+    "routes_added": 1,
+    "listeners_added": 0,
+    "own_routes_removed": true,
+    "viewport_restored": true
+  },
+  "external_source": {
+    "url": "https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html",
+    "method": "GET",
+    "blocked": true,
+    "remote_request_sent": false,
+    "official_body_read": false,
+    "response_kind": "synthetic local block notice",
+    "test_response_body": "Atlas: external communication blocked for this check. Official source body was not fetched."
+  },
+  "source_after": {
+    "index.html": "b641b4281e292234f83fae3f399667981cec0e5fdc5ed9ab9a2cf9828278ce8d",
+    "reader.css": "024fc145246a982b7e442b6c2015b97bb87cab71ad2cb6deb29ec06284d797ef",
+    "reader-app.js": "29b98fe9664b5c23d4d46b16759774fff494697d398be0277fb5970c4547030e",
+    "reader-state.js": "3b6ee5f2b3018db73ddec507e2c633025a4f02714aabf8ed035b6d0bd1a0d748",
+    "reader-data.js": "aa2091e144122c14881c50462e0999d1fb8151571e358a97ec9307c7136f7a2f",
+    "reader-expectations.js": "ccb4ee31a7b366302204e6430cbde1d70658f584dc41891eb3f7de7601ea946c",
+    "check-browser.cjs": "55142d391deee8f6c4d4fd5621c96280164c99b84826cba7aaaaaa41999aa9f0",
+    "serve.py": "a42b94d27663ce20061d5a951992d202815537c4cfe93bcf7c69f09fb636969c",
+    "README.md": "773bcfb5300363311d92341f2f157764bb980466dead0dbbccb302eaa0b7a33b",
+    "CONTRACT.md": "39d49374831f0f578bf7d3ee52fa8934a95a41953e4079f4afb08251bf89f136",
+    "COVERAGE.md": "183fa3e7403ccda5e011e43c84aafaeb247750d844b9297023e1499ac740c73b",
+    "PREREQUISITES.md": "eee09916bad78a05e678a50ea359700aaa9981643ce4289e0a7391c58cb90592",
+    "SKILL.md": "954a4a7c24bea691a018ce83bf1045b23b1ea59645aa562620f86c10769dbc5f",
+    "SOURCE-MAP.md": "a4df8978f5807c64e4f0234ff420a35e2d42fe3a3ccce722036c177003dc00ec",
+    "GUI-QA.md": "ee2e837494638dee31a80e7e3fde68ee9b9cc405a7f84fe3c7f1c1e59c587382"
+  },
+  "finished_at_utc": "2026-10-06T22:41:57.950Z",
+  "elapsed_ms": 355,
+  "pointer_actions": 6,
+  "keyboard_actions": 0,
+  "api_selections": 0,
+  "wrapper": {
+    "file": "ATLAS_WORKSPACE/independent-learning/browser-qa/recovery-causality-2026-10-06/checks/workflow-retry-readiness.cjs",
+    "sha256": "232b161066258b04522ca0b1fb79b2edef9420e79b77a497e9dde870c0256c4f",
+    "body": "ATLAS_WORKSPACE/independent-learning/workflow-retry-readiness/check-browser.cjs",
+    "body_sha256": "55142d391deee8f6c4d4fd5621c96280164c99b84826cba7aaaaaa41999aa9f0",
+    "cache_cleared": true
+  }
+}

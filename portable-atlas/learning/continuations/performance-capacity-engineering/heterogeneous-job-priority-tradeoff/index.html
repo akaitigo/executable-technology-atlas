@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas｜短い仕事を先にすると、誰が待つ？</title>
+  <style>
+    :root {color-scheme: light; font-family: system-ui, sans-serif; color:#192b3a; background:#edf2f6; line-height:1.75}
+    * {box-sizing:border-box} body {margin:0} main {max-width:1060px; margin:auto; padding:24px 18px 60px}
+    h1 {font-size:clamp(1.65rem,4vw,2.5rem); line-height:1.4} h2 {font-size:1.25rem; margin-top:0}
+    .eyebrow {color:#315b77; font-weight:700; letter-spacing:.06em} .intro {max-width:820px}
+    section,article {background:white; border:1px solid #cbd7e0; border-radius:14px; padding:22px; margin:18px 0}
+    .notice {background:#fff4d7; border-left:5px solid #a76800; padding:12px 16px; border-radius:6px}
+    .grid {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px} .grid article {margin:0}
+    .controls {display:flex; align-items:center; flex-wrap:wrap; gap:14px} button,select {font:inherit; padding:8px 12px; border-radius:7px; border:1px solid #7290a5; background:#f4f8fc; color:#132d40}
+    button {cursor:pointer} button:disabled {opacity:.5; cursor:default} :focus-visible {outline:3px solid #005e99; outline-offset:3px}
+    fieldset {border:1px solid #bacbd7; border-radius:8px; margin:16px 0} fieldset label {display:inline-block; padding:8px 16px 8px 0}
+    input[type=range] {width:min(400px,65vw)} .track {height:72px; display:flex; position:relative; margin-top:30px; border:1px solid #395a70}
+    .job {display:flex; align-items:center; justify-content:center; font-weight:700; border-right:1px solid white; min-width:0; white-space:nowrap; font-size:clamp(.72rem,2vw,1rem)}
+    .job-A {background:#b9d8f2; color:#12344f} .job-B {background:#bddfcc; color:#123a29} .job-C {background:#f2d39d; color:#503900}
+    .cursor {position:absolute; width:3px; top:-10px; bottom:-10px; background:#932a53; transform:translateX(-50%)}
+    .axis {display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; font-size:.85rem; margin-top:10px}
+    .states {font-size:.85rem; min-height:3.5em} .scroll {overflow-x:auto} table {border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums}
+    th,td {padding:10px 12px; text-align:left; border-bottom:1px solid #d9e2e9} thead {background:#eef4f8} th {font-weight:600}
+    pre {background:#142a3a; color:#e5f0f6; padding:16px; overflow:auto; max-height:320px; border-radius:8px; font-size:.85rem}
+    a {color:#005b92} .answer {background:#e6f3ed; padding:16px; border-radius:8px; overflow-wrap:anywhere} small,.muted {color:#4b6272}
+    [hidden] {display:none!important} @media(max-width:700px) {.grid {grid-template-columns:1fr} section,article {padding:16px} th,td {padding:9px 6px; font-size:.88rem}}
+  </style>
+</head>
+<body><main>
+  <p class="eyebrow">Atlas ／ 性能・容量工学 ／ 待ち順序を考える</p>
+  <h1>短い仕事を先にすると、誰が待つ？</h1>
+  <p class="intro">処理量が同じでも、仕事を始める順序で待ち時間は変わります。平均が改善したとき、個々の仕事も改善したのかを、時間図で確かめます。</p>
+  <p class="notice">固定された 3 仕事の有限モデルです。A は 5、B と C は 1 tick。すべて時刻 0 に到着し、1 台で、中断せずに処理します。tick は架空の時間単位で、実サーバーの秒数ではありません。</p>
+  <section>
+    <h2>1. 予想する</h2>
+    <p>FIFO は同時到着の登録順 A → B → C。短い順では B → C → A です。順序を変えたとき、長い仕事 A の完了はどうなるでしょう。</p>
+    <label for="order">比較する順序 </label>
+    <select id="order"><option value="ABC">A → B → C（FIFO と同じ）</option><option value="ACB">A → C → B</option><option value="BAC">B → A → C</option><option value="BCA" selected>B → C → A（短い順）</option><option value="CAB">C → A → B</option><option value="CBA">C → B → A（同じ長さの順を交換）</option></select>
+    <div class="controls" style="margin-top:12px"><button id="previous-order" type="button">前の順序</button><button id="next-order" type="button">次の順序</button></div>
+    <p class="muted">メニューのほか、前後のボタンでも6つの順序を選べます。最初と最後では、その方向のボタンが無効になります。</p>
+    <fieldset><legend>FIFO と比べた A の完了時刻</legend>
+      <label><input type="radio" name="prediction" value="earlier"> 早くなる</label>
+      <label><input type="radio" name="prediction" value="same"> 変わらない</label>
+      <label><input type="radio" name="prediction" value="later"> 遅くなる</label>
+    </fieldset>
+    <small>順序を変更すると、予想・答え・時刻はリセットされます。</small>
+  </section>
+  <section>
+    <h2>2. 操作して比べる</h2>
+    <div class="controls"><label for="tick">時刻 <output id="tick-value">0</output> / 7</label><input id="tick" type="range" min="0" max="7" step="1" value="0"><button id="next">1 tick 進める</button><button id="reset">最初に戻す</button></div>
+    <p class="muted">棒の長さは処理時間です。線を動かして待ち・実行中・完了を確認します。処理区間は [開始, 終了)。終了時刻ちょうどに次の仕事が始まります。</p>
+    <div class="grid">
+      <article><h2>FIFO：A → B → C</h2><div id="fifo-timeline"></div></article>
+      <article><h2 id="compare-title">短い順：B → C → A</h2><div id="chosen-timeline"></div></article>
+    </div>
+    <p class="muted">次の表は全仕事を最後まで処理した結果です。スライダー時刻までの完了分だけの平均ではありません。</p>
+    <div class="scroll"><table><thead><tr><th scope="col">見るもの</th><th scope="col">FIFO</th><th scope="col">選んだ順序</th></tr></thead><tbody id="metrics"></tbody></table></div>
+  </section>
+  <section>
+    <h2>3. 原典と実装を確認する</h2>
+    <p><a href="https://sre.google/sre-book/handling-overload/#the-pitfalls-of-queries-per-second">Google SRE「Handling Overload」</a>は、リクエストごとに必要な資源量が異なる点を説明しています。この教材では、その違いを処理時間 5・1・1 に限定しました。順序の計算結果は今回の有限モデルから得たもので、原典の実測結果ではありません。</p>
+    <p><a href="model.py">Python 実装</a>は処理時間を足して開始・完了を求めます。<a href="hand-oracle.json">実装前に固定した手計算表</a>と <a href="observations/run.json">実行観測</a>を照合できます。<a href="README.md">操作説明</a> ／ <a href="COVERAGE.md">未教材の範囲</a></p>
+    <details><summary>選んだ順序の計算結果</summary><pre id="raw"></pre></details>
+  </section>
+  <section>
+    <h2>4. 答え合わせと判断</h2>
+    <button id="answer-button" disabled>予想と答えを照合する</button><p id="answer" class="answer" role="status" hidden></p>
+    <p>「平均が小さくなったので、全員が早く終わった」は、この例では誤りです。平均に加えて、誰の完了が遅れたのか、最後の完了時刻が変わったのかを確認します。3 件の最大値を、本番の p95 や p99 と呼ぶことはできません。</p>
+  </section>
+  <section>
+    <h2>5. 限界と次の問い</h2>
+    <p>全 6 順序で仕事数は 3、処理時間の合計は 7。今回は順序を変えても能力は増えていません。全件が必ず完了する有限入力なので、仕事が無期限に待つ starvation（飢餓）は検証していません。</p>
+    <p>処理時間を事前に知れないとき、到着が続くとき、期限や重みがあるとき、複数サーバーで動かすときは別の実験が必要です。実 CPU・I/O・メモリー、本番容量、負荷試験、一般的な公平性も未検証です。</p>
+    <p class="notice">これは 3 仕事の有限模型です。実サーバーの性能・本番容量・一般的な starvation を検証するものではありません。<a href="GUI-QA.md">現行 reader の検証範囲</a> ／ <a href="../browser-qa/run-2026-10-06T022404940Z/report.json">初回操作記録</a> ／ <a href="../browser-qa/visual-review.json">初回目視記録</a>。Atlas への統合は別工程です。</p>
+  </section>
+  <noscript><p class="notice">操作には JavaScript が必要です。README.md の手計算表と Python コマンドでも比較できます。</p></noscript>
+</main><script src="app.js"></script></body>
+</html>

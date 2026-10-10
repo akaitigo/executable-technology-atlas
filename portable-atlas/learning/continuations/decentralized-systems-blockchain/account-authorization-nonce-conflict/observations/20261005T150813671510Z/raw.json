@@ -1,0 +1,1269 @@
+{
+  "conflict-forward": {
+    "case": "conflict-forward",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        },
+        {
+          "id": "t20",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 20
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.672324+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "MIXED_DECISIONS",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": false
+        },
+        {
+          "transaction": {
+            "id": "t20",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 20
+          },
+          "before": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "decision": "NONCE_CONFLICT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": false,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 90,
+          "B": 60
+        },
+        "nonces": {
+          "A": 1,
+          "B": 0
+        },
+        "accepted_ids": [
+          "t10"
+        ]
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "conflict-reverse": {
+    "case": "conflict-reverse",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t20",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 20
+        },
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.672875+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "MIXED_DECISIONS",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t20",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 20
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 80,
+              "B": 70
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t20"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": false
+        },
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 80,
+              "B": 70
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t20"
+            ]
+          },
+          "decision": "NONCE_CONFLICT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 80,
+              "B": 70
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t20"
+            ]
+          },
+          "nonce_matches": false,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 80,
+          "B": 70
+        },
+        "nonces": {
+          "A": 1,
+          "B": 0
+        },
+        "accepted_ids": [
+          "t20"
+        ]
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "bad-ignore-nonce": {
+    "case": "bad-ignore-nonce",
+    "fixture": {
+      "mode": "ignore-nonce",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        },
+        {
+          "id": "t20",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 20
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.673534+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "BAD_ACCEPTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": false
+        },
+        {
+          "transaction": {
+            "id": "t20",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 20
+          },
+          "before": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "decision": "BAD_ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 70,
+              "B": 80
+            },
+            "nonces": {
+              "A": 2,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10",
+              "t20"
+            ]
+          },
+          "nonce_matches": false,
+          "bad": true
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 70,
+          "B": 80
+        },
+        "nonces": {
+          "A": 2,
+          "B": 0
+        },
+        "accepted_ids": [
+          "t10",
+          "t20"
+        ]
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "unauthorized": {
+    "case": "unauthorized",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "bob",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.674021+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "bob",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "UNAUTHORIZED",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "bad-balance-only": {
+    "case": "bad-balance-only",
+    "fixture": {
+      "mode": "balance-only",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "bob",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.674459+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "BAD_ACCEPTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "bob",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "BAD_ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": true
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 90,
+          "B": 60
+        },
+        "nonces": {
+          "A": 1,
+          "B": 0
+        },
+        "accepted_ids": [
+          "t10"
+        ]
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "unknown-actor": {
+    "case": "unknown-actor",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "unknown",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.674821+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "unknown",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "UNKNOWN_ACTOR",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "bool-nonce": {
+    "case": "bool-nonce",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": true,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.675140+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": true,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "INVALID_NONCE",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": false,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "zero-amount": {
+    "case": "zero-amount",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 0
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.675468+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 0
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "INVALID_AMOUNT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "negative-amount": {
+    "case": "negative-amount",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": -1
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.675867+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": -1
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "INVALID_AMOUNT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "bool-amount": {
+    "case": "bool-amount",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": true
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.676204+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": true
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "INVALID_AMOUNT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "overspend": {
+    "case": "overspend",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 101
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.676523+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 101
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "INSUFFICIENT_BALANCE",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "future-nonce": {
+    "case": "future-nonce",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 1,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.676847+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "ALL_REJECTED",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 1,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "NONCE_CONFLICT",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "nonce_matches": false,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 100,
+          "B": 50
+        },
+        "nonces": {
+          "A": 0,
+          "B": 0
+        },
+        "accepted_ids": []
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  },
+  "duplicate-id": {
+    "case": "duplicate-id",
+    "fixture": {
+      "mode": "strict",
+      "transactions": [
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 0,
+          "amount": 10
+        },
+        {
+          "id": "t10",
+          "actor": "alice",
+          "source": "A",
+          "destination": "B",
+          "nonce": 1,
+          "amount": 10
+        }
+      ]
+    },
+    "utc": "2026-10-05T15:08:13.677167+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "platform": "Darwin"
+    },
+    "source_binding": {
+      "calculate.py": "64a00e7ec3dca585caa485ec8ee4406a757aea81e10cb0aa3b277a0c53101cc8",
+      "runner.py": "3a81aacd0a0ca8aa6e480e731e0c7b0a2725e147932cb901620fdd8623019ab0",
+      "fixtures.json": "37f991f6bd7a09744f3cc2208336644fab5c2b9475a9cdccafe6d4eaac1697ec",
+      "hand-oracle.json": "c973ffc26669b4148eda841762ef5d8aee5da095d5b1fbf390efd52e534c3846"
+    },
+    "result": {
+      "status": "MIXED_DECISIONS",
+      "processing_started": true,
+      "rows": [
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 0,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 100,
+              "B": 50
+            },
+            "nonces": {
+              "A": 0,
+              "B": 0
+            },
+            "accepted_ids": []
+          },
+          "decision": "ACCEPT",
+          "accepted": true,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": false
+        },
+        {
+          "transaction": {
+            "id": "t10",
+            "actor": "alice",
+            "source": "A",
+            "destination": "B",
+            "nonce": 1,
+            "amount": 10
+          },
+          "before": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "decision": "DUPLICATE_ID",
+          "accepted": false,
+          "after": {
+            "balances": {
+              "A": 90,
+              "B": 60
+            },
+            "nonces": {
+              "A": 1,
+              "B": 0
+            },
+            "accepted_ids": [
+              "t10"
+            ]
+          },
+          "nonce_matches": true,
+          "bad": false
+        }
+      ],
+      "final": {
+        "balances": {
+          "A": 90,
+          "B": 60
+        },
+        "nonces": {
+          "A": 1,
+          "B": 0
+        },
+        "accepted_ids": [
+          "t10"
+        ]
+      },
+      "actor_trust": "trusted synthetic fixture; no signature verification"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formal methods — mutexの最短反例を歩く</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="data.js"></script><script defer src="app.js"></script>
+</head>
+<body><main>
+  <header><p class="eyebrow">FORMAL METHODS / FINITE STATE EXPLORATION</p>
+    <h1>「空いている」を見た。<br>それで、入ってよい？</h1>
+    <p class="lead">2つのprocessが同じmutexを取りに来る。確認と入室の間に別のprocessが動くと、何が起きるだろう。標準Pythonで探索した全状態と、最短反例を歩いて確かめる。</p>
+    <div id="environment" class="meta"></div>
+  </header>
+
+  <section class="prediction"><span class="number">01</span><div><h2>予想する</h2>
+    <p>空き確認と入室を分けても、全processが確認しているなら相互排他は守れる？</p>
+    <div class="choices"><button id="predict-safe">守れると思う</button><button id="predict-unsafe">途中で破れると思う</button></div>
+    <p id="prediction-answer" role="status">予想を選び、欠陥モデルの「最短反例」を進めてみよう。</p>
+  </div></section>
+
+  <section aria-labelledby="compare-heading"><div class="section-heading"><span class="number">02</span><h2 id="compare-heading">正常とguard欠陥を比較する</h2></div>
+    <div class="comparison">
+      <article class="summary safe"><p class="tag">ATOMIC / 正常モデル</p><h3>確認と入室を1つのstepに</h3>
+        <code>owner == ∅ → owner = me; pc = critical</code>
+        <p>間へ別processが割り込めない。これは宣言した原子的transitionの仮定。</p><div id="atomic-counts" class="counts"></div></article>
+      <article class="summary faulty"><p class="tag">SPLIT GUARD / 意図的な欠陥</p><h3>昔の確認を信じて入室</h3>
+        <code>check-free → ready → claim-without-recheck</code>
+        <p>入室のstepにguardがない。2人が同じ「空き」を見られる。</p><div id="faulty-counts" class="counts"></div></article>
+    </div>
+  </section>
+
+  <section class="workbench" aria-labelledby="operate-heading">
+    <div class="section-heading"><span class="number">03</span><h2 id="operate-heading">transitionを操作する</h2></div>
+    <div class="toolbar"><label>モデル <select id="variant"><option value="atomic">正常: atomic check-and-enter</option><option value="split-guard">欠陥: split guard</option></select></label><button id="reset">初期状態へ</button><button id="counterexample" class="primary">欠陥の最短反例を見る</button></div>
+    <div class="simulation"><div class="actors"><article id="p0" class="actor"><b>P0</b><span></span></article><div class="lock"><small>共有owner</small><strong id="owner">∅</strong></div><article id="p1" class="actor"><b>P1</b><span></span></article></div>
+      <div id="invariant" class="invariant" role="status"></div>
+      <p id="step-description" class="step-description"></p>
+      <div class="step-controls"><button id="previous">← 前の反例step</button><button id="next">次の反例step →</button><span id="position"></span></div>
+      <h3>この状態から許される操作</h3><div id="enabled" class="choices"></div>
+      <p class="hint">自由操作は選択状態からの実transition。反例の前後移動はPythonが保存した最短traceを再生する。</p>
+    </div>
+    <div class="trace-wrap"><h3>欠陥モデルの最短counterexample</h3><div id="trace" class="trace" aria-label="最短反例の全step"></div><p><a href="evidence/counterexample.svg">実探索traceから生成した図を開く</a></p></div>
+    <details><summary>全到達状態を開く — 状態を選んで、許されるtransitionを見る</summary><p>各tileはPython探索の1状態。黄色は1人、赤は2人がcritical。これは状態一覧で、tileの並びは実行順序を表さない。</p><div id="states" class="states"></div></details>
+  </section>
+
+  <section class="explanation"><div class="section-heading"><span class="number">04</span><h2>一次資料と実装へ戻る</h2></div>
+    <div class="two-column"><article><h3>状態を式へ写す</h3><p><code>pc = [P0の位置, P1の位置]</code><br><code>owner ∈ {∅, 0, 1}</code></p><p class="formula">MutualExclusion =<br>count(pc[i] == critical) ≤ 1</p>
+      <p>「ownerは1つしか値を持たない」だけでは足りない。欠陥モデルではownerを書き換えても、先に入ったprocessのpcはcriticalのまま残る。</p>
+      <p><a href="model.py">transition実装</a> / <a href="evidence/stdout.json">今回の生stdout</a> / <a href="evidence/run.json">観測identityと全状態</a></p></article>
+      <article><h3>公式・原著資料</h3><p><a href="https://lamport.azurewebsites.net/tla/tutorial/session8.html">Lamport: Mutual Exclusion</a> — atomic step、critical section、不変条件、実機への写像。</p><p><a href="https://lamport.azurewebsites.net/tla/tutorial/session9.html">Lamport: Liveness</a> — safetyと進行、fairnessの区別。</p><p><a href="https://docs.python.org/3/library/collections.html#collections.deque">Python: deque</a> — BFSのFIFO frontier。</p><p>教材モデルは独自実装。PlusCal、TLC、Leanを今回実行した記録ではない。</p></article></div>
+  </section>
+
+  <section class="answer"><span class="number">05</span><div><h2>答え: guardは、入室を決めるstepに必要</h2><p id="answer"></p><p>この正常モデルのatomic stepを実装するなら、実CPU・言語のmutex/CASなどへ写像し、その意味がモデルと一致することを別途検証する必要がある。</p></div></section>
+  <section class="limits"><h2>Safetyとlivenessを混ぜない</h2><p><strong>Safety</strong>: 同時に2人がcriticalにならない。今回、正常モデルの全到達状態で検査した。</p><p><strong>Liveness</strong>: 待っているP1がいつか入れる。今回、時間的性質の全検査は行っていない。fairnessを仮定しないschedulerなら、P1がwaitingの間にP0のrequest→enter→releaseだけを無限に選べる。相互排他を守りながらP1を飢餓させる実行が許される。</p>
+    <h3>有限モデルの仮定</h3><p>2 process、有限なpc、共有owner、故障なし、宣言したstepの逐次一貫interleaving。探索深さを打ち切らず、到達状態集合が閉じるまで探索した。process数・state domainは有限で、実装のthread・弱いメモリ順序・時間・I/Oは含まない。</p>
+    <h3>未教材Coverage</h3><p>Peterson/Bakery、TLA+/PlusCal、Lean/Coqの定理証明、temporal model checking、deadlock一般検査、fairness、weak memory、refinement proof、distributed consensus、実OS lockの性能・障害回復。理解度や分野全体の完成は測定していない。</p><p><a href="README.md">再現手順と観測の読み方</a> / <a href="COVERAGE.md">Coverageとrefinement gap</a></p>
+  </section>
+</main><footer>LOCAL LEARNING UNIT · formal-methods-verification · <span id="version"></span></footer></body></html>

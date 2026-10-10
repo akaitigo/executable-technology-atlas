@@ -1,0 +1,128 @@
+{
+  "scope": "synthetic SQLite fixture, fixed sequential schedule, two connections; not an actual parallel race",
+  "check_transaction": "reader BEGIN / SELECT tenant / COMMIT ends before writer mutation",
+  "mutation_transaction": "writer BEGIN IMMEDIATE / UPDATE tenant,payload,revision / COMMIT",
+  "read_transaction": "separate reader BEGIN / SELECT with tenant condition or ID-only / COMMIT or ROLLBACK",
+  "normal": "precheck is diagnostic only; current tenant predicate authorizes payload retrieval in one SELECT",
+  "faulty": "old check allowed then ID-only SELECT, else skip",
+  "cases": [
+    {
+      "id": "unchanged",
+      "label": "変更なし → alpha payload",
+      "actor": "actor-alpha",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": null,
+      "sql_failure": false
+    },
+    {
+      "id": "move-after-check",
+      "label": "alpha check → beta commit → read",
+      "actor": "actor-alpha",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "payload-after-check",
+      "label": "alphaのままpayload更新",
+      "actor": "actor-alpha",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": [
+        "alpha",
+        "ALPHA VERSION TWO",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "move-before-check",
+      "label": "beta commit → alpha check → read",
+      "actor": "actor-alpha",
+      "resource": "doc1",
+      "schedule": "before-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "beta-after-check",
+      "label": "beta actor：旧check deny後betaへ変更",
+      "actor": "actor-beta",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "unknown-resource",
+      "label": "未知resource → 返却なし",
+      "actor": "actor-alpha",
+      "resource": "missing",
+      "schedule": "after-check",
+      "change": null,
+      "sql_failure": false
+    },
+    {
+      "id": "unknown-actor",
+      "label": "未知actor拒否",
+      "actor": "actor-unknown",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "actor-type",
+      "label": "actor型拒否",
+      "actor": 7,
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "resource-type",
+      "label": "resource型拒否",
+      "actor": "actor-alpha",
+      "resource": true,
+      "schedule": "after-check",
+      "change": [
+        "beta",
+        "BETA SYNTHETIC",
+        2
+      ],
+      "sql_failure": false
+    },
+    {
+      "id": "sql-error",
+      "label": "実SQL読取失敗",
+      "actor": "actor-alpha",
+      "resource": "doc1",
+      "schedule": "after-check",
+      "change": null,
+      "sql_failure": true
+    }
+  ]
+}

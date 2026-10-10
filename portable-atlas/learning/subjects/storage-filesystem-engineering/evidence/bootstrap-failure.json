@@ -1,0 +1,112 @@
+{
+  "observed_at_utc": "2026-10-05T07:28:03.759018+00:00",
+  "source_sha256": {
+    "experiment.py": "69bfc3dd72904dd82b08445631029fabdd467ffce04f6dc140aae68b6ef85d63",
+    "oracle.py": "0affcc9b859269173a8811be7eae98b10d3ff9841ef7bcf641dc4443299772fe"
+  },
+  "result": {
+    "status": "error",
+    "input": {
+      "mode": "atomic-commit",
+      "old": "OLD:version1\n",
+      "new": "NEW:version2\n",
+      "cut": 13
+    },
+    "events": [
+      {
+        "seq": 0,
+        "event": "owned_temp_created",
+        "wall_ns": 1791185283757200000,
+        "mono_ns": 48961166,
+        "relative_directory": ".owned-4klvm1sq"
+      },
+      {
+        "seq": 1,
+        "event": "flush_returned",
+        "wall_ns": 1791185283757328000,
+        "mono_ns": 49089166,
+        "role": "initial-old"
+      },
+      {
+        "seq": 2,
+        "event": "fsync_called",
+        "wall_ns": 1791185283757330000,
+        "mono_ns": 49090416,
+        "role": "initial-old",
+        "fd": 4
+      },
+      {
+        "seq": 3,
+        "event": "fsync_returned",
+        "wall_ns": 1791185283757381000,
+        "mono_ns": 49141875,
+        "role": "initial-old"
+      },
+      {
+        "seq": 4,
+        "event": "held_reader_opened",
+        "wall_ns": 1791185283758389000,
+        "mono_ns": 50149708,
+        "fd": 4
+      },
+      {
+        "seq": 5,
+        "event": "old_ready",
+        "wall_ns": 1791185283758499000,
+        "mono_ns": 50259875,
+        "path": {
+          "length": 13,
+          "sha256": "54d377b71b86a8ed686ee7f1cc993288822dac95fe88950dfc59ae7b3adb263b",
+          "hex": "4f4c443a76657273696f6e310a"
+        },
+        "held_reader": {
+          "length": 13,
+          "sha256": "54d377b71b86a8ed686ee7f1cc993288822dac95fe88950dfc59ae7b3adb263b",
+          "hex": "4f4c443a76657273696f6e310a"
+        },
+        "candidate": null,
+        "path_inode": 117460720,
+        "held_inode": 117460720,
+        "path_device": 16777232,
+        "held_device": 16777232,
+        "candidate_inode": null,
+        "candidate_device": null
+      },
+      {
+        "seq": 6,
+        "event": "unexpected_exception",
+        "wall_ns": 1791185283758596000,
+        "mono_ns": 50356666,
+        "type": "TypeError",
+        "message": "event() got multiple values for argument 'name'"
+      },
+      {
+        "seq": 7,
+        "event": "held_reader_closed",
+        "wall_ns": 1791185283758600000,
+        "mono_ns": 50361000
+      },
+      {
+        "seq": 8,
+        "event": "owned_temp_removed",
+        "wall_ns": 1791185283759002000,
+        "mono_ns": 50762250,
+        "relative_directory": ".owned-4klvm1sq",
+        "existed_before": true,
+        "exists_after": false
+      }
+    ],
+    "committed": false,
+    "injected_exception": false,
+    "unexpected": {
+      "type": "TypeError",
+      "message": "event() got multiple values for argument 'name'"
+    },
+    "cleanup": {
+      "held_reader_closed": true,
+      "temp_removed": true
+    },
+    "durability": "power-loss/crash durability not tested; fsync call/return evidence only"
+  },
+  "repair": "event(name, name=...) duplicated the argument; rename payload field to filename"
+}

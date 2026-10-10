@@ -1,0 +1,353 @@
+{
+  "title": "Atlas 小Wasmの手書き型・命令契約",
+  "import_module": "wasi_snapshot_preview1",
+  "imports": [
+    {
+      "name": "fd_prestat_get",
+      "params": [
+        "i32",
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fd_prestat_dir_name",
+      "params": [
+        "i32",
+        "i32",
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fd_fdstat_get",
+      "params": [
+        "i32",
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fd_fdstat_set_rights",
+      "params": [
+        "i32",
+        "i64",
+        "i64"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "path_open",
+      "params": [
+        "i32",
+        "i32",
+        "i32",
+        "i32",
+        "i32",
+        "i64",
+        "i64",
+        "i32",
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fd_read",
+      "params": [
+        "i32",
+        "i32",
+        "i32",
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fd_close",
+      "params": [
+        "i32"
+      ],
+      "results": [
+        "i32"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "prestat",
+      "params": [
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "i32.const",
+          0
+        ],
+        [
+          "call",
+          0
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "prestat_name",
+      "params": [
+        "i32",
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "i32.const",
+          64
+        ],
+        [
+          "local.get",
+          1
+        ],
+        [
+          "call",
+          1
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "fdstat",
+      "params": [
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "i32.const",
+          256
+        ],
+        [
+          "call",
+          2
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "reduce",
+      "params": [
+        "i32",
+        "i64",
+        "i64"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "local.get",
+          1
+        ],
+        [
+          "local.get",
+          2
+        ],
+        [
+          "call",
+          3
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "open",
+      "params": [
+        "i32",
+        "i32",
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "i32.const",
+          0
+        ],
+        [
+          "local.get",
+          1
+        ],
+        [
+          "local.get",
+          2
+        ],
+        [
+          "i32.const",
+          0
+        ],
+        [
+          "i64.const",
+          2
+        ],
+        [
+          "i64.const",
+          0
+        ],
+        [
+          "i32.const",
+          0
+        ],
+        [
+          "i32.const",
+          320
+        ],
+        [
+          "call",
+          4
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "read",
+      "params": [
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "i32.const",
+          384
+        ],
+        [
+          "i32.const",
+          1
+        ],
+        [
+          "i32.const",
+          392
+        ],
+        [
+          "call",
+          5
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    },
+    {
+      "name": "close",
+      "params": [
+        "i32"
+      ],
+      "code": [
+        [
+          "local.get",
+          0
+        ],
+        [
+          "call",
+          6
+        ],
+        [
+          "end"
+        ]
+      ],
+      "results": [
+        "i32"
+      ]
+    }
+  ],
+  "memory": {
+    "minimum_pages": 1,
+    "maximum_pages": 1,
+    "export": "memory"
+  },
+  "data": [
+    {
+      "offset": 128,
+      "hex": "6e6f74652e747874"
+    },
+    {
+      "offset": 160,
+      "hex": "616273656e742e747874"
+    },
+    {
+      "offset": 384,
+      "hex": "0002000008000000"
+    }
+  ],
+  "memory_layout": {
+    "prestat": 0,
+    "prestat_name": 64,
+    "path_note": 128,
+    "path_missing": 160,
+    "fdstat": 256,
+    "opened_fd": 320,
+    "iovec": 384,
+    "nread": 392,
+    "read_buffer": 512
+  },
+  "forbidden": [
+    "start section",
+    "start function",
+    "arbitrary host imports",
+    "host filesystem reading as WASI output",
+    "branch/loop/memory.grow in guest"
+  ],
+  "decoder_rule": "Pythonでsection/LEB/type/import/export/code/dataを別decodeし、この手書き命令契約と照合。JS generatorはこのJSONを読み込まない。実engineによるcompileは後の実験で別確認。"
+}

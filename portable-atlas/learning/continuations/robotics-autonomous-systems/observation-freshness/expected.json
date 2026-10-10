@@ -1,0 +1,52 @@
+{
+  "title":"Atlas 実装前の手追跡",
+  "method":"literal manual table; producer not implemented or executed",
+  "columns":["now","action","reason","incomingAge","storedState","observedAt","arrivedAt","adoptedVersion","mapRevision","age","fresh","effectiveState","decision"],
+  "cases":[
+    {"id":"ordered","guarded":[
+      [0,"accept","accepted",0,"free",0,0,1,1,0,true,"free","MOVE_ALLOWED"],
+      [2,"accept","accepted",0,"occupied",2,2,2,2,0,true,"occupied","STOP_OCCUPIED"],
+      [4,"accept","accepted",0,"free",4,4,3,3,0,true,"free","MOVE_ALLOWED"]
+    ],"arrival-only":[
+      [0,"accept","arrival-overwrite",0,"free",0,0,1,1,0,true,"free","MOVE_ALLOWED"],
+      [2,"accept","arrival-overwrite",0,"occupied",2,2,2,2,0,true,"occupied","STOP_OCCUPIED"],
+      [4,"accept","arrival-overwrite",0,"free",4,4,3,3,0,true,"free","MOVE_ALLOWED"]
+    ]},
+    {"id":"reversed-clear","guarded":[
+      [6,"accept","accepted",0,"occupied",6,6,2,1,0,true,"occupied","STOP_OCCUPIED"],
+      [7,"reject","stale-version",3,"occupied",6,6,2,1,1,true,"occupied","STOP_OCCUPIED"],
+      [10,"none","no-arrival",null,"occupied",6,6,2,1,4,true,"occupied","STOP_OCCUPIED"],
+      [11,"none","no-arrival",null,"occupied",6,6,2,1,5,false,"unknown","STOP_UNKNOWN"]
+    ],"arrival-only":[
+      [6,"accept","arrival-overwrite",0,"occupied",6,6,2,1,0,true,"occupied","STOP_OCCUPIED"],
+      [7,"accept","arrival-overwrite",3,"free",4,7,1,2,3,true,"free","MOVE_ALLOWED"],
+      [10,"none","no-arrival",null,"free",4,7,1,2,6,false,"free","MOVE_ALLOWED"],
+      [11,"none","no-arrival",null,"free",4,7,1,2,7,false,"free","MOVE_ALLOWED"]
+    ]},
+    {"id":"expiry-boundary","guarded":[
+      [0,"accept","accepted",0,"free",0,0,1,1,0,true,"free","MOVE_ALLOWED"],
+      [4,"none","no-arrival",null,"free",0,0,1,1,4,true,"free","MOVE_ALLOWED"],
+      [5,"none","no-arrival",null,"free",0,0,1,1,5,false,"unknown","STOP_UNKNOWN"]
+    ],"arrival-only":[
+      [0,"accept","arrival-overwrite",0,"free",0,0,1,1,0,true,"free","MOVE_ALLOWED"],
+      [4,"none","no-arrival",null,"free",0,0,1,1,4,true,"free","MOVE_ALLOWED"],
+      [5,"none","no-arrival",null,"free",0,0,1,1,5,false,"free","MOVE_ALLOWED"]
+    ]},
+    {"id":"expired-arrival","guarded":[
+      [10,"reject","expired-at-arrival",5,"unknown",null,null,0,0,null,null,"unknown","STOP_UNKNOWN"],
+      [11,"accept","accepted",0,"occupied",11,11,2,1,0,true,"occupied","STOP_OCCUPIED"]
+    ],"arrival-only":[
+      [10,"accept","arrival-overwrite",5,"free",5,10,1,1,5,false,"free","MOVE_ALLOWED"],
+      [11,"accept","arrival-overwrite",0,"occupied",11,11,2,2,0,true,"occupied","STOP_OCCUPIED"]
+    ]},
+    {"id":"explicit-unknown","guarded":[
+      [0,"none","no-arrival",null,"unknown",null,null,0,0,null,null,"unknown","STOP_UNKNOWN"],
+      [1,"accept","accepted",0,"unknown",1,1,1,1,0,true,"unknown","STOP_UNKNOWN"],
+      [2,"accept","accepted",0,"free",2,2,2,2,0,true,"free","MOVE_ALLOWED"]
+    ],"arrival-only":[
+      [0,"none","no-arrival",null,"unknown",null,null,0,0,null,null,"unknown","STOP_UNKNOWN"],
+      [1,"accept","arrival-overwrite",0,"unknown",1,1,1,1,0,true,"unknown","STOP_UNKNOWN"],
+      [2,"accept","arrival-overwrite",0,"free",2,2,2,2,0,true,"free","MOVE_ALLOWED"]
+    ]}
+  ]
+}

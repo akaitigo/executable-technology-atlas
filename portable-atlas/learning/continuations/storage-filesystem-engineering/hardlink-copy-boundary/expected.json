@@ -1,0 +1,18 @@
+{
+  "schema": "atlas.hardlink-copy.fixed-expectations.v1",
+  "prepared_before_execution": true,
+  "inputs": {"original_hex":"414c5048410a", "alias_update_hex":"425241564f0a", "copy_update_hex":"434f5059210a", "bytes_each":6},
+  "phases": [
+    {"id":"created", "files":{"original":{"identity":"A","nlink":1,"hex":"414c5048410a"},"alias":null,"copy":null}},
+    {"id":"linked_and_copied", "files":{"original":{"identity":"A","nlink":2,"hex":"414c5048410a"},"alias":{"identity":"A","nlink":2,"hex":"414c5048410a"},"copy":{"identity":"B","nlink":1,"hex":"414c5048410a"}}},
+    {"id":"duplicate_link_rejected", "files":{"original":{"identity":"A","nlink":2,"hex":"414c5048410a"},"alias":{"identity":"A","nlink":2,"hex":"414c5048410a"},"copy":{"identity":"B","nlink":1,"hex":"414c5048410a"}}},
+    {"id":"alias_overwritten", "files":{"original":{"identity":"A","nlink":2,"hex":"425241564f0a"},"alias":{"identity":"A","nlink":2,"hex":"425241564f0a"},"copy":{"identity":"B","nlink":1,"hex":"414c5048410a"}}},
+    {"id":"copy_overwritten", "files":{"original":{"identity":"A","nlink":2,"hex":"425241564f0a"},"alias":{"identity":"A","nlink":2,"hex":"425241564f0a"},"copy":{"identity":"B","nlink":1,"hex":"434f5059210a"}}},
+    {"id":"original_unlinked", "files":{"original":null,"alias":{"identity":"A","nlink":1,"hex":"425241564f0a"},"copy":{"identity":"B","nlink":1,"hex":"434f5059210a"}}}
+  ],
+  "expected_failure":{"operation":"duplicate_link","exception_type":"FileExistsError","errno_name":"EEXIST","state_unchanged":true},
+  "identity_rule":"A and B are different (st_dev,st_ino) pairs in this one run. Numbers are not compared across runs.",
+  "filesystem_type":"not identified",
+  "limits":{"max_names":3,"distinct_regular_files":2,"max_bytes_per_file":6,"timeout_seconds":5,"attempts":1,"retries":0},
+  "claims":{"physical_block_sharing_proven":false,"all_metadata_independence_proven":false,"durability_proven":false,"performance_comparison":false,"held_fd_after_unlink_tested":false}
+}

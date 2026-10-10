@@ -1,0 +1,24 @@
+{
+  "Atlas": "Minimal reuse of the accepted one-child wrapper and trusted process parser",
+  "files": {
+    "resource_parse.py": {
+      "sourcePath": "ATLAS_WORKSPACE/independent-learning/supply-chain-provenance-policy/resource_parse.py",
+      "sourceSha256": "cee0eeb080c4987b6195a389f9b70e272b4c029164f47ea26a1cbcae15ddaea4",
+      "currentSha256": "cee0eeb080c4987b6195a389f9b70e272b4c029164f47ea26a1cbcae15ddaea4",
+      "diff": ""
+    },
+    "resource_observe.py": {
+      "sourcePath": "ATLAS_WORKSPACE/independent-learning/supply-chain-provenance-policy/resource_observe.py",
+      "sourceSha256": "95dc03cdcbf4644392da1ced30d13d196fee2253bad883e05614291567999a7e",
+      "currentSha256": "97d9e76990a2d852f8f85dac4b896f9e5258e3652f95533a445bd3af2233ae6a",
+      "diff": "--- existing/resource_observe.py\n+++ new/resource_observe.py\n@@ -9,8 +9,8 @@\n from resource_parse import parse_processes\n \n ROOT = Path(__file__).resolve().parent\n-REFERENCE = ROOT.parent / \"browser-qa/recovery-causality-2026-10-06/post-gui-root-browser-reference.json\"\n-REFERENCE_SHA = \"972821be59dde9cd6e7bf3e7c518f0719ec9387dd24a32917b93c655ac84c0a1\"\n+REFERENCE = ROOT.parent / \"browser-qa/type-placement-phase-2026-10-06/root-browser-reference.json\"\n+REFERENCE_SHA = \"08d40d914ffeb2820f771fb284d647ebbddf27fb4bb63b5ea96502a5960c3bc9\"\n IDENTITY = (\"pid\", \"ppid\", \"lstart\", \"command\")\n \n \n@@ -18,7 +18,7 @@\n     out = ROOT / \"verification/resource-before-calculation.json\"\n     if out.exists():\n         raise SystemExit(\"observation exists; no automatic retry\")\n-    record = {\"Atlas\": \"Supply-chain policy calculation resource observation\", \"observedAt\": datetime.datetime.now(datetime.timezone.utc).isoformat(),\n+    record = {\"Atlas\": \"Placement eligibility resource observation\", \"observedAt\": datetime.datetime.now(datetime.timezone.utc).isoformat(),\n               \"cpus\": os.cpu_count(), \"load\": os.getloadavg(), \"commands\": {}, \"allowed\": False,\n               \"decision\": \"pending root decision and exclusive slot\", \"targetStarted\": False}\n     commands = {\"cpu\": [\"/usr/bin/top\", \"-l\", \"2\", \"-s\", \"1\", \"-n\", \"0\"],\n"
+    },
+    "execute_once.py": {
+      "sourcePath": "ATLAS_WORKSPACE/independent-learning/supply-chain-provenance-policy/execute_once.py",
+      "sourceSha256": "5e84077fae79e215f6671984b4a9fe4926c37aa5b70c21b6e2b6db35fe5eecde",
+      "currentSha256": "840ab359430d942ee7e8e150455147f326343727a7de45efa2d5aac636eee0bc",
+      "diff": "--- existing/execute_once.py\n+++ new/execute_once.py\n@@ -28,7 +28,7 @@\n     age = (datetime.datetime.now(datetime.timezone.utc) - stamp).total_seconds()\n     if not gate.get(\"readTrusted\") or not 0 <= age <= 300:\n         raise SystemExit(\"fresh trusted resource observation required\")\n-    if (decision.get('scope') != 'supply-chain-provenance-policy' or decision.get('allowed') is not True\n+    if (decision.get('scope') != 'orchestration-taint-selector-eligibility' or decision.get('allowed') is not True\n         or decision.get('observationSha256') != hashlib.sha256(observation.read_bytes()).hexdigest()\n         or decision.get('rootSlot') is not True or decision.get('rootGuiIdle') is not True\n         or decision.get('otherTargets') != 0 or not decision.get('authorization')):\n@@ -45,7 +45,7 @@\n         raise SystemExit('browser outside this observation-specific root decision')\n     if (ROOT / \"observations/run-01\").exists() or (directory / \"execution.json\").exists():\n         raise SystemExit(\"existing attempt is immutable; no automatic retry\")\n-    record = {\"Atlas\": \"来歴policy比較の実行記録\", \"attempt\": 1, \"retry\": 0, \"children\": [],\n+    record = {\"Atlas\": \"Placement eligibilityの実行記録\", \"attempt\": 1, \"retry\": 0, \"children\": [],\n               \"deadlineSeconds\": 15, \"resourceObservation\": \"resource-before-calculation.json\",\n               \"resourceSha256\": hashlib.sha256(observation.read_bytes()).hexdigest(),\n               \"rootDecision\": {\"path\": str(args.decision.resolve()), \"sha256\": hashlib.sha256(decision_bytes).hexdigest(), \"record\": decision}}\n"
+    }
+  },
+  "targetExecutions": 0
+}

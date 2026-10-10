@@ -1,0 +1,126 @@
+Browser tab: 14, Title: "RIFF chunk — odd lengthとpad", URL: "http://127.0.0.1:50765/".
+1 AXWebArea RIFF chunk — odd lengthとpad, URL: 127.0.0.1:50765/
+	2 heading RIFF/WAV：3-byte JUNKの次headerは、47？48？, Value: 1
+		3 text RIFF/WAV：3-byte JUNKの次headerは、47？48？
+	4 text 前提：little endian uint32、byte offset、半開区間、mono16 PCM。chunkSizeは8-byte headerとpadを含みません。
+	5 container
+		6 heading 1 · 予測 → 操作, Value: 2
+			7 text 1 · 予測 → 操作
+		8 text fixture
+		9 pop up button (collapsed, settable) Description: fixture, Value: odd-junk, ID: case, Secondary Actions: Expand
+			10 menu
+				11 base
+				12 (selected) odd-junk
+				13 even-junk
+				14 riff-oversize
+				15 chunk-oversize
+				16 short-data
+				17 missing-pad
+		18 text parser
+		19 pop up button (collapsed, settable) Description: parser, Value: strict教材parser, ID: mode, Secondary Actions: Expand
+			20 menu
+				21 (selected) strict教材parser
+				22 pad省略の故障版
+		23 text chunk
+		24 pop up button (collapsed, settable) Description: chunk, Value: "JUNK" @36, Secondary Actions: Expand
+			25 menu
+				76 "fmt " @12
+				77 (selected) "JUNK" @36
+				78 "data" @48
+		79 text 実file 62 bytes / RIFF宣言end 62
+		29 text 次offset予測
+		30 pop up button (collapsed, settable) Description: 次offset予測, Value: 47, ID: nextguess, Secondary Actions: Expand
+			31 menu
+				32 未選択
+				33 36
+				34 (selected) 47
+				35 48
+				36 50
+				37 62
+				38 66
+				39 1688
+				40 3892314168
+				41 未取得
+		42 text parser全体の予測
+		43 pop up button (collapsed, settable) Description: parser全体の予測, Value: 受理, ID: statusguess, Secondary Actions: Expand
+			44 menu
+				45 未選択
+				46 (selected) 受理
+				47 拒否
+		48 button 観測と比較, ID: compare
+		80 text 予測と差分あり — 次offset=48、parser=accepted
+	50 container
+		51 heading 2 · header / payload / pad / 次offset, Value: 2
+			52 text 2 · header / payload / pad / 次offset
+		81 container results
+			82 text 青=8-byte header、緑=payload、黄=pad。図は実file範囲にclipし、巨大な宣言長で領域を確保しません。
+			83 text header [36,44) / payload [44,47) / pad=1 / next=48
+			84 table
+				85 row
+					86 cell
+						87 text chunk
+					88 cell
+						89 text header / payload
+					90 cell
+						91 text declared / actual
+					92 cell
+						93 text pad / next
+				94 container rows
+					95 row
+						96 cell
+							97 text "fmt "
+						98 cell
+							99 text 12 / [20,36)
+						100 cell
+							101 text 16 / 16
+						102 cell
+							103 text 0 / 36
+					104 row
+						105 cell
+							106 text "JUNK"
+						107 cell
+							108 text 36 / [44,47)
+						109 cell
+							110 text 3 / 3
+						111 cell
+							112 text 1 / 48
+					113 row
+						114 cell
+							115 text "data"
+						116 cell
+							117 text 48 / [56,62)
+						118 cell
+							119 text 6 / 6
+						120 cell
+							121 text 0 / 62
+			122 text 選択parser accepted
+			123 text strict教材判定とPCM
+			124 text 受理 / [1000,-1000,32767]
+			125 text Python wave 実挙動
+			126 text read: 宣言3frames / 返却6bytes / 全宣言frame取得=true / samples=[1000,-1000,32767]
+			127 button (collapsed) command / exit / actual bytes / 原記録, Secondary Actions: Expand
+				128 text command / exit / actual bytes / 原記録
+	54 container
+		55 heading 3 · 原典・実装, Value: 2
+			56 text 3 · 原典・実装
+		57 text 実行UTC 2026-10-05T12:19:06.434770+00:00 · Python 3.9.6 · Darwin · stdlib wave、readframes上限16
+		58 link Description: 再現と有限契約, Value: 127.0.0.1:50765/README.md
+		59 text  · 
+		60 link Description: 事前の手書きoffset/PCM, Value: 127.0.0.1:50765/oracle.json
+		61 text  · 
+		62 link Description: parser/wave実装, Value: 127.0.0.1:50765/worker.py
+		63 text  · 
+		64 link Description: 観測runner, Value: 127.0.0.1:50765/runner.py
+		65 text  · 
+		66 link Description: 独立oracle, Value: 127.0.0.1:50765/checker.py
+		67 text  · 
+		68 link Description: 到達範囲, Value: 127.0.0.1:50765/COVERAGE.md
+		69 text  · 
+		70 link Description: Microsoft RIFF: chunkSize / WORD padding, Value: learn.microsoft.com/en-us/windows/win32/xaudio2/resource-interchange-file-format--riff-
+	71 container
+		72 heading 4 · 答えと実務判断, Value: 2
+			73 text 4 · 答えと実務判断
+		129 text JUNK payloadは[44,47)、3-byte宣言長に1-byte padを加え、次headerは48。pad省略の故障版は47から誤読し、PCMへ到達しません。正しいstrictとwaveではsamplesが不変です。
+		75 text strict教材契約はclassicRIFF、fmt16、mono16/8000Hz、正確なRIFF全長、chunk境界、frame alignment。waveの実read/exceptionと別に判定します。読取成功だけで宣言した全frameを取得したとは言えません。 RF64、圧縮codec、再生品質、配信、汎用format保証は未検証。次はfmt拡張、複数dataの契約、bounded truncation系列へ進みます。
+
+The focused UI element is 48 button 観測と比較, ID: compare

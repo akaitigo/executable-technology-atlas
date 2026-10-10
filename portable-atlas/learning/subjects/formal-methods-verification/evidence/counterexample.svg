@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="1000" viewBox="0 0 1040 1000" role="img" aria-labelledby="title desc">
+<title id="title">Mutex guard defect — shortest counterexample</title>
+<desc id="desc">Diagram generated from the actual Python breadth-first search trace. Six transitions reach two processes in the critical section.</desc>
+<rect width="1040" height="1000" rx="24" fill="#f4f1e9"/>
+<g font-family="-apple-system, sans-serif" fill="#202e31">
+<text x="48" y="58" font-size="28" font-weight="700">空き確認を分けると、6 stepで相互排他が破れる</text>
+<text x="48" y="91" font-size="15">実探索traceの再描画 / Python BFS / 23 states · 44 transitions · 2 violations</text>
+<rect x="48" y="122" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="151" font-size="16" font-weight="700">0 · initial</text>
+<text x="70" y="186" font-size="20" font-family="monospace">P0=idle   P1=idle   owner=∅</text>
+<text x="950" y="160" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 215v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="238" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="267" font-size="16" font-weight="700">1 · P0: request</text>
+<text x="70" y="302" font-size="20" font-family="monospace">P0=waiting   P1=idle   owner=∅</text>
+<text x="950" y="276" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 331v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="354" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="383" font-size="16" font-weight="700">2 · P0: check-free</text>
+<text x="70" y="418" font-size="20" font-family="monospace">P0=ready   P1=idle   owner=∅</text>
+<text x="950" y="392" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 447v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="470" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="499" font-size="16" font-weight="700">3 · P1: request</text>
+<text x="70" y="534" font-size="20" font-family="monospace">P0=ready   P1=waiting   owner=∅</text>
+<text x="950" y="508" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 563v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="586" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="615" font-size="16" font-weight="700">4 · P1: check-free</text>
+<text x="70" y="650" font-size="20" font-family="monospace">P0=ready   P1=ready   owner=∅</text>
+<text x="950" y="624" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 679v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="702" width="944" height="90" rx="12" fill="#fffdfa" stroke="#24725f" stroke-width="2"/>
+<text x="70" y="731" font-size="16" font-weight="700">5 · P0: claim-without-recheck</text>
+<text x="70" y="766" font-size="20" font-family="monospace">P0=critical   P1=ready   owner=P0</text>
+<text x="950" y="740" text-anchor="end" font-size="16" fill="#24725f">safe</text>
+<path d="M520 795v17m-6-6 6 6 6-6" fill="none" stroke="#566568" stroke-width="2"/>
+<rect x="48" y="818" width="944" height="90" rx="12" fill="#fce0dd" stroke="#b33c35" stroke-width="2"/>
+<text x="70" y="847" font-size="16" font-weight="700">6 · P1: claim-without-recheck</text>
+<text x="70" y="882" font-size="20" font-family="monospace">P0=critical   P1=critical   owner=P1</text>
+<text x="950" y="856" text-anchor="end" font-size="16" fill="#b33c35">VIOLATION</text>
+<text x="48" y="965" font-size="14">Observed: 2026-10-05T13:34:09+09:00 · Abstract model; production mutex refinement not checked</text>
+</g></svg>

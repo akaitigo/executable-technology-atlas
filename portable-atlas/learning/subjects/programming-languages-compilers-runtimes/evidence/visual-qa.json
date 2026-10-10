@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "subject": "programming-languages-compilers-runtimes",
+  "classification": "actual-background-IAB-QA-of-saved-observation",
+  "checked_at": "2026-10-05T05:09:22.133Z",
+  "reviewer": "main-agent",
+  "independent_agent_review": false,
+  "url": "http://127.0.0.1:8798/",
+  "page_title": "Expressions — 文字の順番と、計算の順番",
+  "module_identity": "programming-languages-compilers-runtimes · bounded-expression-recursive-descent-v1",
+  "browser": "Codex In-app Browser",
+  "background": true,
+  "viewport": {"width": 1280, "height": 720, "device_pixel_ratio": 2},
+  "run_digest": "sha256:27fe396cca3066281df59c6ee6f0a36e5f3816539266cfcd5230148a416ac34c",
+  "ui_digests": {
+    "index.html": "sha256:0adb8bb53de416e10bb10a8b9da5422588ea57aa9710e85f19abd808f3eb3e54",
+    "app.js": "sha256:dfeccb01cc50d14467a2fc0de1d1323f0d8b9d348b7fafde5450a9b909a2b47a",
+    "style.css": "sha256:d31f80662f07ad2161fc6bbcc1b09b5f94b3ed3314c45e11a80638ebcc80e412",
+    "data.js": "sha256:56e490e890058d58e7912de297da1b1c333968c767e508260011573841be5517"
+  },
+  "checks": [
+    {"id": "module-and-provenance", "result": "passed", "observed": "教材title、有限grammar、保存10 input、観測環境、実装・原票・原典linkが表示された。UIによる新規Python実行ではない。"},
+    {"id": "prediction-and-step", "result": "passed", "observed": "20の予想を選択しToken開始、AST開始、評価開始、nextを操作。token +、consume INT、整数2/3/4、Multiply 12、Add 14を順に確認。"},
+    {"id": "precedence", "result": "passed", "normal": 14, "naive": 20, "observed": "正常root Addの右にMultiply、naive root Multiplyの左にAdd。最後のnextは無効。"},
+    {"id": "parentheses", "result": "passed", "normal": 20, "naive": 20},
+    {"id": "two-products", "result": "passed", "normal": 26, "naive": 50},
+    {"id": "boundary", "result": "passed", "normal": 7, "naive": 6999993},
+    {"id": "zero", "result": "passed", "normal": 0, "naive": 0, "observed": "正常0はerrorの結果なしとは異なる。"},
+    {"id": "missing-operand", "result": "passed", "phase": "parse", "offset": 4, "line": 1, "column": 5, "observed": "*にcaret、期待INTまたは(、root AST/評価結果なし。評価開始buttonは無効。"},
+    {"id": "missing-close", "result": "passed", "phase": "parse", "offset": 6, "line": 1, "column": 7, "observed": "EOF位置にcaret、結果なし。"},
+    {"id": "illegal-character", "result": "passed", "phase": "lex", "offset": 4, "line": 1, "column": 5, "observed": "x位置で停止、結果なし。"},
+    {"id": "adjacent-integers", "result": "passed", "phase": "parse", "offset": 2, "line": 1, "column": 3, "observed": "EOF期待に対し3を検出、結果なし。"},
+    {"id": "multiline-error", "result": "passed", "phase": "parse", "offset": 5, "line": 2, "column": 2, "observed": "2行目の*にcaret、結果なし。"},
+    {"id": "trace-jump", "result": "passed", "observed": "全22 traceから15 · parse: build Multiplyを選択し、source 3 * 4 / span [4,9)とbuild表示を確認。ASTは最終形preview＋生成済み/current表示であり、逐次生成の完全snapshotとは呼ばない。"},
+    {"id": "diagram-link", "result": "passed", "observed": "実parserのASTから生成した図linkを開き、正常14/naive20、root+と右* subtreeを実表示確認。再描画の明示があり表示の切れなし。"}
+  ],
+  "console_check": {"levels": ["warn", "error"], "limit": 30, "entries": [], "scope": "教材ページ操作後、SVG navigation前に取得。全ブラウザ・全時刻の無エラーを主張しない。"},
+  "captures": [
+    {"view": "precedence-result", "mime_type": "image/jpeg", "bytes": 50557, "displayed_in_conversation": true, "saved_capture_file": null},
+    {"view": "missing-operand-error", "mime_type": "image/jpeg", "bytes": 54399, "displayed_in_conversation": true, "saved_capture_file": null},
+    {"view": "generated-ast-svg-in-browser", "mime_type": "image/jpeg", "bytes": 22024, "displayed_in_conversation": true, "saved_capture_file": null}
+  ],
+  "capture_export_limitation": "利用したcapture APIは画素byteを会話内へ表示できるが、documented local-file exportがない。実captureファイルは未保存。SVGをcaptureの代替とは扱わない。",
+  "persisted_redraw": {"path": "evidence/precedence-ast.svg", "digest": "sha256:f3520c0ddd949ec19d58995dd10e3dc0a4ff890fbee25abde2daa7af6acd4504", "classification": "actual-parser-AST-redraw-not-screenshot"},
+  "limits": ["desktop viewportのみ。mobile QAは未実施。", "保存runの操作と表示のQAであり、学習者理解度や実言語compilerの検証ではない。"],
+  "server_observation": {"module_requests": "index/style/data/app/SVG HTTP200", "non_module_request": "/favicon.ico HTTP404 after SVG navigation", "effect": "教材・図の読み込みは成功。faviconは未提供。"},
+  "targeted_validation": {
+    "recorded_at": "2026-10-05T05:14:52Z",
+    "python_verify": {"exit_code": 0, "generated": 100, "invalid": 15, "evidence_negative": 5, "read_only_processes": 3},
+    "node_check_app_js": {"exit_code": 0},
+    "skill_quick_validate": {"exit_code": 0, "output": "Skill is valid!"},
+    "whole_portal_gate": "not-run; finite local module only, not Portal completion or delivery"
+  },
+  "cleanup": {
+    "status": "completed",
+    "server_session": "63841",
+    "server_stop": "Ctrl-C to owned session only",
+    "server_exit_code": 0,
+    "owned_tab_id": "5",
+    "owned_tab_closed_at": "2026-10-05T05:14:40.852Z",
+    "listener_check": "lsof -nP -iTCP:8798 -sTCP:LISTEN returned no listener (exit1)",
+    "other_task_resources_changed": false
+  }
+}

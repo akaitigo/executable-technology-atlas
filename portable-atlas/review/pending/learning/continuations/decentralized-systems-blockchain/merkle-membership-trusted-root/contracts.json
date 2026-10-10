@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "keys": [
+    "leaf_hex",
+    "index",
+    "proof",
+    "sender_root"
+  ],
+  "leaf_hex": "lowercase even hex, 0..16 bytes; empty permitted",
+  "index": "integer 0..3, bool forbidden",
+  "proof": "exactly 2 objects, keys side/hash; leaf upward order",
+  "side": "sibling side: level j left iff index bit j is1, otherwise right; mismatched side refuses",
+  "hash": "64 lowercase hex characters -> raw32 digest bytes",
+  "leaf_hash": "SHA256(0x00 || decoded leaf bytes)",
+  "internal_hash": "SHA256(0x01 || raw left32 || raw right32)",
+  "tree": "ordered complete 4-leaf, depth2, no sorting/padding/double SHA",
+  "baseline_leaf_hex": [
+    "41",
+    "42",
+    "41",
+    "44"
+  ],
+  "trusted_root": "82ea96439566986e84d7e37227191ea4a6755a371969acad2f9d26d17e079f56",
+  "trust": "verifier-owned literal pinned before request, fixture assumption; no root distribution/authentication implemented",
+  "receiver": "leaf bytes,index,two siblings,sender_root only; no baseline leaves used by verifier",
+  "duplicates": "A at index0 and2 intentionally; accepted positional membership never unique value/person/provenance",
+  "classification": "trusted_match iff folded root equals verifier pinned root; sender equality only internal consistency diagnostic",
+  "limits": [
+    "synthetic finite membership only",
+    "no content truth/authorization/signature/consensus/finality/unique history",
+    "no collision resistance proof or hash implementation certification",
+    "encoding and domain tags are ours, not NISTIR8202 protocol"
+  ]
+}

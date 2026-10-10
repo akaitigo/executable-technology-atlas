@@ -1,0 +1,14 @@
+{
+  "field_id": "oci-container-engineering",
+  "reference_version": "OCI Image Spec v1.1.1",
+  "third_party_body_saved": false,
+  "sources": [
+    {"id":"oci-layout","url":"https://github.com/opencontainers/image-spec/blob/v1.1.1/image-layout.md","locators":["oci-layout file","index.json file","Blobs"],"binding":"layout/index/blob relationship; layout marker 1.0.0 is not image-spec release version"},
+    {"id":"oci-manifest","url":"https://github.com/opencontainers/image-spec/blob/v1.1.1/manifest.md#image-manifest","locators":["Image Manifest / layers"],"binding":"ordered two layer descriptors from base to upper"},
+    {"id":"oci-config","url":"https://github.com/opencontainers/image-spec/blob/v1.1.1/config.md#layer-diffid","locators":["Layer DiffID","rootfs / diff_ids"],"binding":"uncompressed tar SHA-256; digest equals DiffID only in this uncompressed subset"},
+    {"id":"oci-layer","url":"https://github.com/opencontainers/image-spec/blob/v1.1.1/layer.md#whiteouts","locators":["Distributable Format","Changeset over existing files","Whiteouts","Opaque Whiteout"],"binding":"regular file overwrite and explicit whiteout of lower layer; opaque valid in OCI but unsupported here"},
+    {"id":"oci-descriptor","url":"https://github.com/opencontainers/image-spec/blob/v1.1.1/descriptor.md#digests","locators":["Digests","size"],"binding":"metadata and layer blob digest/size comparisons; not signature/authenticity"}
+  ],
+  "subset": ["synthetic linux/amd64 config", "one manifest", "two uncompressed USTAR layers", "ASCII canonical relative file paths", "regular files <=64KiB", "128 entries/layer", "blob <=2MiB", "explicit empty whiteouts", "in-memory UTF-8 path map"],
+  "not_taught": ["actual container execution", "runtime-spec", "namespaces", "cgroups", "isolation", "capabilities", "seccomp", "rootless", "overlayfs", "host extraction", "file ownership/mode/xattrs", "directory metadata", "symlinks/hardlinks/devices/FIFO", "opaque whiteout implementation", "gzip/zstd", "multiarch/index nesting", "registry/distribution", "signatures/SBOM/CVE", "image security", "production performance", "whole subject completion"]
+}

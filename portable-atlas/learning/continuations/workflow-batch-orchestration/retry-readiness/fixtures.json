@@ -1,0 +1,48 @@
+{
+  "title": "Atlas fixed retry readiness inputs",
+  "schema": 1,
+  "edge": [
+    "B",
+    "D"
+  ],
+  "b_success_value": 7,
+  "d_multiplier": 2,
+  "retry_budget": 2,
+  "retry_delay": 2,
+  "attempt_duration": 1,
+  "cases": [
+    {
+      "id": "retryable-resume",
+      "outcomes": [
+        "TRANSIENT",
+        "SUCCESS"
+      ],
+      "downstream_mode": "on-terminal-failure"
+    },
+    {
+      "id": "nonretryable-stop",
+      "outcomes": [
+        "PERMANENT",
+        "SUCCESS"
+      ],
+      "downstream_mode": "on-terminal-failure"
+    },
+    {
+      "id": "retry-budget-exhausted",
+      "outcomes": [
+        "TRANSIENT",
+        "TRANSIENT",
+        "TRANSIENT"
+      ],
+      "downstream_mode": "on-terminal-failure"
+    },
+    {
+      "id": "premature-downstream-block",
+      "outcomes": [
+        "TRANSIENT",
+        "SUCCESS"
+      ],
+      "downstream_mode": "on-any-failure-sticky"
+    }
+  ]
+}

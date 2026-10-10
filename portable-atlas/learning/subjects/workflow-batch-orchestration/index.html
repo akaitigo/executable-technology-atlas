@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>有限DAG — dependency / retry / blocked</title><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body><main>
+<header><p class="eyebrow">workflow-batch-orchestration / Python stdlib</p><h1>依存が終わるまで、次は動かない</h1><p>4 taskの有限DAGを実計算し、依存順・bounded retry・blockedを比べる。図はraw eventの再生で、Airflowや永続workerは起動しません。</p></header>
+<section><h2>1　予想して実行する</h2><p>Aはseed、BはA×2、CはA+3、DはB+C。Bが失敗したらDはどうなる？</p>
+<div class="controls"><label>予想<select id="prediction"><option value="unsure">まだ分からない</option><option value="succeeded">Dまで成功する</option><option value="blocked">Dはblockedになる</option><option value="rejected">実行前に拒否される</option></select></label>
+<label>ケース<select id="case"><option value="normal">正常：全task成功</option><option value="fail-once">境界：Bは最初の1回だけ失敗</option><option value="always-fail">異常：Bは全許可attemptで失敗</option><option value="cycle">拒否：D→Aを追加してcycle</option></select></label>
+<label>retry上限<select id="retries"><option value="0">0 — 最大1 attempt</option><option value="1" selected>1 — 最大2 attempts</option><option value="2">2 — 最大3 attempts</option></select></label>
+<label>seed<select id="seed"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label>
+<label>今回の実行<select id="mode"><option value="fresh">新規run：全taskを新しく計算</option><option value="reuse">直前runの成功結果を保持／再利用</option></select></label>
+<button id="run">Pythonで実行・原票を追記</button></div>
+<p id="status" role="status">まだ実行していません。入力を選んで実行してください。</p><p class="note">再利用は同じgraph・seed・retry・実装digestのみ。失敗taskのattemptは新runごとにリセットします。外部side effectの重複防止・exactly-once保証ではありません。</p></section>
+<section id="result" hidden><h2>2　依存図と状態を戻して見る</h2>
+<p id="binding"></p><div class="timeline"><button id="first">開始</button><button id="failure">最初の失敗／拒否</button><button id="last">最終event</button><label>eventを戻す／進める <input id="step" type="range" min="0" max="0" value="0"></label><output id="position"></output></div>
+<div class="diagram" role="img" aria-label="実行eventから描いたA B C Dの依存と状態"><svg viewBox="0 0 800 290" aria-hidden="true"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#54707b"/></marker></defs>
+<path class="edge" d="M174 130 L328 66"/><path class="edge" d="M174 160 L328 228"/><path class="edge" d="M475 66 L627 130"/><path class="edge" d="M475 228 L627 160"/><path id="cycle-edge" class="edge cycle" d="M695 111 C680 5 117 5 100 111" hidden/>
+<g id="node-A" transform="translate(28 112)"><rect width="146" height="80" rx="10"/><text x="73" y="22">A : seed</text><text class="state" x="73" y="44"></text><text class="value" x="73" y="65"></text></g>
+<g id="node-B" transform="translate(329 27)"><rect width="146" height="80" rx="10"/><text x="73" y="22">B : A × 2</text><text class="state" x="73" y="44"></text><text class="value" x="73" y="65"></text></g>
+<g id="node-C" transform="translate(329 190)"><rect width="146" height="80" rx="10"/><text x="73" y="22">C : A + 3</text><text class="state" x="73" y="44"></text><text class="value" x="73" y="65"></text></g>
+<g id="node-D" transform="translate(628 112)"><rect width="146" height="80" rx="10"/><text x="73" y="22">D : B + C</text><text class="state" x="73" y="44"></text><text class="value" x="73" y="65"></text></g></svg></div>
+<p class="legend">pending → ready → running → succeeded ／ running → retrying → running ／ 上限でfailed ／ 成功しない依存があればblocked。再利用はsucceededのまま、attempt 0。</p>
+<p id="event" class="event"></p><table><thead><tr><th>task</th><th>表示eventのstate</th><th>今回attempt数</th><th>出力</th><th>成功再利用</th></tr></thead><tbody id="tasks"></tbody></table>
+<p id="answer" class="answer"></p><p id="oracle"></p>
+<details><summary>全lifecycle eventのraw表示</summary><pre id="raw-events"></pre></details>
+<p><a id="raw" href="#">このrunのraw JSON</a> · <a id="metadata" href="#">artifact digest</a></p></section>
+<section id="comparison" hidden><h2>3　同じseed／retry上限で正常・境界・異常を比べる</h2><p>下表は今回のPythonが別々に新規runした結果です。主runの再利用結果や途中eventとは分けています。</p><table><thead><tr><th>ケース</th><th>run</th><th>B attempts</th><th>D</th><th>Oracle一致</th></tr></thead><tbody id="matrix"></tbody></table></section>
+<section><h2>4　原典と実装で答え合わせする</h2><p><a href="https://docs.python.org/3.9/library/graphlib.html#graphlib.TopologicalSorter">Python graphlib: TopologicalSorter</a>の冒頭定義、prepare/get_ready/static_order/CycleErrorを参照。教材runnerは独自の逐次Kahn式、Oracleは全permutation検査です。</p><p><a href="https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html#task-instances">Airflow公式 Tasks / Task Instances (3.3.2)</a>にはupstream_failedやup_for_retryを含む製品のstateがあります。本教材のblocked/retryingは独自stateで、同じ製品実装ではありません。</p><p><a href="runner.py">runner.py</a> · <a href="test_runner.py">独立checker</a> · <a href="README.md">再現手順・モデル境界</a> · <a href="QA.md">実画面QA</a> · <a href="coverage.json">未教材Coverage</a></p><p class="note">retryがある＝必ず成功ではない。依存順＝並列実行でもない。scheduler時刻、backoff待機、永続worker、実分散、crash/recovery、業務外部side effect、製品固有trigger ruleは未教材です。</p></section>
+</main></body></html>

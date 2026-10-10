@@ -1,0 +1,729 @@
+{
+  "Atlas": "別保持policyと受信policyの有限比較",
+  "kind": "synthetic_unsigned_claim_comparison",
+  "cases": [
+    {
+      "id": "normal",
+      "fixtureSha256": "41a02a23d5d0179c2772c4abd8b8c849e6a37ef65457f4ae7f5e018408676e79",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": true,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": true,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "other-builder",
+      "fixtureSha256": "3546703bf008faca0a6dd199a930da5373e1a3e0925500c61d9be06cc55fbebc",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": false,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": false,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "other-source",
+      "fixtureSha256": "14db0f767e44042630eaf4e65dc886506cc56a690efe2f3f2c8c5e0f45285c87",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/fork/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/fork/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": false,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": false,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "other-build-type",
+      "fixtureSha256": "d3f928e59ac7e3eb67c7d2df42dd02375a1d094bbbfcdc1f7bfe11f25c4b303d",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v2",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v2",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": false,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": false,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "changed-parameter",
+      "fixtureSha256": "59df0c73ed72389316940d437dd19c5ca637fdaf4125f4b2f0cf634530ab0b44",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "debug",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "debug",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": false
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": false
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "unknown-parameter",
+      "fixtureSha256": "a3b288da45a1e230672ece8e4ea44ea054e16774e9f6c8a07156b7ae2255e6f8",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64",
+            "skipTests": "true"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64",
+            "skipTests": "true"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/release/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": false,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": false,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    },
+    {
+      "id": "bundle-policy-replaced",
+      "fixtureSha256": "131fb2b895a0ecdfc6e89b87cc8c7a9323d4597eeeed3de0c411635ff1a9c1b3",
+      "bundle_before": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "bundle_after": {
+        "artifact_file": "artifact.bin",
+        "artifact_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "claims": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        },
+        "proposed_policy": {
+          "builder_id": "https://builder.example.invalid/unapproved/v1",
+          "source_id": "https://source.example.invalid/atlas/demo",
+          "build_type": "https://build.example.invalid/archive/v1",
+          "parameters": {
+            "mode": "release",
+            "target": "arm64"
+          }
+        }
+      },
+      "consumer_policy_before": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "consumer_policy_after": {
+        "builder_id": "https://builder.example.invalid/release/v1",
+        "source_id": "https://source.example.invalid/atlas/demo",
+        "build_type": "https://build.example.invalid/archive/v1",
+        "parameters": {
+          "mode": "release",
+          "target": "arm64"
+        }
+      },
+      "artifact": {
+        "hex": "616263",
+        "size": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      "independent_policy": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": false,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": false,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      },
+      "bundle_policy_fault": {
+        "checks": {
+          "artifact_digest": true,
+          "builder_id": true,
+          "source_id": true,
+          "build_type": true,
+          "parameter_keys": true,
+          "parameter_values": true
+        },
+        "claimsMatchPolicy": true,
+        "signatureCheck": "not-run",
+        "authenticatedBuilder": null,
+        "releaseDecision": "out-of-scope"
+      }
+    }
+  ],
+  "startedAt": "2026-10-06T23:04:39.719880+00:00",
+  "calculationSeconds": 0.001416166999999996,
+  "toolchain": {
+    "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "platform": "macOS-26.1-arm64-arm-64bit"
+  },
+  "actualNice": 10,
+  "sourceSha256": {
+    "CONTRACT.md": "cdcbbdea5da01b6ef0234814fe50402f531aeb7bea89235a15b800ea1612d5eb",
+    "SOURCES.md": "df7483aa39cef506c6798c7ed43d10911566412282adc3e4ddf1b1443d8ed9c1",
+    "consumer-policy.json": "d2078351f920336e4260912612a4500e54dc09e7599bdcbf4d9c8b920dc7ac1e",
+    "cases.json": "51324564dde8fca97bf875e4823339955e5ca8121b0d7856a157fe655a636fdb",
+    "expected.json": "af6ace59b76f9b455404c1fe142619fa553ad29bfeeb458bf6be67e2d1ef55d0",
+    "policy.py": "97d0fe28541a6682b000bb4801fcac873fdec93598393d2b2b32f46cf2324202",
+    "produce.py": "55d7202647e7620a588c34d8f23fabb92eef68911146368ea538730593502cfa",
+    "verify.py": "debdc26c7b309d125d2a92842c694e875ce56bf2a1a9e1f33b43509c4c21a362",
+    "run.py": "2b05c54f183fdefa39492746de915282799705cb72b7c63827c6c088baaedefd",
+    "execute_once.py": "5e84077fae79e215f6671984b4a9fe4926c37aa5b70c21b6e2b6db35fe5eecde",
+    "fixtures/artifact.bin": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "fixtures/bundle-policy-replaced.json": "131fb2b895a0ecdfc6e89b87cc8c7a9323d4597eeeed3de0c411635ff1a9c1b3",
+    "fixtures/changed-parameter.json": "59df0c73ed72389316940d437dd19c5ca637fdaf4125f4b2f0cf634530ab0b44",
+    "fixtures/normal.json": "41a02a23d5d0179c2772c4abd8b8c849e6a37ef65457f4ae7f5e018408676e79",
+    "fixtures/other-build-type.json": "d3f928e59ac7e3eb67c7d2df42dd02375a1d094bbbfcdc1f7bfe11f25c4b303d",
+    "fixtures/other-builder.json": "3546703bf008faca0a6dd199a930da5373e1a3e0925500c61d9be06cc55fbebc",
+    "fixtures/other-source.json": "14db0f767e44042630eaf4e65dc886506cc56a690efe2f3f2c8c5e0f45285c87",
+    "fixtures/unknown-parameter.json": "a3b288da45a1e230672ece8e4ea44ea054e16774e9f6c8a07156b7ae2255e6f8"
+  }
+}

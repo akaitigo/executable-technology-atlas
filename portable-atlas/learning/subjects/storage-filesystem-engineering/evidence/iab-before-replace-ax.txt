@@ -1,0 +1,230 @@
+Browser tab: 3, Title: "旧fileとatomic replace — Storage教材", URL: "http://127.0.0.1:55468/index.html".
+1 AXWebArea 旧fileとatomic replace — Storage教材, URL: 127.0.0.1:55468/index.html
+	2 container
+		3 text 有限1教材 / 実task-owned files / power-loss durability・block CoWは未実証
+		4 heading 旧fileを、いつ手放す？, Value: 1
+			5 text 旧fileを、いつ手放す？
+		6 text new.tmpを完成してから名前を置換する方式と、旧fileをtruncateしてから書く方式を、実reader状態で比較します。
+		7 heading 前提 → 主要概念・仕組み, Value: 2
+			8 text 前提 → 主要概念・仕組み
+		9 text pathが指すfileと、開いたreaderが参照するfileを区別します。別tempへ新版を書き、flush/fsyncしてos.replace。置換後のpathは新版、既存readerは旧版です。truncateは同じinodeのdataを先に失います。
+		10 text 実務: commit前例外で旧dataを残せるか、既存readerをどう切り替えるかを判断。限界: 単fileのruntime可視性と電源断durabilityは別。これはアプリケーションのwrite-new方式で、physical block CoW測定ではありません。
+		11 link Description: 契約と再現, Value: 127.0.0.1:55468/document.html?file=README.md
+		12 text  · 
+		13 link Description: 全Subject roadmapと次の4実験, Value: 127.0.0.1:55468/document.html?file=COVERAGE.md
+		14 heading 1. 予想, Value: 2
+			15 text 1. 予想
+		16 text new.tmpに4byteだけ書いて例外になったら、旧targetと既存readerは何を読む？
+		17 text field (settable) new.tmpに4byteだけ書いて例外になったら、旧targetと既存readerは何を読む？, Value: abortなら旧版。truncateなら旧dataを失う, ID: prediction
+		90 text 予想を入力済み。比較してから答えへ。
+		19 heading 2. 操作 → 3. 正常・境界・意図異常の比較, Value: 2
+			20 text 2. 操作 → 3. 正常・境界・意図異常の比較
+		21 text 実験case
+		22 pop up button (collapsed, settable) 実験case, Value: atomic-commit, ID: case, Secondary Actions: Expand
+			23 menu
+				24 (selected) atomic-commit
+				25 atomic-abort
+				26 truncate-failure
+				27 empty-new-commit
+				28 zero-byte-truncate-failure
+				29 empty-old-max-new
+				30 full-prefix-truncate-failure
+				31 invalid-cut
+				32 invalid-bool
+				33 invalid-external-path
+		34 button 次のevent, ID: next
+		35 button 全event, ID: all
+		36 button 最初に戻す, ID: reset
+		91 text atomic-commit: 12 / 20 event表示 / PID=74641
+		92 text 独立期待: 最終path length=13 / held length=13 / commit=true
+		93 text 実結果は全event後に表示。
+		94 text 最後に観測したsnapshot: candidate_written / path inode=117467710 / held inode=117467710
+		95 container 実reader snapshotの状態図
+		41 table
+			42 row
+				43 cell
+					44 text 観測reader
+				45 cell
+					46 text length
+				47 cell
+					48 text SHA-256（全64桁）
+				49 cell
+					50 text 独立oracle / data preview
+			96 container readers
+				97 row
+					98 cell
+						99 text path reader
+					100 cell
+						101 text 13
+					102 cell
+						103 text 54d377b71b86a8ed686ee7f1cc993288822dac95fe88950dfc59ae7b3adb263b
+					104 cell
+						105 text oracle一致 / OLD:version1\n
+				106 row
+					107 cell
+						108 text held reader
+					109 cell
+						110 text 13
+					111 cell
+						112 text 54d377b71b86a8ed686ee7f1cc993288822dac95fe88950dfc59ae7b3adb263b
+					113 cell
+						114 text oracle一致 / OLD:version1\n
+				115 row
+					116 cell
+						117 text new.tmp
+					118 cell
+						119 text 13
+					120 cell
+						121 text 796e79976dee8eac24fa7196f2b8877287ea0764f2435f1c065b8e88c06cd468
+					122 cell
+						123 text oracle一致 / NEW:version2\n
+		51 text fsync call/returnを記録しても電源断durability証明なし。例外注入はprocess crashや停電ではありません。cleanup後は図が示す観測fileも除去済みです。
+		52 table
+			53 row
+				54 cell
+					55 text seq / event
+				56 cell
+					57 text wall時刻UTC
+				58 cell
+					59 text mono差 ms
+				60 cell
+					61 text 観測fields / reader length
+			124 container events
+				125 row
+					126 cell
+						127 text 0 / owned_temp_created
+					128 cell
+						129 text 2026-10-05T07:38:35.947Z
+					130 cell
+						131 text 0.000
+					132 cell
+						133 text {"relative_directory":".owned-mq3o7s19","pid":74641}
+				134 row
+					135 cell
+						136 text 1 / flush_returned
+					137 cell
+						138 text 2026-10-05T07:38:35.947Z
+					139 cell
+						140 text 0.128
+					141 cell
+						142 text {"role":"initial-old"}
+				143 row
+					144 cell
+						145 text 2 / fsync_called
+					146 cell
+						147 text 2026-10-05T07:38:35.947Z
+					148 cell
+						149 text 0.129
+					150 cell
+						151 text {"role":"initial-old","fd":4}
+				152 row
+					153 cell
+						154 text 3 / fsync_returned
+					155 cell
+						156 text 2026-10-05T07:38:35.947Z
+					157 cell
+						158 text 0.163
+					159 cell
+						160 text {"role":"initial-old"}
+				161 row
+					162 cell
+						163 text 4 / held_reader_opened
+					164 cell
+						165 text 2026-10-05T07:38:35.948Z
+					166 cell
+						167 text 1.097
+					168 cell
+						169 text {"fd":4}
+				170 row
+					171 cell
+						172 text 5 / old_ready
+					173 cell
+						174 text 2026-10-05T07:38:35.948Z
+					175 cell
+						176 text 1.197
+					177 cell
+						178 text path=13 / held=13 / candidate=なし
+				179 row
+					180 cell
+						181 text 6 / candidate_created
+					182 cell
+						183 text 2026-10-05T07:38:35.948Z
+					184 cell
+						185 text 1.280
+					186 cell
+						187 text {"filename":"new.tmp"}
+				188 row
+					189 cell
+						190 text 7 / candidate_empty
+					191 cell
+						192 text 2026-10-05T07:38:35.949Z
+					193 cell
+						194 text 1.981
+					195 cell
+						196 text path=13 / held=13 / candidate=0
+				197 row
+					198 cell
+						199 text 8 / flush_returned
+					200 cell
+						201 text 2026-10-05T07:38:35.949Z
+					202 cell
+						203 text 2.014
+					204 cell
+						205 text {"role":"candidate"}
+				206 row
+					207 cell
+						208 text 9 / fsync_called
+					209 cell
+						210 text 2026-10-05T07:38:35.949Z
+					211 cell
+						212 text 2.015
+					213 cell
+						214 text {"role":"candidate","fd":5}
+				215 row
+					216 cell
+						217 text 10 / fsync_returned
+					218 cell
+						219 text 2026-10-05T07:38:35.949Z
+					220 cell
+						221 text 2.050
+					222 cell
+						223 text {"role":"candidate"}
+				224 row
+					225 cell
+						226 text 11 / candidate_written
+					227 cell
+						228 text 2026-10-05T07:38:35.950Z
+					229 cell
+						230 text 3.105
+					231 cell
+						232 text path=13 / held=13 / candidate=13
+		62 button (collapsed) input / 実raw, Secondary Actions: Expand
+			63 text input / 実raw
+		64 heading 4. 原典 / 実装, Value: 2
+			65 text 4. 原典 / 実装
+		66 container
+			67 link Description: 一次資料locatorと確認状態, Value: 127.0.0.1:55468/document.html?file=SOURCES.md
+			68 text  · 
+			69 link Description: 実file更新, Value: 127.0.0.1:55468/document.html?file=experiment.py
+			70 text  · 
+			71 link Description: 独立reader-state oracle, Value: 127.0.0.1:55468/document.html?file=oracle.py
+		72 container
+			73 link Description: 時刻・環境・digest, Value: 127.0.0.1:55468/document.html?file=evidence/run.json
+			74 text  · 
+			75 link Description: 保存input/output, Value: 127.0.0.1:55468/document.html?file=evidence/raw.json
+			76 text  · 
+			77 link Description: reader状態図（生成図）, Value: 127.0.0.1:55468/evidence/reader-states.svg
+			78 text  · 
+			79 link Description: 実IAB QA / cleanup, Value: 127.0.0.1:55468/document.html?file=evidence/ui-qa.json
+		80 heading 5. 答え, Value: 2
+			81 text 5. 答え
+		82 button 答えを表示, ID: reveal
+		83 heading 次の学習と限界, Value: 2
+			84 text 次の学習と限界
+		85 container
+			86 text 前提→仕組み→今回の実装/正常異常→実務判断→限界→原典を通ったら、次1: namespace/metadata、次2: multiwriter、次3: persistence/crash、次4: block CoW/checksum/RAIDへ。
+			87 link Description: 具体的な問い・次実験・公式locator, Value: 127.0.0.1:55468/document.html?file=COVERAGE.md
+			88 text で全Subjectの未教材coverageを確認できます。分野全体の完成ではありません。
+		89 text 保存観測 2026-10-05T07:38:35.946736+00:00 / Darwin arm64 / Python 3.9.6。再実行・停電実験・block CoW・filesystem type検証ではありません。
+
+The focused UI element is 34 button 次のevent, ID: next

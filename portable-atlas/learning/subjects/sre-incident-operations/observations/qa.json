@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-05T08:06:50.078789+00:00",
+  "method": "actual IAB selector/button execution; JSON transcribed from rendered raw and window detail, not generated as browser observations",
+  "title": "分母から読むerror budget | SRE incident operations",
+  "prediction": "窓の分母が違うので単純平均ではなく9/10",
+  "sourceArtifactDigests": {
+    "fixture.json": "577714a6be3bdee33444efa612cadb76011de4971713e868c86199d759b2f0a7",
+    "runner.py": "a5b5e46995fc57f7523a16a54a03c708e6e93696398a2802297adc6283d3bcc9",
+    "oracle.py": "5c60464b3636aae479060d8d0344468ba04f7bfb86bfa7736c7b0df0ee0610ea",
+    "checker.py": "eca1cd525f3e139697a6de94e8bb514ebae22e493826355a8069b73430c9f8ea",
+    "server.py": "f5dc3fd37f548686e763871f26b799d825667a099ddafb6f7762ed91b91f06fd",
+    "index.html": "74811e742d6c7ea10eeebee395f3435b9ece2d94b8af113a2c837d7cff12431a",
+    "app.js": "32558f1658c798645c324774712b14ee7f243ffc72e43d1dc17fc46896dd37e5",
+    "README.md": "988807a57969ee6b8e0c5d5e9a8f72222017c199363d3d1c0541626eb2c05f39",
+    "sources.json": "5ca0b98b90f035d8db5948c6b00e7e47683836a5a7c96b65e7e230c4899a35b6",
+    "skills/atlas-sre-incident-operations/SKILL.md": "f4468c905467a8c1ce7a986949779f0ed762236bec260f4912a73f779d378e9e"
+  },
+  "cases": [
+    {
+      "case": "unequal-volume",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "exactSLI": "9/10",
+        "naiveSLI": "1/2",
+        "naiveWrong": true,
+        "burnRate": "1",
+        "remainingErrors": "0"
+      }
+    },
+    {
+      "case": "all-success",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "exactSLI": "1",
+        "naiveSLI": "1",
+        "naiveWrong": false,
+        "burnRate": "0",
+        "remainingErrors": "1"
+      }
+    },
+    {
+      "case": "budget-breach",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "exactSLI": "4/5",
+        "naiveSLI": "1/2",
+        "naiveWrong": true,
+        "burnRate": "2",
+        "remainingErrors": "-1"
+      }
+    },
+    {
+      "case": "expected-failures",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "exactSLI": "9/10",
+        "naiveSLI": "1/2",
+        "naiveWrong": true,
+        "burnRate": "1",
+        "remainingErrors": "0"
+      }
+    },
+    {
+      "case": "window-boundaries",
+      "oracle": {
+        "validScenario": true,
+        "status": "calculated",
+        "exactSLI": "3/4",
+        "naiveSLI": "3/4",
+        "naiveWrong": false,
+        "burnRate": "5/2",
+        "remainingErrors": "-3/5"
+      }
+    },
+    {
+      "case": "zero-events",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "zero-events"
+      }
+    },
+    {
+      "case": "empty-window",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "zero-eligible-window"
+      }
+    },
+    {
+      "case": "all-expected",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "zero-eligible-window"
+      }
+    },
+    {
+      "case": "late-input",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "reason": "late-input"
+      }
+    }
+  ],
+  "windowChecks": 6,
+  "windowObservations": [
+    {
+      "case": "unequal-volume",
+      "index": 0,
+      "observed": {
+        "window": [
+          0,
+          10
+        ],
+        "allIds": [
+          "e1"
+        ],
+        "eligibleIds": [
+          "e1"
+        ],
+        "excludedIds": [],
+        "good": 0,
+        "bad": 1,
+        "denominator": 1
+      }
+    },
+    {
+      "case": "unequal-volume",
+      "index": 1,
+      "observed": {
+        "window": [
+          10,
+          20
+        ],
+        "allIds": [
+          "e2",
+          "e3",
+          "e4",
+          "e5",
+          "e6",
+          "e7",
+          "e8",
+          "e9",
+          "e10"
+        ],
+        "eligibleIds": [
+          "e2",
+          "e3",
+          "e4",
+          "e5",
+          "e6",
+          "e7",
+          "e8",
+          "e9",
+          "e10"
+        ],
+        "excludedIds": [],
+        "good": 9,
+        "bad": 0,
+        "denominator": 9
+      }
+    },
+    {
+      "case": "expected-failures",
+      "index": 0,
+      "observed": {
+        "window": [
+          0,
+          10
+        ],
+        "allIds": [
+          "e1",
+          "e11"
+        ],
+        "eligibleIds": [
+          "e1"
+        ],
+        "excludedIds": [
+          "e11"
+        ],
+        "good": 0,
+        "bad": 1,
+        "denominator": 1
+      }
+    },
+    {
+      "case": "expected-failures",
+      "index": 1,
+      "observed": {
+        "window": [
+          10,
+          20
+        ],
+        "allIds": [
+          "e2",
+          "e3",
+          "e4",
+          "e5",
+          "e6",
+          "e7",
+          "e8",
+          "e9",
+          "e10",
+          "e12"
+        ],
+        "eligibleIds": [
+          "e2",
+          "e3",
+          "e4",
+          "e5",
+          "e6",
+          "e7",
+          "e8",
+          "e9",
+          "e10"
+        ],
+        "excludedIds": [
+          "e12"
+        ],
+        "good": 9,
+        "bad": 0,
+        "denominator": 9
+      }
+    },
+    {
+      "case": "window-boundaries",
+      "index": 0,
+      "observed": {
+        "window": [
+          0,
+          10
+        ],
+        "allIds": [
+          "e1",
+          "e2"
+        ],
+        "eligibleIds": [
+          "e1",
+          "e2"
+        ],
+        "excludedIds": [],
+        "good": 1,
+        "bad": 1,
+        "denominator": 2
+      }
+    },
+    {
+      "case": "window-boundaries",
+      "index": 1,
+      "observed": {
+        "window": [
+          10,
+          20
+        ],
+        "allIds": [
+          "e3",
+          "e4"
+        ],
+        "eligibleIds": [
+          "e3",
+          "e4"
+        ],
+        "excludedIds": [],
+        "good": 2,
+        "bad": 0,
+        "denominator": 2
+      }
+    }
+  ],
+  "rawExpanded": true,
+  "answerExpanded": true,
+  "roadmapTopics": [
+    "SLI/SLO measurement",
+    "burn alert and policy",
+    "incident response",
+    "postmortem and toil"
+  ],
+  "capture": {
+    "format": "JPEG",
+    "displayedInTool": true,
+    "saved": false,
+    "reason": "documented IAB screenshot API returns bytes for tool display; no supported local export path used; no reconstruction"
+  },
+  "cleanup": {
+    "serverClosed": true,
+    "serverExit": 0,
+    "tabClosed": true,
+    "port": 57451,
+    "listenerCheck": "lsof exact port: empty output, exit 1"
+  },
+  "browserNotes": [
+    "favicon.ico returned404; no application case failure"
+  ],
+  "skillRouting": {
+    "quickValidate": "PASS",
+    "supportedCase": "unequal-volume",
+    "unsupportedCase": "real-incident",
+    "unsupportedRejected": true,
+    "forwardAgentEvaluation": false
+  },
+  "qaDigest": "1638614f3778cd62b4e8ca796765b962ef9138531fb74f6d644c3fe59f48ee94"
+}

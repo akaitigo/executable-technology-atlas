@@ -1,0 +1,80 @@
+{
+  "utc": "2026-10-05T15:11:56.315178+00:00",
+  "attempts": [
+    {
+      "id": "global-empty",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "global-leak",
+        "--events-json",
+        "[]"
+      ],
+      "started_utc": "2026-10-05T15:11:56.021950+00:00",
+      "ended_utc": "2026-10-05T15:11:56.093978+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"global-leak\",\n  \"input\": {\n    \"id\": \"global-leak\",\n    \"label\": \"故障: 回転Bのglobal値をAへ漏らす\",\n    \"mode\": \"global-leak\",\n    \"events\": [],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"FAULT_GLOBAL_LEAK\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 0,\n    \"event\": null,\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "id": "dead-empty",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "dead-owner-reuse",
+        "--events-json",
+        "[]"
+      ],
+      "started_utc": "2026-10-05T15:11:56.094025+00:00",
+      "ended_utc": "2026-10-05T15:11:56.167170+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"dead-owner-reuse\",\n  \"input\": {\n    \"id\": \"dead-owner-reuse\",\n    \"label\": \"故障: 終了Bのownerを再利用\",\n    \"mode\": \"dead-owner-reuse\",\n    \"events\": [],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"FAULT_DEAD_REUSE\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 0,\n    \"event\": null,\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "id": "remove-a",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "rotate-b",
+        "--events-json",
+        "[{\"op\":\"finish\",\"target\":\"A\"}]"
+      ],
+      "started_utc": "2026-10-05T15:11:56.167228+00:00",
+      "ended_utc": "2026-10-05T15:11:56.240766+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"rotate-b\",\n  \"input\": {\n    \"id\": \"rotate-b\",\n    \"label\": \"B回転 / 同owner保持\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"finish\",\n        \"target\": \"A\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"finish\",\n        \"target\": \"A\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"finish\",\n      \"target\": \"A\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "id": "death-only",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "new-process-b",
+        "--events-json",
+        "[{\"op\":\"death\",\"target\":null}]"
+      ],
+      "started_utc": "2026-10-05T15:11:56.240822+00:00",
+      "ended_utc": "2026-10-05T15:11:56.315168+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"new-process-b\",\n  \"input\": {\n    \"id\": \"new-process-b\",\n    \"label\": \"death→新process模型→B作成\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"death\",\n        \"target\": null\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"death\",\n        \"target\": null\n      },\n      \"process\": 1,\n      \"alive\": false,\n      \"owners\": {}\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"death\",\n      \"target\": null\n    },\n    \"process\": 1,\n    \"alive\": false,\n    \"owners\": {}\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "source_sha256": {
+    "producer.py": "74cad0fbc5b72d9025b913f9097caba745ba299fb3046c8733e8ebbba3b165b2",
+    "runner.py": "9f2699ddb15af52ea34b2120ed3348597f02593df6ee5f3ca08023c122920419",
+    "server.py": "d885d9324f56de836baa43209016bac098f46493fe9e000f680b32503708f2d9",
+    "ui.js": "0dd16bc68a9575a3adb97870e02306dacdeac72e84143f803b034161f54e53bd",
+    "custom-oracle.json": "47726fd4fd34d4c6f7a37c7510949386d51f214329d1f4714efa86072fa7bea7"
+  }
+}

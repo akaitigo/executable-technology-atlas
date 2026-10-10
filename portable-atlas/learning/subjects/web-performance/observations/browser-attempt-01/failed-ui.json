@@ -1,0 +1,2711 @@
+{
+  "kind": "actual-iab-layout-timer-qa",
+  "startedAt": "2026-10-05T07:12:06.506Z",
+  "environment": {
+    "language": "ja",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "url": "http://127.0.0.1:53692/",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "observations": [
+    {
+      "id": "initial",
+      "at": "2026-10-05T07:12:06.547Z",
+      "snapshot": "- main:\n  - paragraph: Web performance — 有限1教材 / 同一小grid\n  - heading \"同じ形、違う更新順\" [level=1]\n  - paragraph: geometryの値が一致しても、DOMの書き・読み順は異なります。自分のBrowserでelapsedを比較し、速さの断定と結果の一致を分けて学びます。\n  - generic \"学ぶ順番・前提・実務判断\"\n  - paragraph: 前提：DOM style更新、getBoundingClientRect、event loop。主要概念：style invalidation→geometry read→layout依存→batching、performance.nowとmeasurement noise、timerは実行時刻の保証ではない。\n  - paragraph: 予想→操作→実時間/geometry比較→手順図/実装/原典→答え。今回から判断できるのは、不必要なread/write混在を調べること、同じ値を保って順序を変えること、warmupと本測定を分けること、長timerとメインスレッド占有を混同しないこと。常にbatchedが速い・LCP/INPが改善するとは判断できません。\n  - heading \"1. 予想する\" [level=2]\n  - text: 予想\n  - combobox \"予想\":\n    - option \"batchedは常に速い\" [selected]\n    - option \"値一致を検査し時間は観測する\"\n  - button \"予想を保存\"\n  - status\n  - heading \"2. 操作する\" [level=2]\n  - text: 固定workload\n  - combobox \"固定workload\":\n    - option \"通常：8反復\" [selected]\n    - option \"境界：0反復\"\n    - option \"不正：-1反復（拒否）\"\n  - button \"同じgridで2方式を測る\"\n  - button \"timerと120ms占有を比較\"\n  - paragraph: 16セル。warmup2 round、本測定5 round、順序を交互にします。前処理resetと最終geometry採取は計時外。timer例では20ms予約、100ms予約、20ms予約＋120ms同期占有の3ケースを順に実行。最後のケースは意図的に約120ms操作を止めるので注意。\n  - heading \"3. 実時間と値を比較する\" [level=2]\n  - paragraph: 未実行\n  - generic: \"0\"\n  - generic: \"1\"\n  - generic: \"2\"\n  - generic: \"3\"\n  - generic: \"4\"\n  - generic: \"5\"\n  - generic: \"6\"\n  - generic: \"7\"\n  - generic: \"8\"\n  - generic: \"9\"\n  - generic: \"10\"\n  - generic: \"11\"\n  - generic: \"12\"\n  - generic: \"13\"\n  - generic: \"14\"\n  - generic: \"15\"\n  - table:\n    - rowgroup:\n      - row \"round mode elapsed ms reads / writes / checksum\":\n        - columnheader \"round\"\n        - columnheader \"mode\"\n        - columnheader \"elapsed ms\"\n        - columnheader \"reads / writes / checksum\"\n    - rowgroup\n  - paragraph: まだ比較できません。\n  - paragraph: elapsedが0でも捨てません。小標本、timer精度、JIT、GC、他process、描画状態が影響します。この表はengineのLayout event countではなく、JSが呼んだgeometry read/write回数です。強制layoutのリスクを示しますが、全readで実layoutが起きたと数えません。\n  - heading \"4. 応答性の反例を読む\" [level=2]\n  - table:\n    - rowgroup:\n      - row \"case 予約 ms 同期占有 ms timer実経過 ms\":\n        - columnheader \"case\"\n        - columnheader \"予約 ms\"\n        - columnheader \"同期占有 ms\"\n        - columnheader \"timer実経過 ms\"\n    - rowgroup\n  - paragraph: timer probeはユーザー入力ではありません。120ms占有中はtimer callbackとmicrotaskを実行できないことをevent traceで確認します。100ms timerを予約するだけでは、その100msずっとメインスレッドを占有しません。これはINP・全応答性・paint/画面提示の測定ではありません。\n  - heading \"5. 仕組み・実装・一次資料\" [level=2]\n  - img \"交互は各セル書き読みを反復、batchedは全書き後に全読み\":\n    - generic: interleaved（各反復）\n    - generic: 書0 → 読0 → 書1 → 読1 → …\n    - generic: batched（各反復）\n    - generic: 全セルへ書く → 全セルを読む\n    - generic: 両方とも値一致・128 read / write\n  - paragraph:\n    - text: 図は独自の説明図でengine traceではありません。\n    - link \"実DOM runner\":\n      - /url: experiment.mjs\n    - text: /\n    - link \"固定workload\":\n      - /url: plan.mjs\n    - text: /\n    - link \"独立期待表\":\n      - /url: oracle.mjs\n    - text: /\n    - link \"fixture CSS\":\n      - /url: styles.css\n    - text: /\n    - link \"Source hash\":\n      - /url: sources.json\n  - paragraph:\n    - text: 原典：\n    - link \"CSSOM geometry\":\n      - /url: https://www.w3.org/TR/cssom-view-1/#dom-element-getboundingclientrect\n    - text: /\n    - link \"Chrome開発者のlayout解説\":\n      - /url: https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing\n    - text: /\n    - link \"High Resolution Time\":\n      - /url: https://www.w3.org/TR/hr-time-3/#dom-performance-now\n    - text: /\n    - link \"HTML timers\":\n      - /url: https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers\n    - text: 。\n  - heading \"6. 答える\" [level=2]\n  - text: 実務判断\n  - combobox \"実務判断\":\n    - option \"一回の時間だけで勝者を固定\" [selected]\n    - option \"値一致・条件・分布・traceを分けて判断\"\n    - option \"timer経過をINPとして公表\"\n  - button \"答えを確認\"\n  - paragraph\n  - generic \"次に何を学ぶか：主要未教材→4実験案\"\n  - generic \"実行原票（保存は明示操作）\"\n  - paragraph:\n    - link \"学習ガイドと再現手順\":\n      - /url: README.md\n    - text: /\n    - link \"実測・制約\":\n      - /url: VERIFICATION.md",
+      "dom": {
+        "geometry": [
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 0,
+            "width": 80,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 1,
+            "width": 80,
+            "x": 157,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 2,
+            "width": 80,
+            "x": 305,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 3,
+            "width": 80,
+            "x": 453,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 4,
+            "width": 80,
+            "x": 9,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 5,
+            "width": 80,
+            "x": 157,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 6,
+            "width": 80,
+            "x": 305,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 7,
+            "width": 80,
+            "x": 453,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 8,
+            "width": 80,
+            "x": 9,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 9,
+            "width": 80,
+            "x": 157,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 10,
+            "width": 80,
+            "x": 305,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 11,
+            "width": 80,
+            "x": 453,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 12,
+            "width": 80,
+            "x": 9,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 13,
+            "width": 80,
+            "x": 157,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 14,
+            "width": 80,
+            "x": 305,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 15,
+            "width": 80,
+            "x": 453,
+            "y": 129
+          }
+        ],
+        "probeRows": [],
+        "rows": [],
+        "status": "未実行",
+        "summary": "まだ比較できません。",
+        "trace": ""
+      },
+      "raw": {
+        "actions": [],
+        "at": "2026-10-05T07:11:33.502Z",
+        "busy": false,
+        "environment": {
+          "language": "ja",
+          "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "url": "http://127.0.0.1:53692/",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        "feedback": "",
+        "geometry": [
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 0,
+            "width": 80,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 1,
+            "width": 80,
+            "x": 157,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 2,
+            "width": 80,
+            "x": 305,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 3,
+            "width": 80,
+            "x": 453,
+            "y": 9
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 4,
+            "width": 80,
+            "x": 9,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 5,
+            "width": 80,
+            "x": 157,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 6,
+            "width": 80,
+            "x": 305,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 7,
+            "width": 80,
+            "x": 453,
+            "y": 49
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 8,
+            "width": 80,
+            "x": 9,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 9,
+            "width": 80,
+            "x": 157,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 10,
+            "width": 80,
+            "x": 305,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 11,
+            "width": 80,
+            "x": 453,
+            "y": 89
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 12,
+            "width": 80,
+            "x": 9,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 13,
+            "width": 80,
+            "x": 157,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 14,
+            "width": 80,
+            "x": 305,
+            "y": 129
+          },
+          {
+            "computedWidth": "80px",
+            "height": 32,
+            "id": 15,
+            "width": 80,
+            "x": 453,
+            "y": 129
+          }
+        ],
+        "kind": "actual-browser-layout-timer-ui",
+        "probes": [],
+        "runs": [],
+        "sourceHashes": {
+          "check.mjs": "1e2d575538ec30991e61bf363e3772ae95cfda0695d41bdeec9d307642ddd75d",
+          "experiment.mjs": "44e71e5f08bf9332428943d0a5fa5c45797b993136c80b0d3d4995623947e43e",
+          "index.html": "cdc9d9ae4ea72848c0bec2cf076567539409c2ba3cb3bdbc235e9fc6aba09100",
+          "lesson.mjs": "cc2e3b487bf89313a263608deaca9c8183d18e5bf2fd73cc3f0cddcecc75dc2f",
+          "oracle.mjs": "528b84129a430c34c4adc9617e33b0c0dcaff4203902d6db0065700615fa354d",
+          "plan.mjs": "6110c557df1ae6286ed57a645fd0fd025bc18e926eccb13ed3ab4a104c069e89",
+          "scope.json": "f120e3c53ab39817e2838bf4ecb60d3414ab43ad01d331df6c81d0b4b865e9de",
+          "serve.mjs": "0fda92634c979621c1d6dd600903af5c6913bce80ae90a53ac127c1fe72e1e9c",
+          "sources.mjs": "92768ac3a2c4a330589d36ffd73ecb991db4f21633df96ebb6a1d50159e099ad",
+          "styles.css": "b98d13e6e8b1d1f30ca9624c9aa7a24ba60ae9b08ae659123dbbf072ebcbc5a3",
+          "verify.mjs": "701736418486d58e55d4f4152392cfa489c6ecbbdca241c44cd558d781fd1678"
+        }
+      }
+    },
+    {
+      "id": "normal",
+      "at": "2026-10-05T07:12:07.185Z",
+      "snapshot": "- main:\n  - paragraph: Web performance — 有限1教材 / 同一小grid\n  - heading \"同じ形、違う更新順\" [level=1]\n  - paragraph: geometryの値が一致しても、DOMの書き・読み順は異なります。自分のBrowserでelapsedを比較し、速さの断定と結果の一致を分けて学びます。\n  - generic \"学ぶ順番・前提・実務判断\"\n  - paragraph: 前提：DOM style更新、getBoundingClientRect、event loop。主要概念：style invalidation→geometry read→layout依存→batching、performance.nowとmeasurement noise、timerは実行時刻の保証ではない。\n  - paragraph: 予想→操作→実時間/geometry比較→手順図/実装/原典→答え。今回から判断できるのは、不必要なread/write混在を調べること、同じ値を保って順序を変えること、warmupと本測定を分けること、長timerとメインスレッド占有を混同しないこと。常にbatchedが速い・LCP/INPが改善するとは判断できません。\n  - heading \"1. 予想する\" [level=2]\n  - text: 予想\n  - combobox \"予想\":\n    - option \"batchedは常に速い\" [selected]\n    - option \"値一致を検査し時間は観測する\"\n  - button \"予想を保存\"\n  - status: \"予想を保存: always-faster\"\n  - heading \"2. 操作する\" [level=2]\n  - text: 固定workload\n  - combobox \"固定workload\":\n    - option \"通常：8反復\" [selected]\n    - option \"境界：0反復\"\n    - option \"不正：-1反復（拒否）\"\n  - button \"同じgridで2方式を測る\" [active]\n  - button \"timerと120ms占有を比較\"\n  - paragraph: 16セル。warmup2 round、本測定5 round、順序を交互にします。前処理resetと最終geometry採取は計時外。timer例では20ms予約、100ms予約、20ms予約＋120ms同期占有の3ケースを順に実行。最後のケースは意図的に約120ms操作を止めるので注意。\n  - heading \"3. 実時間と値を比較する\" [level=2]\n  - paragraph: \"測定終了: 8反復 / warmup2 / 本測定5\"\n  - generic: \"0\"\n  - generic: \"1\"\n  - generic: \"2\"\n  - generic: \"3\"\n  - generic: \"4\"\n  - generic: \"5\"\n  - generic: \"6\"\n  - generic: \"7\"\n  - generic: \"8\"\n  - generic: \"9\"\n  - generic: \"10\"\n  - generic: \"11\"\n  - generic: \"12\"\n  - generic: \"13\"\n  - generic: \"14\"\n  - generic: \"15\"\n  - table:\n    - rowgroup:\n      - row \"round mode elapsed ms reads / writes / checksum\":\n        - columnheader \"round\"\n        - columnheader \"mode\"\n        - columnheader \"elapsed ms\"\n        - columnheader \"reads / writes / checksum\"\n    - rowgroup\n  - paragraph: まだ比較できません。\n  - paragraph: elapsedが0でも捨てません。小標本、timer精度、JIT、GC、他process、描画状態が影響します。この表はengineのLayout event countではなく、JSが呼んだgeometry read/write回数です。強制layoutのリスクを示しますが、全readで実layoutが起きたと数えません。\n  - heading \"4. 応答性の反例を読む\" [level=2]\n  - table:\n    - rowgroup:\n      - row \"case 予約 ms 同期占有 ms timer実経過 ms\":\n        - columnheader \"case\"\n        - columnheader \"予約 ms\"\n        - columnheader \"同期占有 ms\"\n        - columnheader \"timer実経過 ms\"\n    - rowgroup\n  - paragraph: timer probeはユーザー入力ではありません。120ms占有中はtimer callbackとmicrotaskを実行できないことをevent traceで確認します。100ms timerを予約するだけでは、その100msずっとメインスレッドを占有しません。これはINP・全応答性・paint/画面提示の測定ではありません。\n  - heading \"5. 仕組み・実装・一次資料\" [level=2]\n  - img \"交互は各セル書き読みを反復、batchedは全書き後に全読み\":\n    - generic: interleaved（各反復）\n    - generic: 書0 → 読0 → 書1 → 読1 → …\n    - generic: batched（各反復）\n    - generic: 全セルへ書く → 全セルを読む\n    - generic: 両方とも値一致・128 read / write\n  - paragraph:\n    - text: 図は独自の説明図でengine traceではありません。\n    - link \"実DOM runner\":\n      - /url: experiment.mjs\n    - text: /\n    - link \"固定workload\":\n      - /url: plan.mjs\n    - text: /\n    - link \"独立期待表\":\n      - /url: oracle.mjs\n    - text: /\n    - link \"fixture CSS\":\n      - /url: styles.css\n    - text: /\n    - link \"Source hash\":\n      - /url: sources.json\n  - paragraph:\n    - text: 原典：\n    - link \"CSSOM geometry\":\n      - /url: https://www.w3.org/TR/cssom-view-1/#dom-element-getboundingclientrect\n    - text: /\n    - link \"Chrome開発者のlayout解説\":\n      - /url: https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing\n    - text: /\n    - link \"High Resolution Time\":\n      - /url: https://www.w3.org/TR/hr-time-3/#dom-performance-now\n    - text: /\n    - link \"HTML timers\":\n      - /url: https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers\n    - text: 。\n  - heading \"6. 答える\" [level=2]\n  - text: 実務判断\n  - combobox \"実務判断\":\n    - option \"一回の時間だけで勝者を固定\" [selected]\n    - option \"値一致・条件・分布・traceを分けて判断\"\n    - option \"timer経過をINPとして公表\"\n  - button \"答えを確認\"\n  - paragraph\n  - generic \"次に何を学ぶか：主要未教材→4実験案\"\n  - generic \"実行原票（保存は明示操作）\"\n  - paragraph:\n    - link \"学習ガイドと再現手順\":\n      - /url: README.md\n    - text: /\n    - link \"実測・制約\":\n      - /url: VERIFICATION.md",
+      "dom": {
+        "geometry": [
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 0,
+            "width": 100,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 1,
+            "width": 108,
+            "x": 157,
+            "y": 9
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 2,
+            "width": 116,
+            "x": 305,
+            "y": 9
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 3,
+            "width": 124,
+            "x": 453,
+            "y": 9
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 4,
+            "width": 100,
+            "x": 9,
+            "y": 49
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 5,
+            "width": 108,
+            "x": 157,
+            "y": 49
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 6,
+            "width": 116,
+            "x": 305,
+            "y": 49
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 7,
+            "width": 124,
+            "x": 453,
+            "y": 49
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 8,
+            "width": 100,
+            "x": 9,
+            "y": 89
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 9,
+            "width": 108,
+            "x": 157,
+            "y": 89
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 10,
+            "width": 116,
+            "x": 305,
+            "y": 89
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 11,
+            "width": 124,
+            "x": 453,
+            "y": 89
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 12,
+            "width": 100,
+            "x": 9,
+            "y": 129
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 13,
+            "width": 108,
+            "x": 157,
+            "y": 129
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 14,
+            "width": 116,
+            "x": 305,
+            "y": 129
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 15,
+            "width": 124,
+            "x": 453,
+            "y": 129
+          }
+        ],
+        "probeRows": [],
+        "rows": [],
+        "status": "測定終了: 8反復 / warmup2 / 本測定5",
+        "summary": "まだ比較できません。",
+        "trace": ""
+      },
+      "raw": {
+        "actions": [
+          {
+            "at": "2026-10-05T07:12:06.606Z",
+            "type": "prediction",
+            "value": "always-faster"
+          },
+          {
+            "at": "2026-10-05T07:12:06.880Z",
+            "input": {
+              "iterations": 8,
+              "trigger": "run",
+              "trusted": true
+            },
+            "type": "run-click"
+          }
+        ],
+        "at": "2026-10-05T07:12:06.904Z",
+        "busy": false,
+        "environment": {
+          "language": "ja",
+          "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "url": "http://127.0.0.1:53692/",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        "feedback": "",
+        "geometry": [
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 0,
+            "width": 100,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 1,
+            "width": 108,
+            "x": 157,
+            "y": 9
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 2,
+            "width": 116,
+            "x": 305,
+            "y": 9
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 3,
+            "width": 124,
+            "x": 453,
+            "y": 9
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 4,
+            "width": 100,
+            "x": 9,
+            "y": 49
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 5,
+            "width": 108,
+            "x": 157,
+            "y": 49
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 6,
+            "width": 116,
+            "x": 305,
+            "y": 49
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 7,
+            "width": 124,
+            "x": 453,
+            "y": 49
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 8,
+            "width": 100,
+            "x": 9,
+            "y": 89
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 9,
+            "width": 108,
+            "x": 157,
+            "y": 89
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 10,
+            "width": 116,
+            "x": 305,
+            "y": 89
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 11,
+            "width": 124,
+            "x": 453,
+            "y": 89
+          },
+          {
+            "computedWidth": "100px",
+            "height": 32,
+            "id": 12,
+            "width": 100,
+            "x": 9,
+            "y": 129
+          },
+          {
+            "computedWidth": "108px",
+            "height": 32,
+            "id": 13,
+            "width": 108,
+            "x": 157,
+            "y": 129
+          },
+          {
+            "computedWidth": "116px",
+            "height": 32,
+            "id": 14,
+            "width": 116,
+            "x": 305,
+            "y": 129
+          },
+          {
+            "computedWidth": "124px",
+            "height": 32,
+            "id": 15,
+            "width": 124,
+            "x": 453,
+            "y": 129
+          }
+        ],
+        "kind": "actual-browser-layout-timer-ui",
+        "probes": [],
+        "runs": [
+          {
+            "clock": {
+              "attempts": 128,
+              "explanation": "Observed positive delta is not guaranteed clock resolution or statistical uncertainty. Zero-duration samples and scheduling noise are retained.",
+              "minimumObservedPositiveDeltaMs": 0.10000002384185792
+            },
+            "completedAt": "2026-10-05T07:12:06.904Z",
+            "input": {
+              "iterations": 8,
+              "trigger": "run",
+              "trusted": true
+            },
+            "result": {
+              "accepted": true,
+              "config": {
+                "cells": 16,
+                "columns": 4,
+                "iterations": 8,
+                "measuredRounds": 5,
+                "timerCases": [
+                  {
+                    "blockMs": 0,
+                    "delayMs": 20,
+                    "id": "idle"
+                  },
+                  {
+                    "blockMs": 0,
+                    "delayMs": 100,
+                    "id": "long-timer"
+                  },
+                  {
+                    "blockMs": 120,
+                    "delayMs": 20,
+                    "id": "blocking"
+                  }
+                ],
+                "warmupRounds": 2
+              },
+              "iterations": 8,
+              "samples": [
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.883Z",
+                  "elapsedMs": 3.199999988079071,
+                  "end": 33438.89999997616,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "warmup",
+                  "reads": 128,
+                  "round": 0,
+                  "start": 33435.69999998808,
+                  "startedAt": "2026-10-05T07:12:06.880Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.884Z",
+                  "elapsedMs": 0.5,
+                  "end": 33439.59999996424,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "warmup",
+                  "reads": 128,
+                  "round": 0,
+                  "start": 33439.09999996424,
+                  "startedAt": "2026-10-05T07:12:06.883Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.884Z",
+                  "elapsedMs": 0.5,
+                  "end": 33440.19999998808,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "warmup",
+                  "reads": 128,
+                  "round": 1,
+                  "start": 33439.69999998808,
+                  "startedAt": "2026-10-05T07:12:06.884Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.887Z",
+                  "elapsedMs": 2.899999976158142,
+                  "end": 33443.09999996424,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "warmup",
+                  "reads": 128,
+                  "round": 1,
+                  "start": 33440.19999998808,
+                  "startedAt": "2026-10-05T07:12:06.884Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.890Z",
+                  "elapsedMs": 2.699999988079071,
+                  "end": 33445.89999997616,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 0,
+                  "start": 33443.19999998808,
+                  "startedAt": "2026-10-05T07:12:06.887Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.890Z",
+                  "elapsedMs": 0.3999999761581421,
+                  "end": 33446.39999997616,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 0,
+                  "start": 33446,
+                  "startedAt": "2026-10-05T07:12:06.890Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.891Z",
+                  "elapsedMs": 0.3999999761581421,
+                  "end": 33446.89999997616,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 1,
+                  "start": 33446.5,
+                  "startedAt": "2026-10-05T07:12:06.891Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.894Z",
+                  "elapsedMs": 2.800000011920929,
+                  "end": 33449.80000001192,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 1,
+                  "start": 33447,
+                  "startedAt": "2026-10-05T07:12:06.891Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.897Z",
+                  "elapsedMs": 2.699999988079071,
+                  "end": 33452.69999998808,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 2,
+                  "start": 33450,
+                  "startedAt": "2026-10-05T07:12:06.894Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.897Z",
+                  "elapsedMs": 0.5,
+                  "end": 33453.19999998808,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 2,
+                  "start": 33452.69999998808,
+                  "startedAt": "2026-10-05T07:12:06.897Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.898Z",
+                  "elapsedMs": 0.5,
+                  "end": 33453.69999998808,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 3,
+                  "start": 33453.19999998808,
+                  "startedAt": "2026-10-05T07:12:06.897Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.901Z",
+                  "elapsedMs": 2.699999988079071,
+                  "end": 33456.5,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 3,
+                  "start": 33453.80000001192,
+                  "startedAt": "2026-10-05T07:12:06.898Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.903Z",
+                  "elapsedMs": 2.600000023841858,
+                  "end": 33459.19999998808,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "interleaved",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 4,
+                  "start": 33456.59999996424,
+                  "startedAt": "2026-10-05T07:12:06.901Z",
+                  "writes": 128
+                },
+                {
+                  "checksum": 14080,
+                  "completedAt": "2026-10-05T07:12:06.904Z",
+                  "elapsedMs": 0.3999999761581421,
+                  "end": 33459.59999996424,
+                  "geometry": [
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 0,
+                      "width": 100,
+                      "x": 9,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 1,
+                      "width": 108,
+                      "x": 157,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 2,
+                      "width": 116,
+                      "x": 305,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 3,
+                      "width": 124,
+                      "x": 453,
+                      "y": 9
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 4,
+                      "width": 100,
+                      "x": 9,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 5,
+                      "width": 108,
+                      "x": 157,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 6,
+                      "width": 116,
+                      "x": 305,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 7,
+                      "width": 124,
+                      "x": 453,
+                      "y": 49
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 8,
+                      "width": 100,
+                      "x": 9,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 9,
+                      "width": 108,
+                      "x": 157,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 10,
+                      "width": 116,
+                      "x": 305,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 11,
+                      "width": 124,
+                      "x": 453,
+                      "y": 89
+                    },
+                    {
+                      "computedWidth": "100px",
+                      "height": 32,
+                      "id": 12,
+                      "width": 100,
+                      "x": 9,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "108px",
+                      "height": 32,
+                      "id": 13,
+                      "width": 108,
+                      "x": 157,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "116px",
+                      "height": 32,
+                      "id": 14,
+                      "width": 116,
+                      "x": 305,
+                      "y": 129
+                    },
+                    {
+                      "computedWidth": "124px",
+                      "height": 32,
+                      "id": 15,
+                      "width": 124,
+                      "x": 453,
+                      "y": 129
+                    }
+                  ],
+                  "iterations": 8,
+                  "mode": "batched",
+                  "phase": "measured",
+                  "reads": 128,
+                  "round": 4,
+                  "start": 33459.19999998808,
+                  "startedAt": "2026-10-05T07:12:06.903Z",
+                  "writes": 128
+                }
+              ]
+            },
+            "sequence": 1,
+            "startedAt": "2026-10-05T07:12:06.880Z"
+          }
+        ],
+        "sourceHashes": {
+          "check.mjs": "1e2d575538ec30991e61bf363e3772ae95cfda0695d41bdeec9d307642ddd75d",
+          "experiment.mjs": "44e71e5f08bf9332428943d0a5fa5c45797b993136c80b0d3d4995623947e43e",
+          "index.html": "cdc9d9ae4ea72848c0bec2cf076567539409c2ba3cb3bdbc235e9fc6aba09100",
+          "lesson.mjs": "cc2e3b487bf89313a263608deaca9c8183d18e5bf2fd73cc3f0cddcecc75dc2f",
+          "oracle.mjs": "528b84129a430c34c4adc9617e33b0c0dcaff4203902d6db0065700615fa354d",
+          "plan.mjs": "6110c557df1ae6286ed57a645fd0fd025bc18e926eccb13ed3ab4a104c069e89",
+          "scope.json": "f120e3c53ab39817e2838bf4ecb60d3414ab43ad01d331df6c81d0b4b865e9de",
+          "serve.mjs": "0fda92634c979621c1d6dd600903af5c6913bce80ae90a53ac127c1fe72e1e9c",
+          "sources.mjs": "92768ac3a2c4a330589d36ffd73ecb991db4f21633df96ebb6a1d50159e099ad",
+          "styles.css": "b98d13e6e8b1d1f30ca9624c9aa7a24ba60ae9b08ae659123dbbf072ebcbc5a3",
+          "verify.mjs": "701736418486d58e55d4f4152392cfa489c6ecbbdca241c44cd558d781fd1678"
+        }
+      }
+    }
+  ],
+  "answers": [],
+  "prediction": {
+    "value": "always-faster",
+    "at": "2026-10-05T07:12:06.848Z",
+    "snapshot": "- main:\n  - paragraph: Web performance — 有限1教材 / 同一小grid\n  - heading \"同じ形、違う更新順\" [level=1]\n  - paragraph: geometryの値が一致しても、DOMの書き・読み順は異なります。自分のBrowserでelapsedを比較し、速さの断定と結果の一致を分けて学びます。\n  - generic \"学ぶ順番・前提・実務判断\"\n  - paragraph: 前提：DOM style更新、getBoundingClientRect、event loop。主要概念：style invalidation→geometry read→layout依存→batching、performance.nowとmeasurement noise、timerは実行時刻の保証ではない。\n  - paragraph: 予想→操作→実時間/geometry比較→手順図/実装/原典→答え。今回から判断できるのは、不必要なread/write混在を調べること、同じ値を保って順序を変えること、warmupと本測定を分けること、長timerとメインスレッド占有を混同しないこと。常にbatchedが速い・LCP/INPが改善するとは判断できません。\n  - heading \"1. 予想する\" [level=2]\n  - text: 予想\n  - combobox \"予想\":\n    - option \"batchedは常に速い\" [selected]\n    - option \"値一致を検査し時間は観測する\"\n  - button \"予想を保存\" [active]\n  - status: \"予想を保存: always-faster\"\n  - heading \"2. 操作する\" [level=2]\n  - text: 固定workload\n  - combobox \"固定workload\":\n    - option \"通常：8反復\" [selected]\n    - option \"境界：0反復\"\n    - option \"不正：-1反復（拒否）\"\n  - button \"同じgridで2方式を測る\"\n  - button \"timerと120ms占有を比較\"\n  - paragraph: 16セル。warmup2 round、本測定5 round、順序を交互にします。前処理resetと最終geometry採取は計時外。timer例では20ms予約、100ms予約、20ms予約＋120ms同期占有の3ケースを順に実行。最後のケースは意図的に約120ms操作を止めるので注意。\n  - heading \"3. 実時間と値を比較する\" [level=2]\n  - paragraph: 未実行\n  - generic: \"0\"\n  - generic: \"1\"\n  - generic: \"2\"\n  - generic: \"3\"\n  - generic: \"4\"\n  - generic: \"5\"\n  - generic: \"6\"\n  - generic: \"7\"\n  - generic: \"8\"\n  - generic: \"9\"\n  - generic: \"10\"\n  - generic: \"11\"\n  - generic: \"12\"\n  - generic: \"13\"\n  - generic: \"14\"\n  - generic: \"15\"\n  - table:\n    - rowgroup:\n      - row \"round mode elapsed ms reads / writes / checksum\":\n        - columnheader \"round\"\n        - columnheader \"mode\"\n        - columnheader \"elapsed ms\"\n        - columnheader \"reads / writes / checksum\"\n    - rowgroup\n  - paragraph: まだ比較できません。\n  - paragraph: elapsedが0でも捨てません。小標本、timer精度、JIT、GC、他process、描画状態が影響します。この表はengineのLayout event countではなく、JSが呼んだgeometry read/write回数です。強制layoutのリスクを示しますが、全readで実layoutが起きたと数えません。\n  - heading \"4. 応答性の反例を読む\" [level=2]\n  - table:\n    - rowgroup:\n      - row \"case 予約 ms 同期占有 ms timer実経過 ms\":\n        - columnheader \"case\"\n        - columnheader \"予約 ms\"\n        - columnheader \"同期占有 ms\"\n        - columnheader \"timer実経過 ms\"\n    - rowgroup\n  - paragraph: timer probeはユーザー入力ではありません。120ms占有中はtimer callbackとmicrotaskを実行できないことをevent traceで確認します。100ms timerを予約するだけでは、その100msずっとメインスレッドを占有しません。これはINP・全応答性・paint/画面提示の測定ではありません。\n  - heading \"5. 仕組み・実装・一次資料\" [level=2]\n  - img \"交互は各セル書き読みを反復、batchedは全書き後に全読み\":\n    - generic: interleaved（各反復）\n    - generic: 書0 → 読0 → 書1 → 読1 → …\n    - generic: batched（各反復）\n    - generic: 全セルへ書く → 全セルを読む\n    - generic: 両方とも値一致・128 read / write\n  - paragraph:\n    - text: 図は独自の説明図でengine traceではありません。\n    - link \"実DOM runner\":\n      - /url: experiment.mjs\n    - text: /\n    - link \"固定workload\":\n      - /url: plan.mjs\n    - text: /\n    - link \"独立期待表\":\n      - /url: oracle.mjs\n    - text: /\n    - link \"fixture CSS\":\n      - /url: styles.css\n    - text: /\n    - link \"Source hash\":\n      - /url: sources.json\n  - paragraph:\n    - text: 原典：\n    - link \"CSSOM geometry\":\n      - /url: https://www.w3.org/TR/cssom-view-1/#dom-element-getboundingclientrect\n    - text: /\n    - link \"Chrome開発者のlayout解説\":\n      - /url: https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing\n    - text: /\n    - link \"High Resolution Time\":\n      - /url: https://www.w3.org/TR/hr-time-3/#dom-performance-now\n    - text: /\n    - link \"HTML timers\":\n      - /url: https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers\n    - text: 。\n  - heading \"6. 答える\" [level=2]\n  - text: 実務判断\n  - combobox \"実務判断\":\n    - option \"一回の時間だけで勝者を固定\" [selected]\n    - option \"値一致・条件・分布・traceを分けて判断\"\n    - option \"timer経過をINPとして公表\"\n  - button \"答えを確認\"\n  - paragraph\n  - generic \"次に何を学ぶか：主要未教材→4実験案\"\n  - generic \"実行原票（保存は明示操作）\"\n  - paragraph:\n    - link \"学習ガイドと再現手順\":\n      - /url: README.md\n    - text: /\n    - link \"実測・制約\":\n      - /url: VERIFICATION.md"
+  },
+  "completedAt": "2026-10-05T07:12:23.779Z",
+  "passed": false,
+  "failure": {
+    "layer": "UI rendering",
+    "observation": "normal raw geometry and elapsed acquired but displayed result table has zero rows",
+    "cause": "getElementById used with CSS descendant selector results tbody"
+  }
+}

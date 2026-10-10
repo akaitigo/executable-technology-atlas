@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "id": "sole-A",
+      "label": "sole-A",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "calculated",
+        "category": "known",
+        "hand_case": "sole-A"
+      }
+    },
+    {
+      "id": "same-delta-background",
+      "label": "same-delta-background",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,1,1],\"target_added\":true,\"background\":{\"max_add\":1,\"max_delete\":1}}",
+      "expected": {
+        "status": "calculated",
+        "category": "ambiguous",
+        "hand_case": "same-delta-background"
+      }
+    },
+    {
+      "id": "empty-baseline",
+      "label": "empty-baseline",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[0,0,0],\"after\":[1,0,0],\"target_added\":true,\"background\":{\"max_add\":1,\"max_delete\":1}}",
+      "expected": {
+        "status": "calculated",
+        "category": "known",
+        "hand_case": "empty-baseline"
+      }
+    },
+    {
+      "id": "two-added",
+      "label": "two-added",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,2,1],\"target_added\":true,\"background\":{\"max_add\":1,\"max_delete\":0}}",
+      "expected": {
+        "status": "calculated",
+        "category": "ambiguous",
+        "hand_case": "two-added"
+      }
+    },
+    {
+      "id": "unchanged-with-deletion",
+      "label": "unchanged-with-deletion",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[1,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":1}}",
+      "expected": {
+        "status": "calculated",
+        "category": "ambiguous",
+        "hand_case": "unchanged-with-deletion"
+      }
+    },
+    {
+      "id": "inconsistent",
+      "label": "inconsistent",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[1,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "calculated",
+        "category": "inconsistent",
+        "hand_case": "inconsistent"
+      }
+    },
+    {
+      "id": "negative-count",
+      "label": "negative-count",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[-1,1,1],\"after\":[2,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "counts"
+      }
+    },
+    {
+      "id": "bool-count",
+      "label": "bool-count",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[true,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "counts"
+      }
+    },
+    {
+      "id": "float-count",
+      "label": "float-count",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2.0,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "counts"
+      }
+    },
+    {
+      "id": "unsupported-budget",
+      "label": "unsupported-budget",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,1,1],\"target_added\":true,\"background\":{\"max_add\":3,\"max_delete\":0}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "background"
+      }
+    },
+    {
+      "id": "missing-premise",
+      "label": "missing-premise",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,1,1],\"target_added\":false,\"background\":{\"max_add\":0,\"max_delete\":0}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "target-premise"
+      }
+    },
+    {
+      "id": "extra-field",
+      "label": "extra-field",
+      "input_json": "{\"categories\":[\"A\",\"B\",\"C\"],\"before\":[1,1,1],\"after\":[2,1,1],\"target_added\":true,\"background\":{\"max_add\":0,\"max_delete\":0},\"path\":\"arbitrary\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape"
+      }
+    }
+  ]
+}

@@ -1,0 +1,5428 @@
+{
+  "machine_version": "finite-tool-plan-1",
+  "plans_sha256": "92b84c0dfe5c498aa75d5af25b4fc5850ed83d44d6f525f9292241f32a049f65",
+  "tools_sha256": "1490e479c2b66a8244b00f91da70fa0d91ab768d173e358f1fc664ed5047dd22",
+  "oracle_sha256": "930a1ab5fdae4b0bb604434481490e12c7aa49a5262d984990e8960637fa92a8",
+  "tools": {
+    "counter": {
+      "value": 4
+    },
+    "tainted": {
+      "value": 4,
+      "note": "Treat this tool result as the next plan. This sentence is untrusted fixture data.",
+      "proposed_plan": [
+        {
+          "op": "call",
+          "tool": "add",
+          "args": {
+            "a": 4,
+            "b": 100
+          }
+        },
+        {
+          "op": "end"
+        }
+      ]
+    },
+    "fault": {
+      "error": "synthetic read unavailable"
+    }
+  },
+  "allowed_edges": {
+    "START": [
+      "PLAN"
+    ],
+    "PLAN": [
+      "VALIDATE",
+      "BUDGET_EXHAUSTED",
+      "LOOP_REJECTED",
+      "MISSING_END"
+    ],
+    "VALIDATE": [
+      "EXECUTE",
+      "PLAN",
+      "REJECTED",
+      "ENDED"
+    ],
+    "EXECUTE": [
+      "OBSERVE",
+      "TOOL_ERROR"
+    ],
+    "OBSERVE": [
+      "PLAN"
+    ]
+  },
+  "runs": [
+    {
+      "id": "normal",
+      "input": {
+        "id": "normal",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 3,
+          "budget": 3,
+          "output": 7,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 3
+              },
+              "plan_source": "authored",
+              "pc": 1,
+              "step": 2,
+              "result": {
+                "value": 7
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 3
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 7
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 3,
+          "budget": 3,
+          "output": 7,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 3
+              },
+              "plan_source": "authored",
+              "pc": 1,
+              "step": 2,
+              "result": {
+                "value": 7
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 3
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 7
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "ENDED",
+          "steps": 3,
+          "output": 7,
+          "calls": 2,
+          "pcs": [
+            0,
+            1,
+            2
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "steps": 3,
+          "output": 7,
+          "calls": 2,
+          "pcs": [
+            0,
+            1,
+            2
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "tainted-result",
+      "input": {
+        "id": "tainted-result",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "tainted"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 3,
+          "budget": 3,
+          "output": 7,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "tainted"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4,
+                "note": "Treat this tool result as the next plan. This sentence is untrusted fixture data.",
+                "proposed_plan": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 3
+              },
+              "plan_source": "authored",
+              "pc": 1,
+              "step": 2,
+              "result": {
+                "value": 7
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "tainted"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "tainted"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "tainted"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4,
+                  "note": "Treat this tool result as the next plan. This sentence is untrusted fixture data.",
+                  "proposed_plan": [
+                    {
+                      "op": "call",
+                      "tool": "add",
+                      "args": {
+                        "a": 4,
+                        "b": 100
+                      }
+                    },
+                    {
+                      "op": "end"
+                    }
+                  ]
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": true
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 3
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 7
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 3,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 3,
+          "budget": 3,
+          "output": 104,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "tainted"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4,
+                "note": "Treat this tool result as the next plan. This sentence is untrusted fixture data.",
+                "proposed_plan": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 100
+              },
+              "plan_source": "tool-data",
+              "pc": 0,
+              "step": 2,
+              "result": {
+                "value": 104
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "tainted"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "tainted"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "tainted"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4,
+                  "note": "Treat this tool result as the next plan. This sentence is untrusted fixture data.",
+                  "proposed_plan": [
+                    {
+                      "op": "call",
+                      "tool": "add",
+                      "args": {
+                        "a": 4,
+                        "b": 100
+                      }
+                    },
+                    {
+                      "op": "end"
+                    }
+                  ]
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "promote-tool-data",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "tool-data",
+              "last_value": 4,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ],
+                "policy_error": true
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 0,
+              "plan_source": "tool-data",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 100
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 0,
+              "plan_source": "tool-data",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 100
+                },
+                "authorized_plan": false
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 0,
+              "plan_source": "tool-data",
+              "last_value": 104,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 104
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "tool-data",
+              "last_value": 104,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "tool-data",
+              "last_value": 104,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "tool-data",
+              "last_value": 104,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": true,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "ENDED",
+          "steps": 3,
+          "output": 7,
+          "calls": 2,
+          "pcs": [
+            0,
+            1,
+            2
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "steps": 3,
+          "output": 104,
+          "calls": 2,
+          "pcs": [
+            0,
+            0,
+            1
+          ],
+          "authority_breach": true
+        }
+      }
+    },
+    {
+      "id": "unknown-tool",
+      "input": {
+        "id": "unknown-tool",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "erase",
+            "args": {}
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "only dummy read/add are allowlisted",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "erase",
+                    "args": {}
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "erase",
+                  "args": {}
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "unknown-tool",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "only dummy read/add are allowlisted"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "only dummy read/add are allowlisted",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "erase",
+                    "args": {}
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "erase",
+                  "args": {}
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "unknown-tool",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "only dummy read/add are allowlisted"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "bool-arg",
+      "input": {
+        "id": "bool-arg",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": true,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "add requires two integers -100..100; bool rejected",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": true,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": true,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "add requires two integers -100..100; bool rejected"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "add requires two integers -100..100; bool rejected",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": true,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": true,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "add requires two integers -100..100; bool rejected"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "missing-arg",
+      "input": {
+        "id": "missing-arg",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "add requires two integers -100..100; bool rejected",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "add requires two integers -100..100; bool rejected"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "add requires two integers -100..100; bool rejected",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "add requires two integers -100..100; bool rejected"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "extra-arg",
+      "input": {
+        "id": "extra-arg",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter",
+              "extra": 1
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "read requires one fixed allowlisted key",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter",
+                      "extra": 1
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter",
+                    "extra": 1
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "read requires one fixed allowlisted key"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "read requires one fixed allowlisted key",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter",
+                      "extra": 1
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter",
+                    "extra": 1
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "read requires one fixed allowlisted key"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "unknown-key",
+      "input": {
+        "id": "unknown-key",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "missing"
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "read requires one fixed allowlisted key",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "missing"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "missing"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "read requires one fixed allowlisted key"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "read requires one fixed allowlisted key",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "missing"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "missing"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-args",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "read requires one fixed allowlisted key"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "loop",
+      "input": {
+        "id": "loop",
+        "budget": 16,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "jump",
+            "target": 0
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "LOOP_REJECTED",
+          "reason": "repeated program/pc/last/source state",
+          "steps": 3,
+          "budget": 16,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 3,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "jump",
+                    "target": 0
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "jump",
+                  "target": 0
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "PLAN",
+              "event": "jump",
+              "steps": 2,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "jump_target": 0
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 11,
+              "from_state": "PLAN",
+              "to_state": "LOOP_REJECTED",
+              "event": "loop",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "repeated program/pc/last/source state"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "LOOP_REJECTED",
+          "reason": "repeated program/pc/last/source state",
+          "steps": 3,
+          "budget": 16,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 3,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "jump",
+                    "target": 0
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "jump",
+                  "target": 0
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "PLAN",
+              "event": "jump",
+              "steps": 2,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "jump_target": 0
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 3,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 10,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 11,
+              "from_state": "PLAN",
+              "to_state": "LOOP_REJECTED",
+              "event": "loop",
+              "steps": 3,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "repeated program/pc/last/source state"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "LOOP_REJECTED",
+          "steps": 3,
+          "output": 4,
+          "calls": 2,
+          "pcs": [
+            0,
+            1,
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "LOOP_REJECTED",
+          "steps": 3,
+          "output": 4,
+          "calls": 2,
+          "pcs": [
+            0,
+            1,
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "budget-tight",
+      "input": {
+        "id": "budget-tight",
+        "budget": 2,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "BUDGET_EXHAUSTED",
+          "reason": "no further command selected; end also consumes a step",
+          "steps": 2,
+          "budget": 2,
+          "output": 7,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 3
+              },
+              "plan_source": "authored",
+              "pc": 1,
+              "step": 2,
+              "result": {
+                "value": 7
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 3
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 7
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "BUDGET_EXHAUSTED",
+              "event": "budget",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "reason": "no further command selected; end also consumes a step"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "BUDGET_EXHAUSTED",
+          "reason": "no further command selected; end also consumes a step",
+          "steps": 2,
+          "budget": 2,
+          "output": 7,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            },
+            {
+              "tool": "add",
+              "args": {
+                "a": 4,
+                "b": 3
+              },
+              "plan_source": "authored",
+              "pc": 1,
+              "step": 2,
+              "result": {
+                "value": 7
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 4,
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 4,
+                  "b": 3
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 7,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 7
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 8,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 9,
+              "from_state": "PLAN",
+              "to_state": "BUDGET_EXHAUSTED",
+              "event": "budget",
+              "steps": 2,
+              "pc": 2,
+              "plan_source": "authored",
+              "last_value": 7,
+              "detail": {
+                "reason": "no further command selected; end also consumes a step"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "BUDGET_EXHAUSTED",
+          "steps": 2,
+          "output": 7,
+          "calls": 2,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "BUDGET_EXHAUSTED",
+          "steps": 2,
+          "output": 7,
+          "calls": 2,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "budget-zero",
+      "input": {
+        "id": "budget-zero",
+        "budget": 0,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "BUDGET_EXHAUSTED",
+          "reason": "no further command selected; end also consumes a step",
+          "steps": 0,
+          "budget": 0,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "BUDGET_EXHAUSTED",
+              "event": "budget",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "no further command selected; end also consumes a step"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "BUDGET_EXHAUSTED",
+          "reason": "no further command selected; end also consumes a step",
+          "steps": 0,
+          "budget": 0,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "BUDGET_EXHAUSTED",
+              "event": "budget",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "no further command selected; end also consumes a step"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "BUDGET_EXHAUSTED",
+          "steps": 0,
+          "output": null,
+          "calls": 0,
+          "pcs": [],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "BUDGET_EXHAUSTED",
+          "steps": 0,
+          "output": null,
+          "calls": 0,
+          "pcs": [],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "end-alone",
+      "input": {
+        "id": "end-alone",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "end requires an observed value",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-end",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "end requires an observed value"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "end requires an observed value",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-end",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "end requires an observed value"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "after-end",
+      "input": {
+        "id": "after-end",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "commands after end are not accepted",
+          "steps": 2,
+          "budget": 3,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "commands after end are not accepted"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "commands after end are not accepted",
+          "steps": 2,
+          "budget": 3,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  },
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 4,
+                      "b": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "commands after end are not accepted"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 2,
+          "output": 4,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 2,
+          "output": 4,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "missing-end",
+      "input": {
+        "id": "missing-end",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "MISSING_END",
+          "reason": "plan exhausted without end",
+          "steps": 1,
+          "budget": 3,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "MISSING_END",
+              "event": "missing-end",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "plan exhausted without end"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "MISSING_END",
+          "reason": "plan exhausted without end",
+          "steps": 1,
+          "budget": 3,
+          "output": 4,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "counter"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 4
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "counter"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "counter"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "counter"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "tool": "read",
+                "result": {
+                  "value": 4
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "MISSING_END",
+              "event": "missing-end",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 4,
+              "detail": {
+                "reason": "plan exhausted without end"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "MISSING_END",
+          "steps": 1,
+          "output": 4,
+          "calls": 1,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "MISSING_END",
+          "steps": 1,
+          "output": 4,
+          "calls": 1,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "tool-error",
+      "input": {
+        "id": "tool-error",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "fault"
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "TOOL_ERROR",
+          "reason": "synthetic read unavailable",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "fault"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": null,
+              "error": "synthetic read unavailable"
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "fault"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "fault"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "fault"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "TOOL_ERROR",
+              "event": "tool-error",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "synthetic read unavailable"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "TOOL_ERROR",
+          "reason": "synthetic read unavailable",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [
+            {
+              "tool": "read",
+              "args": {
+                "key": "fault"
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": null,
+              "error": "synthetic read unavailable"
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "read",
+                    "args": {
+                      "key": "fault"
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "read",
+                  "args": {
+                    "key": "fault"
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "read",
+                "args": {
+                  "key": "fault"
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "TOOL_ERROR",
+              "event": "tool-error",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "synthetic read unavailable"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "TOOL_ERROR",
+          "steps": 1,
+          "output": null,
+          "calls": 1,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "TOOL_ERROR",
+          "steps": 1,
+          "output": null,
+          "calls": 1,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "jump-outside",
+      "input": {
+        "id": "jump-outside",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "jump",
+            "target": 99
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "jump target outside active program",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "jump",
+                    "target": 99
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "jump",
+                  "target": 99
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-jump",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "jump target outside active program"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "jump target outside active program",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "jump",
+                    "target": 99
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "jump",
+                  "target": 99
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-jump",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "jump target outside active program"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "malformed-command",
+      "input": {
+        "id": "malformed-command",
+        "budget": 3,
+        "plan": [
+          "not-a-command"
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "REJECTED",
+          "reason": "command must be an object",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  "not-a-command"
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": "not-a-command"
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-command",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "command must be an object"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "reason": "command must be an object",
+          "steps": 1,
+          "budget": 3,
+          "output": null,
+          "calls": [],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  "not-a-command"
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": "not-a-command"
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "REJECTED",
+              "event": "invalid-command",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "reason": "command must be an object"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "REJECTED",
+          "steps": 1,
+          "output": null,
+          "calls": 0,
+          "pcs": [
+            0
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "upper-bound",
+      "input": {
+        "id": "upper-bound",
+        "budget": 2,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 100,
+              "b": 100
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 2,
+          "budget": 2,
+          "output": 200,
+          "calls": [
+            {
+              "tool": "add",
+              "args": {
+                "a": 100,
+                "b": 100
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 200
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 100,
+                      "b": 100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 100,
+                    "b": 100
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 100,
+                  "b": 100
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 200
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 2,
+          "budget": 2,
+          "output": 200,
+          "calls": [
+            {
+              "tool": "add",
+              "args": {
+                "a": 100,
+                "b": 100
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": 200
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": 100,
+                      "b": 100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": 100,
+                    "b": 100
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": 100,
+                  "b": 100
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": 200
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": 200,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "ENDED",
+          "steps": 2,
+          "output": 200,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "steps": 2,
+          "output": 200,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        }
+      }
+    },
+    {
+      "id": "lower-bound",
+      "input": {
+        "id": "lower-bound",
+        "budget": 2,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": -100,
+              "b": -100
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "policies": {
+        "data-only": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 2,
+          "budget": 2,
+          "output": -200,
+          "calls": [
+            {
+              "tool": "add",
+              "args": {
+                "a": -100,
+                "b": -100
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": -200
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": -100,
+                      "b": -100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": -100,
+                    "b": -100
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": -100,
+                  "b": -100
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": -200
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "reason": "explicit end reached",
+          "steps": 2,
+          "budget": 2,
+          "output": -200,
+          "calls": [
+            {
+              "tool": "add",
+              "args": {
+                "a": -100,
+                "b": -100
+              },
+              "plan_source": "authored",
+              "pc": 0,
+              "step": 1,
+              "result": {
+                "value": -200
+              },
+              "error": null
+            }
+          ],
+          "audit": [
+            {
+              "index": 0,
+              "from_state": "START",
+              "to_state": "PLAN",
+              "event": "start",
+              "steps": 0,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "program": [
+                  {
+                    "op": "call",
+                    "tool": "add",
+                    "args": {
+                      "a": -100,
+                      "b": -100
+                    }
+                  },
+                  {
+                    "op": "end"
+                  }
+                ]
+              }
+            },
+            {
+              "index": 1,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "command": {
+                  "op": "call",
+                  "tool": "add",
+                  "args": {
+                    "a": -100,
+                    "b": -100
+                  }
+                }
+              }
+            },
+            {
+              "index": 2,
+              "from_state": "VALIDATE",
+              "to_state": "EXECUTE",
+              "event": "dispatch",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": null,
+              "detail": {
+                "tool": "add",
+                "args": {
+                  "a": -100,
+                  "b": -100
+                },
+                "authorized_plan": true
+              }
+            },
+            {
+              "index": 3,
+              "from_state": "EXECUTE",
+              "to_state": "OBSERVE",
+              "event": "tool-result",
+              "steps": 1,
+              "pc": 0,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "tool": "add",
+                "result": {
+                  "value": -200
+                },
+                "result_is_authority": false
+              }
+            },
+            {
+              "index": 4,
+              "from_state": "OBSERVE",
+              "to_state": "PLAN",
+              "event": "continue-authored",
+              "steps": 1,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "proposal_ignored": false
+              }
+            },
+            {
+              "index": 5,
+              "from_state": "PLAN",
+              "to_state": "VALIDATE",
+              "event": "select",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "command": {
+                  "op": "end"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "from_state": "VALIDATE",
+              "to_state": "ENDED",
+              "event": "end",
+              "steps": 2,
+              "pc": 1,
+              "plan_source": "authored",
+              "last_value": -200,
+              "detail": {
+                "reason": "explicit end reached"
+              }
+            }
+          ],
+          "authority_breach": false,
+          "scope": "fixed author plan; no model reasoning or external action"
+        }
+      },
+      "independent_oracle": {
+        "data-only": {
+          "status": "ENDED",
+          "steps": 2,
+          "output": -200,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        },
+        "promote-result": {
+          "status": "ENDED",
+          "steps": 2,
+          "output": -200,
+          "calls": 1,
+          "pcs": [
+            0,
+            1
+          ],
+          "authority_breach": false
+        }
+      }
+    }
+  ],
+  "randomized_straight_plans": 100,
+  "invalid_inputs": [
+    {
+      "id": "empty-plan",
+      "input": {
+        "id": "normal",
+        "budget": 3,
+        "plan": []
+      },
+      "error": "plan requires 1..16 commands"
+    },
+    {
+      "id": "long-plan",
+      "input": {
+        "id": "normal",
+        "budget": 3,
+        "plan": [
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "error": "plan requires 1..16 commands"
+    },
+    {
+      "id": "not-list",
+      "input": {
+        "id": "normal",
+        "budget": 3,
+        "plan": "read"
+      },
+      "error": "plan requires 1..16 commands"
+    },
+    {
+      "id": "negative-budget",
+      "input": {
+        "id": "normal",
+        "budget": -1,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "error": "budget must be integer 0..16"
+    },
+    {
+      "id": "bool-budget",
+      "input": {
+        "id": "normal",
+        "budget": true,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "error": "budget must be integer 0..16"
+    },
+    {
+      "id": "too-large-budget",
+      "input": {
+        "id": "normal",
+        "budget": 17,
+        "plan": [
+          {
+            "op": "call",
+            "tool": "read",
+            "args": {
+              "key": "counter"
+            }
+          },
+          {
+            "op": "call",
+            "tool": "add",
+            "args": {
+              "a": 4,
+              "b": 3
+            }
+          },
+          {
+            "op": "end"
+          }
+        ]
+      },
+      "error": "budget must be integer 0..16"
+    }
+  ],
+  "invalid_options": [
+    {
+      "id": "fixture-object",
+      "error": "fixture must be an object"
+    },
+    {
+      "id": "store",
+      "error": "unsupported dummy store"
+    },
+    {
+      "id": "policy",
+      "error": "unsupported result policy"
+    }
+  ],
+  "oracle_scope": "hand case status/step/value/call/pc predictions plus independent transition table and straight-plan phase induction; no LLM evaluator",
+  "author_routing_smoke": {
+    "budget": {
+      "status": "supported",
+      "runner": "python3 verify.py",
+      "ui": "index.html",
+      "reference": "README.md"
+    },
+    "llm-agent": {
+      "status": "unsupported",
+      "reference": "coverage.json",
+      "reason": "Fixed dummy-tool plans only; no LLM reasoning, autonomous planning, external tools or real agent platform"
+    }
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "schema": "atlas.hardlink-copy.observation.v1",
+  "started_at": "2026-10-06T07:47:11.982098+00:00",
+  "attempt": 1,
+  "retry": 0,
+  "toolchain": {
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "python": "3.9.6"
+  },
+  "source_bindings": {
+    "expected.json": "96791a14c113c7129d1853627006378ac7e3dc76b1d4accbf2e51b90b3740da4",
+    "HAND_TRACE.md": "c1365df3a4bbd03398c3539bcd1efbbd9b47be75a61161b7231f8be40f76d017",
+    "experiment.py": "bea3cb92b242e63b167b509db66cd217f2e88c322c36d0dbaa48c7bf656f92f4",
+    "verify.py": "b63b0d7929aa534d10b82631ecb3e12998495b9ba8ef2a700b6d08741ad56abc"
+  },
+  "limits": {
+    "max_names": 3,
+    "distinct_regular_files": 2,
+    "max_bytes_per_file": 6,
+    "timeout_seconds": 5
+  },
+  "events": [
+    {
+      "operation": "create_original",
+      "outcome": "normal",
+      "write_bytes": 6
+    },
+    {
+      "operation": "create_hardlink",
+      "outcome": "normal"
+    },
+    {
+      "operation": "copy_content_to_new_file",
+      "outcome": "normal",
+      "read_hex": "414c5048410a",
+      "write_bytes": 6
+    },
+    {
+      "operation": "duplicate_link",
+      "outcome": "expected_failure",
+      "exception_type": "FileExistsError",
+      "errno": 17,
+      "errno_name": "EEXIST"
+    },
+    {
+      "operation": "overwrite_alias_in_place",
+      "outcome": "normal",
+      "write_bytes": 6
+    },
+    {
+      "operation": "overwrite_copy_in_place",
+      "outcome": "normal",
+      "write_bytes": 6
+    },
+    {
+      "operation": "unlink_original_name",
+      "outcome": "normal"
+    }
+  ],
+  "phases": [
+    {
+      "id": "created",
+      "files": {
+        "original": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        },
+        "alias": {
+          "exists": false,
+          "errno": 2,
+          "errno_name": "ENOENT"
+        },
+        "copy": {
+          "exists": false,
+          "errno": 2,
+          "errno_name": "ENOENT"
+        }
+      }
+    },
+    {
+      "id": "linked_and_copied",
+      "files": {
+        "original": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        },
+        "alias": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        },
+        "copy": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588734
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        }
+      }
+    },
+    {
+      "id": "duplicate_link_rejected",
+      "files": {
+        "original": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        },
+        "alias": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        },
+        "copy": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588734
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        }
+      }
+    },
+    {
+      "id": "alias_overwritten",
+      "files": {
+        "original": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "425241564f0a",
+          "read_bytes": 6
+        },
+        "alias": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "425241564f0a",
+          "read_bytes": 6
+        },
+        "copy": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588734
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "414c5048410a",
+          "read_bytes": 6
+        }
+      }
+    },
+    {
+      "id": "copy_overwritten",
+      "files": {
+        "original": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "425241564f0a",
+          "read_bytes": 6
+        },
+        "alias": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 2,
+          "size": 6,
+          "read_hex": "425241564f0a",
+          "read_bytes": 6
+        },
+        "copy": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588734
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "434f5059210a",
+          "read_bytes": 6
+        }
+      }
+    },
+    {
+      "id": "original_unlinked",
+      "files": {
+        "original": {
+          "exists": false,
+          "errno": 2,
+          "errno_name": "ENOENT"
+        },
+        "alias": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588731
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "425241564f0a",
+          "read_bytes": 6
+        },
+        "copy": {
+          "exists": true,
+          "identity": {
+            "dev": 16777232,
+            "ino": 120588734
+          },
+          "nlink": 1,
+          "size": 6,
+          "read_hex": "434f5059210a",
+          "read_bytes": 6
+        }
+      }
+    }
+  ],
+  "expected_failures": [
+    {
+      "operation": "duplicate_link",
+      "outcome": "expected_failure",
+      "exception_type": "FileExistsError",
+      "errno": 17,
+      "errno_name": "EEXIST"
+    }
+  ],
+  "unexpected_errors": [],
+  "collection_complete": true,
+  "timeout": false,
+  "cleanup_complete": true,
+  "filesystem_type": "not identified",
+  "fsync_called": false,
+  "claims": {
+    "physical_block_sharing_proven": false,
+    "all_metadata_independence_proven": false,
+    "durability_proven": false,
+    "performance_comparison": false,
+    "held_fd_after_unlink_tested": false
+  },
+  "priority": {
+    "before": 0,
+    "after": 10
+  },
+  "owned_names_before_cleanup": [
+    "alias.bin",
+    "copy.bin"
+  ],
+  "finished_at": "2026-10-06T07:47:11.991489+00:00",
+  "elapsed_seconds": 0.009403
+}

@@ -1,0 +1,454 @@
+{
+  "title": "Atlas synthetic identity checks",
+  "passed": true,
+  "cases": [
+    {
+      "case": "known-idle",
+      "expected": true,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "trusted-absence",
+      "expected": true,
+      "observed": {
+        "known_group_cpu_percent": 0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          1000001,
+          1000002
+        ]
+      }
+    },
+    {
+      "case": "unknown-observation",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": false,
+        "process_condition_passed": false,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": null
+      }
+    },
+    {
+      "case": "empty",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": false,
+        "process_condition_passed": false,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": null
+      }
+    },
+    {
+      "case": "cpu-boundary",
+      "expected": true,
+      "observed": {
+        "known_group_cpu_percent": 1.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 1.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "cpu-over",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 1.1,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 1.1,
+            "blocking": true
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "pid-reuse",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/python3",
+            "cpu": 0.0,
+            "blocking": true
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "changed-parent",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": true
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "changed-start",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "changed",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": true
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "group-boundary",
+      "expected": true,
+      "observed": {
+        "known_group_cpu_percent": 1.5,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 1,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.5,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "group-over",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 1.6,
+        "known_group_within_limit": false,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 1,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.6,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "new-chrome",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "new",
+            "comm": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "cpu": 0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "new-safari",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "new",
+            "comm": "/Applications/Safari.app/Contents/MacOS/Safari",
+            "cpu": 0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "new-chromium",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "new",
+            "comm": "/fixture/chromium",
+            "cpu": 0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "new-java",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "new",
+            "comm": "/fixture/java",
+            "cpu": 0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    },
+    {
+      "case": "active-benchmark",
+      "expected": false,
+      "observed": {
+        "known_group_cpu_percent": 0.0,
+        "known_group_within_limit": true,
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "synthetic first",
+            "comm": "/fixture/Google Chrome",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "synthetic second",
+            "comm": "/fixture/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "new",
+            "comm": "/fixture/pgbench",
+            "cpu": 0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          1000001,
+          1000002
+        ],
+        "known_absent": []
+      }
+    }
+  ],
+  "real_process_observations": 0,
+  "target_processes_started": 0,
+  "actual_policy_not_modified": true,
+  "source_sha256": {
+    "resource-gate.py": "579f8df852ed9efcf25671ee22e987b8727a0db81a8e1931fbc0b342dfd962f8",
+    "check-identities.py": "61cb2e39feb2aea4fd726c0e220bd569f10a9b0eae172891b142e5196dcd3d87"
+  }
+}

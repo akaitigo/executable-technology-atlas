@@ -1,0 +1,1972 @@
+{
+  "fixed_before_implementation": true,
+  "utc": "2026-10-05T18:26:41.535582+00:00",
+  "ledger": [
+    {
+      "request_id": "r1",
+      "issued_ms": 0,
+      "teaching_latency_ms": 100
+    },
+    {
+      "request_id": "r2",
+      "issued_ms": 0,
+      "teaching_latency_ms": 200
+    },
+    {
+      "request_id": "r3",
+      "issued_ms": 0,
+      "teaching_latency_ms": 400
+    },
+    {
+      "request_id": "r4",
+      "issued_ms": 0,
+      "teaching_latency_ms": 800
+    },
+    {
+      "request_id": "r5",
+      "issued_ms": 0,
+      "teaching_latency_ms": 1800
+    },
+    {
+      "request_id": "r6",
+      "issued_ms": 0,
+      "teaching_latency_ms": 2200
+    }
+  ],
+  "schedules": {
+    "full": {
+      "arrivals_ms": [
+        2400,
+        2400,
+        2400,
+        2400,
+        2400,
+        2400
+      ],
+      "loss_notice_ms": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "late": {
+      "arrivals_ms": [
+        2400,
+        2400,
+        2400,
+        2400,
+        4000,
+        5000
+      ],
+      "loss_notice_ms": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "missing-high": {
+      "arrivals_ms": [
+        2400,
+        2400,
+        2400,
+        2400,
+        null,
+        null
+      ],
+      "loss_notice_ms": [
+        null,
+        null,
+        null,
+        null,
+        4500,
+        4500
+      ]
+    },
+    "missing-low": {
+      "arrivals_ms": [
+        null,
+        null,
+        2400,
+        2400,
+        2400,
+        2400
+      ],
+      "loss_notice_ms": [
+        4500,
+        4500,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "empty": {
+      "arrivals_ms": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "loss_notice_ms": [
+        4500,
+        4500,
+        4500,
+        4500,
+        4500,
+        4500
+      ]
+    }
+  },
+  "contract": {
+    "cutoffs_ms": [
+      1000,
+      2400,
+      4000,
+      4500,
+      5000
+    ],
+    "thresholds_ms": [
+      400,
+      800
+    ],
+    "inclusive_cutoff": true,
+    "inclusive_good": true,
+    "quantile": "sorted x[ceil(p*n)-1]; no interpolation; empty undefined",
+    "confirmed_missing": "explicit synthetic final loss notice<=cutoff, never inferred from silence",
+    "registered_denominator": "6 issued IDs independent of collector",
+    "unknown": "all unobserved latencies stay null; missing and pending both unknown quality",
+    "oracle": "omniscient fixture only; not collector knowledge or real operation"
+  },
+  "cases": [
+    {
+      "scenario": "full",
+      "cutoff_ms": 1000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 1000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 2400,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 3,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 2400,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 4,
+      "seen_good_ratio": "2/3",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 4000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 3,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 4000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 4,
+      "seen_good_ratio": "2/3",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 4500,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 3,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 4500,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 4,
+      "seen_good_ratio": "2/3",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 5000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 3,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "full",
+      "cutoff_ms": 5000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 4,
+      "seen_good_ratio": "2/3",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 1000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 1000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 2400,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/4",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 2400,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "1",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 4000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 5,
+        "pending": 1,
+        "confirmed_missing": 0,
+        "unobserved": 1
+      },
+      "seen_stats": {
+        "n": 5,
+        "mean_ms": "660",
+        "p50_ms": 400,
+        "p95_ms": 1800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/5",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-770/3",
+        "p50_ms": 0,
+        "p95_ms": -400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 4000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 5,
+        "pending": 1,
+        "confirmed_missing": 0,
+        "unobserved": 1
+      },
+      "seen_stats": {
+        "n": 5,
+        "mean_ms": "660",
+        "p50_ms": 400,
+        "p95_ms": 1800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "4/5",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-770/3",
+        "p50_ms": 0,
+        "p95_ms": -400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 4500,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 5,
+        "pending": 1,
+        "confirmed_missing": 0,
+        "unobserved": 1
+      },
+      "seen_stats": {
+        "n": 5,
+        "mean_ms": "660",
+        "p50_ms": 400,
+        "p95_ms": 1800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/5",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-770/3",
+        "p50_ms": 0,
+        "p95_ms": -400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 4500,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 5,
+        "pending": 1,
+        "confirmed_missing": 0,
+        "unobserved": 1
+      },
+      "seen_stats": {
+        "n": 5,
+        "mean_ms": "660",
+        "p50_ms": 400,
+        "p95_ms": 1800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "4/5",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-770/3",
+        "p50_ms": 0,
+        "p95_ms": -400
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 5000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 3,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "late",
+      "cutoff_ms": 5000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 6,
+        "pending": 0,
+        "confirmed_missing": 0,
+        "unobserved": 0
+      },
+      "seen_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "known_good": 4,
+      "seen_good_ratio": "2/3",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "0",
+        "p50_ms": 0,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 1000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 1000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 2400,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/4",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 2400,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "1",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 4000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/4",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 4000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "1",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 4500,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/4",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 4500,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "1",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 5000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 3,
+      "seen_good_ratio": "3/4",
+      "registered_good_lower": "1/2",
+      "registered_good_upper": "5/6",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-high",
+      "cutoff_ms": 5000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "375",
+        "p50_ms": 200,
+        "p95_ms": 800
+      },
+      "known_good": 4,
+      "seen_good_ratio": "1",
+      "registered_good_lower": "2/3",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "-1625/3",
+        "p50_ms": -200,
+        "p95_ms": -1400
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 1000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 1000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 2400,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 1,
+      "seen_good_ratio": "1/4",
+      "registered_good_lower": "1/6",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 2400,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 2,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 4000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 1,
+      "seen_good_ratio": "1/4",
+      "registered_good_lower": "1/6",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 4000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 2,
+        "confirmed_missing": 0,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 2,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 4500,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 1,
+      "seen_good_ratio": "1/4",
+      "registered_good_lower": "1/6",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 4500,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 2,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 5000,
+      "threshold_ms": 400,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 1,
+      "seen_good_ratio": "1/4",
+      "registered_good_lower": "1/6",
+      "registered_good_upper": "1/2",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "missing-low",
+      "cutoff_ms": 5000,
+      "threshold_ms": 800,
+      "seen_ids": [
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "counts": {
+        "issued": 6,
+        "seen": 4,
+        "pending": 0,
+        "confirmed_missing": 2,
+        "unobserved": 2
+      },
+      "seen_stats": {
+        "n": 4,
+        "mean_ms": "1300",
+        "p50_ms": 800,
+        "p95_ms": 2200
+      },
+      "known_good": 2,
+      "seen_good_ratio": "1/2",
+      "registered_good_lower": "1/3",
+      "registered_good_upper": "2/3",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": {
+        "mean_ms": "1150/3",
+        "p50_ms": 400,
+        "p95_ms": 0
+      }
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 1000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 1000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 2400,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 2400,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 4000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 4000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 6,
+        "confirmed_missing": 0,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 4500,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 0,
+        "confirmed_missing": 6,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 4500,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 0,
+        "confirmed_missing": 6,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 5000,
+      "threshold_ms": 400,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 0,
+        "confirmed_missing": 6,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 3,
+      "oracle_good_ratio": "1/2",
+      "bias": null
+    },
+    {
+      "scenario": "empty",
+      "cutoff_ms": 5000,
+      "threshold_ms": 800,
+      "seen_ids": [],
+      "counts": {
+        "issued": 6,
+        "seen": 0,
+        "pending": 0,
+        "confirmed_missing": 6,
+        "unobserved": 6
+      },
+      "seen_stats": null,
+      "known_good": 0,
+      "seen_good_ratio": null,
+      "registered_good_lower": "0",
+      "registered_good_upper": "1",
+      "oracle_stats": {
+        "n": 6,
+        "mean_ms": "2750/3",
+        "p50_ms": 400,
+        "p95_ms": 2200
+      },
+      "oracle_good": 4,
+      "oracle_good_ratio": "2/3",
+      "bias": null
+    }
+  ]
+}

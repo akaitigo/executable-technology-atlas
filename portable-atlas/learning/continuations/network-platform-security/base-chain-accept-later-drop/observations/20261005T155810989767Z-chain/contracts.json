@@ -1,0 +1,19 @@
+{
+  "hook": "input",
+  "chain_ids": [
+    "source",
+    "service"
+  ],
+  "priorities": {
+    "source": 0,
+    "service": 10
+  },
+  "fixed_rules": {
+    "source": "source == 10.0.0.1 -> accept; else policy drop",
+    "service": "protocol == tcp AND dport == 22 -> drop; else policy accept"
+  },
+  "packet": "canonical IPv4 string, tcp|udp, exact int port 0..65535 (bool forbidden)",
+  "priority": "exact int, unique, fixed 0/10; equal priority refused independently of real undefined order",
+  "verdict": "only fixed accept/drop descriptors; other verdicts outside subset",
+  "scope": "synthetic Python model, not nft syntax/kernel/firewall safety"
+}

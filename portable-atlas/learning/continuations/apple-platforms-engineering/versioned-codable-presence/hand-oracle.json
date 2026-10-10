@@ -1,0 +1,315 @@
+{
+  "authored_before_swift_execution": true,
+  "policy": "v1 missing defaults name, explicit null retained; v2 key required/null allowed; encode explicit null",
+  "cases": {
+    "v1-missing": {
+      "version": 1,
+      "presence": "missing",
+      "type": "missing",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Aki"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Aki"
+        }
+      },
+      "expected_strict": "Aki",
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Aki"
+      }
+    },
+    "v1-null": {
+      "version": 1,
+      "presence": "null",
+      "type": "null",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": null
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": null
+        }
+      },
+      "expected_strict": null,
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": null
+      }
+    },
+    "v1-string": {
+      "version": 1,
+      "presence": "string",
+      "type": "string",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Mika"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Mika"
+        }
+      },
+      "expected_strict": "Mika",
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Mika"
+      }
+    },
+    "v2-null": {
+      "version": 2,
+      "presence": "null",
+      "type": "null",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": null
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": null
+        }
+      },
+      "expected_strict": null,
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": null
+      }
+    },
+    "v2-string": {
+      "version": 2,
+      "presence": "string",
+      "type": "string",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Mika"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Mika"
+        }
+      },
+      "expected_strict": "Mika",
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Mika"
+      }
+    },
+    "v2-missing": {
+      "version": 2,
+      "presence": "missing",
+      "type": "missing",
+      "mode": "strict",
+      "status": "INPUT_REJECTED",
+      "error_kind": "keyNotFound",
+      "error_key": "displayName",
+      "error_path": [
+        "profile"
+      ],
+      "decode_accepted": false,
+      "encoded": null
+    },
+    "v1-number": {
+      "version": 1,
+      "presence": "number",
+      "type": "number",
+      "mode": "strict",
+      "status": "INPUT_REJECTED",
+      "error_kind": "typeMismatch",
+      "error_key": null,
+      "error_path": [
+        "profile",
+        "displayName"
+      ],
+      "decode_accepted": false,
+      "encoded": null
+    },
+    "v2-number": {
+      "version": 2,
+      "presence": "number",
+      "type": "number",
+      "mode": "strict",
+      "status": "INPUT_REJECTED",
+      "error_kind": "typeMismatch",
+      "error_key": null,
+      "error_path": [
+        "profile",
+        "displayName"
+      ],
+      "decode_accepted": false,
+      "encoded": null
+    },
+    "v99-string": {
+      "version": 99,
+      "presence": "string",
+      "type": "string",
+      "mode": "strict",
+      "status": "INPUT_REJECTED",
+      "error_kind": "dataCorrupted",
+      "error_key": "version",
+      "error_path": [
+        "version"
+      ],
+      "decode_accepted": false,
+      "encoded": null
+    },
+    "v1-extra-key": {
+      "version": 1,
+      "presence": "null",
+      "type": "null",
+      "mode": "strict",
+      "status": "ROUNDTRIPPED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": null
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": null
+        }
+      },
+      "expected_strict": null,
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": null
+      }
+    },
+    "bad-v1-null": {
+      "version": 1,
+      "presence": "null",
+      "type": "null",
+      "mode": "fallback",
+      "status": "BAD_ACCEPTED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Aki"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Aki"
+        }
+      },
+      "expected_strict": null,
+      "rule_failed": true,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Aki"
+      }
+    },
+    "bad-v1-missing": {
+      "version": 1,
+      "presence": "missing",
+      "type": "missing",
+      "mode": "fallback",
+      "status": "FAULT_CONTROL",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Aki"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Aki"
+        }
+      },
+      "expected_strict": "Aki",
+      "rule_failed": false,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Aki"
+      }
+    },
+    "bad-v2-null": {
+      "version": 2,
+      "presence": "null",
+      "type": "null",
+      "mode": "fallback",
+      "status": "BAD_ACCEPTED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Aki"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Aki"
+        }
+      },
+      "expected_strict": null,
+      "rule_failed": true,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Aki"
+      }
+    },
+    "bad-v2-missing": {
+      "version": 2,
+      "presence": "missing",
+      "type": "missing",
+      "mode": "fallback",
+      "status": "BAD_ACCEPTED",
+      "decode_accepted": true,
+      "migrated": {
+        "name": "Aki",
+        "displayName": "Aki"
+      },
+      "encoded": {
+        "version": 2,
+        "profile": {
+          "name": "Aki",
+          "displayName": "Aki"
+        }
+      },
+      "expected_strict": "REFUSE",
+      "rule_failed": true,
+      "roundtrip": {
+        "name": "Aki",
+        "displayName": "Aki"
+      }
+    }
+  },
+  "diagnostic_correction": "v99 error path corrected after initial Swift attempt; semantic version/presence/type/value table was fixed before execution"
+}

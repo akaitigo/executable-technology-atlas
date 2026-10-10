@@ -1,0 +1,543 @@
+{
+  "Atlas": "実装前の手書き判断表",
+  "executionObserved": false,
+  "expected": [
+    {
+      "id": "operator-title",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title"
+          ]
+        },
+        "incremental_check": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title"
+          ]
+        },
+        "validate_then_apply": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title"
+          ]
+        }
+      }
+    },
+    {
+      "id": "operator-contact",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "contact_email"
+          ]
+        },
+        "incremental_check": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "contact_email"
+          ]
+        },
+        "validate_then_apply": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "contact_email"
+          ]
+        }
+      }
+    },
+    {
+      "id": "operator-two",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title",
+            "contact_email"
+          ]
+        },
+        "incremental_check": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title",
+            "contact_email"
+          ]
+        },
+        "validate_then_apply": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title",
+            "contact_email"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auditor-note",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "internal_note"
+          ]
+        },
+        "incremental_check": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "internal_note"
+          ]
+        },
+        "validate_then_apply": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "internal_note"
+          ]
+        }
+      }
+    },
+    {
+      "id": "read-not-write",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "same-tenant-no-grant",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "no-write-grant",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "cross-tenant",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "unknown-object",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 404,
+          "reason": "not-found",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 404,
+          "reason": "not-found",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 404,
+          "reason": "not-found",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "forbidden-note",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "internal_note"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "allowed-then-forbidden",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title",
+            "internal_note"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": [
+            "title"
+          ]
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "forbidden-then-allowed",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "internal_note",
+            "title"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "auditor-title-forbidden",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "title"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "protected-id",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "id"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "protected-tenant",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "tenant_id"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "protected-status",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 200,
+          "reason": "ok",
+          "changedFields": [
+            "status"
+          ]
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "unknown-field",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "unknown-role",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "role-override",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "tenant-override",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "invalid-value",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "empty-changes",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "wrong-operation",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 403,
+          "reason": "unsupported-operation",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 403,
+          "reason": "unsupported-operation",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 403,
+          "reason": "unsupported-operation",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "no-context",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "changedFields": []
+        }
+      }
+    },
+    {
+      "id": "changes-list",
+      "outcomes": {
+        "bulk_assign": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "incremental_check": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        },
+        "validate_then_apply": {
+          "status": 400,
+          "reason": "invalid-request",
+          "changedFields": []
+        }
+      }
+    }
+  ],
+  "permitCounts": {
+    "bulk_assign": 11,
+    "incremental_check": 4,
+    "validate_then_apply": 4
+  },
+  "deniedStoreChanged": {
+    "bulk_assign": [],
+    "incremental_check": [
+      "allowed-then-forbidden"
+    ],
+    "validate_then_apply": []
+  }
+}

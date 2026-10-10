@@ -1,0 +1,907 @@
+{
+  "normal": {
+    "case": "normal",
+    "utc": "2026-10-05T10:45:12.921333+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "value": 4,
+        "proposed_plan": {
+          "tool": "add",
+          "args": {
+            "left": 100,
+            "right": 3
+          }
+        }
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "COMPLETED",
+      "final": 7,
+      "rejection": null,
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 4,
+            "right": 3
+          }
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "value": 4,
+            "proposed_plan": {
+              "tool": "add",
+              "args": {
+                "left": 100,
+                "right": 3
+              }
+            }
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "bound",
+          "node": "a",
+          "arg": "left",
+          "source": "r",
+          "field": "value",
+          "value": 4
+        },
+        {
+          "seq": 5,
+          "stage": "dispatch",
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 4,
+            "right": 3
+          }
+        },
+        {
+          "seq": 6,
+          "stage": "tool_result",
+          "node": "a",
+          "result": {
+            "value": 7
+          }
+        },
+        {
+          "seq": 7,
+          "stage": "end",
+          "final": 7
+        }
+      ],
+      "results": {
+        "r": {
+          "value": 4,
+          "proposed_plan": {
+            "tool": "add",
+            "args": {
+              "left": 100,
+              "right": 3
+            }
+          }
+        },
+        "a": {
+          "value": 7
+        }
+      },
+      "violation": false,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "missing-field": {
+    "case": "missing-field",
+    "utc": "2026-10-05T10:45:12.921943+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "other": 4
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "REJECTED",
+      "final": null,
+      "rejection": {
+        "reason": "MISSING_FIELD",
+        "phase": "binding",
+        "node": "a",
+        "arg": "left"
+      },
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "other": 4
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "rejected",
+          "reason": "MISSING_FIELD",
+          "phase": "binding",
+          "node": "a",
+          "arg": "left"
+        }
+      ],
+      "results": {
+        "r": {
+          "other": 4
+        }
+      },
+      "violation": false,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "string-value": {
+    "case": "string-value",
+    "utc": "2026-10-05T10:45:12.922348+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "value": "4"
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "REJECTED",
+      "final": null,
+      "rejection": {
+        "reason": "TYPED_INT",
+        "phase": "binding",
+        "node": "a",
+        "arg": "left"
+      },
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "value": "4"
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "rejected",
+          "reason": "TYPED_INT",
+          "phase": "binding",
+          "node": "a",
+          "arg": "left"
+        }
+      ],
+      "results": {
+        "r": {
+          "value": "4"
+        }
+      },
+      "violation": false,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "bool-value": {
+    "case": "bool-value",
+    "utc": "2026-10-05T10:45:12.922744+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "value": true
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "REJECTED",
+      "final": null,
+      "rejection": {
+        "reason": "TYPED_INT",
+        "phase": "binding",
+        "node": "a",
+        "arg": "left"
+      },
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "value": true
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "rejected",
+          "reason": "TYPED_INT",
+          "phase": "binding",
+          "node": "a",
+          "arg": "left"
+        }
+      ],
+      "results": {
+        "r": {
+          "value": true
+        }
+      },
+      "violation": false,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "unknown-reference": {
+    "case": "unknown-reference",
+    "utc": "2026-10-05T10:45:12.923297+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "value": 4
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "ghost",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "REJECTED",
+      "final": null,
+      "rejection": {
+        "reason": "UNKNOWN_REF",
+        "phase": "preflight",
+        "node": "a",
+        "arg": "left"
+      },
+      "calls": [],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "rejected",
+          "reason": "UNKNOWN_REF",
+          "phase": "preflight",
+          "node": "a",
+          "arg": "left"
+        }
+      ],
+      "results": {},
+      "violation": false,
+      "authored_plan_hash": "c82736e56c52b231f48ec7cd62171167ab2a0d7b307da7def93c0cb48f5003f6"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "cycle": {
+    "case": "cycle",
+    "utc": "2026-10-05T10:45:12.923787+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "strict",
+      "read_result": {
+        "value": 4
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "b",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        },
+        {
+          "id": "b",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "a",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "REJECTED",
+      "final": null,
+      "rejection": {
+        "reason": "CYCLE",
+        "phase": "preflight",
+        "node": "a",
+        "arg": null
+      },
+      "calls": [],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "rejected",
+          "reason": "CYCLE",
+          "phase": "preflight",
+          "node": "a",
+          "arg": null
+        }
+      ],
+      "results": {},
+      "violation": false,
+      "authored_plan_hash": "c5ad86848ae17a6d6e503263ae094fea5b7ae5749575b1e0ef8086ca2b920acd"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "bad-coercion": {
+    "case": "bad-coercion",
+    "utc": "2026-10-05T10:45:12.924199+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "bad-coercion",
+      "read_result": {
+        "value": "4"
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "BAD_COMPLETED",
+      "final": 7,
+      "rejection": null,
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 4,
+            "right": 3
+          }
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "value": "4"
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "bad_coercion",
+          "node": "a",
+          "arg": "left",
+          "original": "4"
+        },
+        {
+          "seq": 5,
+          "stage": "bound",
+          "node": "a",
+          "arg": "left",
+          "source": "r",
+          "field": "value",
+          "value": 4
+        },
+        {
+          "seq": 6,
+          "stage": "dispatch",
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 4,
+            "right": 3
+          }
+        },
+        {
+          "seq": 7,
+          "stage": "tool_result",
+          "node": "a",
+          "result": {
+            "value": 7
+          }
+        },
+        {
+          "seq": 8,
+          "stage": "end",
+          "final": 7
+        }
+      ],
+      "results": {
+        "r": {
+          "value": "4"
+        },
+        "a": {
+          "value": 7
+        }
+      },
+      "violation": true,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  },
+  "bad-promotion": {
+    "case": "bad-promotion",
+    "utc": "2026-10-05T10:45:12.924583+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "input": {
+      "policy": "bad-promotion",
+      "read_result": {
+        "value": 4,
+        "proposed_plan": {
+          "tool": "add",
+          "args": {
+            "left": 100,
+            "right": 3
+          }
+        }
+      },
+      "plan": [
+        {
+          "id": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "id": "a",
+          "tool": "add",
+          "args": {
+            "left": {
+              "ref": "r",
+              "field": "value",
+              "type": "int"
+            },
+            "right": {
+              "literal": 3
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "status": "BAD_COMPLETED",
+      "final": 103,
+      "rejection": null,
+      "calls": [
+        {
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 100,
+            "right": 3
+          }
+        }
+      ],
+      "trace": [
+        {
+          "seq": 1,
+          "stage": "preflight_accepted",
+          "order": [
+            "r",
+            "a"
+          ],
+          "plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+        },
+        {
+          "seq": 2,
+          "stage": "dispatch",
+          "node": "r",
+          "tool": "read",
+          "args": {}
+        },
+        {
+          "seq": 3,
+          "stage": "tool_result",
+          "node": "r",
+          "result": {
+            "value": 4,
+            "proposed_plan": {
+              "tool": "add",
+              "args": {
+                "left": 100,
+                "right": 3
+              }
+            }
+          }
+        },
+        {
+          "seq": 4,
+          "stage": "bound",
+          "node": "a",
+          "arg": "left",
+          "source": "r",
+          "field": "value",
+          "value": 4
+        },
+        {
+          "seq": 5,
+          "stage": "bad_promotion",
+          "node": "a",
+          "proposal": {
+            "tool": "add",
+            "args": {
+              "left": 100,
+              "right": 3
+            }
+          }
+        },
+        {
+          "seq": 6,
+          "stage": "dispatch",
+          "node": "a",
+          "tool": "add",
+          "args": {
+            "left": 100,
+            "right": 3
+          }
+        },
+        {
+          "seq": 7,
+          "stage": "tool_result",
+          "node": "a",
+          "result": {
+            "value": 103
+          }
+        },
+        {
+          "seq": 8,
+          "stage": "end",
+          "final": 103
+        }
+      ],
+      "results": {
+        "r": {
+          "value": 4,
+          "proposed_plan": {
+            "tool": "add",
+            "args": {
+              "left": 100,
+              "right": 3
+            }
+          }
+        },
+        "a": {
+          "value": 103
+        }
+      },
+      "violation": true,
+      "authored_plan_hash": "96a53f00b1e7266ecee195a681e0092c27011dd774c9ad151a9814a83a9ffd99"
+    },
+    "source_binding": {
+      "executor.py": "3da1d156f56f949639373386e2fca48b6e474ba11ef7521115a7e7597b654710",
+      "runner.py": "1d8291663c669db00ccb321486d6caa2f49069c929d42baa1347009ec9ff8354",
+      "fixtures.json": "9f6a88fd5f206e376063fc0bc5c88be9f9728f429b50a2eed717c43d77ffb2a3",
+      "oracle.json": "7b4411e1cc4ba52665c26fdfffc8ccc523db7fcc0133c5a46cbf40c52eb5f8e3"
+    }
+  }
+}

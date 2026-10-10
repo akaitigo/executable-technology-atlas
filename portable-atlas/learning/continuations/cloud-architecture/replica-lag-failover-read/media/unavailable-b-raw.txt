@@ -1,0 +1,222 @@
+Browser tab: 18, Title: "AのackとBのread — replica lag / failover", URL: "http://127.0.0.1:57219/".
+0 AXWebArea AのackとBのread — replica lag / failover, URL: 127.0.0.1:57219/
+	1 container
+		2 text CLOUD ARCHITECTURE · 有限2store模型
+		3 heading Aでackが返った。 Bへ切り替えたreadは最新？, Value: 1
+			4 text Aでackが返った。
+			5 text Bへ切り替えたreadは最新？
+		6 text 「読める」と「最新revisionを読める」を分けます。2store・配送FIFO・routerをPythonで逐次操作。実cloud・quorum・consensus・durability・RTOの保証ではありません。
+		7 heading 前提と読む順番, Value: 2
+			8 text 前提と読む順番
+		9 text revision、FIFO、操作順、観測起点が前提です。
+		10 content list
+			11 container
+				12 AXListMarker 1. 
+				13 link Description: 元Cloud Subject：複製完了済みの仮定, Value: 127.0.0.1:57219/subjects/cloud-architecture/README.md
+				14 text を確認。
+			15 container
+				16 AXListMarker 2. 
+				17 link Description: 先固定の契約と手書きrevision表, Value: 127.0.0.1:57219/oracle.json
+				18 text で予想。
+			19 container
+				20 AXListMarker 3. 
+				21 text ack→未配送B read→配送後read→partition→復旧配送を比較。
+			22 container
+				23 AXListMarker 4. 
+				24 link Description: 関連WAL教材：read snapshotの起点, Value: 127.0.0.1:57219/database-engine-internals/wal-snapshot-checkpoint/README.md
+				25 text と比較し、
+				26 link Description: 再現・実務判断, Value: 127.0.0.1:57219/README.md
+				27 text 、
+				28 link Description: 未教材, Value: 127.0.0.1:57219/COVERAGE.md
+				29 text へ。
+		30 text 初期A/B=revision0/value v0、router A。A writeはローカル更新＋enqueue後ack。deliver1回で先頭1件をBへ反映、partition中はqueue保持。routeは参照先選択だけ。freshは
+		31 text そのread stepのA revisionと一致するか
+		32 text 。操作は入力順、観測は成功runの最後readです。
+		33 heading 予想 → 操作, Value: 2
+			34 text 予想 → 操作
+		35 text 条件
+		36 pop up button (collapsed, settable) Description: 条件, Value: 拒否：B unavailable read, ID: case, Secondary Actions: Expand
+			37 menu
+				38 初期A read
+				39 A更新ack → A read
+				40 A ack → 未配送Bへroute → read
+				41 A ack → 配送 → B read
+				42 partition中のB read
+				43 partition → read → 復旧配送 → read
+				44 A更新2件 → 配送1件 → B read
+				45 拒否：target C
+				46 拒否：unknown operation
+				47 拒否：value bool
+				48 拒否：partition string
+				49 (selected) 拒否：B unavailable read
+				50 実行失敗：malformed JSON
+		51 text 最終read revision
+		52 pop up button (collapsed, settable) Description: revision予想, Value: 未観測・拒否, ID: revisionGuess, Secondary Actions: Expand
+			53 menu
+				54 選択
+				55 0
+				56 1
+				57 2
+				58 (selected) 未観測・拒否
+		59 text read available
+		60 pop up button (collapsed, settable) Description: available予想, Value: 未観測・拒否, ID: availableGuess, Secondary Actions: Expand
+			61 menu
+				62 選択
+				63 true
+				64 false
+				65 (selected) 未観測・拒否
+		66 text fresh
+		67 pop up button (collapsed, settable) Description: fresh予想, Value: 未観測・拒否, ID: freshGuess, Secondary Actions: Expand
+			68 menu
+				69 選択
+				70 true
+				71 false
+				72 (selected) 未観測・拒否
+		73 button 保存rawと比較, ID: compare
+		84 text 予想一致：revision=none / available=none / fresh=none
+		85 container results
+			86 heading 入力・read契約の拒否, Value: 2, ID: status
+				87 text 入力・read契約の拒否
+			88 text exit=2 / unavailable:B / failed step=3。成功stepまでのtraceを保持します。
+			89 text 正常readの答えはありません。拒否・実行失敗をfresh=true/falseへ変換しません。
+			90 text 最後の成功step 2 のmodel状態（失敗したreadの成功値ではありません）
+			91 container diagram
+				92 heading A · writer, Value: 3
+					93 text A · writer
+				94 text rev 1 / v1
+				95 text store available=true
+				96 heading B · replica, Value: 3
+					97 text B · replica
+				98 text rev 0 / v0
+				99 text store available=false
+				100 text A → FIFO → B / queued [{"revision":1,"value":"v1"}] / link partition=false
+				101 text router target=B（参照先選択だけ。writer昇格ではありません）
+			102 heading 操作順 → ack / delivery / read, Value: 3
+				103 text 操作順 → ack / delivery / read
+			104 table
+				105 row
+					106 cell
+						107 text step
+					108 cell
+						109 text operation/status
+					110 cell
+						111 text A rev/value
+					112 cell
+						113 text B rev/value
+					114 cell
+						115 text FIFO rev
+					116 cell
+						117 text partition
+					118 cell
+						119 text route
+					120 cell
+						121 text A ack rev
+					122 cell
+						123 text read rev / fresh
+				124 container trace
+					125 row
+						126 cell
+							127 text 0
+						128 cell
+							129 text write / ack-a
+						130 cell
+							131 text 1/v1
+						132 cell
+							133 text 0/v0
+						134 cell
+							135 text 1
+						136 cell
+							137 text false
+						138 cell
+							139 text A
+						140 cell
+							141 text 1
+						142 cell
+							143 text —
+					144 row
+						145 cell
+							146 text 1
+						147 cell
+							148 text availability / availability
+						149 cell
+							150 text 1/v1
+						151 cell
+							152 text 0/v0
+						153 cell
+							154 text 1
+						155 cell
+							156 text false
+						157 cell
+							158 text A
+						159 cell
+							160 text —
+						161 cell
+							162 text —
+					163 row
+						164 cell
+							165 text 2
+						166 cell
+							167 text route / route
+						168 cell
+							169 text 1/v1
+						170 cell
+							171 text 0/v0
+						172 cell
+							173 text 1
+						174 cell
+							175 text false
+						176 cell
+							177 text B
+						178 cell
+							179 text —
+						180 cell
+							181 text —
+			182 heading readの観測起点, Value: 3
+				183 text readの観測起点
+			184 text 成功readなし
+			185 container
+				186 button (expanded) 原票：入力・command・exit・stdout・stderr, Secondary Actions: Collapse
+					187 text 原票：入力・command・exit・stdout・stderr
+				188 text {
+  "input": {
+    "steps": [
+      {
+        "op": "write",
+        "value": "v1"
+      },
+      {
+        "op": "availability",
+        "target": "B",
+        "available": false
+      },
+      {
+        "op": "route",
+        "target": "B"
+      },
+      {
+        "op": "read"
+      }
+    ]
+  },
+  "argv": [
+    "python3",
+    "-B",
+    "worker.py"
+  ],
+  "inputSha256": "ba98dff783cdff1138abaad94b943160a5d7c0c186b27c117f9d59a1199054bb",
+  "exitCode": 2,
+  "stdout": "{\"accepted\": false, \"reason\": \"unavailable:B\", \"failedStep\": 3, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"available\": false, \"op\": \"availability\", \"target\": \"B\"}, \"status\": \"availability\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": false}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": false}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}], \"reads\": [], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": null}\n",
+  "stderr": ""
+}
+		74 heading 原典 → 実装 → 答え → 実務判断, Value: 2
+			75 text 原典 → 実装 → 答え → 実務判断
+		76 link Description: AWS REL05-BP01, Value: docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_mitigate_interaction_failure_graceful_degradation.html
+		77 text を依存障害と縮退動作の設計観点として読みます。今回のreplicationは独自契約で、AWS製品の挙動を再現しません。
+		78 link Description: 実際の辞書・FIFO操作, Value: 127.0.0.1:57219/worker.py
+		79 text ・
+		80 link Description: 独立手書き表checker, Value: 127.0.0.1:57219/checker.py
+		81 text ・
+		82 link Description: raw保存runner, Value: 127.0.0.1:57219/runner.py
+		83 text を比較。A ackだけではB revisionは増えません。B route availableでも未配送ならrevision0/fresh=false、配送後はrevision1/fresh=true。2更新中1配送ならB revision1、A revision2でfresh=falseです。 実務ではackの保証範囲、要求revision、readの観測step、配送完了を分けます。route切替をwriter昇格と同一視せず、読めたことからdurabilityやRTOを推論しません。 2in-memory store・単一writer・有限FIFO・逐次step。実cloud、quorum、consensus、durability、split brain、RTO保証、実性能、重複/逆順配送は未実証です。
+
+The focused UI element is 186 button (expanded) 原票：入力・command・exit・stdout・stderr, Secondary Actions: Collapse

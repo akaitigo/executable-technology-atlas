@@ -1,0 +1,103 @@
+[
+  {
+    "event": "sql",
+    "sql": "PRAGMA user_version"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT sql FROM sqlite_schema WHERE type='table' AND name='orders'"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT name FROM sqlite_schema WHERE name NOT IN ('orders','sqlite_autoindex_orders_1')"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT id,amount_text,state FROM orders ORDER BY id"
+  },
+  {
+    "event": "preflight-accepted",
+    "direction": "up",
+    "policy": "exact",
+    "rows": 3
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN IMMEDIATE"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT id,amount_text,state FROM orders ORDER BY id"
+  },
+  {
+    "event": "sql",
+    "sql": "CREATE TABLE \"orders_staged\" (id TEXT PRIMARY KEY, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0), state_code INTEGER NOT NULL)"
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders_staged VALUES ('a', 1230, 10)"
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders_staged VALUES ('b', 0, 20)"
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders_staged VALUES ('c', 105, 10)"
+  },
+  {
+    "event": "staged-copy",
+    "mapped_rows": [
+      [
+        "a",
+        1230,
+        10
+      ],
+      [
+        "b",
+        0,
+        20
+      ],
+      [
+        "c",
+        105,
+        10
+      ]
+    ]
+  },
+  {
+    "event": "sql",
+    "sql": "DROP TABLE orders"
+  },
+  {
+    "event": "old-table-dropped"
+  },
+  {
+    "event": "sql",
+    "sql": "ALTER TABLE orders_staged RENAME TO \"orders\""
+  },
+  {
+    "event": "sql",
+    "sql": "PRAGMA user_version=2"
+  },
+  {
+    "event": "sql",
+    "sql": "PRAGMA integrity_check"
+  },
+  {
+    "event": "sql",
+    "sql": "COMMIT"
+  },
+  {
+    "event": "migrated",
+    "version": 2
+  },
+  {
+    "event": "transaction-after-step",
+    "active": false
+  },
+  {
+    "event": "connection-closed",
+    "probe": "ProgrammingError"
+  }
+]

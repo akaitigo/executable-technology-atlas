@@ -1,0 +1,330 @@
+{
+  "authored_before_producer_execution": true,
+  "initial": {
+    "balances": {
+      "A": 100,
+      "B": 50
+    },
+    "nonces": {
+      "A": 0,
+      "B": 0
+    },
+    "accepted_ids": []
+  },
+  "cases": {
+    "conflict-forward": {
+      "decisions": [
+        "ACCEPT",
+        "NONCE_CONFLICT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        },
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        }
+      ],
+      "bad": false
+    },
+    "conflict-reverse": {
+      "decisions": [
+        "ACCEPT",
+        "NONCE_CONFLICT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 80,
+            "B": 70
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t20"
+          ]
+        },
+        {
+          "balances": {
+            "A": 80,
+            "B": 70
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t20"
+          ]
+        }
+      ],
+      "bad": false
+    },
+    "bad-ignore-nonce": {
+      "decisions": [
+        "ACCEPT",
+        "BAD_ACCEPT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        },
+        {
+          "balances": {
+            "A": 70,
+            "B": 80
+          },
+          "nonces": {
+            "A": 2,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10",
+            "t20"
+          ]
+        }
+      ],
+      "bad": true
+    },
+    "unauthorized": {
+      "decisions": [
+        "UNAUTHORIZED"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "bad-balance-only": {
+      "decisions": [
+        "BAD_ACCEPT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        }
+      ],
+      "bad": true
+    },
+    "unknown-actor": {
+      "decisions": [
+        "UNKNOWN_ACTOR"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "bool-nonce": {
+      "decisions": [
+        "INVALID_NONCE"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "zero-amount": {
+      "decisions": [
+        "INVALID_AMOUNT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "negative-amount": {
+      "decisions": [
+        "INVALID_AMOUNT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "bool-amount": {
+      "decisions": [
+        "INVALID_AMOUNT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "overspend": {
+      "decisions": [
+        "INSUFFICIENT_BALANCE"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "future-nonce": {
+      "decisions": [
+        "NONCE_CONFLICT"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 100,
+            "B": 50
+          },
+          "nonces": {
+            "A": 0,
+            "B": 0
+          },
+          "accepted_ids": []
+        }
+      ],
+      "bad": false
+    },
+    "duplicate-id": {
+      "decisions": [
+        "ACCEPT",
+        "DUPLICATE_ID"
+      ],
+      "states": [
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        },
+        {
+          "balances": {
+            "A": 90,
+            "B": 60
+          },
+          "nonces": {
+            "A": 1,
+            "B": 0
+          },
+          "accepted_ids": [
+            "t10"
+          ]
+        }
+      ],
+      "bad": false
+    }
+  }
+}

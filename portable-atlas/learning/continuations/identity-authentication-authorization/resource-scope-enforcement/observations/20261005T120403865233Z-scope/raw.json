@@ -1,0 +1,2178 @@
+{
+  "run_id": "20261005T120403865233Z-scope",
+  "environment": {
+    "python": "3.9.6",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "dependencies": "stdlib"
+  },
+  "source_digests": {
+    "contracts.json": "bd968fcdd10dd3ac2073c16438272521c442ea44016b8bdf09f741e8c60818ea",
+    "expected-table.json": "1690277e6502f9fa8b1e435aae429f7e1bd44f4fd6d0376d7dba7839e2a45bb6",
+    "fixtures/alpha.txt": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b",
+    "fixtures/beta.txt": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5",
+    "experiment.py": "8c6098a8681755e2cb8be67b278617e9663477af26962d176bdd3d544f084887",
+    "runner.py": "d22148583b59619c681de91e7a155ca38970cb69cb2b277c51eea67ee79147f7",
+    "checker.py": "499f126531249194a501e53805537d3fc0ce8616c283ed9ef50bb0a0a82cd876",
+    "route.py": "d66e37e6db5c0896f5e018eb9ca6f537e62b199568b50b5f66adf71b95f8ea51",
+    "README.md": "b97bc4ab6703b4cdad67f0e4f842362a72f883873f29333d53a34fd1f4dfba3b",
+    "sources.json": "e9209df2d09984396270554fb61b995136e85366889d7041821cbcae3d57ad57",
+    "index.html": "c3de89a7b7637a0d45d9a775c3f23fa622c77f6bdc2acf39f7e427af881d8f3c",
+    "app.js": "6280223ff4af09caa0f478eb3c33859916be672e349b67430915bca4152cb6b5",
+    "styles.css": "1b3c053e0547f0e3190c9aad3f61f6c5a248c8c87801dcf7bca245f4623e7c38",
+    "skills/atlas-resource-scope-enforcement/SKILL.md": "4889e1e8062cbd11819d3eadd993cda2db6c946eb1bfbe5d2613bc9b41630161"
+  },
+  "rows": [
+    {
+      "id": "a-reader-alpha-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "ALPHA SYNTHETIC DOCUMENT\n",
+        "content_hex": "414c5048412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "alpha.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 25,
+            "sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "ALPHA SYNTHETIC DOCUMENT\n",
+        "content_hex": "414c5048412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "alpha.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 25,
+            "sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-alpha-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-alpha-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "BETA SYNTHETIC DOCUMENT\n",
+        "content_hex": "424554412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "beta.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 24,
+            "sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-alpha-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-beta-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-beta-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-beta-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-reader-beta-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-alpha-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-alpha-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-alpha-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-alpha-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-beta-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-beta-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-beta-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a-no-read-beta-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "a-no-read",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-alpha-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-alpha-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-alpha-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-alpha-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-subject-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": false,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-subject-scope"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-beta-doc-alpha-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "ALPHA SYNTHETIC DOCUMENT\n",
+        "content_hex": "414c5048412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "alpha.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 25,
+            "sha256": "ff0ae51509c016fd0c5f2f36341d30cc3aa6b5516f8df31af9271656707eb59b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-beta-doc-alpha-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-alpha",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-resource-scope",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-resource-scope"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-alpha",
+            "scope": "alpha",
+            "owner": "owner-alpha"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": false,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-beta-doc-beta-read",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "BETA SYNTHETIC DOCUMENT\n",
+        "content_hex": "424554412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "beta.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 24,
+            "sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "allow",
+        "read_count": 1,
+        "content_ascii": "BETA SYNTHETIC DOCUMENT\n",
+        "content_hex": "424554412053594e54484554494320444f43554d454e540a",
+        "content_sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5",
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": true,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "allow",
+            "reason": "allow"
+          },
+          {
+            "event": "read-start",
+            "fixture_file": "beta.txt"
+          },
+          {
+            "event": "read-complete",
+            "bytes": 24,
+            "sha256": "a9fdb7f5d6ac5f661e286681b78257eb75903d82e47c57fae2e9123653530dd5"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b-reader-beta-doc-beta-write",
+      "status": "normal-comparison",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "doc-beta",
+        "action": "write"
+      },
+      "normal": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": true
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "deny-read-permission",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "trusted-resource",
+            "resource": "doc-beta",
+            "scope": "beta",
+            "owner": "owner-beta"
+          },
+          {
+            "event": "checks",
+            "resource_scope_matches": true,
+            "subject_scope_assigned": true,
+            "read_permitted": false,
+            "resource_scope_enforced": false
+          },
+          {
+            "event": "decision",
+            "decision": "deny",
+            "reason": "deny-read-permission"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-unknown-resource",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "not-known",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "unknown-resource",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "unknown-resource"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "unknown-resource",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "unknown-resource"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-missing-scope",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "missing-scope",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "missing-resource-attribute",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "missing-resource-attribute"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "missing-resource-attribute",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "missing-resource-attribute"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-missing-owner",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "missing-owner",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "missing-resource-attribute",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "missing-resource-attribute"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "missing-resource-attribute",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "missing-resource-attribute"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-unauthenticated",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": false,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "authenticated-subject-required",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "authenticated-subject-required"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "authenticated-subject-required",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "authenticated-subject-required"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-missing-authentication",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "a-reader",
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "request-field-set",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "request-field-set"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "request-field-set",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "request-field-set"
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-bool-scope",
+      "status": "expected-refusal",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": true,
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "normal": {
+        "decision": "refuse",
+        "reason": "scope-contract",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "normal"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "scope-contract"
+          }
+        ]
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "scope-contract",
+        "read_count": 0,
+        "content_ascii": null,
+        "content_hex": null,
+        "content_sha256": null,
+        "trace": [
+          {
+            "event": "request",
+            "mode": "scope-only"
+          },
+          {
+            "event": "decision",
+            "decision": "refuse",
+            "reason": "scope-contract"
+          }
+        ]
+      }
+    }
+  ],
+  "identity": "authenticated_subject True is synthetic input assumption only",
+  "policy": "local finite subset, not NIST ABAC compliance",
+  "fixture_io": "two synthetic files in owned temporary directory; no user files/credentials"
+}

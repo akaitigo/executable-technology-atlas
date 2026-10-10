@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PIの飽和とwindup</title>
+<style>
+body{margin:auto;max-width:1120px;padding:24px;background:#eff2ec;color:#223a34;font:16px/1.75 system-ui}h1{font-size:32px}h2{font-size:23px}section{background:white;padding:20px;margin:18px 0;border-radius:14px}button,select{font:inherit;padding:8px;margin:4px}button{background:#215b4a;color:white;border:0;border-radius:5px}a{display:inline-block;color:#136751;margin-right:10px}pre{font:12px/1.6 monospace;white-space:pre-wrap;overflow-wrap:anywhere}#status{font-weight:bold}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid #ccc;padding:7px;text-align:left}#trace{overflow-x:auto}.chart{margin:16px 0;border-bottom:1px solid #ccc}.chart svg{width:100%;height:auto}details{margin:12px 0}summary{cursor:pointer}.legend{display:flex;flex-wrap:wrap;gap:18px}.swatch{padding:4px 8px;border-bottom:4px solid}footer{font-size:14px}@media(max-width:700px){body{padding:12px}table{font-size:11px}}
+</style>
+<p>制御・simulation / 独立した有限数学モデル</p><h1>入力は上限でも、積分stateは増え続ける</h1>
+<p>目標を4から.5へ下げ、要求入力・実入力とzの回復を比べます。CPU上の数学モデルです。実plantの設定値・安定性・安全性は保証しません。</p>
+<section><h2>1. 更新順を読む → 予想する</h2>
+<p>τ=1秒、Kp=1、y0=z0=0。旧stateからe=r-y、要求u=e+Ki*z。実uを区間中保持し、plantは指数関数で厳密更新。zは旧eで離散更新します。上限1/下限-1、4秒で目標切替、8秒まで観測します。</p>
+<label>controller周期h <select id="h"><option value="0.25">.25秒</option><option value="0.5" selected>.5秒</option></select></label>
+<label>詳しく追う方式 <select id="mode"><option value="free">飽和なし</option><option value="saturated" selected>飽和・積分継続</option><option value="conditional">外向き時のみ積分停止</option></select></label>
+<label>積分gain <select id="ki"><option value="0">Ki=0 / P対照</option><option value="1" selected>Ki=1 / PI</option></select></label>
+<p>同じh/Kiの3方式と、選択方式のP対照を同時に実行します。全12条件。Ki=0でもzを記録しますが、入力への積分寄与は0です。</p>
+<p>条件付き停止: 要求u>=1かつe>0、または要求u<=-1かつe&lt;0。等値は停止、内向き反転とe=0では積分できます。clipの有無と積分停止は別です。</p>
+<label>切替時のzと整定を予想 <select id="prediction"><option value="">先に予想を選ぶ</option><option value="unsettled">継続側のzが大きく、全方式は窓内未整定</option><option value="same">切替時zは3方式で同じ</option><option value="settled">少なくとも1方式が窓内整定済み</option></select></label>
+<button id="run">2. 同じreferenceで実行</button><button id="reset">初期条件へリセット</button><p id="status">未実行</p><p id="summary"></p></section>
+<section><h2>3. 時系列とP対照を見る</h2><div class="legend"><span class="swatch" style="border-color:#236aad">飽和なし</span><span class="swatch" style="border-color:#b27022">飽和・積分継続</span><span class="swatch" style="border-color:#20805f">条件付き停止</span><span class="swatch" style="border-color:#9359a4">選択方式のP対照</span></div><div id="diagram"></div>
+<p>各変数の軸は4系列で共通、数値範囲を左に表示。線はsample点の視覚補間。縦破線は4秒のreference切替。y図の点線はreference。要求/実uの終端8秒値は未実行なので描きません。</p>
+<div id="trace"></div></section>
+<section><h2>4. 手計算・原典・実装を読む</h2>
+<a href="source.html?file=CONTRACT.md">有限契約と境界手表</a><a href="source.html?file=hand-oracle.json">初期手計算</a><a href="source.html?file=controller.py">controller実装</a><a href="source.html?file=decimal_oracle.py">独立Decimal漸化式</a><a href="source.html?file=oracle.py">検査器</a><a href="source.html?file=metrics.py">整定判定</a><a href="source.html?file=observations/attempt-01.json">CLI原票</a><a href="source.html?file=README.md">再現手順</a><a href="source.html?file=COVERAGE.md">未教材</a><a href="source.html?file=sources.json">原典確認</a><a href="source.html?file=reference/LEARNING_PATH.md">既存の学習経路</a>
+<p><a href="https://ocw.mit.edu/courses/6-302-feedback-systems-spring-2007/680f67691cfadcea9aa8a82e6f4c3654_6_302rec6.pdf">MIT 6.302 Recitation 6 本文</a>は積分と定常偏差の概念入口。今回のanti-windup規則とsampled plantは独自modelです。</p>
+<details><summary>今回の実応答原票（全文）</summary><pre id="raw"></pre></details><button id="compare">5. 予想を照合して答えを開く</button><p id="comparison"></p><details id="answer-details"><summary id="answer"></summary><p id="answer-body"></p></details></section>
+<section><h2>観測のガード</h2><label><input type="checkbox" id="hold">応答を保留して古い応答を試す</label><button id="release" disabled>保留応答を解放</button><p>条件・予想変更で旧答えとtraceを消去。入力拒否・通信失敗では正常の答えを表示しません。</p></section>
+<footer>整定は4..8秒のsample観測、±.05帯、以降再逸脱なし、残り1秒以上。未整定はnullです。solver誤差、離散controller周期の差、実plantの挙動を混ぜません。</footer><script src="app.js"></script></html>

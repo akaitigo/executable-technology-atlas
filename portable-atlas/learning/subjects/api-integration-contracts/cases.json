@@ -1,0 +1,14 @@
+[
+  {"id":"base","title":"既存契約：idとname","status":200,"content_type":"application/json","body":"{\"id\":7,\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"optional","title":"optional field追加：互換を維持","status":200,"content_type":"application/json; charset=utf-8","body":"{\"id\":7,\"name\":\"sample\",\"note\":\"v2\",\"extra\":true}","delay_seconds":0},
+  {"id":"missing","title":"必須name欠落：拒否","status":200,"content_type":"application/json","body":"{\"id\":7}","delay_seconds":0},
+  {"id":"type-changed","title":"idがstringへ変更：拒否","status":200,"content_type":"application/json","body":"{\"id\":\"7\",\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"boolean-id","title":"booleanをinteger扱いしない","status":200,"content_type":"application/json","body":"{\"id\":true,\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"status-changed","title":"201：HTTP成功でもこの契約は拒否","status":201,"content_type":"application/json","body":"{\"id\":7,\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"media-changed","title":"text/plain：JSON文字列でも拒否","status":200,"content_type":"text/plain","body":"{\"id\":7,\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"malformed","title":"壊れたJSON：拒否","status":200,"content_type":"application/json","body":"{\"id\":7,","delay_seconds":0},
+  {"id":"empty-body","title":"200だがbody空：拒否","status":200,"content_type":"application/json","body":"","delay_seconds":0},
+  {"id":"api-error","title":"422とerror body：エラーとして処理","status":422,"content_type":"application/json","body":"{\"error\":{\"code\":\"invalid_input\",\"message\":\"synthetic rejection\"}}","delay_seconds":0},
+  {"id":"bad-error","title":"422だがerror body契約欠落","status":422,"content_type":"application/json","body":"{\"id\":7,\"name\":\"sample\"}","delay_seconds":0},
+  {"id":"timeout","title":"応答前delay：socket timeoutで停止","status":200,"content_type":"application/json","body":"{\"id\":7,\"name\":\"late\"}","delay_seconds":0.6}
+]

@@ -1,0 +1,7 @@
+# 検証範囲
+
+6fixture×3方式。空traceを含み22operation×3=66step。事前literal表でdirty eviction・clean eviction・dirty/repeated flushのresident data、dirty、memory[1]/[3]、transaction/byte/writeback/victimを照合。独立逐次memory仕様で全正常load返値、各stepの全256byte復元を照合する。故障版はdirty eviction後のdata損失をEXPECTED_MISMATCHとして分離する。
+
+明示recordだけ未使用run directoryへUTC/command/input/runtime/exit/rawとcontent hashを保存。通常checker/routeは読取り専用、外側recorderでhash/mtime不変を確認する。Core/fullGate、実CPU、独立AgentEvalは未実行。
+
+全256address×3方式の768境界trace（各5step、3840step）も検証。20不正入力はEXPECTED_REFUSAL、故障evictionによる論理memory損失はEXPECTED_MISMATCHとして固定66stepの実行数と正しい返却・状態の件数を区別する。実IABは12状態tupleと3step拒否、空trace/末尾操作、原典/coverage、producer/独立memory本文への到達を確認。実capture7回、ファイル未保存。専用tab14/session64801/port63307終了、残存listener0。保護対象60285/PID45413、53478/PID3901のLISTENを維持。default bind EPERMを保全し一時承認実行でUI検証。Skill quick_validate成功、作者route正常/unsupported確認。初回receiptとpending QAはattempt-01内に保持。rawの初回UTC/command/source hashを変えず現在QA/receiptを別時刻で束縛する。

@@ -1,0 +1,9 @@
+# 検証と証拠の区別
+
+事前literal契約の12模型条件を独立表へ照合。7拒否入力、6mutant、nearest-rankの20件例を検査。模型の全request分母、client受信status、server200生成/試行、打切り待ち時間と真のresponse latency nullを別項目にする。
+
+実HTTPはowned server/client独立process各2件を2attempt。初回socket.timeout分類の不備は旧source/rawごと保持し、修正版を新attemptで再観測。IDとUTCをjoinし、server200試行がclienttimeout後であること、clientstatus/body未受信を確認。process内monotonic差分だけで経過を出し、process間の原点は比較しない。WRITE_RETURNEDも配送保証とはしない。保存原票照合でactualHTTPを再実行したとは主張しない。
+
+実IAB: 模型12条件、予想4値と入力変更で旧answer/raw/trace/summary解除・新予想保持、可変timeout/window/caseの実答え、拒否とtransport failure、prediction変更による旧保留応答破棄、保存実HTTPpanelのread-only表示、11source/既存教材導線。実capture取得・保存可否は正直に記録。所有server/tabのみcleanup、保護listenerはread-only観測。
+
+通常verify/route/Skill検査の前後で全module file sha256/mtime_nsを比較し、proofを最後に保存。初期receipt/原票は上書きせずcurrent bindingをseal。Core/full gateは専有scope外で未実行。7章の入口があってもQE全体の完成/理解度/製品品質は未実証。

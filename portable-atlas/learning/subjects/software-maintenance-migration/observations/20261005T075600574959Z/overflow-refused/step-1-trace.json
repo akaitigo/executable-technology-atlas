@@ -1,0 +1,30 @@
+[
+  {
+    "event": "sql",
+    "sql": "PRAGMA user_version"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT sql FROM sqlite_schema WHERE type='table' AND name='orders'"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT name FROM sqlite_schema WHERE name NOT IN ('orders','sqlite_autoindex_orders_1')"
+  },
+  {
+    "event": "sql",
+    "sql": "SELECT id,amount_text,state FROM orders ORDER BY id"
+  },
+  {
+    "event": "refused",
+    "reason": "amount-out-of-int64-range"
+  },
+  {
+    "event": "transaction-after-step",
+    "active": false
+  },
+  {
+    "event": "connection-closed",
+    "probe": "ProgrammingError"
+  }
+]

@@ -1,0 +1,25 @@
+export const digest=async text=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),b=>b.toString(16).padStart(2,'0')).join('');
+export async function runGpu(f,c,shader){
+  const started=new Date().toISOString(),events=[],mark=(name,detail)=>events.push({name,time:new Date().toISOString(),detail});
+  const raw={kind:'actual-browser-webgpu-compute',id:c.id,input:{fixture:f,case:c},started,shaderDigest:await digest(shader),inputDigest:await digest(JSON.stringify({fixture:f,case:c})),adapterObtained:false,deviceRequested:false,submitted:false,mapped:false,output:null,marks:null,error:null,events,resources:{created:0,destroyed:0,deviceDestroyed:false}};
+  let device=null,scopeOpen=false;const buffers=[];
+  try{
+    if(!navigator.gpu){raw.kind='gpu-unavailable';mark('unavailable',{reason:'navigator.gpu-absent'});return raw;}
+    const adapter=await navigator.gpu.requestAdapter();raw.adapterObtained=!!adapter;if(!adapter){raw.kind='gpu-unavailable';mark('unavailable',{reason:'null-adapter'});return raw;}
+    const info=adapter.info;raw.adapterInfo=info?{vendor:info.vendor,architecture:info.architecture,device:info.device,description:info.description,isFallbackAdapter:info.isFallbackAdapter??null}:null;mark('adapter',{obtained:true});
+    raw.deviceRequested=true;device=await adapter.requestDevice();raw.limits={maxComputeWorkgroupsPerDimension:device.limits.maxComputeWorkgroupsPerDimension,maxComputeWorkgroupSizeX:device.limits.maxComputeWorkgroupSizeX};mark('device',raw.limits);
+    device.pushErrorScope('validation');scopeOpen=true;
+    const make=(size,usage)=>{const b=device.createBuffer({size,usage});buffers.push(b);raw.resources.created++;return b;};
+    const storage=GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST;
+    const a=make(c.mode==='short-binding'?24:28,storage),b=make(28,storage),out=make(36,storage|GPUBufferUsage.COPY_SRC),params=make(16,GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST),marks=make(48,storage|GPUBufferUsage.COPY_SRC),readback=make(84,GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST);
+    device.queue.writeBuffer(a,0,new Uint32Array(c.mode==='short-binding'?f.a.slice(0,6):f.a));device.queue.writeBuffer(b,0,new Uint32Array(f.b));device.queue.writeBuffer(out,0,new Uint32Array(9).fill(f.sentinel));device.queue.writeBuffer(params,0,new Uint32Array([7,0,0,0]));device.queue.writeBuffer(marks,0,new Uint32Array(12));mark('buffers',{aBytes:a.size,bBytes:b.size,outputBytes:out.size,markBytes:marks.size});
+    const module=device.createShaderModule({code:shader}),compile=await module.getCompilationInfo();raw.compilationMessages=compile.messages.map(m=>({type:m.type,message:m.message,lineNum:m.lineNum,linePos:m.linePos}));
+    const layout=device.createBindGroupLayout({entries:[{binding:0,visibility:GPUShaderStage.COMPUTE,buffer:{type:'read-only-storage',minBindingSize:28}},{binding:1,visibility:GPUShaderStage.COMPUTE,buffer:{type:'read-only-storage',minBindingSize:28}},{binding:2,visibility:GPUShaderStage.COMPUTE,buffer:{type:'storage',minBindingSize:36}},{binding:3,visibility:GPUShaderStage.COMPUTE,buffer:{type:'uniform',minBindingSize:16}},{binding:4,visibility:GPUShaderStage.COMPUTE,buffer:{type:'storage',minBindingSize:48}}]});
+    const pipeline=await device.createComputePipelineAsync({layout:device.createPipelineLayout({bindGroupLayouts:[layout]}),compute:{module,entryPoint:'main'}});
+    const group=device.createBindGroup({layout,entries:[a,b,out,params,marks].map((buffer,binding)=>({binding,resource:{buffer}}))});mark('bind-group',{mode:c.mode});
+    if(c.mode!=='short-binding'){const encoder=device.createCommandEncoder(),pass=encoder.beginComputePass();pass.setPipeline(pipeline);pass.setBindGroup(0,group);raw.dispatchGroups=c.mode==='dispatch-limit'?raw.limits.maxComputeWorkgroupsPerDimension+1:c.groups;pass.dispatchWorkgroups(raw.dispatchGroups);pass.end();mark('dispatch-encoded',{groups:raw.dispatchGroups});if(c.mode==='compute'){encoder.copyBufferToBuffer(out,0,readback,0,36);encoder.copyBufferToBuffer(marks,0,readback,36,48);const commands=encoder.finish();device.queue.submit([commands]);raw.submitted=true;mark('submitted',{copyBytes:84});await readback.mapAsync(GPUMapMode.READ);raw.mapped=true;const bytes=readback.getMappedRange();raw.output=Array.from(new Uint32Array(bytes,0,9));raw.marks=Array.from(new Uint32Array(bytes,36,12));readback.unmap();mark('mapped',{output:raw.output,marks:raw.marks});}else encoder.finish();}
+    const error=await device.popErrorScope();scopeOpen=false;if(error){raw.error={name:error.constructor.name,message:error.message};mark('validation-rejected',raw.error);}
+  }catch(e){raw.error={name:e.name,message:e.message};mark('exception',raw.error);}
+  finally{if(scopeOpen&&device){const e=await device.popErrorScope();if(e)raw.scopeError={name:e.constructor.name,message:e.message};}for(const b of buffers){b.destroy();raw.resources.destroyed++;}if(device){device.destroy();raw.resources.deviceDestroyed=true;}mark('cleanup',raw.resources);raw.completed=new Date().toISOString();}
+  return raw;
+}

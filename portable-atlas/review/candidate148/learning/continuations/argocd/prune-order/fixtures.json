@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "scope": {"phase": "Sync", "kind": "ConfigMap", "prune": true, "dry_run": false, "prune_last": false, "confirmation_satisfied": true, "hooks": false, "namespace_crd_dependencies": false},
+  "cases": [
+    {
+      "id": "apply-ascending",
+      "title": "適用は小さいwaveから",
+      "question": "high / low / midのどれを最初に適用する？",
+      "tasks": [
+        {"id": "high", "action": "apply", "wave": 8, "result": "Synced", "observation": "unobserved"},
+        {"id": "low", "action": "apply", "wave": -3, "result": "Synced", "observation": "ready"},
+        {"id": "mid", "action": "apply", "wave": 1, "result": "Synced", "observation": "ready"}
+      ]
+    },
+    {
+      "id": "prune-descending",
+      "title": "削除は元の大きいwaveから",
+      "question": "元waveが -3 / 1 / 8 のとき、有効waveは符号反転でよい？",
+      "tasks": [
+        {"id": "high", "action": "prune", "wave": 8, "result": "Pruned", "observation": "absent"},
+        {"id": "low", "action": "prune", "wave": -3, "result": "Pruned", "observation": "unobserved"},
+        {"id": "mid", "action": "prune", "wave": 1, "result": "Pruned", "observation": "absent"}
+      ]
+    },
+    {
+      "id": "prune-waiting",
+      "title": "Prunedでも後続が待つ",
+      "question": "highがPrunedでliveのdeletionTimestampがある。midへ進む？",
+      "tasks": [
+        {"id": "high", "action": "prune", "wave": 8, "result": "Pruned", "observation": "terminating"},
+        {"id": "low", "action": "prune", "wave": -3, "result": "Pruned", "observation": "unobserved"},
+        {"id": "mid", "action": "prune", "wave": 1, "result": "Pruned", "observation": "absent"}
+      ]
+    },
+    {
+      "id": "prune-failed",
+      "title": "途中のprune失敗",
+      "question": "high消滅を観測後、midの結果がSyncFailedならlowへ進む？",
+      "tasks": [
+        {"id": "high", "action": "prune", "wave": 8, "result": "Pruned", "observation": "absent"},
+        {"id": "low", "action": "prune", "wave": -3, "result": "Pruned", "observation": "unobserved"},
+        {"id": "mid", "action": "prune", "wave": 1, "result": "SyncFailed", "observation": "unobserved"}
+      ]
+    },
+    {
+      "id": "mixed-same-wave-failed",
+      "title": "同じwave内のprune失敗でapplyも未着手",
+      "question": "wave 0にoldのpruneとnewのapply。oldがSyncFailedならnewは始まる？",
+      "tasks": [
+        {"id": "old", "action": "prune", "wave": 0, "result": "SyncFailed", "observation": "unobserved"},
+        {"id": "new", "action": "apply", "wave": 0, "result": "Synced", "observation": "ready"},
+        {"id": "later", "action": "apply", "wave": 2, "result": "Synced", "observation": "unobserved"}
+      ]
+    }
+  ]
+}

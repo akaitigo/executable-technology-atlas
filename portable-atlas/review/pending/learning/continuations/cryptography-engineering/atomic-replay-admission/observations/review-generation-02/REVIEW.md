@@ -1,0 +1,9 @@
+# witness要求と教材要求の分離
+
+旧27ファイル全体をgeneration-01へhash一致で保存し、snapshot-mapから元digestを再構成する。旧appは共通versionをwitnessで更新し、run/compareの応答を捨てる。新しいcontrolled harnessを旧appへ適用して実際に失敗を保存した。
+
+app.jsにwitnessVersionを設けた。witnessはrun/compareのversionを変更しない。条件変更・reset・新しいrun/compareでclearするとwitness要求も失効する。witnessの重複クリックは最新だけを表示する。モデル・契約・実thread原票は変更していない。
+
+既存controlled async5件を維持し、run/compare待ち→witness、逆順2件、witness重複の古い成功/失敗を加え、計11件が通過。実UIは代表run＋witness、比較＋witness、reset、更新app source、現在の通信失敗のみ確認した。実UIの応答速度を制御したとは主張しない。全56ケースの大量UI再実行はしていない。
+
+更新したbrowser bindingは旧56結果を保持してapp sourceだけ再確認し、新しい証拠とreceipt/read-only-proofを結び直した。画像2枚はinline実captureのみ。review所有サーバ/tabは終了し、保護対象は操作していない。

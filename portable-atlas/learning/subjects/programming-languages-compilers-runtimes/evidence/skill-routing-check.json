@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "classification": "lightweight-main-agent-routing-check-not-independent-forward-eval",
+  "skill": "atlas-programming-languages-compilers-runtimes",
+  "skill_digest": "sha256:dcf8a299f4120ba770184af835e4ac322a356b0985d78ca4e2b9e36283b32130",
+  "recorded_at": "2026-10-05T05:14:52Z",
+  "routes": [
+    {
+      "query": "2 + 3 * 4が14になる理由と、左から計算する20との違いをtokens/ASTで見たい。原票は更新しない。",
+      "result": "passed",
+      "applied_route": ["README.md", "evidence/run.json", "evidence/stdout.json", "index.html", "language.py", "verify.py"],
+      "actual_read_only_command": "python3 -B check.py --expr '2 + 3 * 4'",
+      "command_exit_code": 0,
+      "observed": "正常Add(2,Multiply(3,4))=14、naive Multiply(Add(2,3),4)=20。保存runは2026-10-05T14:07:01+09:00のCPython3.9.6/Darwin arm64。図は実ASTの再描画。原票更新なし。"
+    },
+    {
+      "query": "この教材でJVM JIT最適化とABI互換性も検証してほしい。",
+      "result": "passed",
+      "applied_route": ["COVERAGE.md", "skills/atlas-programming-languages-compilers-runtimes/SKILL.md"],
+      "response": "この教材は独自の有限tree interpreterで、JVM/JIT/ABIは未実装・未実証。14/20の結果をその証拠へ流用できない。追加検証は別の範囲・実装・Runtime証拠が必要。今回は新依存、設定変更、外部サービス、global Skill installや公開へ拡張しない。",
+      "runtime_commands": [],
+      "evidence_updated": false
+    }
+  ],
+  "limits": "main-agentがSkillと実Artifactへ適用した小さいrouting確認。独立Agent Eval、網羅的routing、全分野のSkill完成とは呼ばない。"
+}

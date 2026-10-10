@@ -1,0 +1,21 @@
+{
+  "subject_status":"部分教材: lexical retrieval/context/citation binding有限1単位。生成モデル未実行。",
+  "implemented":["中立の架空corpus4文書","ASCII lexical scoreと固定tie順","top-kと全文章char budget","固定著者回答fixture","citation存在とliteral supportの分離","context不足と棄権","手動instruction fixtureの参照境界"],
+  "areas":[
+    {"area":"生成モデルの基礎","status":"未教材","concepts":["tokenization","next-token probability","pretraining/instruction tuning","decoding/temperature"],"question":"検索工程と生成モデルの確率的出力は何が違うか？","source":"rag-paper"},
+    {"area":"データ取得・chunk・索引","status":"部分教材","concepts":["parse/chunk/overlap","metadata","document version","index更新・削除"],"question":"必要な根拠の文がchunk境界で分断されたら何が起こるか？","source":"rag-security"},
+    {"area":"retrieval・ranking","status":"部分教材","concepts":["lexical/BM25","embedding/dense","hybrid","rerank","query expansion"],"question":"同義語、長い文、命令文の語反復で順位はどう変わるか？","source":"rag-paper"},
+    {"area":"contextとprompt構成","status":"部分教材","concepts":["context budget","LLM token数","順序・重複","データ/命令の分離"],"question":"根拠が検索されてもcontextに入らなければ何を答えられるか？","source":"injection"},
+    {"area":"grounding・引用・棄権","status":"部分教材","concepts":["citation存在","claim coverage","原文span","意味的entailment","矛盾と棄権"],"question":"存在するcitationが、答えの各claimを本当に支持しているか？","source":"rag-security"},
+    {"area":"RAG/生成の評価","status":"未教材","concepts":["retrieval recall/ranking","faithfulness","正答性","human評価","judge bias"],"question":"検索成功と回答の正しさを別々に測れるか？","source":"rag-paper"},
+    {"area":"権限・信頼・攻撃境界","status":"部分教材","concepts":["document ACL","tenant isolation","prompt injection","poisoning","output sanitization"],"question":"参照文書に命令があっても誰が実操作を許可するか？","source":"injection"},
+    {"area":"会話・tool・agent連携","status":"未教材","concepts":["session memory","tool permission","multi-step retrieval","structured output","action grounding"],"question":"回答の引用を根拠に、実操作まで自動化してよいか？","source":"rag-security"},
+    {"area":"運用・privacy・資源","status":"未教材","concepts":["latency/cost","cache invalidation","PII","provenance","更新/監視/rollback"],"question":"同じcitation IDでも文書が更新されれば回答を再検査する必要があるか？","source":"rag-security"}
+  ],
+  "next_experiments":[
+    {"id":"lexical-variants","question":"同義語と語反復でretrievalの正解率はどう変わるか？","experiment":"固定queryの同義語/反復を追加し、単純重複countと文書長で正規化したscoreを手計算rankingで比較する。","source":"rag-paper"},
+    {"id":"chunk-budget","question":"chunk境界とcontext budgetで根拠が欠けるか？","experiment":"同じ3参照文書を複数chunk化し、全根拠文の保持とoverlap/char budgetの組合せを独立span oracleで比較する。","source":"rag-security"},
+    {"id":"claim-coverage","question":"複数claimの一部だけ支持される答えをどう扱うか？","experiment":"固定claim集合と矛盾例を増やし、全claim受入/部分表示/棄権を比較。言い換えを支持できないliteral検査の限界も記録する。","source":"rag-security"},
+    {"id":"source-version","question":"文書versionや参照資格が変わった後も古い引用を受理してよいか？","experiment":"同じdoc IDの2versionと固定allowlist変更を用意し、cache keyと古いspan/digestの失効をローカル状態機械で比較する。","source":"injection"}
+  ]
+}

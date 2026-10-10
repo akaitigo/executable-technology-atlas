@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="保存済みFlutter実Widget観測を読み、ListViewの並べ替えとStateの生存を比較する教材。">
+<title>Flutter｜ListViewとStateの行き先</title><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body><a class="skip" href="#lesson">教材へ移動</a>
+<header><span class="brand">ATLAS <small>Flutter / ListView</small></span><span class="badge">保存実測を読む教材</span></header>
+<main id="lesson">
+  <section class="hero"><div><p class="eyebrow">LAZY LIST / KEY / STATE</p><h1>並べ替えた後、<br>そのStateはどこへ行く？</h1><p class="lead">項目のKeyは同じ。違うのは、現在のindexを返すcallback。<br>保持中の入替と、破棄後の再生成を分けて確かめます。</p></div><aside><b>まず、この要求から</b><p>Aの1、Bの2を<br>項目と一緒に移したい。</p><span>2条件 × 5時点の保存実測</span></aside></section>
+  <div class="notice" role="note"><strong>この画面はFlutterのライブ実行ではありません。</strong>GUI操作は保存実測の選択・再生です。カードは実Widget原票の数値表示で、実Flutterの画像ではありません。学習画面のスクリーンショットと実Flutter描画の証拠も区別します。</div>
+  <div class="load-bar"><p id="load-status" role="status">保存実測と実行ソースの整合性を確認しています…</p><button id="reload" type="button">原票を読み直す</button></div>
+  <div id="load-error" role="alert" class="error" hidden></div>
+  <div id="lesson-body" hidden>
+    <nav class="steps" aria-label="読む順番"><a href="#predict">1 条件と予想</a><a href="#observe">2 再生と対照</a><a href="#sources">3 原典と実装</a><a href="#answer-section">4 答えと判断</a></nav>
+    <section id="predict" class="panel"><p class="eyebrow">01 / PREDICT</p><h2>先頭のAとBを入れ替える</h2><p>準備時点は A：State S1・1回、B：State S2・2回。<br>両条件とも、builderが返すTileに項目IDのKeyがあります。</p>
+      <fieldset><legend>比較する条件</legend><div class="choices two">
+        <label><input type="radio" name="condition" value="withLookup" checked><span><b>callbackあり</b><small>Keyから現在のindexを返す</small></span></label>
+        <label><input type="radio" name="condition" value="withoutLookup"><span><b>callbackなし</b><small>同じ項目Key、callbackは省略</small></span></label>
+      </div></fieldset>
+      <fieldset><legend>入替後のStateと回数を予想する</legend><div class="choices three">
+        <label><input type="radio" name="prediction" value="follows"><span><b>項目と一緒に移動</b><small>BはS2・2回、AはS1・1回</small></span></label>
+        <label><input type="radio" name="prediction" value="fresh"><span><b>新しく作り直す</b><small>BもAも新しいState・0回</small></span></label>
+        <label><input type="radio" name="prediction" value="position"><span><b>位置に残る</b><small>BはS1・1回、AはS2・2回</small></span></label>
+      </div></fieldset><p class="hint">条件変更は予想も消します。予想変更は新しい予想を残し、前の再生・対照・答えを消して準備時点へ戻します。</p>
+    </section>
+    <section id="observe" class="panel"><p class="eyebrow">02 / OBSERVE</p><h2>保存された実測を再生する</h2><p id="observation-status" role="status"></p>
+      <div class="actions"><button id="replay" class="primary" disabled>入替後の保存実測を再生</button><button id="reset">予想からやり直す</button></div>
+      <div id="timeline" class="timeline" aria-label="保存した操作時点"></div>
+      <div class="state-heading"><h3 id="selected-title"></h3><span id="phase-label" class="badge"></span></div>
+      <p class="hint">原票の値を表示しています。State IDは各条件内の識別子です。条件をまたぐ同じS1は別オブジェクトです。</p>
+      <div id="selected-rows" class="rows"></div><p id="event-summary" class="event-summary"></p>
+      <div id="comparison" class="comparison" hidden><h3 id="comparison-title"></h3><p>同じ時点・同じ操作で、もう一方の条件と比較します。</p><div id="comparison-rows" class="rows"></div></div>
+      <div id="boundary" class="boundary" hidden></div>
+      <details id="raw-details"><summary>この時点の実観測JSONを読む</summary><pre id="raw-observation"></pre></details>
+    </section>
+    <section id="sources" class="panel"><p class="eyebrow">03 / EXPLAIN</p><h2>Keyとindexの橋渡しを読む</h2>
+      <div class="mechanism"><span>項目Key</span><b aria-hidden="true">→</b><span>現在のindex</span><b aria-hidden="true">→</b><span>保持中のElement</span></div><p class="hint">仕組みの説明図です。Flutter画像や実行トレースではありません。</p>
+      <ol><li><code>ListView.builder</code>は必要なindexから子を作ります。</li><li><code>findChildIndexCallback</code>が、既存の子のKeyを現在のindexへ引き直します。</li><li>破棄されたStateを復元する機能ではありません。画面外の保持や業務データの所有は別に設計します。</li></ol>
+      <p class="fixture">今回の固定条件：12項目 / 幅320・高さ160 / 項目高80 / cache 0 / keep-alive要求なし。<br>Flutter 3.47.1・Dart 3.13.1。初期index 0/1、遠方8/9の生成はこのfixtureでの観測です。</p>
+      <div class="source-links"><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/scroll_delegate.dart#L517-L575" target="_blank" rel="noopener noreferrer">公式：callbackの契約 ↗</a><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/sliver.dart#L969-L1053" target="_blank" rel="noopener noreferrer">公式：Elementの対応付け ↗</a><a href="https://github.com/flutter/flutter/blob/6655482ec06e547f90abf8ae7590466f4415978d/packages/flutter/lib/src/widgets/scroll_view.dart#L1090-L1130" target="_blank" rel="noopener noreferrer">公式：子の寿命 ↗</a></div>
+      <p class="hint">外部リンクは自分で開いた時だけ接続します。教材の読込に外部通信はありません。</p>
+      <details id="implementation"><summary>今回実行したWidgetソースを読む</summary><pre id="source-code"></pre></details>
+    </section>
+    <section id="answer-section" class="panel"><p class="eyebrow">04 / CHECK</p><h2>予想と実測を照合する</h2><p>答え合わせは「入替後」の予想についてです。遠方・戻る時点からは、入替後へ戻して照合します。</p><button id="reveal" class="primary" disabled>予想と実測を照合</button><div id="answer" class="answer" aria-live="polite" hidden></div>
+      <div class="limits"><h3>この結果を、どこまで使えるか</h3><p>保持中の項目を並べ替えるには、安定Keyと現在indexの対応を組にします。破棄をまたいで必要な業務データは、子Stateの外に所有者を置く設計を検討します。</p><p>keep-alive有効時、削除・挿入、可変高さ、GlobalKey、保存・復元は未対応です。今回の固定条件をすべてのListViewへ一般化しません。</p></div>
+    </section>
+  </div>
+  <footer><b>証拠の範囲</b><p>2026-10-06の実Widget観測：2条件・10時点。操作はStateメソッドとjumpTo。FlutterライブGUIのポインター確認ではありません。</p><a href="README.md">教材と記録</a> · <a href="REPRODUCE.md">再現手順</a> · <a href="SKILL.md">案内用Skill</a> · <a href="COVERAGE.md">残る範囲</a></footer>
+</main></body></html>

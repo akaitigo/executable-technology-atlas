@@ -1,0 +1,24 @@
+{
+  "subject": "software-maintenance-migration",
+  "scope": "有限1教材: standalone SQLite table v1/v2; production zero-downtime and other databases not executed",
+  "areas": [
+    {"concept": "schema変更・段階copy・atomic切替", "status": "今回限定実測", "question": "copy後とDROP後の失敗で旧schema/rowsが戻るか", "source": "sqlite-alter"},
+    {"concept": "data mapping・情報保存・逆変換", "status": "固定dataのみ実測", "question": "1.005を100centにした後、原値を逆変換で取り戻せるか", "source": "decimal"},
+    {"concept": "preflight・unknown値・version/schema guard", "status": "今回限定実測", "question": "未知state、非canonical値、int64超過を変換前に拒否できるか", "source": "sqlite-version"},
+    {"concept": "transaction rollback と rollback migration", "status": "今回限定実測", "question": "未commitの取消とcommit後の逆移行の成功条件は同じか", "source": "sqlite-transaction"},
+    {"concept": "expand/contract・old/new writer・rolling deploy", "status": "未教材", "question": "旧clientを止めず新schemaへ移す読み書き順序とcutover条件は何か", "source": "parallel-change"},
+    {"concept": "backup/restore・災害復旧・RPO/RTO", "status": "閉じたfixture copyのみ; 未教材", "question": "migrationを戻せないとき、どの時点のbackupへどれだけの時間で復旧できるか", "source": "sqlite-backup"},
+    {"concept": "foreign key・view・trigger・index・query性能", "status": "依存schemaは拒否; 未教材", "question": "schema周辺の参照とquery計画を移行中にどう維持するか", "source": "sqlite-alter"},
+    {"concept": "legacy characterization・refactoring・回帰局所化", "status": "未教材", "question": "未知の旧挙動をtestへ残し、どの変更で壊れたかを特定できるか", "source": "git-bisect"},
+    {"concept": "API互換性・deprecation・依存更新", "status": "未教材", "question": "data schemaの変更と公開APIの互換性を別々にどう判定するか", "source": "semver"},
+    {"concept": "長時間backfill・再開・checkpoint・idempotency", "status": "一transactionの小dataのみ; 未教材", "question": "途中中断した大data移行を重複や欠落なしに再開できるか", "source": "parallel-change"},
+    {"concept": "可観測性・audit・承認・運用手順", "status": "raw traceとhashのみ; 未教材", "question": "cutover前後の指標、rollback期限、担当者の判断を何で支えるか", "source": "sqlite-backup"},
+    {"concept": "他DB/ORM/migration tool・cross-platform差", "status": "未教材", "question": "DDL transaction、lock、型変換の差で同じmigration planはどう変わるか", "source": "sqlite-transaction"}
+  ],
+  "next_experiments": [
+    {"id": "N1", "title": "old/new client と expand/contract", "experiment": "同じSQLiteで旧/new writerを別processから送り、列追加→backfill→二重読取→cutover→旧列廃止を小段階に分ける。互換性とlock停止時間を実測し、今回の一transaction切替と比較する。本番zero downtimeは別環境で検証する。", "source": ["parallel-change", "sqlite-alter", "semver"]},
+    {"id": "N2", "title": "backup復旧と不可逆判断", "experiment": "活性DBのBackup APIを使い、lossy migration後に実restoreしてrow hashと復旧時間を測る。逆移行・未commit rollback・backup restoreの3経路を区別し、RPO/RTOとrollback期限を決める。", "source": ["sqlite-backup", "sqlite-transaction", "decimal"]},
+    {"id": "N3", "title": "大data・依存schema・再開", "experiment": "FK/view/trigger/indexを一つずつ追加し、公式の移行手順と再作成/検査を追う。次にbatch backfillを中断・再開し、手作り期待集合で欠落/重複を検査。負荷/lock時間/再開位置を記録する。", "source": ["sqlite-alter", "parallel-change"]},
+    {"id": "N4", "title": "legacy挙動と互換性の維持", "experiment": "旧clientの金額表記や未知stateをcharacterization testへ固定し、schema/API互換性を分けて評価する。小さな履歴でregressionをbisectし、別DB/ORMではDDL transactionと型の差を独立追試して保守計画へ反映する。", "source": ["git-bisect", "semver", "sqlite-transaction"]}
+  ]
+}

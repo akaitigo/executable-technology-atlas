@@ -1,0 +1,123 @@
+Browser tab: 13, Title: "Short / Long burn — ANDの境界", URL: "http://127.0.0.1:65461/".
+0 AXWebArea Short / Long burn — ANDの境界, URL: 127.0.0.1:65461/
+	1 heading 短窓が燃えたら、すぐalert？, Value: 1
+		2 text 短窓が燃えたら、すぐalert？
+	3 text 前提：失敗数／対象数、半開区間、Fraction。toy SLO=9/10、burn=(失敗／対象)/(1/10)。独自閾値2、本番pagerの提案ではありません。
+	4 container
+		5 heading 1 · 条件を選び、予測する, Value: 2
+			6 text 1 · 条件を選び、予測する
+		7 text ケース
+		8 pop up button (collapsed, settable) Description: ケース, Value: spike, ID: case, Secondary Actions: Expand
+			9 menu
+				10 normal
+				11 (selected) spike
+				12 sustained
+				13 recovered
+				14 boundaries
+				15 short-empty
+				16 all-outside
+				17 empty
+				18 unknown-status
+				19 duplicate-id
+				20 boolean-tick
+		21 text 判定方法
+		22 pop up button (collapsed, settable) Description: 判定方法, Value: 短窓だけ（意図的な誤比較）, ID: method, Secondary Actions: Expand
+			23 menu
+				24 両burn >= 2 のAND
+				25 (selected) 短窓だけ（意図的な誤比較）
+		26 text long [0,100) / short [90,100)。tickは合成値で、event IDは識別子です。
+		81 text 原入力 100 events / bad IDs: 96, 97, 98, 99
+		28 text short burn予測
+		29 pop up button (collapsed, settable) Description: short burn予測, Value: 4, ID: shortguess, Secondary Actions: Expand
+			30 menu
+				31 未選択
+				32 0
+				33 2
+				34 (selected) 4
+				35 10
+				36 未定義
+		37 text long burn予測
+		38 pop up button (collapsed, settable) Description: long burn予測, Value: 2/5, ID: longguess, Secondary Actions: Expand
+			39 menu
+				40 未選択
+				41 0
+				42 (selected) 2/5
+				43 2
+				44 10
+				45 未定義
+		46 text 判定予測
+		47 pop up button (collapsed, settable) Description: 判定予測, Value: true, ID: guess, Secondary Actions: Expand
+			48 menu
+				49 未選択
+				50 (selected) true
+				51 false
+				52 入力／分母拒否
+		53 button 観測と比較, ID: compare
+		82 text 予測と一致 — short=4、long=2/5、判定=true
+	55 container
+		56 heading 2 · 原入力 → 窓集合 → burn → 判定, Value: 2
+			57 text 2 · 原入力 → 窓集合 → burn → 判定
+		83 container results
+			84 text short burn
+			85 text 4
+			86 text long burn
+			87 text 2/5
+			88 text 選択した判定
+			89 text true
+			90 text worker exit=0
+			91 table
+				92 row
+					93 cell
+						94 text 窓
+					95 cell
+						96 text 範囲／分母
+					97 cell
+						98 text 失敗数／失敗ID集合
+					99 cell
+						100 text burn / >=2
+				101 container windows
+					102 row
+						103 cell
+							104 text long
+						105 cell
+							106 text [0,100) / 100
+						107 cell
+							108 text 4 / [96,97,98,99]
+						109 cell
+							110 text 2/5 / false
+					111 row
+						112 cell
+							113 text short
+						114 cell
+							115 text [90,100) / 10
+						116 cell
+							117 text 4 / [96,97,98,99]
+						118 cell
+							119 text 4 / true
+			120 text AND=false / 短窓だけの誤比較=true
+			121 button (collapsed) command / exit / input / raw窓集合, Secondary Actions: Expand
+				122 text command / exit / input / raw窓集合
+	59 container
+		60 heading 3 · 原典と実装, Value: 2
+			61 text 3 · 原典と実装
+		62 text 実行UTC 2026-10-05T11:56:19.891092+00:00 · Python 3.9.6 · Darwin · fractions.Fraction
+		63 link Description: 再現と契約, Value: 127.0.0.1:65461/README.md
+		64 text  · 
+		65 link Description: 事前の手書き期待値, Value: 127.0.0.1:65461/expected.json
+		66 text  · 
+		67 link Description: Fraction実装, Value: 127.0.0.1:65461/worker.py
+		68 text  · 
+		69 link Description: 観測runner, Value: 127.0.0.1:65461/runner.py
+		70 text  · 
+		71 link Description: 独立ID集合oracle, Value: 127.0.0.1:65461/checker.py
+		72 text  · 
+		73 link Description: 到達範囲, Value: 127.0.0.1:65461/COVERAGE.md
+		74 text  · 
+		75 link Description: Google SRE §6 Multiwindow, Multi-Burn-Rate Alerts, Value: sre.google/workbook/alerting-on-slos/
+	76 container
+		77 heading 4 · 答え → 実務判断, Value: 2
+			78 text 4 · 答え → 実務判断
+		123 text short=4でもlong=2/5。AND=false、短窓だけはtrue。このtoy条件では突出を短窓だけで拾う誤比較です。
+		80 text この教材は合成eventの数学と仮policyだけを扱います。分母0や型不正をfalseへ変換しません。除外／欠測補正、実clock、production incident、stream framework、pager運用は未検証です。 次の実験：低trafficと単発失敗、イベント遅着／欠測、閾値とreset time。元SRE入口のdenominator教材から、重なる2窓のANDへ進みます。
+
+The focused UI element is 53 button 観測と比較, ID: compare

@@ -1,0 +1,14 @@
+{
+ "initial":[["a",100],["b",200],["c",300]],
+ "results":{
+  "replace":[{"exit":0,"rows":[["a",110],["d",400]],"sum":510}],
+  "append":[{"exit":0,"rows":[["a",100],["a",110],["b",200],["c",300],["d",400]],"sum":1110}],
+  "keyed":[{"exit":0,"rows":[["a",110],["c",300],["d",400]],"sum":810},{"exit":0,"rows":[["a",110],["c",300],["d",400]],"sum":810}],
+  "unknown-delete":[{"exit":2,"reason":"unknown-delete:z","rows":[["a",100],["b",200],["c",300]],"sum":600}],
+  "duplicate-id":[{"exit":2,"reason":"duplicate-event-id:e1","rows":[["a",100],["b",200],["c",300]],"sum":600}],
+  "id-collision":[{"exit":0,"rows":[["a",110],["c",300],["d",400]],"sum":810},{"exit":2,"reason":"event-id-payload-conflict:e1","rows":[["a",110],["c",300],["d",400]],"sum":810}],
+  "same-key-order":[{"exit":0,"rows":[["a",120],["c",300],["d",400]],"sum":820}],
+  "same-key-reverse":[{"exit":0,"rows":[["a",110],["c",300],["d",400]],"sum":810}]
+ },
+ "policy":{"eventId":"unique event identity + payload binding, not key/version/order","sourceVersion":"recorded metadata; NOT freshness guard","order":"provided-list; last update for same key wins","unknownDelete":"whole-batch rollback","duplicateWithinBatch":"whole-batch refusal"}
+}

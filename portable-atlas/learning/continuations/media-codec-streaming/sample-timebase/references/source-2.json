@@ -1,0 +1,3223 @@
+{
+  "project": "Atlas",
+  "lesson": "media-sample-timebase",
+  "kind": "targeted-viewport-and-P3-supplement",
+  "started_at": "2026-10-06T19:10:35.192Z",
+  "passed": true,
+  "budget_ms": 35000,
+  "full_report": {
+    "path": "ATLAS_WORKSPACE/independent-learning/browser-qa/nine-lessons-2026-10-06/session-2026-10-06T185545132Z/media-sample-timebase-2026-10-06T190131439Z/report.json",
+    "sha256": "84c49f424af9af0025070035fa04f01ecc95ae3c941529cfd39a423275912138"
+  },
+  "source_before": {
+    "index.html": "ec4e0b998513a9de823e08b882b733a1b40a9e6d165e90cd22a7f0aeb2cb7dad",
+    "reader.css": "364ed072788af6086d01fe002344934102316c4e41e8d9cababbf4fc909042b0",
+    "reader-app.js": "f4987af6fb60de8ec1c188514e04a277aa7a0da6f5eb24e1cff801d4e3db0024",
+    "reader-state.js": "47eade8b11aa1232d58a24f9d80a9324873cf8189487b936a98d9660dc22eef0",
+    "reader-data.js": "ee9a33a3e4ba091130834aefd4b560d65bb9286bdbfb3dd4775b6844875462b5"
+  },
+  "source_after": {
+    "index.html": "ec4e0b998513a9de823e08b882b733a1b40a9e6d165e90cd22a7f0aeb2cb7dad",
+    "reader.css": "364ed072788af6086d01fe002344934102316c4e41e8d9cababbf4fc909042b0",
+    "reader-app.js": "f4987af6fb60de8ec1c188514e04a277aa7a0da6f5eb24e1cff801d4e3db0024",
+    "reader-state.js": "47eade8b11aa1232d58a24f9d80a9324873cf8189487b936a98d9660dc22eef0",
+    "reader-data.js": "ee9a33a3e4ba091130834aefd4b560d65bb9286bdbfb3dd4775b6844875462b5"
+  },
+  "checks": [
+    {
+      "name": "entry-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "prediction-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "result-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "entry-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "prediction-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "result-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "error-chart-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "primary-hover-computed-style",
+      "passed": true,
+      "detail": {
+        "hovered": true,
+        "disabled": false,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(23, 74, 64)",
+        "text": "保存した計算を開く",
+        "contrast_ratio": 10.047959823855013
+      }
+    },
+    {
+      "name": "primary-hover-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "details-physically-opened",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "open-details-cleared-by-prediction",
+      "passed": true,
+      "detail": true
+    }
+  ],
+  "dom": [
+    {
+      "label": "entry-1280",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "provenance": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "prediction-1280",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 3 区間。時計差の仮定 0 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "provenance": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 591
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "loaded-1280",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 3063
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "result-1280",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1326
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "entry-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "provenance": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "prediction-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "provenance": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 838
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "loaded-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 3450
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "result-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1684
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "error-chart-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1724
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "primary-hover-390",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 996
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "details-opened",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n\n保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。\n\n前の境界\n次の境界\n末尾へ\n表示する境界 300 / 300\nサンプル位置 N\n\n307200 sample\n\n丸め前の名目時刻\n\n6400.000000 ms\n\n絶対位置から換算 A\n\n6400 ms\n\n区間を丸めて加算 C\n\n6300 ms\n\n仮定した基準時計 R\n\n6399.360064 ms\n\n時計差 t − R\n\n0.639936 ms\n\nずれの原因を分ける\n\n青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。\n\nms\n12.72\n-112.08\n境界0\n境界300\n\nこの境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。\n\n代表的な境界\n境界\t位置 N\t名目時刻\t絶対位置\t区間の加算\n0\t0\t0\t0\t0\n1\t1024\t64/3\t21\t21\n2\t2048\t128/3\t43\t42\n3\t3072\t64\t64\t63\n150\t153600\t3200\t3200\t3150\n299\t306176\t19136/3\t6379\t6279\n300\t307200\t6400\t6400\t6300\n選んだ境界の正確な保存値\n{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。前の境界次の境界末尾へ表示する境界 300 / 300サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 msずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。ms12.72-112.08境界0境界300この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。代表的な境界境界位置 N名目時刻絶対位置区間の加算000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {
+            "caseId": "fast-clock"
+          }
+        },
+        "provenance": {
+          "text": "保存計算 2026-10-06T17:58:38.627861+00:00 / Python 3.9.6。小数表示は6桁、正確な分数は詳細で確認できます。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "300 / 300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "サンプル位置 N307200 sample丸め前の名目時刻6400.000000 ms絶対位置から換算 A6400 ms区間を丸めて加算 C6300 ms仮定した基準時計 R6399.360064 ms時計差 t − R0.639936 ms",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "ms12.72-112.08境界0境界300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "この境界の C − R = 丸め誤差 -100.000000 + 時計差 0.639936 = -99.360064 ms。絶対位置の丸め誤差 A − t は 0.000000 ms、時計差を含む A − R は 0.639936 ms。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "000001102464/3212122048128/343423307264646315015360032003200315029930617619136/363796279300307200640064006300",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}",
+          "visible": true,
+          "disabled": null,
+          "open": true,
+          "data": {}
+        },
+        "record-json": {
+          "text": "{\n  \"boundary_index\": 300,\n  \"sample_position\": 307200,\n  \"nominal_ms\": \"6400\",\n  \"reference_ms\": \"64000000/10001\",\n  \"absolute_rounded_ms\": 6400,\n  \"interval_sum_ms\": 6300,\n  \"absolute_round_error_ms\": \"0\",\n  \"interval_round_error_ms\": \"-100\",\n  \"clock_error_ms\": \"6400/10001\",\n  \"absolute_total_error_ms\": \"6400/10001\",\n  \"interval_total_error_ms\": \"-993700/10001\"\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。末尾は A=6400 ms、C=6300 ms。C の丸め誤差 −100ms と、仮定の時計差 約+0.639936ms は別の原因です。相殺は時計補正の成功ではありません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 2709
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": [
+            [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "1",
+              "1024",
+              "64/3",
+              "21",
+              "21"
+            ],
+            [
+              "2",
+              "2048",
+              "128/3",
+              "43",
+              "42"
+            ],
+            [
+              "3",
+              "3072",
+              "64",
+              "64",
+              "63"
+            ],
+            [
+              "150",
+              "153600",
+              "3200",
+              "3200",
+              "3150"
+            ],
+            [
+              "299",
+              "306176",
+              "19136/3",
+              "6379",
+              "6279"
+            ],
+            [
+              "300",
+              "307200",
+              "6400",
+              "6400",
+              "6300"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    },
+    {
+      "label": "open-details-cleared-by-prediction",
+      "url": "http://127.0.0.1:57890/index.html",
+      "title": "Atlas｜サンプル時刻と二つのずれ",
+      "body_text": "Atlas / 音声・映像の時間\n\n丸めの積み重ねと、\n時計のずれを分ける。\n\n同じサンプル数でも、時刻への換算方法で差が生まれます。\n\n48,000 sample/s の有限な計算を読む教材です。実際のデバイス時計・音声・再生・RTP通信は測定していません。\n\n01 / 予想\n\n区間ごとに丸めても、同じ時刻になる？\n\nサンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。\n\n空・境界0だけ\n23サンプル\n24サンプル×2\n25サンプル\n48サンプル×3\n1024サンプル×3\n1024サンプル×300\n同300区間・時計+100ppm\n\n1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。\n\n末尾では、区間ごとの丸め加算は絶対位置からの換算より…\n 同じ時刻になる\n 大きい時刻になる\n 小さい時刻になる\n保存した計算を開く\nリセット\n\n02 / 操作と対照\n\n原点から換算するか、丸めた区間を足すか\n記録を読めないときの比較\n\n03 / 原典・実装\n\nサンプル時刻は、到着した時刻とは別\n\nRFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。\n\n原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合\n\n04 / 答え合わせ\n\n小さく見える差が、補正の成功とは限らない\n末尾の予想と照合\n\n05 / 実務判断と限界\n\n丸めを直しても、時計の速さは別に残る\n\n絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。\n\n到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。\n\n使い方と再現・範囲と次の問い・案内の手順・現在の確認状況\n\nAtlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。",
+      "ids": {
+        "prediction": {
+          "text": "01 / 予想区間ごとに丸めても、同じ時刻になる？サンプルは音の値を数える単位。mono では1サンプルが1フレームです。サンプル0の境界を0msとし、位置 N の正確な名目時刻は N / 48 ms。整数msへ丸めるときは、ちょうど0.5を上へ丸めます。空・境界0だけ23サンプル24サンプル×225サンプル48サンプル×31024サンプル×31024サンプル×300同300区間・時計+100ppm1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。末尾では、区間ごとの丸め加算は絶対位置からの換算より… 同じ時刻になる 大きい時刻になる 小さい時刻になる保存した計算を開くリセット",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "condition": {
+          "text": "1区間 1024 サンプル × 300 区間。時計差の仮定 100 ppm。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "compare": {
+          "text": "保存した計算を開く",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "input-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "comparison": {
+          "text": "02 / 操作と対照原点から換算するか、丸めた区間を足すか前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-error": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "observed": {
+          "text": "前の境界次の境界末尾へ表示する境界 ずれの原因を分ける青は絶対位置から換算した丸め誤差、橙は区間ごとに丸めた累積誤差、紫は仮定した時計の速さの差です。すべてmsで表示します。代表的な境界境界位置 N名目時刻絶対位置区間の加算選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "provenance": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "previous": {
+          "text": "前の境界",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "next": {
+          "text": "次の境界",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "last": {
+          "text": "末尾へ",
+          "visible": false,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "position-label": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "position": {
+          "text": "",
+          "visible": false,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "values": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "error-chart": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "decomposition": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "checkpoints": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "raw": {
+          "text": "選んだ境界の正確な保存値",
+          "visible": false,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "record-json": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "integrity": {
+          "text": "記録を読めないときの比較保存記録の欠落・改変・別条件を拒否し、前の計算結果や答えを消します。デバイスの故障を起こす操作ではありません。正常な記録欠落値の改変別の条件",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "sources": {
+          "text": "03 / 原典・実装サンプル時刻は、到着した時刻とは別RFC3550 §5.1 はサンプリング時点と時計周波数を説明しています。ここで選んだ原点0、整数ms、丸め方、+100ppm は教材の比較条件で、RFCの要求ではありません。原典と既存教材・規約・実装前の手表・整数による実装・Fractionによる別照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-section": {
+          "text": "04 / 答え合わせ小さく見える差が、補正の成功とは限らない末尾の予想と照合",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "末尾の予想と照合",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "limits": {
+          "text": "05 / 実務判断と限界丸めを直しても、時計の速さは別に残る絶対位置から換算すると、その丸め誤差は各境界で0.5ms以内です。しかし、基準時計との比較には別の時計差が加わります。+100ppm はここでは仮定値で、時計の初期ずれは0としています。到着遅延、音質、実再生、RTPの時刻wrap、RTCP同期、可変レート、負の時計差、補正方式は未検証です。使い方と再現・範囲と次の問い・案内の手順・現在の確認状況",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 821
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "checkpoints",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [],
+      "footer": "Atlas｜サンプル境界の保存計算を読み、丸め誤差と仮定の時計差を区別する。"
+    }
+  ],
+  "captures": [
+    {
+      "file": "entry-1280.png",
+      "sha256": "04fc25969f2c92c6b77673062d1ce9a7f860597fed2f7c2eb953d70fb5e1e8ed",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "file": "prediction-1280.png",
+      "sha256": "ef3786533d5aa5aee607c1c6267dd1a6cb95f11477158ba514c0904b9fe8a951",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 591
+      }
+    },
+    {
+      "file": "result-1280.png",
+      "sha256": "7c4a7a57c030d188c5fce276029d20abf116438d0f1cfdc41109a1aa6fee193f",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1326
+      }
+    },
+    {
+      "file": "entry-390.png",
+      "sha256": "b889697726cf42d0c4b06cdfdbaf8d842903f24638190ddc87708dc0d1ee8c9a",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "file": "prediction-390.png",
+      "sha256": "47cfa95fdf0fd8d3b85fb120694e9ed84a9f7c2ed1b300a6b5fc72d9f804703f",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 838
+      }
+    },
+    {
+      "file": "result-390.png",
+      "sha256": "6595b1691d51060d175ecc82580fe35210f6e122e99de413cf1cf85bc4c9d65b",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1684
+      }
+    },
+    {
+      "file": "error-chart-390.png",
+      "sha256": "b8d44d3a47ca0399a6a2c7d7164497076efe813e2bf02abdaca9745d77681d18",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1724
+      }
+    },
+    {
+      "file": "primary-hover-390.png",
+      "sha256": "67dac4b95ca83f915b06a260572f37adfd0d111d04c3f3fd5b70eca7ff5ab6a1",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 996
+      }
+    }
+  ],
+  "pointer_actions": [
+    {
+      "kind": "mouse-click",
+      "selector": "#reset",
+      "completed": true,
+      "x": 374,
+      "y": 400.2109375
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "[data-case=fast-clock]",
+      "completed": true,
+      "x": 441.5625,
+      "y": 207.4296875
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=prediction][value=earlier]",
+      "completed": true,
+      "x": 168.5,
+      "y": 457.515625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#compare",
+      "completed": true,
+      "x": 227,
+      "y": 543.2109375
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#answer-button",
+      "completed": true,
+      "x": 219,
+      "y": 399.7890625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#reset",
+      "completed": true,
+      "x": 254,
+      "y": 69.8046875
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "[data-case=fast-clock]",
+      "completed": true,
+      "x": 285.75,
+      "y": 152.90625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=prediction][value=earlier]",
+      "completed": true,
+      "x": 48.5,
+      "y": 472.109375
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#compare",
+      "completed": true,
+      "x": 107,
+      "y": 557.8046875
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#answer-button",
+      "completed": true,
+      "x": 99,
+      "y": 399.5078125
+    },
+    {
+      "kind": "mouse-hover",
+      "selector": "#compare",
+      "x": 107,
+      "y": 399.8046875,
+      "completed": true
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#raw > summary",
+      "completed": true,
+      "x": 195,
+      "y": 400.0078125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=\"prediction\"][value=\"same\"]",
+      "completed": true,
+      "x": 48.5,
+      "y": 399.515625
+    }
+  ],
+  "keyboard_actions": [],
+  "api_actions": [
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:57890/index.html"
+    },
+    {
+      "kind": "viewport",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "kind": "scrollTo",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "fieldset"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "#values"
+    },
+    {
+      "kind": "viewport",
+      "width": 390,
+      "height": 800
+    },
+    {
+      "kind": "scrollTo",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "fieldset"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "#values"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "#error-chart"
+    }
+  ],
+  "errors": [],
+  "new_browser": 0,
+  "new_context": 0,
+  "new_tab": 0,
+  "new_server": 0,
+  "new_target_execution": 0,
+  "cleanup": {
+    "routes_installed": 0,
+    "routes_removed": true,
+    "viewport_restored": true,
+    "page_left_open": true
+  },
+  "limits": [
+    "Full condition comparison is covered by the linked first report, not rerun here.",
+    "Viewport captures require separate human visual review."
+  ],
+  "previous_checker_sha256": "539fa8d00a95fd16c2e31291526556b42c92eab543365b4b688db3349a2b3790",
+  "checker_sha256": "6f6bf1d85bf1a5a70ea87901ecd46aa19bc1d1f331c9aff861ff200e0dbbc87b",
+  "sources_unchanged": true,
+  "finished_at": "2026-10-06T19:10:35.825Z",
+  "elapsed_ms": 633
+}

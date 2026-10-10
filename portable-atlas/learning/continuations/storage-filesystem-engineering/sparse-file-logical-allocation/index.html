@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas｜疎なファイルの論理長と割当量</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf2f6;color:#182639;font:17px/1.7 system-ui,-apple-system,sans-serif}main{max-width:1060px;margin:auto;padding:32px 20px 56px}h1{font-size:clamp(27px,5vw,40px);line-height:1.35;margin:8px 0 16px}h2{font-size:22px;line-height:1.4;margin-top:0}.eyebrow{font-weight:700;color:#38627f;letter-spacing:.08em}.lead{max-width:850px}.badge{display:inline-block;background:#d9e7f0;border-radius:20px;padding:3px 12px;font-size:14px}.card{background:white;border:1px solid #d3dee7;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 3px 10px #25405b08}label{display:block;font-weight:600}select,textarea,button{font:inherit}select,textarea{width:100%;padding:10px;border:1px solid #7289a0;border-radius:8px;background:white;color:inherit}textarea{min-height:90px;resize:vertical;margin:7px 0 12px}button{cursor:pointer;background:#234f70;color:white;border:0;border-radius:8px;padding:10px 18px}button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #d18100;outline-offset:3px}.muted{color:#4d6070;font-size:15px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:15px;background:#f1f5f9;border-radius:8px}.metric strong{display:block;font-size:27px;color:#174d70;overflow-wrap:anywhere}.metric span{font-size:14px}.track{display:flex;min-height:58px;gap:5px;margin:15px 0}.zeros{background:#bddaf6;flex:1;border-radius:6px;padding:12px}.last{background:#f7ce76;border-radius:6px;padding:12px;min-width:54px;text-align:center}.empty{border:2px dashed #879bab;padding:12px;width:100%;border-radius:6px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;padding:16px;background:#102436;color:#e3eef7;border-radius:8px}code{overflow-wrap:anywhere}a{color:#155d8f}table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:10px 6px;border-bottom:1px solid #d4dfe7;vertical-align:top;overflow-wrap:anywhere}.table-wrap{overflow-x:auto}details{margin-top:18px}summary{cursor:pointer}#answer[hidden]{display:none}#status{min-height:1.7em}.notice{border-left:4px solid #d28a16;padding-left:15px}.links{display:flex;flex-wrap:wrap;gap:8px 20px}@media(max-width:650px){main{padding:20px 12px}.card{padding:18px}.stats{grid-template-columns:1fr}.metric strong{font-size:24px}.zeros{font-size:14px}}
+button:disabled{cursor:default;opacity:.45}
+</style>
+<main>
+  <header>
+    <div class="eyebrow">Atlas ／ ストレージ・ファイルシステム工学</div>
+    <h1>末尾に1バイト。<br>どこまで読める？</h1>
+    <p class="lead">疎なファイル（sparse file）の位置・論理長・割当量を、Macの小さな実験で分けて考えます。</p>
+    <span class="badge">保存した実測値を読む教材</span>
+    <p class="muted" id="environment">観測情報を読み込み中</p>
+  </header>
+  <section class="card">
+    <h2>1. 操作を選んで、先に予想する</h2>
+    <label for="stage">どの操作の直後を見るか</label>
+    <select id="stage">
+      <option value="seek_only">書込みを省略：位置65,535へseekするだけ</option>
+      <option value="sparse_written">疎な書込み：位置65,535でXを1バイト書く</option>
+      <option value="dense_written">対照：ゼロ65,535個とXを先頭から全て書く</option>
+    </select>
+    <p><button id="previous-stage" type="button" disabled>前の条件</button> <button id="next-stage" type="button">次の条件</button></p>
+    <p class="muted">Atlas の 3 条件は、上の選択欄でも前後のボタンでも切り替えられます。端の条件では、その先へ進むボタンが無効になります。</p>
+    <p id="prompt">まだ書いていないファイルの長さと、先頭の読取り結果を予想してください。</p>
+    <label for="prediction">自分の予想と理由</label>
+    <textarea id="prediction" placeholder="例：seekだけで長さが変わるのか。先頭を読むと何が返るのか。"></textarea>
+    <button id="reveal" type="button" disabled>観測値を見る</button>
+    <button id="reset" type="button">最初からやり直す</button>
+    <p id="status" class="muted" aria-live="polite">予想を書いてください。条件・予想を変えると古い結果と答えを消します。</p>
+    <p id="data-error" class="notice" role="alert" hidden></p>
+  </section>
+  <section class="card" id="answer" hidden>
+    <h2>2. 観測値と比べる</h2>
+    <div class="stats">
+      <div class="metric"><span>論理長 st_size</span><strong id="logical"></strong></div>
+      <div class="metric"><span>通常の読書き位置</span><strong id="offset"></strong></div>
+      <div class="metric"><span>OS報告の割当量 st_blocks × 512</span><strong id="allocation"></strong></div>
+    </div>
+    <div class="track" id="track"></div>
+    <p class="muted">模式図です。幅はバイト数に比例せず、物理配置も示していません。</p>
+    <p id="explanation"></p>
+    <p id="read-summary"></p>
+    <h2>3. 正常な対照と比べる</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>操作</th><th>論理長</th><th>読める内容</th><th>OS報告の割当量</th></tr></thead>
+      <tbody id="comparison"></tbody>
+    </table></div>
+    <p class="notice">割当量は今回の観測値です。別の環境で両方式が同じ値でも正しい結果です。物理的な予約・性能・電源断への耐久性は、この実験から判断できません。</p>
+    <details id="raw-details"><summary>この観測の生データを確認する</summary><pre id="raw"></pre></details>
+  </section>
+  <section class="card">
+    <h2>4. 原典と実装をたどる</h2>
+    <p>seekが変えるもの、書込みが変えるものを分けて説明してみてください。<code>b'\x00'</code>はゼロの1バイト、<code>b''</code>は空の結果です。</p>
+    <div class="links"><a href="README.md">学習手順と答え</a><a href="experiment.py">実験コード</a><a href="expected.json">事前の固定期待値</a><a href="verify.py">独立した検証器</a><a href="observations/run.json">保存観測</a><a href="file-layout.svg">全体の図</a></div>
+    <p><a href="https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/lseek.2.html">Apple：位置を移してから書く</a> ／ <a href="https://docs.python.org/3/library/os.html#os.pread">Python：位置を指定して読む</a> ／ <a href="https://docs.python.org/3/library/os.html#os.stat_result.st_blocks">Python：割当ブロック数</a></p>
+    <p>この画面では新しいファイル実験を実行しません。自分のMacでの再現はREADMEのコマンドを使います。</p>
+    <p class="muted"><a href="COVERAGE.md">既存計画との対応・残課題</a> ／ <a href="SKILL.md">学習用Skill</a> ／ <a href="observations/status.json">保存した検査・受入の状態</a><br>初回のブラウザー確認5項目・4画像は<a href="../browser-qa/run-2026-10-06T022404940Z/report.json">初回の実行記録</a>と<a href="../browser-qa/visual-review.json">初回の目視記録</a>へ。初回画像は過去版です。前後ボタンを加えた現画面の確認は<a href="browser-qa/button-revision-20261006T075200Z/README.md">今回の変更記録</a>に分けて残します。図は物理配置を示しません。Atlasへの統合は未完了です。</p>
+  </section>
+  <section class="card">
+    <h2>5. 予想と答えを照合する</h2>
+    <button id="explain-button" type="button" disabled>観測から答えを確認する</button>
+    <div id="interpretation" hidden><p>自分の予想：<span id="prediction-copy"></span></p><p id="lesson-answer"></p></div>
+    <p class="notice">同じ内容でも割当量が等しいとは限りません。違いが出る保証もありません。必要な容量・性能・耐久性の判断には、別の条件と検証が必要です。</p>
+  </section>
+  <noscript><p class="notice">この画面の切替にはJavaScriptが必要です。READMEと図はJavaScriptなしで読めます。</p></noscript>
+</main>
+<script src="observations/data.js"></script>
+<script src="lesson.js"></script>
+</html>

@@ -1,0 +1,717 @@
+{
+  "tabId": "23",
+  "conditions": [
+    {
+      "case": "memory-overhead",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "両resourceのrequest＋overheadを満たすnodeがなくPending。Pendingは正常な配置結果で、実行失敗ではない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "nodeArequest使用 CPU 2/4 · memory 3/4 / remaining 2/1nodeBrequest使用 CPU 0/4 · memory 0/2 / remaining 4/2",
+        "rows": 2,
+        "status": "OBSERVED / model exit 0 / audit exit 0",
+        "summary": "Bound 1 / Pending 1 / PENDING / 容量内 true / 全列挙maxBound 1"
+      }
+    },
+    {
+      "case": "ignore-memory-fault",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"ignore-memory\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "故障版はmemory gateを無視してBoundと報告。nodeA memory6>4なので容量違反。Bound自己報告を成功扱いしない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "nodeArequest使用 CPU 4/4 · memory 6/4 / remaining 0/-2nodeBrequest使用 CPU 0/4 · memory 0/2 / remaining 4/2",
+        "rows": 2,
+        "status": "OBSERVED / model exit 0 / audit exit 0",
+        "summary": "Bound 2 / Pending 0 / BOUND / 容量内 false / 全列挙maxBound 1"
+      }
+    },
+    {
+      "case": "no-overhead",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "この有限入力は両resourceの容量内でBound。Running/Ready、usage/limits/OOMや可用性は証明しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "nodeArequest使用 CPU 4/4 · memory 4/4 / remaining 0/0nodeBrequest使用 CPU 0/4 · memory 0/2 / remaining 4/2",
+        "rows": 2,
+        "status": "OBSERVED / model exit 0 / audit exit 0",
+        "summary": "Bound 2 / Pending 0 / BOUND / 容量内 true / 全列挙maxBound 2"
+      }
+    },
+    {
+      "case": "cpu-limited",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 3,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 3,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p3\",\n      \"cpu\": 3,\n      \"memory\": 1\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 1,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "両resourceのrequest＋overheadを満たすnodeがなくPending。Pendingは正常な配置結果で、実行失敗ではない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "nodeArequest使用 CPU 4/4 · memory 1/4 / remaining 0/3nodeBrequest使用 CPU 4/4 · memory 1/2 / remaining 0/1",
+        "rows": 3,
+        "status": "OBSERVED / model exit 0 / audit exit 0",
+        "summary": "Bound 2 / Pending 1 / PENDING / 容量内 true / 全列挙maxBound 2"
+      }
+    },
+    {
+      "case": "greedy-trap",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 4\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "固定first-fitは容量内だが最大配置数に届かない。trapはp1 B/p2 Aで2件可能。順序配置と一般的な最適解を区別する。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "nodeArequest使用 CPU 2/4 · memory 1/4 / remaining 2/3nodeBrequest使用 CPU 0/4 · memory 0/2 / remaining 4/2",
+        "rows": 2,
+        "status": "OBSERVED / model exit 0 / audit exit 0",
+        "summary": "Bound 1 / Pending 1 / PENDING / 容量内 true / 全列挙maxBound 2"
+      }
+    },
+    {
+      "case": "refused-negative",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": -1,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-bool",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": true\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-fractional",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2.5,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-duplicate-id",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-topology",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    },\n    \"nodeC\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-overhead",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": -1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-schema",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "refused-nonfinite",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\"algorithm\": \"first-fit\", \"nodes\": {\"nodeA\": {\"cpu\": 4, \"memory\": 4}, \"nodeB\": {\"cpu\": 4, \"memory\": 2}}, \"pods\": [{\"id\": \"p1\", \"cpu\": Infinity, \"memory\": 2}, {\"id\": \"p2\", \"cpu\": 2, \"memory\": 2}], \"overhead\": {\"cpu\": 0, \"memory\": 1}}",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "契約検査で処理前に拒否。通常Pendingの答えとは分ける。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "REFUSED / model exit 2 / audit exit 0 / invalid bounded placement request",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    },
+    {
+      "case": "execution-failure",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\"algorithm\":",
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "実JSON decodeがexit3。旧正常answerは使わない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "nodes": "",
+        "rows": 0,
+        "status": "EXECUTION_FAILURE / model exit 3 / audit exit 0",
+        "summary": "placements・remainingは未観測。旧正常値や0で補完しない。"
+      }
+    }
+  ],
+  "predictions": [
+    {
+      "case": "memory-overhead",
+      "control": "Bound数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "0",
+          "1",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "memory-overhead",
+      "control": "Pending数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "1",
+          "0",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "memory-overhead",
+      "control": "容量内予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "false",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "1",
+          "1",
+          "false"
+        ]
+      }
+    },
+    {
+      "case": "ignore-memory-fault",
+      "control": "Bound数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"ignore-memory\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "0",
+          "0",
+          "false"
+        ]
+      }
+    },
+    {
+      "case": "ignore-memory-fault",
+      "control": "Pending数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"ignore-memory\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "2",
+          "1",
+          "false"
+        ]
+      }
+    },
+    {
+      "case": "ignore-memory-fault",
+      "control": "容量内予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "true",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"ignore-memory\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "2",
+          "0",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "greedy-trap",
+      "control": "Bound数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 4\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "0",
+          "1",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "greedy-trap",
+      "control": "Pending数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 4\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "1",
+          "0",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "greedy-trap",
+      "control": "容量内予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "false",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 1\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 4\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "1",
+          "1",
+          "false"
+        ]
+      }
+    },
+    {
+      "case": "refused-bool",
+      "control": "Bound数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": true\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "0",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "refused-bool",
+      "control": "Pending数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": true\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "0",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "refused-bool",
+      "control": "容量内予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "true",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": true\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "not-observed",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "Bound数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\"algorithm\":",
+        "rawOpen": false,
+        "values": [
+          "0",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "Pending数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "0",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\"algorithm\":",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "0",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "容量内予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "true",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\"algorithm\":",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "not-observed",
+          "true"
+        ]
+      }
+    }
+  ],
+  "editableInput": [
+    {
+      "case": "memory-overhead",
+      "comparisonThenAnswerOpened": true,
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "1",
+          "1",
+          "true"
+        ]
+      }
+    },
+    {
+      "case": "ignore-memory-fault",
+      "comparisonThenAnswerOpened": true,
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "2",
+          "0",
+          "false"
+        ]
+      }
+    },
+    {
+      "case": "refused-bool",
+      "comparisonThenAnswerOpened": true,
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "comparisonThenAnswerOpened": true,
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+        "rawOpen": false,
+        "values": [
+          "not-observed",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    }
+  ],
+  "editedActualSuccessAndFailure": true,
+  "delayedOldResponse": {
+    "delayMs": 2000,
+    "oldInput": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 1\n  }\n}",
+    "newInput": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+    "immediate": {
+      "answerOpen": false,
+      "empty": true,
+      "feedback": "入力変更：新しい入力と予想を保持。再比較してください。",
+      "hidden": true,
+      "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+      "rawOpen": false
+    },
+    "afterServerHTTP200": {
+      "answerOpen": false,
+      "empty": true,
+      "feedback": "入力変更：新しい入力と予想を保持。再比較してください。",
+      "hidden": true,
+      "input": "{\n  \"algorithm\": \"first-fit\",\n  \"nodes\": {\n    \"nodeA\": {\n      \"cpu\": 4,\n      \"memory\": 4\n    },\n    \"nodeB\": {\n      \"cpu\": 4,\n      \"memory\": 2\n    }\n  },\n  \"pods\": [\n    {\n      \"id\": \"p1\",\n      \"cpu\": 2,\n      \"memory\": 2\n    },\n    {\n      \"id\": \"p2\",\n      \"cpu\": 2,\n      \"memory\": 2\n    }\n  ],\n  \"overhead\": {\n    \"cpu\": 0,\n    \"memory\": 0\n  }\n}",
+      "rawOpen": false
+    },
+    "responseBodyNotCaptured": true
+  },
+  "references": [
+    {
+      "label": "元Container：slotsとcoverage",
+      "exactOriginalBody": true
+    },
+    {
+      "label": "capacity：2server待機容量",
+      "exactOriginalBody": true
+    },
+    {
+      "label": "FinOps：unitcostの分母",
+      "exactOriginalBody": true
+    }
+  ],
+  "logs": []
+}

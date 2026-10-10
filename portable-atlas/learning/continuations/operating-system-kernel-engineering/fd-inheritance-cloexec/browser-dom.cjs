@@ -1,0 +1,54 @@
+"use strict";
+const fs=require("node:fs"),path=require("node:path"),os=require("node:os"),crypto=require("node:crypto"),assert=require("node:assert/strict"),{spawn}=require("node:child_process");
+const {chromium}=require('playwright');
+const root=__dirname,out=path.join(root,"browser-qa","dom-run-"+new Date().toISOString().replaceAll(":","").replaceAll(".",""));fs.mkdirSync(out,{recursive:true});
+const profile=fs.mkdtempSync(path.join(out,"owned-profile-")),read=n=>fs.readFileSync(path.join(root,n)),hash=n=>crypto.createHash("sha256").update(read(n)).digest("hex");
+const manifest=JSON.parse(read("reader-data.json")),raw=JSON.parse(read(manifest.observation.path)),expected=JSON.parse(read("expected.json"));
+const names=["index.html","style.css","lesson.js","preview.py","reader-data.json","reference-map.json","references.html","expected.json","CONTRACT.md","experiment.py","probe.py","verify.py",manifest.observation.path,"browser-check.cjs","browser-dom.cjs"];
+const binding=()=>Object.fromEntries(names.map(n=>[n,hash(n)]));
+const snapshot=path.join(out,"tested-source");fs.mkdirSync(snapshot);for(const n of names){const f=path.join(snapshot,n);fs.mkdirSync(path.dirname(f),{recursive:true});fs.copyFileSync(path.join(root,n),f);}
+const report={project:"Atlas",started_at:new Date().toISOString(),new_os_experiment:false,real_browser:true,source_before:binding(),checks:[],dom_samples:[],pointer_actions:[],keyboard_actions:[],controlled_faults:[],captures:[],errors:[],browser_closed:false,own_profile_removed:false,own_server_closed:false,server_stdout:"",server_stderr:""};
+let context,server,origin,held=null,fault="pass",timer;
+const note=(label,detail=true)=>report.checks.push({label,passed:true,detail});
+async function pointer(page,s){const e=page.locator(s);await e.scrollIntoViewIfNeeded();const b=await e.boundingBox();assert.ok(b,s);const x=b.x+b.width/2,y=b.y+b.height/2;await page.mouse.move(x,y);await page.mouse.click(x,y);report.pointer_actions.push({selector:s,x,y,viewport:page.viewportSize()});}
+async function predict(page,text){await pointer(page,"#prediction");await page.keyboard.insertText(text);report.keyboard_actions.push({text});}
+async function cleared(page){assert.equal(await page.locator("#result").isVisible(),false);assert.equal(await page.locator("#answer").isVisible(),false);assert.equal(await page.locator("#answer-button").isDisabled(),true);assert.equal(await page.locator("#previous").isDisabled(),true);assert.equal(await page.locator("#next").isDisabled(),true);for(const id of ["raw","comparison","diagram","answer-text","prediction-copy"])assert.equal(await page.locator("#"+id).textContent(),"");assert.equal(await page.locator("#raw-details").getAttribute("open"),null);}
+const phaseNames=["親：fork の前","子：fork の後","子：exec の後","親：wait の後"];
+function fdText(row){if(!row)return "複製なし";if(row.status==="EBADF")return `FD ${row.fd}\n期待した拒否：EBADF\nerrno 9 / 読取なし`;return `FD ${row.fd} / 印 ${row.cloexec?"on":"off"}\n対象 ${row.identity.join(" / ")}\n"ATLAS-FD"`;}
+async function stageCheck(page,id,n){
+ const c=raw.cases.find(c=>c.id===id),phase=c.phases[n],fixed=expected.cases.find(c=>c.id===id);
+ assert.equal(await page.locator("#phase-title").innerText(),`${n+1} / 4　${phaseNames[n]}`);assert.equal(await page.locator("#previous").isDisabled(),n===0);assert.equal(await page.locator("#next").isDisabled(),n===3);assert.equal(await page.locator("#answer-button").isDisabled(),n!==3);
+ const rows=await page.locator("#comparison tr").evaluateAll(rs=>rs.map(r=>[...r.cells].map(c=>c.textContent)));
+ for(let i=0;i<4;i++){const p=c.phases[i],want=i>n?[phaseNames[i]+"\n未再生","未再生","未再生"]:[phaseNames[i]+"\nPID "+p.pid,fdText(p.fds.original),fdText(p.fds.duplicate)];assert.deepEqual(rows[i],want);}
+ const texts=await page.locator("#diagram text").allTextContents();assert.ok(texts.includes((n===0||n===3?"親":"子")+" PID "+phase.pid));const positions=[texts.indexOf("元 FD "+phase.fds.original.fd)];if(phase.fds.duplicate){positions.push(texts.indexOf("複製 FD "+phase.fds.duplicate.fd));assert.ok(positions[1]>positions[0]);}
+ const parsed=JSON.parse(await page.locator("#raw").textContent());if(n===3)assert.deepEqual(parsed.case,c);else{assert.deepEqual(parsed.phase,phase);assert.equal(Object.hasOwn(parsed,"case"),false);}
+ const stageExpect=n===2?fixed.exec:n===1?fixed.fork:fixed.parent;
+ for(const [label,state] of Object.entries(stageExpect))assert.equal(phase.fds[label].status,state);
+ assert.equal(await page.locator("#answer").isVisible(),false);
+}
+async function choose(page,id){await pointer(page,'input[value="'+id+'"]');await cleared(page);assert.equal(await page.locator("#prediction").inputValue(),"");assert.equal(await page.locator("#load").isDisabled(),true);}
+async function load(page,id){await pointer(page,"#load");await page.locator("#result").waitFor({state:"visible"});await stageCheck(page,id,0);}
+async function finish(page,id){for(let i=1;i<4;i++){await pointer(page,"#next");await stageCheck(page,id,i);}await pointer(page,"#answer-button");assert.equal(await page.locator("#answer").isVisible(),true);assert.match(await page.locator("#prediction-copy").textContent(),/あなたの予想：/);}
+async function shot(page,name,full=false){const file=path.join(out,name+".png");await page.screenshot({path:file,fullPage:full,animations:"disabled",timeout:8000});const b=fs.readFileSync(file);report.captures.push({path:path.relative(root,file),sha256:crypto.createHash("sha256").update(b).digest("hex"),viewport:page.viewportSize(),full_page:full,width:b.readUInt32BE(16),height:b.readUInt32BE(20)});}
+async function overflow(page){const d=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,outside:[...document.querySelectorAll("main,section,fieldset,textarea,button")].filter(e=>{const b=e.getBoundingClientRect();return e.getClientRects().length&&(b.left< -1||b.right>innerWidth+1);}).map(e=>e.id)}));assert.ok(d.width<=d.viewport&&d.outside.length===0,JSON.stringify(d));note(page.viewportSize().width+"px 横はみ出しなし",d);}
+async function tests(){
+ const priority=os.getPriority(0);if(priority<10)os.setPriority(0,10);report.nice=os.getPriority(0);assert.ok(report.nice>=10);
+ server=spawn("/Library/Developer/CommandLineTools/usr/bin/python3",["-B",path.join(root,"preview.py"),"--port","0"],{cwd:root,stdio:["ignore","pipe","pipe"]});server.stdout.on("data",b=>report.server_stdout+=b.toString());server.stderr.on("data",b=>report.server_stderr+=b.toString());
+ origin=await new Promise((resolve,reject)=>{let done=false;const t=setTimeout(()=>reject(new Error("preview startup timeout")),5000);server.on("error",reject);server.stdout.on("data",()=>{const m=report.server_stdout.match(/http:\/\/127\.0\.0\.1:\d+/);if(m&&!done){done=true;clearTimeout(t);resolve(m[0]);}});});report.owned_loopback_origin=origin;report.preview_pid=server.pid;
+ context=await chromium.launchPersistentContext(profile,{executablePath:path.join(os.homedir(),"Library/Caches/ms-playwright/chromium_headless_shell-1200/chrome-headless-shell-mac-arm64/chrome-headless-shell"),headless:true,chromiumSandbox:true,viewport:{width:1280,height:900},deviceScaleFactor:1,locale:"ja-JP",timezoneId:"Asia/Tokyo",timeout:12000,acceptDownloads:false,downloadsPath:path.join(out,"downloads"),artifactsDir:out});
+
+ await context.route("**/*", async route => route.request().url().startsWith(origin+"/") ? route.continue() : route.abort());
+ const page=context.pages()[0]||await context.newPage();page.setDefaultTimeout(3500);page.on("pageerror",e=>report.errors.push({kind:"pageerror",message:String(e)}));await page.goto(origin+"/",{waitUntil:"load",timeout:8000});
+ async function collect(id,stage){
+   await stageCheck(page,id,stage);
+   const actual=await page.evaluate(()=>{
+     const q=s=>document.querySelector(s), visible=e=>!!e&&getComputedStyle(e).display!=="none"&&getComputedStyle(e).visibility!=="hidden"&&e.getClientRects().length>0;
+     const rawText=q("#raw").textContent;
+     return {phase_title:q("#phase-title").textContent,comparison:[...document.querySelectorAll("#comparison tr")].map(r=>[...r.cells].map(c=>c.textContent)),diagram_text:[...document.querySelectorAll("#diagram text")].map(e=>e.textContent),diagram_svg:q("#diagram").innerHTML,raw_text:rawText,raw_parsed:JSON.parse(rawText),disabled:{previous:q("#previous").disabled,next:q("#next").disabled,answer:q("#answer-button").disabled},visible:{answer:visible(q("#answer")),result:visible(q("#result"))},raw_details_open:q("#raw-details").open,status:q("#status").textContent,selected_case:q('input[name="case"]:checked')?.value||q('input[type="radio"]:checked')?.value,prediction:q("#prediction").value};
+   });
+   assert.equal(actual.selected_case,id);report.dom_samples.push({case_id:id,stage,read_at:new Date().toISOString(),actual});note(id+" stage "+stage+" actual DOM saved");
+ }
+ for(const c of raw.cases){if(c.id!=="guarded_single")await choose(page,c.id);await predict(page,c.id+" の保存結果を予想して読む");await pointer(page,"#load");await page.locator("#result").waitFor({state:"visible"});await collect(c.id,0);for(let i=1;i<4;i++){await pointer(page,"#next");await collect(c.id,i);}}
+ assert.equal(report.dom_samples.length,16);assert.equal(report.errors.length,0);report.passed=true;
+}
+(async()=>{try{await Promise.race([tests(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error("45 second QA deadline")),45000);})]);}catch(e){report.passed=false;report.errors.push({kind:"test-failure",message:String(e.stack||e).replaceAll(os.homedir(),"~")});process.exitCode=1;}finally{clearTimeout(timer);if(held){try{await held.route.abort();}catch{}held=null;}if(context){try{await context.close();report.browser_closed=true;}catch(e){report.errors.push({kind:"browser-close",message:String(e)});process.exitCode=1;}}if(!context||report.browser_closed){fs.rmSync(profile,{recursive:true,force:true});report.own_profile_removed=true;}if(server){if(server.exitCode===null&&server.signalCode===null){server.kill("SIGINT");await new Promise(resolve=>{const t=setTimeout(()=>{server.kill("SIGKILL");resolve();},3000);server.once("exit",()=>{clearTimeout(t);resolve();});});}report.own_server_closed=server.exitCode!==null||server.signalCode!==null;}report.source_after=binding();report.sources_unchanged=JSON.stringify(report.source_before)===JSON.stringify(report.source_after);report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(out,"report.json"),JSON.stringify(report,null,2)+"\n");console.log(JSON.stringify({report:path.relative(root,path.join(out,"report.json")),passed:report.passed,checks:report.checks.length,dom_samples:report.dom_samples.length,pointer_actions:report.pointer_actions.length,keyboard_actions:report.keyboard_actions.length,captures:report.captures.length,browser_closed:report.browser_closed,own_profile_removed:report.own_profile_removed,own_server_closed:report.own_server_closed,errors:report.errors},null,2));}})();

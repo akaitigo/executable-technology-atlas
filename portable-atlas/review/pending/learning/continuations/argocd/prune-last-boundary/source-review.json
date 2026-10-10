@@ -1,0 +1,29 @@
+{
+  "product":"Argo CD",
+  "version":"v3.5.2",
+  "commit":"e258ee23c3e52266d407572f4bcdfe7d9ed36cb5",
+  "url":"https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/gitops-engine/pkg/sync/sync_context.go",
+  "checked_date":"2026-10-06",
+  "acquisition":{
+    "method":"前単元で正式web toolにより確認した同一固定sourceの表示本文を再利用。新規取得なし。",
+    "prior_review":"../argocd-prune-order/source-review.json",
+    "prior_formal_tool_invocations":1,
+    "prior_open_views":3,
+    "new_tool_invocations":0,
+    "continuous_retry":false,
+    "raw_body_saved":false,
+    "raw_byte_sha256":null,
+    "raw_byte_hash_reason":"元のraw byte列を保存しておらず、表示本文の読取をbyte契約検証と同一視しない。"
+  },
+  "locators":[
+    {"path":"gitops-engine/pkg/sync/sync_context.go","lines":"1014–1041","finding":"PruneLastより先に、存在するprune waveの両端を対称交換。"},
+    {"path":"gitops-engine/pkg/sync/sync_context.go","lines":"1042–1052","finding":"初期値0から、phaseがSyncのtaskの有効wave最大値を求めて1を加える。pruneも含む。"},
+    {"path":"gitops-engine/pkg/sync/sync_context.go","lines":"1053–1058","finding":"pruneで、全体指定またはlive側資源のPruneLast指定があるtaskだけwaveOverrideを設定。phaseへの代入ではない。"},
+    {"path":"gitops-engine/pkg/sync/sync_context.go","lines":"1060","finding":"この処理後にSort。今回は依存調整がない準備済み入力へ限定。"},
+    {"path":"gitops-engine/pkg/sync/sync_tasks.go","lines":"82–132","finding":"既存dependency-order/source-review.jsonで確認したphase優先の比較。今回同じphase/waveは集合として表示し完了順を保証しない。"}
+  ],
+  "not_verified":["pruneObject全分岐・annotation文字列パーサー","liveキャッシュからのtask生成・再計画","全Health状態・hook実行・失敗/待機・retry","削除API・権限・finalizer・propagation","最終wave後のOperationPhase全経路"],
+  "upstream_code_executed":false,
+  "live_executed":false,
+  "source_byte_contract_checked":false
+}

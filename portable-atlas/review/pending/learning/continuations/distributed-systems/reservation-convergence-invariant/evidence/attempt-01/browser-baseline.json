@@ -1,0 +1,1440 @@
+{
+  "status": "OBSERVED / exit=0",
+  "answer": "即時受理: accepted 2件 / 上限1 / 一致=true / 業務上限=false。保留: 初回pending 2件からaccepted 1件・rejected 1件へ判定 / 一致=true / 業務上限=true。復旧は配送ではなく、集合の一致とaccepted上限は別に検査します。",
+  "input": "{\n  \"capacity\": 1,\n  \"requests\": [\n    {\n      \"replica\": \"A\",\n      \"id\": \"a\"\n    },\n    {\n      \"replica\": \"B\",\n      \"id\": \"b\"\n    }\n  ],\n  \"serial_order\": [\n    \"a\",\n    \"b\"\n  ],\n  \"schedule\": [\n    \"A>B\",\n    \"B>A\"\n  ]\n}",
+  "prediction": "一致してもacceptedが2件なら上限1を破る。pendingは成功ではない。",
+  "panels": [
+    {
+      "policy": "optimistic",
+      "state": {
+        "step": 6,
+        "event": "deliver:B>A",
+        "link_up": true,
+        "local_decision": null,
+        "response_event": null,
+        "response_history": [
+          {
+            "id": "a",
+            "replica": "A",
+            "status": "accepted",
+            "phase": "request"
+          },
+          {
+            "id": "b",
+            "replica": "B",
+            "status": "accepted",
+            "phase": "request"
+          }
+        ],
+        "latest_responses": {
+          "a": "accepted",
+          "b": "accepted"
+        },
+        "accepted_returned": [
+          "a",
+          "b"
+        ],
+        "local_sets": {
+          "A": [
+            "a",
+            "b"
+          ],
+          "B": [
+            "a",
+            "b"
+          ]
+        },
+        "pending_ids": [],
+        "messages": {
+          "A>B": [
+            "a"
+          ],
+          "B>A": [
+            "b"
+          ]
+        },
+        "delivered_set": {
+          "A": [
+            "B>A"
+          ],
+          "B": [
+            "A>B"
+          ]
+        },
+        "delivery_count": {
+          "A": 1,
+          "B": 1
+        },
+        "converged": true,
+        "global_business_ok": false,
+        "replica_bounds": {
+          "A": false,
+          "B": false
+        }
+      },
+      "chips": [
+        "[\"a\",\"b\"]",
+        "[\"a\",\"b\"]"
+      ],
+      "summary": "accepted_returned=[\"a\",\"b\"]pending=[]converged=true / global_business_ok=falsereplica_bounds={\"A\":false,\"B\":false}all_messages_delivered=true",
+      "responses": "[{\"id\":\"a\",\"replica\":\"A\",\"status\":\"accepted\",\"phase\":\"request\"},{\"id\":\"b\",\"replica\":\"B\",\"status\":\"accepted\",\"phase\":\"request\"}]",
+      "rows": [
+        [
+          "init\nfalse",
+          "null\nnull",
+          "[]\n[]",
+          "[]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "true\ntrue"
+        ],
+        [
+          "request:a\nfalse",
+          "{\"id\":\"a\",\"replica\":\"A\",\"status\":\"accepted\",\"phase\":\"request\"}\n{\"id\":\"a\",\"replica\":\"A\",\"status\":\"accepted\",\"phase\":\"request\"}",
+          "[\"a\"]\n[]",
+          "[\"a\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\ntrue"
+        ],
+        [
+          "request:b\nfalse",
+          "{\"id\":\"b\",\"replica\":\"B\",\"status\":\"accepted\",\"phase\":\"request\"}\n{\"id\":\"b\",\"replica\":\"B\",\"status\":\"accepted\",\"phase\":\"request\"}",
+          "[\"a\"]\n[\"b\"]",
+          "[\"a\",\"b\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\nfalse"
+        ],
+        [
+          "recover\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[\"b\"]",
+          "[\"a\",\"b\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\nfalse"
+        ],
+        [
+          "publish\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[\"b\"]",
+          "[\"a\",\"b\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\nfalse"
+        ],
+        [
+          "deliver:A>B\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[\"a\",\"b\"]",
+          "[\"a\",\"b\"]\n[]",
+          "{\"A\":[],\"B\":[\"A>B\"]}\n{\"A\":0,\"B\":1}",
+          "false\nfalse"
+        ],
+        [
+          "deliver:B>A\ntrue",
+          "null\nnull",
+          "[\"a\",\"b\"]\n[\"a\",\"b\"]",
+          "[\"a\",\"b\"]\n[]",
+          "{\"A\":[\"B>A\"],\"B\":[\"A>B\"]}\n{\"A\":1,\"B\":1}",
+          "true\nfalse"
+        ]
+      ]
+    },
+    {
+      "policy": "deferred",
+      "state": {
+        "step": 8,
+        "event": "deliver:B>A",
+        "link_up": true,
+        "local_decision": null,
+        "response_event": null,
+        "response_history": [
+          {
+            "id": "a",
+            "replica": "A",
+            "status": "pending",
+            "phase": "request"
+          },
+          {
+            "id": "b",
+            "replica": "B",
+            "status": "pending",
+            "phase": "request"
+          },
+          {
+            "id": "a",
+            "replica": "A",
+            "status": "accepted",
+            "phase": "adjudicate"
+          },
+          {
+            "id": "b",
+            "replica": "B",
+            "status": "rejected",
+            "phase": "adjudicate"
+          }
+        ],
+        "latest_responses": {
+          "a": "accepted",
+          "b": "rejected"
+        },
+        "accepted_returned": [
+          "a"
+        ],
+        "local_sets": {
+          "A": [
+            "a"
+          ],
+          "B": [
+            "a"
+          ]
+        },
+        "pending_ids": [],
+        "messages": {
+          "A>B": [
+            "a"
+          ],
+          "B>A": []
+        },
+        "delivered_set": {
+          "A": [
+            "B>A"
+          ],
+          "B": [
+            "A>B"
+          ]
+        },
+        "delivery_count": {
+          "A": 1,
+          "B": 1
+        },
+        "converged": true,
+        "global_business_ok": true,
+        "replica_bounds": {
+          "A": true,
+          "B": true
+        }
+      },
+      "chips": [
+        "[\"a\"]",
+        "[\"a\"]"
+      ],
+      "summary": "accepted_returned=[\"a\"]pending=[]converged=true / global_business_ok=truereplica_bounds={\"A\":true,\"B\":true}all_messages_delivered=true",
+      "responses": "[{\"id\":\"a\",\"replica\":\"A\",\"status\":\"pending\",\"phase\":\"request\"},{\"id\":\"b\",\"replica\":\"B\",\"status\":\"pending\",\"phase\":\"request\"},{\"id\":\"a\",\"replica\":\"A\",\"status\":\"accepted\",\"phase\":\"adjudicate\"},{\"id\":\"b\",\"replica\":\"B\",\"status\":\"rejected\",\"phase\":\"adjudicate\"}]",
+      "rows": [
+        [
+          "init\nfalse",
+          "null\nnull",
+          "[]\n[]",
+          "[]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "true\ntrue"
+        ],
+        [
+          "request:a\nfalse",
+          "{\"id\":\"a\",\"replica\":\"A\",\"status\":\"pending\",\"phase\":\"request\"}\n{\"id\":\"a\",\"replica\":\"A\",\"status\":\"pending\",\"phase\":\"request\"}",
+          "[]\n[]",
+          "[]\n[\"a\"]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "true\ntrue"
+        ],
+        [
+          "request:b\nfalse",
+          "{\"id\":\"b\",\"replica\":\"B\",\"status\":\"pending\",\"phase\":\"request\"}\n{\"id\":\"b\",\"replica\":\"B\",\"status\":\"pending\",\"phase\":\"request\"}",
+          "[]\n[]",
+          "[]\n[\"a\",\"b\"]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "true\ntrue"
+        ],
+        [
+          "recover\ntrue",
+          "null\nnull",
+          "[]\n[]",
+          "[]\n[\"a\",\"b\"]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "true\ntrue"
+        ],
+        [
+          "adjudicate:a\ntrue",
+          "null\n{\"id\":\"a\",\"replica\":\"A\",\"status\":\"accepted\",\"phase\":\"adjudicate\"}",
+          "[\"a\"]\n[]",
+          "[\"a\"]\n[\"b\"]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\ntrue"
+        ],
+        [
+          "adjudicate:b\ntrue",
+          "null\n{\"id\":\"b\",\"replica\":\"B\",\"status\":\"rejected\",\"phase\":\"adjudicate\"}",
+          "[\"a\"]\n[]",
+          "[\"a\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\ntrue"
+        ],
+        [
+          "publish\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[]",
+          "[\"a\"]\n[]",
+          "{\"A\":[],\"B\":[]}\n{\"A\":0,\"B\":0}",
+          "false\ntrue"
+        ],
+        [
+          "deliver:A>B\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[\"a\"]",
+          "[\"a\"]\n[]",
+          "{\"A\":[],\"B\":[\"A>B\"]}\n{\"A\":0,\"B\":1}",
+          "true\ntrue"
+        ],
+        [
+          "deliver:B>A\ntrue",
+          "null\nnull",
+          "[\"a\"]\n[\"a\"]",
+          "[\"a\"]\n[]",
+          "{\"A\":[\"B>A\"],\"B\":[\"A>B\"]}\n{\"A\":1,\"B\":1}",
+          "true\ntrue"
+        ]
+      ]
+    }
+  ],
+  "raw": {
+    "request_id": "0f9ce76693694b3abb0352f36a7e19bd",
+    "argv": [
+      "python3",
+      "-B",
+      "model.py"
+    ],
+    "input_json": "{\n  \"capacity\": 1,\n  \"requests\": [\n    {\n      \"replica\": \"A\",\n      \"id\": \"a\"\n    },\n    {\n      \"replica\": \"B\",\n      \"id\": \"b\"\n    }\n  ],\n  \"serial_order\": [\n    \"a\",\n    \"b\"\n  ],\n  \"schedule\": [\n    \"A>B\",\n    \"B>A\"\n  ]\n}",
+    "started": "2026-10-05T21:04:23.420034+00:00",
+    "completed": "2026-10-05T21:04:23.494589+00:00",
+    "exit": 0,
+    "stdout": "{\"status\": \"OBSERVED\", \"input_echo\": {\"capacity\": 1, \"requests\": [{\"replica\": \"A\", \"id\": \"a\"}, {\"replica\": \"B\", \"id\": \"b\"}], \"serial_order\": [\"a\", \"b\"], \"schedule\": [\"A>B\", \"B>A\"]}, \"policies\": {\"optimistic\": {\"trace\": [{\"step\": 0, \"event\": \"init\", \"link_up\": false, \"local_decision\": null, \"response_event\": null, \"response_history\": [], \"latest_responses\": {}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 1, \"event\": \"request:a\", \"link_up\": false, \"local_decision\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 2, \"event\": \"request:b\", \"link_up\": false, \"local_decision\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 3, \"event\": \"recover\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 4, \"event\": \"publish\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 5, \"event\": \"deliver:A>B\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 0, \"B\": 1}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": false}}, {\"step\": 6, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\", \"b\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": false, \"replica_bounds\": {\"A\": false, \"B\": false}}], \"final\": {\"step\": 6, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\", \"b\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": false, \"replica_bounds\": {\"A\": false, \"B\": false}}, \"all_messages_delivered\": true, \"response_preserved\": true}, \"deferred\": {\"trace\": [{\"step\": 0, \"event\": \"init\", \"link_up\": false, \"local_decision\": null, \"response_event\": null, \"response_history\": [], \"latest_responses\": {}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 1, \"event\": \"request:a\", \"link_up\": false, \"local_decision\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 2, \"event\": \"request:b\", \"link_up\": false, \"local_decision\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\", \"b\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\", \"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 3, \"event\": \"recover\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\", \"b\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\", \"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 4, \"event\": \"adjudicate:a\", \"link_up\": true, \"local_decision\": null, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"pending\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [\"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 5, \"event\": \"adjudicate:b\", \"link_up\": true, \"local_decision\": null, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 6, \"event\": \"publish\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 7, \"event\": \"deliver:A>B\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 0, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 8, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}], \"final\": {\"step\": 8, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, \"all_messages_delivered\": true, \"response_preserved\": true}}}\n",
+    "stderr": "",
+    "result": {
+      "status": "OBSERVED",
+      "input_echo": {
+        "capacity": 1,
+        "requests": [
+          {
+            "replica": "A",
+            "id": "a"
+          },
+          {
+            "replica": "B",
+            "id": "b"
+          }
+        ],
+        "serial_order": [
+          "a",
+          "b"
+        ],
+        "schedule": [
+          "A>B",
+          "B>A"
+        ]
+      },
+      "policies": {
+        "optimistic": {
+          "trace": [
+            {
+              "step": 0,
+              "event": "init",
+              "link_up": false,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [],
+              "latest_responses": {},
+              "accepted_returned": [],
+              "local_sets": {
+                "A": [],
+                "B": []
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 1,
+              "event": "request:a",
+              "link_up": false,
+              "local_decision": {
+                "id": "a",
+                "replica": "A",
+                "status": "accepted",
+                "phase": "request"
+              },
+              "response_event": {
+                "id": "a",
+                "replica": "A",
+                "status": "accepted",
+                "phase": "request"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": []
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 2,
+              "event": "request:b",
+              "link_up": false,
+              "local_decision": {
+                "id": "b",
+                "replica": "B",
+                "status": "accepted",
+                "phase": "request"
+              },
+              "response_event": {
+                "id": "b",
+                "replica": "B",
+                "status": "accepted",
+                "phase": "request"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "accepted"
+              },
+              "accepted_returned": [
+                "a",
+                "b"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "b"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": false,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 3,
+              "event": "recover",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "accepted"
+              },
+              "accepted_returned": [
+                "a",
+                "b"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "b"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": false,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 4,
+              "event": "publish",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "accepted"
+              },
+              "accepted_returned": [
+                "a",
+                "b"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "b"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": [
+                  "b"
+                ]
+              },
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": false,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 5,
+              "event": "deliver:A>B",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "accepted"
+              },
+              "accepted_returned": [
+                "a",
+                "b"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "a",
+                  "b"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": [
+                  "b"
+                ]
+              },
+              "delivered_set": {
+                "A": [],
+                "B": [
+                  "A>B"
+                ]
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 1
+              },
+              "converged": false,
+              "global_business_ok": false,
+              "replica_bounds": {
+                "A": true,
+                "B": false
+              }
+            },
+            {
+              "step": 6,
+              "event": "deliver:B>A",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "accepted",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "accepted"
+              },
+              "accepted_returned": [
+                "a",
+                "b"
+              ],
+              "local_sets": {
+                "A": [
+                  "a",
+                  "b"
+                ],
+                "B": [
+                  "a",
+                  "b"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": [
+                  "b"
+                ]
+              },
+              "delivered_set": {
+                "A": [
+                  "B>A"
+                ],
+                "B": [
+                  "A>B"
+                ]
+              },
+              "delivery_count": {
+                "A": 1,
+                "B": 1
+              },
+              "converged": true,
+              "global_business_ok": false,
+              "replica_bounds": {
+                "A": false,
+                "B": false
+              }
+            }
+          ],
+          "final": {
+            "step": 6,
+            "event": "deliver:B>A",
+            "link_up": true,
+            "local_decision": null,
+            "response_event": null,
+            "response_history": [
+              {
+                "id": "a",
+                "replica": "A",
+                "status": "accepted",
+                "phase": "request"
+              },
+              {
+                "id": "b",
+                "replica": "B",
+                "status": "accepted",
+                "phase": "request"
+              }
+            ],
+            "latest_responses": {
+              "a": "accepted",
+              "b": "accepted"
+            },
+            "accepted_returned": [
+              "a",
+              "b"
+            ],
+            "local_sets": {
+              "A": [
+                "a",
+                "b"
+              ],
+              "B": [
+                "a",
+                "b"
+              ]
+            },
+            "pending_ids": [],
+            "messages": {
+              "A>B": [
+                "a"
+              ],
+              "B>A": [
+                "b"
+              ]
+            },
+            "delivered_set": {
+              "A": [
+                "B>A"
+              ],
+              "B": [
+                "A>B"
+              ]
+            },
+            "delivery_count": {
+              "A": 1,
+              "B": 1
+            },
+            "converged": true,
+            "global_business_ok": false,
+            "replica_bounds": {
+              "A": false,
+              "B": false
+            }
+          },
+          "all_messages_delivered": true,
+          "response_preserved": true
+        },
+        "deferred": {
+          "trace": [
+            {
+              "step": 0,
+              "event": "init",
+              "link_up": false,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [],
+              "latest_responses": {},
+              "accepted_returned": [],
+              "local_sets": {
+                "A": [],
+                "B": []
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 1,
+              "event": "request:a",
+              "link_up": false,
+              "local_decision": {
+                "id": "a",
+                "replica": "A",
+                "status": "pending",
+                "phase": "request"
+              },
+              "response_event": {
+                "id": "a",
+                "replica": "A",
+                "status": "pending",
+                "phase": "request"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "pending"
+              },
+              "accepted_returned": [],
+              "local_sets": {
+                "A": [],
+                "B": []
+              },
+              "pending_ids": [
+                "a"
+              ],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 2,
+              "event": "request:b",
+              "link_up": false,
+              "local_decision": {
+                "id": "b",
+                "replica": "B",
+                "status": "pending",
+                "phase": "request"
+              },
+              "response_event": {
+                "id": "b",
+                "replica": "B",
+                "status": "pending",
+                "phase": "request"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "pending",
+                "b": "pending"
+              },
+              "accepted_returned": [],
+              "local_sets": {
+                "A": [],
+                "B": []
+              },
+              "pending_ids": [
+                "a",
+                "b"
+              ],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 3,
+              "event": "recover",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                }
+              ],
+              "latest_responses": {
+                "a": "pending",
+                "b": "pending"
+              },
+              "accepted_returned": [],
+              "local_sets": {
+                "A": [],
+                "B": []
+              },
+              "pending_ids": [
+                "a",
+                "b"
+              ],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 4,
+              "event": "adjudicate:a",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": {
+                "id": "a",
+                "replica": "A",
+                "status": "accepted",
+                "phase": "adjudicate"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "adjudicate"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "pending"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": []
+              },
+              "pending_ids": [
+                "b"
+              ],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 5,
+              "event": "adjudicate:b",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": {
+                "id": "b",
+                "replica": "B",
+                "status": "rejected",
+                "phase": "adjudicate"
+              },
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "adjudicate"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "rejected",
+                  "phase": "adjudicate"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "rejected"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": []
+              },
+              "pending_ids": [],
+              "messages": {},
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 6,
+              "event": "publish",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "adjudicate"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "rejected",
+                  "phase": "adjudicate"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "rejected"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": []
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": []
+              },
+              "delivered_set": {
+                "A": [],
+                "B": []
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 0
+              },
+              "converged": false,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 7,
+              "event": "deliver:A>B",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "adjudicate"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "rejected",
+                  "phase": "adjudicate"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "rejected"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "a"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": []
+              },
+              "delivered_set": {
+                "A": [],
+                "B": [
+                  "A>B"
+                ]
+              },
+              "delivery_count": {
+                "A": 0,
+                "B": 1
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            },
+            {
+              "step": 8,
+              "event": "deliver:B>A",
+              "link_up": true,
+              "local_decision": null,
+              "response_event": null,
+              "response_history": [
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "pending",
+                  "phase": "request"
+                },
+                {
+                  "id": "a",
+                  "replica": "A",
+                  "status": "accepted",
+                  "phase": "adjudicate"
+                },
+                {
+                  "id": "b",
+                  "replica": "B",
+                  "status": "rejected",
+                  "phase": "adjudicate"
+                }
+              ],
+              "latest_responses": {
+                "a": "accepted",
+                "b": "rejected"
+              },
+              "accepted_returned": [
+                "a"
+              ],
+              "local_sets": {
+                "A": [
+                  "a"
+                ],
+                "B": [
+                  "a"
+                ]
+              },
+              "pending_ids": [],
+              "messages": {
+                "A>B": [
+                  "a"
+                ],
+                "B>A": []
+              },
+              "delivered_set": {
+                "A": [
+                  "B>A"
+                ],
+                "B": [
+                  "A>B"
+                ]
+              },
+              "delivery_count": {
+                "A": 1,
+                "B": 1
+              },
+              "converged": true,
+              "global_business_ok": true,
+              "replica_bounds": {
+                "A": true,
+                "B": true
+              }
+            }
+          ],
+          "final": {
+            "step": 8,
+            "event": "deliver:B>A",
+            "link_up": true,
+            "local_decision": null,
+            "response_event": null,
+            "response_history": [
+              {
+                "id": "a",
+                "replica": "A",
+                "status": "pending",
+                "phase": "request"
+              },
+              {
+                "id": "b",
+                "replica": "B",
+                "status": "pending",
+                "phase": "request"
+              },
+              {
+                "id": "a",
+                "replica": "A",
+                "status": "accepted",
+                "phase": "adjudicate"
+              },
+              {
+                "id": "b",
+                "replica": "B",
+                "status": "rejected",
+                "phase": "adjudicate"
+              }
+            ],
+            "latest_responses": {
+              "a": "accepted",
+              "b": "rejected"
+            },
+            "accepted_returned": [
+              "a"
+            ],
+            "local_sets": {
+              "A": [
+                "a"
+              ],
+              "B": [
+                "a"
+              ]
+            },
+            "pending_ids": [],
+            "messages": {
+              "A>B": [
+                "a"
+              ],
+              "B>A": []
+            },
+            "delivered_set": {
+              "A": [
+                "B>A"
+              ],
+              "B": [
+                "A>B"
+              ]
+            },
+            "delivery_count": {
+              "A": 1,
+              "B": 1
+            },
+            "converged": true,
+            "global_business_ok": true,
+            "replica_bounds": {
+              "A": true,
+              "B": true
+            }
+          },
+          "all_messages_delivered": true,
+          "response_preserved": true
+        }
+      }
+    },
+    "audit": {
+      "argv": [
+        "python3",
+        "-B",
+        "oracle.py"
+      ],
+      "stdin": "{\"input\": {\"capacity\": 1, \"requests\": [{\"replica\": \"A\", \"id\": \"a\"}, {\"replica\": \"B\", \"id\": \"b\"}], \"serial_order\": [\"a\", \"b\"], \"schedule\": [\"A>B\", \"B>A\"]}, \"result\": {\"status\": \"OBSERVED\", \"input_echo\": {\"capacity\": 1, \"requests\": [{\"replica\": \"A\", \"id\": \"a\"}, {\"replica\": \"B\", \"id\": \"b\"}], \"serial_order\": [\"a\", \"b\"], \"schedule\": [\"A>B\", \"B>A\"]}, \"policies\": {\"optimistic\": {\"trace\": [{\"step\": 0, \"event\": \"init\", \"link_up\": false, \"local_decision\": null, \"response_event\": null, \"response_history\": [], \"latest_responses\": {}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 1, \"event\": \"request:a\", \"link_up\": false, \"local_decision\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 2, \"event\": \"request:b\", \"link_up\": false, \"local_decision\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 3, \"event\": \"recover\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 4, \"event\": \"publish\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 5, \"event\": \"deliver:A>B\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 0, \"B\": 1}, \"converged\": false, \"global_business_ok\": false, \"replica_bounds\": {\"A\": true, \"B\": false}}, {\"step\": 6, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\", \"b\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": false, \"replica_bounds\": {\"A\": false, \"B\": false}}], \"final\": {\"step\": 6, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"accepted\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"accepted\"}, \"accepted_returned\": [\"a\", \"b\"], \"local_sets\": {\"A\": [\"a\", \"b\"], \"B\": [\"a\", \"b\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": [\"b\"]}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": false, \"replica_bounds\": {\"A\": false, \"B\": false}}, \"all_messages_delivered\": true, \"response_preserved\": true}, \"deferred\": {\"trace\": [{\"step\": 0, \"event\": \"init\", \"link_up\": false, \"local_decision\": null, \"response_event\": null, \"response_history\": [], \"latest_responses\": {}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 1, \"event\": \"request:a\", \"link_up\": false, \"local_decision\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 2, \"event\": \"request:b\", \"link_up\": false, \"local_decision\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\", \"b\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\", \"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 3, \"event\": \"recover\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}], \"latest_responses\": {\"a\": \"pending\", \"b\": \"pending\"}, \"accepted_returned\": [], \"local_sets\": {\"A\": [], \"B\": []}, \"pending_ids\": [\"a\", \"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 4, \"event\": \"adjudicate:a\", \"link_up\": true, \"local_decision\": null, \"response_event\": {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"pending\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [\"b\"], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 5, \"event\": \"adjudicate:b\", \"link_up\": true, \"local_decision\": null, \"response_event\": {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 6, \"event\": \"publish\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": []}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [], \"B\": []}, \"delivery_count\": {\"A\": 0, \"B\": 0}, \"converged\": false, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 7, \"event\": \"deliver:A>B\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 0, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, {\"step\": 8, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}], \"final\": {\"step\": 8, \"event\": \"deliver:B>A\", \"link_up\": true, \"local_decision\": null, \"response_event\": null, \"response_history\": [{\"id\": \"a\", \"replica\": \"A\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"pending\", \"phase\": \"request\"}, {\"id\": \"a\", \"replica\": \"A\", \"status\": \"accepted\", \"phase\": \"adjudicate\"}, {\"id\": \"b\", \"replica\": \"B\", \"status\": \"rejected\", \"phase\": \"adjudicate\"}], \"latest_responses\": {\"a\": \"accepted\", \"b\": \"rejected\"}, \"accepted_returned\": [\"a\"], \"local_sets\": {\"A\": [\"a\"], \"B\": [\"a\"]}, \"pending_ids\": [], \"messages\": {\"A>B\": [\"a\"], \"B>A\": []}, \"delivered_set\": {\"A\": [\"B>A\"], \"B\": [\"A>B\"]}, \"delivery_count\": {\"A\": 1, \"B\": 1}, \"converged\": true, \"global_business_ok\": true, \"replica_bounds\": {\"A\": true, \"B\": true}}, \"all_messages_delivered\": true, \"response_preserved\": true}}}}",
+      "started": "2026-10-05T21:04:23.463436+00:00",
+      "completed": "2026-10-05T21:04:23.494539+00:00",
+      "exit": 0,
+      "stdout": "{\"status\": \"passed\"}\n",
+      "stderr": ""
+    },
+    "runtime": "3.9.6",
+    "source_sha256": {
+      "model.py": "bf26e3980f579225f59e998a937737d6a765344b21716a9d6d3459109b6d395f",
+      "oracle.py": "778061a9a45e9d355b08343a2b655ef53863c7d92bf6715c6db748c0193db1de",
+      "execute.py": "51d2e5e073b29eef1aa5f49657a4c6267a86d66ceb187c86168c2ae33e233739",
+      "runner.py": "cf4b94aabf9edfdc259a035beda93339e9de64f0c892ab20fc19efe788230f69",
+      "server.py": "626549f3e6484320cda4cea59e8588809b2b48de01f51cadcd47bc1b3ecd5249",
+      "ui.js": "7b1c7c9fcffa1c472afd55cb07231d2b4e656f4cc7a8547eb9633886420e0d01",
+      "index.html": "0825ad0b3cabe933e373afcf065b0b044e72c7c74c1ef960945631d73166f313",
+      "document.html": "672a18b425a37e66498a3128421b3bb513689dc945cea706e2681656d647cce6",
+      "fixture.json": "c2ee64882f061496c0325421f15be7169799d02cf3d5b8c03439ab9c0c0145e8",
+      "oracle.json": "c5339c323df30557962a841bc1b4467b2531fbc1ae0442a2f97b0e309fba94f7",
+      "hand-trace.json": "45109e7055f0783945efb8df2468209fb44c64ef84cf1def6dd189413e77b71d",
+      "custom.json": "2b582a9cce1af6eaa95983e95b0d98ff4ef77098eea85aa7e8b61f734acf8cf7",
+      "README.md": "085d31a4850038d90bc22027c3e5dae9de6c38f128366af4ad9c264e309813c6",
+      "EXPECTATIONS.md": "cb3b617f7d8292e7a23b16c391a728cc27df76647a4e35cc1b2a01ef9ef4547f",
+      "SOURCES.md": "8f7028bea3b5dcc304eeff6d17a84699c39ac277017f6bf42dc1f83be869cf75",
+      "COVERAGE.md": "fdf3111fdd06d37f39d76248fbdf2c6741d2c72d22aeb43ede665218d41a7a11",
+      "route.py": "b2d370565ef1cac9f521e4f9728c7fab83af0c0d2a3534d1c496a44f9b986b89",
+      "skills/atlas-reservation-invariant/SKILL.md": "f7206f4b648bb1e8df6d23ea7df91abcf0372abf1752aa1d380c88dfb0ea70b5"
+    }
+  }
+}

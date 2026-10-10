@@ -1,0 +1,1036 @@
+[
+  {
+    "id": "all-fields",
+    "json": "{\"name\":\"Aki\",\"age\":7,\"note\":\"hello\"}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": "hello"
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": "hello"
+        },
+        "status": "accepted"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": "hello"
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": "hello"
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": "hello"
+        },
+        "reason": null
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": "hello"
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "optional-missing",
+    "json": "{\"name\":\"Aki\",\"age\":7}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "No value associated with key CodingKeys(stringValue: \"note\", intValue: nil) (\"note\").",
+          "kind": "keyNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:missing"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "optional-null",
+    "json": "{\"name\":\"Aki\",\"age\":7,\"note\":null}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "Cannot get value of type String -- found null value instead",
+          "kind": "valueNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:null"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "required-missing",
+    "json": "{\"age\":7,\"note\":\"hello\"}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "",
+          "note": "hello"
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "No value associated with key CodingKeys(stringValue: \"name\", intValue: nil) (\"name\").",
+          "kind": "keyNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "No value associated with key CodingKeys(stringValue: \"name\", intValue: nil) (\"name\").",
+          "kind": "keyNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:missing"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:missing"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": 7,
+          "note": "hello"
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "required-null",
+    "json": "{\"name\":null,\"age\":7}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "Cannot get value of type String -- found null value instead",
+          "kind": "valueNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "Cannot get value of type String -- found null value instead",
+          "kind": "valueNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:null"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:null"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "name-wrong-type",
+    "json": "{\"name\":7,\"age\":7}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "Expected to decode String but found number instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "name"
+          ],
+          "debug": "Expected to decode String but found number instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "name:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "age-string",
+    "json": "{\"name\":\"Aki\",\"age\":\"7\"}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 0,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "age"
+          ],
+          "debug": "Expected to decode Int8 but found a string instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "age"
+          ],
+          "debug": "Expected to decode Int8 but found a string instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 0,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "age-bool",
+    "json": "{\"name\":\"Aki\",\"age\":true}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 0,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "age"
+          ],
+          "debug": "Expected to decode Int8 but found bool instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "age"
+          ],
+          "debug": "Expected to decode Int8 but found bool instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 0,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "note-wrong-type",
+    "json": "{\"name\":\"Aki\",\"age\":7,\"note\":7}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "Expected to decode String but found number instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "Expected to decode String but found number instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "int8-min",
+    "json": "{\"name\":\"\",\"age\":-128,\"note\":\"\"}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": -128,
+          "name": "",
+          "note": ""
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": null,
+        "profile": {
+          "age": -128,
+          "name": "",
+          "note": ""
+        },
+        "status": "accepted"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": -128,
+          "name": "",
+          "note": ""
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": -128,
+          "note": ""
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": -128,
+          "note": ""
+        },
+        "reason": null
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "",
+          "age": -128,
+          "note": ""
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "int8-max",
+    "json": "{\"name\":\"境界\",\"age\":127,\"note\":null}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 127,
+          "name": "境界",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "Cannot get value of type String -- found null value instead",
+          "kind": "valueNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 127,
+          "name": "境界",
+          "note": null
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "境界",
+          "age": 127,
+          "note": null
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:null"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "境界",
+          "age": 127,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "int8-underflow",
+    "json": "{\"name\":\"Aki\",\"age\":-129}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 0,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 0,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "int8-overflow",
+    "json": "{\"name\":\"Aki\",\"age\":128}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 0,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 0,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "fractional-age",
+    "json": "{\"name\":\"Aki\",\"age\":7.5}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 0,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "age:type/range"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 0,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "extra-key",
+    "json": "{\"name\":\"Aki\",\"age\":7,\"other\":true}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "No value associated with key CodingKeys(stringValue: \"note\", intValue: nil) (\"note\").",
+          "kind": "keyNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:missing"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  },
+  {
+    "id": "root-array",
+    "json": "[]",
+    "variants": {
+      "defaulting": {
+        "error": {
+          "coding_path": [],
+          "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [],
+          "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [],
+          "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+          "kind": "typeMismatch"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "root object required"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "root object required"
+      },
+      "defaulting": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "root object required"
+      }
+    }
+  },
+  {
+    "id": "malformed-json",
+    "json": "{broken",
+    "variants": {
+      "defaulting": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": {
+          "coding_path": [],
+          "debug": "The given data was not valid JSON.",
+          "kind": "dataCorrupted"
+        },
+        "profile": null,
+        "status": "rejected"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "JSON syntax"
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "JSON syntax"
+      },
+      "defaulting": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "JSON syntax"
+      }
+    }
+  },
+  {
+    "id": "integral-decimal-age",
+    "json": "{\"name\":\"Aki\",\"age\":7.0}",
+    "variants": {
+      "defaulting": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      },
+      "eager-optional": {
+        "error": {
+          "coding_path": [
+            "note"
+          ],
+          "debug": "No value associated with key CodingKeys(stringValue: \"note\", intValue: nil) (\"note\").",
+          "kind": "keyNotFound"
+        },
+        "profile": null,
+        "status": "rejected"
+      },
+      "normal": {
+        "error": null,
+        "profile": {
+          "age": 7,
+          "name": "Aki",
+          "note": null
+        },
+        "status": "accepted"
+      }
+    },
+    "oracle": {
+      "normal": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      },
+      "eager-optional": {
+        "status": "rejected",
+        "profile": null,
+        "reason": "note:missing"
+      },
+      "defaulting": {
+        "status": "accepted",
+        "profile": {
+          "name": "Aki",
+          "age": 7,
+          "note": null
+        },
+        "reason": null
+      }
+    }
+  }
+]

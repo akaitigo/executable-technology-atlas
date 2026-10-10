@@ -1,0 +1,190 @@
+{
+  "utc": "2026-10-05T12:11:43.702882+00:00",
+  "command": "python3 -B runner.py --record",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "system": "Darwin",
+    "release": "25.1.0"
+  },
+  "fixture": {
+    "max_body_bytes": 128,
+    "groups": [
+      {
+        "id": "normal",
+        "cases": [
+          {
+            "id": "normal-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          }
+        ]
+      },
+      {
+        "id": "rejections",
+        "cases": [
+          {
+            "id": "invalid-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "1"
+            }
+          },
+          {
+            "id": "bool-units",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":true}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "14"
+            }
+          },
+          {
+            "id": "body-too-large",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "129"
+            }
+          },
+          {
+            "id": "missing-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          },
+          {
+            "id": "bad-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "oops"
+            }
+          },
+          {
+            "id": "wrong-type",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "text/plain",
+              "Content-Length": "11"
+            }
+          },
+          {
+            "id": "wrong-route",
+            "method": "POST",
+            "path": "/other",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          },
+          {
+            "id": "wrong-method",
+            "method": "GET",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "recovery",
+        "cases": [
+          {
+            "id": "second-sql-fault",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11",
+              "X-Lesson-Fault": "second-sql"
+            }
+          },
+          {
+            "id": "after-failure",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "source_sha256": {
+    "fixture.json": "f8a37becd9f69269d7f01709a67a2fa4dfc8443dcf56f026d20620065678fd2a",
+    "oracle.json": "52b3ba896a917c6e34da7869628cf1553290661fa8a2e7446bece824b5db8c8f",
+    "EXPECTATIONS.md": "8e223318bd000ed81ba7c58efae0d7189dc7d92da348678b9fbf1adbc738e148",
+    "adapter.py": "7f1a3fc334bb20ab0614317c69546cad1cce94993f15863dd0053e647294b3f1",
+    "runner.py": "b13d1594fce3c662f4dafa0c209cbd9429f0f5d09446036dd3d8e2baf0adadbf"
+  },
+  "groups": [
+    {
+      "id": "normal",
+      "cases": [],
+      "cleanup": {
+        "server_not_created": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "execution_failure": {
+        "type": "PermissionError",
+        "message": "[Errno 1] Operation not permitted"
+      }
+    },
+    {
+      "id": "rejections",
+      "cases": [],
+      "cleanup": {
+        "server_not_created": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "execution_failure": {
+        "type": "PermissionError",
+        "message": "[Errno 1] Operation not permitted"
+      }
+    },
+    {
+      "id": "recovery",
+      "cases": [],
+      "cleanup": {
+        "server_not_created": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "execution_failure": {
+        "type": "PermissionError",
+        "message": "[Errno 1] Operation not permitted"
+      }
+    }
+  ],
+  "execution_failures": 3,
+  "exit_code": 1
+}

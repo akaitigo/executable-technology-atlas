@@ -1,0 +1,1528 @@
+{
+  "startedUtc": "2026-10-05T13:11:31.845635+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "storage": "two local in-memory model dictionaries; not durable stores"
+  },
+  "sourceHashes": {
+    "worker.py": "8d8fb5ad32bdf5053c9984b077666970add139cc219b851fdb7f34526b05f329",
+    "runner.py": "19a63d847a6f72705e34ffea9d4e321bdbf6194959cbe0793dc9975aebcc5195",
+    "checker.py": "67ce882daaaa6bc99b8abdedf7abf73d12db37d86eacfb55d3c57384a779e0b7",
+    "test_negative.py": "9196b41bba2a4fe366aa367c276e9dab494b6167b26ed632cb4204c8a87a1b89",
+    "oracle.json": "378f54d5132923b24b302a4805ae4ce0df211eb09296cbeaf32d57ea6bd6b5f0",
+    "fixtures.json": "fd46778430c02307b9cee591b1e7b3f3870493bf0da6093165d8b7c9f245ea17",
+    "index.html": "fda0729f0c2e5474f7d80a80a3e0e28ec49e1648ef0b21f25b1c13ece50fc84b",
+    "preview.py": "8ba3bf3710bd11b8339c00e8803539a330f7e8e72d27611039ed6317daba4bcf",
+    "route.py": "e76f09edf42859cfeaec6f04a86461355ab14ba051f1e519d4a0ed666b741a25",
+    "README.md": "e9ac3efb51c94be306093f7669296fad34568de974fb809a090b506e3e43cad1",
+    "COVERAGE.md": "bd1b738ef23fd09f12841fdc3789e2f1a3c12b2103d0d7ba386340476f2eee48",
+    "skills/replica-lag-failover-read/SKILL.md": "d940d761be24760118c984f79e10190750e49198b744e53f1f530c96eb920e35"
+  },
+  "cases": [
+    {
+      "id": "baseline",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "baseline/input.txt",
+      "inputSha256": "2f1871acb8b9ff8cc3f0c44a63391e7e51834c204e97bb4eff59e61c9bbf66c8",
+      "startedUtc": "2026-10-05T13:11:31.848258+00:00",
+      "endedUtc": "2026-10-05T13:11:31.880794+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": {\"step\": 0, \"store\": \"A\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 0, \"fresh\": true}}], \"reads\": [{\"step\": 0, \"store\": \"A\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 0, \"fresh\": true}], \"acks\": [], \"answer\": {\"step\": 0, \"store\": \"A\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 0, \"fresh\": true}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "A",
+            "ack": null,
+            "read": {
+              "step": 0,
+              "store": "A",
+              "available": true,
+              "revision": 0,
+              "value": "v0",
+              "requiredRevision": 0,
+              "fresh": true
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 0,
+            "store": "A",
+            "available": true,
+            "revision": 0,
+            "value": "v0",
+            "requiredRevision": 0,
+            "fresh": true
+          }
+        ],
+        "acks": [],
+        "answer": {
+          "step": 0,
+          "store": "A",
+          "available": true,
+          "revision": 0,
+          "value": "v0",
+          "requiredRevision": 0,
+          "fresh": true
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "ack-a",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "ack-a/input.txt",
+      "inputSha256": "def58e585fba0b55adf4ffdd978c6f563c36693e88325c4b4e8c900375fe5f0f",
+      "startedUtc": "2026-10-05T13:11:31.881056+00:00",
+      "endedUtc": "2026-10-05T13:11:31.913488+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": {\"step\": 1, \"store\": \"A\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}], \"reads\": [{\"step\": 1, \"store\": \"A\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 1, \"store\": \"A\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": null,
+            "read": {
+              "step": 1,
+              "store": "A",
+              "available": true,
+              "revision": 1,
+              "value": "v1",
+              "requiredRevision": 1,
+              "fresh": true
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 1,
+            "store": "A",
+            "available": true,
+            "revision": 1,
+            "value": "v1",
+            "requiredRevision": 1,
+            "fresh": true
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 1,
+          "store": "A",
+          "available": true,
+          "revision": 1,
+          "value": "v1",
+          "requiredRevision": 1,
+          "fresh": true
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "failover-before-delivery",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "failover-before-delivery/input.txt",
+      "inputSha256": "65f9a827d847f645abea190156763a6922f9eb40702dabe7325542fe0dff9548",
+      "startedUtc": "2026-10-05T13:11:31.913766+00:00",
+      "endedUtc": "2026-10-05T13:11:31.946168+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 2, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}}], \"reads\": [{\"step\": 2, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 2, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 2,
+              "store": "B",
+              "available": true,
+              "revision": 0,
+              "value": "v0",
+              "requiredRevision": 1,
+              "fresh": false
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 2,
+            "store": "B",
+            "available": true,
+            "revision": 0,
+            "value": "v0",
+            "requiredRevision": 1,
+            "fresh": false
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 2,
+          "store": "B",
+          "available": true,
+          "revision": 0,
+          "value": "v0",
+          "requiredRevision": 1,
+          "fresh": false
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "delivered-before-failover",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "delivered-before-failover/input.txt",
+      "inputSha256": "98348fb5e2aff1b6aa4ab9ce7cc86c17369dc561e95ecb2273e6044b0a30dae9",
+      "startedUtc": "2026-10-05T13:11:31.946429+00:00",
+      "endedUtc": "2026-10-05T13:11:31.978512+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"op\": \"deliver\"}, \"status\": \"delivered\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 3, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 3, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}], \"reads\": [{\"step\": 3, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 3, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "op": "deliver"
+            },
+            "status": "delivered",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "A",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 3,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 3,
+              "store": "B",
+              "available": true,
+              "revision": 1,
+              "value": "v1",
+              "requiredRevision": 1,
+              "fresh": true
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 3,
+            "store": "B",
+            "available": true,
+            "revision": 1,
+            "value": "v1",
+            "requiredRevision": 1,
+            "fresh": true
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 3,
+          "store": "B",
+          "available": true,
+          "revision": 1,
+          "value": "v1",
+          "requiredRevision": 1,
+          "fresh": true
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "partition-read",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "partition-read/input.txt",
+      "inputSha256": "aaa5c73d89dc1dc9e1c56a9c9756946c46cf0f16ac874aaf3843167ad2d76e87",
+      "startedUtc": "2026-10-05T13:11:31.978743+00:00",
+      "endedUtc": "2026-10-05T13:11:32.012270+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"enabled\": true, \"op\": \"partition\"}, \"status\": \"partition\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 3, \"operation\": {\"op\": \"deliver\"}, \"status\": \"delivery-blocked\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 4, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}}], \"reads\": [{\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "enabled": true,
+              "op": "partition"
+            },
+            "status": "partition",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "A",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 3,
+            "operation": {
+              "op": "deliver"
+            },
+            "status": "delivery-blocked",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 4,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 4,
+              "store": "B",
+              "available": true,
+              "revision": 0,
+              "value": "v0",
+              "requiredRevision": 1,
+              "fresh": false
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 4,
+            "store": "B",
+            "available": true,
+            "revision": 0,
+            "value": "v0",
+            "requiredRevision": 1,
+            "fresh": false
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 4,
+          "store": "B",
+          "available": true,
+          "revision": 0,
+          "value": "v0",
+          "requiredRevision": 1,
+          "fresh": false
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "heal-deliver",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "heal-deliver/input.txt",
+      "inputSha256": "9aa497f28f34c2d55829ef5c7db4bb495f1dc3e447240b7de91ae9868b82c005",
+      "startedUtc": "2026-10-05T13:11:32.012543+00:00",
+      "endedUtc": "2026-10-05T13:11:32.046398+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"enabled\": true, \"op\": \"partition\"}, \"status\": \"partition\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 3, \"operation\": {\"op\": \"deliver\"}, \"status\": \"delivery-blocked\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 4, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": true, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}}, {\"step\": 5, \"operation\": {\"enabled\": false, \"op\": \"partition\"}, \"status\": \"partition\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 6, \"operation\": {\"op\": \"deliver\"}, \"status\": \"delivered\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 7, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 7, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}], \"reads\": [{\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 0, \"value\": \"v0\", \"requiredRevision\": 1, \"fresh\": false}, {\"step\": 7, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 7, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 1, \"fresh\": true}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "enabled": true,
+              "op": "partition"
+            },
+            "status": "partition",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "A",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 3,
+            "operation": {
+              "op": "deliver"
+            },
+            "status": "delivery-blocked",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 4,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": true,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 4,
+              "store": "B",
+              "available": true,
+              "revision": 0,
+              "value": "v0",
+              "requiredRevision": 1,
+              "fresh": false
+            }
+          },
+          {
+            "step": 5,
+            "operation": {
+              "enabled": false,
+              "op": "partition"
+            },
+            "status": "partition",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 6,
+            "operation": {
+              "op": "deliver"
+            },
+            "status": "delivered",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 7,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 7,
+              "store": "B",
+              "available": true,
+              "revision": 1,
+              "value": "v1",
+              "requiredRevision": 1,
+              "fresh": true
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 4,
+            "store": "B",
+            "available": true,
+            "revision": 0,
+            "value": "v0",
+            "requiredRevision": 1,
+            "fresh": false
+          },
+          {
+            "step": 7,
+            "store": "B",
+            "available": true,
+            "revision": 1,
+            "value": "v1",
+            "requiredRevision": 1,
+            "fresh": true
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 7,
+          "store": "B",
+          "available": true,
+          "revision": 1,
+          "value": "v1",
+          "requiredRevision": 1,
+          "fresh": true
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "two-writes-one-delivery",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "two-writes-one-delivery/input.txt",
+      "inputSha256": "f45b62f6eab0a4994e2573934886476b7db6b55e0428361cc2c89c233ebf66d2",
+      "startedUtc": "2026-10-05T13:11:32.046679+00:00",
+      "endedUtc": "2026-10-05T13:11:32.079012+00:00",
+      "exitCode": 0,
+      "stdout": "{\"accepted\": true, \"reason\": null, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"op\": \"write\", \"value\": \"v2\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 2, \"value\": \"v2\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}, {\"revision\": 2, \"value\": \"v2\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 2, \"value\": \"v2\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"deliver\"}, \"status\": \"delivered\", \"stores\": {\"A\": {\"revision\": 2, \"value\": \"v2\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 2, \"value\": \"v2\"}], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 3, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 2, \"value\": \"v2\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 2, \"value\": \"v2\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}, {\"step\": 4, \"operation\": {\"op\": \"read\"}, \"status\": \"read\", \"stores\": {\"A\": {\"revision\": 2, \"value\": \"v2\", \"available\": true}, \"B\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 2, \"value\": \"v2\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": {\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 2, \"fresh\": false}}], \"reads\": [{\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 2, \"fresh\": false}], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, {\"store\": \"A\", \"revision\": 2, \"value\": \"v2\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": {\"step\": 4, \"store\": \"B\", \"available\": true, \"revision\": 1, \"value\": \"v1\", \"requiredRevision\": 2, \"fresh\": false}}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": true,
+        "reason": null,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "op": "write",
+              "value": "v2"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 2,
+                "value": "v2",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              },
+              {
+                "revision": 2,
+                "value": "v2"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 2,
+              "value": "v2",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "deliver"
+            },
+            "status": "delivered",
+            "stores": {
+              "A": {
+                "revision": 2,
+                "value": "v2",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 2,
+                "value": "v2"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 3,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 2,
+                "value": "v2",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 2,
+                "value": "v2"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 4,
+            "operation": {
+              "op": "read"
+            },
+            "status": "read",
+            "stores": {
+              "A": {
+                "revision": 2,
+                "value": "v2",
+                "available": true
+              },
+              "B": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 2,
+                "value": "v2"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": {
+              "step": 4,
+              "store": "B",
+              "available": true,
+              "revision": 1,
+              "value": "v1",
+              "requiredRevision": 2,
+              "fresh": false
+            }
+          }
+        ],
+        "reads": [
+          {
+            "step": 4,
+            "store": "B",
+            "available": true,
+            "revision": 1,
+            "value": "v1",
+            "requiredRevision": 2,
+            "fresh": false
+          }
+        ],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          },
+          {
+            "store": "A",
+            "revision": 2,
+            "value": "v2",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": {
+          "step": 4,
+          "store": "B",
+          "available": true,
+          "revision": 1,
+          "value": "v1",
+          "requiredRevision": 2,
+          "fresh": false
+        }
+      },
+      "outcome": "normal"
+    },
+    {
+      "id": "invalid-target",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "invalid-target/input.txt",
+      "inputSha256": "d05982f30bcd4eaf3e7872fb5d5ed192e4799f7ae109cdd92c32d4fd2d7d7770",
+      "startedUtc": "2026-10-05T13:11:32.079300+00:00",
+      "endedUtc": "2026-10-05T13:11:32.111852+00:00",
+      "exitCode": 2,
+      "stdout": "{\"accepted\": false, \"reason\": \"invalid target\", \"failedStep\": 0, \"trace\": [], \"reads\": [], \"acks\": [], \"answer\": null}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": false,
+        "reason": "invalid target",
+        "failedStep": 0,
+        "trace": [],
+        "reads": [],
+        "acks": [],
+        "answer": null
+      },
+      "outcome": "refusal"
+    },
+    {
+      "id": "unknown-operation",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "unknown-operation/input.txt",
+      "inputSha256": "46cd28e9ddddc2e22bf2dc8d10b91275c9fe2390de091dffac3950a656986488",
+      "startedUtc": "2026-10-05T13:11:32.112197+00:00",
+      "endedUtc": "2026-10-05T13:11:32.143569+00:00",
+      "exitCode": 2,
+      "stdout": "{\"accepted\": false, \"reason\": \"unknown operation\", \"failedStep\": 0, \"trace\": [], \"reads\": [], \"acks\": [], \"answer\": null}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": false,
+        "reason": "unknown operation",
+        "failedStep": 0,
+        "trace": [],
+        "reads": [],
+        "acks": [],
+        "answer": null
+      },
+      "outcome": "refusal"
+    },
+    {
+      "id": "invalid-write",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "invalid-write/input.txt",
+      "inputSha256": "b19d264307716cad7da6ef4304105621c3963bf310131776a30a9afc8d843115",
+      "startedUtc": "2026-10-05T13:11:32.143904+00:00",
+      "endedUtc": "2026-10-05T13:11:32.173453+00:00",
+      "exitCode": 2,
+      "stdout": "{\"accepted\": false, \"reason\": \"invalid value\", \"failedStep\": 0, \"trace\": [], \"reads\": [], \"acks\": [], \"answer\": null}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": false,
+        "reason": "invalid value",
+        "failedStep": 0,
+        "trace": [],
+        "reads": [],
+        "acks": [],
+        "answer": null
+      },
+      "outcome": "refusal"
+    },
+    {
+      "id": "invalid-partition",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "invalid-partition/input.txt",
+      "inputSha256": "59cfe6f736ff4bb69ec6fdab22d9769ebb6c1ddb58efb699e0acb09ce470cd17",
+      "startedUtc": "2026-10-05T13:11:32.173858+00:00",
+      "endedUtc": "2026-10-05T13:11:32.204159+00:00",
+      "exitCode": 2,
+      "stdout": "{\"accepted\": false, \"reason\": \"invalid partition\", \"failedStep\": 0, \"trace\": [], \"reads\": [], \"acks\": [], \"answer\": null}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": false,
+        "reason": "invalid partition",
+        "failedStep": 0,
+        "trace": [],
+        "reads": [],
+        "acks": [],
+        "answer": null
+      },
+      "outcome": "refusal"
+    },
+    {
+      "id": "unavailable-b",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "unavailable-b/input.txt",
+      "inputSha256": "ba98dff783cdff1138abaad94b943160a5d7c0c186b27c117f9d59a1199054bb",
+      "startedUtc": "2026-10-05T13:11:32.204418+00:00",
+      "endedUtc": "2026-10-05T13:11:32.234380+00:00",
+      "exitCode": 2,
+      "stdout": "{\"accepted\": false, \"reason\": \"unavailable:B\", \"failedStep\": 3, \"trace\": [{\"step\": 0, \"operation\": {\"op\": \"write\", \"value\": \"v1\"}, \"status\": \"ack-a\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": true}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": {\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}, \"read\": null}, {\"step\": 1, \"operation\": {\"available\": false, \"op\": \"availability\", \"target\": \"B\"}, \"status\": \"availability\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": false}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"A\", \"ack\": null, \"read\": null}, {\"step\": 2, \"operation\": {\"op\": \"route\", \"target\": \"B\"}, \"status\": \"route\", \"stores\": {\"A\": {\"revision\": 1, \"value\": \"v1\", \"available\": true}, \"B\": {\"revision\": 0, \"value\": \"v0\", \"available\": false}}, \"deliveryQueue\": [{\"revision\": 1, \"value\": \"v1\"}], \"partition\": false, \"router\": \"B\", \"ack\": null, \"read\": null}], \"reads\": [], \"acks\": [{\"store\": \"A\", \"revision\": 1, \"value\": \"v1\", \"scope\": \"local model ack; no B/durability guarantee\"}], \"answer\": null}\n",
+      "stderr": "",
+      "observation": {
+        "accepted": false,
+        "reason": "unavailable:B",
+        "failedStep": 3,
+        "trace": [
+          {
+            "step": 0,
+            "operation": {
+              "op": "write",
+              "value": "v1"
+            },
+            "status": "ack-a",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": true
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": {
+              "store": "A",
+              "revision": 1,
+              "value": "v1",
+              "scope": "local model ack; no B/durability guarantee"
+            },
+            "read": null
+          },
+          {
+            "step": 1,
+            "operation": {
+              "available": false,
+              "op": "availability",
+              "target": "B"
+            },
+            "status": "availability",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": false
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "A",
+            "ack": null,
+            "read": null
+          },
+          {
+            "step": 2,
+            "operation": {
+              "op": "route",
+              "target": "B"
+            },
+            "status": "route",
+            "stores": {
+              "A": {
+                "revision": 1,
+                "value": "v1",
+                "available": true
+              },
+              "B": {
+                "revision": 0,
+                "value": "v0",
+                "available": false
+              }
+            },
+            "deliveryQueue": [
+              {
+                "revision": 1,
+                "value": "v1"
+              }
+            ],
+            "partition": false,
+            "router": "B",
+            "ack": null,
+            "read": null
+          }
+        ],
+        "reads": [],
+        "acks": [
+          {
+            "store": "A",
+            "revision": 1,
+            "value": "v1",
+            "scope": "local model ack; no B/durability guarantee"
+          }
+        ],
+        "answer": null
+      },
+      "outcome": "refusal"
+    },
+    {
+      "id": "execution-failure",
+      "argv": [
+        "python3",
+        "-B",
+        "worker.py"
+      ],
+      "stdin": "execution-failure/input.txt",
+      "inputSha256": "24a0f40074ffc023990481ae0b0700f7f2350f82e25699eb3807f73d769ba0d6",
+      "startedUtc": "2026-10-05T13:11:32.234584+00:00",
+      "endedUtc": "2026-10-05T13:11:32.264046+00:00",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 10 (char 9)\n",
+      "observation": null,
+      "outcome": "execution-failure"
+    }
+  ]
+}

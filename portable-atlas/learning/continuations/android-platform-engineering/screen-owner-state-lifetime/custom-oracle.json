@@ -1,0 +1,118 @@
+{
+  "cases": [
+    {
+      "id": "global-empty",
+      "case": "global-leak",
+      "events": [],
+      "status": "FAULT_GLOBAL_LEAK",
+      "rows": [
+        [
+          1,
+          true,
+          [
+            "p1:A:1",
+            1,
+            2
+          ],
+          [
+            "p1:B:2",
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "dead-empty",
+      "case": "dead-owner-reuse",
+      "events": [],
+      "status": "FAULT_DEAD_REUSE",
+      "rows": [
+        [
+          1,
+          true,
+          [
+            "p1:A:1",
+            1,
+            2
+          ],
+          [
+            "p1:B:2",
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "remove-a",
+      "case": "rotate-b",
+      "events": [
+        {
+          "op": "finish",
+          "target": "A"
+        }
+      ],
+      "status": "NORMAL",
+      "rows": [
+        [
+          1,
+          true,
+          [
+            "p1:A:1",
+            1,
+            2
+          ],
+          [
+            "p1:B:2",
+            1,
+            1
+          ]
+        ],
+        [
+          1,
+          true,
+          null,
+          [
+            "p1:B:2",
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "death-only",
+      "case": "new-process-b",
+      "events": [
+        {
+          "op": "death",
+          "target": null
+        }
+      ],
+      "status": "NORMAL",
+      "rows": [
+        [
+          1,
+          true,
+          [
+            "p1:A:1",
+            1,
+            2
+          ],
+          [
+            "p1:B:2",
+            1,
+            1
+          ]
+        ],
+        [
+          1,
+          false,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

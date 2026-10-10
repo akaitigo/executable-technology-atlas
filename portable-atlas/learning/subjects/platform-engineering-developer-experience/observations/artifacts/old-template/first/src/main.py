@@ -1,0 +1,2 @@
+PROJECT = "cedar"
+KIND = "library"

@@ -1,0 +1,9 @@
+(function(g){'use strict';
+const canonical=x=>Array.isArray(x)?'['+x.map(canonical).join(',')+']':x&&typeof x==='object'?'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}':JSON.stringify(x);
+const need=(ok,message)=>{if(!ok)throw Error(message);};
+function validate(data,id){const e=g.AtlasCallExpectations;need(e&&data&&canonical(data)===canonical(e),'入力・計算・実行日時の固定記録と一致しません。');const row=data.result.cases.find(x=>x.id===id);need(row,'選んだ条件がありません。');return row;}
+const initial=()=>({caseId:'normal',prediction:null,recordMode:'normal',shown:false,answer:false,error:''});
+function change(s,kind,value){const n={...s,shown:false,answer:false,error:''};if(kind==='case'){need(g.AtlasCallExpectations.fixtures.cases.some(x=>x.id===value),'unknown case');return {...n,caseId:value,prediction:null,recordMode:'normal'};}if(kind==='prediction'){need(['reject','approved','fault'].includes(value),'unknown prediction');n.prediction=value;}else if(kind==='record'){need(['normal','missing','altered','old'].includes(value),'unknown record');n.recordMode=value;}else if(kind==='reset')return {...initial(),caseId:s.caseId};else throw Error('unknown change');return n;}
+function read(s,data){const n={...s,shown:false,answer:false,error:''};if(!s.prediction)return {...n,error:'addがどうなるかを予想してから開いてください。'};try{let d=data;if(s.recordMode!=='normal'){d=JSON.parse(JSON.stringify(data));let i=d.result.cases.findIndex(x=>x.id===s.caseId);if(s.recordMode==='missing')d.result.cases.splice(i,1);else if(s.recordMode==='altered')d.result.cases[i].add_calls=9;else d.result.cases[i]=d.result.cases.find(x=>x.id!==s.caseId);}validate(d,s.caseId);return {...n,shown:true};}catch(e){return {...n,error:'記録を表示しません：'+e.message};}}
+const api={canonical,validate,initial,change,read};if(typeof module!=='undefined'&&module.exports)module.exports=api;else g.AtlasCallState=api;
+})(typeof window==='undefined'?globalThis:window);

@@ -1,0 +1,4108 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-10-05T06:20:23.849543+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "system": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64"
+  },
+  "command": "python3 -B check.py --record",
+  "clock": "fixed integer model clock; real execution time is executedAt",
+  "measurements": {
+    "intentionalFaultComparison": [
+      {
+        "intentionalFault": "expiry-exclusive",
+        "input": {
+          "phase": "overlap",
+          "version": "v1",
+          "now": 110,
+          "fault": "none"
+        },
+        "faultyResult": "accept",
+        "independentExpected": "expired",
+        "detected": true
+      },
+      {
+        "intentionalFault": "revoked-key-accepted",
+        "input": {
+          "phase": "revoked",
+          "version": "v1",
+          "now": 100,
+          "fault": "none"
+        },
+        "faultyResult": "accept",
+        "independentExpected": "revoked",
+        "detected": true
+      }
+    ],
+    "cases": [
+      {
+        "expected": "accept",
+        "inputSha256": "0daee94dab050ec9ccd7f321e463dc075f98ef096ce63aa209eb6634b15db1b4",
+        "rawSha256": "ae77d84ac88b6e93bfc5d0e01263943a62403a46885edf0bf86afc1fe073ca72",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "90984a256a9a2236302ab7cf12211b77641a2a70571ff75426c7208321bc61e8",
+        "rawSha256": "f1168eddab77c6ce3cdbab7a5c5cb6fc3e34672acb5f69d4650fed146a7e011e",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "3fbcb88d1da2275052c3fc9c71024ff36b326942b111adc6140c7eb9f329e343",
+        "rawSha256": "54a15e8a1dca0fc7a73066d12d23d9612295e0770a866fa37bce2fab02405720",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "40af8c481fd6fb4880c1fa015f21e547627531d4e1814f50e48d7c0397c3a598",
+        "rawSha256": "19df7d020ff457e123c13481ad6731de825c50781e811c38a062551e2445f5eb",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "8b7078e74c6e04b0abef0c6680c11b43ddc505992c189e8a39c7363b24e3939f",
+        "rawSha256": "61b3bba48098d44927cfe6c5765d5f42af0619cbd096f248c5da3d42bfd4222a",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "31a1040524c54c29727ccb5bd831f5c36b53a5c7a658b9f80e18f7e0508b08eb",
+        "rawSha256": "5991864d55f47853127e7149140e0bfff5306783f29066f5927a27b2c7b3d5a4",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "f51448c0a0ea29de281c132c6c778df69fcda63ba5900bf62fec04ebf6b91409",
+        "rawSha256": "69c416f83237ad393597731fa51b29d3338694bda6465ad4b3beead8cad38934",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "53af93e3d2acf0f64439e80edddf964d787fff46c0118e84706a2fc45b3c8d7f",
+        "rawSha256": "38f545ee581bdcc3ca4dd3b1d9315a2901a26106d865025a76f942fe4b8f76a7",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "82f317482113a2a312438293986ea16eb485c004ab314fc882d78ea511ae2942",
+        "rawSha256": "4dafa864351596945b88bd9078ee95588d98a12bb3f3bc08014eacc4a755cd3a",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "01fcccda25dbd72cb4feb316dc2e202129fb9df19571fd4746b663cc11cae812",
+        "rawSha256": "30a4a5425d726f6ae589e8f70bd81c51fe142f755b7c91b8cdd5db9c6f0f89d3",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "5d7633cd7152b0c75e0a60b6214c376c799f4ac9e076e8d0494787f021422434",
+        "rawSha256": "66eb016092e175ca8fe0738ffc379c39d3a57f8e0c50125efa2d1a02374b23a4",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "d13f9254abe302bea9573f95940c78746a6c698c48bee7bed860cd800c9c2fbb",
+        "rawSha256": "6fa6d92c840e072865376725e0f18bf76baa575eababf9eeffa35371c2b0999e",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "f3170ed10e2fb85be542cc42a43389dc209dbc57393eb5022560ac825eb71124",
+        "rawSha256": "431a9000af7c1f757ccf33501f664c6142a10e268fc6486039bb4463770f61a3",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "bb54aa04c86dd1414621009f7c53dd53bcc7fbd0a8a2089d8e9d4b8b6f1e7130",
+        "rawSha256": "7df50f5645a3b96b07ebcdf75aa8132bf03420446a40e08bcb4794334d54384b",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "f919e02446b8a2248f53edbceb7a2dba8e8ea2aeb029a45fbc1fa402fdafb26c",
+        "rawSha256": "d40189e77171af64f9d7a69ce7a7cb6888e404a47e3a9c78f67650e63c21f513",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "6bb7e9b1b2cafee89b5baa9fde4434eb3d7a2bb9eccafedf93e6a20b01605441",
+        "rawSha256": "d52df8a3b585c103b18c3b29e6c4a25e43e471ed146125ca115ca01eeeff553f",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "fe762099f4aa0f3c41fcc57b3308521e067bc5741a5ef801c2490c6ecb998f48",
+        "rawSha256": "ed3931becd1fd75107f9ccf40bb7b40e4dad7a8419d4bc86355f1746478856ee",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "c6f560014f61425d775003556c603e10ce61b538814c56452e3c6add33456aef",
+        "rawSha256": "b734fe76e214228af19827f05a947b31caa617061407e36e1b4d52c796b14dda",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "9432bcbfd4a96a4b7d12d84197ca88930bb1fc46550f7a76e713f85ab5302bdd",
+        "rawSha256": "c00e4b1068ba43b63a09da5b8b310bc55209489ad31d475733a420081287ffc4",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "2d28c5b5c0de0e49be59f3be901736b1e707ccd744ac91f80640bed6cc8c0a2d",
+        "rawSha256": "6f263bb2e3f04a9c2e25436601502e6c7853181acded9e0bfc1009b765698bb3",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "17eaa8cdfb405bca2cc7ce0fb135540f77dde1566c1aaf459200cbc105fda19c",
+        "rawSha256": "c8ec6c0455a9a437f2582d4b30d095187074fe30f2016ff0b4f798faefd765fe",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "cbfe181cc1ec6f490e87a521547b52c4ab284dd811b51c21a8883ad0723da1cb",
+        "rawSha256": "35ac87a43ebaa1cb88ebf7879e2df83dfe6d4cbfa3eac657eeeeb0b5941d3768",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "1cd28d77ad3481d5aa8109dec270745865fed07bff5ed3eebe16d7c1d8fd36ef",
+        "rawSha256": "98610ec5b0496ed26614d9ead9b1112bfa75a1f215f9884cb0de0cb4e8754101",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "ce733cb813a81b12dea8543604e255d490455edcdab5c6a67622464e36346816",
+        "rawSha256": "0c67e2119c8af10170887f6d9926f4da5e0b1e1755f94dd3ede5024db887f2b3",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "47d01dd1402cad51923a3713592f0fcc4f484dc6bf7af3f368d86a7231a848fd",
+        "rawSha256": "8f459d73dad5996f320c360f9f0fb13493ed83047733ebf0bf82dc467b231e89",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 0,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "dc6cb262fc093b2a379904362ee34c78d2efad13b844ae8326c179fd46bf607a",
+        "rawSha256": "a53466e1000fd8a3804bb8ced916f9c06d9019b08ca5a73d8f0025f9e0726694",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 0,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "54f7b75256f3d6d0c2ae92b88ecd2ff1dc50110c0738b993374726d6988ebe09",
+        "rawSha256": "b04e7a21c85e261d124991b1283a3fb6d1ee16ea5d5f607896cba70bcbd75e69",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "14d84f0ce86d51a0dc5d3147c66571216b97bfa18eb8765d96f8a4c95f0748cb",
+        "rawSha256": "2cd11cacca1f28931e578278c68c358d07366d1f7ae33f3e6394ad88a995f946",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "08ba0fcce333cb7ee4b9ec3f9d9d8b3a74ec0f7b092464c9d814a1c41183cdd3",
+        "rawSha256": "943bdd4d64beea99dda6af81122ac2341067c18f041c2a48c7c4c4a9130945b6",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 100,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "e3fc41e28943bd63745d5afc5beb3c77a15126e3b113e325b66053f9be408436",
+        "rawSha256": "14158442ad8f9a1595fde601b5dfa9e3338fc81df59783abb2a427545ba3ef74",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 100,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "fcd1d61115496de45500575614ebc5cfb019e55ff54f9668836f02258afc3ef4",
+        "rawSha256": "483a763ba7df66e34da6b684149303a0cc512e2caa39989aaf226254c7481878",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "81f1d329e6391459c974a01b89de38fb9e7bbbc083322d0a4dec365e8615af78",
+        "rawSha256": "f24424fbe9ef0b352d3ae248ddbd2571111d85fa83b4a5bb03c50fd6eb3a7e97",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "7db67440833d0e7492ab6768b3439a193b93c3975153085b1611200d699844dc",
+        "rawSha256": "feaf149365a73d8ecd9c452549ca40d28926adb7f93d6bdd784be9bcb20b4ae7",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 109,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "7503f772eab020c2645d9a6cf61793ad50227e2f449d5c9afd8f0ab1a97df19d",
+        "rawSha256": "34210545f16bdcc259e9964f97f670d715bfa97dc7abd4967d905256ac0a4da7",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 109,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "1972f3af21076438ea8a85ffa3cbbbb6bd63aad053b00e133a4f42982b88c42e",
+        "rawSha256": "02b97ef7ce18b7c57ae267359fc20110d9c31fba71136d89e17a85619add7808",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "45f0174dd6854ee638ac0e9ee13963fd91a18c19200d4071f85977695ac65952",
+        "rawSha256": "bb012d426bd264584cbf36c9a9f981d6bd979e26c18f49b96b3c46625f944f32",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "204aab04a278f0bf8fe73dc94f719ed1f93341aa9cfef897bd3fb0e4be84e991",
+        "rawSha256": "fff8ce365cb4aa6174ca51fef5822c771a4ff52e020ebeb90bbe16119cc78313",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 110,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "ab67b9ba5b937dae6561025bfe80603991596d74010ccab3855d85821267e09f",
+        "rawSha256": "9a2e75443d4a815479dc2aeb4a99884859d77027e3ce31bd2d2bec97ef954712",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 110,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "1a0bb951053256c636474fcfd23286681a574d5bb64acf4f8ce64e203f1439b9",
+        "rawSha256": "b0fd6f339d80ad73b16919ed233bac9f1effeff098b1fbab6f4849ad84cd3571",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "81383e6eafa4f4852497aee166d8f7bd68068563eb58a5ad30f30b2a8982fa1b",
+        "rawSha256": "75f9cfd9cb53328ba9a86382969db32d977f0f34b11c4c86f3ad72daf94365ee",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "31bf1c139dd1f0368e55aaff4110144c14bd2fae0078a33902ac3c0d3972737d",
+        "rawSha256": "3f6b9196d98eecb695ebc702eefe5dc9927d00141ab2105abea990fa4d82038a",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 111,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "2adcd47f680e400accc94a73526431fc89e266f398fb6e9ecccfe77f0f1aae7a",
+        "rawSha256": "7ea7448b4d39db5dfb508c0036fe6082a7bc8c93018a6217b554bcd7b49b8a24",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 111,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "97648bb1f94ad01ecb06dadb33937f28c190b25fe674e4663724f6b8a954e741",
+        "rawSha256": "cfa362047bc8f15f97ffa01c2325b64b561856c6cc19de07c37ba19ca6f3e213",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "28d04e949c4802fbe2aa930c2eb168819eaa19710bc92e094c2c7b2372293baa",
+        "rawSha256": "a701d7aa45b79a1d282985ed167296294e9ad65194e80e9fb405454d18402499",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "d2c137f633d8b7d0ffad356dcff40e3681bf048ff0bcbe1e6d79452ade4be63f",
+        "rawSha256": "bc77682bc8b5da1047bc2a37c2a32f34b1e7397e56d2bbef6acca327d827acc2",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "initial",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "f1cd62fd446033cfa35e44bc499f4656bb7b4c31124fb1ab309aaa26699d1f4d",
+        "rawSha256": "efe8c3f394e6768c430ead9967b3b43aef6cc2da345f7682bd4a059dff4b61f8",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "initial",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "15d103c86abbe9ef90a31c21213f3a4d66b2f3a661953f87cb2bf3b184d4a949",
+        "rawSha256": "039d82d3f6f123b8b894d66266bc1765d69d441e7f1bb34efab3d44cd8eadb53",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "0a0bfcb27d5a0d131b4da100b2404e5d4dd3c03fe4e5a8e218af1dfd888fc33d",
+        "rawSha256": "a60b9e3e3e8fe9b361904327d5d8f5623d54e3774b84929b222192c8c2c20a4b",
+        "raw": {
+          "input": {
+            "phase": "initial",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v1"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "348ee8136d223f941ba82041adab545f64f26c7f2628117efcae7d8b9336eda9",
+        "rawSha256": "4bf5d26e70a35172febc5f1858933acf94df0dc88c2d8c8be6841431e3276b01",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "c49b5fa2f616164797a4eca5ba566cae7aa0aaa51bb152f4b83be16782d287a4",
+        "rawSha256": "c97e10d79e78936b6f3841617c562af7149119179fbf8a9a4a69048f8b0b8035",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "e2eac3014c1383032eadffd73fd2a6f41f5fba25524ecacca4f8799d423d003b",
+        "rawSha256": "5010ea805739094fe15d26991b226de30648c6798a919d0b86d27ad9f36bc969",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "f6fc3ece287719a388f681ea5cf09016f88e79c75bf5ee1c2d2f193581f026d0",
+        "rawSha256": "69718f626b08f7ab585e995bcfa9aed515344e20f953f10644c2d3b43837b65f",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "fd9569dd1d7a401077f433e69713b07559680b3c5529aa5ed91923a87b3abb67",
+        "rawSha256": "d9e525531fca8aaabcdfee8919c7caedce01580193e26b644eeb729935b085e2",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "c75dee2970ce7d770dfc443c50d4f058bca644fc86ff6efa73bd3d5f00a29ee7",
+        "rawSha256": "a7a88246005990957c880758ccd0c3bc54188927d32154cce1db0ddf23128509",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "6673366b4b41da119ee9a3d221e0d7dbc1edb800207e5d8850260b6481e033ac",
+        "rawSha256": "902bb694b522b437a3302d3d2b950416c050c7f8bb523ec27e3f93edc9ab9a43",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "bc757aacdb47174c6a7f006ed3b8f56b2a44047d1056865e5aa5a33a08c53e7b",
+        "rawSha256": "0d7bbe65c89b486ebe2b569f1167c234ee4eb5a3811502b3251de5d76661b641",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "29c8f9456735bd50be59196b140241232d77ba3194312115f9711fcba47093a7",
+        "rawSha256": "96d159b744266166046006c644b68bcc5b0f5e0e5bd0aaa5eb6cce8a38f279bf",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "2d6c4f4b1259d5812aead0ff8b4e2deea90526122b6321e5d81600ff92c75e92",
+        "rawSha256": "f7c48468ab43c65e87c4d194ef7f579a97e9f69575658e40f92d1a071e5bcc82",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "8ebdbe293e1bdce121eda866d3893cfff2c1936a13008cb125fb214b4e547318",
+        "rawSha256": "967138c0f409e105607464cdb59fb1f4ca53f84b2080905f37405e98b9b5466d",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "790f97b414b69e26e16e382d7a4ced42ffa54032913bbc6d63f2c5aada297669",
+        "rawSha256": "14b49225aafa550cc92c562f252fa4ccd1529a55ee98bd72994a4b9bf1cb3255",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "79c0189c6f735087ae98725fd1984579dce61919f1305595bcd7d6be42404eb6",
+        "rawSha256": "ea19daed9239e68b59a870b02cb0f5e1526f9c2b40c04bacd9fa6dbbbd931025",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "055041bfcd1e146f03cdbccf7edda889a7987030e3e336b43744d71966c64adf",
+        "rawSha256": "26171266f21389c1ac3f8af73580e0b3434c172efe0f6fc7f1132c13e537b115",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "81f7145e240288dc2fc2aa25e57f8a1aea5c8310592904b7e88d84d9e80f7904",
+        "rawSha256": "0c86ab1c804c9c9b9368b80910ae50100feef5dc5a9785afc816b26746dd3b33",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "73d0aeee6123e79913d6ec82b252e943f52f53ec54be0615a2c216aa51bb427f",
+        "rawSha256": "158e43dd2b7d074edac79a4d07768c2b6d1844ecdcabc7a1005df60ff515a45e",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "79ed74368433c7d60d653b7baac96ab367cf997d962fcba42a005498faf9b6fe",
+        "rawSha256": "c8a026ea58f0de11f6cc2ab8e55baa63067cd1e15b83191f845edcdc6d0f8f71",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "2d76ca52fdc1155447efca9f0b0b9ff80683ced79fe3f27e91061938237c496c",
+        "rawSha256": "4aa714efba94d7ee78719112099a88e586dc49a0328d1d8711cebcfe3ab25d2f",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "a363de524e16567e95c27f723b72eac749ead4a28cc95585b4207354160f597e",
+        "rawSha256": "3e21b861cb4816ee65be73685ed1955b64847084b2b9606f9db67444594c2b51",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "7ec0f8f26b7e30f1aa58867ea7b4761d195e5690919a298472f3050540ddefd1",
+        "rawSha256": "31302d80566caaa2bfb622c11ab3653b9708011434ce6644d6aa9c039ffbae60",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "9e22676c839333fcf7ce8dd652f04192714b651fb182f641f35938527986ac88",
+        "rawSha256": "691641ca996ff8f4e0ea4b3355020e6ed20a52d65087ad3ff41db31b04b21d73",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "4555c9fa754146518b98c9bb5a5fb4979fd365cbd2c39011e74f4fa728de9eb3",
+        "rawSha256": "eb809e1928188d7fcd91cf5bbcdd21187cd09a4c7e48d97998f5abb93f2f468e",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "410ee47870d7bac5f16817e5cab931592cd8fe4c51cc2cb1ffb1bcdcc88591dc",
+        "rawSha256": "d0a3c85ed3fafd1654c7510bdb264896463fa42489af913c139cd488dac48a4d",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "6253e61dc592fa0ff313ccbf5398e315284d312eae6977a31db3f5112afba867",
+        "rawSha256": "2997dea028101e533957400ad710dee3b2e0c847e94be3e79db7e28c7903c3df",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "37377d46920d213f6831c3caf84a79c3233b163ea831e07b9d8e3a3baf31edc7",
+        "rawSha256": "5ed56fff4010509b237ceecd51ac8403c70f120e1ce7a5ce79bdfc59264aa0e5",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "f6436b18892dba4cddcbebc9e656a79f5d2b02569fe6570a98cf1bae726be1c1",
+        "rawSha256": "d847640487d69851606a6c6ca0d20e3a954a02ff4f371f7030575d9d50417d2c",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "812be32a6fc804adef231ab20b0b3b976bd92ae589ef63dd2ef5963ea26a297a",
+        "rawSha256": "c94083702cc220e8c3b37739977d166976bcde093e5080a2836426667dc5bf3a",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "0f6a6680f513db6c9739c1e9b9a2fce61a09cb0254c54d82baa86a5fee51cd8d",
+        "rawSha256": "18bb36eadaf20314009d5bf976230da035f84f353c11334d9c83d0d28f2a0288",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "4b9959773a90fad19506e1dda1b46bb8529411a0e2bee03e5f1515f590221445",
+        "rawSha256": "28d423a73b53fbb3fd542aa1add0c766b4cd625ddc00e1f967c148a86f8d6d2c",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "5371f0212e736e77fa21b8053ac52e83af6e73e479ca9c44a6b8c2c05b171468",
+        "rawSha256": "e3cc83ffacf3ed55cf50c8bffed6f9a391598dc5cd9917ed274d5e4d9b511b49",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "38bfbf9536d0be14fe051e2ea627971f2dac60341994ae530138ec853555a03f",
+        "rawSha256": "19f88cb9ae3fe02e0b7cc307998c089be1b3e018768c31de8920684d01d235fa",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "9088f12b521004e64f41dc308f15be064fea1f9e28cc4a35c1dad88999f85fb0",
+        "rawSha256": "e969690b2f18e4b8d209dcf76168aef6e6e342a895d51aa5367c88dfbc5d4eff",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "b0060d5e65ea9663b79ab8bc65e31a42c917f9fd013cc2cbc53b5486516a4165",
+        "rawSha256": "fda6f760e499dcc20e5ddd5a2c1f2a644627a04799289bbea2f1d99ac12ca6ef",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "45625100b93407521d14876b370a857beb9a90f1d86d8dd7a3f658c3054804dd",
+        "rawSha256": "7c2e29be00d74c7a6866f20465b2444f94d3bf1c6d3d63147cd770062ca5b09a",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "aa84518d23caa7aa735d31f83f2539069481a3646cbbe8eb9cf30179b49e991d",
+        "rawSha256": "45e4bb2ba36af043f98a26ccd2b3a8084fe5f24f41eafed68f6deef22be5e788",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "b2e4e17bc40a288dddc56e469d00c0269d459d60ab2340be872bf36230f40f17",
+        "rawSha256": "42ee2b596aaf9e8f27872196df4278c036c305b71e7a587e749b4ac46c534801",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "27838e43441cfbbfa9bb41b9573ffa091516ceee2d70539c162ad2e930cd34f5",
+        "rawSha256": "43a8ac062bace0bef6d4ec48c0c1f0485d8e59e8fd971dde52f93a7bbb02a68c",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "a4925c31bd4905d12a077209fa35af639f7f73b1bbd8def8cb2d78f51208b3cd",
+        "rawSha256": "c93a67c7875cc932b9b4a896e62c5fad7c583624a3f501c33fb4061270ac1508",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "11948f1c8622d6efb96734acb03a85633325a0e160d9d39c7ffba78e07db91ad",
+        "rawSha256": "b29a42ccff4459ea68e5cf75c32ca1b8dc25a34dec05c05f33eed3a86a69e180",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "18cdd636114447e1338c0b768a66b55ff90c28a1097861a6b73c7bee02b50563",
+        "rawSha256": "63213541156fd591a6373a44a184ac854445bae12a27ff4eab33d25a73249803",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "97ef516a8da264de0f626bec61258633f4fa3ceb1b425beb953746e111894b42",
+        "rawSha256": "23309ea4b8c88b78d49358854e6b1792233488e100364609ae63fabbe4808f9f",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "c5d448372374f5eacb0bf0b4b5d41fe15c88c18d34c2ede0b9aba4e005646c1b",
+        "rawSha256": "16f6f115e5495b79d31c66c4999a283448fec2ffe67135d3a27371485a31e807",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "2b6575d786153c0cd2194db800f81a19a1bf5892298b8c86e535d163545d353f",
+        "rawSha256": "b603ce4735fd9038ad3b10053138f4c1bb068f8abe0e88102a694ad2adca4ecd",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "63cbdb80d0e4827b15f6c1762bec4f048655ac405c00ac85993cb2045b8b8ac3",
+        "rawSha256": "45e5531d16a8c08358bbc9897a2bbaf94c83632a57c7c01bc4a7aa75f78fbda0",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "198fdd2775abbeff58fd19d318a434f59d7f819dd3767a6820e12cb7884d2ce3",
+        "rawSha256": "24e270aceb6f06d2fbde5e975b48d799fbc765c7ffda331f93377ea5ffbe8562",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "overlap",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "e6b6b1c114dc69902e394a87b9e7a5c14e23b497212424930962ec5400c2b530",
+        "rawSha256": "34051e910678c0947b92b4ce90762ca3b3fddddad2d52d1b89bf0e16cf680755",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "overlap",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "c1c0a7a0e45a8cf490d52b12affd60341e22949332d4e76e4f6c3cff5de94338",
+        "rawSha256": "3fca4c44ffa3c1db8d9fe5c8c2e3d87e83250a3b2c33eca0d071abf11e33f484",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "86f5d35378824a01db08ba5a0b9943a135d94d4402863d248304929b12673f5b",
+        "rawSha256": "cb89a623d2cbd617cfabc30c0e09af0f237dadeeecbc3b3a891b773773a43b9b",
+        "raw": {
+          "input": {
+            "phase": "overlap",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "6d30ab4f8f0c070de56b96b3f0809f31ee688ba6a9ee36b6e295d55816b63024",
+        "rawSha256": "35196a44910d41f4cb6a941c7400f2d28c2b44138a0e56b98127b0042645d150",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 0,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "6eaadc0b27c7a1fa07868964c307cdd8161f4ba643e7a3ba3b56c0057be06c83",
+        "rawSha256": "df7b5d4a9d64ff60c4e42f1d13d1431e81fe83c9982ec22c957ad5d730bdae9f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 0,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "2be5c15d48032fdebf45ab9abc44f677d2e8f9a7cbbf2c661c4ff458a05b872d",
+        "rawSha256": "ecb6be62a08806d1a68173e5fe4495be37d8c4bcdb59f2ed848d6cc93d1ee56f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "3f57640395ef7ccc7f470f22aac5255134b1c44a4c74c1bc8ed4e91b115e0f12",
+        "rawSha256": "f5135e7b216fbafeb15bf51330632ea74d4bb05495246d3485b0a9fc36a45a82",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "42cdd2988090dd1105bbc90df07aaa8f578a7c70520909ed52299d872c2fe495",
+        "rawSha256": "31f29e433d73e66fab0d7facbc15d8c845f5cce76d521de25dd15805d317cee4",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 100,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "00193c81f60ac8d8aea889c42588d1d2d06b417997499b393dcb57955719c1b7",
+        "rawSha256": "4cc0090df947aefab6b2775b454ce359682003c9b774de1c8f7d648137a9f7e8",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 100,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "3fb329e1f75df59352335a360917e6224580286627d9e64939e9c2a2335a339a",
+        "rawSha256": "e46363d3e00fcc979f9c61a060891a5848934927715eb0a745f8c5df6ad4b691",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "522f79db0bceae989e03e77c5bc7185f0fa046f3b09f6a45dc575aa0e07d5d6e",
+        "rawSha256": "646886d81cad24e59acd5d3d4cdf249a7244337538c8f4b023710dc8f74976e8",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "75c0d9d90e102fddddec0accbe306ba704c733b9955211776803c435e3490d0b",
+        "rawSha256": "123f0f78310ff5e0662dbfdd1b174e01c43631189bdea2b6535e0a784562ebc3",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 109,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "4665841c82b36d0532bbd83e200461fba8303f08dd900d05b124053d4ed29663",
+        "rawSha256": "b1e3c3218949dcc1be34629052e0489c091106c28f18a7f225b64d33a06aea8e",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 109,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "2d93adc4a40df0ef1493cbab58fc9634220ed3791864764b30b73223eaf1088b",
+        "rawSha256": "0d734b85ea2eacee13b411f8e1e62acf3bb051e6a9b6227374b12e4dfef4dc97",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "c3db974a2f8652f9cd71be425988c1cc872f0a1faec5846ab22ebe893db44025",
+        "rawSha256": "4f0813a4a551fb73dbc2fe6e8cb039f45d8789633bd6fa48b85cfbcbb9bf7512",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "90cd52212dc002fb20dff8d3fccc2ba1c4f7cb084be0dfea494280494a0abd1a",
+        "rawSha256": "48d2eff1678e68a45e56edffd50cca551d78e62222655cbe3918d77066975330",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 110,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "33669468f5525eb00c0fa9e2a2646504b6ed707500edeed95e9e6f1cea81bbd0",
+        "rawSha256": "8598bfaec8ff538a40aafb6a38984949f65d48de6c465a89c64002da2646d430",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 110,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "ada50310bdd2afe3e858303a16702f07b50d8abc9a9139ddb28346e8517518cd",
+        "rawSha256": "9f0d7ed4e2850ff9fae9d6b8f1aebc8bb0e57b1e0d7045a3d18bbe6f1f92e387",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "0961bc20c358c7b54044ffbf80ba9fcbec2cc8b30e71d985b3f5fb2a10ebe7a6",
+        "rawSha256": "d340d93c993bfef95f2d3c5f135f5bd14013dfd3110a8d95a3a4e4d54b7546cf",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "1f79447bffd78f1970487d64d86f3022e3772635fd23050ee5dc3a4a36c1fdff",
+        "rawSha256": "bea3246c5fd4fddfbe5170297133e9137a6fabb597d0205081a7f6ac67bdf61f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 111,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "2045b985cb087f1f53ed7632185dbf7bb5058f3e3d41619a92a3c33525c24794",
+        "rawSha256": "4a004b52ee86db99a70c0b136b5b6762cfebc3246529866c2960b520261d5c05",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 111,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "5aa43e390d99520f7a417d5011c39e55eb2d1dda8ab6451b153946296c28bc38",
+        "rawSha256": "f22b25c0991b63977991c364752457d64acd3ea9457f16ff68c2d362324f167f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "9765f03fa011e63bb6aa2349d91704f6911c7b7048c821125b0f55b189cc28dd",
+        "rawSha256": "fa575d2919ee69a4197506af71add8159246c7a3ad4c9a406c212bc39e4835d7",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "2f6a0ec80c19cf64ad18c797b0dcdb9f890b9c381bac55764d581ebdbb19f017",
+        "rawSha256": "e17325662871464fbee7d7887a1d46d87730c6a9c31f18d5f0a4ed61db87058c",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "revoked",
+        "inputSha256": "0aef3d80aadac771a684b1482a1932a8fc3f9fc8eaa9c16b0bf4a139481acc57",
+        "rawSha256": "72e696cce9c917343cdafc026c776050c344514de9cdd22355360bce9a24a4f0",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "version": "v1",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v1\"}",
+            "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+            "computedMAC": "6a73fee43f8b4a2d661044bb41ab74b2871133f71ac3f3e18db355cce7c38771",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": false,
+            "result": "revoked"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "94784d3ee784303bcaf97c97bea16c1d3c5ae5953c7bf9b044f98f701e097d15",
+        "rawSha256": "e95d77c90895957483a63437e0f8a5f9cff80bf1d5ee3626e55cbef360e8bf6d",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "31d3b90668f51b2cb3e3040b53cbf5fa6785edfcc7756acda69feea43e6c4b6d",
+        "rawSha256": "72b7b4c49558d78545f31e208bd40b0b6d8dc3106f3297c63998757bb63c3c61",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v1",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v1",
+            "payload": "demo",
+            "expires": true,
+            "mac": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "0a9f4ac65574564b14bccb49523c71408aca9f99b36ae8b0d15de0ca2dcae5ec",
+        "rawSha256": "37c45de3d318a32baa4de7459a631ea3be86cb2733f8c83f4c78cd6eb3013379",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 0,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "25894f2193e59f0fc1c8583a1dd232a51dfea6e600fd2501b79e2250b89671c8",
+        "rawSha256": "32b44ffa7f0a032829aaba18325388cc600a7244a10aba110fa3a8077295f672",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 0,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 0,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "722d85a34e050f161a5c84132ca28500105520088c354652c56835f019ecceb1",
+        "rawSha256": "e51570bc6d500a391688694af3eb001826aa3610d07d39cc5c3f71de16be200f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 0,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "a8fb2ef6efe950213be5171676eb74415d439f13a9c48594cb3243faa829294e",
+        "rawSha256": "b73acfb5d9c8aae89b93df92b19ee8177f1813de11d1155043121ddc20d493b8",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 0,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "cb35cac226d263339c9d70a18e6f06c9bf4ccaac75b4d96f9ab564d076ef1084",
+        "rawSha256": "2222a495aaa86b9a18be23e128720c0eb8355e49d441fdeda210c8e9e82e6825",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 100,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "b3d8a69e68e3c348a91faf702195cf4896df32e080d1c62cb0dd4a670c9d3e00",
+        "rawSha256": "e45d3fabb819ff6db4d3aac8b394657b71dd5d15b2679ccba6270a8a6e1ab450",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 100,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 100,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "76b8fd963f01f39176a0dd191e24d47637c288fa342dad3cd5ea99461115b537",
+        "rawSha256": "9cb704bb56b42385332248a895b91ad40f8675d846c5f76cd4a58c133faea422",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 100,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "5db0618f91c110c2435c52c5f7c94bd1a5747fdffb5378d88c978ef27585d404",
+        "rawSha256": "cf596ffdc96b705fd4366b51302ee0e4d2beafc45ac7aca856041d00a044ae7c",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 100,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "accept",
+        "inputSha256": "5ea7fc18408df7f0510d616979411ef4068db2f1320dab2c9404bd64ebfe7b69",
+        "rawSha256": "0e2ba891d64c96a46728a1dc89844a9203b5f49b932244eeafa20f8de71a6652",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 109,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "accept"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "de2099a426b521989e7ace05c5ea2bed6b0ef25ca578f2dfc4f9f60886c295a2",
+        "rawSha256": "9c36158edd47409a114763605a53ddc492932bcb55747e5103183b7a40fb257f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 109,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 109,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "3f4e44babd76c60bde45f80bd1b2adb004735f3bb539a2a3cffd374d40a920ee",
+        "rawSha256": "c0605a7d7bc9982f02b1efdc05a3d2728f13df94ed35ff37d4c27663ce839b32",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 109,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "77150c3869c01a0974df7cd5ad48c74f16f727c8483b94979865befbebc09586",
+        "rawSha256": "c6287db4d5407990d1dc3062ed34d739c5e4cbe64f2f7ef88b0670a2e54be71c",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 109,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "452ecd9e0b57cfb2119807db693d39b2c2ce227dc849c4d0e743e0618ed09473",
+        "rawSha256": "b925db32c188a676928c06bb71c1e593d73e2ddd4ff47cb82d5b3b0fe39c32af",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 110,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "6cd0a8f5455a65129ae51bbf12df620e6e18c072c757c72e22b4e864a04c8660",
+        "rawSha256": "0c3aaba195edbae27145d38807ab413abcfde46c0d001e3ab919dea7d1318c45",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 110,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 110,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "5f956d26d5323fd12b4c6affa422998ea2edc882de603f8b3a6147ac8f78432f",
+        "rawSha256": "f41cf0b36b8443b3b8053897a0214003893d9f4b970c9224c7d8e7ed11bb45b2",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 110,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "4621c7261aa039ea0595e2c6469818c8e93572bc6327e1a6f11345185b0a4741",
+        "rawSha256": "9dcd2963a0cd88ae18afcae2221b8fbf61f739614e5b5244ac364ccb5f02602f",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 110,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "5c891ffef9691d2b58f7699cc8d1955a232f005de46d47507c337fd49091c731",
+        "rawSha256": "f2fc89edeb1d95d3de38c5f3b7ae143fef5905b4013645a40ebaaf7efe81f1db",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 111,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "96d2457ff0ede238e14565045e367b8154fbc5679304f34227b1636bd47a9842",
+        "rawSha256": "096be98838ec6f2459f9967b5fdbb384bbb639b880d7e1b330e644e3d3bb42c7",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 111,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 111,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "7e6114089fc48ce1eefb84aff007e24e8000a96721cf52f08715a689804d311b",
+        "rawSha256": "ba0ab8b95d03d49e86cb605f8da53cdf123c14a1ae10d26ac7de9e6062d94e13",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 111,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "29a80f1713d5c56f65118c67843e9fb9a84dcd2d69f9fee9c2938e83e0496756",
+        "rawSha256": "4df74e9e3ad19aacd4065ddd20ff8b9961096b9a305f729cf7d83ca5771fc4a6",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 111,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "expired",
+        "inputSha256": "73008684005a5630ffc087579492e0927cdd630e49338e612b763a8c91538698",
+        "rawSha256": "a7766cc3eb06ac2a96a6d74c15551129d1f58066c20f69a3fa3ebc3cad3784ee",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "none"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "macMatches": true,
+            "phase": "revoked",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "expired"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "tamper",
+        "inputSha256": "e3b111418b9c64209b93444c722c409a3ebed6ae548c16b66819e2534e7d7e4f",
+        "rawSha256": "b93813cb9114c189e33cbfa2a6f3ff8f3ae10f2fcb82361b78b8ec377b196600",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "tamper"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "changed",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "version": "v2",
+            "canonical": "{\"expires\":110,\"payload\":\"changed\",\"version\":\"v2\"}",
+            "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+            "computedMAC": "a7120f3fc1150b5d335ff26382d903db9948bad9f7a1fb1c4d09fa7e477d753a",
+            "macMatches": false,
+            "phase": "revoked",
+            "now": 1000000,
+            "expires": 110,
+            "authorized": true,
+            "result": "tamper"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "unknown-key",
+        "inputSha256": "abf02be68a48930ebe4d49a843446e2fca064cd22a7149b2e77ed803124d4e1a",
+        "rawSha256": "d0f2401721d3cb59d0e5193a15dca69b1517087b6585a9351c5ec6a97419ea24",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "unknown"
+          },
+          "token": {
+            "version": "v9",
+            "payload": "demo",
+            "expires": 110,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "unknown-key",
+            "version": "v9"
+          },
+          "issuer": "v2"
+        }
+      },
+      {
+        "expected": "input",
+        "inputSha256": "89db85729860cafc5d9462c81159a9dba1c011a318268de9bc075a86c96743dd",
+        "rawSha256": "94ef4e3289cfbf243590628be97501a12a03c2e0b2d705f374dccc74125ca5fe",
+        "raw": {
+          "input": {
+            "phase": "revoked",
+            "version": "v2",
+            "now": 1000000,
+            "fault": "input"
+          },
+          "token": {
+            "version": "v2",
+            "payload": "demo",
+            "expires": true,
+            "mac": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45"
+          },
+          "trace": {
+            "result": "input"
+          },
+          "issuer": "v2"
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "version": "v1",
+        "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+        "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "macMatches": true,
+        "phase": "initial",
+        "now": 100,
+        "expires": 110,
+        "authorized": true,
+        "result": "accept"
+      },
+      {
+        "version": "v1",
+        "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+        "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "macMatches": true,
+        "phase": "overlap",
+        "now": 100,
+        "expires": 110,
+        "authorized": true,
+        "result": "accept"
+      },
+      {
+        "version": "v2",
+        "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+        "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+        "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+        "macMatches": true,
+        "phase": "overlap",
+        "now": 100,
+        "expires": 110,
+        "authorized": true,
+        "result": "accept"
+      },
+      {
+        "version": "v1",
+        "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v1\"}",
+        "receivedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "computedMAC": "b98dbe74eeddd43b29ecbb23fd724d0140a89c9a0e98ca34d68b39117b917307",
+        "macMatches": true,
+        "phase": "revoked",
+        "now": 100,
+        "expires": 110,
+        "authorized": false,
+        "result": "revoked"
+      },
+      {
+        "version": "v2",
+        "canonical": "{\"expires\":110,\"payload\":\"demo\",\"version\":\"v2\"}",
+        "receivedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+        "computedMAC": "6b05554876d8d61d566fca53e052c93f9de98cfb6a05bb994d064764aa290e45",
+        "macMatches": true,
+        "phase": "revoked",
+        "now": 100,
+        "expires": 110,
+        "authorized": true,
+        "result": "accept"
+      }
+    ],
+    "rfc4231": {
+      "locator": "https://www.rfc-editor.org/rfc/rfc4231#section-4.2",
+      "keyHex": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+      "dataHex": "4869205468657265",
+      "expected": "b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7",
+      "actual": "b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7"
+    },
+    "inputRejects": 20
+  }
+}

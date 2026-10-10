@@ -1,0 +1,86 @@
+{
+  "project": "Atlas",
+  "version": 1,
+  "assumptions": {
+    "identity": "already authenticated; not verified by this model",
+    "scope": "assignment and request already matched by exact string equality; no cross-scope evaluation here"
+  },
+  "graphs": {
+    "diamond": {
+      "lead": [
+        "writer",
+        "auditor"
+      ],
+      "writer": [
+        "viewer"
+      ],
+      "auditor": [
+        "viewer"
+      ],
+      "viewer": []
+    },
+    "back-edge": {
+      "lead": [
+        "writer",
+        "auditor"
+      ],
+      "writer": [
+        "viewer"
+      ],
+      "auditor": [
+        "viewer"
+      ],
+      "viewer": [
+        "lead"
+      ]
+    }
+  },
+  "permissions": {
+    "lead": [
+      "approve",
+      "read"
+    ],
+    "writer": [
+      "write"
+    ],
+    "auditor": [
+      "audit",
+      "read"
+    ],
+    "viewer": [
+      "read"
+    ]
+  },
+  "cases": [
+    {
+      "id": "viewer-only",
+      "graph": "diamond",
+      "role": "viewer",
+      "mode": "stack-checked"
+    },
+    {
+      "id": "diamond",
+      "graph": "diamond",
+      "role": "lead",
+      "mode": "stack-checked"
+    },
+    {
+      "id": "diamond-visited-fault",
+      "graph": "diamond",
+      "role": "lead",
+      "mode": "visited-only-fault"
+    },
+    {
+      "id": "cycle",
+      "graph": "back-edge",
+      "role": "lead",
+      "mode": "stack-checked"
+    },
+    {
+      "id": "unknown-role",
+      "graph": "diamond",
+      "role": "ghost",
+      "mode": "stack-checked"
+    }
+  ]
+}

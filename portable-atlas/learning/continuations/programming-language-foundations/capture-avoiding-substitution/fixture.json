@@ -1,0 +1,987 @@
+{
+  "cases": [
+    {
+      "id": "capture",
+      "label": "捕獲: 10対3",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "same-binder",
+      "label": "同名binderで停止",
+      "term": {
+        "kind": "Lam",
+        "name": "x",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "no-collision",
+      "label": "衝突なし: 同値",
+      "term": {
+        "kind": "Lam",
+        "name": "z",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "fresh-free-collision",
+      "label": "free v0衝突を避ける",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Add",
+          "left": {
+            "kind": "Var",
+            "name": "x"
+          },
+          "right": {
+            "kind": "Var",
+            "name": "v0"
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10,
+        "v0": 5
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "fresh-bound-collision",
+      "label": "bound v0衝突を避ける",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3,
+        4
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "nested-shadow",
+      "label": "内側同名binderのrename停止",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Add",
+          "left": {
+            "kind": "Var",
+            "name": "x"
+          },
+          "right": {
+            "kind": "App",
+            "fn": {
+              "kind": "Lam",
+              "name": "y",
+              "body": {
+                "kind": "Var",
+                "name": "y"
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 4
+            }
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "target-absent",
+      "label": "target不在: rename不要",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Var",
+          "name": "y"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "closed-replacement",
+      "label": "closed置換: 同値",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Int",
+        "value": 9
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "replacement-lambda",
+      "label": "open lambdaを置換",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "App",
+          "fn": {
+            "kind": "Var",
+            "name": "x"
+          },
+          "arg": {
+            "kind": "Int",
+            "value": 2
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Lam",
+        "name": "z",
+        "body": {
+          "kind": "Add",
+          "left": {
+            "kind": "Var",
+            "name": "y"
+          },
+          "right": {
+            "kind": "Var",
+            "name": "z"
+          }
+        }
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "two-fresh",
+      "label": "fresh2回を重複させない",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3,
+        4
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "invalid-binder",
+      "label": "binder型不正",
+      "term": {
+        "kind": "Lam",
+        "name": true,
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "unknown-kind",
+      "label": "未知AST kind",
+      "term": {
+        "kind": "Whatever"
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "bool-literal",
+      "label": "boolを整数扱いしない",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Int",
+          "value": true
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "extra-field",
+      "label": "余分AST field",
+      "term": {
+        "kind": "Var",
+        "name": "x",
+        "extra": 1
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "invalid-environment",
+      "label": "env bool不正",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": true
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "depth-limit",
+      "label": "深さ17で拒否",
+      "term": {
+        "kind": "Lam",
+        "name": "z",
+        "body": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Lam",
+            "name": "z",
+            "body": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Lam",
+                "name": "z",
+                "body": {
+                  "kind": "Lam",
+                  "name": "z",
+                  "body": {
+                    "kind": "Lam",
+                    "name": "z",
+                    "body": {
+                      "kind": "Lam",
+                      "name": "z",
+                      "body": {
+                        "kind": "Lam",
+                        "name": "z",
+                        "body": {
+                          "kind": "Lam",
+                          "name": "z",
+                          "body": {
+                            "kind": "Lam",
+                            "name": "z",
+                            "body": {
+                              "kind": "Lam",
+                              "name": "z",
+                              "body": {
+                                "kind": "Lam",
+                                "name": "z",
+                                "body": {
+                                  "kind": "Lam",
+                                  "name": "z",
+                                  "body": {
+                                    "kind": "Lam",
+                                    "name": "z",
+                                    "body": {
+                                      "kind": "Lam",
+                                      "name": "z",
+                                      "body": {
+                                        "kind": "Lam",
+                                        "name": "z",
+                                        "body": {
+                                          "kind": "Var",
+                                          "name": "x"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "node-limit",
+      "label": "node65超で拒否",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Add",
+          "left": {
+            "kind": "Add",
+            "left": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              }
+            },
+            "right": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "right": {
+            "kind": "Add",
+            "left": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              }
+            },
+            "right": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Int",
+                      "value": 1
+                    },
+                    "right": {
+                      "kind": "Int",
+                      "value": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "normal"
+    },
+    {
+      "id": "execution-failure",
+      "label": "実Error注入 / 正常答えなし",
+      "term": {
+        "kind": "Lam",
+        "name": "y",
+        "body": {
+          "kind": "Var",
+          "name": "x"
+        }
+      },
+      "target": "x",
+      "replacement": {
+        "kind": "Var",
+        "name": "y"
+      },
+      "environment": {
+        "y": 10
+      },
+      "arguments": [
+        3
+      ],
+      "variant": "execution-failure"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas — 装置状態とsnapshot</title><link rel="stylesheet" href="reader.css"></head>
+<body><main>
+<header><p class="eyebrow">ATLAS / 仮想化・エミュレーション</p><h1>装置を忘れたsnapshot</h1><p class="lead">PCとメモリーが戻っても、続きは同じでしょうか。</p><p>周期3の小タイマーを含む状態で、継続・完全復元・装置欠落を比べます。仮想tickだけの有限模型で、実VMや物理時間の測定ではありません。</p></header>
+<section aria-labelledby="prerequisite-title"><h2 id="prerequisite-title">1. 前提と順序</h2><p>counterは発火までの進み具合、pendingはACKまで残る保留、ACKは保留を消す命令です。READはpendingをAへ読むだけで消しません。</p><ol class="order"><li>tickを進める</li><li>timer更新・発火</li><li>命令を実行</li><li>pcを進めて保存境界へ</li></ol><p><strong>tick6は発火してからACK。</strong>命令途中の保存と割込みハンドラーの自動実行はありません。</p></section>
+<section id="controls" aria-labelledby="predict-title"><h2 id="predict-title">2. 条件を選んで予想</h2><p>切断点は命令の完了後です。ボタンをクリックして条件を確定します。</p>
+<div class="buttons" role="group" aria-label="切断点"><button data-case="initial">初期：tick0</button><button data-case="before-expiry">発火直前：tick2</button><button data-case="pending-latched">発火済み：tick3</button><button data-case="after-ack">ACK後：tick6</button></div>
+<p><strong>deviceだけを省略して0,falseへ戻すと、suffix全状態は継続と一致しますか？</strong> pc/A/memory/tickは保持します。</p><div class="buttons" role="group" aria-label="予想"><button data-prediction="same">一致する</button><button data-prediction="different">一致しない</button></div>
+<details id="record-details"><summary>保存記録の読取り条件</summary><div class="buttons" role="group" aria-label="記録モード"><button data-mode="saved">保存した記録</button><button data-mode="missing">欠落の対照</button><button data-mode="altered">値改変の対照</button><button data-mode="old">別由来の対照</button></div><p>保存データの複製を変える表示検査です。実ネットワーク障害や外部攻撃の測定ではありません。</p></details>
+<div class="buttons"><button id="load" class="primary">保存した比較を開く</button><button id="reset">最初へ戻す</button></div><p id="error" role="alert"></p></section>
+<section id="results" hidden aria-labelledby="compare-title"><h2 id="compare-title">3. 同じ保存地点から続きを比べる</h2><p>prefixは保存地点まで、suffixはその後の続きです。</p><p id="provenance"></p><p id="case-note"></p>
+<div id="snapshots" class="snapshots"></div>
+<div class="buttons"><button id="previous">前の境界</button><strong id="position"></strong><button id="next">次の境界</button></div><p>カードは選択中の境界。発火・READ・書込みはその境界を作った直前の1命令です。切断点ではまだsuffix命令を実行していません。</p>
+<div id="cards" class="cards"></div>
+<h3>全suffixの保留状態</h3><p>横にスクロールできます。各経路の上側の点はpending=true、下側はfalse、数字はcounterです。点は命令完了時点の保存値で、線は読み順の目安です。物理時間の波形ではありません。</p><div id="diagram-scroll" class="scroll" tabindex="0" aria-label="全suffix図を横にスクロール"><svg id="diagram" viewBox="0 0 760 230" role="img" aria-label="継続と復元のpending比較"></svg></div>
+<h3>全suffix表</h3><p>選択時点より後の保存結果も含む全履歴です。横にスクロールして右端のREAD・書込みを読めます。</p><div id="table-scroll" class="scroll" tabindex="0" aria-label="全suffix表を横にスクロール"><table><thead><tr><th>経路</th><th>tick</th><th>pc</th><th>A</th><th>memory</th><th>counter</th><th>pending</th><th>発火</th><th>READ</th><th>書込み</th></tr></thead><tbody id="trace"></tbody></table></div>
+<details id="raw-details"><summary>選んだ条件の保存JSONを読む</summary><pre id="raw"></pre></details>
+<h2>4. 原典・実装を読み、答え合わせ</h2><p><a href="CONTRACT.md">契約</a>・<a href="HAND-CALCULATION.md">手計算</a>・<a href="model.py">実装</a>を読んでから答えを開きます。</p><button id="answer-button" class="primary">答えを開く</button><p id="answer" aria-live="polite"></p></section>
+<footer><h2>5. 実務判断と限界</h2><p>成功した切断点だけで必要な保存欄が揃ったとは判断できません。正常restoreの欠落拒否と、別schemaの意図故障を分けます。形式のhashはbyte対応で、認証や互換性の証明ではありません。</p><p>実QEMU/HVF、実VM、隔離、物理時間、live migration、任意のプログラムは未検証です。前提のTiny8幅・STORE原理は今回の追加成果へ数えません。</p><nav><a href="README.md">README・起動方法</a> / <a href="PREREQUISITES.md">前提の学習順</a> / <a href="CONTRACT.md">契約</a> / <a href="HAND-CALCULATION.md">手計算</a> / <a href="model.py">計算の実装</a> / <a href="SOURCES.md">原典と独自規約</a> / <a href="SKILL.md">問い別のSkill</a> / <a href="https://www.qemu.org/docs/master/devel/migration/main.html">QEMU公式資料</a></nav></footer>
+</main><script src="reader-data.js"></script><script src="reader-expectations.js"></script><script src="reader-state.js"></script><script src="reader-app.js"></script></body></html>

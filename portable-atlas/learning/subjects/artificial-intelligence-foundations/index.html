@@ -1,0 +1,39 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI基礎 | BFSとA*の探索実験</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#e7edf7;background:#101824}body{margin:0}main{max-width:1160px;margin:auto;padding:28px}header{border-bottom:1px solid #435269;padding-bottom:20px}h1{font-size:30px;margin:8px 0}h2{font-size:20px}p{line-height:1.7;color:#b9c7db}a{color:#82dcff}label{display:inline-block;margin:12px 12px 12px 0}select,button{font:inherit;background:#243448;color:#fff;border:1px solid #64738a;padding:9px;border-radius:6px}button{cursor:pointer}button:disabled{opacity:.4}input{width:100%;accent-color:#55d7b9}.layout{display:grid;grid-template-columns:1.1fr 1fr;gap:24px}.card{background:#192536;border:1px solid #34465e;border-radius:12px;padding:20px;margin:16px 0}.grid{display:grid;gap:5px;margin:20px 0}.cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-weight:700;background:#293c52;border:2px solid transparent;border-radius:5px}.wall{background:#060d17;color:#61718b}.closed{background:#335984}.frontier{background:#966b28}.path{background:#176758}.selected{border-color:#fff;box-shadow:0 0 0 2px #fff}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px}.pill{padding:7px;border-radius:6px;background:#263c55}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:7px;border-bottom:1px solid #3a4a60}code{color:#7de6c5}.metrics{font-size:19px;line-height:1.8}details{padding:12px 0}#error{color:#ffabb2}@media(max-width:800px){.layout{grid-template-columns:1fr}main{padding:16px}.cell{font-size:12px}}
+</style>
+<main><header><small>EXECUTABLE TECHNOLOGY ATLAS / 有限1教材</small><h1>AI基礎 — BFSとA*の探索実験</h1><p>位置を状態にし、道を計画する。推定と枝刈りを変え、最短経路の保証がどこで崩れるかを見る。</p><a href="README.md">学習の道筋・再現手順</a> · <a href="observations/receipt.json">実行時刻・digest</a> · <a href="sources.json">原典との対応</a></header>
+<section class="card"><h2>1 予想する</h2><p>過大推定でも最短7歩になる？ 許容的な推定ならclosedを永久固定できる？ 同点FIFO/LIFOで探索量は変わる？</p><label>比較ケース <select id="case" aria-label="比較ケース"></select></label><p id="description"></p></section>
+<div class="layout"><section class="card"><h2>2 操作する — 実行済みtraceの再生</h2><div class="legend"><span>青: closed</span><span>黄: frontier</span><span>緑: 選択経路</span><span>白枠: 選択位置</span><span>黒: 障害物</span></div><div id="grid" class="grid" aria-label="探索格子"></div><label for="step">探索step <span id="step-label"></span></label><input type="range" id="step" min="0" value="0"><button id="prev">一段戻る</button> <button id="next">一段進める</button> <button id="end">最後へ</button><p>再生は原票の状態列。画面操作による探索の再実行や実時間の性能測定ではありません。S=開始、G=目標、その他は座標。</p></section>
+<section class="card"><h2>3 比較する</h2><div id="metrics" class="metrics" aria-live="polite"></div><p id="event"></p><h3>frontier（次の優先順）</h3><div style="overflow:auto;max-height:260px"><table><thead><tr><th>位置</th><th>g</th><th>h</th><th>f</th><th>挿入順</th></tr></thead><tbody id="frontier"></tbody></table></div><p id="path"></p><details><summary>推定条件の実検査</summary><pre id="properties" style="white-space:pre-wrap"></pre></details></section></div>
+<section class="card"><h2>4 原典・実装を読む → 答えを確かめる</h2><p>Manhattanは障害物を除いた下界。非整合hでclosed改善を捨てると、この例では9歩。再開すれば7歩。過大推定は再開しても最初のgoalで止める保証を失います。expandedはgoalの取り出しも含みます。</p><p><a href="search.py">探索実装</a> · <a href="verify.py">独立distance-layer oracle / checker</a> · <a href="observations/raw.json">入力と全trace原票</a></p><div id="sources"></div><h3>入力不正の実際の拒否</h3><ul id="invalid"></ul></section>
+<section class="card"><h2>5 この先の学習 — Subject全体は未完</h2><p>前提→状態・行動・cost→BFS/A*→保証の条件→実務判断→限界→原典。今回で判断できるのは、既知の有限格子における最短性と探索順序です。実ML/LLM学習は未実装。</p><div id="coverage"></div><h3>次の4実験（未実装）</h3><ol id="experiments"></ol></section><p id="error" role="alert"></p></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);let runs=[],current;
+const names={'bfs':'BFS / 最短基準','manhattan':'A* / Manhattan 正常','overestimate':'A* / 過大推定の反例','reopen':'A* / 非整合h・再開あり','no-reopen':'A* / 非整合h・再開なし（意図誤り）','tie-fifo':'同点 FIFO / 5×5','tie-lifo':'同点 LIFO / 5×5','unreachable':'到達不能','same':'開始 = 目標'};
+const eq=(a,b)=>a[0]===b[0]&&a[1]===b[1];const has=(arr,p)=>arr.some(q=>eq(q,p));
+function render(){const r=current.result, i=Number($('step').value),t=r.trace[i],g=current.input;
+$('step-label').textContent=`${i+1} / ${r.trace.length}`;$('prev').disabled=i===0;$('next').disabled=i===r.trace.length-1;
+$('grid').style.gridTemplateColumns=`repeat(${g.width},1fr)`;$('grid').replaceChildren();
+for(let y=0;y<g.height;y++)for(let x=0;x<g.width;x++){const p=[x,y],d=document.createElement('div');d.className='cell';
+if(has(t.closed,p))d.classList.add('closed');if(has(t.frontier.map(n=>n.cell),p))d.classList.add('frontier');if(has(t.selected_path,p))d.classList.add('path');if(has(g.blocked,p))d.classList.add('wall');if(eq(t.selected,p))d.classList.add('selected');
+d.textContent=has(g.blocked,p)?'■':eq(p,g.start)?'S':eq(p,g.goal)?'G':`${x},${y}`;d.title=`位置 ${x},${y}`;$('grid').append(d);}
+const final=i===r.trace.length-1;const status=final?(r.status==='found'?'到達':'到達不能'):'探索途中';
+$('metrics').textContent=`${status} | 選択 (${t.selected}) g=${t.g} h=${t.h} f=${t.f} · 取り出し ${i+1}回 / 最終 ${r.expanded}回 · 最終cost ${r.cost??'なし'} / oracle ${current.oracle_cost??'なし'}`;
+$('event').textContent=`再開: ${JSON.stringify(t.reopened)} / 改善抑止: ${JSON.stringify(t.suppressed)} / closed ${t.closed.length}件`;
+$('frontier').replaceChildren();for(const n of t.frontier){const tr=document.createElement('tr');for(const value of [n.cell.join(','),n.g,n.h,n.f,n.insertion]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('frontier').append(tr);}
+$('path').textContent=`現在の選択経路: ${t.selected_path.map(p=>`(${p})`).join(' → ')}${final?' / 結果 '+r.status:''}`;
+$('properties').textContent=JSON.stringify(current.heuristic,null,2);
+}
+function select(){current=runs.find(r=>r.id===$('case').value);$('step').max=current.result.trace.length-1;$('step').value=0;$('description').textContent=`${current.input.width}×${current.input.height} / ${current.options.algorithm} / h=${current.options.mode} / tie=${current.options.tie} / closed再開=${current.options.reopen}`;render();}
+$('case').addEventListener('change',select);$('step').addEventListener('input',render);
+$('prev').onclick=()=>{$('step').value=Number($('step').value)-1;render();};$('next').onclick=()=>{$('step').value=Number($('step').value)+1;render();};$('end').onclick=()=>{$('step').value=$('step').max;render();};
+Promise.all(['observations/raw.json','coverage.json','sources.json'].map(p=>fetch(p).then(r=>{if(!r.ok)throw Error(`${p}: ${r.status}`);return r.json();}))).then(([raw,coverage,sources])=>{runs=raw.runs;for(const r of runs){const op=document.createElement('option');op.value=r.id;op.textContent=names[r.id];$('case').append(op);}select();
+for(const error of raw.invalid){const li=document.createElement('li');li.textContent=`${error.id}: ${error.status} — ${error.error}`;$('invalid').append(li);}
+for(const s of sources){const p=document.createElement('p'),a=document.createElement('a');a.href=s.url;a.textContent=s.locator;p.append(a,` — ${s.binding}`);$('sources').append(p);}
+for(const c of coverage.areas){const p=document.createElement('p');p.textContent=`${c.area} [${c.status}]：${c.concepts.join(' / ')} — ${c.question}`;$('coverage').append(p);}
+for(const e of coverage.next_experiments){const li=document.createElement('li');li.textContent=`${e.question} ${e.experiment}`;$('experiments').append(li);}
+}).catch(e=>{$('error').textContent=`原票を読み込めません: ${e.message}。serve.pyのURLで開いてください。`;});
+</script></html>

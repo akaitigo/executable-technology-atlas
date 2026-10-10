@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Argo CD｜作る順序、消す順序。</title>
+  <style>
+    :root{--ink:#203c43;--muted:#52646a;--line:#cbd5d1;--paper:#fffefa;--bg:#f1f4ee;--teal:#12675f;--light:#e3f2ec;--orange:#805100;--red:#9c302f;--blue:#294da4}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}main{max-width:1100px;margin:auto;padding:32px 24px 64px}a{color:#145d8a;text-underline-offset:3px;overflow-wrap:anywhere}button,input{font:inherit}button{cursor:pointer;min-height:46px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);font-weight:650}button:hover:not(:disabled){border-color:var(--teal);background:var(--light)}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #2e6dd0;outline-offset:3px}button:disabled{cursor:default;opacity:.48}h1{font-size:clamp(29px,4vw,44px);line-height:1.35;letter-spacing:.02em;margin:12px 0 18px}h2{font-size:24px;line-height:1.5;margin:0 0 18px}h3{font-size:18px;margin:14px 0 8px}p{margin:10px 0}small,.muted{color:var(--muted)}code{font: .91em ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}.eyebrow{font-size:13px;letter-spacing:.08em;font-weight:800;color:var(--teal)}.intro{max-width:780px}.badge{display:inline-block;border:1px solid #aac4b9;border-radius:99px;padding:3px 12px;background:white;font-size:13px;margin:4px 8px 4px 0}.notice{border-left:4px solid var(--teal);padding:10px 16px;background:var(--light);margin:22px 0 28px}.number{display:inline-block;color:var(--teal);font-size:15px;letter-spacing:.08em;margin-right:12px}.section{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin:24px 0;padding:26px;min-width:0}.cases{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.case{font-size:14px;text-align:left;padding:10px}.case[aria-pressed=true]{background:var(--teal);color:white;border-color:var(--teal)}.case small{display:block;font-size:12px;font-weight:500}.case[aria-pressed=true] small{color:#dbf0e7}.columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}.question{font-size:18px;font-weight:700;margin:22px 0 14px}.input-tasks{display:flex;gap:10px;flex-wrap:wrap}.task-seed{flex:1;min-width:120px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#f5f6f2}.task-seed strong{font-size:18px}.task-seed span{display:block;font-size:14px;color:var(--muted)}fieldset{border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0;margin:14px 0 0}legend{font-weight:700;padding:0 6px}.choice{display:flex;gap:10px;align-items:center;border-radius:6px;padding:10px 8px;min-height:44px;cursor:pointer}.choice:has(input:checked){background:var(--light)}input[type=radio]{accent-color:var(--teal);width:19px;height:19px;flex:none}.controls{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.primary{background:var(--teal);border-color:var(--teal);color:white}.primary:hover:not(:disabled){background:#0c554e}.phase-status{padding:12px 16px;border-radius:8px;background:#e9eeed;font-weight:700;min-height:52px}.phase-status.wait{background:#fff0cc;color:var(--orange)}.phase-status.failed{background:#fbe7e4;color:var(--red)}.phase-status.consumed{background:var(--light);color:var(--teal)}.progress{font-size:14px;color:var(--muted)}.resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.resource{border:1px solid var(--line);border-top:4px solid #b4bfbd;border-radius:10px;padding:14px;min-width:0}.resource.attempted{border-top-color:var(--teal)}.resource.failed{border-top-color:var(--red);background:#fff7f5}.resource.waiting{border-top-color:#a66a00;background:#fff9e9}.resource strong{font-size:20px}.wave-map{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0}.wave-value{font-family:ui-monospace,monospace;font-size:19px;background:#eef2ed;border-radius:4px;padding:1px 7px}.resource-state{font-weight:700;overflow-wrap:anywhere}.observation{font-size:14px;color:var(--muted);margin-top:8px;min-height:45px}.batch{display:grid;grid-template-columns:100px 1fr 1fr;gap:8px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}.lane{padding:7px 10px;border-radius:6px;background:#edf2f1}.lane.prune{background:#fff0db}.legend{font-size:13px;color:var(--muted)}[hidden]{display:none!important}.answer{background:var(--light);border-radius:10px;padding:18px;margin-top:16px}.answer p:first-child{margin-top:0}.score-no{color:var(--red);font-weight:750}.score-yes{color:var(--teal);font-weight:750}.source-list{margin:8px 0;padding-left:22px}.source-list li{padding:4px 0}.limit{font-size:15px}.footer{font-size:13px;color:var(--muted);margin-top:24px}details{margin:12px 0}summary{cursor:pointer;font-weight:650}details p{font-size:14px}noscript{display:block;padding:16px;background:#ffe8dd}
+    @media(max-width:760px){main{padding:22px 14px 42px}.section{padding:18px 15px;margin:18px 0}.cases{grid-template-columns:1fr 1fr}.case:last-child{grid-column:1/-1}.columns{grid-template-columns:1fr;gap:0}.resource-grid{grid-template-columns:1fr}.resource{padding:12px}.observation{min-height:0}.batch{grid-template-columns:70px 1fr;gap:6px}.batch .lane:last-child{grid-column:2}.batch b{grid-row:span 2}.input-tasks{gap:7px}.task-seed{min-width:85px;padding:9px}.task-seed strong{font-size:17px}.task-seed span{font-size:12px}h2{font-size:21px}.question{font-size:17px}fieldset{margin-top:12px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">ARGO CD · 順序を読む / 03</div>
+    <h1>作る順序、消す順序。</h1>
+    <p class="intro">wave が −3、1、8 の3資源。作るときと消すときで、先に始まる資源は変わります。削除が待機・失敗した場面まで、予想してから一段ずつ比べます。</p>
+    <span class="badge">v3.5.2 の実装を参照</span><span class="badge">保存した5ケースを読む</span>
+    <div class="notice"><strong>これは説明模型です。</strong> 保存済みの手計算・Python模型の結果を表示します。live Argo CDやKubernetesを操作せず、実資源の削除・消滅を測っていません。</div>
+  </header>
+  <noscript>操作にはJavaScriptが必要です。<a href="README.md">READMEとCLI教材</a>でも学習できます。</noscript>
+  <section class="section" aria-labelledby="predict-title">
+    <h2 id="predict-title"><span class="number">01</span>場面を選び、予想する</h2>
+    <div class="cases" aria-label="比較する場面">
+      <button class="case" data-case="apply-ascending">通常apply<small>小さいwaveから</small></button>
+      <button class="case" data-case="prune-descending">通常prune<small>消す順序を比較</small></button>
+      <button class="case" data-case="prune-waiting">削除待ち<small>Prunedのその後</small></button>
+      <button class="case" data-case="prune-failed">途中で失敗<small>midがSyncFailed</small></button>
+      <button class="case" data-case="mixed-same-wave-failed">同waveで失敗<small>applyも始まる？</small></button>
+    </div>
+    <p class="question" id="question"></p>
+    <div class="input-tasks" id="input-tasks"></div>
+    <p class="muted" id="scenario-input"></p>
+    <div class="columns">
+      <fieldset><legend>どの資源まで、どの順に始まる？</legend><div id="order-options"></div></fieldset>
+      <fieldset><legend>この模型はどこで終わる？</legend>
+        <label class="choice"><input type="radio" name="stop" value="consumed">用意した計画を最後まで読む</label>
+        <label class="choice"><input type="radio" name="stop" value="wait">次のwaveへ進む前に削除待ち</label>
+        <label class="choice"><input type="radio" name="stop" value="failed">現在waveのpruneで失敗を返す</label>
+      </fieldset>
+    </div>
+  </section>
+  <section class="section" id="comparison" aria-labelledby="compare-title">
+    <h2 id="compare-title"><span class="number">02</span>一段ずつ進めて、対照する</h2>
+    <p>最初に初期計画、次に各資源の結果、最後に停止境界を表示します。結果コードと、その後のlive観測は別の欄で読みます。</p>
+    <div class="controls"><button id="next" class="primary" disabled>次の段階へ</button><button id="reset">この場面をリセット</button></div>
+    <p class="progress" id="progress">予想を2つ選んでください。</p>
+    <div id="stage-status" class="phase-status" role="status" aria-live="polite"></div>
+    <div class="resource-grid" id="resource-grid"></div>
+    <div id="plan" hidden><h3>初期計画の有効waveごとの組</h3><p class="legend">同じ組では prune → apply。別waveまで含めて「全pruneが先」とは扱いません。</p><div id="batches"></div></div>
+    <p class="legend">元waveと有効waveは初期のタスク集合に固定。資源消滅後の再計画や、並行資源の完了時刻は再現しません。</p>
+  </section>
+  <section class="section" aria-labelledby="source-title">
+    <h2 id="source-title"><span class="number">03</span>原典と実装に戻る</h2>
+    <p>固定commitの <code>sync_context.go</code> を読み、この3つの境界を教材へ取り込みました。</p>
+    <ol class="source-list">
+      <li><a href="https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/gitops-engine/pkg/sync/sync_context.go#L1014" target="_blank" rel="noreferrer">prune wave の両端を交換</a>：−3、1、8 → 8、1、−3。符号反転ではありません。</li>
+      <li><a href="https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/gitops-engine/pkg/sync/sync_context.go#L558" target="_blank" rel="noreferrer">削除待ちで戻る条件</a>：Pruned、liveあり、deletionTimestampあり。</li>
+      <li><a href="https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/gitops-engine/pkg/sync/sync_context.go#L1493" target="_blank" rel="noreferrer">現在wave内でpruneを先に処理</a>：SyncFailedならapply側へ進まず戻ります。</li>
+    </ol>
+    <details><summary>教材の実装・原票を確認する</summary><p><a href="model.py">Python模型</a> / <a href="hand-oracle.json">実装前の手計算</a> / <a href="observations/model-check.json">旧模型の実行原票</a> / <a href="source-review.json">原典の読取記録</a>。この画面はその保存結果を段階表示するreaderです。原典byte hashの自動照合、Go実行、LIVE実験はしていません。</p></details>
+  </section>
+  <section class="section" aria-labelledby="answer-title">
+    <h2 id="answer-title"><span class="number">04</span>予想と答えを比べる</h2>
+    <p>対照を最後まで進めると答えを開けます。予想を変えると、段階と答えも最初に戻ります。</p>
+    <button id="answer-button" class="primary" disabled>答え合わせを開く</button>
+    <div id="answer" class="answer" hidden aria-live="polite"></div>
+  </section>
+  <section class="section limit" aria-labelledby="limit-title">
+    <h2 id="limit-title"><span class="number">05</span>実務で判断する、その前に</h2>
+    <p><strong>Pruned と「資源が消えた」は別です。</strong> 元wave・有効wave、結果、liveの有無、deletionTimestampを分けて確認します。SyncFailedの原因は実際のcontroller/APIの記録を調べてください。</p>
+    <p>この教材はSync phase、ConfigMap、prune有効、PruneLast無効、確認条件充足、hookなし。初期タスク集合を固定し、結果とlive観測は仮定入力です。最終wave後の消滅やHealth、再計画、一般の依存解消、cycle解決を保証しません。</p>
+    <p>次の未対応は <strong>PruneLast・削除確認・削除保護</strong>。<a href="COVERAGE.md">対応範囲</a>と<a href="README.md">CLI教材・検証方法</a>へ進めます。</p>
+  </section>
+  <footer class="footer">学習経路：phase / wave → Namespace / CRD依存 → prune順序。統合・公開・分野全体の網羅は未完了です。<p id="provenance"></p></footer>
+</main>
+<script src="reader-data.js"></script><script src="reader-state.js"></script><script src="reader-app.js"></script>
+</body></html>

@@ -1,0 +1,100 @@
+{
+  "title": "Atlas 優先度停止条件の関数確認",
+  "passed": true,
+  "cases": [
+    {
+      "case": "setter-denied",
+      "return_code": 78,
+      "calls": [
+        [
+          "set",
+          10
+        ]
+      ],
+      "messages": [
+        {
+          "title": "Atlas priority guard",
+          "ready": false,
+          "requested_nice": 10,
+          "error": "injected EPERM",
+          "target_started": false
+        }
+      ]
+    },
+    {
+      "case": "getter-denied",
+      "return_code": 78,
+      "calls": [
+        [
+          "set",
+          10
+        ],
+        [
+          "get"
+        ]
+      ],
+      "messages": [
+        {
+          "title": "Atlas priority guard",
+          "ready": false,
+          "requested_nice": 10,
+          "error": "injected get error",
+          "target_started": false
+        }
+      ]
+    },
+    {
+      "case": "wrong-value",
+      "return_code": 78,
+      "calls": [
+        [
+          "set",
+          10
+        ],
+        [
+          "get"
+        ]
+      ],
+      "messages": [
+        {
+          "title": "Atlas priority guard",
+          "ready": false,
+          "requested_nice": 10,
+          "error": "requested nice 10, observed 9",
+          "target_started": false
+        }
+      ]
+    },
+    {
+      "case": "ready",
+      "return_code": 0,
+      "calls": [
+        [
+          "set",
+          10
+        ],
+        [
+          "get"
+        ],
+        [
+          "exec",
+          [
+            "/not-executed"
+          ]
+        ]
+      ],
+      "messages": [
+        {
+          "title": "Atlas priority guard",
+          "ready": true,
+          "requested_nice": 10,
+          "observed_nice": 10,
+          "target_started": "exec follows"
+        }
+      ]
+    }
+  ],
+  "real_priority_change": false,
+  "child_spawned": false,
+  "WASI_executed": false
+}

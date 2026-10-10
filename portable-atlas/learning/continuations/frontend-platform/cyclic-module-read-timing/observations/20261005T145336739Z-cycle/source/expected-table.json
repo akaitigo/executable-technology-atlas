@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "fixed_before_first_engine_run": true,
+  "events_are": "console.log観測点のみ。内部linker/evaluator traceではない。",
+  "rows": [
+    {
+      "id": "immediate",
+      "label": "循環Bが即時read",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true,
+      "category": "throws",
+      "expected": {
+        "exit": 1,
+        "exception_class": "ReferenceError",
+        "final_value": null,
+        "events": [
+          {
+            "event": "driver:import"
+          },
+          {
+            "event": "B:eval"
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "driver:failed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "delayed",
+      "label": "循環Bの関数をentryからread",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true,
+      "category": "one",
+      "expected": {
+        "exit": 0,
+        "exception_class": null,
+        "final_value": 1,
+        "events": [
+          {
+            "event": "driver:import"
+          },
+          {
+            "event": "B:eval"
+          },
+          {
+            "event": "B:ready"
+          },
+          {
+            "event": "A:eval"
+          },
+          {
+            "event": "A:init",
+            "value": 1
+          },
+          {
+            "event": "entry:eval"
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "B:read",
+            "value": 1
+          },
+          {
+            "event": "entry:final",
+            "value": 1
+          },
+          {
+            "event": "driver:done",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "early-call",
+      "label": "関数にしたがB評価中にcall",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true,
+      "category": "throws",
+      "expected": {
+        "exit": 1,
+        "exception_class": "ReferenceError",
+        "final_value": null,
+        "events": [
+          {
+            "event": "driver:import"
+          },
+          {
+            "event": "B:eval"
+          },
+          {
+            "event": "B:ready"
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "driver:failed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "acyclic",
+      "label": "循環なしの即時read",
+      "graph": {
+        "entry": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ],
+        "a": []
+      },
+      "cycle": false,
+      "category": "one",
+      "expected": {
+        "exit": 0,
+        "exception_class": null,
+        "final_value": 1,
+        "events": [
+          {
+            "event": "driver:import"
+          },
+          {
+            "event": "A:eval"
+          },
+          {
+            "event": "A:init",
+            "value": 1
+          },
+          {
+            "event": "B:eval"
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "B:read",
+            "value": 1
+          },
+          {
+            "event": "entry:eval"
+          },
+          {
+            "event": "entry:final",
+            "value": 1
+          },
+          {
+            "event": "driver:done",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "live-update",
+      "label": "循環の遅延readとlive更新",
+      "graph": {
+        "entry": [
+          "a"
+        ],
+        "a": [
+          "b"
+        ],
+        "b": [
+          "a"
+        ]
+      },
+      "cycle": true,
+      "category": "live",
+      "expected": {
+        "exit": 0,
+        "exception_class": null,
+        "final_value": 2,
+        "events": [
+          {
+            "event": "driver:import"
+          },
+          {
+            "event": "B:eval"
+          },
+          {
+            "event": "B:ready"
+          },
+          {
+            "event": "A:eval"
+          },
+          {
+            "event": "A:init",
+            "value": 1
+          },
+          {
+            "event": "entry:eval"
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "B:read",
+            "value": 1
+          },
+          {
+            "event": "entry:snapshot",
+            "value": 1
+          },
+          {
+            "event": "A:update",
+            "value": 2
+          },
+          {
+            "event": "B:before-read"
+          },
+          {
+            "event": "B:read",
+            "value": 2
+          },
+          {
+            "event": "entry:snapshot-after",
+            "value": 1
+          },
+          {
+            "event": "entry:final",
+            "value": 2
+          },
+          {
+            "event": "driver:done",
+            "value": 2
+          }
+        ]
+      }
+    }
+  ]
+}

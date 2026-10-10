@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL NULL・JOIN・制約の境界</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">RELATIONAL DATABASE / BOUNDED SQLITE LESSON</p>
+      <h1>NULLは「空の値」ではない。<br>JOINは、行を残す場所を選ぶ。</h1>
+      <p class="lede">同じ3行と3イベントをSQLite 3.51.0で実行し、比較がUNKNOWNになる瞬間、LEFT JOINの行が消える瞬間、制約が書込みを拒否する境界を追います。</p>
+      <div class="scope"><span></span> ACTUAL: Python stdlib sqlite3 · :memory: · attempts 1 / retries 0</div>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+      <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+      <div class="null-mark">NULL</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section intro-grid">
+      <div>
+        <p class="kicker">01 · THREE-VALUED LOGIC</p>
+        <h2>比較の結果は、TRUE / FALSEだけではない。</h2>
+        <p class="section-lede">`score = NULL` は一致判定にならずUNKNOWNです。WHEREはTRUEだけを残すため、該当しそうなbetaも消えます。</p>
+      </div>
+      <div class="runtime-card">
+        <span class="badge actual">実観測</span>
+        <dl><div><dt>Engine</dt><dd id="runtimeEngine">SQLite</dd></div><div><dt>Version</dt><dd id="runtimeVersion">—</dd></div><div><dt>Database</dt><dd>:memory:</dd></div></dl>
+      </div>
+    </section>
+
+    <section class="section truth-workbench">
+      <div class="query-card">
+        <div class="query-head"><span class="step-number">A</span><span>誤った比較</span></div>
+        <code>WHERE score = NULL</code>
+        <div class="truth unknown"><strong>UNKNOWN</strong><small>beta.score is NULL</small></div>
+        <div class="row-result"><span>残る行</span><strong id="equalsNullCount">0</strong></div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="query-card featured">
+        <div class="query-head"><span class="step-number">B</span><span>NULL専用の判定</span></div>
+        <code>WHERE score IS NULL</code>
+        <div class="truth true"><strong>TRUE</strong><small>beta.score is NULL</small></div>
+        <div class="row-result"><span>残る行</span><strong id="isNullCount">1 · beta</strong></div>
+      </div>
+      <div class="truth-strip" id="truthStrip" aria-label="SQLiteで実行した真理値"></div>
+    </section>
+
+    <section class="section join-section">
+      <div class="join-heading">
+        <div><p class="kicker">02 · JOIN RETENTION</p><h2>フィルターを書く場所で、残る行が変わる。</h2></div>
+        <p>INNER → LEFT → LEFT + WHERE → LEFT + ON の順に、同じfixtureを比較します。</p>
+      </div>
+      <div class="join-lab">
+        <nav class="join-tabs" aria-label="JOINの比較">
+          <button data-query="join.inner" aria-pressed="true"><span>01</span>INNER JOIN</button>
+          <button data-query="join.left" aria-pressed="false"><span>02</span>LEFT JOIN</button>
+          <button data-query="join.left-where" aria-pressed="false"><span>03</span>LEFT + WHERE</button>
+          <button data-query="join.left-on" aria-pressed="false"><span>04</span>LEFT + ON</button>
+        </nav>
+        <div class="join-stage">
+          <div class="stage-top"><div><span class="badge actual">SQLite raw rows</span><h3 id="joinTitle">INNER JOIN</h3></div><strong id="joinCount">3 rows</strong></div>
+          <pre id="joinSql"></pre>
+          <div class="table-wrap"><table><thead><tr><th>row_id</th><th>label</th><th>event_id</th><th>kind</th><th>結果</th></tr></thead><tbody id="joinRows"></tbody></table></div>
+          <p class="stage-note" id="joinNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section constraint-section">
+      <div><p class="kicker">03 · CONSTRAINT BOUNDARY</p><h2>制約は、結果表ではなく書込み時に現れる。</h2><p class="section-lede">PRAGMA foreign_keys = ON の同じconnectionで、NOT NULL / UNIQUE / FOREIGN KEYを実行しました。</p></div>
+      <div class="constraint-grid" id="constraintGrid"></div>
+      <div class="dialect-note"><span>SQLite固有の観測</span><strong>UNIQUE列でもNULLは2行とも保存された</strong><p>他のSQL製品へ一般化せず、このruntime・dialectの境界として記録しています。</p></div>
+    </section>
+
+    <section class="section evidence-section">
+      <div class="evidence-copy"><p class="kicker">EVIDENCE, NOT A SCREENSHOT CLAIM</p><h2>画面は保存済みraw rowを読む。</h2><p>ブラウザはSQLを再実行しません。実行processのstdoutを <a href="evidence/raw-results.json">raw-results.json</a> に保存し、独立OracleがNULL・JOIN・制約・runtime/source digestを検査します。</p></div>
+      <div class="evidence-list">
+        <a href="evidence/run.json"><span>RUN</span> runtime / digest / oracle summary</a>
+        <a href="evidence/raw-results.json"><span>RAW</span> exact SQL / columns / rows / errors</a>
+        <a href="sources.json"><span>AUTH</span> official SQLite locators; body not stored</a>
+      </div>
+    </section>
+
+    <section class="section coverage-section">
+      <p class="kicker">BOUNDARY</p><h2>この1教材が証明しないもの</h2>
+      <div class="coverage-table"><div class="coverage-row head"><span>Surface</span><span>状態</span><span>理由</span></div><div class="coverage-row"><span>SQLite NULL / JOIN / 3 constraints</span><span class="status learned">observed</span><span>保存済みactual rows + Oracle</span></div><div class="coverage-row"><span>SQL全機能</span><span class="status gap">unlearned</span><span>有限fixture外</span></div><div class="coverage-row"><span>PostgreSQL・他DB dialect</span><span class="status gap">unlearned</span><span>実行していない</span></div><div class="coverage-row"><span>Planner / index / concurrency</span><span class="status gap">unlearned</span><span>query plan・並行実行なし</span></div></div>
+    </section>
+  </main>
+  <footer><span>relational-database-sql · bounded lesson</span><span><a href="README.md">README</a> · <a href="COVERAGE.md">Coverage</a></span></footer>
+  <script src="evidence/data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

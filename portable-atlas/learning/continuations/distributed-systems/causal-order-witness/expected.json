@@ -1,0 +1,26 @@
+{
+  "schema":"atlas-causal-hand-expectations-v1",
+  "authorship":"Hand-derived before producer implementation; not an execution result",
+  "pair_relations":[
+    ["a","b","before"],["a","c","before"],["a","d","concurrent"],
+    ["a","e","before"],["a","f","before"],["b","c","before"],
+    ["b","d","concurrent"],["b","e","concurrent"],["b","f","concurrent"],
+    ["c","d","after"],["c","e","after"],["c","f","after"],
+    ["d","e","before"],["d","f","before"],["e","f","before"]
+  ],
+  "base_edges":[["a","b"],["b","c"],["d","e"],["e","f"],["a","e"],["f","c"]],
+  "causal_pairs":[["a","b"],["a","c"],["a","e"],["a","f"],["b","c"],["d","c"],["d","e"],["d","f"],["e","c"],["e","f"],["f","c"]],
+  "concurrent_pairs":[["a","d"],["b","d"],["b","e"],["b","f"]],
+  "clock_labels":{"a":1,"b":2,"c":4,"d":1,"e":2,"f":3},
+  "cases":{
+    "causal-r1":{"predicted_causal_count":11,"predicted_concurrent_count":4,"false_positive_pairs":[],"false_negative_pairs":[],"classification":"matches-causal-relation"},
+    "causal-r2":{"predicted_causal_count":11,"predicted_concurrent_count":4,"false_positive_pairs":[],"false_negative_pairs":[],"classification":"matches-causal-relation"},
+    "scalar-inverse":{"predicted_causal_count":13,"predicted_concurrent_count":2,"false_positive_pairs":[["b","f"],["d","b"]],"false_negative_pairs":[],"classification":"intentional-inference-counterexample"},
+    "display-edges":{"predicted_causal_count":15,"predicted_concurrent_count":0,"false_positive_pairs":[["a","d"],["b","d"],["b","e"],["b","f"]],"false_negative_pairs":[],"classification":"intentional-inference-counterexample"}
+  },
+  "normal_process_exit":0,
+  "clock_condition_violations":[],
+  "self_pairs_included":false,
+  "physical_concurrency_measured":false,
+  "general_guarantee":false
+}

@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "python3",
+    "migration.py",
+    "observations/20261005T075600574959Z/roundtrip/working.sqlite"
+  ],
+  "started_at": "2026-10-05T07:56:00.682404+00:00",
+  "completed_at": "2026-10-05T07:56:00.727618+00:00",
+  "stdin": "{\"direction\": \"down\", \"policy\": \"exact\", \"inject\": \"none\"}",
+  "stdout": "{\"event\": \"sql\", \"sql\": \"PRAGMA user_version\"}\n{\"event\": \"sql\", \"sql\": \"SELECT sql FROM sqlite_schema WHERE type='table' AND name='orders'\"}\n{\"event\": \"sql\", \"sql\": \"SELECT name FROM sqlite_schema WHERE name NOT IN ('orders','sqlite_autoindex_orders_1')\"}\n{\"event\": \"sql\", \"sql\": \"SELECT id,amount_cents,state_code FROM orders ORDER BY id\"}\n{\"event\": \"preflight-accepted\", \"direction\": \"down\", \"policy\": \"exact\", \"rows\": 3}\n{\"event\": \"sql\", \"sql\": \"BEGIN IMMEDIATE\"}\n{\"event\": \"sql\", \"sql\": \"SELECT id,amount_cents,state_code FROM orders ORDER BY id\"}\n{\"event\": \"sql\", \"sql\": \"CREATE TABLE \\\"orders_staged\\\" (id TEXT PRIMARY KEY, amount_text TEXT NOT NULL, state TEXT NOT NULL)\"}\n{\"event\": \"sql\", \"sql\": \"INSERT INTO orders_staged VALUES ('a', '12.30', 'new')\"}\n{\"event\": \"sql\", \"sql\": \"INSERT INTO orders_staged VALUES ('b', '0.00', 'paid')\"}\n{\"event\": \"sql\", \"sql\": \"INSERT INTO orders_staged VALUES ('c', '1.05', 'new')\"}\n{\"event\": \"staged-copy\", \"mapped_rows\": [[\"a\", \"12.30\", \"new\"], [\"b\", \"0.00\", \"paid\"], [\"c\", \"1.05\", \"new\"]]}\n{\"event\": \"sql\", \"sql\": \"DROP TABLE orders\"}\n{\"event\": \"old-table-dropped\"}\n{\"event\": \"sql\", \"sql\": \"ALTER TABLE orders_staged RENAME TO \\\"orders\\\"\"}\n{\"event\": \"sql\", \"sql\": \"PRAGMA user_version=1\"}\n{\"event\": \"sql\", \"sql\": \"PRAGMA integrity_check\"}\n{\"event\": \"sql\", \"sql\": \"COMMIT\"}\n{\"event\": \"migrated\", \"version\": 1}\n{\"event\": \"transaction-after-step\", \"active\": false}\n{\"event\": \"connection-closed\", \"probe\": \"ProgrammingError\"}\n",
+  "stderr": "",
+  "exit_code": 0,
+  "stdin_digest": "sha256:7968496d9703d4f3407dc535efaea680d3006c5b7895262c68a6fc52ac8c1928",
+  "stdout_digest": "sha256:416c9a8ffeb2976b75170cafd5d0b8fdb18eaffd323ecf70ddd7c2126c64186d",
+  "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

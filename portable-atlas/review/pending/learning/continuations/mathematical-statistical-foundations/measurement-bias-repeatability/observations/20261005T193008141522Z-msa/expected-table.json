@@ -1,0 +1,117 @@
+{
+  "rows": [
+    {
+      "id": "centered",
+      "label": "centered",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "calculated",
+        "category": "within",
+        "hand_case": "centered"
+      }
+    },
+    {
+      "id": "tight-biased",
+      "label": "tight-biased",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[12,12,12],[12,12,12],[22,22,22],[22,22,22]]}",
+      "expected": {
+        "status": "calculated",
+        "category": "bias",
+        "hand_case": "tight-biased"
+      }
+    },
+    {
+      "id": "centered-noisy",
+      "label": "centered-noisy",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[7,10,13],[7,10,13],[17,20,23],[17,20,23]]}",
+      "expected": {
+        "status": "calculated",
+        "category": "spread",
+        "hand_case": "centered-noisy"
+      }
+    },
+    {
+      "id": "operator-offset",
+      "label": "operator-offset",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10,11],[11,12,13],[19,20,21],[21,22,23]]}",
+      "expected": {
+        "status": "calculated",
+        "category": "bias",
+        "hand_case": "operator-offset"
+      }
+    },
+    {
+      "id": "cancelled-bias",
+      "label": "cancelled-bias",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[11,12,13],[11,12,13],[17,18,19],[17,18,19]]}",
+      "expected": {
+        "status": "calculated",
+        "category": "bias",
+        "hand_case": "cancelled-bias"
+      }
+    },
+    {
+      "id": "bool-reference",
+      "label": "bool-reference",
+      "input_json": "{\"unit\":\"arb\",\"references\":[true,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "references"
+      }
+    },
+    {
+      "id": "changed-reference",
+      "label": "changed-reference",
+      "input_json": "{\"unit\":\"arb\",\"references\":[11,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "references"
+      }
+    },
+    {
+      "id": "changed-operator",
+      "label": "changed-operator",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"C\"],\"cells\":[[9,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "operators"
+      }
+    },
+    {
+      "id": "replicate-missing",
+      "label": "replicate-missing",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "replicates"
+      }
+    },
+    {
+      "id": "float-value",
+      "label": "float-value",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9.0,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "values"
+      }
+    },
+    {
+      "id": "extra-field",
+      "label": "extra-field",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[9,10,11],[9,10,11],[19,20,21],[19,20,21]],\"path\":\"arbitrary\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape"
+      }
+    },
+    {
+      "id": "nan",
+      "label": "nan",
+      "input_json": "{\"unit\":\"arb\",\"references\":[10,20],\"operators\":[\"A\",\"B\"],\"cells\":[[NaN,10,11],[9,10,11],[19,20,21],[19,20,21]]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax"
+      }
+    }
+  ]
+}

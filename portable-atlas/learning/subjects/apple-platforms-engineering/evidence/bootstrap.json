@@ -1,0 +1,620 @@
+{
+  "rows": [
+    {
+      "id": "all-fields",
+      "json": "{\"name\":\"Aki\",\"age\":7,\"note\":\"hello\"}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": "hello"
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": "hello"
+          },
+          "status": "accepted"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": "hello"
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "optional-missing",
+      "json": "{\"name\":\"Aki\",\"age\":7}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "No value associated with key CodingKeys(stringValue: \"note\", intValue: nil) (\"note\").",
+            "kind": "keyNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "optional-null",
+      "json": "{\"name\":\"Aki\",\"age\":7,\"note\":null}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "Cannot get value of type String -- found null value instead",
+            "kind": "valueNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "required-missing",
+      "json": "{\"age\":7,\"note\":\"hello\"}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "",
+            "note": "hello"
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "No value associated with key CodingKeys(stringValue: \"name\", intValue: nil) (\"name\").",
+            "kind": "keyNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "No value associated with key CodingKeys(stringValue: \"name\", intValue: nil) (\"name\").",
+            "kind": "keyNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "required-null",
+      "json": "{\"name\":null,\"age\":7}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "Cannot get value of type String -- found null value instead",
+            "kind": "valueNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "Cannot get value of type String -- found null value instead",
+            "kind": "valueNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "name-wrong-type",
+      "json": "{\"name\":7,\"age\":7}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "Expected to decode String but found number instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "name"
+            ],
+            "debug": "Expected to decode String but found number instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "age-string",
+      "json": "{\"name\":\"Aki\",\"age\":\"7\"}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 0,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "age"
+            ],
+            "debug": "Expected to decode Int8 but found a string instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "age"
+            ],
+            "debug": "Expected to decode Int8 but found a string instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "age-bool",
+      "json": "{\"name\":\"Aki\",\"age\":true}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 0,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "age"
+            ],
+            "debug": "Expected to decode Int8 but found bool instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "age"
+            ],
+            "debug": "Expected to decode Int8 but found bool instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "note-wrong-type",
+      "json": "{\"name\":\"Aki\",\"age\":7,\"note\":7}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "Expected to decode String but found number instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "Expected to decode String but found number instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "int8-min",
+      "json": "{\"name\":\"\",\"age\":-128,\"note\":\"\"}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": -128,
+            "name": "",
+            "note": ""
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": null,
+          "profile": {
+            "age": -128,
+            "name": "",
+            "note": ""
+          },
+          "status": "accepted"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": -128,
+            "name": "",
+            "note": ""
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "int8-max",
+      "json": "{\"name\":\"境界\",\"age\":127,\"note\":null}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 127,
+            "name": "境界",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "Cannot get value of type String -- found null value instead",
+            "kind": "valueNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": 127,
+            "name": "境界",
+            "note": null
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "int8-underflow",
+      "json": "{\"name\":\"Aki\",\"age\":-129}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 0,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "int8-overflow",
+      "json": "{\"name\":\"Aki\",\"age\":128}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 0,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "fractional-age",
+      "json": "{\"name\":\"Aki\",\"age\":7.5}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 0,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "extra-key",
+      "json": "{\"name\":\"Aki\",\"age\":7,\"other\":true}",
+      "variants": {
+        "defaulting": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [
+              "note"
+            ],
+            "debug": "No value associated with key CodingKeys(stringValue: \"note\", intValue: nil) (\"note\").",
+            "kind": "keyNotFound"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": null,
+          "profile": {
+            "age": 7,
+            "name": "Aki",
+            "note": null
+          },
+          "status": "accepted"
+        }
+      }
+    },
+    {
+      "id": "root-array",
+      "json": "[]",
+      "variants": {
+        "defaulting": {
+          "error": {
+            "coding_path": [],
+            "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [],
+            "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [],
+            "debug": "Expected to decode Dictionary<String, Any> but found an array instead.",
+            "kind": "typeMismatch"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    },
+    {
+      "id": "malformed-json",
+      "json": "{broken",
+      "variants": {
+        "defaulting": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "eager-optional": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        },
+        "normal": {
+          "error": {
+            "coding_path": [],
+            "debug": "The given data was not valid JSON.",
+            "kind": "dataCorrupted"
+          },
+          "profile": null,
+          "status": "rejected"
+        }
+      }
+    }
+  ],
+  "log": {
+    "started_at_utc": "2026-10-05T08:28:48.303462+00:00",
+    "compiler_command": [
+      "xcrun",
+      "swiftc",
+      "Lesson.swift",
+      "-module-cache-path",
+      "<owned-build>/cache",
+      "-o",
+      "<owned-build>/lesson"
+    ],
+    "compile_exit_code": 0,
+    "compile_stdout": "",
+    "compile_stderr": "",
+    "run_exit_code": 0,
+    "run_stdout": "[{\"id\":\"all-fields\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7,\\\"note\\\":\\\"hello\\\"}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":\"hello\"},\"status\":\"accepted\"},\"eager-optional\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":\"hello\"},\"status\":\"accepted\"},\"normal\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":\"hello\"},\"status\":\"accepted\"}}},{\"id\":\"optional-missing\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"No value associated with key CodingKeys(stringValue: \\\"note\\\", intValue: nil) (\\\"note\\\").\",\"kind\":\"keyNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"}}},{\"id\":\"optional-null\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7,\\\"note\\\":null}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"Cannot get value of type String -- found null value instead\",\"kind\":\"valueNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"}}},{\"id\":\"required-missing\",\"json\":\"{\\\"age\\\":7,\\\"note\\\":\\\"hello\\\"}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"\",\"note\":\"hello\"},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"No value associated with key CodingKeys(stringValue: \\\"name\\\", intValue: nil) (\\\"name\\\").\",\"kind\":\"keyNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"No value associated with key CodingKeys(stringValue: \\\"name\\\", intValue: nil) (\\\"name\\\").\",\"kind\":\"keyNotFound\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"required-null\",\"json\":\"{\\\"name\\\":null,\\\"age\\\":7}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"Cannot get value of type String -- found null value instead\",\"kind\":\"valueNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"Cannot get value of type String -- found null value instead\",\"kind\":\"valueNotFound\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"name-wrong-type\",\"json\":\"{\\\"name\\\":7,\\\"age\\\":7}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"Expected to decode String but found number instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"name\"],\"debug\":\"Expected to decode String but found number instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"age-string\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":\\\"7\\\"}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":0,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"age\"],\"debug\":\"Expected to decode Int8 but found a string instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"age\"],\"debug\":\"Expected to decode Int8 but found a string instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"age-bool\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":true}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":0,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"age\"],\"debug\":\"Expected to decode Int8 but found bool instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"age\"],\"debug\":\"Expected to decode Int8 but found bool instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"note-wrong-type\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7,\\\"note\\\":7}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"Expected to decode String but found number instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"Expected to decode String but found number instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"int8-min\",\"json\":\"{\\\"name\\\":\\\"\\\",\\\"age\\\":-128,\\\"note\\\":\\\"\\\"}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":-128,\"name\":\"\",\"note\":\"\"},\"status\":\"accepted\"},\"eager-optional\":{\"error\":null,\"profile\":{\"age\":-128,\"name\":\"\",\"note\":\"\"},\"status\":\"accepted\"},\"normal\":{\"error\":null,\"profile\":{\"age\":-128,\"name\":\"\",\"note\":\"\"},\"status\":\"accepted\"}}},{\"id\":\"int8-max\",\"json\":\"{\\\"name\\\":\\\"境界\\\",\\\"age\\\":127,\\\"note\\\":null}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":127,\"name\":\"境界\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"Cannot get value of type String -- found null value instead\",\"kind\":\"valueNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":null,\"profile\":{\"age\":127,\"name\":\"境界\",\"note\":null},\"status\":\"accepted\"}}},{\"id\":\"int8-underflow\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":-129}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":0,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"int8-overflow\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":128}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":0,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"fractional-age\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7.5}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":0,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"extra-key\",\"json\":\"{\\\"name\\\":\\\"Aki\\\",\\\"age\\\":7,\\\"other\\\":true}\",\"variants\":{\"defaulting\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"},\"eager-optional\":{\"error\":{\"coding_path\":[\"note\"],\"debug\":\"No value associated with key CodingKeys(stringValue: \\\"note\\\", intValue: nil) (\\\"note\\\").\",\"kind\":\"keyNotFound\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":null,\"profile\":{\"age\":7,\"name\":\"Aki\",\"note\":null},\"status\":\"accepted\"}}},{\"id\":\"root-array\",\"json\":\"[]\",\"variants\":{\"defaulting\":{\"error\":{\"coding_path\":[],\"debug\":\"Expected to decode Dictionary<String, Any> but found an array instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"eager-optional\":{\"error\":{\"coding_path\":[],\"debug\":\"Expected to decode Dictionary<String, Any> but found an array instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[],\"debug\":\"Expected to decode Dictionary<String, Any> but found an array instead.\",\"kind\":\"typeMismatch\"},\"profile\":null,\"status\":\"rejected\"}}},{\"id\":\"malformed-json\",\"json\":\"{broken\",\"variants\":{\"defaulting\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"},\"eager-optional\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"},\"normal\":{\"error\":{\"coding_path\":[],\"debug\":\"The given data was not valid JSON.\",\"kind\":\"dataCorrupted\"},\"profile\":null,\"status\":\"rejected\"}}}]\n",
+    "run_stderr": "",
+    "binary_sha256": "600eece2f495158a4188449e2cdff3331a10349d5fb04e3874fb7b4a001e57a7",
+    "stdin_sha256": "e3c6391a0b16cc144a14e4dc2b6abb18a1ee1dccdfc2309203964540806aa8b2",
+    "finished_at_utc": "2026-10-05T08:29:12.199050+00:00",
+    "build_cache_cleanup": true,
+    "remaining_owned_build_dirs": []
+  }
+}

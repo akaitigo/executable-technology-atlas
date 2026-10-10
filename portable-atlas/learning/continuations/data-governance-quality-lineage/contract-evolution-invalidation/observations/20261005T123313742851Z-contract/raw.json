@@ -1,0 +1,344 @@
+{
+  "run_id": "20261005T123313742851Z-contract",
+  "environment": {
+    "python": "3.9.6",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "dependencies": "stdlib"
+  },
+  "source_digests": {
+    "contracts.json": "77cd451476b7c2f137871649c07e9dfa851ed5ec625531fb7960b62d6a6fe218",
+    "expected-table.json": "1842cbe29184b240eb6fd433f982c7bd8a70cc195bc12a4dc4c6979bc8a1ea77",
+    "engine.py": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503",
+    "runner.py": "0be7e49e80188bdcd6ffa890e71aa7be3a5da9bcf56f964718a99a0ce397d0f8",
+    "checker.py": "90d246eed1b34d2c6a4b52c7191df8246ecb2bf22f3ab4ea05d5fb3579d94ad4",
+    "route.py": "f0d5505ae1eea5ed5c7f9344436b063b1fd7c046516723c871753c136427bc75",
+    "README.md": "39248dc2e8d08fe1a7780c635f98789783ba1d96094a4520dfd4a78a6cf05b42",
+    "sources.json": "62579a2f4ba527b95d174aaae30b2559f8f2fd5a40d884296d21f1215a2ec8a5",
+    "index.html": "ae9dc16627fbcb65c0f65c020223eef5640638ffe2c936d1be26b6f934312a85",
+    "app.js": "cb9545c8c9d5de548d3152f20e40c217efb34dd07553aeeeea0a8698c7a617b8",
+    "styles.css": "28bac7963e0c8b1bdfbe8382a07288749285997f4394fdce3b6d2c3894a97688",
+    "skills/atlas-contract-evolution-invalidation/SKILL.md": "d32681552d9f29002ed6e0d57cc461786d265dcb7bb750e10f577292b58edc13"
+  },
+  "rows": [
+    {
+      "id": "unchanged",
+      "label": "同じcontract",
+      "status": "normal-comparison",
+      "current_contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "current_contract": {
+        "version": "v1",
+        "minimum": 0,
+        "maximum": 100,
+        "amount_type": "integer-not-bool"
+      },
+      "binding": {
+        "source": "4a30cc43e3eb6da5dc68c7f8903eeb4a088005a912fa3ed3dcc7bec77d74b145",
+        "contract": "a460f87bbd96a5fbb2ad564cc47430b10870517c3b43dab929138682ea1fd248",
+        "producer": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503"
+      },
+      "raw_contract_sha256": "302979e3ced114ae60dd58325b2a531707123954fa748c6fe366530a93fed82e",
+      "normalized_contract_ascii": "{\"amount_type\":\"integer-not-bool\",\"maximum\":100,\"minimum\":0,\"version\":\"v1\"}",
+      "normalized_contract_sha256": "a460f87bbd96a5fbb2ad564cc47430b10870517c3b43dab929138682ea1fd248",
+      "raw_contract_equal": true,
+      "normalized_contract_equal": true,
+      "validation_semantics_equal": true,
+      "normal": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse"
+          }
+        ]
+      },
+      "faulty": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "source-only-binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse",
+            "contract_ignored": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "max99",
+      "label": "最大100→99",
+      "status": "normal-comparison",
+      "current_contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":99,\"amount_type\":\"integer-not-bool\"}",
+      "current_contract": {
+        "version": "v1",
+        "minimum": 0,
+        "maximum": 99,
+        "amount_type": "integer-not-bool"
+      },
+      "binding": {
+        "source": "4a30cc43e3eb6da5dc68c7f8903eeb4a088005a912fa3ed3dcc7bec77d74b145",
+        "contract": "aad6e081609fe16e814c890586c84d870b4433ff983bf2aac15ed7cd4443ccc1",
+        "producer": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503"
+      },
+      "raw_contract_sha256": "2d52441e39ba5b0f4267b85fdcae4c71398ec0c427560f4c7447e1d846efdcbe",
+      "normalized_contract_ascii": "{\"amount_type\":\"integer-not-bool\",\"maximum\":99,\"minimum\":0,\"version\":\"v1\"}",
+      "normalized_contract_sha256": "aad6e081609fe16e814c890586c84d870b4433ff983bf2aac15ed7cd4443ccc1",
+      "raw_contract_equal": false,
+      "normalized_contract_equal": false,
+      "validation_semantics_equal": false,
+      "normal": {
+        "cache_state": "invalidated",
+        "validation_state": "reevaluated-rejected",
+        "accepted": false,
+        "violations": [
+          {
+            "row": 1,
+            "column": "amount",
+            "rule": "maximum",
+            "value": 100,
+            "limit": 99
+          }
+        ],
+        "amount_sum": null,
+        "trace": [
+          {
+            "event": "binding-check",
+            "matches": false
+          },
+          {
+            "event": "cache-invalidate",
+            "old_result_discarded": true
+          },
+          {
+            "event": "revalidate",
+            "accepted": false,
+            "violations": [
+              {
+                "row": 1,
+                "column": "amount",
+                "rule": "maximum",
+                "value": 100,
+                "limit": 99
+              }
+            ]
+          }
+        ]
+      },
+      "faulty": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "source-only-binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse",
+            "contract_ignored": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "version-only",
+      "label": "version v1→v2だけ",
+      "status": "normal-comparison",
+      "current_contract_json": "{\"version\":\"v2\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "current_contract": {
+        "version": "v2",
+        "minimum": 0,
+        "maximum": 100,
+        "amount_type": "integer-not-bool"
+      },
+      "binding": {
+        "source": "4a30cc43e3eb6da5dc68c7f8903eeb4a088005a912fa3ed3dcc7bec77d74b145",
+        "contract": "579562c2d302f9f77ae1047c5c3b6dbe63cf3afb0e999126d8763185fc67f6f0",
+        "producer": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503"
+      },
+      "raw_contract_sha256": "3bd352c6c2c08087f26b69a99e62b6c35cb37081022590d031efe176d7c872e5",
+      "normalized_contract_ascii": "{\"amount_type\":\"integer-not-bool\",\"maximum\":100,\"minimum\":0,\"version\":\"v2\"}",
+      "normalized_contract_sha256": "579562c2d302f9f77ae1047c5c3b6dbe63cf3afb0e999126d8763185fc67f6f0",
+      "raw_contract_equal": false,
+      "normalized_contract_equal": false,
+      "validation_semantics_equal": true,
+      "normal": {
+        "cache_state": "invalidated",
+        "validation_state": "reevaluated-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "binding-check",
+            "matches": false
+          },
+          {
+            "event": "cache-invalidate",
+            "old_result_discarded": true
+          },
+          {
+            "event": "revalidate",
+            "accepted": true,
+            "violations": []
+          }
+        ]
+      },
+      "faulty": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "source-only-binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse",
+            "contract_ignored": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "format-only",
+      "label": "空白・key順だけ",
+      "status": "normal-comparison",
+      "current_contract_json": "{ \"amount_type\": \"integer-not-bool\", \"maximum\": 100, \"minimum\": 0, \"version\": \"v1\" }",
+      "current_contract": {
+        "amount_type": "integer-not-bool",
+        "maximum": 100,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "binding": {
+        "source": "4a30cc43e3eb6da5dc68c7f8903eeb4a088005a912fa3ed3dcc7bec77d74b145",
+        "contract": "a460f87bbd96a5fbb2ad564cc47430b10870517c3b43dab929138682ea1fd248",
+        "producer": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503"
+      },
+      "raw_contract_sha256": "c065f8b2b8daa4ea809baf949b0abb606b5121b88101f30716b0db87f7e74388",
+      "normalized_contract_ascii": "{\"amount_type\":\"integer-not-bool\",\"maximum\":100,\"minimum\":0,\"version\":\"v1\"}",
+      "normalized_contract_sha256": "a460f87bbd96a5fbb2ad564cc47430b10870517c3b43dab929138682ea1fd248",
+      "raw_contract_equal": false,
+      "normalized_contract_equal": true,
+      "validation_semantics_equal": true,
+      "normal": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse"
+          }
+        ]
+      },
+      "faulty": {
+        "cache_state": "reused",
+        "validation_state": "cache-reused-accepted",
+        "accepted": true,
+        "violations": [],
+        "amount_sum": 100,
+        "trace": [
+          {
+            "event": "source-only-binding-check",
+            "matches": true
+          },
+          {
+            "event": "cache-reuse",
+            "contract_ignored": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "refuse-source-bool",
+      "status": "expected-refusal",
+      "stage": "source",
+      "reason": "amount-type",
+      "source_json": "[{\"id\":\"r1\",\"amount\":true}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "cache_used": false,
+      "result_created": false
+    },
+    {
+      "id": "refuse-source-float",
+      "status": "expected-refusal",
+      "stage": "source",
+      "reason": "amount-type",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100.0}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "cache_used": false,
+      "result_created": false
+    },
+    {
+      "id": "refuse-contract-bool",
+      "status": "expected-refusal",
+      "stage": "contract",
+      "reason": "range-type",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":true,\"amount_type\":\"integer-not-bool\"}",
+      "cache_used": false,
+      "result_created": false
+    },
+    {
+      "id": "refuse-contract-range",
+      "status": "expected-refusal",
+      "stage": "contract",
+      "reason": "range-order",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":-1,\"amount_type\":\"integer-not-bool\"}",
+      "cache_used": false,
+      "result_created": false
+    },
+    {
+      "id": "refuse-duplicate-key",
+      "status": "expected-refusal",
+      "stage": "contract",
+      "reason": "duplicate-key",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\",\"maximum\":99}",
+      "cache_used": false,
+      "result_created": false
+    }
+  ],
+  "initial_cache": {
+    "binding": {
+      "source": "4a30cc43e3eb6da5dc68c7f8903eeb4a088005a912fa3ed3dcc7bec77d74b145",
+      "contract": "a460f87bbd96a5fbb2ad564cc47430b10870517c3b43dab929138682ea1fd248",
+      "producer": "b5904ed2812b9d3f579c480023bde4bc8ae63d5bc86561cd2fef49f3c3a96503"
+    },
+    "result": {
+      "accepted": true,
+      "violations": [],
+      "amount_sum": 100
+    }
+  },
+  "base_contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+  "base_raw_contract_sha256": "302979e3ced114ae60dd58325b2a531707123954fa748c6fe366530a93fed82e",
+  "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+  "claim": "independent custom JSON contract; not CSVW conformance, authenticity or business approval"
+}

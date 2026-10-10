@@ -1,0 +1,18 @@
+{
+  "schema":1,
+  "scope":{"phase":"Sync","prepared_current_wave":true,"prune_enabled":true,"confirmation_helper_pre_evaluated":true,"api_execution":false},
+  "cases":[
+    {"id":"no-confirmation-needed","title":"現在waveに確認が必要なpruneなし","current_wave":0,"prune_confirmed":false,
+     "current_prunes":[{"id":"old-a","requires_confirmation":false},{"id":"old-b","requires_confirmation":false}],
+     "current_apply_ids":["new-config"],"later_prunes":[{"id":"old-later","wave":1,"requires_confirmation":false}]},
+    {"id":"needs-confirmation","title":"現在waveのold-bが未確認","current_wave":0,"prune_confirmed":false,
+     "current_prunes":[{"id":"old-a","requires_confirmation":false},{"id":"old-b","requires_confirmation":true}],
+     "current_apply_ids":["new-config"],"later_prunes":[{"id":"old-later","wave":1,"requires_confirmation":false}]},
+    {"id":"already-confirmed","title":"同じ現在waveを確認済みで渡す","current_wave":0,"prune_confirmed":true,
+     "current_prunes":[{"id":"old-a","requires_confirmation":false},{"id":"old-b","requires_confirmation":true}],
+     "current_apply_ids":["new-config"],"later_prunes":[{"id":"old-later","wave":1,"requires_confirmation":false}]},
+    {"id":"later-wave-only","title":"確認が必要なのは後続waveだけ","current_wave":0,"prune_confirmed":false,
+     "current_prunes":[{"id":"old-a","requires_confirmation":false},{"id":"old-b","requires_confirmation":false}],
+     "current_apply_ids":["new-config"],"later_prunes":[{"id":"old-later","wave":1,"requires_confirmation":true}]}
+  ]
+}

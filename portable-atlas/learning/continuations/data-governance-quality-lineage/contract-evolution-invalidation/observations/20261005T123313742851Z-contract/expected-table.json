@@ -1,0 +1,51 @@
+{
+  "method": "handwritten violation/cache-state table fixed before producer execution",
+  "source_literal": "[{\"id\":\"r1\",\"amount\":100}]",
+  "canonical_base_contract": "{\"amount_type\":\"integer-not-bool\",\"maximum\":100,\"minimum\":0,\"version\":\"v1\"}",
+  "cases": {
+    "unchanged": {
+      "cache_state": "reused",
+      "validation_state": "cache-reused-accepted",
+      "violations": [],
+      "amount_sum": 100,
+      "semantic_equal": true,
+      "raw_equal": true,
+      "normalized_equal": true
+    },
+    "max99": {
+      "cache_state": "invalidated",
+      "validation_state": "reevaluated-rejected",
+      "violations": [
+        {
+          "row": 1,
+          "column": "amount",
+          "rule": "maximum",
+          "value": 100,
+          "limit": 99
+        }
+      ],
+      "amount_sum": null,
+      "semantic_equal": false,
+      "raw_equal": false,
+      "normalized_equal": false
+    },
+    "version-only": {
+      "cache_state": "invalidated",
+      "validation_state": "reevaluated-accepted",
+      "violations": [],
+      "amount_sum": 100,
+      "semantic_equal": true,
+      "raw_equal": false,
+      "normalized_equal": false
+    },
+    "format-only": {
+      "cache_state": "reused",
+      "validation_state": "cache-reused-accepted",
+      "violations": [],
+      "amount_sum": 100,
+      "semantic_equal": true,
+      "raw_equal": false,
+      "normalized_equal": true
+    }
+  }
+}

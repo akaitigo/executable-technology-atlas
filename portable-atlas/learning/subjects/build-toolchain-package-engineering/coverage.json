@@ -1,0 +1,19 @@
+{
+ "subject":"build-toolchain-package-engineering",
+ "implemented":["actual two-action DAG generates object/bundle UTF8 bytes","content input dependency/action/toolchain/builder key","local action metadata plus CAS output blobs","mtime-only stale cache hit comparison","dependency and toolchain invalidation","touch only hit versus false miss","same host clean rebuild byte identity","empty input / missing dependency / cycle / unsupported action"],
+ "uncovered":[
+  {"concept":"toolchain pinning / hermetic builds / undeclared input","question":"compiler binary、環境、locale、path、networkをどこまでinputに含めるか","sources":["bazel","repro"]},
+  {"concept":"real package format / ABI / platform compatibility","question":"wheelやnative artifactのtarget platform/ABI/dependency metadataをどう検証するか","sources":["packages"]},
+  {"concept":"dependency resolution / lockfiles / transitive graph","question":"version range、lockとsource integrityをどの更新単位で扱うか","sources":["packages","bazel"]},
+  {"concept":"cross-host reproducibility / nondeterministic inputs","question":"時刻、ordering、絶対path、別OSでbyte同一を壊す要因をどう切り分けるか","sources":["repro"]},
+  {"concept":"remote cache trust / corruption / concurrent writers","question":"cacheのwriter認証、出力digest、競合、破損時の拒否/再buildをどう扱うか","sources":["bazel"]},
+  {"concept":"incremental scheduling / parallel actions / failure recovery","question":"大DAGでdirty部分だけを並列実行し失敗後の結果をどう隔離するか","sources":["dag","bazel"]},
+  {"concept":"package provenance / signing / publish lifecycle","question":"生成物の署名、依存一覧、registryへ渡す境界とretentionをどう設計するか","sources":["packages","repro"]}
+ ],
+ "next_experiments":[
+  {"title":"undeclared input","operation":"架空locale又はbannerをkeyに含めないbad actionへ投入し、生成bytesが変わるのにhitする例と明示input版を比較","sources":["bazel","repro"]},
+  {"title":"cache corruption","operation":"owned fixture CAS blobを一時コピーで改変しdigest拒否と明示clean rebuildを比較","sources":["bazel"]},
+  {"title":"deterministic package ordering","operation":"同じfilesを異なる列挙順/mtimeでtoy archiveに入れ、sortと固定metadataによるbyte同一を比較","sources":["repro","packages"]},
+  {"title":"branching DAG invalidation","operation":"独立した第二objectを追加し一方の入力だけ変更、片側missと共通bundle invalidationを手計算keyで検証","sources":["dag","bazel"]}
+ ]
+}

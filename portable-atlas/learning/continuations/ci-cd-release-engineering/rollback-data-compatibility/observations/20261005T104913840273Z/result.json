@@ -1,0 +1,926 @@
+{
+  "startedUtc": "2026-10-05T10:49:13.840922+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "platform": "Darwin",
+    "subprocessExecutable": "python3",
+    "executablePathNormalized": true
+  },
+  "sourceHashes": {
+    "runner.py": "2f803ece5e4f9c8573b293c9d66053d1f459c2692eca8afd4de99a74f78d337f",
+    "checker.py": "b8c800a3075daaa53027ec720803a034a898ca12bd57bad461d6b1cb08e97eaa",
+    "app_v1.py": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223",
+    "app_v2.py": "ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053",
+    "health.py": "6589df8d1bcd1e08aa3aad9dfe6374cbfea767b0d17a5a804b1ad7555297a188",
+    "compatibility.json": "fac2bf6ba41669093e67881d46b29f883b22e9f46975ad7cec49f5f227982735",
+    "index.html": "11f980cff28cc7888c1ffd8d9f25637730dd8d868f0d17a4a6f7deb5aa980956",
+    "preview.py": "1706473cae88eefedb9a29fbb941bfc1ecad5afcf9f50073031c87c7145f0860",
+    "route.py": "ef5554e827ef6f575b4d4044e5fbf5ade4636f9f1feaccde27ff099a3c4c7884",
+    "test_negative.py": "000bd6ab33a110dce26533bff25c9da15115cb279777ac6f8ecaad203627efd2",
+    "README.md": "84f36eb5311c8dcdc6f969f61c5a353c1bd282b8d0c386052200ad37b88dcaf9",
+    "COVERAGE.md": "a773c39fc3c9308f9f7c2892b90f2da97cf77cebdc03db96389df4012e88d89a",
+    "skills/rollback-data-compatibility/SKILL.md": "c933f9d55414e487cfd6cd26a4ef36e348df5b058afb074ec38decd4e80a2cac"
+  },
+  "matrix": [
+    {
+      "schema": "v1",
+      "sqlTrace": [
+        {
+          "sql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.847459+00:00",
+          "endedUtc": "2026-10-05T10:49:13.847932+00:00"
+        },
+        {
+          "sql": "INSERT INTO person VALUES(1,'Ada')",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.847935+00:00",
+          "endedUtc": "2026-10-05T10:49:13.848280+00:00"
+        }
+      ],
+      "snapshot": {
+        "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+        "columns": [
+          [
+            0,
+            "id",
+            "INTEGER",
+            0,
+            null,
+            1
+          ],
+          [
+            1,
+            "name",
+            "TEXT",
+            1,
+            null,
+            0
+          ]
+        ],
+        "rows": [
+          [
+            1,
+            "Ada"
+          ]
+        ],
+        "dbSha256": "13d5a0c53267d7b297b2b33e88297225f969c8c8cf072914012ad09b9d3bf0c9"
+      },
+      "reads": {
+        "v1": {
+          "label": "v1",
+          "argv": [
+            "python3",
+            "-B",
+            "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+            "matrix-v1/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:13.849640+00:00",
+          "endedUtc": "2026-10-05T10:49:13.890441+00:00",
+          "exitCode": 0,
+          "stdout": "{\"version\": \"v1\", \"sql\": \"SELECT id, name FROM person ORDER BY id\", \"rows\": [[1, \"Ada\"]]}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v1",
+            "sql": "SELECT id, name FROM person ORDER BY id",
+            "rows": [
+              [
+                1,
+                "Ada"
+              ]
+            ]
+          }
+        },
+        "v2": {
+          "label": "v2",
+          "argv": [
+            "python3",
+            "-B",
+            "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+            "matrix-v1/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:13.890521+00:00",
+          "endedUtc": "2026-10-05T10:49:13.931063+00:00",
+          "exitCode": 3,
+          "stdout": "{\"version\": \"v2\", \"sql\": \"SELECT id, display_name FROM person ORDER BY id\", \"error\": \"no such column: display_name\", \"errorClass\": \"OperationalError\", \"sqliteErrorCode\": null, \"sqliteErrorName\": null}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v2",
+            "sql": "SELECT id, display_name FROM person ORDER BY id",
+            "error": "no such column: display_name",
+            "errorClass": "OperationalError",
+            "sqliteErrorCode": null,
+            "sqliteErrorName": null
+          }
+        }
+      }
+    },
+    {
+      "schema": "additive",
+      "sqlTrace": [
+        {
+          "sql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.931493+00:00",
+          "endedUtc": "2026-10-05T10:49:13.932361+00:00"
+        },
+        {
+          "sql": "INSERT INTO person VALUES(1,'Ada')",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.932363+00:00",
+          "endedUtc": "2026-10-05T10:49:13.932779+00:00"
+        },
+        {
+          "sql": "ALTER TABLE person ADD COLUMN display_name TEXT NOT NULL DEFAULT ''",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.932781+00:00",
+          "endedUtc": "2026-10-05T10:49:13.933238+00:00"
+        },
+        {
+          "sql": "UPDATE person SET display_name=name || '-v2'",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:13.933240+00:00",
+          "endedUtc": "2026-10-05T10:49:13.933646+00:00"
+        }
+      ],
+      "snapshot": {
+        "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL, display_name TEXT NOT NULL DEFAULT '')",
+        "columns": [
+          [
+            0,
+            "id",
+            "INTEGER",
+            0,
+            null,
+            1
+          ],
+          [
+            1,
+            "name",
+            "TEXT",
+            1,
+            null,
+            0
+          ],
+          [
+            2,
+            "display_name",
+            "TEXT",
+            1,
+            "''",
+            0
+          ]
+        ],
+        "rows": [
+          [
+            1,
+            "Ada",
+            "Ada-v2"
+          ]
+        ],
+        "dbSha256": "978fad1df129c525e72023b50fbfce95cba4307dd69315aa2752408742f7b69f"
+      },
+      "reads": {
+        "v1": {
+          "label": "v1",
+          "argv": [
+            "python3",
+            "-B",
+            "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+            "matrix-additive/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:13.934926+00:00",
+          "endedUtc": "2026-10-05T10:49:13.975274+00:00",
+          "exitCode": 0,
+          "stdout": "{\"version\": \"v1\", \"sql\": \"SELECT id, name FROM person ORDER BY id\", \"rows\": [[1, \"Ada\"]]}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v1",
+            "sql": "SELECT id, name FROM person ORDER BY id",
+            "rows": [
+              [
+                1,
+                "Ada"
+              ]
+            ]
+          }
+        },
+        "v2": {
+          "label": "v2",
+          "argv": [
+            "python3",
+            "-B",
+            "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+            "matrix-additive/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:13.975345+00:00",
+          "endedUtc": "2026-10-05T10:49:14.016618+00:00",
+          "exitCode": 0,
+          "stdout": "{\"version\": \"v2\", \"sql\": \"SELECT id, display_name FROM person ORDER BY id\", \"rows\": [[1, \"Ada-v2\"]]}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v2",
+            "sql": "SELECT id, display_name FROM person ORDER BY id",
+            "rows": [
+              [
+                1,
+                "Ada-v2"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "schema": "rename",
+      "sqlTrace": [
+        {
+          "sql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.017046+00:00",
+          "endedUtc": "2026-10-05T10:49:14.017982+00:00"
+        },
+        {
+          "sql": "INSERT INTO person VALUES(1,'Ada')",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.017986+00:00",
+          "endedUtc": "2026-10-05T10:49:14.018471+00:00"
+        },
+        {
+          "sql": "ALTER TABLE person RENAME COLUMN name TO display_name",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.018473+00:00",
+          "endedUtc": "2026-10-05T10:49:14.019417+00:00"
+        },
+        {
+          "sql": "UPDATE person SET display_name=display_name || '-v2'",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.019422+00:00",
+          "endedUtc": "2026-10-05T10:49:14.019855+00:00"
+        }
+      ],
+      "snapshot": {
+        "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, display_name TEXT NOT NULL)",
+        "columns": [
+          [
+            0,
+            "id",
+            "INTEGER",
+            0,
+            null,
+            1
+          ],
+          [
+            1,
+            "display_name",
+            "TEXT",
+            1,
+            null,
+            0
+          ]
+        ],
+        "rows": [
+          [
+            1,
+            "Ada-v2"
+          ]
+        ],
+        "dbSha256": "50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2"
+      },
+      "reads": {
+        "v1": {
+          "label": "v1",
+          "argv": [
+            "python3",
+            "-B",
+            "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+            "matrix-rename/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:14.021338+00:00",
+          "endedUtc": "2026-10-05T10:49:14.061575+00:00",
+          "exitCode": 3,
+          "stdout": "{\"version\": \"v1\", \"sql\": \"SELECT id, name FROM person ORDER BY id\", \"error\": \"no such column: name\", \"errorClass\": \"OperationalError\", \"sqliteErrorCode\": null, \"sqliteErrorName\": null}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v1",
+            "sql": "SELECT id, name FROM person ORDER BY id",
+            "error": "no such column: name",
+            "errorClass": "OperationalError",
+            "sqliteErrorCode": null,
+            "sqliteErrorName": null
+          }
+        },
+        "v2": {
+          "label": "v2",
+          "argv": [
+            "python3",
+            "-B",
+            "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+            "matrix-rename/data.sqlite"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T10:49:14.061671+00:00",
+          "endedUtc": "2026-10-05T10:49:14.101560+00:00",
+          "exitCode": 0,
+          "stdout": "{\"version\": \"v2\", \"sql\": \"SELECT id, display_name FROM person ORDER BY id\", \"rows\": [[1, \"Ada-v2\"]]}\n",
+          "stderr": "",
+          "parsed": {
+            "version": "v2",
+            "sql": "SELECT id, display_name FROM person ORDER BY id",
+            "rows": [
+              [
+                1,
+                "Ada-v2"
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "releases": [
+    {
+      "schema": "additive",
+      "seedTrace": [
+        {
+          "sql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.101963+00:00",
+          "endedUtc": "2026-10-05T10:49:14.102801+00:00"
+        },
+        {
+          "sql": "INSERT INTO person VALUES(1,'Ada')",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.102807+00:00",
+          "endedUtc": "2026-10-05T10:49:14.103287+00:00"
+        }
+      ],
+      "trace": [
+        {
+          "event": "before",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "name",
+                "TEXT",
+                1,
+                null,
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada"
+              ]
+            ],
+            "dbSha256": "13d5a0c53267d7b297b2b33e88297225f969c8c8cf072914012ad09b9d3bf0c9"
+          }
+        },
+        {
+          "event": "migration",
+          "sqlTrace": [
+            {
+              "sql": "ALTER TABLE person ADD COLUMN display_name TEXT NOT NULL DEFAULT ''",
+              "rows": [],
+              "exitCode": 0,
+              "startedUtc": "2026-10-05T10:49:14.106562+00:00",
+              "endedUtc": "2026-10-05T10:49:14.107030+00:00"
+            },
+            {
+              "sql": "UPDATE person SET display_name=name || '-v2'",
+              "rows": [],
+              "exitCode": 0,
+              "startedUtc": "2026-10-05T10:49:14.107033+00:00",
+              "endedUtc": "2026-10-05T10:49:14.107383+00:00"
+            }
+          ],
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL, display_name TEXT NOT NULL DEFAULT '')",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "name",
+                "TEXT",
+                1,
+                null,
+                0
+              ],
+              [
+                2,
+                "display_name",
+                "TEXT",
+                1,
+                "''",
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada",
+                "Ada-v2"
+              ]
+            ],
+            "dbSha256": "978fad1df129c525e72023b50fbfce95cba4307dd69315aa2752408742f7b69f"
+          }
+        },
+        {
+          "event": "promotion",
+          "active": {
+            "sha256": "ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053"
+          }
+        },
+        {
+          "event": "v2-read",
+          "command": {
+            "label": "v2-read",
+            "argv": [
+              "python3",
+              "-B",
+              "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+              "release-additive/data.sqlite"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.110321+00:00",
+            "endedUtc": "2026-10-05T10:49:14.151058+00:00",
+            "exitCode": 0,
+            "stdout": "{\"version\": \"v2\", \"sql\": \"SELECT id, display_name FROM person ORDER BY id\", \"rows\": [[1, \"Ada-v2\"]]}\n",
+            "stderr": "",
+            "parsed": {
+              "version": "v2",
+              "sql": "SELECT id, display_name FROM person ORDER BY id",
+              "rows": [
+                [
+                  1,
+                  "Ada-v2"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "event": "synthetic-health-failure",
+          "command": {
+            "label": "synthetic-health-failure",
+            "argv": [
+              "python3",
+              "-B",
+              "health.py"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.151096+00:00",
+            "endedUtc": "2026-10-05T10:49:14.182228+00:00",
+            "exitCode": 42,
+            "stdout": "{\"kind\": \"synthetic-health-failure\", \"reason\": \"fixed fixture: canary alarm; no service/provider probe\", \"healthy\": false}\n",
+            "stderr": "",
+            "parsed": {
+              "kind": "synthetic-health-failure",
+              "reason": "fixed fixture: canary alarm; no service/provider probe",
+              "healthy": false
+            }
+          }
+        },
+        {
+          "event": "artifact-rollback",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "databaseSha256": "978fad1df129c525e72023b50fbfce95cba4307dd69315aa2752408742f7b69f",
+          "savedBytesVerified": true
+        },
+        {
+          "event": "v1-read",
+          "command": {
+            "label": "v1-read",
+            "argv": [
+              "python3",
+              "-B",
+              "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+              "release-additive/data.sqlite"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.184602+00:00",
+            "endedUtc": "2026-10-05T10:49:14.225035+00:00",
+            "exitCode": 0,
+            "stdout": "{\"version\": \"v1\", \"sql\": \"SELECT id, name FROM person ORDER BY id\", \"rows\": [[1, \"Ada\"]]}\n",
+            "stderr": "",
+            "parsed": {
+              "version": "v1",
+              "sql": "SELECT id, name FROM person ORDER BY id",
+              "rows": [
+                [
+                  1,
+                  "Ada"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "event": "after",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL, display_name TEXT NOT NULL DEFAULT '')",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "name",
+                "TEXT",
+                1,
+                null,
+                0
+              ],
+              [
+                2,
+                "display_name",
+                "TEXT",
+                1,
+                "''",
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada",
+                "Ada-v2"
+              ]
+            ],
+            "dbSha256": "978fad1df129c525e72023b50fbfce95cba4307dd69315aa2752408742f7b69f"
+          }
+        }
+      ],
+      "artifactRestored": true,
+      "databaseRestored": false,
+      "v1ReadExit": 0,
+      "v1ReadSucceeded": true
+    },
+    {
+      "schema": "rename",
+      "seedTrace": [
+        {
+          "sql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.226428+00:00",
+          "endedUtc": "2026-10-05T10:49:14.226836+00:00"
+        },
+        {
+          "sql": "INSERT INTO person VALUES(1,'Ada')",
+          "rows": [],
+          "exitCode": 0,
+          "startedUtc": "2026-10-05T10:49:14.226838+00:00",
+          "endedUtc": "2026-10-05T10:49:14.227210+00:00"
+        }
+      ],
+      "trace": [
+        {
+          "event": "before",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "name",
+                "TEXT",
+                1,
+                null,
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada"
+              ]
+            ],
+            "dbSha256": "13d5a0c53267d7b297b2b33e88297225f969c8c8cf072914012ad09b9d3bf0c9"
+          }
+        },
+        {
+          "event": "migration",
+          "sqlTrace": [
+            {
+              "sql": "ALTER TABLE person RENAME COLUMN name TO display_name",
+              "rows": [],
+              "exitCode": 0,
+              "startedUtc": "2026-10-05T10:49:14.230132+00:00",
+              "endedUtc": "2026-10-05T10:49:14.230750+00:00"
+            },
+            {
+              "sql": "UPDATE person SET display_name=display_name || '-v2'",
+              "rows": [],
+              "exitCode": 0,
+              "startedUtc": "2026-10-05T10:49:14.230755+00:00",
+              "endedUtc": "2026-10-05T10:49:14.231139+00:00"
+            }
+          ],
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, display_name TEXT NOT NULL)",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "display_name",
+                "TEXT",
+                1,
+                null,
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada-v2"
+              ]
+            ],
+            "dbSha256": "50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2"
+          }
+        },
+        {
+          "event": "promotion",
+          "active": {
+            "sha256": "ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053"
+          }
+        },
+        {
+          "event": "v2-read",
+          "command": {
+            "label": "v2-read",
+            "argv": [
+              "python3",
+              "-B",
+              "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+              "release-rename/data.sqlite"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.234053+00:00",
+            "endedUtc": "2026-10-05T10:49:14.274200+00:00",
+            "exitCode": 0,
+            "stdout": "{\"version\": \"v2\", \"sql\": \"SELECT id, display_name FROM person ORDER BY id\", \"rows\": [[1, \"Ada-v2\"]]}\n",
+            "stderr": "",
+            "parsed": {
+              "version": "v2",
+              "sql": "SELECT id, display_name FROM person ORDER BY id",
+              "rows": [
+                [
+                  1,
+                  "Ada-v2"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "event": "synthetic-health-failure",
+          "command": {
+            "label": "synthetic-health-failure",
+            "argv": [
+              "python3",
+              "-B",
+              "health.py"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.274232+00:00",
+            "endedUtc": "2026-10-05T10:49:14.304690+00:00",
+            "exitCode": 42,
+            "stdout": "{\"kind\": \"synthetic-health-failure\", \"reason\": \"fixed fixture: canary alarm; no service/provider probe\", \"healthy\": false}\n",
+            "stderr": "",
+            "parsed": {
+              "kind": "synthetic-health-failure",
+              "reason": "fixed fixture: canary alarm; no service/provider probe",
+              "healthy": false
+            }
+          }
+        },
+        {
+          "event": "artifact-rollback",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "databaseSha256": "50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2",
+          "savedBytesVerified": true
+        },
+        {
+          "event": "v1-read",
+          "command": {
+            "label": "v1-read",
+            "argv": [
+              "python3",
+              "-B",
+              "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+              "release-rename/data.sqlite"
+            ],
+            "executablePathNormalized": true,
+            "startedUtc": "2026-10-05T10:49:14.306936+00:00",
+            "endedUtc": "2026-10-05T10:49:14.347257+00:00",
+            "exitCode": 3,
+            "stdout": "{\"version\": \"v1\", \"sql\": \"SELECT id, name FROM person ORDER BY id\", \"error\": \"no such column: name\", \"errorClass\": \"OperationalError\", \"sqliteErrorCode\": null, \"sqliteErrorName\": null}\n",
+            "stderr": "",
+            "parsed": {
+              "version": "v1",
+              "sql": "SELECT id, name FROM person ORDER BY id",
+              "error": "no such column: name",
+              "errorClass": "OperationalError",
+              "sqliteErrorCode": null,
+              "sqliteErrorName": null
+            }
+          }
+        },
+        {
+          "event": "after",
+          "active": {
+            "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+          },
+          "database": {
+            "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, display_name TEXT NOT NULL)",
+            "columns": [
+              [
+                0,
+                "id",
+                "INTEGER",
+                0,
+                null,
+                1
+              ],
+              [
+                1,
+                "display_name",
+                "TEXT",
+                1,
+                null,
+                0
+              ]
+            ],
+            "rows": [
+              [
+                1,
+                "Ada-v2"
+              ]
+            ],
+            "dbSha256": "50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2"
+          }
+        }
+      ],
+      "artifactRestored": true,
+      "databaseRestored": false,
+      "v1ReadExit": 3,
+      "v1ReadSucceeded": false
+    }
+  ],
+  "artifacts": {
+    "v1": {
+      "path": "store/549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223.py",
+      "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223",
+      "bytes": 692
+    },
+    "v2": {
+      "path": "store/ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053.py",
+      "sha256": "ff8f629f1b076f175d3591dfd82509ad74fceb97e94755483ace2a62748ca053",
+      "bytes": 700
+    }
+  },
+  "compileOptions": [
+    "ATOMIC_INTRINSICS=1",
+    "BUG_COMPATIBLE_20160819",
+    "CCCRYPT256",
+    "CODEC=see-cccrypt",
+    "COMPILER=clang-17.0.0",
+    "DEFAULT_AUTOVACUUM",
+    "DEFAULT_CACHE_SIZE=2000",
+    "DEFAULT_CKPTFULLFSYNC",
+    "DEFAULT_FILE_FORMAT=4",
+    "DEFAULT_JOURNAL_SIZE_LIMIT=32768",
+    "DEFAULT_LOOKASIDE=1200,102",
+    "DEFAULT_MEMSTATUS=0",
+    "DEFAULT_MMAP_SIZE=0",
+    "DEFAULT_PAGE_SIZE=4096",
+    "DEFAULT_PCACHE_INITSZ=20",
+    "DEFAULT_RECURSIVE_TRIGGERS",
+    "DEFAULT_SECTOR_SIZE=4096",
+    "DEFAULT_SYNCHRONOUS=2",
+    "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+    "DEFAULT_WAL_SYNCHRONOUS=1",
+    "DEFAULT_WORKER_THREADS=0",
+    "DIRECT_OVERFLOW_READ",
+    "DQS=3",
+    "ENABLE_API_ARMOR",
+    "ENABLE_BYTECODE_VTAB",
+    "ENABLE_COLUMN_METADATA",
+    "ENABLE_DBSTAT_VTAB",
+    "ENABLE_FTS3",
+    "ENABLE_FTS3_PARENTHESIS",
+    "ENABLE_FTS3_TOKENIZER",
+    "ENABLE_FTS4",
+    "ENABLE_FTS5",
+    "ENABLE_LOCKING_STYLE=1",
+    "ENABLE_MATH_FUNCTIONS",
+    "ENABLE_NORMALIZE",
+    "ENABLE_PREUPDATE_HOOK",
+    "ENABLE_RTREE",
+    "ENABLE_SESSION",
+    "ENABLE_SETLK_TIMEOUT",
+    "ENABLE_SNAPSHOT",
+    "ENABLE_SQLLOG",
+    "ENABLE_STMT_SCANSTATUS",
+    "ENABLE_UNKNOWN_SQL_FUNCTION",
+    "ENABLE_UPDATE_DELETE_LIMIT",
+    "HAS_CODEC_RESTRICTED",
+    "HAVE_ISNAN",
+    "MALLOC_SOFT_LIMIT=1024",
+    "MAX_ATTACHED=10",
+    "MAX_COLUMN=2000",
+    "MAX_COMPOUND_SELECT=500",
+    "MAX_DEFAULT_PAGE_SIZE=8192",
+    "MAX_EXPR_DEPTH=1000",
+    "MAX_FUNCTION_ARG=127",
+    "MAX_LENGTH=2147483645",
+    "MAX_LIKE_PATTERN_LENGTH=50000",
+    "MAX_MMAP_SIZE=1073741824",
+    "MAX_PAGE_COUNT=1073741823",
+    "MAX_PAGE_SIZE=65536",
+    "MAX_SQL_LENGTH=1000000000",
+    "MAX_TRIGGER_DEPTH=1000",
+    "MAX_VARIABLE_NUMBER=500000",
+    "MAX_VDBE_OP=250000000",
+    "MAX_WORKER_THREADS=8",
+    "MUTEX_UNFAIR",
+    "OMIT_AUTORESET",
+    "OMIT_LOAD_EXTENSION",
+    "STMTJRNL_SPILL=131072",
+    "SYSTEM_MALLOC",
+    "TEMP_STORE=1",
+    "THREADSAFE=2",
+    "USE_URI"
+  ],
+  "sourceId": "2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl",
+  "endedUtc": "2026-10-05T10:49:14.348494+00:00"
+}

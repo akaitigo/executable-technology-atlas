@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ループ境界と停止を分けて学ぶ</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><p class="eyebrow">FORMAL METHODS / 有限実行と紙上導出</p><h1>境界で戻る不変条件。<br>減っていく停止variant。</h1><p>x=n, y=0 から x を1減らし、yを1増やす。途中の崩れと本体末尾の違反を見分けよう。</p></header>
+<section><h2>1. 予測する</h2><label for="case">固定ケース</label><select id="case"></select>
+<label for="prediction">観測結果の予測</label><select id="prediction"><option value="">選択してください</option><option value="observed_correct">境界を保ち guard exit</option><option value="invariant_violation">境界の不変条件違反</option><option value="budget_exhausted">budget不足・事後条件未観測</option><option value="input_refused">入力拒否</option></select>
+<label for="input">入力（n,budget は整数0..8）</label><textarea id="input" rows="6" spellcheck="false"></textarea>
+<div class="buttons"><button id="run">実行して比較</button><button id="step">本体を1回進める</button><button id="reset">このケースに戻す</button></div><p id="status" aria-live="polite">予測を選んで実行してください。</p></section>
+<section id="results" hidden><h2>2. 実際の有限トレース</h2><p id="comparison"></p><div id="summary"></div>
+<p class="note">● 初期状態と本体末尾が不変条件の検査点。○ x代入直後は途中状態。途中で等式が崩れても境界違反とは判定しない。</p>
+<div id="diagram"></div><div class="table-scroll"><table><thead><tr><th>k</th><th>位置</th><th>x</th><th>y</th><th>x+y</th><th>nと等しい</th><th>検査点</th></tr></thead><tbody id="trace"></tbody></table></div>
+<details><summary>実行証拠と答え</summary><pre id="answer"></pre></details></section>
+<section><h2>3. 正常系と誤実装を比較する</h2><p>同じ n,budget のまま本体を切り替えて実行する。正常系は y+=1、誤実装は y+=2。どちらも x は減るが、事後条件は異なる。</p><button id="toggle">正常／y+=2 を切り替える</button><p>budgetは全本体の回数。「本体を1回進める」はbudgetを1増やして初期状態から再実行する。途中で保存した可変状態を続行する操作ではない。</p></section>
+<section><h2>4. 紙上の導出を読む</h2><div class="proof"><article><strong>初期化</strong><p>x=n,y=0<br>x+y=n</p></article><span>→</span><article><strong>保存</strong><p>I ∧ x&gt;0 ⇒ x≥1<br>x'=x−1：和 n−1（途中）<br>y'=y+1：和 n（境界）</p></article><span>→</span><article><strong>出口</strong><p>I ∧ ¬(x&gt;0), x∈ℕ<br>⇒ x=0 ⇒ y=n</p></article></div>
+<p>誤実装は本体末尾の和が n+1 となり保存に失敗する。正常系の途中は n−1。誤実装の途中が偶然 n になることもあるが、検査点ではない。</p>
+<article class="variant"><strong>停止は別の論証</strong><p>V=x は自然数。本体開始時 x&gt;0、本体後 x'=x−1&lt;x。自然数の無限の厳密下降はない。よってbudgetを付けない両方のループは停止する。これは本教材の紙上の数学的論証。Hoareの部分正当性規則だけでは停止を証明しない。</p></article>
+<p>有限の n=0..8 の追試は任意の自然数への機械証明ではない。budget不足はループの非停止を意味しない。n=0,budget=0 は guard exit、n&gt;0,budget=0 は本体未観測。</p></section>
+<section><h2>5. 原典・実装・独立検査へ</h2><nav><a href="https://softwarefoundations.cis.upenn.edu/plf-current/Hoare.html">Software Foundations：While Loops</a><a href="calculate.py">代入で動く実装</a><a href="checker.py">閉式の独立oracle</a><a href="hand-table.json">先に固定した手表</a><a href="contract.json">有限契約</a><a href="oracle-contract-v2.md">oracle設計</a><a href="expected.json">固定期待値</a><a href="README.md">再現手順</a><a href="COVERAGE.md">範囲と限界</a><a href="Skill.md">学習ルート</a></nav></section>
+</main><script src="app.js"></script></body></html>

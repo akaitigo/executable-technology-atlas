@@ -1,0 +1,203 @@
+{
+  "browser": "IAB",
+  "tab": "14",
+  "closed": true,
+  "url": "http://127.0.0.1:62974/",
+  "method": "Actual fixed case/prediction selections and button clicks, DOM status/witness/reason/trace inspection. Summary transcription; no complete UI raw export.",
+  "cases": [
+    {
+      "case": "after-write-fresh",
+      "utc": "2026-10-05T11:32:07.824547+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "response_sort": true
+    },
+    {
+      "case": "after-write-stale",
+      "utc": "2026-10-05T11:32:08.165317+00:00",
+      "status": "NOT_LINEARIZABLE",
+      "reason": null,
+      "witnesses": [],
+      "response_sort": false
+    },
+    {
+      "case": "overlap-read-zero",
+      "utc": "2026-10-05T11:32:08.497831+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "r1",
+          "w1"
+        ]
+      ],
+      "response_sort": true
+    },
+    {
+      "case": "overlap-read-one",
+      "utc": "2026-10-05T11:32:08.803609+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "response_sort": false
+    },
+    {
+      "case": "two-writes-overlap",
+      "utc": "2026-10-05T11:32:09.145168+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "w1",
+          "r1",
+          "w2",
+          "r2"
+        ]
+      ],
+      "response_sort": false
+    },
+    {
+      "case": "two-writes-sequential",
+      "utc": "2026-10-05T11:32:09.595400+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "w1",
+          "w2",
+          "r1",
+          "r2"
+        ]
+      ],
+      "response_sort": true
+    },
+    {
+      "case": "read-regression",
+      "utc": "2026-10-05T11:32:09.986587+00:00",
+      "status": "NOT_LINEARIZABLE",
+      "reason": null,
+      "witnesses": [],
+      "response_sort": false
+    },
+    {
+      "case": "initial-reads",
+      "utc": "2026-10-05T11:32:10.328539+00:00",
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "witnesses": [
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "response_sort": true
+    },
+    {
+      "case": "bad-time",
+      "utc": "2026-10-05T11:32:10.829094+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "TIME_ORDER",
+      "witnesses": [],
+      "response_sort": null
+    },
+    {
+      "case": "client-overlap",
+      "utc": "2026-10-05T11:32:11.237594+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "CLIENT_OVERLAP",
+      "witnesses": [],
+      "response_sort": null
+    },
+    {
+      "case": "unknown-op",
+      "utc": "2026-10-05T11:32:11.594933+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "UNKNOWN_OP",
+      "witnesses": [],
+      "response_sort": null
+    },
+    {
+      "case": "bad-write-response",
+      "utc": "2026-10-05T11:32:11.905666+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "WRITE_RESPONSE",
+      "witnesses": [],
+      "response_sort": null
+    },
+    {
+      "case": "bad-read-response",
+      "utc": "2026-10-05T11:32:12.253392+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "READ_RESPONSE",
+      "witnesses": [],
+      "response_sort": null
+    },
+    {
+      "case": "pending",
+      "utc": "2026-10-05T11:32:12.746963+00:00",
+      "status": "INPUT_REJECTED",
+      "reason": "PENDING_UNSUPPORTED",
+      "witnesses": [],
+      "response_sort": null
+    }
+  ],
+  "source_binding": {
+    "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+    "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+    "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+    "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+  },
+  "all_ui_bindings_equal": true,
+  "counterexample_walk": {
+    "case": "overlap-read-one",
+    "prediction": "NOT_LINEARIZABLE",
+    "observed": "LINEARIZABLE",
+    "timeline": [
+      "w1 1-4",
+      "r1 2-3"
+    ],
+    "opened_trace": true,
+    "legal_order": [
+      "w1",
+      "r1"
+    ],
+    "rejected_branch": {
+      "prefix": [
+        "r1"
+      ],
+      "expected": 0,
+      "returned": 1
+    },
+    "bad_response_order": [
+      "r1",
+      "w1"
+    ],
+    "answer": "response-sort fails, but another legal order exists"
+  },
+  "observed_path": [
+    "prediction",
+    "operation",
+    "timeline",
+    "precedence/witness/sort failure",
+    "candidate trace opened",
+    "source/implementation links",
+    "answer/history collection limits"
+  ],
+  "capture": {
+    "displayed": true,
+    "saved": false,
+    "reason": "CUA getScreenshot returned tool image; no documented local export used; no substitute rendering"
+  },
+  "other_resources_touched": false
+}

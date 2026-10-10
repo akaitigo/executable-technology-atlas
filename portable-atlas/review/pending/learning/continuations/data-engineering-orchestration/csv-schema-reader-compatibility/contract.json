@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "input": "exactly writer,reader,mode,csv; writer literal/v1/v2; reader v1/v2; mode name/position-fault",
+  "csv_bounds": "UTF-8 <=1024 bytes, 1 header + 1..4 nonblank data records, <=5 columns; no BOM; default excel dialect strict=True; LF/CRLF supported",
+  "required": [
+    "id",
+    "quantity",
+    "unit_price"
+  ],
+  "v1_allowed": [
+    "id",
+    "quantity",
+    "unit_price"
+  ],
+  "v2_allowed": [
+    "id",
+    "quantity",
+    "unit_price",
+    "note"
+  ],
+  "unknown": "reject in both readers",
+  "headers": "duplicate/empty/unknown/missing-required reject before typed conversion; any unique known column order accepted",
+  "integer": "ASCII 0 or [1-9][0-9]? (0..99); no signs, blanks, leading zero, decimal or whitespace",
+  "id": "ASCII letters/digits/_ length1..8, not empty",
+  "optional": "v2 missing note header => explicit (default); present empty note => empty string; absent cell under present note header => reject",
+  "note": "ASCII text incl comma quote CR LF, <=16 characters",
+  "shape": "extra or missing cells reject whole file; no partial committed rows",
+  "fault": "position-fault assigns first required three positions to id,quantity,unit_price and fourth optional to note; header policy still checked; reordered same-type numeric cells can parse yet swap meaning",
+  "writer": "v1/v2 actual DictWriter/StringIO emission must byte-equal supplied csv, otherwise input_refused; literal uses supplied fixture/custom bytes",
+  "output_categories": [
+    "accepted",
+    "rejected",
+    "input_refused"
+  ],
+  "claims": "own typed policy, no general CSV version compatibility or RFC/schema standard conformance"
+}

@@ -1,0 +1,229 @@
+{
+  "title": "Atlas browser process condition check",
+  "passed": true,
+  "synthetic_cases": 12,
+  "checks": [
+    {
+      "case": "complete_absent",
+      "expected_pass": true,
+      "expected_identity": "confirmed_absent",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "confirmed_absent",
+        "process_condition_passed": true,
+        "runtime_candidates": []
+      },
+      "passed": true
+    },
+    {
+      "case": "empty_output",
+      "expected_pass": false,
+      "expected_identity": "unobserved",
+      "observed": {
+        "process_snapshot_complete": false,
+        "known_identity_state": "unobserved",
+        "process_condition_passed": false,
+        "runtime_candidates": []
+      },
+      "passed": true
+    },
+    {
+      "case": "acquisition_failed",
+      "expected_pass": false,
+      "expected_identity": "unobserved",
+      "observed": {
+        "process_snapshot_complete": false,
+        "known_identity_state": "unobserved",
+        "process_condition_passed": false,
+        "runtime_candidates": []
+      },
+      "passed": true
+    },
+    {
+      "case": "parse_incomplete",
+      "expected_pass": false,
+      "expected_identity": "unobserved",
+      "observed": {
+        "process_snapshot_complete": false,
+        "known_identity_state": "unobserved",
+        "process_condition_passed": false,
+        "runtime_candidates": []
+      },
+      "passed": true
+    },
+    {
+      "case": "absent_other_runtime",
+      "expected_pass": false,
+      "expected_identity": "confirmed_absent",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "confirmed_absent",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "present_match",
+      "expected_pass": true,
+      "expected_identity": "confirmed_matching_idle",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "confirmed_matching_idle",
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": false,
+            "classification": "既存・現在idle、所有不明、操作しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "present_cpu_boundary",
+      "expected_pass": true,
+      "expected_identity": "confirmed_matching_idle",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "confirmed_matching_idle",
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 1,
+            "blocking": false,
+            "classification": "既存・現在idle、所有不明、操作しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "present_cpu_high",
+      "expected_pass": false,
+      "expected_identity": "present_but_not_approved",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "present_but_not_approved",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 1.1,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "reused_nonruntime_comm",
+      "expected_pass": false,
+      "expected_identity": "present_but_not_approved",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "present_but_not_approved",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/usr/bin/python3",
+            "cpu": 0,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "changed_start",
+      "expected_pass": false,
+      "expected_identity": "present_but_not_approved",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "present_but_not_approved",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "different",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "changed_parent",
+      "expected_pass": false,
+      "expected_identity": "present_but_not_approved",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "present_but_not_approved",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "present_and_other",
+      "expected_pass": false,
+      "expected_identity": "confirmed_matching_idle",
+      "observed": {
+        "process_snapshot_complete": true,
+        "known_identity_state": "confirmed_matching_idle",
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": false,
+            "classification": "既存・現在idle、所有不明、操作しない"
+          },
+          {
+            "lstart": "Tue Oct 6 20:59:10 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0,
+            "blocking": true,
+            "classification": "未確認または稼働候補。開始しない"
+          }
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "actual_process_observations": 0,
+  "browser_executed": false,
+  "source_sha256": {
+    "browser-resource-gate.py": "e70841c508808efca62cc89d0ac3997c7f30e6a01be698730820843d623ebc0a",
+    "browser-gate-policy.json": "0c3e9d0fa9f3296af58b32fa9924ff6a8c5c68564905477357e544843049249f",
+    "check-browser-gate.py": "72d74af270cd1012d15a2161fd9c71deff227e569436ece3e8938121c93c20b5"
+  }
+}

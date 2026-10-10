@@ -1,0 +1,1463 @@
+{
+  "after-write-fresh": {
+    "case": "after-write-fresh",
+    "utc": "2026-10-05T11:25:23.780268+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 2,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 3,
+        "res": 4,
+        "out": 1
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "witnesses": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "before": 1,
+          "after": 1
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "w1",
+            "r1"
+          ],
+          "state": 1
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "w1",
+          "r1"
+        ],
+        "accepted": true,
+        "failure": null
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "after-write-stale": {
+    "case": "after-write-stale",
+    "utc": "2026-10-05T11:25:23.780895+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 2,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 3,
+        "res": 4,
+        "out": 0
+      }
+    ],
+    "result": {
+      "status": "NOT_LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "expected": 1,
+          "returned": 0
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "w1",
+          "r1"
+        ],
+        "accepted": false,
+        "failure": {
+          "operation": "r1",
+          "expected": 1,
+          "returned": 0
+        }
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "overlap-read-zero": {
+    "case": "overlap-read-zero",
+    "utc": "2026-10-05T11:25:23.781343+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 4,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 2,
+        "res": 3,
+        "out": 0
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [],
+      "witnesses": [
+        [
+          "r1",
+          "w1"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1",
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "expected": 1,
+          "returned": 0
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "r1"
+          ],
+          "before": 0,
+          "after": 0
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "r1"
+          ],
+          "state": 0,
+          "choices": [
+            "w1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "r1",
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "r1",
+            "w1"
+          ],
+          "state": 1
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "r1",
+          "w1"
+        ],
+        "accepted": true,
+        "failure": null
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "overlap-read-one": {
+    "case": "overlap-read-one",
+    "utc": "2026-10-05T11:25:23.781758+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 4,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 2,
+        "res": 3,
+        "out": 1
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [],
+      "witnesses": [
+        [
+          "w1",
+          "r1"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1",
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "before": 1,
+          "after": 1
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "w1",
+            "r1"
+          ],
+          "state": 1
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "r1"
+          ],
+          "expected": 0,
+          "returned": 1
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "r1",
+          "w1"
+        ],
+        "accepted": false,
+        "failure": {
+          "operation": "r1",
+          "expected": 0,
+          "returned": 1
+        }
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "two-writes-overlap": {
+    "case": "two-writes-overlap",
+    "utc": "2026-10-05T11:25:23.782153+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 8,
+        "out": "ok"
+      },
+      {
+        "id": "w2",
+        "client": "B",
+        "op": "write",
+        "arg": 2,
+        "inv": 2,
+        "res": 7,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "C",
+        "op": "read",
+        "inv": 3,
+        "res": 4,
+        "out": 1
+      },
+      {
+        "id": "r2",
+        "client": "C",
+        "op": "read",
+        "inv": 5,
+        "res": 6,
+        "out": 2
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "witnesses": [
+        [
+          "w1",
+          "r1",
+          "w2",
+          "r2"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1",
+            "w2",
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "w2",
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "before": 1,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "state": 2,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1"
+          ],
+          "expected": 2,
+          "returned": 1
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "before": 1,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "r1"
+          ],
+          "state": 1,
+          "choices": [
+            "w2",
+            "r2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "r1",
+            "w2"
+          ],
+          "before": 1,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "r1",
+            "w2"
+          ],
+          "state": 2,
+          "choices": [
+            "r2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "r1",
+            "w2",
+            "r2"
+          ],
+          "before": 2,
+          "after": 2
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "w1",
+            "r1",
+            "w2",
+            "r2"
+          ],
+          "state": 2
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w1",
+            "r1",
+            "r2"
+          ],
+          "expected": 1,
+          "returned": 2
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w2"
+          ],
+          "before": 0,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w2"
+          ],
+          "state": 2,
+          "choices": [
+            "w1",
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w2",
+            "w1"
+          ],
+          "before": 2,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w2",
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w2",
+            "w1",
+            "r1"
+          ],
+          "before": 1,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w2",
+            "w1",
+            "r1"
+          ],
+          "state": 1,
+          "choices": [
+            "r2"
+          ]
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w2",
+            "w1",
+            "r1",
+            "r2"
+          ],
+          "expected": 1,
+          "returned": 2
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w2",
+            "r1"
+          ],
+          "expected": 2,
+          "returned": 1
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "r1"
+          ],
+          "expected": 0,
+          "returned": 1
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "r1",
+          "r2",
+          "w2",
+          "w1"
+        ],
+        "accepted": false,
+        "failure": {
+          "operation": "r1",
+          "expected": 0,
+          "returned": 1
+        }
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "two-writes-sequential": {
+    "case": "two-writes-sequential",
+    "utc": "2026-10-05T11:25:23.782555+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 2,
+        "out": "ok"
+      },
+      {
+        "id": "w2",
+        "client": "A",
+        "op": "write",
+        "arg": 2,
+        "inv": 3,
+        "res": 4,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 5,
+        "res": 6,
+        "out": 2
+      },
+      {
+        "id": "r2",
+        "client": "B",
+        "op": "read",
+        "inv": 7,
+        "res": 8,
+        "out": 2
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "w1",
+          "w2"
+        ],
+        [
+          "w1",
+          "r1"
+        ],
+        [
+          "w1",
+          "r2"
+        ],
+        [
+          "w2",
+          "r1"
+        ],
+        [
+          "w2",
+          "r2"
+        ],
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "witnesses": [
+        [
+          "w1",
+          "w2",
+          "r1",
+          "r2"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "w2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "before": 1,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "state": 2,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1"
+          ],
+          "before": 2,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1"
+          ],
+          "state": 2,
+          "choices": [
+            "r2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1",
+            "r2"
+          ],
+          "before": 2,
+          "after": 2
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "w1",
+            "w2",
+            "r1",
+            "r2"
+          ],
+          "state": 2
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "w1",
+          "w2",
+          "r1",
+          "r2"
+        ],
+        "accepted": true,
+        "failure": null
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "read-regression": {
+    "case": "read-regression",
+    "utc": "2026-10-05T11:25:23.782969+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 2,
+        "out": "ok"
+      },
+      {
+        "id": "w2",
+        "client": "A",
+        "op": "write",
+        "arg": 2,
+        "inv": 3,
+        "res": 4,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "B",
+        "op": "read",
+        "inv": 5,
+        "res": 6,
+        "out": 2
+      },
+      {
+        "id": "r2",
+        "client": "B",
+        "op": "read",
+        "inv": 7,
+        "res": 8,
+        "out": 1
+      }
+    ],
+    "result": {
+      "status": "NOT_LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "w1",
+          "w2"
+        ],
+        [
+          "w1",
+          "r1"
+        ],
+        [
+          "w1",
+          "r2"
+        ],
+        [
+          "w2",
+          "r1"
+        ],
+        [
+          "w2",
+          "r2"
+        ],
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "w1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1"
+          ],
+          "before": 0,
+          "after": 1
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1"
+          ],
+          "state": 1,
+          "choices": [
+            "w2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "before": 1,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "w2"
+          ],
+          "state": 2,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1"
+          ],
+          "before": 2,
+          "after": 2
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1"
+          ],
+          "state": 2,
+          "choices": [
+            "r2"
+          ]
+        },
+        {
+          "event": "read_mismatch",
+          "prefix": [
+            "w1",
+            "w2",
+            "r1",
+            "r2"
+          ],
+          "expected": 2,
+          "returned": 1
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "w1",
+          "w2",
+          "r1",
+          "r2"
+        ],
+        "accepted": false,
+        "failure": {
+          "operation": "r2",
+          "expected": 2,
+          "returned": 1
+        }
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "initial-reads": {
+    "case": "initial-reads",
+    "utc": "2026-10-05T11:25:23.783361+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "r1",
+        "client": "A",
+        "op": "read",
+        "inv": 1,
+        "res": 2,
+        "out": 0
+      },
+      {
+        "id": "r2",
+        "client": "A",
+        "op": "read",
+        "inv": 3,
+        "res": 4,
+        "out": 0
+      }
+    ],
+    "result": {
+      "status": "LINEARIZABLE",
+      "reason": null,
+      "edges": [
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "witnesses": [
+        [
+          "r1",
+          "r2"
+        ]
+      ],
+      "trace": [
+        {
+          "event": "available",
+          "prefix": [],
+          "state": 0,
+          "choices": [
+            "r1"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "r1"
+          ],
+          "before": 0,
+          "after": 0
+        },
+        {
+          "event": "available",
+          "prefix": [
+            "r1"
+          ],
+          "state": 0,
+          "choices": [
+            "r2"
+          ]
+        },
+        {
+          "event": "apply",
+          "prefix": [
+            "r1",
+            "r2"
+          ],
+          "before": 0,
+          "after": 0
+        },
+        {
+          "event": "legal_candidate",
+          "order": [
+            "r1",
+            "r2"
+          ],
+          "state": 0
+        }
+      ],
+      "response_sort": {
+        "order": [
+          "r1",
+          "r2"
+        ],
+        "accepted": true,
+        "failure": null
+      }
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "bad-time": {
+    "case": "bad-time",
+    "utc": "2026-10-05T11:25:23.783772+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "r1",
+        "client": "A",
+        "op": "read",
+        "inv": 4,
+        "res": 2,
+        "out": 0
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "TIME_ORDER",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "TIME_ORDER"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "client-overlap": {
+    "case": "client-overlap",
+    "utc": "2026-10-05T11:25:23.784167+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 4,
+        "out": "ok"
+      },
+      {
+        "id": "r1",
+        "client": "A",
+        "op": "read",
+        "inv": 2,
+        "res": 3,
+        "out": 0
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "CLIENT_OVERLAP",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "CLIENT_OVERLAP"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "unknown-op": {
+    "case": "unknown-op",
+    "utc": "2026-10-05T11:25:23.784583+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "x1",
+        "client": "A",
+        "op": "delete",
+        "inv": 1,
+        "res": 2,
+        "out": "ok"
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "UNKNOWN_OP",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "UNKNOWN_OP"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "bad-write-response": {
+    "case": "bad-write-response",
+    "utc": "2026-10-05T11:25:23.785062+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1,
+        "res": 2,
+        "out": "error"
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "WRITE_RESPONSE",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "WRITE_RESPONSE"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "bad-read-response": {
+    "case": "bad-read-response",
+    "utc": "2026-10-05T11:25:23.785609+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "r1",
+        "client": "A",
+        "op": "read",
+        "inv": 1,
+        "res": 2,
+        "out": "0"
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "READ_RESPONSE",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "READ_RESPONSE"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  },
+  "pending": {
+    "case": "pending",
+    "utc": "2026-10-05T11:25:23.786017+00:00",
+    "runtime": {
+      "python": "3.9.6",
+      "os": "Darwin",
+      "release": "25.1.0",
+      "machine": "arm64"
+    },
+    "history": [
+      {
+        "id": "w1",
+        "client": "A",
+        "op": "write",
+        "arg": 1,
+        "inv": 1
+      }
+    ],
+    "result": {
+      "status": "INPUT_REJECTED",
+      "reason": "PENDING_UNSUPPORTED",
+      "edges": [],
+      "witnesses": [],
+      "trace": [
+        {
+          "event": "input_rejected",
+          "reason": "PENDING_UNSUPPORTED"
+        }
+      ],
+      "response_sort": null
+    },
+    "source_binding": {
+      "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+      "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+      "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+      "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0"
+    }
+  }
+}

@@ -59,6 +59,13 @@ jobs:
           check-latest: false
           cache: false
 
+      - name: Verify portable learning distribution
+        working-directory: portable-atlas
+        run: |
+          node scripts/verify-delivery.mjs
+          npm test
+          npm run test:seeds
+
       - name: Install lockfile dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
 

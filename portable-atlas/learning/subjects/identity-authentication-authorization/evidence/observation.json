@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "model_version": "authorization-scope-inheritance-revoke-v1",
+  "observation_type": "local-fixed-policy-execution",
+  "authentication": {
+    "status": "input-assumption",
+    "implemented": false
+  },
+  "policy_before": {
+    "revision": "policy-v1",
+    "role_inheritance": {
+      "editor": [
+        "viewer"
+      ],
+      "viewer": []
+    },
+    "role_permissions": {
+      "editor": [
+        "document.write"
+      ],
+      "viewer": [
+        "document.read"
+      ]
+    },
+    "assignments": [
+      {
+        "subject": "subject-01",
+        "role": "editor",
+        "scope": "project-alpha"
+      }
+    ]
+  },
+  "policy_after_revoke": {
+    "revision": "policy-v2-read-grant-revoked",
+    "role_inheritance": {
+      "editor": [
+        "viewer"
+      ],
+      "viewer": []
+    },
+    "role_permissions": {
+      "editor": [
+        "document.write"
+      ],
+      "viewer": []
+    },
+    "assignments": [
+      {
+        "subject": "subject-01",
+        "role": "editor",
+        "scope": "project-alpha"
+      }
+    ]
+  },
+  "scenarios": {
+    "role-inheritance": {
+      "model_version": "authorization-scope-inheritance-revoke-v1",
+      "policy_revision": "policy-v1",
+      "decision_id": "decision-0984bc68982954e1",
+      "request": {
+        "subject": "subject-01",
+        "scope": "project-alpha",
+        "resource": "document-001",
+        "action": "read"
+      },
+      "result": "allow",
+      "reason": "inherited_permission",
+      "matched_role": "viewer",
+      "assigned_role": "editor",
+      "role_closure": [
+        "editor",
+        "viewer"
+      ],
+      "trace": [
+        {
+          "step": "identity-input",
+          "status": "assumed-authenticated",
+          "detail": "authentication is an input assumption, not implemented here"
+        },
+        {
+          "step": "scope-match",
+          "status": "matched",
+          "detail": "project-alpha"
+        },
+        {
+          "step": "role-closure",
+          "status": "resolved",
+          "detail": [
+            "editor",
+            "viewer"
+          ]
+        },
+        {
+          "step": "permission-lookup",
+          "status": "checked",
+          "detail": {
+            "role": "editor",
+            "grants": [
+              "document.write"
+            ]
+          }
+        },
+        {
+          "step": "permission-lookup",
+          "status": "checked",
+          "detail": {
+            "role": "viewer",
+            "grants": [
+              "document.read"
+            ]
+          }
+        },
+        {
+          "step": "decision",
+          "status": "allow",
+          "detail": "inherited_permission"
+        }
+      ]
+    },
+    "scope-crossing": {
+      "model_version": "authorization-scope-inheritance-revoke-v1",
+      "policy_revision": "policy-v1",
+      "decision_id": "decision-778371616d2f475c",
+      "request": {
+        "subject": "subject-01",
+        "scope": "project-beta",
+        "resource": "document-002",
+        "action": "read"
+      },
+      "result": "deny",
+      "reason": "scope_mismatch",
+      "trace": [
+        {
+          "step": "identity-input",
+          "status": "assumed-authenticated",
+          "detail": "authentication is an input assumption, not implemented here"
+        },
+        {
+          "step": "scope-match",
+          "status": "rejected",
+          "detail": {
+            "requested": "project-beta",
+            "assigned": [
+              "project-alpha"
+            ]
+          }
+        },
+        {
+          "step": "decision",
+          "status": "deny",
+          "detail": "scope_mismatch"
+        }
+      ]
+    },
+    "grant-revocation": {
+      "before": {
+        "model_version": "authorization-scope-inheritance-revoke-v1",
+        "policy_revision": "policy-v1",
+        "decision_id": "decision-0984bc68982954e1",
+        "request": {
+          "subject": "subject-01",
+          "scope": "project-alpha",
+          "resource": "document-001",
+          "action": "read"
+        },
+        "result": "allow",
+        "reason": "inherited_permission",
+        "matched_role": "viewer",
+        "assigned_role": "editor",
+        "role_closure": [
+          "editor",
+          "viewer"
+        ],
+        "trace": [
+          {
+            "step": "identity-input",
+            "status": "assumed-authenticated",
+            "detail": "authentication is an input assumption, not implemented here"
+          },
+          {
+            "step": "scope-match",
+            "status": "matched",
+            "detail": "project-alpha"
+          },
+          {
+            "step": "role-closure",
+            "status": "resolved",
+            "detail": [
+              "editor",
+              "viewer"
+            ]
+          },
+          {
+            "step": "permission-lookup",
+            "status": "checked",
+            "detail": {
+              "role": "editor",
+              "grants": [
+                "document.write"
+              ]
+            }
+          },
+          {
+            "step": "permission-lookup",
+            "status": "checked",
+            "detail": {
+              "role": "viewer",
+              "grants": [
+                "document.read"
+              ]
+            }
+          },
+          {
+            "step": "decision",
+            "status": "allow",
+            "detail": "inherited_permission"
+          }
+        ]
+      },
+      "after": {
+        "model_version": "authorization-scope-inheritance-revoke-v1",
+        "policy_revision": "policy-v2-read-grant-revoked",
+        "decision_id": "decision-38b1597362b9fd6b",
+        "request": {
+          "subject": "subject-01",
+          "scope": "project-alpha",
+          "resource": "document-001",
+          "action": "read"
+        },
+        "result": "deny",
+        "reason": "permission_not_granted",
+        "trace": [
+          {
+            "step": "identity-input",
+            "status": "assumed-authenticated",
+            "detail": "authentication is an input assumption, not implemented here"
+          },
+          {
+            "step": "scope-match",
+            "status": "matched",
+            "detail": "project-alpha"
+          },
+          {
+            "step": "role-closure",
+            "status": "resolved",
+            "detail": [
+              "editor",
+              "viewer"
+            ]
+          },
+          {
+            "step": "permission-lookup",
+            "status": "checked",
+            "detail": {
+              "role": "editor",
+              "grants": [
+                "document.write"
+              ]
+            }
+          },
+          {
+            "step": "permission-lookup",
+            "status": "checked",
+            "detail": {
+              "role": "viewer",
+              "grants": []
+            }
+          },
+          {
+            "step": "decision",
+            "status": "deny",
+            "detail": "permission_not_granted"
+          }
+        ]
+      }
+    }
+  },
+  "graph": {
+    "nodes": [
+      "subject-01",
+      "assignment@project-alpha",
+      "editor",
+      "viewer",
+      "document.read",
+      "document-001"
+    ],
+    "edges": [
+      {
+        "from": "subject-01",
+        "to": "assignment@project-alpha",
+        "kind": "assigned"
+      },
+      {
+        "from": "assignment@project-alpha",
+        "to": "editor",
+        "kind": "activates"
+      },
+      {
+        "from": "editor",
+        "to": "viewer",
+        "kind": "inherits"
+      },
+      {
+        "from": "viewer",
+        "to": "document.read",
+        "kind": "grant-before-revoke"
+      },
+      {
+        "from": "document.read",
+        "to": "document-001",
+        "kind": "requested-operation"
+      }
+    ]
+  },
+  "assertions": {
+    "inherited_read_allowed": true,
+    "scope_crossing_denied": true,
+    "before_revoke_allowed": true,
+    "after_revoke_denied": true,
+    "authenticated_identity_only_assumed": true
+  }
+}

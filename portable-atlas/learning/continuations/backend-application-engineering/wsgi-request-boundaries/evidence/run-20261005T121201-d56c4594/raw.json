@@ -1,0 +1,1376 @@
+{
+  "utc": "2026-10-05T12:12:01.807369+00:00",
+  "command": "python3 -B runner.py --record",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "system": "Darwin",
+    "release": "25.1.0"
+  },
+  "fixture": {
+    "max_body_bytes": 128,
+    "groups": [
+      {
+        "id": "normal",
+        "cases": [
+          {
+            "id": "normal-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          }
+        ]
+      },
+      {
+        "id": "rejections",
+        "cases": [
+          {
+            "id": "invalid-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "1"
+            }
+          },
+          {
+            "id": "bool-units",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":true}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "14"
+            }
+          },
+          {
+            "id": "body-too-large",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "129"
+            }
+          },
+          {
+            "id": "missing-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          },
+          {
+            "id": "bad-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "oops"
+            }
+          },
+          {
+            "id": "wrong-type",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "text/plain",
+              "Content-Length": "11"
+            }
+          },
+          {
+            "id": "wrong-route",
+            "method": "POST",
+            "path": "/other",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          },
+          {
+            "id": "wrong-method",
+            "method": "GET",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "0"
+            }
+          }
+        ]
+      },
+      {
+        "id": "recovery",
+        "cases": [
+          {
+            "id": "second-sql-fault",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11",
+              "X-Lesson-Fault": "second-sql"
+            }
+          },
+          {
+            "id": "after-failure",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "source_sha256": {
+    "fixture.json": "f8a37becd9f69269d7f01709a67a2fa4dfc8443dcf56f026d20620065678fd2a",
+    "oracle.json": "52b3ba896a917c6e34da7869628cf1553290661fa8a2e7446bece824b5db8c8f",
+    "EXPECTATIONS.md": "8e223318bd000ed81ba7c58efae0d7189dc7d92da348678b9fbf1adbc738e148",
+    "adapter.py": "7f1a3fc334bb20ab0614317c69546cad1cce94993f15863dd0053e647294b3f1",
+    "runner.py": "b13d1594fce3c662f4dafa0c209cbd9429f0f5d09446036dd3d8e2baf0adadbf"
+  },
+  "groups": [
+    {
+      "id": "normal",
+      "cases": [
+        {
+          "id": "normal-json",
+          "request": {
+            "id": "normal-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 201,
+            "reason": "Created",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "27"
+              ]
+            ],
+            "body_hex": "7b226f726465725f6964223a312c22616d6f756e74223a3230307d",
+            "body": {
+              "order_id": 1,
+              "amount": 200
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.817064+00:00"
+              },
+              {
+                "event": "input_read",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.817115+00:00",
+                "requested": 11,
+                "actual": 11
+              },
+              {
+                "event": "input_validated",
+                "seq": 2,
+                "utc": "2026-10-05T12:12:01.817126+00:00"
+              },
+              {
+                "event": "connection_acquired",
+                "seq": 3,
+                "utc": "2026-10-05T12:12:01.817542+00:00",
+                "token": "request-connection-1"
+              },
+              {
+                "event": "transaction_begin",
+                "seq": 4,
+                "utc": "2026-10-05T12:12:01.817589+00:00"
+              },
+              {
+                "event": "orders_inserted",
+                "seq": 5,
+                "utc": "2026-10-05T12:12:01.817821+00:00",
+                "order_id": 1
+              },
+              {
+                "event": "outbox_inserted",
+                "seq": 6,
+                "utc": "2026-10-05T12:12:01.817843+00:00"
+              },
+              {
+                "event": "transaction_commit",
+                "seq": 7,
+                "utc": "2026-10-05T12:12:01.818204+00:00"
+              },
+              {
+                "event": "connection_closed",
+                "seq": 8,
+                "utc": "2026-10-05T12:12:01.818230+00:00",
+                "token": "request-connection-1"
+              },
+              {
+                "event": "closed_probe_refused",
+                "seq": 9,
+                "utc": "2026-10-05T12:12:01.818234+00:00",
+                "type": "ProgrammingError",
+                "message": "Cannot operate on a closed database."
+              },
+              {
+                "event": "response_start",
+                "seq": 10,
+                "utc": "2026-10-05T12:12:01.818250+00:00",
+                "status": 201
+              }
+            ],
+            "sql_trace": [
+              "BEGIN IMMEDIATE",
+              "INSERT INTO orders(units) VALUES (2)",
+              "INSERT INTO outbox(order_id,event) VALUES (1,'order.created')",
+              "COMMIT"
+            ],
+            "acquired": 1,
+            "closed": 1,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "11",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "request_body_hex": "7b22756e697473223a327d",
+            "connection_token": "request-connection-1",
+            "closed_probe": {
+              "type": "ProgrammingError",
+              "message": "Cannot operate on a closed database."
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 201,
+            "response_body": {
+              "order_id": 1,
+              "amount": 200
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 201 27"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/normal-json.sqlite",
+          "db_sha256": "0a4f83d63d8f8f8b87a9982ead0d0985d43ba7db864507ac9b06091ed1fea566",
+          "independent_observer": {
+            "orders": [
+              [
+                1,
+                2
+              ]
+            ],
+            "outbox": [
+              [
+                1,
+                "order.created"
+              ]
+            ],
+            "integrity": "ok"
+          }
+        }
+      ],
+      "cleanup": {
+        "server_closed": true,
+        "server_thread_stopped": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "host": "127.0.0.1",
+      "port": 50560
+    },
+    {
+      "id": "rejections",
+      "cases": [
+        {
+          "id": "invalid-json",
+          "request": {
+            "id": "invalid-json",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "1"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 400,
+            "reason": "Bad Request",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "24"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22696e76616c6964204a534f4e227d",
+            "body": {
+              "error": "invalid JSON"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.843433+00:00"
+              },
+              {
+                "event": "input_read",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.843450+00:00",
+                "requested": 1,
+                "actual": 1
+              },
+              {
+                "event": "response_start",
+                "seq": 2,
+                "utc": "2026-10-05T12:12:01.843477+00:00",
+                "status": 400
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "1",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "request_body_hex": "7b",
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 400,
+            "response_body": {
+              "error": "invalid JSON"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 400 24"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/invalid-json.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "bool-units",
+          "request": {
+            "id": "bool-units",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":true}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "14"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 400,
+            "reason": "Bad Request",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "38"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22756e697473206d75737420626520696e746567657220312e2e33227d",
+            "body": {
+              "error": "units must be integer 1..3"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.845857+00:00"
+              },
+              {
+                "event": "input_read",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.845894+00:00",
+                "requested": 14,
+                "actual": 14
+              },
+              {
+                "event": "response_start",
+                "seq": 2,
+                "utc": "2026-10-05T12:12:01.845910+00:00",
+                "status": 400
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "14",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "request_body_hex": "7b22756e697473223a747275657d",
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 400,
+            "response_body": {
+              "error": "units must be integer 1..3"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 400 38"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/bool-units.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "body-too-large",
+          "request": {
+            "id": "body-too-large",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "129"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 413,
+            "reason": "Payload Too Large",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "34"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22626f6479206578636565647320313238206279746573227d",
+            "body": {
+              "error": "body exceeds 128 bytes"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.848076+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.848087+00:00",
+                "status": 413
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "129",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 413,
+            "response_body": {
+              "error": "body exceeds 128 bytes"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 413 34"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/body-too-large.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "missing-length",
+          "request": {
+            "id": "missing-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 411,
+            "reason": "Length Required",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "35"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22436f6e74656e742d4c656e677468207265717569726564227d",
+            "body": {
+              "error": "Content-Length required"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.850140+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.850153+00:00",
+                "status": 411
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 411,
+            "response_body": {
+              "error": "Content-Length required"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 411 35"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/missing-length.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "bad-length",
+          "request": {
+            "id": "bad-length",
+            "method": "POST",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "oops"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 400,
+            "reason": "Bad Request",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "34"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22696e76616c696420436f6e74656e742d4c656e677468227d",
+            "body": {
+              "error": "invalid Content-Length"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.852182+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.852189+00:00",
+                "status": 400
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "oops",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 400,
+            "response_body": {
+              "error": "invalid Content-Length"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 400 34"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/bad-length.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "wrong-type",
+          "request": {
+            "id": "wrong-type",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "text/plain",
+              "Content-Length": "11"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 415,
+            "reason": "Unsupported Media Type",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "49"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22436f6e74656e742d54797065206d757374206265206170706c69636174696f6e2f6a736f6e227d",
+            "body": {
+              "error": "Content-Type must be application/json"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.854114+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.854124+00:00",
+                "status": 415
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "11",
+              "CONTENT_TYPE": "text/plain",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 415,
+            "response_body": {
+              "error": "Content-Type must be application/json"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 415 49"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/wrong-type.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "wrong-route",
+          "request": {
+            "id": "wrong-route",
+            "method": "POST",
+            "path": "/other",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 404,
+            "reason": "Not Found",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "27"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a22726f757465206e6f7420666f756e64227d",
+            "body": {
+              "error": "route not found"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.856011+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.856023+00:00",
+                "status": 404
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/other",
+              "CONTENT_LENGTH": "11",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 404,
+            "response_body": {
+              "error": "route not found"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /other HTTP/1.1\" 404 27"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/wrong-route.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "wrong-method",
+          "request": {
+            "id": "wrong-method",
+            "method": "GET",
+            "path": "/orders",
+            "body": "",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "0"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 405,
+            "reason": "Method Not Allowed",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "31"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a226d6574686f64206d75737420626520504f5354227d",
+            "body": {
+              "error": "method must be POST"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.858273+00:00"
+              },
+              {
+                "event": "response_start",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.858280+00:00",
+                "status": 405
+              }
+            ],
+            "sql_trace": [],
+            "acquired": 0,
+            "closed": 0,
+            "environ": {
+              "REQUEST_METHOD": "GET",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "0",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 405,
+            "response_body": {
+              "error": "method must be POST"
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"GET /orders HTTP/1.1\" 405 31"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/wrong-method.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        }
+      ],
+      "cleanup": {
+        "server_closed": true,
+        "server_thread_stopped": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "host": "127.0.0.1",
+      "port": 50562
+    },
+    {
+      "id": "recovery",
+      "cases": [
+        {
+          "id": "second-sql-fault",
+          "request": {
+            "id": "second-sql-fault",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11",
+              "X-Lesson-Fault": "second-sql"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 500,
+            "reason": "Internal Server Error",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "27"
+              ]
+            ],
+            "body_hex": "7b226572726f72223a2273746f72616765206661696c757265227d",
+            "body": {
+              "error": "storage failure"
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.884348+00:00"
+              },
+              {
+                "event": "input_read",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.884360+00:00",
+                "requested": 11,
+                "actual": 11
+              },
+              {
+                "event": "input_validated",
+                "seq": 2,
+                "utc": "2026-10-05T12:12:01.884369+00:00"
+              },
+              {
+                "event": "connection_acquired",
+                "seq": 3,
+                "utc": "2026-10-05T12:12:01.885651+00:00",
+                "token": "request-connection-1"
+              },
+              {
+                "event": "transaction_begin",
+                "seq": 4,
+                "utc": "2026-10-05T12:12:01.885677+00:00"
+              },
+              {
+                "event": "orders_inserted",
+                "seq": 5,
+                "utc": "2026-10-05T12:12:01.885855+00:00",
+                "order_id": 1
+              },
+              {
+                "event": "fault_before_second_sql",
+                "seq": 6,
+                "utc": "2026-10-05T12:12:01.885857+00:00",
+                "sql": "INSERT INTO missing_outbox(order_id,event) VALUES (?,?)"
+              },
+              {
+                "event": "sql_exception",
+                "seq": 7,
+                "utc": "2026-10-05T12:12:01.885865+00:00",
+                "type": "OperationalError",
+                "message": "no such table: missing_outbox"
+              },
+              {
+                "event": "transaction_rollback",
+                "seq": 8,
+                "utc": "2026-10-05T12:12:01.886004+00:00"
+              },
+              {
+                "event": "connection_closed",
+                "seq": 9,
+                "utc": "2026-10-05T12:12:01.886024+00:00",
+                "token": "request-connection-1"
+              },
+              {
+                "event": "closed_probe_refused",
+                "seq": 10,
+                "utc": "2026-10-05T12:12:01.886028+00:00",
+                "type": "ProgrammingError",
+                "message": "Cannot operate on a closed database."
+              },
+              {
+                "event": "response_start",
+                "seq": 11,
+                "utc": "2026-10-05T12:12:01.886041+00:00",
+                "status": 500
+              }
+            ],
+            "sql_trace": [
+              "BEGIN IMMEDIATE",
+              "INSERT INTO orders(units) VALUES (2)",
+              "ROLLBACK"
+            ],
+            "acquired": 1,
+            "closed": 1,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "11",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "request_body_hex": "7b22756e697473223a327d",
+            "connection_token": "request-connection-1",
+            "exception": {
+              "type": "OperationalError",
+              "message": "no such table: missing_outbox"
+            },
+            "closed_probe": {
+              "type": "ProgrammingError",
+              "message": "Cannot operate on a closed database."
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 500,
+            "response_body": {
+              "error": "storage failure"
+            }
+          },
+          "error_stream_delta": "lesson storage failure: OperationalError\n",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 500 27"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/second-sql-fault.sqlite",
+          "db_sha256": "4157ea158c36404704d03f9164d5ddaf321d945eda8910acb0661edd3281d6d8",
+          "independent_observer": {
+            "orders": [],
+            "outbox": [],
+            "integrity": "ok"
+          }
+        },
+        {
+          "id": "after-failure",
+          "request": {
+            "id": "after-failure",
+            "method": "POST",
+            "path": "/orders",
+            "body": "{\"units\":2}",
+            "headers": {
+              "Content-Type": "application/json",
+              "Content-Length": "11"
+            }
+          },
+          "http_command": "http.client.HTTPConnection dynamic loopback; putrequest/putheader/endheaders/getresponse",
+          "response": {
+            "status": 201,
+            "reason": "Created",
+            "headers": [
+              [
+                "Date",
+                "Mon, 05 Oct 2026 12:12:01 GMT"
+              ],
+              [
+                "Server",
+                "WSGIServer/0.2 CPython/3.9.6"
+              ],
+              [
+                "Content-Type",
+                "application/json"
+              ],
+              [
+                "Content-Length",
+                "27"
+              ]
+            ],
+            "body_hex": "7b226f726465725f6964223a312c22616d6f756e74223a3230307d",
+            "body": {
+              "order_id": 1,
+              "amount": 200
+            }
+          },
+          "app": {
+            "events": [
+              {
+                "event": "request_received",
+                "seq": 0,
+                "utc": "2026-10-05T12:12:01.888492+00:00"
+              },
+              {
+                "event": "input_read",
+                "seq": 1,
+                "utc": "2026-10-05T12:12:01.888501+00:00",
+                "requested": 11,
+                "actual": 11
+              },
+              {
+                "event": "input_validated",
+                "seq": 2,
+                "utc": "2026-10-05T12:12:01.888508+00:00"
+              },
+              {
+                "event": "connection_acquired",
+                "seq": 3,
+                "utc": "2026-10-05T12:12:01.888640+00:00",
+                "token": "request-connection-2"
+              },
+              {
+                "event": "transaction_begin",
+                "seq": 4,
+                "utc": "2026-10-05T12:12:01.888659+00:00"
+              },
+              {
+                "event": "orders_inserted",
+                "seq": 5,
+                "utc": "2026-10-05T12:12:01.888819+00:00",
+                "order_id": 1
+              },
+              {
+                "event": "outbox_inserted",
+                "seq": 6,
+                "utc": "2026-10-05T12:12:01.888846+00:00"
+              },
+              {
+                "event": "transaction_commit",
+                "seq": 7,
+                "utc": "2026-10-05T12:12:01.889168+00:00"
+              },
+              {
+                "event": "connection_closed",
+                "seq": 8,
+                "utc": "2026-10-05T12:12:01.889193+00:00",
+                "token": "request-connection-2"
+              },
+              {
+                "event": "closed_probe_refused",
+                "seq": 9,
+                "utc": "2026-10-05T12:12:01.889197+00:00",
+                "type": "ProgrammingError",
+                "message": "Cannot operate on a closed database."
+              },
+              {
+                "event": "response_start",
+                "seq": 10,
+                "utc": "2026-10-05T12:12:01.889209+00:00",
+                "status": 201
+              }
+            ],
+            "sql_trace": [
+              "BEGIN IMMEDIATE",
+              "INSERT INTO orders(units) VALUES (2)",
+              "INSERT INTO outbox(order_id,event) VALUES (1,'order.created')",
+              "COMMIT"
+            ],
+            "acquired": 1,
+            "closed": 1,
+            "environ": {
+              "REQUEST_METHOD": "POST",
+              "PATH_INFO": "/orders",
+              "CONTENT_LENGTH": "11",
+              "CONTENT_TYPE": "application/json",
+              "HTTP_TRANSFER_ENCODING": null,
+              "wsgi.multithread": false,
+              "wsgi.multiprocess": false
+            },
+            "request_body_hex": "7b22756e697473223a327d",
+            "connection_token": "request-connection-2",
+            "closed_probe": {
+              "type": "ProgrammingError",
+              "message": "Cannot operate on a closed database."
+            },
+            "server_streams_closed_by_app": false,
+            "input_closed_at_response": false,
+            "errors_closed_at_response": false,
+            "status": 201,
+            "response_body": {
+              "order_id": 1,
+              "amount": 200
+            }
+          },
+          "error_stream_delta": "",
+          "access_log": [
+            "\"POST /orders HTTP/1.1\" 201 27"
+          ],
+          "http_client_closed": true,
+          "db_snapshot": "evidence/run-20261005T121201-d56c4594/after-failure.sqlite",
+          "db_sha256": "0a4f83d63d8f8f8b87a9982ead0d0985d43ba7db864507ac9b06091ed1fea566",
+          "independent_observer": {
+            "orders": [
+              [
+                1,
+                2
+              ]
+            ],
+            "outbox": [
+              [
+                1,
+                "order.created"
+              ]
+            ],
+            "integrity": "ok"
+          }
+        }
+      ],
+      "cleanup": {
+        "server_closed": true,
+        "server_thread_stopped": true,
+        "live_temp_removed": true
+      },
+      "setup_connection": "separate from request acquisitions, closed",
+      "host": "127.0.0.1",
+      "port": 50571
+    }
+  ],
+  "execution_failures": 0,
+  "exit_code": 0
+}

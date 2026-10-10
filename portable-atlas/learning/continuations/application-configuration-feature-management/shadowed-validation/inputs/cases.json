@@ -1,0 +1,78 @@
+{
+  "field_order": [
+    "timeout_ms",
+    "retries",
+    "flag_enabled",
+    "rollout_percent"
+  ],
+  "policies": [
+    "all-layer",
+    "winning-only"
+  ],
+  "defaults": {
+    "timeout_ms": 1000,
+    "retries": 2,
+    "flag_enabled": true,
+    "rollout_percent": 50
+  },
+  "cases": [
+    {
+      "id": "normal-boundary",
+      "env": {
+        "APP_TIMEOUT_MS": "2000",
+        "APP_FLAG_ENABLED": "true"
+      },
+      "task": {
+        "timeout_ms": 5000,
+        "retries": 0,
+        "flag_enabled": false,
+        "rollout_percent": 100
+      }
+    },
+    {
+      "id": "shadowed-integer",
+      "env": {
+        "APP_TIMEOUT_MS": "oops"
+      },
+      "task": {
+        "timeout_ms": 3000
+      }
+    },
+    {
+      "id": "unshadowed-integer",
+      "env": {
+        "APP_TIMEOUT_MS": "oops"
+      },
+      "task": {
+        "retries": 3
+      }
+    },
+    {
+      "id": "invalid-winning-bool",
+      "env": {
+        "APP_TIMEOUT_MS": "2000"
+      },
+      "task": {
+        "timeout_ms": true
+      }
+    },
+    {
+      "id": "shadowed-boolean",
+      "env": {
+        "APP_FLAG_ENABLED": "TRUE"
+      },
+      "task": {
+        "flag_enabled": false
+      }
+    },
+    {
+      "id": "unknown-field",
+      "env": {
+        "APP_SECRET": "EXAMPLE_NOT_A_SECRET"
+      },
+      "task": {
+        "timeout_ms": 3000
+      }
+    }
+  ]
+}

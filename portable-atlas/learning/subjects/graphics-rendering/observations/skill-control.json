@@ -1,0 +1,166 @@
+{
+  "at": "2026-10-05T05:25:38.751Z",
+  "kind": "same-agent-routing-control-not-independent-forward-eval",
+  "skill": "skills/atlas-graphics-rendering/SKILL.md",
+  "normal": {
+    "input": "共有辺のpixelが二重塗りされないか、既存教材で確認したい",
+    "route": [
+      "README.md",
+      "python3 -B verify.py",
+      "python3 -B verify.py --check observations/cpu-attempt-01/run.json",
+      "node audit.mjs",
+      "shared-ab UI at (5,5); expand fragment trace"
+    ],
+    "state": {
+      "at": "2026-10-05T05:25:38.188Z",
+      "kind": "actual-browser-png-decode",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "width": 1280,
+        "height": 720,
+        "language": "ja"
+      },
+      "ready": true,
+      "loading": false,
+      "caseId": "shared-ab",
+      "runSha256": "331bc0a0c474a890cd48ca7845eb01fce5bf19b65244444dc8ab958e9cc3993a",
+      "sourceHashes": {
+        "raster.py": "597bb0ba1cc0d3ac1eef0791248f09b788319a7ca2a9010952466f3547cba437",
+        "verify.py": "f77ee032de951b4457b892f97ce1142f6420b1d300d66721c27b1dd43f17c45b",
+        "scenes.json": "e471da6f2a1a0326c3c813e4e64ad8d29c8e21af65dd5dea2d0873b779b97e84",
+        "index.html": "2d221f6585b1b3d3f7f22a715079a0ef7be15b8e516337143f0030a7cf580459",
+        "lesson.js": "6cbbf893df6c4d290b99eb10d28ad70b966646d701da80711414e9ad355c059a",
+        "serve.mjs": "277d145fa5df8f49699b3dc6205ea0e96d9379f53cb2807f6f532e4c18d3f783",
+        "scope.json": "945a078c5d0bb714f4b614b39416ecc7c2c21c946931b19473c276003cb64262"
+      },
+      "sample": {
+        "x": 5,
+        "y": 5,
+        "caseId": "shared-ab",
+        "depth": {
+          "owner": "A",
+          "depthExact": "1/2",
+          "pythonRgb": [
+            22,
+            118,
+            124
+          ],
+          "decodedRgba": [
+            22,
+            118,
+            124,
+            255
+          ],
+          "matched": true,
+          "fragments": [
+            {
+              "triangle": "A",
+              "covered": true,
+              "edges": [
+                "21",
+                "15",
+                "0"
+              ],
+              "edgeIncludedOnTie": [
+                true,
+                false,
+                true
+              ],
+              "weights": [
+                "5/12",
+                "0",
+                "7/12"
+              ],
+              "depthExact": "1/2",
+              "depth": 0.5,
+              "accepted": true
+            },
+            {
+              "triangle": "B",
+              "covered": false,
+              "edges": [
+                "0",
+                "15",
+                "21"
+              ],
+              "edgeIncludedOnTie": [
+                false,
+                false,
+                true
+              ],
+              "reason": "outside-or-exclusive-edge"
+            }
+          ]
+        },
+        "painter": {
+          "owner": "A",
+          "depthExact": "1/2",
+          "pythonRgb": [
+            22,
+            118,
+            124
+          ],
+          "decodedRgba": [
+            22,
+            118,
+            124,
+            255
+          ],
+          "matched": true,
+          "fragments": [
+            {
+              "triangle": "A",
+              "covered": true,
+              "edges": [
+                "21",
+                "15",
+                "0"
+              ],
+              "edgeIncludedOnTie": [
+                true,
+                false,
+                true
+              ],
+              "weights": [
+                "5/12",
+                "0",
+                "7/12"
+              ],
+              "depthExact": "1/2",
+              "depth": 0.5,
+              "accepted": true
+            },
+            {
+              "triangle": "B",
+              "covered": false,
+              "edges": [
+                "0",
+                "15",
+                "21"
+              ],
+              "edgeIncludedOnTie": [
+                false,
+                false,
+                true
+              ],
+              "reason": "outside-or-exclusive-edge"
+            }
+          ]
+        }
+      },
+      "feedback": "未検証。これはCPU screen-space教材で、GPU/clip/照明の保証にはならない。"
+    },
+    "snapshot": "- main:\n  - generic: GRAPHICS RENDERING / 01\n  - heading \"面の前後は、pixelごとに違う\" [level=1]\n  - paragraph: Pythonで計算した16×12 pixelのPNGを拡大表示する。後から塗るだけの方式とdepth testを比べよう。\n  - paragraph: CPUのscreen-space教材です。Browserは画像を表示・sampleするだけ。実GPU、透視投影、物理照明の検証ではありません。\n  - heading \"1. 予想する\" [level=2]\n  - generic: 交差する2面の描画順を逆にすると？\n  - combobox \"交差する2面の描画順を逆にすると？\":\n    - option \"選ぶ\"\n    - option \"両方式とも同じになる\"\n    - option \"depth testだけ同じになる（同深度は除く）\" [selected]\n    - option \"後から塗る方式だけ同じになる\"\n  - button \"予想を保存\"\n  - status: 予想を保存。描画順を切り替えて比べよう。\n  - heading \"2. 実CPU出力を操作して比べる\" [level=2]\n  - generic: 入力と描画順\n  - combobox \"入力と描画順\":\n    - option \"交差する面 / A→B\"\n    - option \"交差する面 / B→A\"\n    - 'option \"境界: 面積0のA\"'\n    - 'option \"境界: 一部がgrid外\"'\n    - 'option \"境界: 2面ともgrid外\"'\n    - option \"共有辺 / A→B\" [selected]\n    - option \"共有辺 / B→A\"\n    - 'option \"境界: Aの頂点順だけ逆転\"'\n    - option \"同じ深さ / A→B（先勝ち）\"\n    - option \"同じ深さ / B→A（先勝ち）\"\n  - status: \"Python実行原票: CPython 3.9.6 / 共有辺 / A→B\"\n  - paragraph:\n    - generic: A / 青緑\n    - generic: B / 橙\n    - generic: 背景 / 未所属\n  - 'figure \"正常: pixelごとのdepth test（小さいzが手前）\"':\n    - generic: \"正常: pixelごとのdepth test（小さいzが手前）\"\n    - img \"depth testを使ったCPU画像\"\n  - 'figure \"意図的な異常: 後から描いた面で上書き\"':\n    - generic: \"意図的な異常: 後から描いた面で上書き\"\n    - img \"draw orderだけで上書きしたCPU画像\"\n  - paragraph: \"所属面が異なるpixel: 0 / 192。退化triangle: なし。\"\n  - heading \"3. 1 pixelを調べる\" [level=2]\n  - generic: x（0–15）\n  - spinbutton \"x（0–15）\": \"5\"\n  - generic: y（0–11）\n  - spinbutton \"y（0–11）\": \"5\"\n  - button \"pixelを検査\"\n  - status: \"(5,5) 中心(5.5,5.5): Python出力とBrowser decodeは一致\"\n  - table:\n    - rowgroup:\n      - row \"方式 所属面 depth（正確値） Python RGB / Browser decode RGB\":\n        - columnheader \"方式\"\n        - columnheader \"所属面\"\n        - columnheader \"depth（正確値）\"\n        - columnheader \"Python RGB / Browser decode RGB\"\n    - rowgroup:\n      - row \"depth test A 1/2 22,118,124 / 22,118,124\":\n        - rowheader \"depth test\"\n        - cell \"A\"\n        - cell \"1/2\"\n        - cell \"22,118,124 / 22,118,124\"\n      - row \"draw order A 1/2 22,118,124 / 22,118,124\":\n        - rowheader \"draw order\"\n        - cell \"A\"\n        - cell \"1/2\"\n        - cell \"22,118,124 / 22,118,124\"\n  - generic \"このpixelのedge・barycentric・判定記録\" [active]\n  - generic: \"{ \\\"x\\\": 5, \\\"y\\\": 5, \\\"caseId\\\": \\\"shared-ab\\\", \\\"depth\\\": { \\\"owner\\\": \\\"A\\\", \\\"depthExact\\\": \\\"1/2\\\", \\\"pythonRgb\\\": [ 22, 118, 124 ], \\\"decodedRgba\\\": [ 22, 118, 124, 255 ], \\\"matched\\\": true, \\\"fragments\\\": [ { \\\"triangle\\\": \\\"A\\\", \\\"covered\\\": true, \\\"edges\\\": [ \\\"21\\\", \\\"15\\\", \\\"0\\\" ], \\\"edgeIncludedOnTie\\\": [ true, false, true ], \\\"weights\\\": [ \\\"5/12\\\", \\\"0\\\", \\\"7/12\\\" ], \\\"depthExact\\\": \\\"1/2\\\", \\\"depth\\\": 0.5, \\\"accepted\\\": true }, { \\\"triangle\\\": \\\"B\\\", \\\"covered\\\": false, \\\"edges\\\": [ \\\"0\\\", \\\"15\\\", \\\"21\\\" ], \\\"edgeIncludedOnTie\\\": [ false, false, true ], \\\"reason\\\": \\\"outside-or-exclusive-edge\\\" } ] }, \\\"painter\\\": { \\\"owner\\\": \\\"A\\\", \\\"depthExact\\\": \\\"1/2\\\", \\\"pythonRgb\\\": [ 22, 118, 124 ], \\\"decodedRgba\\\": [ 22, 118, 124, 255 ], \\\"matched\\\": true, \\\"fragments\\\": [ { \\\"triangle\\\": \\\"A\\\", \\\"covered\\\": true, \\\"edges\\\": [ \\\"21\\\", \\\"15\\\", \\\"0\\\" ], \\\"edgeIncludedOnTie\\\": [ true, false, true ], \\\"weights\\\": [ \\\"5/12\\\", \\\"0\\\", \\\"7/12\\\" ], \\\"depthExact\\\": \\\"1/2\\\", \\\"depth\\\": 0.5, \\\"accepted\\\": true }, { \\\"triangle\\\": \\\"B\\\", \\\"covered\\\": false, \\\"edges\\\": [ \\\"0\\\", \\\"15\\\", \\\"21\\\" ], \\\"edgeIncludedOnTie\\\": [ false, false, true ], \\\"reason\\\": \\\"outside-or-exclusive-edge\\\" } ] } }\"\n  - heading \"4. 規則・実装・一次資料\" [level=2]\n  - paragraph: 座標は右が+x、下が+y。sampleはpixel中心(x+½, y+½)。頂点順を正の面積へ正規化し、各edgeの内側を判定する。辺上はtop-left規則（上向きの辺、または右向きの水平辺）だけ含む。共有辺は一方だけに所属する。\n  - paragraph: barycentric重みからscreen-linearなzを計算。初期depthは∞（JSONではnull）、新しいzが厳密に小さい場合だけ更新する。等しいzは先勝ちなので、同じ深さの重なりは描画順に依存する。面積0は描画しない。grid外のsampleは検査せず、viewport内だけを走査する。\n  - paragraph: world→clip変換、homogeneous clipping、perspective-correct補間、有限精度depth、MSAA、shading、cullingは実装していない。有理数の正確計算と実GPU数値精度は同一ではない。\n  - list:\n    - link \"Microsoft / Direct3D rasterization rules\":\n      - /url: https://learn.microsoft.com/en-us/windows/win32/direct3d11/d3d10-graphics-programming-guide-rasterizer-stage-rules#triangle-rasterization-rules-without-multisampling\n    - text: — pixel中心とtop-left規則の参照。GPU/APIの完全再現は主張しない。\n    - link \"Microsoft / Depth Buffers\":\n      - /url: https://learn.microsoft.com/en-us/windows/win32/direct3d9/depth-buffers\n    - text: — depth値の保存・比較を参照。教材のzは単純なscreen-linear値。\n  - generic \"独自Python rendererを見る\"\n  - paragraph:\n    - link \"raster.py\":\n      - /url: raster.py\n    - text: /\n    - link \"独立oracleと検査\":\n      - /url: verify.py\n    - text: /\n    - link \"CPU原票\":\n      - /url: observations/cpu-attempt-01/run.json\n  - heading \"5. なぜ崩れたか答える\" [level=2]\n  - generic: 交差する面を正しく表示するには？\n  - combobox \"交差する面を正しく表示するには？\":\n    - option \"選ぶ\"\n    - option \"一度だけ描画順を逆にすれば必ず解決\"\n    - option \"各pixelでdepthを比較する。同じdepthのtie規則も別に決める\"\n    - option \"このPython結果で全GPUのclip/照明も保証できる\" [selected]\n  - button \"回答を確認\"\n  - status: 未検証。これはCPU screen-space教材で、GPU/clip/照明の保証にはならない。\n  - link \"起動と再現\":\n    - /url: README.md\n  - text: /\n  - link \"未教材領域\":\n    - /url: scope.json",
+    "passed": true
+  },
+  "unsupported": {
+    "input": "このCPU教材で全GPUのclip/shader/物理照明を実装保証して",
+    "route": "scope.json未制作領域とCPU/GPUの差を説明し、実証なしの保証をしない",
+    "additionalServicesOrSettings": false,
+    "passed": true
+  },
+  "limitations": [
+    "同一Agentのrouting controlであり独立Forward Evalではない",
+    "GPU/lightingは実行せず未測定を維持"
+  ]
+}

@@ -1,0 +1,266 @@
+{
+  "unit": "replica-lag-failover-read",
+  "utc": "2026-10-05T13:17:27.085Z",
+  "scope": "Finite 2 in-memory stores, FIFO delivery queue, route model; no fullGate/Core claim",
+  "checks": [
+    {
+      "check": "checker",
+      "exitCode": 0,
+      "output": "PASS 13 fixtures; independent hand revision/delivery/read/ack tables, refusals and execution failure\n"
+    },
+    {
+      "check": "negative",
+      "exitCode": 0,
+      "output": "[\n  {\n    \"test\": \"read-only SHA256+mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"ack-means-delivered\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"stale-marked-fresh\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"wrong-read-value\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"partition-auto-delivery\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"lost-queue-message\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"refusal-normal-answer\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"execution-failure-success\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  }\n]\n"
+    },
+    {
+      "check": "skill-validator",
+      "exitCode": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "check": "capture-dimensions",
+      "exitCode": 0,
+      "output": "<module>/media/failover-stale-read.jpg\n  pixelWidth: 1280\n  pixelHeight: 2335\n<module>/media/delivered-fresh-read.jpg\n  pixelWidth: 1280\n  pixelHeight: 2372\n<module>/media/partition-available-stale.jpg\n  pixelWidth: 1280\n  pixelHeight: 2408\n<module>/media/unavailable-read-refusal.jpg\n  pixelWidth: 1280\n  pixelHeight: 3056\n<module>/media/execution-failure-no-answer.jpg\n  pixelWidth: 1280\n  pixelHeight: 2150\n"
+    },
+    {
+      "check": "protected-53478",
+      "exitCode": 0,
+      "output": "3901\n"
+    },
+    {
+      "check": "protected-60285",
+      "exitCode": 0,
+      "output": "80282\n"
+    },
+    {
+      "check": "owned-port-closed",
+      "exitCode": 1,
+      "output": ""
+    }
+  ],
+  "ui": {
+    "fixtureComparisons": 13,
+    "conditionResets": 13,
+    "predictionOnlyChanges": 9,
+    "threeControls": [
+      "revisionGuess",
+      "availableGuess",
+      "freshGuess"
+    ],
+    "normalRefusalExecutionFailureEachTested": true,
+    "newPredictionGroupRetained": true,
+    "oldComparisonAnswerRawAndTraceCleared": true,
+    "refusalTracePreserved": true,
+    "executionFailureNoNormalAnswer": true,
+    "originalRelatedREADMEReadOnlyBodiesVerified": 2,
+    "implementationRelativeHrefs": 3,
+    "consoleErrors": 0,
+    "captures": [
+      {
+        "path": "media/failover-stale-read.jpg",
+        "width": 1280,
+        "height": 2335
+      },
+      {
+        "path": "media/delivered-fresh-read.jpg",
+        "width": 1280,
+        "height": 2372
+      },
+      {
+        "path": "media/partition-available-stale.jpg",
+        "width": 1280,
+        "height": 2408
+      },
+      {
+        "path": "media/unavailable-read-refusal.jpg",
+        "width": 1280,
+        "height": 3056
+      },
+      {
+        "path": "media/execution-failure-no-answer.jpg",
+        "width": 1280,
+        "height": 2150
+      }
+    ],
+    "evidence": [
+      "media/iab-thirteen-fixtures.json",
+      "media/iab-condition-resets.json",
+      "media/iab-prediction-resets.json",
+      "media/iab-links.json",
+      "media/iab-captures.json",
+      "media/unavailable-b-raw.txt",
+      "media/execution-failure-raw.txt",
+      "media/iab-console.json"
+    ]
+  },
+  "outcomes": {
+    "normal": 7,
+    "contractRefusal": 5,
+    "executionFailure": 1,
+    "unDeliveredB": {
+      "revision": 0,
+      "value": "v0",
+      "requiredRevision": 1,
+      "available": true,
+      "fresh": false
+    },
+    "deliveredB": {
+      "revision": 1,
+      "value": "v1",
+      "requiredRevision": 1,
+      "available": true,
+      "fresh": true
+    },
+    "partitionRead": {
+      "available": true,
+      "fresh": false,
+      "queuePreserved": true
+    },
+    "twoWritesOneDelivery": {
+      "ARevision": 2,
+      "BRevision": 1,
+      "queueRevision": 2,
+      "fresh": false
+    },
+    "malformedJSON": {
+      "actualExitCode": 3,
+      "stdout": "",
+      "observation": null,
+      "answer": null
+    }
+  },
+  "preview": {
+    "command": "python3 -B preview.py",
+    "normalAttempt": {
+      "exitCode": 1,
+      "output": "Traceback (most recent call last):\n  File \"<module>/preview.py\", line 16, in <module>\n    s=ThreadingHTTPServer(('127.0.0.1',0),Handler);print('http://127.0.0.1:'+str(s.server_port)+'/',flush=True)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 452, in __init__\n    self.server_bind()\n  File \"<python-runtime>/lib/python3.9/http/server.py\", line 138, in server_bind\n    socketserver.TCPServer.server_bind(self)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 466, in server_bind\n    self.socket.bind(self.server_address)\nPermissionError: [Errno 1] Operation not permitted\n"
+    },
+    "sameCommandPermissionAttempt": {
+      "port": 57219,
+      "ownedSession": 74988
+    },
+    "cleanup": {
+      "ownedServerExitCode": 0,
+      "ownedTab18Closed": true,
+      "ownedPortClosed": true,
+      "protectedListeners": {
+        "53478": 3901,
+        "60285": 80282
+      }
+    }
+  },
+  "sources": [
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_mitigate_interaction_failure_graceful_degradation.html",
+      "locator": "Desired outcome; Implementation guidance",
+      "use": "Design perspective only; replication rules are independent toy contract"
+    }
+  ],
+  "limitations": [
+    "A ack is local update and enqueue; not B reflection or durability proof",
+    "No actual cloud, quorum, consensus, durability, RTO guarantee or real performance",
+    "Sequential steps; no real clock or automatic delivery; finite single-writer FIFO"
+  ],
+  "savedCommandExecutableAlias": "python3; actual subprocess uses same observed Python interpreter; no personal runtime path stored",
+  "frozenAfterQA": true,
+  "currentRun": "observations/20261005T131131845635Z",
+  "runtime": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "storage": "two local in-memory model dictionaries; not durable stores"
+  },
+  "sourceHashes": {
+    "worker.py": "8d8fb5ad32bdf5053c9984b077666970add139cc219b851fdb7f34526b05f329",
+    "runner.py": "19a63d847a6f72705e34ffea9d4e321bdbf6194959cbe0793dc9975aebcc5195",
+    "checker.py": "67ce882daaaa6bc99b8abdedf7abf73d12db37d86eacfb55d3c57384a779e0b7",
+    "test_negative.py": "9196b41bba2a4fe366aa367c276e9dab494b6167b26ed632cb4204c8a87a1b89",
+    "oracle.json": "378f54d5132923b24b302a4805ae4ce0df211eb09296cbeaf32d57ea6bd6b5f0",
+    "fixtures.json": "fd46778430c02307b9cee591b1e7b3f3870493bf0da6093165d8b7c9f245ea17",
+    "index.html": "fda0729f0c2e5474f7d80a80a3e0e28ec49e1648ef0b21f25b1c13ece50fc84b",
+    "preview.py": "8ba3bf3710bd11b8339c00e8803539a330f7e8e72d27611039ed6317daba4bcf",
+    "route.py": "e76f09edf42859cfeaec6f04a86461355ab14ba051f1e519d4a0ed666b741a25",
+    "README.md": "e9ac3efb51c94be306093f7669296fad34568de974fb809a090b506e3e43cad1",
+    "COVERAGE.md": "bd1b738ef23fd09f12841fdc3789e2f1a3c12b2103d0d7ba386340476f2eee48",
+    "skills/replica-lag-failover-read/SKILL.md": "d940d761be24760118c984f79e10190750e49198b744e53f1f530c96eb920e35"
+  },
+  "actualRunnerStdoutMatchesSavedBytes": true,
+  "handOracleFixedBeforeWorkerAndRun": true,
+  "observedSuccessfulSteps": 31,
+  "observedReadCount": 8,
+  "readOnlyHashMtimeEvidence": "test_negative.py checks SHA256 + mtime_ns before/after; final default runner/checker/route checks do the same for the entire module",
+  "linkedOriginals": [
+    {
+      "path": "../../../subjects/cloud-architecture/README.md",
+      "sha256": "14afc68821deb28a6a45fabe135d1cbadc7e6de068a6b82b9a3ba2b08453b0a3",
+      "iabBodyMatches": true
+    },
+    {
+      "path": "../../database-engine-internals/wal-snapshot-checkpoint/README.md",
+      "sha256": "3bf4a9ee1ee21548749a090a52b89aaf965754d29f5479fb8772c1fd848930a7",
+      "iabBodyMatches": true
+    }
+  ],
+  "localMarkdownLinks": {
+    "count": 14,
+    "allExist": true,
+    "links": [
+      {
+        "source": "README.md",
+        "href": "../../../subjects/cloud-architecture/README.md"
+      },
+      {
+        "source": "README.md",
+        "href": "oracle.json"
+      },
+      {
+        "source": "README.md",
+        "href": "index.html"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "../../database-engine-internals/wal-snapshot-checkpoint/README.md"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "README.md",
+        "href": "CURRENT"
+      },
+      {
+        "source": "README.md",
+        "href": "runner.py"
+      },
+      {
+        "source": "README.md",
+        "href": "QA.json"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "COVERAGE.md",
+        "href": "../../../subjects/cloud-architecture/README.md"
+      }
+    ]
+  }
+}

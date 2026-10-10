@@ -1,0 +1,8 @@
+{
+  "schema": "CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE stage_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER, amount INTEGER); CREATE TABLE lines(line_id INTEGER PRIMARY KEY, order_id INTEGER NOT NULL); CREATE VIEW classified AS SELECT o.*, CASE WHEN o.customer_id IS NULL THEN 'null_key' WHEN EXISTS(SELECT 1 FROM customers c WHERE c.customer_id=o.customer_id) THEN 'known' ELSE 'unknown' END AS key_state, (SELECT COUNT(*) FROM lines l WHERE l.order_id=o.order_id) AS line_count FROM stage_orders o; CREATE TABLE accepted(order_id INTEGER PRIMARY KEY); CREATE TABLE quarantined(order_id INTEGER PRIMARY KEY, reason TEXT NOT NULL); CREATE TABLE rejected(order_id INTEGER PRIMARY KEY, reason TEXT NOT NULL);",
+  "accept_predicates": {"reject-batch":"NOT EXISTS(SELECT 1 FROM classified WHERE key_state='unknown')","quarantine-row":"key_state<>'unknown'","retain":"1"},
+  "classification": "SELECT order_id, key_state, line_count FROM classified ORDER BY order_id",
+  "metric_ids": "SELECT c.order_id FROM classified c JOIN accepted a ON a.order_id=c.order_id WHERE EXISTS(SELECT 1 FROM lines l WHERE l.order_id=c.order_id) ORDER BY c.order_id",
+  "metric": "SELECT SUM(c.amount),COUNT(*),COUNT(c.amount),COUNT(*)-COUNT(c.amount) FROM classified c JOIN accepted a ON a.order_id=c.order_id WHERE EXISTS(SELECT 1 FROM lines l WHERE l.order_id=c.order_id)",
+  "fk_schema": "CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);"
+}

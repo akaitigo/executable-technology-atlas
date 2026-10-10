@@ -1,0 +1,545 @@
+{
+  "fixed_before_first_swift": true,
+  "count_order": [
+    "Character",
+    "scalar",
+    "UTF16",
+    "UTF8"
+  ],
+  "rows": [
+    {
+      "id": "composed",
+      "label": "é",
+      "input_json": "\"\\u00e9\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 1,
+          "scalar": 1,
+          "utf16": 1,
+          "utf8": 2,
+          "codepoints": [
+            233
+          ],
+          "utf8_hex": "c3a9"
+        },
+        "redecoded": {
+          "character": 1,
+          "scalar": 1,
+          "utf16": 1,
+          "utf8": 2,
+          "codepoints": [
+            233
+          ],
+          "utf8_hex": "c3a9"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "decomposed",
+      "label": "e + U0301",
+      "input_json": "\"e\\u0301\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 1,
+          "scalar": 2,
+          "utf16": 2,
+          "utf8": 3,
+          "codepoints": [
+            101,
+            769
+          ],
+          "utf8_hex": "65cc81"
+        },
+        "redecoded": {
+          "character": 1,
+          "scalar": 2,
+          "utf16": 2,
+          "utf8": 3,
+          "codepoints": [
+            101,
+            769
+          ],
+          "utf8_hex": "65cc81"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "emoji3",
+      "label": "😀×3",
+      "input_json": "\"😀😀😀\"",
+      "category": "refused",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 3,
+          "scalar": 3,
+          "utf16": 6,
+          "utf8": 12,
+          "codepoints": [
+            128512,
+            128512,
+            128512
+          ],
+          "utf8_hex": "f09f9880f09f9880f09f9880"
+        },
+        "redecoded": {
+          "character": 3,
+          "scalar": 3,
+          "utf16": 6,
+          "utf8": 12,
+          "codepoints": [
+            128512,
+            128512,
+            128512
+          ],
+          "utf8_hex": "f09f9880f09f9880f09f9880"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "scalar-over",
+      "label": "e+U0301 e+U0301 a",
+      "input_json": "\"e\\u0301e\\u0301a\"",
+      "category": "mismatch",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 3,
+          "scalar": 5,
+          "utf16": 5,
+          "utf8": 7,
+          "codepoints": [
+            101,
+            769,
+            101,
+            769,
+            97
+          ],
+          "utf8_hex": "65cc8165cc8161"
+        },
+        "redecoded": {
+          "character": 3,
+          "scalar": 5,
+          "utf16": 5,
+          "utf8": 7,
+          "codepoints": [
+            101,
+            769,
+            101,
+            769,
+            97
+          ],
+          "utf8_hex": "65cc8165cc8161"
+        },
+        "normal": {
+          "scalar_ok": false,
+          "byte_ok": true,
+          "accepted": false
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "empty",
+      "label": "空文字",
+      "input_json": "\"\"",
+      "category": "refused",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 0,
+          "scalar": 0,
+          "utf16": 0,
+          "utf8": 0,
+          "codepoints": [],
+          "utf8_hex": ""
+        },
+        "redecoded": {
+          "character": 0,
+          "scalar": 0,
+          "utf16": 0,
+          "utf8": 0,
+          "codepoints": [],
+          "utf8_hex": ""
+        },
+        "normal": {
+          "scalar_ok": false,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "faulty": {
+          "scalar_ok": false,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "ascii4",
+      "label": "scalar境界4",
+      "input_json": "\"abcd\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 4,
+          "scalar": 4,
+          "utf16": 4,
+          "utf8": 4,
+          "codepoints": [
+            97,
+            98,
+            99,
+            100
+          ],
+          "utf8_hex": "61626364"
+        },
+        "redecoded": {
+          "character": 4,
+          "scalar": 4,
+          "utf16": 4,
+          "utf8": 4,
+          "codepoints": [
+            97,
+            98,
+            99,
+            100
+          ],
+          "utf8_hex": "61626364"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "ascii5",
+      "label": "scalar超過5",
+      "input_json": "\"abcde\"",
+      "category": "refused",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 5,
+          "scalar": 5,
+          "utf16": 5,
+          "utf8": 5,
+          "codepoints": [
+            97,
+            98,
+            99,
+            100,
+            101
+          ],
+          "utf8_hex": "6162636465"
+        },
+        "redecoded": {
+          "character": 5,
+          "scalar": 5,
+          "utf16": 5,
+          "utf8": 5,
+          "codepoints": [
+            97,
+            98,
+            99,
+            100,
+            101
+          ],
+          "utf8_hex": "6162636465"
+        },
+        "normal": {
+          "scalar_ok": false,
+          "byte_ok": true,
+          "accepted": false
+        },
+        "faulty": {
+          "scalar_ok": false,
+          "byte_ok": true,
+          "accepted": false
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "emoji2",
+      "label": "byte境界8",
+      "input_json": "\"😀😀\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 2,
+          "scalar": 2,
+          "utf16": 4,
+          "utf8": 8,
+          "codepoints": [
+            128512,
+            128512
+          ],
+          "utf8_hex": "f09f9880f09f9880"
+        },
+        "redecoded": {
+          "character": 2,
+          "scalar": 2,
+          "utf16": 4,
+          "utf8": 8,
+          "codepoints": [
+            128512,
+            128512
+          ],
+          "utf8_hex": "f09f9880f09f9880"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "byte-over",
+      "label": "byte超過9",
+      "input_json": "\"😀😀a\"",
+      "category": "refused",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 3,
+          "scalar": 3,
+          "utf16": 5,
+          "utf8": 9,
+          "codepoints": [
+            128512,
+            128512,
+            97
+          ],
+          "utf8_hex": "f09f9880f09f988061"
+        },
+        "redecoded": {
+          "character": 3,
+          "scalar": 3,
+          "utf16": 5,
+          "utf8": 9,
+          "codepoints": [
+            128512,
+            128512,
+            97
+          ],
+          "utf8_hex": "f09f9880f09f988061"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": false,
+          "accepted": false
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "decomposed2",
+      "label": "結合2組、scalar4",
+      "input_json": "\"e\\u0301e\\u0301\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 2,
+          "scalar": 4,
+          "utf16": 4,
+          "utf8": 6,
+          "codepoints": [
+            101,
+            769,
+            101,
+            769
+          ],
+          "utf8_hex": "65cc8165cc81"
+        },
+        "redecoded": {
+          "character": 2,
+          "scalar": 4,
+          "utf16": 4,
+          "utf8": 6,
+          "codepoints": [
+            101,
+            769,
+            101,
+            769
+          ],
+          "utf8_hex": "65cc8165cc81"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "custom-ab",
+      "label": "編集ab",
+      "input_json": "\"ab\"",
+      "category": "accepted",
+      "expected": {
+        "status": "observed",
+        "exception_class": null,
+        "decoded": {
+          "character": 2,
+          "scalar": 2,
+          "utf16": 2,
+          "utf8": 2,
+          "codepoints": [
+            97,
+            98
+          ],
+          "utf8_hex": "6162"
+        },
+        "redecoded": {
+          "character": 2,
+          "scalar": 2,
+          "utf16": 2,
+          "utf8": 2,
+          "codepoints": [
+            97,
+            98
+          ],
+          "utf8_hex": "6162"
+        },
+        "normal": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "faulty": {
+          "scalar_ok": true,
+          "byte_ok": true,
+          "accepted": true
+        },
+        "scalar_sequence_preserved": true,
+        "utf8_preserved": true
+      }
+    },
+    {
+      "id": "number",
+      "label": "非string42",
+      "input_json": "42",
+      "category": "input",
+      "expected": {
+        "status": "input_refusal",
+        "exception_class": "DecodingError",
+        "decoded": null,
+        "redecoded": null,
+        "normal": null,
+        "faulty": null,
+        "scalar_sequence_preserved": null,
+        "utf8_preserved": null,
+        "encoded_json": null
+      }
+    },
+    {
+      "id": "malformed",
+      "label": "不完全JSON",
+      "input_json": "\"",
+      "category": "input",
+      "expected": {
+        "status": "input_refusal",
+        "exception_class": "DecodingError",
+        "decoded": null,
+        "redecoded": null,
+        "normal": null,
+        "faulty": null,
+        "scalar_sequence_preserved": null,
+        "utf8_preserved": null,
+        "encoded_json": null
+      }
+    }
+  ]
+}

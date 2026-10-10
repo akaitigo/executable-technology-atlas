@@ -1,0 +1,656 @@
+{
+  "tabId": "22",
+  "conditions": [
+    {
+      "case": "epoch-order",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "epoch2/seq1を新世代として採用。遅延epoch1/seq5も初見historyに加えるがlatest2/1を戻さない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 3,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 ACCEPT_HISTORY / latest 2/1 / value 201 / history 3 / duplicate 0 / conflict 0 / stale拒否 0",
+        "timeline": "arrival 1 · 1/4ACCEPT_LATEST → latest 1/4 / history 1arrival 2 · 2/1ACCEPT_LATEST → latest 2/1 / history 2arrival 3 · 1/5ACCEPT_HISTORY → latest 2/1 / history 3"
+      }
+    },
+    {
+      "case": "seq-only-fault",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "epochを落としたseq HWMは新世代seq1を誤STALE_REJECT。旧epoch/seq5を採ってlatest1/5へ戻る。historyも2件しかない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 3,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 ACCEPT_LATEST / latest 1/5 / value 50 / history 2 / duplicate 0 / conflict 0 / stale拒否 1",
+        "timeline": "arrival 1 · 1/4ACCEPT_LATEST → latest 1/4 / history 1arrival 2 · 2/1STALE_REJECT → latest 1/4 / history 1arrival 3 · 1/5ACCEPT_LATEST → latest 1/5 / history 2"
+      }
+    },
+    {
+      "case": "duplicate-conflict",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "同(device,epoch,seq)＋同valueはDUPLICATE、別value999はCONFLICT。history追加もlatest更新もしない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 5,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 CONFLICT / latest 2/1 / value 201 / history 3 / duplicate 1 / conflict 1 / stale拒否 0",
+        "timeline": "arrival 1 · 1/4ACCEPT_LATEST → latest 1/4 / history 1arrival 2 · 2/1ACCEPT_LATEST → latest 2/1 / history 2arrival 3 · 1/5ACCEPT_HISTORY → latest 2/1 / history 3arrival 4 · 2/1DUPLICATE → latest 2/1 / history 3arrival 5 · 2/1CONFLICT → latest 2/1 / history 3"
+      }
+    },
+    {
+      "case": "old-history-repeat",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "旧epochでも初見はhistoryへ採用しidentityを記憶する。再送はDUPLICATE、変更valueはCONFLICT。latest2/1は保持。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 5,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 CONFLICT / latest 2/1 / value 201 / history 3 / duplicate 1 / conflict 1 / stale拒否 0",
+        "timeline": "arrival 1 · 1/4ACCEPT_LATEST → latest 1/4 / history 1arrival 2 · 2/1ACCEPT_LATEST → latest 2/1 / history 2arrival 3 · 1/5ACCEPT_HISTORY → latest 2/1 / history 3arrival 4 · 1/5DUPLICATE → latest 2/1 / history 3arrival 5 · 1/5CONFLICT → latest 2/1 / history 3"
+      }
+    },
+    {
+      "case": "same-sequence-new-epoch",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "同じseq1でもepoch1とepoch2は別identity。history2件、latestは新epoch2/seq1。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 2,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 ACCEPT_LATEST / latest 2/1 / value 21 / history 2 / duplicate 0 / conflict 0 / stale拒否 0",
+        "timeline": "arrival 1 · 1/1ACCEPT_LATEST → latest 1/1 / history 1arrival 2 · 2/1ACCEPT_LATEST → latest 2/1 / history 2"
+      }
+    },
+    {
+      "case": "seq-key-collision-fault",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "epoch省略key[a,1]が新世代と衝突。value21を誤CONFLICTにして新世代を採れない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 2,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 CONFLICT / latest 1/1 / value 11 / history 1 / duplicate 0 / conflict 1 / stale拒否 0",
+        "timeline": "arrival 1 · 1/1ACCEPT_LATEST → latest 1/1 / history 1arrival 2 · 2/1CONFLICT → latest 1/1 / history 1"
+      }
+    },
+    {
+      "case": "within-epoch-out-of-order",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "同epoch2のseq1はseq3より古いが初見historyへ採用。latestは2/3を保持する。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 2,
+        "status": "OBSERVED / child exit 0",
+        "summary": "最後 ACCEPT_HISTORY / latest 2/3 / value 203 / history 2 / duplicate 0 / conflict 0 / stale拒否 0",
+        "timeline": "arrival 1 · 2/3ACCEPT_LATEST → latest 2/3 / history 1arrival 2 · 2/1ACCEPT_HISTORY → latest 2/3 / history 2"
+      }
+    },
+    {
+      "case": "refused-epoch-zero",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-epoch-bool",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-epoch-string",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-seq-zero",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-seq-bool",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-seq-wrap",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-device",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "refused-value-bool",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "入力全体を事前検査して拒否した。正常arrivalは処理せず、正常系の答えを補完しない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "REFUSED / child exit 2 / invalid telemetry identity or value",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    },
+    {
+      "case": "execution-failure",
+      "reset": {
+        "answerOpen": false,
+        "empty": true,
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "state": {
+        "answer": "JSONDecodeErrorが実子processでexit3。旧trace・latest・答えは使わない。",
+        "answerOpen": true,
+        "feedback": "予想一致",
+        "rowCount": 0,
+        "status": "EXECUTION_FAILURE / child exit 3",
+        "summary": "history・latestは未観測。0や旧正常値で補完しない。",
+        "timeline": ""
+      }
+    }
+  ],
+  "predictions": [
+    {
+      "case": "epoch-order",
+      "control": "最後の採否予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "ACCEPT_LATEST",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "2/1",
+          "3"
+        ]
+      }
+    },
+    {
+      "case": "epoch-order",
+      "control": "latest予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1/4",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_HISTORY",
+          "1/4",
+          "3"
+        ]
+      }
+    },
+    {
+      "case": "epoch-order",
+      "control": "history件数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_HISTORY",
+          "2/1",
+          "1"
+        ]
+      }
+    },
+    {
+      "case": "seq-only-fault",
+      "control": "最後の採否予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "CONFLICT",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "CONFLICT",
+          "1/5",
+          "2"
+        ]
+      }
+    },
+    {
+      "case": "seq-only-fault",
+      "control": "latest予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1/4",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "1/4",
+          "2"
+        ]
+      }
+    },
+    {
+      "case": "seq-only-fault",
+      "control": "history件数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "1/5",
+          "1"
+        ]
+      }
+    },
+    {
+      "case": "duplicate-conflict",
+      "control": "最後の採否予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "ACCEPT_LATEST",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "2/1",
+          "3"
+        ]
+      }
+    },
+    {
+      "case": "duplicate-conflict",
+      "control": "latest予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1/4",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "CONFLICT",
+          "1/4",
+          "3"
+        ]
+      }
+    },
+    {
+      "case": "duplicate-conflict",
+      "control": "history件数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "CONFLICT",
+          "2/1",
+          "1"
+        ]
+      }
+    },
+    {
+      "case": "refused-epoch-bool",
+      "control": "最後の採否予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "ACCEPT_LATEST",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "refused-epoch-bool",
+      "control": "latest予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1/4",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "REFUSED",
+          "1/4",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "refused-epoch-bool",
+      "control": "history件数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "REFUSED",
+          "not-observed",
+          "1"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "最後の採否予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "ACCEPT_LATEST",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "ACCEPT_LATEST",
+          "not-observed",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "latest予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1/4",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "EXECUTION_FAILURE",
+          "1/4",
+          "not-observed"
+        ]
+      }
+    },
+    {
+      "case": "execution-failure",
+      "control": "history件数予測",
+      "comparisonThenAnswerOpened": true,
+      "newPrediction": "1",
+      "state": {
+        "answerOpen": false,
+        "empty": true,
+        "feedback": "予想変更：新しい値群を保持しました。再比較してください。",
+        "hidden": true,
+        "rawOpen": false,
+        "values": [
+          "EXECUTION_FAILURE",
+          "not-observed",
+          "1"
+        ]
+      }
+    }
+  ],
+  "references": [
+    {
+      "label": "元IoT：device別HWMとcoverage",
+      "exactOriginalBody": true
+    },
+    {
+      "label": "key-generation CAS：keyの寿命",
+      "exactOriginalBody": true
+    }
+  ],
+  "logs": []
+}

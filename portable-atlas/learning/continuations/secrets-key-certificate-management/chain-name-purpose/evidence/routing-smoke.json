@@ -1,0 +1,380 @@
+{
+  "skillValidation": "Skill is valid!",
+  "executor": "main agent read Skill and invoked existing runner",
+  "forwardAgentEval": "not-run",
+  "smoke": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "run.py",
+        "--case",
+        "normal"
+      ],
+      "exit": 0,
+      "stdout": {
+        "input": {
+          "case": "normal",
+          "certificate": "certs/leaf-good.pem",
+          "trustAnchor": "certs/root-a.pem",
+          "expectedHostname": "api.atlas.invalid",
+          "purpose": "sslserver",
+          "verificationEpoch": 1791201600,
+          "defaultTrustDisabled": true
+        },
+        "inputSha256": "b91aa18f47a7326509a0b031eafc4c4e448a19e80526f7fc5d57971864f38773",
+        "raw": {
+          "fields": {
+            "argv": [
+              "openssl3",
+              "x509",
+              "-in",
+              "certs/leaf-good.pem",
+              "-noout",
+              "-subject",
+              "-issuer",
+              "-serial",
+              "-dates",
+              "-ext",
+              "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+            ],
+            "exit": 0,
+            "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+            "stderr": ""
+          },
+          "runs": {
+            "strict": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "-verify_hostname",
+                "api.atlas.invalid",
+                "certs/leaf-good.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-good.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            },
+            "noName": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "certs/leaf-good.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-good.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            },
+            "chainOnly": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "certs/leaf-good.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-good.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            }
+          }
+        },
+        "rawSha256": "cfcf6fb1b6c389e892b88a595add50328d155e9481c51feb885ad83a89a1ed29",
+        "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+        "tlsConnected": false,
+        "osTrustChanged": false
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "run.py"
+      ],
+      "exit": 0,
+      "stdout": {
+        "input": {
+          "case": "wrong-san",
+          "certificate": "certs/leaf-wrong-san.pem",
+          "trustAnchor": "certs/root-a.pem",
+          "expectedHostname": "api.atlas.invalid",
+          "purpose": "sslserver",
+          "verificationEpoch": 1791201600,
+          "defaultTrustDisabled": true
+        },
+        "inputSha256": "78fea0b1561ca0331890e9b58b633f52ee9f17742f64ab1540884fcb05da6d1f",
+        "raw": {
+          "fields": {
+            "argv": [
+              "openssl3",
+              "x509",
+              "-in",
+              "certs/leaf-wrong-san.pem",
+              "-noout",
+              "-subject",
+              "-issuer",
+              "-serial",
+              "-dates",
+              "-ext",
+              "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+            ],
+            "exit": 0,
+            "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=66\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:other.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+            "stderr": ""
+          },
+          "runs": {
+            "strict": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "-verify_hostname",
+                "api.atlas.invalid",
+                "certs/leaf-wrong-san.pem"
+              ],
+              "exit": 2,
+              "stdout": "",
+              "stderr": "CN=api.atlas.invalid\nerror 62 at 0 depth lookup: hostname mismatch\nerror certs/leaf-wrong-san.pem: verification failed\n",
+              "accepted": false
+            },
+            "noName": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "certs/leaf-wrong-san.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-wrong-san.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            },
+            "chainOnly": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "certs/leaf-wrong-san.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-wrong-san.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            }
+          }
+        },
+        "rawSha256": "86d5aca2b76920ddecc769657c93c5ed81d1e95172593e9b8b684e4cc52d27d5",
+        "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+        "tlsConnected": false,
+        "osTrustChanged": false
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "run.py",
+        "--case",
+        "wrong-eku"
+      ],
+      "exit": 0,
+      "stdout": {
+        "input": {
+          "case": "wrong-eku",
+          "certificate": "certs/leaf-client.pem",
+          "trustAnchor": "certs/root-a.pem",
+          "expectedHostname": "api.atlas.invalid",
+          "purpose": "sslserver",
+          "verificationEpoch": 1791201600,
+          "defaultTrustDisabled": true
+        },
+        "inputSha256": "e0263402dac851c11c9b833c9a1e50db644c81ecac5adaf69a17a96715f0b593",
+        "raw": {
+          "fields": {
+            "argv": [
+              "openssl3",
+              "x509",
+              "-in",
+              "certs/leaf-client.pem",
+              "-noout",
+              "-subject",
+              "-issuer",
+              "-serial",
+              "-dates",
+              "-ext",
+              "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+            ],
+            "exit": 0,
+            "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=67\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Client Authentication\n",
+            "stderr": ""
+          },
+          "runs": {
+            "strict": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "-verify_hostname",
+                "api.atlas.invalid",
+                "certs/leaf-client.pem"
+              ],
+              "exit": 2,
+              "stdout": "",
+              "stderr": "CN=api.atlas.invalid\nerror 26 at 0 depth lookup: unsuitable certificate purpose\nerror certs/leaf-client.pem: verification failed\n",
+              "accepted": false
+            },
+            "noName": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "-purpose",
+                "sslserver",
+                "certs/leaf-client.pem"
+              ],
+              "exit": 2,
+              "stdout": "",
+              "stderr": "CN=api.atlas.invalid\nerror 26 at 0 depth lookup: unsuitable certificate purpose\nerror certs/leaf-client.pem: verification failed\n",
+              "accepted": false
+            },
+            "chainOnly": {
+              "argv": [
+                "openssl3",
+                "verify",
+                "-no-CAfile",
+                "-no-CApath",
+                "-no-CAstore",
+                "-CAfile",
+                "certs/root-a.pem",
+                "-attime",
+                "1791201600",
+                "-x509_strict",
+                "-check_ss_sig",
+                "certs/leaf-client.pem"
+              ],
+              "exit": 0,
+              "stdout": "certs/leaf-client.pem: OK\n",
+              "stderr": "",
+              "accepted": true
+            }
+          }
+        },
+        "rawSha256": "2678c2adec4d03534b9586a48faa08ecfe3f33797cb0ac69e5a81979f646aabc",
+        "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+        "tlsConnected": false,
+        "osTrustChanged": false
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "run.py",
+        "--mode",
+        "tls"
+      ],
+      "exit": 2,
+      "stdout": {
+        "status": "rejected",
+        "error": "unsupported case/mode; offline fixed fixtures only"
+      },
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "run.py",
+        "--case",
+        "real-server"
+      ],
+      "exit": 2,
+      "stdout": {
+        "status": "rejected",
+        "error": "unsupported case/mode; offline fixed fixtures only"
+      },
+      "stderr": ""
+    }
+  ]
+}

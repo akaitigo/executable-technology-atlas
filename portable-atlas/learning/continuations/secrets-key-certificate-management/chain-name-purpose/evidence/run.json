@@ -1,0 +1,1181 @@
+{
+  "recordedAt": "2026-10-05T09:41:42.472965+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "darwin",
+    "toolProbe": {
+      "version": {
+        "argv": [
+          "openssl3",
+          "version"
+        ],
+        "exit": 0,
+        "stdout": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)\n",
+        "stderr": ""
+      },
+      "verifyHelp": {
+        "argv": [
+          "openssl3",
+          "verify",
+          "-help"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": "Usage: verify [options] [cert...]\n\nGeneral options:\n -help                 Display this summary\n -engine val           Use engine, possibly a hardware device\n -verbose              Print extra information about the operations being performed.\n -nameopt val          Certificate subject/issuer name printing options\n\nCertificate chain options:\n -trusted infile       A file of trusted certificates\n -CAfile infile        A file of trusted certificates\n -CApath dir           A directory of files with trusted certificates\n -CAstore uri          URI to a store of trusted certificates\n -no-CAfile            Do not load the default trusted certificates file\n -no-CApath            Do not load trusted certificates from the default directory\n -no-CAstore           Do not load trusted certificates from the default certificates store\n -untrusted infile     A file of untrusted certificates\n -CRLfile infile       File containing one or more CRL's (in PEM format) to load\n -crl_download         Try downloading CRL information for certificates via their CDP entries\n -show_chain           Display information about the certificate chain\n\nValidation options:\n -policy val           adds policy to the acceptable policy set\n -purpose val          certificate chain purpose\n -verify_name val      verification policy name\n -verify_depth int     chain depth limit\n -auth_level int       chain authentication security level\n -attime intmax        verification epoch time\n -verify_hostname val  expected peer hostname\n -verify_email val     expected peer email\n -verify_ip val        expected peer IP address\n -ignore_critical      permit unhandled critical extensions\n -issuer_checks        (deprecated)\n -crl_check            check leaf certificate revocation\n -crl_check_all        check full chain revocation\n -policy_check         perform rfc5280 policy checks\n -explicit_policy      set policy variable require-explicit-policy\n -inhibit_any          set policy variable inhibit-any-policy\n -inhibit_map          set policy variable inhibit-policy-mapping\n -x509_strict          disable certificate compatibility work-arounds\n -extended_crl         enable extended CRL features\n -use_deltas           use delta CRLs\n -policy_print         print policy processing diagnostics\n -check_ss_sig         check root CA self-signatures\n -trusted_first        search trust store first (default)\n -suiteB_128_only      Suite B 128-bit-only mode\n -suiteB_128           Suite B 128-bit mode allowing 192-bit algorithms\n -suiteB_192           Suite B 192-bit-only mode\n -partial_chain        accept chains anchored by intermediate trust-store CAs\n -no_alt_chains        (deprecated)\n -no_check_time        ignore certificate validity time\n -allow_proxy_certs    allow the use of proxy certificates\n -vfyopt val           Verification parameter in n:v form\n\nProvider options:\n -provider-path val    Provider load path (must be before 'provider' argument if required)\n -provider val         Provider to load (can be specified multiple times)\n -provparam val        Set a provider key-value parameter\n -propquery val        Property query used when fetching algorithms\n\nParameters:\n cert                  Certificate(s) to verify (optional; stdin used otherwise)\n\nRecognized certificate chain purposes:\n  sslclient        SSL client\n  sslserver        SSL server\n  nssslserver      Netscape SSL server\n  smimesign        S/MIME signing\n  smimeencrypt     S/MIME encryption\n  crlsign          CRL signing\n  any              Any Purpose\n  ocsphelper       OCSP helper\n  timestampsign    Time Stamp signing\n  codesign         Code signing\nRecognized certificate policy names:\n  code_sign\n  default\n  pkcs7\n  smime_sign\n  ssl_client\n  ssl_server\n"
+      },
+      "x509Help": {
+        "argv": [
+          "openssl3",
+          "x509",
+          "-help"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": "Usage: x509 [options]\n\nGeneral options:\n -help                      Display this summary\n -in infile                 Certificate input, or CSR input file with -req (default stdin)\n -passin val                Private key and cert file pass-phrase source\n -new                       Generate a certificate from scratch\n -x509toreq                 Output a certification request (rather than a certificate)\n -req                       Input is a CSR file (rather than a certificate)\n -copy_extensions val       copy extensions when converting from CSR to x509 or vice versa\n -inform format             CSR input format to use (PEM or DER; by default try PEM first)\n -vfyopt val                CSR verification parameter in n:v form\n -key val                   Key for signing, and to include unless using -force_pubkey\n -signkey val               Same as -key\n -keyform PEM|DER|ENGINE    Key input format (ENGINE, other values ignored)\n -out outfile               Output file - default stdout\n -outform format            Output format (DER or PEM) - default PEM\n -nocert                    No cert output (except for requested printing)\n -noout                     No output (except for requested printing)\n\nCertificate printing options:\n -text                      Print the certificate in text form\n -dateopt val               Datetime format used for printing. (rfc_822/iso_8601). Default is rfc_822.\n -certopt val               Various certificate text printing options\n -fingerprint               Print the certificate fingerprint\n -alias                     Print certificate alias\n -serial                    Print serial number value\n -startdate                 Print the notBefore field\n -enddate                   Print the notAfter field\n -dates                     Print both notBefore and notAfter fields\n -subject                   Print subject DN\n -issuer                    Print issuer DN\n -nameopt val               Certificate subject/issuer name printing options\n -email                     Print email address(es)\n -hash                      Synonym for -subject_hash (for backward compat)\n -subject_hash              Print subject hash value\n -subject_hash_old          Print old-style (MD5) subject hash value\n -issuer_hash               Print issuer hash value\n -issuer_hash_old           Print old-style (MD5) issuer hash value\n -ext val                   Restrict which X.509 extensions to print and/or copy\n -ocspid                    Print OCSP hash values for the subject name and public key\n -ocsp_uri                  Print OCSP Responder URL(s)\n -purpose                   Print out certificate purposes\n -pubkey                    Print the public key in PEM format\n -modulus                   Print the RSA key modulus\n -multi                     Process multiple certificates\n\nCertificate checking options:\n -checkend intmax           Check whether cert expires in the next arg seconds\n                            Exit 1 (failure) if so, 0 if not\n -checkhost val             Check certificate matches host\n -checkemail val            Check certificate matches email\n -checkip val               Check certificate matches ipaddr\n\nCertificate output options:\n -set_serial val            Serial number to use, overrides -CAserial\n -next_serial               Increment current certificate serial number\n -not_before val            [CC]YYMMDDHHMMSSZ value for notBefore certificate field\n -not_after val             [CC]YYMMDDHHMMSSZ value for notAfter certificate field, overrides -days\n -days int                  Number of days until newly generated certificate expires - default 30\n -preserve_dates            Preserve existing validity dates\n -set_issuer val            Set or override certificate issuer\n -set_subject val           Set or override certificate subject (and issuer)\n -subj val                  Alias for -set_subject\n -force_pubkey infile       Key to be placed in new certificate or certificate request\n -clrext                    Do not take over any extensions from the source certificate or request\n -extfile infile            Config file with X509V3 extensions to add\n -extensions val            Section of extfile to use - default: unnamed section\n -sigopt val                Signature parameter, in n:v form\n -badsig                    Corrupt last byte of certificate signature (for test)\n -*                         Any supported digest, used for signing and printing\n\nMicro-CA options:\n -CA infile                 Use the given CA certificate, conflicts with -key\n -CAform PEM|DER            CA cert format (PEM/DER/P12); has no effect\n -CAkey val                 The corresponding CA key; default is -CA arg\n -CAkeyform PEM|DER|ENGINE  CA key format (ENGINE, other values ignored)\n -CAserial val              File that keeps track of CA-generated serial number\n -CAcreateserial            Create CA serial number file if it does not exist\n\nCertificate trust output options:\n -trustout                  Mark certificate PEM output as trusted\n -setalias val              Set certificate alias (nickname)\n -clrtrust                  Clear all trusted purposes\n -addtrust val              Trust certificate for a given purpose\n -clrreject                 Clears all the prohibited or rejected uses of the certificate\n -addreject val             Reject certificate for a given purpose\n\nRandom state options:\n -rand val                  Load the given file(s) into the random number generator\n -writerand outfile         Write random data to the specified file\n -engine val                Use engine, possibly a hardware device\n\nProvider options:\n -provider-path val         Provider load path (must be before 'provider' argument if required)\n -provider val              Provider to load (can be specified multiple times)\n -provparam val             Set a provider key-value parameter\n -propquery val             Property query used when fetching algorithms\n"
+      },
+      "defaultTool": "LibreSSL 3.3.6; verify help lacks -verify_hostname; not used"
+    }
+  },
+  "measurements": {
+    "caseCount": 9,
+    "verifyCount": 27,
+    "unsupportedCount": 2,
+    "omissionCounterexamples": 2,
+    "results": [
+      {
+        "case": "normal",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "midday",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": true,
+          "strict": true,
+          "noName": true,
+          "chainOnly": true,
+          "error": null
+        },
+        "actual": {
+          "input": {
+            "case": "normal",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791201600,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "b91aa18f47a7326509a0b031eafc4c4e448a19e80526f7fc5d57971864f38773",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              }
+            }
+          },
+          "rawSha256": "cfcf6fb1b6c389e892b88a595add50328d155e9481c51feb885ad83a89a1ed29",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "wrong-san",
+        "expected": {
+          "leaf": "wrong-san",
+          "ca": "a",
+          "time": "midday",
+          "chain": true,
+          "name": false,
+          "purpose": true,
+          "timeValid": true,
+          "strict": false,
+          "noName": true,
+          "chainOnly": true,
+          "error": 62
+        },
+        "actual": {
+          "input": {
+            "case": "wrong-san",
+            "certificate": "certs/leaf-wrong-san.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791201600,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "78fea0b1561ca0331890e9b58b633f52ee9f17742f64ab1540884fcb05da6d1f",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-wrong-san.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=66\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:other.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-wrong-san.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 62 at 0 depth lookup: hostname mismatch\nerror certs/leaf-wrong-san.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-wrong-san.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-wrong-san.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-wrong-san.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-wrong-san.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              }
+            }
+          },
+          "rawSha256": "86d5aca2b76920ddecc769657c93c5ed81d1e95172593e9b8b684e4cc52d27d5",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "untrusted",
+        "expected": {
+          "leaf": "good",
+          "ca": "b",
+          "time": "midday",
+          "chain": false,
+          "name": true,
+          "purpose": true,
+          "timeValid": true,
+          "strict": false,
+          "noName": false,
+          "chainOnly": false,
+          "error": 20
+        },
+        "actual": {
+          "input": {
+            "case": "untrusted",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-b.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791201600,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "d8629bb04a3939ec68362a4f6791e6e62b10ba983c44f4352c268c190519358d",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-b.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 20 at 0 depth lookup: unable to get local issuer certificate\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-b.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 20 at 0 depth lookup: unable to get local issuer certificate\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-b.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 20 at 0 depth lookup: unable to get local issuer certificate\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              }
+            }
+          },
+          "rawSha256": "38b381ecd28e7bec48246ac6ec51245c83dabcdc2ec605d27a2d69e305f3e856",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "wrong-eku",
+        "expected": {
+          "leaf": "client",
+          "ca": "a",
+          "time": "midday",
+          "chain": true,
+          "name": true,
+          "purpose": false,
+          "timeValid": true,
+          "strict": false,
+          "noName": false,
+          "chainOnly": true,
+          "error": 26
+        },
+        "actual": {
+          "input": {
+            "case": "wrong-eku",
+            "certificate": "certs/leaf-client.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791201600,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "e0263402dac851c11c9b833c9a1e50db644c81ecac5adaf69a17a96715f0b593",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-client.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=67\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Client Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-client.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 26 at 0 depth lookup: unsuitable certificate purpose\nerror certs/leaf-client.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-client.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 26 at 0 depth lookup: unsuitable certificate purpose\nerror certs/leaf-client.pem: verification failed\n",
+                "accepted": false
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791201600",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-client.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-client.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              }
+            }
+          },
+          "rawSha256": "2678c2adec4d03534b9586a48faa08ecfe3f33797cb0ac69e5a81979f646aabc",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "before-start",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "before-start",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": false,
+          "strict": false,
+          "noName": false,
+          "chainOnly": false,
+          "error": 9
+        },
+        "actual": {
+          "input": {
+            "case": "before-start",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791158399,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "2299e584affab9c527357acca54e39480a81528fdf771c249def9e4d031c328c",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158399",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 9 at 0 depth lookup: certificate is not yet valid or the system clock is incorrect\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158399",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 9 at 0 depth lookup: certificate is not yet valid or the system clock is incorrect\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158399",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 9 at 0 depth lookup: certificate is not yet valid or the system clock is incorrect\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              }
+            }
+          },
+          "rawSha256": "ea339ade2f4c8e924f75235cca75ede019faf4848d91688f55ef38f84b39b416",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "at-start",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "start",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": true,
+          "strict": true,
+          "noName": true,
+          "chainOnly": true,
+          "error": null
+        },
+        "actual": {
+          "input": {
+            "case": "at-start",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791158400,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "b39c90c04227fe3d2dab4a39c9fcc5ccdca21c2a6d4b33bffd38f5334e92eb4c",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158400",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158400",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791158400",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              }
+            }
+          },
+          "rawSha256": "98f35c32cfe7081b2a7c48901803d555ccbfac9af1fd51d899e41a746b2dc00f",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "before-end",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "before-end",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": true,
+          "strict": true,
+          "noName": true,
+          "chainOnly": true,
+          "error": null
+        },
+        "actual": {
+          "input": {
+            "case": "before-end",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791244799,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "3d2be6eb35920688d9982d1871da0b015c12cfc0cf7e43b68ac6840d5d53ca9c",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244799",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244799",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244799",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 0,
+                "stdout": "certs/leaf-good.pem: OK\n",
+                "stderr": "",
+                "accepted": true
+              }
+            }
+          },
+          "rawSha256": "c4c4b4d158908972af65338060191e40650efeefb2f82ff3f9017dc30e0b677a",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "at-end",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "end",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": false,
+          "strict": false,
+          "noName": false,
+          "chainOnly": false,
+          "error": 10
+        },
+        "actual": {
+          "input": {
+            "case": "at-end",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791244800,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "287a15fc10461b1666bbd6b518e1336612d94f11c2e1cadf7b4b370a1574dcc6",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244800",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244800",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244800",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              }
+            }
+          },
+          "rawSha256": "6cab0a4b364c59e9d1e6df1b39d0e6a86878d631c23379d24917347ec085ed1e",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      },
+      {
+        "case": "after-end",
+        "expected": {
+          "leaf": "good",
+          "ca": "a",
+          "time": "after-end",
+          "chain": true,
+          "name": true,
+          "purpose": true,
+          "timeValid": false,
+          "strict": false,
+          "noName": false,
+          "chainOnly": false,
+          "error": 10
+        },
+        "actual": {
+          "input": {
+            "case": "after-end",
+            "certificate": "certs/leaf-good.pem",
+            "trustAnchor": "certs/root-a.pem",
+            "expectedHostname": "api.atlas.invalid",
+            "purpose": "sslserver",
+            "verificationEpoch": 1791244801,
+            "defaultTrustDisabled": true
+          },
+          "inputSha256": "a52298fa1ad16fb5d7743366ae98689d5bf0c7dca3459d7e4464e38a832d9a7d",
+          "raw": {
+            "fields": {
+              "argv": [
+                "openssl3",
+                "x509",
+                "-in",
+                "certs/leaf-good.pem",
+                "-noout",
+                "-subject",
+                "-issuer",
+                "-serial",
+                "-dates",
+                "-ext",
+                "subjectAltName,extendedKeyUsage,basicConstraints,keyUsage"
+              ],
+              "exit": 0,
+              "stdout": "subject=CN=api.atlas.invalid\nissuer=CN=Atlas Dummy Root A\nserial=65\nnotBefore=Oct  5 00:00:00 2026 GMT\nnotAfter=Oct  6 00:00:00 2026 GMT\nX509v3 Basic Constraints: critical\n    CA:FALSE\nX509v3 Key Usage: critical\n    Digital Signature\nX509v3 Subject Alternative Name: \n    DNS:api.atlas.invalid\nX509v3 Extended Key Usage: \n    TLS Web Server Authentication\n",
+              "stderr": ""
+            },
+            "runs": {
+              "strict": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244801",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "-verify_hostname",
+                  "api.atlas.invalid",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "noName": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244801",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "-purpose",
+                  "sslserver",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              },
+              "chainOnly": {
+                "argv": [
+                  "openssl3",
+                  "verify",
+                  "-no-CAfile",
+                  "-no-CApath",
+                  "-no-CAstore",
+                  "-CAfile",
+                  "certs/root-a.pem",
+                  "-attime",
+                  "1791244801",
+                  "-x509_strict",
+                  "-check_ss_sig",
+                  "certs/leaf-good.pem"
+                ],
+                "exit": 2,
+                "stdout": "",
+                "stderr": "CN=api.atlas.invalid\nerror 10 at 0 depth lookup: certificate has expired\nerror certs/leaf-good.pem: verification failed\n",
+                "accepted": false
+              }
+            }
+          },
+          "rawSha256": "6c30f5033eee90ef2c9dd6a6f46a8d2bfc9a1e4002a7f964513a442ea9dbceeb",
+          "version": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)",
+          "tlsConnected": false,
+          "osTrustChanged": false
+        }
+      }
+    ],
+    "rootFields": [
+      {
+        "argv": [
+          "openssl3",
+          "x509",
+          "-in",
+          "certs/root-a.pem",
+          "-noout",
+          "-subject",
+          "-issuer",
+          "-dates",
+          "-ext",
+          "basicConstraints,keyUsage"
+        ],
+        "exit": 0,
+        "stdout": "subject=CN=Atlas Dummy Root A\nissuer=CN=Atlas Dummy Root A\nnotBefore=Jan  1 00:00:00 2026 GMT\nnotAfter=Jan  1 00:00:00 2030 GMT\nX509v3 Basic Constraints: critical\n    CA:TRUE, pathlen:0\nX509v3 Key Usage: critical\n    Certificate Sign, CRL Sign\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "openssl3",
+          "x509",
+          "-in",
+          "certs/root-b.pem",
+          "-noout",
+          "-subject",
+          "-issuer",
+          "-dates",
+          "-ext",
+          "basicConstraints,keyUsage"
+        ],
+        "exit": 0,
+        "stdout": "subject=CN=Atlas Dummy Root B\nissuer=CN=Atlas Dummy Root B\nnotBefore=Jan  1 00:00:00 2026 GMT\nnotAfter=Jan  1 00:00:00 2030 GMT\nX509v3 Basic Constraints: critical\n    CA:TRUE, pathlen:0\nX509v3 Key Usage: critical\n    Certificate Sign, CRL Sign\n",
+        "stderr": ""
+      }
+    ],
+    "unsupported": [
+      {
+        "case": "real-server",
+        "mode": "offline",
+        "error": "unsupported case/mode; offline fixed fixtures only"
+      },
+      {
+        "case": "normal",
+        "mode": "tls",
+        "error": "unsupported case/mode; offline fixed fixtures only"
+      }
+    ],
+    "sources": {
+      "verify": "https://docs.openssl.org/3.6/man1/openssl-verification-options/",
+      "identity": "https://www.rfc-editor.org/rfc/rfc9525.html",
+      "path": "https://www.rfc-editor.org/rfc/rfc5280.html",
+      "time": "https://docs.openssl.org/3.6/man3/X509_cmp_time/"
+    }
+  }
+}

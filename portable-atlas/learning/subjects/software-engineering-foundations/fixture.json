@@ -1,0 +1,12 @@
+{
+  "graph": {"config": [], "price": ["config"], "invoice": ["price"], "report": ["invoice", "price"], "audit": []},
+  "requirements": {
+    "R-config": {"module": "config", "test": "T-config", "description": "税率は0–100の整数"},
+    "R-price": {"module": "price", "test": "T-price", "description": "税抜100の税込価格は110"},
+    "R-invoice": {"module": "invoice", "test": "T-invoice", "description": "1件の請求額は110"},
+    "R-report": {"module": "report", "test": "T-report", "description": "1件の売上集計は110"},
+    "R-audit": {"module": "audit", "test": "T-audit", "description": "監査記録はok"}
+  },
+  "before": {"config": "tax10", "price": "correct", "invoice": "correct", "report": "correct", "audit": "ok"},
+  "changes": {"config": "tax20", "price": "ignore-tax", "invoice": "double", "report": "zero", "audit": "broken"}
+}

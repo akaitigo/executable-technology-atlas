@@ -1,0 +1,135 @@
+{
+  "kind": "hand-computed-before-implementation",
+  "model": "single-server non-preemptive, all arrival=0, service A=5/B=1/C=1, no overhead, input tie order ABC",
+  "time_unit": "model tick, not measured seconds",
+  "identity_order": [
+    "A",
+    "B",
+    "C"
+  ],
+  "cases": [
+    {
+      "order": "ABC",
+      "start_by_ABC": [
+        0,
+        5,
+        6
+      ],
+      "finish_by_ABC": [
+        5,
+        6,
+        7
+      ],
+      "sum_completion": 18,
+      "mean_completion": "6",
+      "mean_wait": "11/3",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    },
+    {
+      "order": "ACB",
+      "start_by_ABC": [
+        0,
+        6,
+        5
+      ],
+      "finish_by_ABC": [
+        5,
+        7,
+        6
+      ],
+      "sum_completion": 18,
+      "mean_completion": "6",
+      "mean_wait": "11/3",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    },
+    {
+      "order": "BAC",
+      "start_by_ABC": [
+        1,
+        0,
+        6
+      ],
+      "finish_by_ABC": [
+        6,
+        1,
+        7
+      ],
+      "sum_completion": 14,
+      "mean_completion": "14/3",
+      "mean_wait": "7/3",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    },
+    {
+      "order": "BCA",
+      "start_by_ABC": [
+        2,
+        0,
+        1
+      ],
+      "finish_by_ABC": [
+        7,
+        1,
+        2
+      ],
+      "sum_completion": 10,
+      "mean_completion": "10/3",
+      "mean_wait": "1",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    },
+    {
+      "order": "CAB",
+      "start_by_ABC": [
+        1,
+        6,
+        0
+      ],
+      "finish_by_ABC": [
+        6,
+        7,
+        1
+      ],
+      "sum_completion": 14,
+      "mean_completion": "14/3",
+      "mean_wait": "7/3",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    },
+    {
+      "order": "CBA",
+      "start_by_ABC": [
+        2,
+        1,
+        0
+      ],
+      "finish_by_ABC": [
+        7,
+        2,
+        1
+      ],
+      "sum_completion": 10,
+      "mean_completion": "10/3",
+      "mean_wait": "1",
+      "max_completion": 7,
+      "makespan": 7,
+      "throughput": "3/7"
+    }
+  ],
+  "derivation": [
+    "ABC: completion 5+6+7=18; 18/3=6; wait (0+5+6)/3=11/3.",
+    "ACB exchanges the equal-length B and C; sum remains 18.",
+    "BAC: completion by identity A=6, B=1, C=7; sum 14; mean 14/3.",
+    "CAB exchanges B and C in BAC; sum remains 14.",
+    "BCA: completion by identity A=7, B=1, C=2; sum 10; mean 10/3; wait (2+0+1)/3=1.",
+    "CBA exchanges B and C in BCA; sum remains 10.",
+    "The longest completion and makespan are 7 in all six orders; A completes at 5 in ABC and 7 in BCA."
+  ]
+}

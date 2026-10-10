@@ -1,0 +1,1432 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "verify.py",
+    "--record",
+    "attempt-01"
+  ],
+  "utc": "2026-10-05T12:58:20.456496+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "inputs": {
+    "contract": {
+      "time": "integer ticks 0..20; valid_from <= t < valid_to",
+      "amount": "integer 0..1000",
+      "version": "unique integer 1..32",
+      "scope": "one fictional natural key; each order id unique"
+    },
+    "cases": [
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            10
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "boundary",
+        "method": "asof"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            10
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "latest-fault",
+        "method": "latest"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            9
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "gap",
+        "method": "asof"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            10
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c9",
+            10,
+            50
+          ]
+        ],
+        "id": "unknown-key",
+        "method": "asof"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            11
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "overlap",
+        "method": "asof"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            0
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "invalid-interval",
+        "method": "asof"
+      },
+      {
+        "versions": [
+          [
+            1,
+            "c1",
+            "north",
+            0,
+            10
+          ],
+          [
+            2,
+            "c1",
+            "south",
+            10,
+            20
+          ]
+        ],
+        "orders": [
+          [
+            "o1",
+            "c1",
+            9,
+            100
+          ],
+          [
+            "o2",
+            "c1",
+            10,
+            50
+          ]
+        ],
+        "id": "execution-failure",
+        "method": "broken"
+      }
+    ]
+  },
+  "source_hashes": {
+    "fixture.json": "6caeae95236fadae000ac1092b22cade51e164ddb600172d1104f2e0394027b7",
+    "model.py": "ae243e94b45a6683db92b57e676dd5aad602cebce861eb74cb1e886381d7109c",
+    "oracle.py": "1ac85d46eea3e2692e489e131c7a3930369bc3bbb67df8a6698f28522ee03d10",
+    "verify.py": "44cfcb76f3a43754130958f5047874ccc5c1ff221423fa1586076b2c635614e0",
+    "route.py": "3ab4681db4ec939595dda2702ca857b8ab89c8e6d63028d41883740c06cbd19d",
+    "serve.py": "f41f177f6563f7e43800b04be0e213473ec58ce3066b5754d17b710af606799c",
+    "index.html": "a08ae8a2727a8fb146d706a035a94353aff430c02c87d46913c3d00d04015f14",
+    "source.html": "80f7bfbd1be0225286fa6378bd894f5feff0e17c05d0b334e73821708fde1c49",
+    "README.md": "76180d0d3c5dc2559e954430eb995556655d1424430dc1f239ccf7babc001037",
+    "VERIFICATION.md": "f14e74a90c8d59ff664c538f6abac97069dabf04de706ab622723eba589cdd33",
+    "sources.json": "e617dd8c329e4fe035550972fd6132e6823be835d4634d38d59f3abf5c03ecff",
+    "coverage.json": "cc7c5f1fa7e7986448cb1662971d00397d9f807f5ecc532245840656498e5b35",
+    "skills/as-of-history/SKILL.md": "21935e1be6eabad116bbee18ffa73e1d18ea993a31a44d847b884a75c70b0d48"
+  },
+  "exit_status": 0,
+  "results": {
+    "boundary": {
+      "status": "OK",
+      "reason": "",
+      "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+      "rows": [
+        [
+          "o1",
+          "c1",
+          9,
+          100,
+          1,
+          "north"
+        ],
+        [
+          "o2",
+          "c1",
+          10,
+          50,
+          2,
+          "south"
+        ]
+      ],
+      "orders": [
+        {
+          "id": "o1",
+          "time": 9,
+          "amount": 100,
+          "classification": "MATCHED",
+          "versions": [
+            1
+          ],
+          "regions": [
+            "north"
+          ]
+        },
+        {
+          "id": "o2",
+          "time": 10,
+          "amount": 50,
+          "classification": "MATCHED",
+          "versions": [
+            2
+          ],
+          "regions": [
+            "south"
+          ]
+        }
+      ],
+      "aggregate": {
+        "north": 100,
+        "south": 50
+      }
+    },
+    "latest-fault": {
+      "status": "OK",
+      "reason": "",
+      "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from=(SELECT MAX(x.valid_from) FROM dimension x WHERE x.customer=o.customer) ORDER BY o.id,d.version",
+      "rows": [
+        [
+          "o1",
+          "c1",
+          9,
+          100,
+          2,
+          "south"
+        ],
+        [
+          "o2",
+          "c1",
+          10,
+          50,
+          2,
+          "south"
+        ]
+      ],
+      "orders": [
+        {
+          "id": "o1",
+          "time": 9,
+          "amount": 100,
+          "classification": "MATCHED",
+          "versions": [
+            2
+          ],
+          "regions": [
+            "south"
+          ]
+        },
+        {
+          "id": "o2",
+          "time": 10,
+          "amount": 50,
+          "classification": "MATCHED",
+          "versions": [
+            2
+          ],
+          "regions": [
+            "south"
+          ]
+        }
+      ],
+      "aggregate": {
+        "south": 150
+      }
+    },
+    "gap": {
+      "status": "OK",
+      "reason": "",
+      "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+      "rows": [
+        [
+          "o1",
+          "c1",
+          9,
+          100,
+          null,
+          null
+        ],
+        [
+          "o2",
+          "c1",
+          10,
+          50,
+          2,
+          "south"
+        ]
+      ],
+      "orders": [
+        {
+          "id": "o1",
+          "time": 9,
+          "amount": 100,
+          "classification": "GAP",
+          "versions": [],
+          "regions": []
+        },
+        {
+          "id": "o2",
+          "time": 10,
+          "amount": 50,
+          "classification": "MATCHED",
+          "versions": [
+            2
+          ],
+          "regions": [
+            "south"
+          ]
+        }
+      ],
+      "aggregate": {
+        "GAP": 100,
+        "south": 50
+      }
+    },
+    "unknown-key": {
+      "status": "OK",
+      "reason": "",
+      "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+      "rows": [
+        [
+          "o1",
+          "c1",
+          9,
+          100,
+          1,
+          "north"
+        ],
+        [
+          "o2",
+          "c9",
+          10,
+          50,
+          null,
+          null
+        ]
+      ],
+      "orders": [
+        {
+          "id": "o1",
+          "time": 9,
+          "amount": 100,
+          "classification": "MATCHED",
+          "versions": [
+            1
+          ],
+          "regions": [
+            "north"
+          ]
+        },
+        {
+          "id": "o2",
+          "time": 10,
+          "amount": 50,
+          "classification": "UNKNOWN_KEY",
+          "versions": [],
+          "regions": []
+        }
+      ],
+      "aggregate": {
+        "north": 100,
+        "UNKNOWN_KEY": 50
+      }
+    },
+    "overlap": {
+      "status": "REFUSED_MULTIPLE_MATCH",
+      "reason": "multiple versions for an order",
+      "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+      "rows": [
+        [
+          "o1",
+          "c1",
+          9,
+          100,
+          1,
+          "north"
+        ],
+        [
+          "o2",
+          "c1",
+          10,
+          50,
+          1,
+          "north"
+        ],
+        [
+          "o2",
+          "c1",
+          10,
+          50,
+          2,
+          "south"
+        ]
+      ],
+      "orders": [
+        {
+          "id": "o1",
+          "time": 9,
+          "amount": 100,
+          "classification": "MATCHED",
+          "versions": [
+            1
+          ],
+          "regions": [
+            "north"
+          ]
+        },
+        {
+          "id": "o2",
+          "time": 10,
+          "amount": 50,
+          "classification": "MULTIPLE_MATCH",
+          "versions": [
+            1,
+            2
+          ],
+          "regions": [
+            "north",
+            "south"
+          ]
+        }
+      ],
+      "aggregate": null
+    },
+    "invalid-interval": {
+      "status": "REFUSED_INVALID_INPUT",
+      "reason": "interval",
+      "sql": null,
+      "rows": [],
+      "orders": [],
+      "aggregate": null
+    },
+    "execution-failure": {
+      "status": "EXECUTION_FAILURE",
+      "reason": "OperationalError: no such column: absent_column",
+      "sql": "SELECT absent_column FROM orders",
+      "rows": [],
+      "orders": [],
+      "aggregate": null
+    }
+  },
+  "ticks": [
+    {
+      "tick": 0,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            0,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 0,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            1,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 1,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            2,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 2,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            3,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 3,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            4,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 4,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            5,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 5,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            6,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 6,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            7,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 7,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            8,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 8,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 9,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            9,
+            1,
+            1,
+            "north"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 9,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              1
+            ],
+            "regions": [
+              "north"
+            ]
+          }
+        ],
+        "aggregate": {
+          "north": 1
+        }
+      }
+    },
+    {
+      "tick": 10,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            10,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 10,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 11,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            11,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 11,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 12,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            12,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 12,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 13,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            13,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 13,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 14,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            14,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 14,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 15,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            15,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 15,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 16,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            16,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 16,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 17,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            17,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 17,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 18,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            18,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 18,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 19,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            19,
+            1,
+            2,
+            "south"
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 19,
+            "amount": 1,
+            "classification": "MATCHED",
+            "versions": [
+              2
+            ],
+            "regions": [
+              "south"
+            ]
+          }
+        ],
+        "aggregate": {
+          "south": 1
+        }
+      }
+    },
+    {
+      "tick": 20,
+      "result": {
+        "status": "OK",
+        "reason": "",
+        "sql": "SELECT o.id,o.customer,o.t,o.amount,d.version,d.region FROM orders o LEFT JOIN dimension d ON o.customer=d.customer AND d.valid_from<=o.t AND o.t<d.valid_to ORDER BY o.id,d.version",
+        "rows": [
+          [
+            "probe",
+            "c1",
+            20,
+            1,
+            null,
+            null
+          ]
+        ],
+        "orders": [
+          {
+            "id": "probe",
+            "time": 20,
+            "amount": 1,
+            "classification": "GAP",
+            "versions": [],
+            "regions": []
+          }
+        ],
+        "aggregate": {
+          "GAP": 1
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "label": "negative-time",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "time",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "large-time",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "time",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "bool-time",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "time",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "negative-amount",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "amount",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "bool-amount",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "amount",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "duplicate-order",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "order id",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "duplicate-version",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "version",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "unknown-method",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "method",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "empty-orders",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "empty orders",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    },
+    {
+      "label": "reverse-interval",
+      "result": {
+        "status": "REFUSED_INVALID_INPUT",
+        "reason": "interval",
+        "sql": null,
+        "rows": [],
+        "orders": [],
+        "aggregate": null
+      }
+    }
+  ],
+  "mutations": [
+    {
+      "label": "latest-pollution",
+      "rejected": true
+    },
+    {
+      "label": "missing-order",
+      "rejected": true
+    },
+    {
+      "label": "wrong-version",
+      "rejected": true
+    },
+    {
+      "label": "gap-erased",
+      "rejected": true
+    },
+    {
+      "label": "overlap-success",
+      "rejected": true
+    },
+    {
+      "label": "failure-normalized",
+      "rejected": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# 検証記録の読み方
+
+実装前hand-oracleに50条件のcounts/ID/分母/Fraction平均/nearest-rank/biasを固定。中央も独立Fractionで50条件を検算しています。教学の全既知値とcollector未知を別fieldへ保持します。
+
+CLI初回recordは50条件・14型/有限契約拒否・8fault（0補完、seen分母変更、空0化、pending早期欠落、欠落品質失敗、補間p50、p95平均、Oracle leak）を保存します。通常verify/routeはmemory-only再評価と保存hash照合だけでファイルを変更しません。serverはsource/保存記録のread-only提供とメモリ評価。実collectorを実行していません。
+
+早期独立レビューでscenario list/objectがdictionary membershipへ渡されTypeErrorになる問題を検出。実際に旧sourceを実行して例外を保存し、旧modelとscenario-schema-attempt-01.jsonを保持して文字列型を先に拒否するよう修正しました。null/number/boolも検査しました。この追加型契約の検査は早期修正後で、初回手表へ後付けして実装前と偽っていません。
+
+実ブラウザで全50条件のcollector viewと教学比較を読み、予想全5値・条件3種類変更、明示reset、旧応答、JSON/型拒否、source、transport failureを検査します。browser-cases.jsonはDOM rawのcompact実観測を手で転記し、CLIの時刻をbrowser時刻へ流用しません。captureがツール表示のみで保存fileを得られなければsaved=false/path/hash=nullとします。
+
+初回bindがsandboxで拒否された場合はexit/errnoを保持し、workspace pathだけ<module>へ置換したstderr excerptとして記録。未加工tool出力はこの制作chat履歴に保持。自分専用動的listener/tabだけを終了し、既存53478/60285/50835や他ownerの資源に操作しません。sealは一度、初回receiptは別保存。最後に通常verify/route/Skill/private-path検索前後の全SHA/mtimeを比較しproofを書きます。Core/global、install、公開、commit/pushは未実行です。
+
+既存QEのREADME/COVERAGEは専有serverのexact allowlist `/reference` を通して読み取り提供し、独自source viewerで9入口を実確認しました。参照ファイルがなくても模型評価は独立して動き、参照だけ404/READ_FAILUREになります。実IABの直接JSON `/evaluate` navigationはERR_BLOCKED_BY_CLIENTだったので成功へ数えません。通常UIのAPI評価50件・form拒否8件は成功。scenario list/object/null/number/boolは別に標準ライブラリHTTPで200+REFUSED_INPUTを確認し、ブラウザUIの代替証拠とは呼びません。教学scheduleのnullは到着なし/通知予定なしというfixture契約として表示し、collector側nullの不明と分けます。

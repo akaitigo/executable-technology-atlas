@@ -1,0 +1,233 @@
+Browser tab: 2, Title: "pipe EOFとFDの寿命 — OS教材", URL: "http://127.0.0.1:53091/index.html".
+0 AXWebArea pipe EOFとFDの寿命 — OS教材, URL: 127.0.0.1:53091/index.html
+	1 container
+		2 text 有限1教材 / 実OSのowned child・pipe・signal / kernel改造・VM・host設定は未実施
+		3 heading writeを止めたのに、readerが終わらない？, Value: 1
+			4 text writeを止めたのに、readerが終わらない？
+		5 text 元のwrite FDを閉じても、duplicateが残ればpipeはEOFになりません。実parent/childの観測でresourceの寿命を追います。
+		6 heading 前提 → 主要概念・仕組み, Value: 2
+			7 text 前提 → 主要概念・仕組み
+		8 text FDはprocess内の番号、open file descriptionへの参照。pipeのbufferを読み切り、全write-endをcloseした時にreadは0bytes（EOF）を返します。ready handshakeで起動と同期し、waitでchildを回収。SIGTERM終了はEOF正常完了とは別です。
+		9 text 実務: 全writerの所有者とclose順を確認する。限界: timeoutは有限観測で、kernel内部・scheduler性能・全OS互換性の証明ではありません。
+		10 link Description: 契約と再現, Value: 127.0.0.1:53091/README.md
+		11 text  · 
+		12 link Description: 全Subjectの道筋と次の4実験, Value: 127.0.0.1:53091/COVERAGE.md
+		13 heading 1. 予想, Value: 2
+			14 text 1. 予想
+		15 text 元のwrite FDをcloseし、dupだけ残すとreaderはEOFで終了する？
+		16 text field (settable) 元のwrite FDをcloseし、dupだけ残すとreaderはEOFで終了する？, Value: 終了しない。dupがwriter参照を保持する, ID: prediction
+		86 text 予想を入力済み。比較してから答えへ。
+		18 heading 2. 操作 → 3. 正常・境界・意図異常を比較, Value: 2
+			19 text 2. 操作 → 3. 正常・境界・意図異常を比較
+		20 text 実験case
+		21 pop up button (collapsed, settable) 実験case, Value: leak-release, ID: case, Secondary Actions: Expand
+			22 menu
+				23 normal-close
+				24 empty-eof
+				25 max-payload
+				26 (selected) leak-release
+				27 leak-signal
+				28 invalid-mode
+				29 invalid-timeout
+				30 invalid-extra-pid
+		31 button 次のevent, ID: next
+		32 button 全event, ID: all
+		33 button 最初に戻す, ID: reset
+		87 text leak-release: 13 / 19 event表示（保存実観測）
+		35 container identity
+			88 text parent PID=65792
+			89 text child PID=65796
+		90 text 独立table期待: checkpoint writers=1 / bounded timeout=true / EOF=true / exit=0
+		91 text 実結果は全event後に表示。
+		92 container data pipe FD参照図
+		41 text FD図は渡したdata pipeだけ。stdout/stderrのlog pipeとは別です。event表示はwall timestampの参考順、process間のmono値を大小比較しません。
+		42 table
+			43 row
+				44 cell
+					45 text actor / PID
+				46 cell
+					47 text event
+				48 cell
+					49 text wall時刻UTC
+				50 cell
+					51 text actor内mono差 ms
+				52 cell
+					53 text 観測fields
+			93 container events
+				94 row
+					95 cell
+						96 text parent / 65792
+					97 cell
+						98 text pipe_created
+					99 cell
+						100 text 2026-10-05T07:01:53.788Z
+					101 cell
+						102 text 0.000
+					103 cell
+						104 text {"read_fd":3,"write_fd":4,"parent_write_refs":1}
+				105 row
+					106 cell
+						107 text parent / 65792
+					108 cell
+						109 text write_duplicated
+					110 cell
+						111 text 2026-10-05T07:01:53.788Z
+					112 cell
+						113 text 0.004
+					114 cell
+						115 text {"leak_fd":5,"parent_write_refs":2}
+				116 row
+					117 cell
+						118 text parent / 65792
+					119 cell
+						120 text child_spawned
+					121 cell
+						122 text 2026-10-05T07:01:53.789Z
+					123 cell
+						124 text 1.330
+					125 cell
+						126 text {"child_pid":65796,"child_read_fd":3,"child_write_refs":0}
+				127 row
+					128 cell
+						129 text parent / 65792
+					130 cell
+						131 text parent_read_closed_begin
+					132 cell
+						133 text 2026-10-05T07:01:53.789Z
+					134 cell
+						135 text 1.339
+					136 cell
+						137 text {"fd":3}
+				138 row
+					139 cell
+						140 text parent / 65792
+					141 cell
+						142 text parent_read_closed
+					143 cell
+						144 text 2026-10-05T07:01:53.789Z
+					145 cell
+						146 text 1.347
+					147 cell
+						148 text {"fd":3}
+				149 row
+					150 cell
+						151 text child / 65796
+					152 cell
+						153 text ready
+					154 cell
+						155 text 2026-10-05T07:01:53.820Z
+					156 cell
+						157 text 0.000
+					158 cell
+						159 text {"ppid":65792,"read_fd":3,"write_end_inherited":false,"sigterm_default":true}
+				160 row
+					161 cell
+						162 text parent / 65792
+					163 cell
+						164 text ready_received
+					165 cell
+						166 text 2026-10-05T07:01:53.821Z
+					167 cell
+						168 text 32.858
+					169 cell
+						170 text {"child_pid":65796}
+				171 row
+					172 cell
+						173 text parent / 65792
+					174 cell
+						175 text payload_written
+					176 cell
+						177 text 2026-10-05T07:01:53.821Z
+					178 cell
+						179 text 32.864
+					180 cell
+						181 text {"bytes":6,"hex":"61746c61730a"}
+				182 row
+					183 cell
+						184 text parent / 65792
+					185 cell
+						186 text original_write_closed_begin
+					187 cell
+						188 text 2026-10-05T07:01:53.821Z
+					189 cell
+						190 text 32.866
+					191 cell
+						192 text {"fd":4}
+				193 row
+					194 cell
+						195 text parent / 65792
+					196 cell
+						197 text original_write_closed
+					198 cell
+						199 text 2026-10-05T07:01:53.821Z
+					200 cell
+						201 text 32.868
+					202 cell
+						203 text {"fd":4}
+				204 row
+					205 cell
+						206 text parent / 65792
+					207 cell
+						208 text writer_refs_checkpoint
+					209 cell
+						210 text 2026-10-05T07:01:53.821Z
+					211 cell
+						212 text 32.871
+					213 cell
+						214 text {"parent_write_refs":1,"child_write_refs":0}
+				215 row
+					216 cell
+						217 text child / 65796
+					218 cell
+						219 text data
+					220 cell
+						221 text 2026-10-05T07:01:53.821Z
+					222 cell
+						223 text 0.123
+					224 cell
+						225 text {"ppid":65792,"hex":"61746c61730a","bytes":6}
+				226 row
+					227 cell
+						228 text parent / 65792
+					229 cell
+						230 text bounded_timeout
+					231 cell
+						232 text 2026-10-05T07:01:54.023Z
+					233 cell
+						234 text 234.832
+					235 cell
+						236 text {"timeout_ms":200,"elapsed_ns":201954583,"child_alive":true,"parent_write_refs":1}
+		54 button (collapsed) 入力 / 実raw / child stdout, Secondary Actions: Expand
+			55 text 入力 / 実raw / child stdout
+		56 heading 4. 原典 / 実装, Value: 2
+			57 text 4. 原典 / 実装
+		58 container
+			59 link Description: 一次資料locatorと確認状態, Value: 127.0.0.1:53091/SOURCES.md
+			60 text  · 
+			61 link Description: parent実験, Value: 127.0.0.1:53091/experiment.py
+			62 text  · 
+			63 link Description: childのread, Value: 127.0.0.1:53091/child.py
+			64 text  · 
+			65 link Description: 独立expected lifecycle, Value: 127.0.0.1:53091/oracle.py
+		66 container
+			67 link Description: 実行時刻・環境・digest, Value: 127.0.0.1:53091/evidence/run.json
+			68 text  · 
+			69 link Description: 実input/output, Value: 127.0.0.1:53091/evidence/raw.json
+			70 text  · 
+			71 link Description: FD図（生成図）, Value: 127.0.0.1:53091/evidence/fd-lifecycle.svg
+			72 text  · 
+			73 link Description: process間mono時計の発見, Value: 127.0.0.1:53091/evidence/clock-discovery.json
+			74 text  · 
+			75 link Description: 実IAB QA / cleanup, Value: 127.0.0.1:53091/evidence/ui-qa.json
+		76 heading 5. 答え, Value: 2
+			77 text 5. 答え
+		78 button 答えを表示, ID: reveal
+		79 heading 次の学習と限界, Value: 2
+			80 text 次の学習と限界
+		81 container
+			82 text 前提→仕組み→今回の実装/異常→実務判断→限界→原典を辿ったら、次1: FD継承・IPC、次2: 同期/scheduler、次3: VM、次4: filesystem/driver/kernelへ。
+			83 link Description: 具体的な問い・次実験・公式locator, Value: 127.0.0.1:53091/COVERAGE.md
+			84 text で全Subjectの未教材範囲を確認できます。今回の有限unitは分野全体の完成ではありません。
+		85 text 保存観測 2026-10-05T07:01:53.677584+00:00 / Darwin arm64 / Python 3.9.6。現在の再実行・kernel tracing・性能測定ではありません。
+
+The focused UI element is 31 button 次のevent, ID: next

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "provenance": "RFC 4231 published HMAC-SHA-256 vectors, manually transcribed independently of runner output; scenario outcomes authored separately",
+  "vector_url": "https://www.rfc-editor.org/rfc/rfc4231.html",
+  "vectors": [
+    {"id":"rfc4231-1","locator":"section-4.2","key_hex":"0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b","message_hex":"4869205468657265","expected_tag_hex":"b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7"},
+    {"id":"rfc4231-2","locator":"section-4.3","key_hex":"4a656665","message_hex":"7768617420646f2079612077616e7420666f72206e6f7468696e673f","expected_tag_hex":"5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843"}
+  ],
+  "scenario_expected": {
+    "valid": {"mac":"valid", "guard":"accepted"},
+    "message-tamper": {"mac":"mismatch", "guard":"mac-rejected"},
+    "wrong-key": {"mac":"mismatch", "guard":"mac-rejected"},
+    "tag-tamper": {"mac":"mismatch", "guard":"mac-rejected"},
+    "replay": {"mac":"valid", "guard":"duplicate-id"},
+    "truncated-tag": {"mac":"invalid-tag-format", "guard":"mac-rejected"},
+    "malformed-tag": {"mac":"invalid-tag-format", "guard":"mac-rejected"}
+  }
+}

@@ -1,0 +1,413 @@
+{
+  "execution_id": "20261005T075600574959Z",
+  "started_at": "2026-10-05T07:56:00.575448+00:00",
+  "completed_at": "2026-10-05T07:56:01.384913+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64"
+  },
+  "source_bindings": {
+    "migration.py": "sha256:e3b473a245b9588f5a1b1681dfdeda8a9aa9f11b52ee6560ef0a2cb2fcc3b30d",
+    "runner.py": "sha256:e61d4228367b291bee994e345867d72559536af12eb5c6dad347d78b32e16669",
+    "checker.py": "sha256:28deafe9400720fd99481483dfde34580fba2bd86369644d47b0ef25307e38d2",
+    "test_negative.py": "sha256:49c9a13bc5ba5f0c15387e061b7ad3a5f61772ba45d7d8d140df3637c8772ea8",
+    "preview.py": "sha256:6ae0ebdfde98672b130fd7443ad4f62dadc7fefcbbeab74ddecd2f7af7ff4531",
+    "index.html": "sha256:3bd87f00307ecbfc46574758e7c4ad8ebf3dd277e84390eb484143acbfca2db1",
+    "README.md": "sha256:209c007231ec542e1999d56c824956c67034e46bc7c5be442d81b056879b014f",
+    "sources.json": "sha256:e84ce238288a4b201b12684bd41da8159892c5bc14d57961ee850a7254857ae5",
+    "coverage.json": "sha256:c79059b24226e898bdc9825501f85f6f8f6786e2b3896ed416e021a64e1e0c9e",
+    "skills/atlas-software-maintenance-migration/SKILL.md": "sha256:2eae221d274f17432a7b42f58968c535fa94d3fa60bf8fe1e65335a6d6fd61e1",
+    "skills/atlas-software-maintenance-migration/route.py": "sha256:3c2b713019cba151dd60880232ebf73a0fce9b8765be5bf8c6aeaae6d26ad452"
+  },
+  "runs": [
+    {
+      "id": "normal-up",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "new"
+        ],
+        [
+          "b",
+          "0.00",
+          "paid"
+        ],
+        [
+          "c",
+          "1.05",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "roundtrip",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "new"
+        ],
+        [
+          "b",
+          "0.00",
+          "paid"
+        ],
+        [
+          "c",
+          "1.05",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        },
+        {
+          "direction": "down",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 0
+        },
+        {
+          "step": 2,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "empty-roundtrip",
+      "source_version": 1,
+      "seed_rows": [],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        },
+        {
+          "direction": "down",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 0
+        },
+        {
+          "step": 2,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "zero-boundary",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "0.00",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "lossy-refused",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "1.005",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "lossy-forced-roundtrip",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "1.005",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "lossy",
+          "inject": "none"
+        },
+        {
+          "direction": "down",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 0
+        },
+        {
+          "step": 2,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "unknown-state-refused",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "refunded"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "noncanonical-refused",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "01.20",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "overflow-refused",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "92233720368547758.08",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "failure-after-copy",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "new"
+        ],
+        [
+          "b",
+          "0.00",
+          "paid"
+        ],
+        [
+          "c",
+          "1.05",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "after-copy"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 3
+        }
+      ]
+    },
+    {
+      "id": "failure-after-drop",
+      "source_version": 1,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "new"
+        ],
+        [
+          "b",
+          "0.00",
+          "paid"
+        ],
+        [
+          "c",
+          "1.05",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "after-drop"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 3
+        }
+      ]
+    },
+    {
+      "id": "down-unknown-refused",
+      "source_version": 2,
+      "seed_rows": [
+        [
+          "a",
+          1230,
+          30
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "down",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "unsupported-version",
+      "source_version": 99,
+      "seed_rows": [
+        [
+          "a",
+          "12.30",
+          "new"
+        ],
+        [
+          "b",
+          "0.00",
+          "paid"
+        ],
+        [
+          "c",
+          "1.05",
+          "new"
+        ]
+      ],
+      "steps": [
+        {
+          "direction": "up",
+          "policy": "exact",
+          "inject": "none"
+        }
+      ],
+      "results": [
+        {
+          "step": 1,
+          "exit_code": 2
+        }
+      ]
+    }
+  ],
+  "external_services": 0,
+  "production_zero_downtime": false,
+  "other_database_executed": false
+}

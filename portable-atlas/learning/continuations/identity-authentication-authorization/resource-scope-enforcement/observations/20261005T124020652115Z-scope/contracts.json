@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "subjects": {
+    "a-reader": {
+      "assigned_scope": "alpha",
+      "permissions": [
+        "read"
+      ]
+    },
+    "a-no-read": {
+      "assigned_scope": "alpha",
+      "permissions": []
+    },
+    "b-reader": {
+      "assigned_scope": "beta",
+      "permissions": [
+        "read"
+      ]
+    }
+  },
+  "resources": {
+    "doc-alpha": {
+      "scope": "alpha",
+      "owner": "owner-alpha",
+      "file": "alpha.txt"
+    },
+    "doc-beta": {
+      "scope": "beta",
+      "owner": "owner-beta",
+      "file": "beta.txt"
+    },
+    "missing-scope": {
+      "owner": "owner-alpha",
+      "file": "alpha.txt"
+    },
+    "missing-owner": {
+      "scope": "beta",
+      "file": "beta.txt"
+    }
+  },
+  "rules": "scope equals trusted resource scope AND assigned subject scope AND requested read is permitted; owner attribute required but ownership equality is NOT a policy rule",
+  "identity": "authenticated_subject True is an input assumption, no credentials verified",
+  "cases": [
+    {
+      "id": "a-reader-alpha-doc-alpha-read",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "a-reader-alpha-doc-alpha-write",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "a-reader-alpha-doc-beta-read",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "a-reader-alpha-doc-beta-write",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "write"
+    },
+    {
+      "id": "a-reader-beta-doc-alpha-read",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "a-reader-beta-doc-alpha-write",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "a-reader-beta-doc-beta-read",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "a-reader-beta-doc-beta-write",
+      "subject": "a-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "write"
+    },
+    {
+      "id": "a-no-read-alpha-doc-alpha-read",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "a-no-read-alpha-doc-alpha-write",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "a-no-read-alpha-doc-beta-read",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "a-no-read-alpha-doc-beta-write",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "write"
+    },
+    {
+      "id": "a-no-read-beta-doc-alpha-read",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "a-no-read-beta-doc-alpha-write",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "a-no-read-beta-doc-beta-read",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "a-no-read-beta-doc-beta-write",
+      "subject": "a-no-read",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "write"
+    },
+    {
+      "id": "b-reader-alpha-doc-alpha-read",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "b-reader-alpha-doc-alpha-write",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "b-reader-alpha-doc-beta-read",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "b-reader-alpha-doc-beta-write",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "alpha",
+      "resource": "doc-beta",
+      "action": "write"
+    },
+    {
+      "id": "b-reader-beta-doc-alpha-read",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "read"
+    },
+    {
+      "id": "b-reader-beta-doc-alpha-write",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-alpha",
+      "action": "write"
+    },
+    {
+      "id": "b-reader-beta-doc-beta-read",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "read"
+    },
+    {
+      "id": "b-reader-beta-doc-beta-write",
+      "subject": "b-reader",
+      "authenticated_subject": true,
+      "scope": "beta",
+      "resource": "doc-beta",
+      "action": "write"
+    }
+  ],
+  "refusals": [
+    {
+      "id": "refuse-unknown-resource",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "not-known",
+        "action": "read"
+      },
+      "reason": "unknown-resource"
+    },
+    {
+      "id": "refuse-missing-scope",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": "alpha",
+        "resource": "missing-scope",
+        "action": "read"
+      },
+      "reason": "missing-resource-attribute"
+    },
+    {
+      "id": "refuse-missing-owner",
+      "request": {
+        "subject": "b-reader",
+        "authenticated_subject": true,
+        "scope": "beta",
+        "resource": "missing-owner",
+        "action": "read"
+      },
+      "reason": "missing-resource-attribute"
+    },
+    {
+      "id": "refuse-unauthenticated",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": false,
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "reason": "authenticated-subject-required"
+    },
+    {
+      "id": "refuse-missing-authentication",
+      "request": {
+        "subject": "a-reader",
+        "scope": "alpha",
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "reason": "request-field-set"
+    },
+    {
+      "id": "refuse-bool-scope",
+      "request": {
+        "subject": "a-reader",
+        "authenticated_subject": true,
+        "scope": true,
+        "resource": "doc-alpha",
+        "action": "read"
+      },
+      "reason": "scope-contract"
+    }
+  ]
+}

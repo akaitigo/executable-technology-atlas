@@ -1,0 +1,19 @@
+{
+ "subject":"data-engineering-orchestration",
+ "implemented":["fixed CSV ingestion and exact header","explicit integer/decimal typing","first valid ID dedup and conflicting ID quarantine","batch replace byte idempotence vs append duplication","bad row quarantine vs silent skip count loss","immutable generation manifest and atomic single publication pointer","stage failure keeps prior output","record-level lineage and independent hand oracle"],
+ "uncovered":[
+  {"concept":"incremental ingestion / CDC / backfill","question":"遅着更新と削除を同じキーにどう適用し、batch境界をどこに置くか","sources":["airflow","beam"]},
+  {"concept":"production scheduler / retries / dependency lifecycle","question":"再試行の副作用、task timeout、分散workerのlost acknowledgementをどう扱うか","sources":["airflow"]},
+  {"concept":"event time / windows / watermark","question":"遅着データで確定済み集計をいつ訂正するか","sources":["beam"]},
+  {"concept":"schema evolution / contracts / quality thresholds","question":"列追加・型変更・quarantine増加をいつ拒否するか","sources":["csv"]},
+  {"concept":"partitioning / large data / distributed joins","question":"メモリを超える入力でdedup状態と再実行範囲をどう分割するか","sources":["beam"]},
+  {"concept":"lineage interoperability / governance","question":"データ所有者・変換version・外部依存を標準形式でどう連結するか","sources":["prov"]},
+  {"concept":"concurrent publishers / durability / retention","question":"同時writer、power loss、世代GCにどの保証が必要か","sources":["replace"]}
+ ],
+ "next_experiments":[
+  {"title":"quoted multiline CSV","operation":"newlineを含むquoted IDとbroken quoteを投入しrecord/end_lineと拒否を手計算比較","sources":["csv"]},
+  {"title":"schema evolution","operation":"optional列追加・未知列・型変更を別fixtureで受理/拒否比較","sources":["csv"]},
+  {"title":"incremental corrected batch","operation":"aの価格更新と削除を別batchとしてreplace/append/keyed mergeに投入し最終行を比較","sources":["beam"]},
+  {"title":"publication reader consistency","operation":"複数世代の切替途中をreaderから観測しpointerを一度だけ読む方式と各file再読方式を比較","sources":["replace","prov"]}
+ ]
+}

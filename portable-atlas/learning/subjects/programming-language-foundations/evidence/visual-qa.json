@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "subject": "programming-language-foundations",
+  "status": "passed-bounded-desktop-IAB-QA",
+  "observed_at": "2026-10-05T06:31:07.796Z",
+  "surface": "background-Codex-in-app-browser",
+  "identity": {
+    "title": "Closure Paths — xは、どこへ戻る？",
+    "main_data_field_id": "programming-language-foundations",
+    "url": "http://127.0.0.1:65255/",
+    "tab_id": "8",
+    "viewport": {"width": 1280, "height": 720, "device_pixel_ratio": 2}
+  },
+  "bindings": {
+    "index.html": "sha256:155405eb8be3a439718fbf741ce95fd5a229d40ede7999d3747727602ce15401",
+    "app.js": "sha256:3b4a0db587f3404d20a24a6e085cb14383c15f203464ff0c19afcc06ac28036f",
+    "style.css": "sha256:a3596fcfcedba9e94b79327c673910c4caef70b7d9f9fa660abd2c2c95154b31",
+    "data.js": "sha256:c7e186bfcf98f4312662f0a1697e04ab80f74c8800e53eea7f5cd37349847953",
+    "evidence/stdout.json": "sha256:472957027880fe454ce5f39307b737fb8ccd0cae07fc94fddca909cbbe9c2dd7",
+    "evidence/environment-chain.svg": "sha256:a490e404e07f818d9161f25af1705f79830fade562713cacaa4fac0c1155f183"
+  },
+  "actions_and_observations": [
+    {"action": "predict-20 then Capture", "normal": "c0 captured e1 / parameter u", "broken": "c0 captured e1 / parameter u"},
+    {"action": "Call parent", "normal": "captured e1 / caller e3 / chosen e1", "broken": "captured e1 / caller e3 / chosen e3"},
+    {"action": "Binding Lookup", "step": 24, "node_path": "$.body.value.body", "normal": "e4 -> e1 / x10", "broken": "e4 -> e3 / x20"},
+    {"action": "Next event", "normal": "Var return10"},
+    {"action": "Last", "normal": "result10", "broken": "result20", "next_enabled": false},
+    {"action": "Previous from terminal", "normal": "result withheld until terminal"},
+    {"action": "Open all event details and jump to step24; open current node", "node": {"kind": "Var", "name": "x"}},
+    {"action": "parameter shadow Lookup", "normal": "e4 / x7", "broken": "e4 / x7"},
+    {"action": "param bool AST rejection", "frames": 0, "next_enabled": false, "capture_enabled": false, "call_enabled": false, "lookup_enabled": false},
+    {"action": "Roadmap", "reading_order": "prerequisites -> bindings -> closure -> normal/defect trace -> practical judgement -> limits -> primary sources", "unimplemented_experiments": ["alpha/substitution", "small-step", "types/safety", "mutable store/effects"]},
+    {"action": "Open generated SVG link", "observed": "c0 captures e1; e4->e1 gives10 / e4->e3 gives20; explicit redraw-not-screenshot label"}
+  ],
+  "case_terminal_results": [
+    {"case": "capture", "normal": 10, "broken": 20},
+    {"case": "parameter_shadow", "normal": 7, "broken": 7},
+    {"case": "argument_caller", "normal": 30, "broken": 40},
+    {"case": "escaped_closure", "normal": 10, "broken": 20},
+    {"case": "let_initializer", "normal": 11, "broken": 11},
+    {"case": "unbound", "normal": "unbound-name/result-none", "broken": "unbound-name/result-none"},
+    {"case": "caller_rescue", "normal": "unbound-name/result-none", "broken": 20},
+    {"case": "not_callable", "normal": "not-callable/result-none", "broken": "not-callable/result-none"},
+    {"case": "addition_type", "normal": "addition-type/result-none", "broken": "addition-type/result-none"},
+    {"case": "literal_boundary", "normal": 0, "broken": 0},
+    {"case": "invalid_literal", "normal": "AST-rejected/literal-limit", "broken": "AST-rejected/literal-limit"},
+    {"case": "invalid_ast", "normal": "AST-rejected/name-shape", "broken": "AST-rejected/name-shape"},
+    {"case": "fuel_boundary", "normal": "evaluation-budget/result-none", "broken": "evaluation-budget/result-none", "terminal_event": 192, "node_path": "$.arg.body.fn", "evaluation_budget": 64}
+  ],
+  "captures": [
+    {"view": "lookup comparison", "mime_type": "image/jpeg", "bytes": 62697, "saved_path": null, "displayed_inline": true},
+    {"view": "caller rescue error comparison", "mime_type": "image/jpeg", "bytes": 62999, "saved_path": null, "displayed_inline": true},
+    {"view": "roadmap and limits", "mime_type": "image/jpeg", "bytes": 107907, "saved_path": null, "displayed_inline": true},
+    {"view": "actual SVG redraw display", "mime_type": "image/jpeg", "bytes": 33341, "saved_path": null, "displayed_inline": true}
+  ],
+  "capture_export": "Documented API returns JPEG bytes/inline image; no local-file export method provided. SVG is retained trace redraw, not a saved IAB screenshot.",
+  "console_before_svg_navigation": {"warn": 0, "error": 0},
+  "nonfatal_observations": [
+    "Prior tab7 was auto-closed at preceding turn end; reopened own tab8 on still-owned server.",
+    "Exact getByLabel selector did not match; verified select id scope-case was used. No data or expected result was changed.",
+    "SVG navigation requested absent favicon.ico: HTTP404. SVG itself HTTP200; no evaluator/UI-script failure observed."
+  ],
+  "cleanup": {
+    "server": "python3 -B -m http.server 0 --bind 127.0.0.1",
+    "port": 65255,
+    "server_stopped": true,
+    "method": "Ctrl-C to owned exec session18316",
+    "server_exit_code": 0,
+    "tab_closed": true,
+    "closed_at": "2026-10-05T06:31:56.609Z",
+    "other_listeners_or_tabs_touched": false
+  },
+  "limits": ["desktop viewport only; mobile not QAed", "saved finite AST replay, not live browser interpreter", "not whole Subject/Portal completion or learner comprehension evidence"]
+}

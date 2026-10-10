@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "classification": "actual-background-IAB-QA-not-a-new-simulation-run",
+  "observed_at": "2026-10-05T13:53:11+09:00",
+  "simulation_observation_at": "2026-10-05T13:46:56+09:00",
+  "browser": "Codex In-app Browser",
+  "target": "http://127.0.0.1:8797/",
+  "viewport": {"width": 1280, "height": 720, "device_pixel_ratio": 2},
+  "bindings": {
+    "evidence/run.json": "sha256:f4217d08391b551149192616156789ae802e488272474fb2d890d64c912b2d82",
+    "index.html": "sha256:291095924e4af4abecafba8ac6702d7d41f1ad42b986188d6ad608880ed1bd94",
+    "app.js": "sha256:0ef0b2f140a6f51e0cdfd2eabac616d2fa585f4cd21dce1eca4ef23a3a00c0e9",
+    "style.css": "sha256:cc6d798e137cab0f68076532bd32811af645f1592e9321baa4439c0ed9e3a708",
+    "data.js": "sha256:3c5bd63b1f58824ccecd95ceeb1878aff627968d3bc8bd1cb294c0439813b65d",
+    "evidence/interference.svg": "sha256:5ae44667ad7a4e733ed07f0d3e52b4874593c74feb9eee6778b1be57f0f64ab3"
+  },
+  "checks": [
+    {"input": "どちらも0へ戻る", "observed": "予想応答とstep0初期化", "passed": true},
+    {"input": "次のstep → (H)", "observed": "両者Born50/50、|ρ01|0.5、purity1", "passed": true},
+    {"input": "次のstep → (D/keep)", "observed": "両者Born50/50のまま、左|ρ01|0.5/purity1、右|ρ01|0/purity0.5。右は単一vectorなしと明記", "passed": true},
+    {"input": "次のstep → (最後のH)", "observed": "左100/0、右50/50。next disabled、previous enabled", "passed": true},
+    {"input": "保存済み4096 shotの頻度を見る", "observed": "左4096/0、右2045/2051・49.93%/50.07%。Born50/50と別欄、最終stateの独立準備サンプルと明記", "passed": true},
+    {"input": "H→Z→Hを選択", "observed": "最終左0/100、右50/50", "passed": true},
+    {"input": "H→S→Hを選択しstep2", "observed": "a1=0+0.7071i、phase1.5708 rad、|ρ01|0.5/purity1", "passed": true},
+    {"input": "原典・実装・答えのUIを確認", "observed": "公式IBM locator、raw/sourceリンク、amplitudeと確率、unitaryとD、mixed vector不可、有限model/未Coverageの説明", "passed": true},
+    {"input": "比較SVGを開く", "observed": "両経路の全stage、coherence/purity、時刻、再描画・非hardware表示を実IABで確認", "passed": true}
+  ],
+  "console": {"queried_levels": ["warn", "error"], "limit": 30, "observed_entries": [], "scope": "取得時にこのtabで利用可能だった記録のみ"},
+  "capture": {
+    "actual_UI_captured": true,
+    "format": "JPEG",
+    "result_view_capture_bytes": 77360,
+    "diagram_view_capture_bytes": 64258,
+    "displayed_in_conversation": true,
+    "saved_capture_file": null,
+    "limitation": "実画面captureは会話内表示のみ。利用したAPIにlocal file exportがなく、repositoryへcapture画像を保存していない。保存interference.svgは実simulationの再描画でありcaptureではない。"
+  },
+  "startup": {"initial_sandbox_bind": "PermissionError", "approved_localhost_start": true, "scope": "専用moduleを127.0.0.1:8797で一時配信"},
+  "cleanup": {"completed_at": "2026-10-05T13:55:03+09:00", "owned_server_command": "python3 -B -m http.server 8797 --bind 127.0.0.1", "server_result": "Keyboard interrupt received, exiting; exit_code=0", "owned_IAB_tab_closed": true, "other_task_resources_touched": false},
+  "network_note": "HTML/CSS/JS/data/SVGは200。SVG表示時のfavicon.icoに404を1件観測。教材機能への影響なし。console記録は取得時点の範囲のみ。",
+  "limits": ["1280x720 desktopのみ。mobile QAなし。", "保存runの表示・操作で、Python再実行やPRNG再抽選ではない。", "分野全体の完成・理解度・実量子機は未評価。"]
+}

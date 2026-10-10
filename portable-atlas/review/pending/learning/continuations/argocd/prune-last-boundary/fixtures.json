@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "scope": {"prepared_tasks": true, "plan_only": true, "dependency_adjustments": false, "live_execution": false},
+  "cases": [
+    {"id":"ordinary","title":"指定なし：通常の逆wave","global_prune_last":false,"tasks":[
+      {"id":"app-a","phase":"Sync","kind":"ConfigMap","action":"apply","wave":0,"prune_last":false},
+      {"id":"app-b","phase":"Sync","kind":"ConfigMap","action":"apply","wave":5,"prune_last":false},
+      {"id":"old-low","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-3,"prune_last":false},
+      {"id":"old-high","phase":"Sync","kind":"ConfigMap","action":"prune","wave":8,"prune_last":false}
+    ]},
+    {"id":"global","title":"全体指定：pruneを同じ終端waveへ","global_prune_last":true,"tasks":[
+      {"id":"app-a","phase":"Sync","kind":"ConfigMap","action":"apply","wave":0,"prune_last":false},
+      {"id":"app-b","phase":"Sync","kind":"ConfigMap","action":"apply","wave":5,"prune_last":false},
+      {"id":"old-low","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-3,"prune_last":false},
+      {"id":"old-high","phase":"Sync","kind":"ConfigMap","action":"prune","wave":8,"prune_last":false}
+    ]},
+    {"id":"resource-only","title":"資源単位指定：old-lowだけを終端へ","global_prune_last":false,"tasks":[
+      {"id":"app-a","phase":"Sync","kind":"ConfigMap","action":"apply","wave":0,"prune_last":false},
+      {"id":"app-b","phase":"Sync","kind":"ConfigMap","action":"apply","wave":5,"prune_last":false},
+      {"id":"old-low","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-3,"prune_last":true},
+      {"id":"old-high","phase":"Sync","kind":"ConfigMap","action":"prune","wave":8,"prune_last":false}
+    ]},
+    {"id":"all-negative","title":"全waveが負：最大値探索の初期値0","global_prune_last":true,"tasks":[
+      {"id":"app","phase":"Sync","kind":"ConfigMap","action":"apply","wave":-4,"prune_last":false},
+      {"id":"old-low","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-7,"prune_last":false},
+      {"id":"old-high","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-2,"prune_last":false}
+    ]},
+    {"id":"presync-excluded","title":"PreSyncのwave 20をSyncの最大値に含めない","global_prune_last":true,"tasks":[
+      {"id":"pre-check","phase":"PreSync","kind":"Job","action":"apply","wave":20,"prune_last":false},
+      {"id":"app","phase":"Sync","kind":"ConfigMap","action":"apply","wave":0,"prune_last":false},
+      {"id":"old","phase":"Sync","kind":"ConfigMap","action":"prune","wave":-2,"prune_last":false}
+    ]}
+  ]
+}

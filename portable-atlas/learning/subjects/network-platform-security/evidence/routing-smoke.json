@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "executedAt": "2026-10-05T07:52:35.790269+00:00",
+  "evaluator": "main agent; not independent forwardAgentEval",
+  "quickValidate": "Skill is valid!",
+  "routes": [
+    {
+      "command": "python3 -B run.py --source 10.0.0.130 --protocol tcp --port 443 --order deny-first",
+      "exitCode": 0,
+      "rawStdout": "{\n  \"input\": {\n    \"packet\": {\n      \"source\": \"10.0.0.130\",\n      \"protocol\": \"tcp\",\n      \"port\": 443\n    },\n    \"order\": \"deny-first\"\n  },\n  \"rules\": [\n    {\n      \"id\": \"block-quarantine\",\n      \"action\": \"deny\",\n      \"source\": \"10.0.0.128/25\",\n      \"protocol\": \"any\",\n      \"ports\": [\n        0,\n        65535\n      ]\n    },\n    {\n      \"id\": \"allow-web\",\n      \"action\": \"allow\",\n      \"source\": \"10.0.0.0/24\",\n      \"protocol\": \"tcp\",\n      \"ports\": [\n        443,\n        443\n      ]\n    },\n    {\n      \"id\": \"allow-admin\",\n      \"action\": \"allow\",\n      \"source\": \"10.0.0.0/25\",\n      \"protocol\": \"tcp\",\n      \"ports\": [\n        22,\n        22\n      ]\n    },\n    {\n      \"id\": \"allow-dns\",\n      \"action\": \"allow\",\n      \"source\": \"10.0.0.0/25\",\n      \"protocol\": \"udp\",\n      \"ports\": [\n        53,\n        53\n      ]\n    }\n  ],\n  \"rulesSha256\": \"1fc12bf6908ed9a879f54f6eac3e9c067033545823de5b72816a08425ae7d587\",\n  \"first\": {\n    \"mode\": \"first-match\",\n    \"decision\": \"deny\",\n    \"winner\": \"block-quarantine\",\n    \"trace\": [\n      {\n        \"index\": 0,\n        \"ruleId\": \"block-quarantine\",\n        \"action\": \"deny\",\n        \"checks\": {\n          \"source\": true,\n          \"protocol\": true,\n          \"port\": true\n        },\n        \"matched\": true,\n        \"terminal\": true,\n        \"effect\": \"terminal\"\n      }\n    ],\n    \"traceSha256\": \"b4c5f09f9e0fe6657172c6d8c2e10382e04bc09da60b6c2c3e3224de5b53de02\"\n  },\n  \"naive\": {\n    \"mode\": \"naive-any-allow\",\n    \"decision\": \"allow\",\n    \"winner\": \"allow-web\",\n    \"trace\": [\n      {\n        \"index\": 0,\n        \"ruleId\": \"block-quarantine\",\n        \"action\": \"deny\",\n        \"checks\": {\n          \"source\": true,\n          \"protocol\": true,\n          \"port\": true\n        },\n        \"matched\": true,\n        \"terminal\": false,\n        \"effect\": \"deny ignored by naive matcher\"\n      },\n      {\n        \"index\": 1,\n        \"ruleId\": \"allow-web\",\n        \"action\": \"allow\",\n        \"checks\": {\n          \"source\": true,\n          \"protocol\": true,\n          \"port\": true\n        },\n        \"matched\": true,\n        \"terminal\": true,\n        \"effect\": \"terminal\"\n      }\n    ],\n    \"traceSha256\": \"5a5791d6915627bcafa07d5cb742a7e31bb52a99edea6803b676b2133f75a03d\"\n  },\n  \"bypass\": true\n}\n",
+      "rawSha256": "8091675b3097a73b118f45f73f76a6a5ac5aabdcd8982d0ffe6259cfce629732"
+    },
+    {
+      "command": "python3 -B run.py --source ::1 --protocol tcp --port 443",
+      "exitCode": 2,
+      "rawStdout": "{\"status\": \"rejected\", \"error\": \"malformed or unsupported IPv4 address\"}\n",
+      "rawSha256": "c7fa8a8f3f12c05377577deee4b65c9580530cf8ed5a2b63e8eb1fd8fd286613"
+    }
+  ],
+  "unsupportedRealFirewallRequest": "README limits/coverage; no OS or real packet filtering operation"
+}

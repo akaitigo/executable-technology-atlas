@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "normalization": "parse JSON rejecting duplicate keys; sort keys, compact separators, ASCII encoding; complete contract including version is cache identity; no canonical JSON standard claim",
+  "version_semantics": "version metadata changes binding, not min/max/type validation predicates",
+  "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+  "base_contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+  "cases": [
+    {
+      "id": "unchanged",
+      "label": "\u540c\u3058contract",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}"
+    },
+    {
+      "id": "max99",
+      "label": "\u6700\u5927100\u219299",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":99,\"amount_type\":\"integer-not-bool\"}"
+    },
+    {
+      "id": "version-only",
+      "label": "version v1\u2192v2\u3060\u3051",
+      "contract_json": "{\"version\":\"v2\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}"
+    },
+    {
+      "id": "format-only",
+      "label": "\u7a7a\u767d\u30fbkey\u9806\u3060\u3051",
+      "contract_json": "{ \"amount_type\": \"integer-not-bool\", \"maximum\": 100, \"minimum\": 0, \"version\": \"v1\" }"
+    }
+  ],
+  "refusals": [
+    {
+      "id": "refuse-source-bool",
+      "source_json": "[{\"id\":\"r1\",\"amount\":true}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "reason": "amount-type",
+      "stage": "source"
+    },
+    {
+      "id": "refuse-source-float",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100.0}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\"}",
+      "reason": "amount-type",
+      "stage": "source"
+    },
+    {
+      "id": "refuse-contract-bool",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":true,\"amount_type\":\"integer-not-bool\"}",
+      "reason": "range-type",
+      "stage": "contract"
+    },
+    {
+      "id": "refuse-contract-range",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":-1,\"amount_type\":\"integer-not-bool\"}",
+      "reason": "range-order",
+      "stage": "contract"
+    },
+    {
+      "id": "refuse-duplicate-key",
+      "source_json": "[{\"id\":\"r1\",\"amount\":100}]",
+      "contract_json": "{\"version\":\"v1\",\"minimum\":0,\"maximum\":100,\"amount_type\":\"integer-not-bool\",\"maximum\":99}",
+      "reason": "duplicate-key",
+      "stage": "contract"
+    }
+  ]
+}

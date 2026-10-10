@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "key": "k",
+  "generation_contract": "g1 then g2 are synthetic non-reused tokens in fixed sequential schedule only; no distributed allocator or backup guarantee",
+  "modes": [
+    "version",
+    "generation-version"
+  ],
+  "cases": [
+    {
+      "id": "same-version",
+      "label": "同じ世代の古version / version",
+      "lifetime": "same",
+      "mode": "version"
+    },
+    {
+      "id": "same-generation-version",
+      "label": "同じ世代の古version / generation-version",
+      "lifetime": "same",
+      "mode": "generation-version"
+    },
+    {
+      "id": "recreated-version",
+      "label": "削除・再作成でversion1再利用 / version",
+      "lifetime": "recreated",
+      "mode": "version"
+    },
+    {
+      "id": "recreated-generation-version",
+      "label": "削除・再作成でversion1再利用 / generation-version",
+      "lifetime": "recreated",
+      "mode": "generation-version"
+    }
+  ],
+  "refusals": [
+    {
+      "id": "refuse-bool-version",
+      "label": "bool-version",
+      "request": {
+        "key": "k",
+        "generation": "g1",
+        "version": true,
+        "value": 1
+      },
+      "reason": "version-type"
+    },
+    {
+      "id": "refuse-zero-version",
+      "label": "zero-version",
+      "request": {
+        "key": "k",
+        "generation": "g1",
+        "version": 0,
+        "value": 1
+      },
+      "reason": "version-range"
+    },
+    {
+      "id": "refuse-float-value",
+      "label": "float-value",
+      "request": {
+        "key": "k",
+        "generation": "g1",
+        "version": 1,
+        "value": 1.5
+      },
+      "reason": "value-type"
+    },
+    {
+      "id": "refuse-bool-value",
+      "label": "bool-value",
+      "request": {
+        "key": "k",
+        "generation": "g1",
+        "version": 1,
+        "value": true
+      },
+      "reason": "value-type"
+    },
+    {
+      "id": "refuse-invalid-key",
+      "label": "invalid-key",
+      "request": {
+        "key": true,
+        "generation": "g1",
+        "version": 1,
+        "value": 1
+      },
+      "reason": "key-contract"
+    },
+    {
+      "id": "refuse-invalid-generation",
+      "label": "invalid-generation",
+      "request": {
+        "key": "k",
+        "generation": true,
+        "version": 1,
+        "value": 1
+      },
+      "reason": "generation-contract"
+    }
+  ],
+  "sql_error_probe": {
+    "id": "sql-error",
+    "sql": "UPDATE kv SET",
+    "expected": "sqlite3.OperationalError; state unchanged; not WHERE mismatch"
+  }
+}

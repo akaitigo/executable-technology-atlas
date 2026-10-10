@@ -1,0 +1,5 @@
+# 実Browser WebGPU検証
+
+adapter probe→正常stride16、故障stride12、last8の正常/故障、padding-1の故障、binding28実validationを操作する。5成功は実GPU submit/copy/map readback、validationはsubmit=false。32byte入力hex/u32と6結果bitpatternを事前literal手表で照合。6mutantと所有buffer/device破棄をチェックする。通常verify/routeは保存GPU原票の読み取り専用照合、CPU実行でのGPU再実行や代用ではない。
+
+実IAB予想4値、scenario/stride/last/pad編集の空リセット、可変入力実答え、validationと通信失敗の通常答え抑止、旧GPU応答非採用、6source導線を確認する。captureは実tool画像、保存不可ならsaved=false/path/hash=null。所有tab/serverのみ終了し保護portは観測だけ。全module file sha256/mtime_nsを通常検証前後で比較しproofを最後に保存する。

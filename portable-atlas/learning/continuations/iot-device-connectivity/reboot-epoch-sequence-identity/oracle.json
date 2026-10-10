@@ -1,0 +1,2411 @@
+{
+  "handArrivalTables": {
+    "epoch-order": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "ACCEPT_LATEST",
+        "ACCEPT_HISTORY"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "latest": [
+        0,
+        1,
+        1
+      ],
+      "keys": [
+        [
+          "a",
+          1,
+          4
+        ],
+        [
+          "a",
+          2,
+          1
+        ],
+        [
+          "a",
+          1,
+          5
+        ]
+      ]
+    },
+    "seq-only-fault": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "STALE_REJECT",
+        "ACCEPT_LATEST"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "latest": [
+        0,
+        0,
+        2
+      ],
+      "keys": [
+        [
+          "a",
+          4
+        ],
+        [
+          "a",
+          1
+        ],
+        [
+          "a",
+          5
+        ]
+      ]
+    },
+    "duplicate-conflict": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "ACCEPT_LATEST",
+        "ACCEPT_HISTORY",
+        "DUPLICATE",
+        "CONFLICT"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "latest": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "keys": [
+        [
+          "a",
+          1,
+          4
+        ],
+        [
+          "a",
+          2,
+          1
+        ],
+        [
+          "a",
+          1,
+          5
+        ],
+        [
+          "a",
+          2,
+          1
+        ],
+        [
+          "a",
+          2,
+          1
+        ]
+      ]
+    },
+    "old-history-repeat": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "ACCEPT_LATEST",
+        "ACCEPT_HISTORY",
+        "DUPLICATE",
+        "CONFLICT"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "latest": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "keys": [
+        [
+          "a",
+          1,
+          4
+        ],
+        [
+          "a",
+          2,
+          1
+        ],
+        [
+          "a",
+          1,
+          5
+        ],
+        [
+          "a",
+          1,
+          5
+        ],
+        [
+          "a",
+          1,
+          5
+        ]
+      ]
+    },
+    "same-sequence-new-epoch": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "ACCEPT_LATEST"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "latest": [
+        0,
+        1
+      ],
+      "keys": [
+        [
+          "a",
+          1,
+          1
+        ],
+        [
+          "a",
+          2,
+          1
+        ]
+      ]
+    },
+    "seq-key-collision-fault": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "CONFLICT"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ],
+      "latest": [
+        0,
+        0
+      ],
+      "keys": [
+        [
+          "a",
+          1
+        ],
+        [
+          "a",
+          1
+        ]
+      ]
+    },
+    "within-epoch-out-of-order": {
+      "decisions": [
+        "ACCEPT_LATEST",
+        "ACCEPT_HISTORY"
+      ],
+      "history": [
+        [
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "latest": [
+        0,
+        0
+      ],
+      "keys": [
+        [
+          "a",
+          2,
+          3
+        ],
+        [
+          "a",
+          2,
+          1
+        ]
+      ]
+    }
+  },
+  "expected": {
+    "epoch-order": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "key": [
+            "a",
+            1,
+            4
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            }
+          ]
+        },
+        {
+          "arrival": 3,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "key": [
+            "a",
+            1,
+            5
+          ],
+          "decision": "ACCEPT_HISTORY",
+          "historyAdded": true,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              1,
+              4
+            ],
+            "payload": "{\"value\":40}"
+          },
+          {
+            "key": [
+              "a",
+              2,
+              1
+            ],
+            "payload": "{\"value\":201}"
+          },
+          {
+            "key": [
+              "a",
+              1,
+              5
+            ],
+            "payload": "{\"value\":50}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 3,
+        "latestEpoch": 2,
+        "latestSeq": 1,
+        "latestValue": 201,
+        "lastDecision": "ACCEPT_HISTORY",
+        "duplicateCount": 0,
+        "conflictCount": 0,
+        "staleRejectedCount": 0
+      }
+    },
+    "seq-only-fault": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "key": [
+            "a",
+            4
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                4
+              ],
+              "payload": "{\"value\":40}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            1
+          ],
+          "decision": "STALE_REJECT",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                4
+              ],
+              "payload": "{\"value\":40}"
+            }
+          ]
+        },
+        {
+          "arrival": 3,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "key": [
+            "a",
+            5
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              4
+            ],
+            "payload": "{\"value\":40}"
+          },
+          {
+            "key": [
+              "a",
+              5
+            ],
+            "payload": "{\"value\":50}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 2,
+        "latestEpoch": 1,
+        "latestSeq": 5,
+        "latestValue": 50,
+        "lastDecision": "ACCEPT_LATEST",
+        "duplicateCount": 0,
+        "conflictCount": 0,
+        "staleRejectedCount": 1
+      }
+    },
+    "duplicate-conflict": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "key": [
+            "a",
+            1,
+            4
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            }
+          ]
+        },
+        {
+          "arrival": 3,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "key": [
+            "a",
+            1,
+            5
+          ],
+          "decision": "ACCEPT_HISTORY",
+          "historyAdded": true,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        },
+        {
+          "arrival": 4,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "DUPLICATE",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        },
+        {
+          "arrival": 5,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 999
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "CONFLICT",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              1,
+              4
+            ],
+            "payload": "{\"value\":40}"
+          },
+          {
+            "key": [
+              "a",
+              2,
+              1
+            ],
+            "payload": "{\"value\":201}"
+          },
+          {
+            "key": [
+              "a",
+              1,
+              5
+            ],
+            "payload": "{\"value\":50}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 3,
+        "latestEpoch": 2,
+        "latestSeq": 1,
+        "latestValue": 201,
+        "lastDecision": "CONFLICT",
+        "duplicateCount": 1,
+        "conflictCount": 1,
+        "staleRejectedCount": 0
+      }
+    },
+    "old-history-repeat": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "key": [
+            "a",
+            1,
+            4
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            }
+          ]
+        },
+        {
+          "arrival": 3,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "key": [
+            "a",
+            1,
+            5
+          ],
+          "decision": "ACCEPT_HISTORY",
+          "historyAdded": true,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        },
+        {
+          "arrival": 4,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          },
+          "key": [
+            "a",
+            1,
+            5
+          ],
+          "decision": "DUPLICATE",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        },
+        {
+          "arrival": 5,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 51
+          },
+          "key": [
+            "a",
+            1,
+            5
+          ],
+          "decision": "CONFLICT",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 4,
+              "value": 40
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            },
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 5,
+              "value": 50
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                4
+              ],
+              "payload": "{\"value\":40}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            },
+            {
+              "key": [
+                "a",
+                1,
+                5
+              ],
+              "payload": "{\"value\":50}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 4,
+            "value": 40
+          },
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 5,
+            "value": 50
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              1,
+              4
+            ],
+            "payload": "{\"value\":40}"
+          },
+          {
+            "key": [
+              "a",
+              2,
+              1
+            ],
+            "payload": "{\"value\":201}"
+          },
+          {
+            "key": [
+              "a",
+              1,
+              5
+            ],
+            "payload": "{\"value\":50}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 3,
+        "latestEpoch": 2,
+        "latestSeq": 1,
+        "latestValue": 201,
+        "lastDecision": "CONFLICT",
+        "duplicateCount": 1,
+        "conflictCount": 1,
+        "staleRejectedCount": 0
+      }
+    },
+    "same-sequence-new-epoch": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "key": [
+            "a",
+            1,
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 1,
+              "value": 11
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                1
+              ],
+              "payload": "{\"value\":11}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 21
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 21
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 1,
+              "value": 11
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 21
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1,
+                1
+              ],
+              "payload": "{\"value\":11}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":21}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 21
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 21
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              1,
+              1
+            ],
+            "payload": "{\"value\":11}"
+          },
+          {
+            "key": [
+              "a",
+              2,
+              1
+            ],
+            "payload": "{\"value\":21}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 2,
+        "latestEpoch": 2,
+        "latestSeq": 1,
+        "latestValue": 21,
+        "lastDecision": "ACCEPT_LATEST",
+        "duplicateCount": 0,
+        "conflictCount": 0,
+        "staleRejectedCount": 0
+      }
+    },
+    "seq-key-collision-fault": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "key": [
+            "a",
+            1
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 1,
+              "value": 11
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1
+              ],
+              "payload": "{\"value\":11}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 21
+          },
+          "key": [
+            "a",
+            1
+          ],
+          "decision": "CONFLICT",
+          "historyAdded": false,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 1,
+              "seq": 1,
+              "value": 11
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                1
+              ],
+              "payload": "{\"value\":11}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 1,
+          "seq": 1,
+          "value": 11
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 1,
+            "seq": 1,
+            "value": 11
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              1
+            ],
+            "payload": "{\"value\":11}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 1,
+        "latestEpoch": 1,
+        "latestSeq": 1,
+        "latestValue": 11,
+        "lastDecision": "CONFLICT",
+        "duplicateCount": 0,
+        "conflictCount": 1,
+        "staleRejectedCount": 0
+      }
+    },
+    "within-epoch-out-of-order": {
+      "observed": true,
+      "reason": null,
+      "trace": [
+        {
+          "arrival": 1,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 3,
+            "value": 203
+          },
+          "key": [
+            "a",
+            2,
+            3
+          ],
+          "decision": "ACCEPT_LATEST",
+          "historyAdded": true,
+          "latestUpdated": true,
+          "beforeLatest": null,
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 3,
+            "value": 203
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 3,
+              "value": 203
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                2,
+                3
+              ],
+              "payload": "{\"value\":203}"
+            }
+          ]
+        },
+        {
+          "arrival": 2,
+          "input": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          },
+          "key": [
+            "a",
+            2,
+            1
+          ],
+          "decision": "ACCEPT_HISTORY",
+          "historyAdded": true,
+          "latestUpdated": false,
+          "beforeLatest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 3,
+            "value": 203
+          },
+          "latest": {
+            "device": "a",
+            "epoch": 2,
+            "seq": 3,
+            "value": 203
+          },
+          "history": [
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 3,
+              "value": 203
+            },
+            {
+              "device": "a",
+              "epoch": 2,
+              "seq": 1,
+              "value": 201
+            }
+          ],
+          "identities": [
+            {
+              "key": [
+                "a",
+                2,
+                3
+              ],
+              "payload": "{\"value\":203}"
+            },
+            {
+              "key": [
+                "a",
+                2,
+                1
+              ],
+              "payload": "{\"value\":201}"
+            }
+          ]
+        }
+      ],
+      "final": {
+        "latest": {
+          "device": "a",
+          "epoch": 2,
+          "seq": 3,
+          "value": 203
+        },
+        "history": [
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 3,
+            "value": 203
+          },
+          {
+            "device": "a",
+            "epoch": 2,
+            "seq": 1,
+            "value": 201
+          }
+        ],
+        "identities": [
+          {
+            "key": [
+              "a",
+              2,
+              3
+            ],
+            "payload": "{\"value\":203}"
+          },
+          {
+            "key": [
+              "a",
+              2,
+              1
+            ],
+            "payload": "{\"value\":201}"
+          }
+        ]
+      },
+      "summary": {
+        "historyCount": 2,
+        "latestEpoch": 2,
+        "latestSeq": 3,
+        "latestValue": 203,
+        "lastDecision": "ACCEPT_HISTORY",
+        "duplicateCount": 0,
+        "conflictCount": 0,
+        "staleRejectedCount": 0
+      }
+    },
+    "refused-epoch-zero": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-epoch-bool": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-epoch-string": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-seq-zero": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-seq-bool": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-seq-wrap": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-device": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "refused-value-bool": {
+      "observed": false,
+      "reason": "invalid telemetry identity or value",
+      "trace": [],
+      "final": null,
+      "summary": null
+    },
+    "execution-failure": null
+  },
+  "requests": {
+    "epoch-order": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "seq-only-fault": {
+      "mode": "seq-only",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "duplicate-conflict": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 999
+        }
+      ]
+    },
+    "old-history-repeat": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 51
+        }
+      ]
+    },
+    "same-sequence-new-epoch": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 1,
+          "value": 11
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 21
+        }
+      ]
+    },
+    "seq-key-collision-fault": {
+      "mode": "seq-only",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 1,
+          "value": 11
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 21
+        }
+      ]
+    },
+    "within-epoch-out-of-order": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 3,
+          "value": 203
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        }
+      ]
+    },
+    "refused-epoch-zero": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 0,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-epoch-bool": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": true,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-epoch-string": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": "2",
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-seq-zero": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 0,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-seq-bool": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": true,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-seq-wrap": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 100,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-device": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "b",
+          "epoch": 2,
+          "seq": 1,
+          "value": 201
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "refused-value-bool": {
+      "mode": "epoch",
+      "arrivals": [
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 4,
+          "value": 40
+        },
+        {
+          "device": "a",
+          "epoch": 2,
+          "seq": 1,
+          "value": true
+        },
+        {
+          "device": "a",
+          "epoch": 1,
+          "seq": 5,
+          "value": 50
+        }
+      ]
+    },
+    "execution-failure": {
+      "rawInput": "{\"mode\":"
+    }
+  },
+  "contract": "monotonic nonreused device epoch is an assumed application contract, not MQTT",
+  "source": "explicit arrival key/history index/latest index decisions fixed before receiver"
+}

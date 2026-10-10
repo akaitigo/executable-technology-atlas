@@ -1,0 +1,315 @@
+{
+  "method": "fixed interleaving, literal rows and per-consumer decisions before producer execution; independent checker direct SQL, no producer import",
+  "initial_rows": [
+    [
+      "doc1",
+      "alpha",
+      "ALPHA SYNTHETIC",
+      1
+    ]
+  ],
+  "rows": [
+    {
+      "id": "unchanged",
+      "check_allowed": true,
+      "normal": {
+        "decision": "allow",
+        "payload": "ALPHA SYNTHETIC",
+        "row_tenant": "alpha",
+        "attempts": 1,
+        "reason": "conditional-match"
+      },
+      "faulty": {
+        "decision": "allow",
+        "payload": "ALPHA SYNTHETIC",
+        "row_tenant": "alpha",
+        "attempts": 1,
+        "reason": "old-check-then-id"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "both-read",
+      "direct_sql_reference": [
+        [
+          "ALPHA SYNTHETIC",
+          "alpha"
+        ]
+      ]
+    },
+    {
+      "id": "move-after-check",
+      "check_allowed": true,
+      "normal": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "reason": "conditional-no-row"
+      },
+      "faulty": {
+        "decision": "allow",
+        "payload": "BETA SYNTHETIC",
+        "row_tenant": "beta",
+        "attempts": 1,
+        "reason": "old-check-then-id"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "category": "boundary",
+      "direct_sql_reference": []
+    },
+    {
+      "id": "payload-after-check",
+      "check_allowed": true,
+      "normal": {
+        "decision": "allow",
+        "payload": "ALPHA VERSION TWO",
+        "row_tenant": "alpha",
+        "attempts": 1,
+        "reason": "conditional-match"
+      },
+      "faulty": {
+        "decision": "allow",
+        "payload": "ALPHA VERSION TWO",
+        "row_tenant": "alpha",
+        "attempts": 1,
+        "reason": "old-check-then-id"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA VERSION TWO",
+          2
+        ]
+      ],
+      "category": "both-read",
+      "direct_sql_reference": [
+        [
+          "ALPHA VERSION TWO",
+          "alpha"
+        ]
+      ]
+    },
+    {
+      "id": "move-before-check",
+      "check_allowed": false,
+      "normal": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "reason": "conditional-no-row"
+      },
+      "faulty": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "precheck-deny"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "category": "both-deny",
+      "direct_sql_reference": []
+    },
+    {
+      "id": "beta-after-check",
+      "check_allowed": false,
+      "normal": {
+        "decision": "allow",
+        "payload": "BETA SYNTHETIC",
+        "row_tenant": "beta",
+        "attempts": 1,
+        "reason": "conditional-match"
+      },
+      "faulty": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "precheck-deny"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "category": "late-allow",
+      "direct_sql_reference": [
+        [
+          "BETA SYNTHETIC",
+          "beta"
+        ]
+      ]
+    },
+    {
+      "id": "unknown-resource",
+      "check_allowed": false,
+      "normal": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "reason": "conditional-no-row"
+      },
+      "faulty": {
+        "decision": "deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "precheck-deny"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "both-deny",
+      "direct_sql_reference": []
+    },
+    {
+      "id": "unknown-actor",
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "unknown-actor"
+      },
+      "faulty": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "unknown-actor"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "refused",
+      "direct_sql_reference": null
+    },
+    {
+      "id": "actor-type",
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "actor-type"
+      },
+      "faulty": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "actor-type"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "refused",
+      "direct_sql_reference": null
+    },
+    {
+      "id": "resource-type",
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "resource-type"
+      },
+      "faulty": {
+        "decision": "refuse",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0,
+        "reason": "resource-type"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "refused",
+      "direct_sql_reference": null
+    },
+    {
+      "id": "sql-error",
+      "check_allowed": true,
+      "normal": {
+        "decision": "error",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "reason": "sqlite-read-error",
+        "error": "no such column: missing_payload"
+      },
+      "faulty": {
+        "decision": "error",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "reason": "sqlite-read-error",
+        "error": "no such column: missing_payload"
+      },
+      "final_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "category": "error",
+      "direct_sql_reference": [
+        [
+          "ALPHA SYNTHETIC",
+          "alpha"
+        ]
+      ]
+    }
+  ]
+}

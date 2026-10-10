@@ -1,0 +1,2 @@
+PROJECT = "maple"
+KIND = "worker"

@@ -1,0 +1,252 @@
+Browser tab: 14, Title: "RIFF chunk — odd lengthとpad", URL: "http://127.0.0.1:50765/".
+1 AXWebArea RIFF chunk — odd lengthとpad, URL: 127.0.0.1:50765/
+	2 heading RIFF/WAV：3-byte JUNKの次headerは、47？48？, Value: 1
+		3 text RIFF/WAV：3-byte JUNKの次headerは、47？48？
+	4 text 前提：little endian uint32、byte offset、半開区間、mono16 PCM。chunkSizeは8-byte headerとpadを含みません。
+	5 container
+		6 heading 1 · 予測 → 操作, Value: 2
+			7 text 1 · 予測 → 操作
+		8 text fixture
+		9 pop up button (collapsed, settable) Description: fixture, Value: short-data, ID: case, Secondary Actions: Expand
+			10 menu
+				11 base
+				12 odd-junk
+				13 even-junk
+				14 riff-oversize
+				15 chunk-oversize
+				16 (selected) short-data
+				17 missing-pad
+		18 text parser
+		19 pop up button (collapsed, settable) Description: parser, Value: strict教材parser, ID: mode, Secondary Actions: Expand
+			20 menu
+				21 (selected) strict教材parser
+				22 pad省略の故障版
+		23 text chunk
+		24 pop up button (collapsed, settable) Description: chunk, Value: "data" @48, Secondary Actions: Expand
+			25 menu
+				85 "fmt " @12
+				86 "JUNK" @36
+				87 (selected) "data" @48
+		88 text 実file 60 bytes / RIFF宣言end 60
+		29 text 次offset予測
+		30 pop up button (collapsed, settable) Description: 次offset予測, Value: 62, ID: nextguess, Secondary Actions: Expand
+			31 menu
+				32 未選択
+				33 36
+				34 47
+				35 48
+				36 50
+				37 (selected) 62
+				38 66
+				39 1688
+				40 3892314168
+				41 未取得
+		42 text parser全体の予測
+		43 pop up button (collapsed, settable) Description: parser全体の予測, Value: 拒否, ID: statusguess, Secondary Actions: Expand
+			44 menu
+				45 未選択
+				46 受理
+				47 (selected) 拒否
+		48 button 観測と比較, ID: compare
+		89 text 予測と一致 — 次offset=62、parser=refused
+	50 container
+		51 heading 2 · header / payload / pad / 次offset, Value: 2
+			52 text 2 · header / payload / pad / 次offset
+		90 container results
+			91 text 青=8-byte header、緑=payload、黄=pad。図は実file範囲にclipし、巨大な宣言長で領域を確保しません。
+			92 text header [48,56) / payload [56,62) / pad=0 / next=62
+			93 table
+				94 row
+					95 cell
+						96 text chunk
+					97 cell
+						98 text header / payload
+					99 cell
+						100 text declared / actual
+					101 cell
+						102 text pad / next
+				103 container rows
+					104 row
+						105 cell
+							106 text "fmt "
+						107 cell
+							108 text 12 / [20,36)
+						109 cell
+							110 text 16 / 16
+						111 cell
+							112 text 0 / 36
+					113 row
+						114 cell
+							115 text "JUNK"
+						116 cell
+							117 text 36 / [44,47)
+						118 cell
+							119 text 3 / 3
+						120 cell
+							121 text 1 / 48
+					122 row
+						123 cell
+							124 text "data"
+						125 cell
+							126 text 48 / [56,62)
+						127 cell
+							128 text 6 / 4
+						129 cell
+							130 text 0 / 62
+			131 text 選択parser refused / chunk-payload-bounds
+			132 text strict教材判定とPCM
+			133 text 拒否 / chunk-payload-bounds
+			134 text Python wave 実挙動
+			135 text read: 宣言3frames / 返却4bytes / 全宣言frame取得=false / samples=[1000,-1000]
+			139 container
+				140 button (expanded) command / exit / actual bytes / 原記録, Secondary Actions: Collapse
+					141 text command / exit / actual bytes / 原記録
+				142 text {
+  "id": "short-data",
+  "argv": [
+    "python3",
+    "-B",
+    "worker.py",
+    "short-data/input.wav"
+  ],
+  "executablePathNormalized": true,
+  "startedUtc": "2026-10-05T12:19:06.676006+00:00",
+  "endedUtc": "2026-10-05T12:19:06.722603+00:00",
+  "inputSha256": "09701562b03a5158adae75deb748a366936c7177866dd7e3d74b6dc30d5d3e77",
+  "exitCode": 2,
+  "stdout": "{\"fileBytes\": 60, \"fileSha256\": \"09701562b03a5158adae75deb748a366936c7177866dd7e3d74b6dc30d5d3e77\", \"fileHex\": \"524946463400000057415645666d74201000000001000100401f0000803e0000020010004a554e4b0300000058595a006461746106000000e80318fc\", \"strict\": {\"accepted\": false, \"reason\": \"chunk-payload-bounds\", \"riffEnd\": 60, \"chunks\": [{\"id\": \"fmt \", \"headerOffset\": 12, \"declaredSize\": 16, \"dataStart\": 20, \"dataEnd\": 36, \"padBytes\": 0, \"nextOffset\": 36, \"actualAvailable\": 16, \"headerHex\": \"666d742010000000\"}, {\"id\": \"JUNK\", \"headerOffset\": 36, \"declaredSize\": 3, \"dataStart\": 44, \"dataEnd\": 47, \"padBytes\": 1, \"nextOffset\": 48, \"actualAvailable\": 3, \"headerHex\": \"4a554e4b03000000\"}, {\"id\": \"data\", \"headerOffset\": 48, \"declaredSize\": 6, \"dataStart\": 56, \"dataEnd\": 62, \"padBytes\": 0, \"nextOffset\": 62, \"actualAvailable\": 4, \"headerHex\": \"6461746106000000\"}], \"pcmHex\": null, \"samples\": null}, \"omitPaddingBug\": {\"accepted\": false, \"reason\": \"chunk-payload-bounds\", \"riffEnd\": 60, \"chunks\": [{\"id\": \"fmt \", \"headerOffset\": 12, \"declaredSize\": 16, \"dataStart\": 20, \"dataEnd\": 36, \"padBytes\": 0, \"nextOffset\": 36, \"actualAvailable\": 16, \"headerHex\": \"666d742010000000\"}, {\"id\": \"JUNK\", \"headerOffset\": 36, \"declaredSize\": 3, \"dataStart\": 44, \"dataEnd\": 47, \"padBytes\": 0, \"nextOffset\": 47, \"actualAvailable\": 3, \"headerHex\": \"4a554e4b03000000\"}, {\"id\": \"\\u0000dat\", \"headerOffset\": 47, \"declaredSize\": 1633, \"dataStart\": 55, \"dataEnd\": 1688, \"padBytes\": 0, \"nextOffset\": 1688, \"actualAvailable\": 5, \"headerHex\": \"0064617461060000\"}], \"pcmHex\": null, \"samples\": null}, \"wave\": {\"status\": \"read\", \"errorClass\": null, \"error\": null, \"params\": {\"channels\": 1, \"sampleWidth\": 2, \"rate\": 8000, \"declaredFrames\": 3}, \"requestedFrames\": 4, \"returnedBytes\": 4, \"pcmHex\": \"e80318fc\", \"declaredFrameBytes\": 6, \"completeDeclaredFrames\": false, \"samples\": [1000, -1000]}}\n",
+  "stderr": "",
+  "observation": {
+    "fileBytes": 60,
+    "fileSha256": "09701562b03a5158adae75deb748a366936c7177866dd7e3d74b6dc30d5d3e77",
+    "fileHex": "524946463400000057415645666d74201000000001000100401f0000803e0000020010004a554e4b0300000058595a006461746106000000e80318fc",
+    "strict": {
+      "accepted": false,
+      "reason": "chunk-payload-bounds",
+      "riffEnd": 60,
+      "chunks": [
+        {
+          "id": "fmt ",
+          "headerOffset": 12,
+          "declaredSize": 16,
+          "dataStart": 20,
+          "dataEnd": 36,
+          "padBytes": 0,
+          "nextOffset": 36,
+          "actualAvailable": 16,
+          "headerHex": "666d742010000000"
+        },
+        {
+          "id": "JUNK",
+          "headerOffset": 36,
+          "declaredSize": 3,
+          "dataStart": 44,
+          "dataEnd": 47,
+          "padBytes": 1,
+          "nextOffset": 48,
+          "actualAvailable": 3,
+          "headerHex": "4a554e4b03000000"
+        },
+        {
+          "id": "data",
+          "headerOffset": 48,
+          "declaredSize": 6,
+          "dataStart": 56,
+          "dataEnd": 62,
+          "padBytes": 0,
+          "nextOffset": 62,
+          "actualAvailable": 4,
+          "headerHex": "6461746106000000"
+        }
+      ],
+      "pcmHex": null,
+      "samples": null
+    },
+    "omitPaddingBug": {
+      "accepted": false,
+      "reason": "chunk-payload-bounds",
+      "riffEnd": 60,
+      "chunks": [
+        {
+          "id": "fmt ",
+          "headerOffset": 12,
+          "declaredSize": 16,
+          "dataStart": 20,
+          "dataEnd": 36,
+          "padBytes": 0,
+          "nextOffset": 36,
+          "actualAvailable": 16,
+          "headerHex": "666d742010000000"
+        },
+        {
+          "id": "JUNK",
+          "headerOffset": 36,
+          "declaredSize": 3,
+          "dataStart": 44,
+          "dataEnd": 47,
+          "padBytes": 0,
+          "nextOffset": 47,
+          "actualAvailable": 3,
+          "headerHex": "4a554e4b03000000"
+        },
+        {
+          "id": "\u0000dat",
+          "headerOffset": 47,
+          "declaredSize": 1633,
+          "dataStart": 55,
+          "dataEnd": 1688,
+          "padBytes": 0,
+          "nextOffset": 1688,
+          "actualAvailable": 5,
+          "headerHex": "0064617461060000"
+        }
+      ],
+      "pcmHex": null,
+      "samples": null
+    },
+    "wave": {
+      "status": "read",
+      "errorClass": null,
+      "error": null,
+      "params": {
+        "channels": 1,
+        "sampleWidth": 2,
+        "rate": 8000,
+        "declaredFrames": 3
+      },
+      "requestedFrames": 4,
+      "returnedBytes": 4,
+      "pcmHex": "e80318fc",
+      "declaredFrameBytes": 6,
+      "completeDeclaredFrames": false,
+      "samples": [
+        1000,
+        -1000
+      ]
+    }
+  }
+}
+	54 container
+		55 heading 3 · 原典・実装, Value: 2
+			56 text 3 · 原典・実装
+		57 text 実行UTC 2026-10-05T12:19:06.434770+00:00 · Python 3.9.6 · Darwin · stdlib wave、readframes上限16
+		58 link Description: 再現と有限契約, Value: 127.0.0.1:50765/README.md
+		59 text  · 
+		60 link Description: 事前の手書きoffset/PCM, Value: 127.0.0.1:50765/oracle.json
+		61 text  · 
+		62 link Description: parser/wave実装, Value: 127.0.0.1:50765/worker.py
+		63 text  · 
+		64 link Description: 観測runner, Value: 127.0.0.1:50765/runner.py
+		65 text  · 
+		66 link Description: 独立oracle, Value: 127.0.0.1:50765/checker.py
+		67 text  · 
+		68 link Description: 到達範囲, Value: 127.0.0.1:50765/COVERAGE.md
+		69 text  · 
+		70 link Description: Microsoft RIFF: chunkSize / WORD padding, Value: learn.microsoft.com/en-us/windows/win32/xaudio2/resource-interchange-file-format--riff-
+	71 container
+		72 heading 4 · 答えと実務判断, Value: 2
+			73 text 4 · 答えと実務判断
+		138 text strictは chunk-payload-bounds で拒否。waveの実read／短read／exceptionは別の観測であり、strictの受理へ読み替えません。
+		75 text strict教材契約はclassicRIFF、fmt16、mono16/8000Hz、正確なRIFF全長、chunk境界、frame alignment。waveの実read/exceptionと別に判定します。読取成功だけで宣言した全frameを取得したとは言えません。 RF64、圧縮codec、再生品質、配信、汎用format保証は未検証。次はfmt拡張、複数dataの契約、bounded truncation系列へ進みます。
+
+The focused UI element is 140 button (expanded) command / exit / actual bytes / 原記録, Secondary Actions: Collapse

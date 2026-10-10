@@ -1,0 +1,73 @@
+{
+  "status": "passed-local-finite-lesson",
+  "checked_at": "2026-10-05T08:00:23.129010+00:00",
+  "execution_id": "20261005T075600574959Z",
+  "iab": {
+    "actual": true,
+    "cases_operated": 13,
+    "steps_operated": 16,
+    "prediction_match": true,
+    "prediction_mismatch_branch": true,
+    "step_pre_post_versions": true,
+    "case_start_restore_comparison": true,
+    "schema_diff_expansion": true,
+    "raw_migration_trace_expansion": true,
+    "raw_command_inline_display": true,
+    "answer_reveal": true,
+    "console_errors_warnings": [],
+    "viewport": "desktop default; mobile not separately tested",
+    "owned_tab": "closed after QA"
+  },
+  "capture": {
+    "saved": true,
+    "type": "actual IAB screenshots; full page; unedited",
+    "source_execution": "20261005T075600574959Z",
+    "dimensions": {
+      "media/roundtrip-restored.jpg": {
+        "width": 1280,
+        "height": 4042
+      },
+      "media/lossy-not-restored.jpg": {
+        "width": 1280,
+        "height": 3609
+      },
+      "media/drop-rollback.jpg": {
+        "width": 1280,
+        "height": 5476
+      }
+    }
+  },
+  "preview": {
+    "command": [
+      "python3",
+      "preview.py"
+    ],
+    "host": "127.0.0.1",
+    "port": 56662,
+    "owned_pid_observed": 76548,
+    "sandbox_attempt": {
+      "exit_code": 1,
+      "raw_error_tail": "PermissionError: [Errno 1] Operation not permitted"
+    },
+    "escalated_attempts": 1,
+    "escalated_result": "allowed; same preview.py started",
+    "resumption": "existing server and IAB tab reused; no duplicate listener started",
+    "owned_server": "terminated via session Ctrl-C; process exit 0",
+    "listener_check": "lsof -nP -iTCP:56662 -sTCP:LISTEN exit 1; no listener",
+    "raw_record": "preview-command.json"
+  },
+  "verification": "verification.json",
+  "ui_evidence": [
+    "ui-observations.json",
+    "ui-details-observation.json"
+  ],
+  "source_fix": "IAB capture review found step2 version origin ambiguity. UI now separates selected-step pre/post diff from case-start restoration; latest source-bound observation regenerated. Earlier observation retained.",
+  "limits": [
+    "production zero-downtime and other databases not executed",
+    "small standalone table only; dependencies and unsupported shapes refused",
+    "concurrency, long backfill, live backup/restore, disk failure not executed",
+    "old Portal/Core/Graph gate not executed under finite assigned scope"
+  ],
+  "goal": "No goal created or changed",
+  "delivery": "local only; no commit/push/publication; only assigned module written"
+}

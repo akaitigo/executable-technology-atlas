@@ -1,0 +1,14 @@
+import pathlib,tempfile
+from calculate import resolve,ID
+from runner import utc
+def probe():
+    folder=tempfile.TemporaryDirectory(prefix='atlas-entry-failure-',dir='/private/tmp');root=pathlib.Path(folder.name)
+    try:
+        p=root/'user'/'applications';p.mkdir(parents=True);(p/ID).write_bytes(b'\\xff')
+        try:resolve(root,dict(entry_id=ID,mode='strict'))
+        except UnicodeDecodeError as error:
+            result=dict(status='EXECUTION_FAILURE',phase='owned actual file UTF-8 decode',error=type(error).__name__,encoding=error.encoding,start=error.start,end=error.end,input_hex='ff',partial=dict(source='user',read_bytes_completed=True))
+        else:raise AssertionError('invalid UTF-8 was decoded')
+    finally:folder.cleanup()
+    assert not root.exists()
+    return dict(utc=utc(),owned_tmp_cleaned=True,controlled_invalid_bytes=True,actual_file_read_failure=True,result=result)

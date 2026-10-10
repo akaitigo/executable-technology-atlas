@@ -1,0 +1,227 @@
+{
+  "Atlas": "Fixed six requests and four input refusals",
+  "cases": [
+    {
+      "id": "no-constraint",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      }
+    },
+    {
+      "id": "selector-only",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": []
+      }
+    },
+    {
+      "id": "toleration-only",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      }
+    },
+    {
+      "id": "selector-and-toleration",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-toleration-value",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-b",
+            "effect": "NoSchedule"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-block",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 1,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "pool": "special"
+        },
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Equal",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "unknown-request-key",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [],
+        "force": true
+      },
+      "expectedReason": "invalid-request-schema"
+    },
+    {
+      "id": "boolean-resource",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": true,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": []
+      },
+      "expectedReason": "invalid-available"
+    },
+    {
+      "id": "unknown-selector-key",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {
+          "zone": "special"
+        },
+        "tolerations": []
+      },
+      "expectedReason": "invalid-selector"
+    },
+    {
+      "id": "unsupported-exists",
+      "request": {
+        "available": {
+          "A": {
+            "cpu": 4,
+            "memory": 4
+          },
+          "B": {
+            "cpu": 4,
+            "memory": 2
+          }
+        },
+        "nodeSelector": {},
+        "tolerations": [
+          {
+            "key": "reserved",
+            "operator": "Exists",
+            "value": "team-a",
+            "effect": "NoSchedule"
+          }
+        ]
+      },
+      "expectedReason": "invalid-toleration"
+    }
+  ]
+}

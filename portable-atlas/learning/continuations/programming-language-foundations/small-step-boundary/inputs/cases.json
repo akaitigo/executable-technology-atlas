@@ -1,0 +1,127 @@
+{
+  "project": "Atlas",
+  "scope": "Five closed JSON AST inputs; no parser or host eval",
+  "cases": [
+    {
+      "id": "zero-value",
+      "ast": {
+        "kind": "Int",
+        "value": 0
+      },
+      "budget": 0
+    },
+    {
+      "id": "arithmetic-complete",
+      "ast": {
+        "kind": "Add",
+        "left": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 1
+          },
+          "right": {
+            "kind": "Int",
+            "value": 2
+          }
+        },
+        "right": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Int",
+            "value": 4
+          }
+        }
+      },
+      "budget": 3
+    },
+    {
+      "id": "arithmetic-budget",
+      "ast": {
+        "kind": "Add",
+        "left": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 1
+          },
+          "right": {
+            "kind": "Int",
+            "value": 2
+          }
+        },
+        "right": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Int",
+            "value": 4
+          }
+        }
+      },
+      "budget": 2
+    },
+    {
+      "id": "application-value",
+      "ast": {
+        "kind": "Call",
+        "fn": {
+          "kind": "Fn",
+          "param": "x",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "Int",
+              "value": 1
+            }
+          }
+        },
+        "arg": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 2
+          },
+          "right": {
+            "kind": "Int",
+            "value": 3
+          }
+        }
+      },
+      "budget": 3
+    },
+    {
+      "id": "not-callable-stuck",
+      "ast": {
+        "kind": "Call",
+        "fn": {
+          "kind": "Int",
+          "value": 0
+        },
+        "arg": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 1
+          },
+          "right": {
+            "kind": "Int",
+            "value": 2
+          }
+        }
+      },
+      "budget": 4
+    }
+  ]
+}

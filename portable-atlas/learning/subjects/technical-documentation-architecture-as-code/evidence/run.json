@@ -1,0 +1,1401 @@
+{
+  "schema": 1,
+  "executedAt": "2026-10-05T07:40:08.028749+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "system": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64"
+  },
+  "command": "python3 -B check.py --record",
+  "measurements": {
+    "scenarios": [
+      {
+        "scenario": "baseline",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "passed",
+          "failures": [],
+          "snippets": [
+            {
+              "function": "clamp",
+              "args": [
+                -1,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(-1, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                0,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(0, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                7,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(7, 0, 10))\n",
+              "expected": "7\n",
+              "stdout": "7\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                10,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(10, 0, 10))\n",
+              "expected": "10\n",
+              "stdout": "10\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                11,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(11, 0, 10))\n",
+              "expected": "10\n",
+              "stdout": "10\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                2,
+                3
+              ],
+              "source": "from api import add\nprint(add(2, 3))\n",
+              "expected": "5\n",
+              "stdout": "5\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                -2,
+                2
+              ],
+              "source": "from api import add\nprint(add(-2, 2))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                0,
+                0
+              ],
+              "source": "from api import add\nprint(add(0, 0))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            }
+          ],
+          "snippetExecution": "actual subprocess"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "passed",
+          "expectedFailures": [],
+          "expectedStdout": [
+            "0\n",
+            "0\n",
+            "7\n",
+            "10\n",
+            "10\n",
+            "5\n",
+            "0\n",
+            "0\n"
+          ],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+        "rawSha256": "84a659336c30cd47f839c3c5472add0811103a7f337a219353e3131f45483120"
+      },
+      {
+        "scenario": "stale-contract",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    8
+                  ],
+                  "stdout": "8\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "stale-contract"
+          ],
+          "snippets": [],
+          "snippetExecution": "skipped before integrity"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "stale-contract"
+          ],
+          "expectedStdout": [],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "5e18ce44d14adf0f700b6e4898fef3b8bf25451bcf7ff3786196fda1e18cf044",
+        "rawSha256": "9cc3810d9ae9eff57d4d08e2ca13dc015b037d07fcbefe1b59116febd10aeb51"
+      },
+      {
+        "scenario": "regenerated",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    8
+                  ],
+                  "stdout": "8\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "5e18ce44d14adf0f700b6e4898fef3b8bf25451bcf7ff3786196fda1e18cf044",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "6c3ef10aa4d324d38d4a9dae8a73f39fbe35f07914f118bf71e10d9bbdef1934",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "6c3ef10aa4d324d38d4a9dae8a73f39fbe35f07914f118bf71e10d9bbdef1934",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "passed",
+          "failures": [],
+          "snippets": [
+            {
+              "function": "clamp",
+              "args": [
+                -1,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(-1, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                0,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(0, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                7,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(7, 0, 10))\n",
+              "expected": "7\n",
+              "stdout": "7\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                10,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(10, 0, 10))\n",
+              "expected": "10\n",
+              "stdout": "10\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                11,
+                0,
+                8
+              ],
+              "source": "from api import clamp\nprint(clamp(11, 0, 8))\n",
+              "expected": "8\n",
+              "stdout": "8\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                2,
+                3
+              ],
+              "source": "from api import add\nprint(add(2, 3))\n",
+              "expected": "5\n",
+              "stdout": "5\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                -2,
+                2
+              ],
+              "source": "from api import add\nprint(add(-2, 2))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                0,
+                0
+              ],
+              "source": "from api import add\nprint(add(0, 0))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            }
+          ],
+          "snippetExecution": "actual subprocess"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 8))\n```\n\n期待stdout:\n```text\n8\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "passed",
+          "expectedFailures": [],
+          "expectedStdout": [
+            "0\n",
+            "0\n",
+            "7\n",
+            "10\n",
+            "8\n",
+            "5\n",
+            "0\n",
+            "0\n"
+          ],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "5e18ce44d14adf0f700b6e4898fef3b8bf25451bcf7ff3786196fda1e18cf044",
+        "rawSha256": "ba8521542a8f04f701b47b1ef9a397ab92fa08a92a61fc22c2ac3a0ccc31d6eb"
+      },
+      {
+        "scenario": "stale-code",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "stale-code"
+          ],
+          "snippets": [],
+          "snippetExecution": "skipped before integrity"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "stale-code"
+          ],
+          "expectedStdout": [],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+        "rawSha256": "8d58f19198760824c5f766c2a8458d8adf5e28f4227c16e06f5ff0ffac722f83"
+      },
+      {
+        "scenario": "broken-anchor",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "1ed228d454f1182798379441865ee830819d3509262a8d904a3108d07daea138",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "1ed228d454f1182798379441865ee830819d3509262a8d904a3108d07daea138",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "broken-local-anchor"
+          ],
+          "snippets": [],
+          "snippetExecution": "skipped before integrity"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-missing)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "broken-local-anchor"
+          ],
+          "expectedStdout": [],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+        "rawSha256": "b9ea06ac83c6a55c8a799d052c6721f9b276c6de06b85a5b8bb1a4b41b5dcd6f"
+      },
+      {
+        "scenario": "unsupported-function",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "divide",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "unsupported function"
+          ],
+          "snippets": [],
+          "snippetExecution": "skipped unsupported input"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "unsupported function"
+          ],
+          "expectedStdout": [],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "d98c377ccf26858f7a75e274c10785e7efb4d9cc3b465f91fc185e2d21f38c8f",
+        "rawSha256": "00d2a467c232bb35d46f2ff0ceb533b7a72d5ffa1830f056160c176d9f69ba3a"
+      },
+      {
+        "scenario": "wrong-output",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "6\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "00757d2fb1806a5e28aa37ce38fb6725fc927df68bfa672a03600e4fea3acb42",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "496dc8ff33f78b72c1598fafeff947cd03a721aeaf35ea4efaf419a141dcabb7",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "496dc8ff33f78b72c1598fafeff947cd03a721aeaf35ea4efaf419a141dcabb7",
+          "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "snippet-output"
+          ],
+          "snippets": [
+            {
+              "function": "clamp",
+              "args": [
+                -1,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(-1, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                0,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(0, 0, 10))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                7,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(7, 0, 10))\n",
+              "expected": "7\n",
+              "stdout": "7\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                10,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(10, 0, 10))\n",
+              "expected": "10\n",
+              "stdout": "10\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "clamp",
+              "args": [
+                11,
+                0,
+                10
+              ],
+              "source": "from api import clamp\nprint(clamp(11, 0, 10))\n",
+              "expected": "10\n",
+              "stdout": "10\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                2,
+                3
+              ],
+              "source": "from api import add\nprint(add(2, 3))\n",
+              "expected": "6\n",
+              "stdout": "5\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": false
+            },
+            {
+              "function": "add",
+              "args": [
+                -2,
+                2
+              ],
+              "source": "from api import add\nprint(add(-2, 2))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            },
+            {
+              "function": "add",
+              "args": [
+                0,
+                0
+              ],
+              "source": "from api import add\nprint(add(0, 0))\n",
+              "expected": "0\n",
+              "stdout": "0\n",
+              "stderr": "",
+              "exitCode": 0,
+              "passed": true
+            }
+          ],
+          "snippetExecution": "actual subprocess"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n6\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">JSON契約</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "snippet-output"
+          ],
+          "expectedStdout": [
+            "0\n",
+            "0\n",
+            "7\n",
+            "10\n",
+            "10\n",
+            "5\n",
+            "0\n",
+            "0\n"
+          ],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "00757d2fb1806a5e28aa37ce38fb6725fc927df68bfa672a03600e4fea3acb42",
+        "rawSha256": "ec65f3a558110fbcf072af806f17954332f76d253cf2eb42821236539579930e"
+      },
+      {
+        "scenario": "tampered-svg",
+        "contract": {
+          "schema": 1,
+          "title": "小さな数値API",
+          "functions": [
+            {
+              "name": "clamp",
+              "summary": "値を閉区間へ収める",
+              "examples": [
+                {
+                  "args": [
+                    -1,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0,
+                    10
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    7,
+                    0,
+                    10
+                  ],
+                  "stdout": "7\n"
+                },
+                {
+                  "args": [
+                    10,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                },
+                {
+                  "args": [
+                    11,
+                    0,
+                    10
+                  ],
+                  "stdout": "10\n"
+                }
+              ]
+            },
+            {
+              "name": "add",
+              "summary": "二つの整数を加える",
+              "examples": [
+                {
+                  "args": [
+                    2,
+                    3
+                  ],
+                  "stdout": "5\n"
+                },
+                {
+                  "args": [
+                    -2,
+                    2
+                  ],
+                  "stdout": "0\n"
+                },
+                {
+                  "args": [
+                    0,
+                    0
+                  ],
+                  "stdout": "0\n"
+                }
+              ]
+            }
+          ]
+        },
+        "manifest": {
+          "contractSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+          "implementationSha256": "5bbec005aef4c278072b40d1b4275422e18a0812bd931a72b2fb7c889900c29a",
+          "artifacts": {
+            "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+            "architecture.svg": "11ea1ab5d2c8ab14f23d74dd1f3883f5745e9ace6f291030f76ad52b2bcfb475"
+          }
+        },
+        "observedArtifactSha256": {
+          "api.md": "353cf9338dbc567aeb72954978a19cc7ebd2ffc0d093af26eedb3ba158de6779",
+          "architecture.svg": "aa8e3c3578d3b829bc5c7be58b88f2902a8576b1b021654790ac10921faf9f05"
+        },
+        "result": {
+          "status": "rejected",
+          "failures": [
+            "artifact-digest:architecture.svg"
+          ],
+          "snippets": [],
+          "snippetExecution": "skipped before integrity"
+        },
+        "artifacts": {
+          "api.md": "# 小さな数値API\n\n[構造図](architecture.svg)\n\n## 索引\n\n- [clamp](#api-clamp)\n- [add](#api-add)\n\n<a id=\"api-clamp\"></a>\n## clamp\n\n値を閉区間へ収める\n\n```python\nfrom api import clamp\nprint(clamp(-1, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(0, 0, 10))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import clamp\nprint(clamp(7, 0, 10))\n```\n\n期待stdout:\n```text\n7\n```\n\n```python\nfrom api import clamp\nprint(clamp(10, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n```python\nfrom api import clamp\nprint(clamp(11, 0, 10))\n```\n\n期待stdout:\n```text\n10\n```\n\n\n<a id=\"api-add\"></a>\n## add\n\n二つの整数を加える\n\n```python\nfrom api import add\nprint(add(2, 3))\n```\n\n期待stdout:\n```text\n5\n```\n\n```python\nfrom api import add\nprint(add(-2, 2))\n```\n\n期待stdout:\n```text\n0\n```\n\n```python\nfrom api import add\nprint(add(0, 0))\n```\n\n期待stdout:\n```text\n0\n```\n\n## 原典\n\n- [examples](https://docs.python.org/3/library/doctest.html#how-it-works)\n- [markdown](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)\n- [svg](https://www.w3.org/TR/SVG2/struct.html#SVGElement)\n- [decisions](https://adr.github.io/)\n",
+          "architecture.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 200\" role=\"img\"><title>契約から文書と実行例への流れ</title><rect x=\"10\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"100\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">手編集</text><path d=\"M 190 90 h 20\" stroke=\"#164e63\"/><rect x=\"210\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"300\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">生成Markdown / SVG</text><path d=\"M 390 90 h 20\" stroke=\"#164e63\"/><rect x=\"410\" y=\"50\" width=\"180\" height=\"80\" rx=\"10\" fill=\"#e0f2fe\"/><text x=\"500\" y=\"95\" text-anchor=\"middle\" font-size=\"14\">snippet実行</text></svg>\n"
+        },
+        "oracle": {
+          "expectedStatus": "rejected",
+          "expectedFailures": [
+            "artifact-digest:architecture.svg"
+          ],
+          "expectedStdout": [],
+          "locatorAndArtifactStructure": "passed"
+        },
+        "inputSha256": "16a2585125fd2fdc0dfd6bbd630a138358d9b539ccf46d8bcb6e067bf5a19337",
+        "rawSha256": "83e63fc894d85c18dcfce0b04080491ea1b8e2066ea5d1e9834ae0d26a26a810"
+      }
+    ],
+    "apiComparisons": 44421,
+    "inputRejects": [
+      {
+        "input": "schema",
+        "error": "contract schema"
+      },
+      {
+        "input": "extra",
+        "error": "contract schema"
+      },
+      {
+        "input": "empty",
+        "error": "function count"
+      },
+      {
+        "input": "title newline",
+        "error": "title"
+      },
+      {
+        "input": "duplicate",
+        "error": "duplicate function"
+      },
+      {
+        "input": "function",
+        "error": "unsupported function"
+      },
+      {
+        "input": "summary html",
+        "error": "summary"
+      },
+      {
+        "input": "bool argument",
+        "error": "argument range"
+      },
+      {
+        "input": "float argument",
+        "error": "argument range"
+      },
+      {
+        "input": "large argument",
+        "error": "argument range"
+      },
+      {
+        "input": "reversed bounds",
+        "error": "bounds"
+      },
+      {
+        "input": "arity",
+        "error": "example schema"
+      },
+      {
+        "input": "arbitrary stdout",
+        "error": "stdout"
+      },
+      {
+        "input": "no examples",
+        "error": "example count"
+      }
+    ],
+    "intentionalFaults": [
+      {
+        "scenario": "stale-contract",
+        "failures": [
+          "stale-contract"
+        ],
+        "independentOracle": "caught"
+      },
+      {
+        "scenario": "stale-code",
+        "failures": [
+          "stale-code"
+        ],
+        "independentOracle": "caught"
+      },
+      {
+        "scenario": "broken-anchor",
+        "failures": [
+          "broken-local-anchor"
+        ],
+        "independentOracle": "caught"
+      },
+      {
+        "scenario": "unsupported-function",
+        "failures": [
+          "unsupported function"
+        ],
+        "independentOracle": "caught"
+      },
+      {
+        "scenario": "wrong-output",
+        "failures": [
+          "snippet-output"
+        ],
+        "independentOracle": "caught"
+      },
+      {
+        "scenario": "tampered-svg",
+        "failures": [
+          "artifact-digest:architecture.svg"
+        ],
+        "independentOracle": "caught"
+      }
+    ]
+  },
+  "sourceBinding": {
+    "examples": "https://docs.python.org/3/library/doctest.html#how-it-works",
+    "markdown": "https://spec.commonmark.org/0.31.2/#fenced-code-blocks",
+    "svg": "https://www.w3.org/TR/SVG2/struct.html#SVGElement",
+    "decisions": "https://adr.github.io/"
+  }
+}

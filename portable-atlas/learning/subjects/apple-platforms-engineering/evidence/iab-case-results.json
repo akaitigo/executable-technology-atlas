@@ -1,0 +1,146 @@
+[
+  {
+    "case": 0,
+    "progress": "all-fields: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tstring: \"hello\"\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"Aki\"\nage: 7\nnote: \"hello\"\neager optional\naccepted\nname: \"Aki\"\nage: 7\nnote: \"hello\"\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: \"hello\"\n独立oracle（正常）\naccepted\nname: \"Aki\"\nage: 7\nnote: \"hello\"",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 1,
+    "progress": "optional-missing: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"Aki\"\nage: 7\nnote: null\neager optional\nrejected\nkeyNotFound / path [\"note\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: null\n独立oracle（正常）\naccepted\nname: \"Aki\"\nage: 7\nnote: null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 2,
+    "progress": "optional-null: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tnull\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"Aki\"\nage: 7\nnote: null\neager optional\nrejected\nvalueNotFound / path [\"note\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: null\n独立oracle（正常）\naccepted\nname: \"Aki\"\nage: 7\nnote: null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 3,
+    "progress": "required-missing: 4 / 4 段階表示（説明用）",
+    "fields": "name\tmissing\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tstring: \"hello\"\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\nkeyNotFound / path [\"name\"]\neager optional\nrejected\nkeyNotFound / path [\"name\"]\ntry? defaulting\naccepted\nname: \"\"\nage: 7\nnote: \"hello\"\n独立oracle（正常）\nrejected\nname:missing",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 4,
+    "progress": "required-null: 4 / 4 段階表示（説明用）",
+    "fields": "name\tnull\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\nvalueNotFound / path [\"name\"]\neager optional\nrejected\nvalueNotFound / path [\"name\"]\ntry? defaulting\naccepted\nname: \"\"\nage: 7\nnote: null\n独立oracle（正常）\nrejected\nname:null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 5,
+    "progress": "name-wrong-type: 4 / 4 段階表示（説明用）",
+    "fields": "name\tnumber: 7\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ntypeMismatch / path [\"name\"]\neager optional\nrejected\ntypeMismatch / path [\"name\"]\ntry? defaulting\naccepted\nname: \"\"\nage: 7\nnote: null\n独立oracle（正常）\nrejected\nname:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 6,
+    "progress": "age-string: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tstring: \"7\"\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ntypeMismatch / path [\"age\"]\neager optional\nrejected\ntypeMismatch / path [\"age\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 0\nnote: null\n独立oracle（正常）\nrejected\nage:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 7,
+    "progress": "age-bool: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tboolean: true\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ntypeMismatch / path [\"age\"]\neager optional\nrejected\ntypeMismatch / path [\"age\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 0\nnote: null\n独立oracle（正常）\nrejected\nage:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 8,
+    "progress": "note-wrong-type: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tnumber: 7\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ntypeMismatch / path [\"note\"]\neager optional\nrejected\ntypeMismatch / path [\"note\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: null\n独立oracle（正常）\nrejected\nnote:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 9,
+    "progress": "int8-min: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: -128\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tstring: \"\"\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"\"\nage: -128\nnote: \"\"\neager optional\naccepted\nname: \"\"\nage: -128\nnote: \"\"\ntry? defaulting\naccepted\nname: \"\"\nage: -128\nnote: \"\"\n独立oracle（正常）\naccepted\nname: \"\"\nage: -128\nnote: \"\"",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 10,
+    "progress": "int8-max: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"境界\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 127\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tnull\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"境界\"\nage: 127\nnote: null\neager optional\nrejected\nvalueNotFound / path [\"note\"]\ntry? defaulting\naccepted\nname: \"境界\"\nage: 127\nnote: null\n独立oracle（正常）\naccepted\nname: \"境界\"\nage: 127\nnote: null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 11,
+    "progress": "int8-underflow: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: -129\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ndataCorrupted / path []\neager optional\nrejected\ndataCorrupted / path []\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 0\nnote: null\n独立oracle（正常）\nrejected\nage:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 12,
+    "progress": "int8-overflow: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 128\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ndataCorrupted / path []\neager optional\nrejected\ndataCorrupted / path []\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 0\nnote: null\n独立oracle（正常）\nrejected\nage:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 13,
+    "progress": "fractional-age: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7.5\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ndataCorrupted / path []\neager optional\nrejected\ndataCorrupted / path []\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 0\nnote: null\n独立oracle（正常）\nrejected\nage:type/range",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 14,
+    "progress": "extra-key: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"Aki\"\nage: 7\nnote: null\neager optional\nrejected\nkeyNotFound / path [\"note\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: null\n独立oracle（正常）\naccepted\nname: \"Aki\"\nage: 7\nnote: null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 15,
+    "progress": "root-array: 4 / 4 段階表示（説明用）",
+    "fields": "name\tkeyed objectなし\tString required\ttry?版は失敗を空文字へ\nage\tkeyed objectなし\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tkeyed objectなし\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ntypeMismatch / path []\neager optional\nrejected\ntypeMismatch / path []\ntry? defaulting\nrejected\ntypeMismatch / path []\n独立oracle（正常）\nrejected\nroot object required",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 16,
+    "progress": "malformed-json: 4 / 4 段階表示（説明用）",
+    "fields": "name\tkeyed objectなし\tString required\ttry?版は失敗を空文字へ\nage\tkeyed objectなし\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tkeyed objectなし\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\nrejected\ndataCorrupted / path []\neager optional\nrejected\ndataCorrupted / path []\ntry? defaulting\nrejected\ndataCorrupted / path []\n独立oracle（正常）\nrejected\nJSON syntax",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  },
+  {
+    "case": 17,
+    "progress": "integral-decimal-age: 4 / 4 段階表示（説明用）",
+    "fields": "name\tstring: \"Aki\"\tString required\ttry?版は失敗を空文字へ\nage\tnumber: 7\tInt8 required (-128..127)\ttry?版は失敗を0へ\nnote\tmissing\tString? missing/null→nil、wrong type throw\teager版はrequired、try?版はwrong typeもnil",
+    "cards": "正常\naccepted\nname: \"Aki\"\nage: 7\nnote: null\neager optional\nrejected\nkeyNotFound / path [\"note\"]\ntry? defaulting\naccepted\nname: \"Aki\"\nage: 7\nnote: null\n独立oracle（正常）\naccepted\nname: \"Aki\"\nage: 7\nnote: null",
+    "comparison": "実Swift normal vs 独立oracle: 一致（status/profile）。Swift error debugはrawに保存。",
+    "nextEnabled": false
+  }
+]

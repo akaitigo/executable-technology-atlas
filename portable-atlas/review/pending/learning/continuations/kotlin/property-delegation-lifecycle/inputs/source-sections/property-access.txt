@@ -1,0 +1,63 @@
+#### Delegated property declaration
+
+A delegated read-only property declaration `val x: T by e` introduces `x` as a name for the *delegation* result of property `x` to the entity `e` or to the delegatee of `e` provided by [`provideDelegate`](#provide-delegate).
+For the former, one may consider these properties as regular properties with a special *delegating* [getters][Getters and setters]:
+
+```kotlin
+val x: T by e
+```
+
+is the same as
+
+```kotlin
+val x$delegate = e
+val x: T
+    get(): T = x$delegate.getValue(thisRef, ::x)
+```
+
+Here every access to such property (`x` in this case) becomes an [overloadable][Operator overloading] form which is expanded into the following:
+
+```kotlin
+e.getValue(thisRef, property)
+```
+
+where 
+
+- `e` is the delegating entity; the compiler needs to make sure that this is accessible in any place `x` is accessible;
+- `getValue` is a suitable operator function available on `e`;
+- `thisRef` is the [receiver][Receivers] object for the property.
+  This argument is `null` for local properties;
+- `property` is an object of the type `kotlin.KProperty<*>` that contains information relevant to `x` (for example, its name, see standard library documentation for details).
+
+A delegated mutable property declaration `var x: T by e` introduces `x` as a name of a mutable entity with type `T`, access to which is *delegated* to the entity `e` or to the delegatee of `e` provided by [`provideDelegate`](#provide-delegate).
+As before, one may view these properties as regular properties with special *delegating* [getters and setters][Getters and setters]:
+
+```kotlin
+var x: T by e
+```
+
+is the same as
+
+```kotlin
+val x$delegate = e
+var x: T
+    get(): T = x$delegate.getValue(thisRef, ::x)
+    set(value: T) { x$delegate.setValue(thisRef, ::x, value) }
+```
+
+Read access is handled the same way as for a delegated read-only property. 
+Any write access to `x` (using, for example, an assignment operator `x = y`) becomes an overloadable form with the following expansion:
+
+```kotlin
+e.setValue(thisRef, property, y)
+```
+
+where 
+
+- `e` is the delegating entity; the compiler needs to make sure that this is accessible in any place `x` is accessible;
+- `setValue` is a suitable operator function available on `e`;
+- `thisRef` is the [receiver][Receivers] object for the property.
+  This argument is `null` for local properties;
+- `property` is an object of the type `kotlin.KProperty<*>` that contains information relevant to `x` (for example, its name, see standard library documentation for details);
+- `y` is the value `x` is assigned to.
+  In case of complex assignments (see the [assignment][Assignments] section), as they are all overloadable forms, first the assignment expansion is performed, and after that, the expansion of the delegated property using normal assignment.

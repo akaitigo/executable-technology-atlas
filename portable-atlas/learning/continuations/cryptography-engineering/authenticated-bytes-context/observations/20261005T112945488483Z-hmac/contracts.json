@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "public_fixture_key_hex": "5055424c49432d464958545552452d4f4e4c592d33322d425954452d4b4559212121",
+  "fields": [
+    "purpose",
+    "operation",
+    "resource",
+    "amount",
+    "text"
+  ],
+  "strings": {
+    "purpose": [
+      "archive-v1",
+      "report-v1"
+    ],
+    "operation": [
+      "read",
+      "write"
+    ],
+    "resource": [
+      "item-a",
+      "item-b"
+    ],
+    "text": [
+      "hello"
+    ]
+  },
+  "amount": "JSON integer lexical 0|[1-9][0-9]{0,2}; bool, float, exponent, -0 rejected",
+  "encoding": "ASCII JSON fixed field order, no whitespace; independent custom contract, not RFC8785",
+  "cases": [
+    {
+      "id": "raw-order",
+      "label": "key順を変える",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{\"text\":\"hello\",\"amount\":2,\"resource\":\"item-a\",\"operation\":\"read\",\"purpose\":\"archive-v1\"}",
+      "mode": "raw",
+      "omit": null
+    },
+    {
+      "id": "raw-whitespace",
+      "label": "空白を変える",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{ \"purpose\": \"archive-v1\", \"operation\": \"read\", \"resource\": \"item-a\", \"amount\": 2, \"text\": \"hello\" }",
+      "mode": "raw",
+      "omit": null
+    },
+    {
+      "id": "canonical-equal",
+      "label": "独自canonicalで順序・空白を吸収",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{ \"purpose\": \"archive-v1\", \"operation\": \"read\", \"resource\": \"item-a\", \"amount\": 2, \"text\": \"hello\" }",
+      "mode": "canonical",
+      "omit": null
+    },
+    {
+      "id": "context-operation",
+      "label": "operationを変更し故障版と比較",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{\"purpose\":\"archive-v1\",\"operation\":\"write\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "mode": "context",
+      "omit": "operation"
+    },
+    {
+      "id": "context-resource",
+      "label": "resourceを変更し故障版と比較",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-b\",\"amount\":2,\"text\":\"hello\"}",
+      "mode": "context",
+      "omit": "resource"
+    },
+    {
+      "id": "context-purpose",
+      "label": "purposeを変更し故障版と比較",
+      "left": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "right": "{\"purpose\":\"report-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\"}",
+      "mode": "context",
+      "omit": "purpose"
+    }
+  ],
+  "refusals": [
+    {
+      "id": "refuse-duplicate",
+      "label": "duplicate",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\",\"amount\":3}",
+      "reason": "duplicate-key"
+    },
+    {
+      "id": "refuse-unknown",
+      "label": "unknown",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":\"hello\",\"extra\":0}",
+      "reason": "field-set"
+    },
+    {
+      "id": "refuse-missing",
+      "label": "missing",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2}",
+      "reason": "field-set"
+    },
+    {
+      "id": "refuse-bool-number",
+      "label": "bool-number",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":true,\"text\":\"hello\"}",
+      "reason": "amount-type"
+    },
+    {
+      "id": "refuse-decimal",
+      "label": "decimal",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2.0,\"text\":\"hello\"}",
+      "reason": "number-spelling"
+    },
+    {
+      "id": "refuse-exponent",
+      "label": "exponent",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2e0,\"text\":\"hello\"}",
+      "reason": "number-spelling"
+    },
+    {
+      "id": "refuse-negative-zero",
+      "label": "negative-zero",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":-0,\"text\":\"hello\"}",
+      "reason": "number-spelling"
+    },
+    {
+      "id": "refuse-nonstring",
+      "label": "nonstring",
+      "input": "{\"purpose\":\"archive-v1\",\"operation\":\"read\",\"resource\":\"item-a\",\"amount\":2,\"text\":true}",
+      "reason": "string-contract"
+    }
+  ]
+}

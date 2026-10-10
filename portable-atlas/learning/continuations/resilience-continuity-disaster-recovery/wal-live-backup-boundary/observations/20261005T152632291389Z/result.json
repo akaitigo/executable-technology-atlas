@@ -1,0 +1,1866 @@
+{
+  "startedUtc": "2026-10-05T15:26:32.291389+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "platform": "Darwin",
+    "scope": "own TemporaryDirectory SQLite only; no shared DB or system settings"
+  },
+  "sourceHashes": {
+    "worker.py": "88f01d8a9cb3d393e23c6d6c2f77d2bcf90ca0a0ecee74bb0148735c72a3a372",
+    "preview.py": "a9cf0fa94f897eb0edcddacedff0e29af017505911272daa1bebdb5a9852e3de",
+    "test_negative.py": "527ced8b20e9b6a35ee9132f3ece01a0916bfc1e192143781a4b047554286b83",
+    "runner.py": "6515ff78e51619c1ac2c4f5b51cfcdf53671b18a5d0f7eebf25c276c20ed5cfb",
+    "index.html": "d47c0c141f786e48d8aed6f7cd77f2c8a7acc9b552bd1cc7e5680fa9f990667a",
+    "route.py": "4297ec430278914d918646704cba04d6584a3ad7ab3edc94131175c99584f773",
+    "oracle.json": "ae8bf336dd70cadb138f106cbc49b091465a53c7792f08f9c4843150167f821c",
+    "README.md": "22cb4e1803f912165e1e8e8bbfc9d447f899ba11e86130d8495f54e18ec07cd3",
+    "requests.json": "b0e137ae25a06c4801202a1156b29f174c8d690c2c4054ad9e4d56e53268d992",
+    "COVERAGE.md": "33b55c5d4dc4ee6bcd21f6032024f0f16761af042a56a2585b9a2f34ac8d1ff8",
+    "checker.py": "8ab83c0f09981bfabb1dcb8bcba5eb8af8a9add16fd2899757502213cc0c8f16",
+    "REVISION": "b7569bf475d1d23ab34766dffd66e70e2a9253e5f08262cdb9507c72fe0b3b82",
+    "skills/wal-live-backup-boundary/SKILL.md": "a95af1bfb25f1c1289d1e8224c6ccf7fb2d271264a55ac63caef108a9781cb3b"
+  },
+  "cases": [
+    {
+      "id": "compare",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.305212+00:00",
+      "endedUtc": "2026-10-05T15:26:32.393554+00:00",
+      "inputSha256": "559066da13a3d23c95dd44a668a87040fa0b59ae6674f3ece0c2fa9cb43bcbe0",
+      "exitCode": 0,
+      "stdout": "{\"journalMode\": \"wal\", \"pageSize\": 4096, \"checkpoint\": [0, 0, 0], \"observed\": true, \"reason\": null, \"failure\": null, \"summary\": {\"sourceRows\": [1, 2], \"checkpointMainRows\": [1], \"sourceMainRows\": [1], \"backupRows\": [1, 2], \"copyRows\": [1], \"backupMissing\": [], \"copyMissing\": [2], \"fileCopySucceeded\": true}, \"failedSourceRows\": null, \"sql\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\", \"startedUtc\": \"2026-10-05T15:26:32.368602+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.369195+00:00\", \"result\": [[\"wal\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\", \"startedUtc\": \"2026-10-05T15:26:32.369200+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.369209+00:00\", \"result\": [[0]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\", \"startedUtc\": \"2026-10-05T15:26:32.369210+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.369215+00:00\", \"result\": [[4096]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\", \"startedUtc\": \"2026-10-05T15:26:32.369216+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.372819+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.372830+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.372848+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\", \"startedUtc\": \"2026-10-05T15:26:32.372850+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.372915+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.372916+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.372981+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\", \"startedUtc\": \"2026-10-05T15:26:32.372983+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.375991+00:00\", \"result\": [[0, 0, 0]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.378506+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.378514+00:00\", \"result\": [], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.378515+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.378566+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.378567+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.378585+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.378694+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.378700+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\", \"startedUtc\": \"2026-10-05T15:26:32.378701+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.378708+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.378709+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.379340+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.379500+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.379504+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.379505+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.380238+00:00\", \"result\": [[1], [2]], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.380239+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.380255+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.382648+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.382661+00:00\", \"result\": [], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.382662+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.382705+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.382707+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.382724+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.384602+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.384614+00:00\", \"result\": [], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.384615+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.384644+00:00\", \"result\": [[1], [2]], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.384645+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.384656+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.386556+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.386561+00:00\", \"result\": [], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.386562+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.386583+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.386586+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.386596+00:00\", \"result\": [[\"ok\"]], \"error\": null}], \"trace\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\"}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"backup-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"copy-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA integrity_check\"}], \"events\": [{\"event\": \"snapshot-captured\", \"utc\": \"2026-10-05T15:26:32.382135+00:00\", \"writerOpen\": true, \"sourceRows\": [1, 2], \"mainAfterRow1Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"mainAfterRow2Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"walSha256\": \"b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c\"}, {\"event\": \"backup-api-completed\", \"startedUtc\": \"2026-10-05T15:26:32.382954+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.383372+00:00\", \"progress\": [{\"status\": 101, \"remaining\": 0, \"total\": 2, \"utc\": \"2026-10-05T15:26:32.383349+00:00\"}]}, {\"event\": \"main-only-copy-completed\", \"startedUtc\": \"2026-10-05T15:26:32.384678+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.385026+00:00\", \"sourceSha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"copySha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\"}, {\"event\": \"source-files-still-stable\", \"utc\": \"2026-10-05T15:26:32.386755+00:00\", \"before\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c\"}, \"after\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c\"}, \"writerOpen\": true}, {\"event\": \"writer-closed\", \"utc\": \"2026-10-05T15:26:32.388272+00:00\"}, {\"event\": \"owned-temp-cleaned\", \"utc\": \"2026-10-05T15:26:32.388989+00:00\", \"removed\": true}], \"files\": {\"backup.sqlite\": {\"sha256\": \"6983f960c2344a272e16da0abf5ddfb45ddaa9a94f8133b8642c3c3d17baba21\", \"bytes\": 8192}, \"main-only.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"source.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"source.sqlite-shm\": {\"sha256\": \"d45235dacfb9177e631ed1983447b4304388ec4b0498401cfa37624ba61f5440\", \"bytes\": 32768}, \"source.sqlite-wal\": {\"sha256\": \"b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c\", \"bytes\": 4152}, \"checkpoint-main.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}}, \"tempCreated\": true, \"tempCleaned\": true}\n",
+      "stderr": "",
+      "observation": {
+        "journalMode": "wal",
+        "pageSize": 4096,
+        "checkpoint": [
+          0,
+          0,
+          0
+        ],
+        "observed": true,
+        "reason": null,
+        "failure": null,
+        "summary": {
+          "sourceRows": [
+            1,
+            2
+          ],
+          "checkpointMainRows": [
+            1
+          ],
+          "sourceMainRows": [
+            1
+          ],
+          "backupRows": [
+            1,
+            2
+          ],
+          "copyRows": [
+            1
+          ],
+          "backupMissing": [],
+          "copyMissing": [
+            2
+          ],
+          "fileCopySucceeded": true
+        },
+        "failedSourceRows": null,
+        "sql": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL",
+            "startedUtc": "2026-10-05T15:26:32.368602+00:00",
+            "endedUtc": "2026-10-05T15:26:32.369195+00:00",
+            "result": [
+              [
+                "wal"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0",
+            "startedUtc": "2026-10-05T15:26:32.369200+00:00",
+            "endedUtc": "2026-10-05T15:26:32.369209+00:00",
+            "result": [
+              [
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size",
+            "startedUtc": "2026-10-05T15:26:32.369210+00:00",
+            "endedUtc": "2026-10-05T15:26:32.369215+00:00",
+            "result": [
+              [
+                4096
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)",
+            "startedUtc": "2026-10-05T15:26:32.369216+00:00",
+            "endedUtc": "2026-10-05T15:26:32.372819+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.372830+00:00",
+            "endedUtc": "2026-10-05T15:26:32.372848+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)",
+            "startedUtc": "2026-10-05T15:26:32.372850+00:00",
+            "endedUtc": "2026-10-05T15:26:32.372915+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.372916+00:00",
+            "endedUtc": "2026-10-05T15:26:32.372981+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)",
+            "startedUtc": "2026-10-05T15:26:32.372983+00:00",
+            "endedUtc": "2026-10-05T15:26:32.375991+00:00",
+            "result": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.378506+00:00",
+            "endedUtc": "2026-10-05T15:26:32.378514+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.378515+00:00",
+            "endedUtc": "2026-10-05T15:26:32.378566+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.378567+00:00",
+            "endedUtc": "2026-10-05T15:26:32.378585+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.378694+00:00",
+            "endedUtc": "2026-10-05T15:26:32.378700+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)",
+            "startedUtc": "2026-10-05T15:26:32.378701+00:00",
+            "endedUtc": "2026-10-05T15:26:32.378708+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.378709+00:00",
+            "endedUtc": "2026-10-05T15:26:32.379340+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.379500+00:00",
+            "endedUtc": "2026-10-05T15:26:32.379504+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.379505+00:00",
+            "endedUtc": "2026-10-05T15:26:32.380238+00:00",
+            "result": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.380239+00:00",
+            "endedUtc": "2026-10-05T15:26:32.380255+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.382648+00:00",
+            "endedUtc": "2026-10-05T15:26:32.382661+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.382662+00:00",
+            "endedUtc": "2026-10-05T15:26:32.382705+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.382707+00:00",
+            "endedUtc": "2026-10-05T15:26:32.382724+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.384602+00:00",
+            "endedUtc": "2026-10-05T15:26:32.384614+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.384615+00:00",
+            "endedUtc": "2026-10-05T15:26:32.384644+00:00",
+            "result": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.384645+00:00",
+            "endedUtc": "2026-10-05T15:26:32.384656+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.386556+00:00",
+            "endedUtc": "2026-10-05T15:26:32.386561+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.386562+00:00",
+            "endedUtc": "2026-10-05T15:26:32.386583+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.386586+00:00",
+            "endedUtc": "2026-10-05T15:26:32.386596+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "trace": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size"
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA integrity_check"
+          }
+        ],
+        "events": [
+          {
+            "event": "snapshot-captured",
+            "utc": "2026-10-05T15:26:32.382135+00:00",
+            "writerOpen": true,
+            "sourceRows": [
+              1,
+              2
+            ],
+            "mainAfterRow1Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "mainAfterRow2Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "walSha256": "b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c"
+          },
+          {
+            "event": "backup-api-completed",
+            "startedUtc": "2026-10-05T15:26:32.382954+00:00",
+            "endedUtc": "2026-10-05T15:26:32.383372+00:00",
+            "progress": [
+              {
+                "status": 101,
+                "remaining": 0,
+                "total": 2,
+                "utc": "2026-10-05T15:26:32.383349+00:00"
+              }
+            ]
+          },
+          {
+            "event": "main-only-copy-completed",
+            "startedUtc": "2026-10-05T15:26:32.384678+00:00",
+            "endedUtc": "2026-10-05T15:26:32.385026+00:00",
+            "sourceSha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "copySha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43"
+          },
+          {
+            "event": "source-files-still-stable",
+            "utc": "2026-10-05T15:26:32.386755+00:00",
+            "before": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c"
+            },
+            "after": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c"
+            },
+            "writerOpen": true
+          },
+          {
+            "event": "writer-closed",
+            "utc": "2026-10-05T15:26:32.388272+00:00"
+          },
+          {
+            "event": "owned-temp-cleaned",
+            "utc": "2026-10-05T15:26:32.388989+00:00",
+            "removed": true
+          }
+        ],
+        "files": {
+          "backup.sqlite": {
+            "sha256": "6983f960c2344a272e16da0abf5ddfb45ddaa9a94f8133b8642c3c3d17baba21",
+            "bytes": 8192
+          },
+          "main-only.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "source.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "source.sqlite-shm": {
+            "sha256": "d45235dacfb9177e631ed1983447b4304388ec4b0498401cfa37624ba61f5440",
+            "bytes": 32768
+          },
+          "source.sqlite-wal": {
+            "sha256": "b25bba944244a278dbdf5921241717e99ad120c77ee36647ddc5b5e626f4652c",
+            "bytes": 4152
+          },
+          "checkpoint-main.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          }
+        },
+        "tempCreated": true,
+        "tempCleaned": true
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "backup-only",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.394177+00:00",
+      "endedUtc": "2026-10-05T15:26:32.476955+00:00",
+      "inputSha256": "85f02d24244efc2f82587801d341e9b33200d9c4326de48cb1ff9b655d4c6a02",
+      "exitCode": 0,
+      "stdout": "{\"journalMode\": \"wal\", \"pageSize\": 4096, \"checkpoint\": [0, 0, 0], \"observed\": true, \"reason\": null, \"failure\": null, \"summary\": {\"sourceRows\": [1, 2], \"checkpointMainRows\": [1], \"sourceMainRows\": [1], \"backupRows\": [1, 2], \"copyRows\": null, \"backupMissing\": [], \"copyMissing\": null, \"fileCopySucceeded\": null}, \"failedSourceRows\": null, \"sql\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\", \"startedUtc\": \"2026-10-05T15:26:32.457876+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.458569+00:00\", \"result\": [[\"wal\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\", \"startedUtc\": \"2026-10-05T15:26:32.458575+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.458584+00:00\", \"result\": [[0]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\", \"startedUtc\": \"2026-10-05T15:26:32.458586+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.458590+00:00\", \"result\": [[4096]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\", \"startedUtc\": \"2026-10-05T15:26:32.458591+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.460986+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.460990+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.461000+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\", \"startedUtc\": \"2026-10-05T15:26:32.461006+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.461070+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.461072+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.461087+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\", \"startedUtc\": \"2026-10-05T15:26:32.461089+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.462621+00:00\", \"result\": [[0, 0, 0]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.464633+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.464650+00:00\", \"result\": [], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.464653+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.464707+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.464709+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.464728+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.464882+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.464891+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\", \"startedUtc\": \"2026-10-05T15:26:32.464893+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.464903+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.464904+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.465491+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.465644+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.465649+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.465650+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.466262+00:00\", \"result\": [[1], [2]], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.466263+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.466281+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.468597+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.468604+00:00\", \"result\": [], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.468606+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.468640+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.468642+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.468658+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.469980+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.469999+00:00\", \"result\": [], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.470001+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.470046+00:00\", \"result\": [[1], [2]], \"error\": null}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.470048+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.470063+00:00\", \"result\": [[\"ok\"]], \"error\": null}], \"trace\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\"}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"backup-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"backup-new-connection\", \"sql\": \"PRAGMA integrity_check\"}], \"events\": [{\"event\": \"snapshot-captured\", \"utc\": \"2026-10-05T15:26:32.468149+00:00\", \"writerOpen\": true, \"sourceRows\": [1, 2], \"mainAfterRow1Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"mainAfterRow2Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"walSha256\": \"668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d\"}, {\"event\": \"backup-api-completed\", \"startedUtc\": \"2026-10-05T15:26:32.468911+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.469391+00:00\", \"progress\": [{\"status\": 101, \"remaining\": 0, \"total\": 2, \"utc\": \"2026-10-05T15:26:32.469363+00:00\"}]}, {\"event\": \"source-files-still-stable\", \"utc\": \"2026-10-05T15:26:32.470285+00:00\", \"before\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d\"}, \"after\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d\"}, \"writerOpen\": true}, {\"event\": \"writer-closed\", \"utc\": \"2026-10-05T15:26:32.471863+00:00\"}, {\"event\": \"owned-temp-cleaned\", \"utc\": \"2026-10-05T15:26:32.472802+00:00\", \"removed\": true}], \"files\": {\"backup.sqlite\": {\"sha256\": \"6983f960c2344a272e16da0abf5ddfb45ddaa9a94f8133b8642c3c3d17baba21\", \"bytes\": 8192}, \"source.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"source.sqlite-shm\": {\"sha256\": \"c96bfb41a7c453702416438ca48cb760b1fd93c5c3d4e244d987a6e0cc1dd0a2\", \"bytes\": 32768}, \"source.sqlite-wal\": {\"sha256\": \"668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d\", \"bytes\": 4152}, \"checkpoint-main.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}}, \"tempCreated\": true, \"tempCleaned\": true}\n",
+      "stderr": "",
+      "observation": {
+        "journalMode": "wal",
+        "pageSize": 4096,
+        "checkpoint": [
+          0,
+          0,
+          0
+        ],
+        "observed": true,
+        "reason": null,
+        "failure": null,
+        "summary": {
+          "sourceRows": [
+            1,
+            2
+          ],
+          "checkpointMainRows": [
+            1
+          ],
+          "sourceMainRows": [
+            1
+          ],
+          "backupRows": [
+            1,
+            2
+          ],
+          "copyRows": null,
+          "backupMissing": [],
+          "copyMissing": null,
+          "fileCopySucceeded": null
+        },
+        "failedSourceRows": null,
+        "sql": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL",
+            "startedUtc": "2026-10-05T15:26:32.457876+00:00",
+            "endedUtc": "2026-10-05T15:26:32.458569+00:00",
+            "result": [
+              [
+                "wal"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0",
+            "startedUtc": "2026-10-05T15:26:32.458575+00:00",
+            "endedUtc": "2026-10-05T15:26:32.458584+00:00",
+            "result": [
+              [
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size",
+            "startedUtc": "2026-10-05T15:26:32.458586+00:00",
+            "endedUtc": "2026-10-05T15:26:32.458590+00:00",
+            "result": [
+              [
+                4096
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)",
+            "startedUtc": "2026-10-05T15:26:32.458591+00:00",
+            "endedUtc": "2026-10-05T15:26:32.460986+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.460990+00:00",
+            "endedUtc": "2026-10-05T15:26:32.461000+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)",
+            "startedUtc": "2026-10-05T15:26:32.461006+00:00",
+            "endedUtc": "2026-10-05T15:26:32.461070+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.461072+00:00",
+            "endedUtc": "2026-10-05T15:26:32.461087+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)",
+            "startedUtc": "2026-10-05T15:26:32.461089+00:00",
+            "endedUtc": "2026-10-05T15:26:32.462621+00:00",
+            "result": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.464633+00:00",
+            "endedUtc": "2026-10-05T15:26:32.464650+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.464653+00:00",
+            "endedUtc": "2026-10-05T15:26:32.464707+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.464709+00:00",
+            "endedUtc": "2026-10-05T15:26:32.464728+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.464882+00:00",
+            "endedUtc": "2026-10-05T15:26:32.464891+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)",
+            "startedUtc": "2026-10-05T15:26:32.464893+00:00",
+            "endedUtc": "2026-10-05T15:26:32.464903+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.464904+00:00",
+            "endedUtc": "2026-10-05T15:26:32.465491+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.465644+00:00",
+            "endedUtc": "2026-10-05T15:26:32.465649+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.465650+00:00",
+            "endedUtc": "2026-10-05T15:26:32.466262+00:00",
+            "result": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.466263+00:00",
+            "endedUtc": "2026-10-05T15:26:32.466281+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.468597+00:00",
+            "endedUtc": "2026-10-05T15:26:32.468604+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.468606+00:00",
+            "endedUtc": "2026-10-05T15:26:32.468640+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.468642+00:00",
+            "endedUtc": "2026-10-05T15:26:32.468658+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.469980+00:00",
+            "endedUtc": "2026-10-05T15:26:32.469999+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.470001+00:00",
+            "endedUtc": "2026-10-05T15:26:32.470046+00:00",
+            "result": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.470048+00:00",
+            "endedUtc": "2026-10-05T15:26:32.470063+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "trace": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size"
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "backup-new-connection",
+            "sql": "PRAGMA integrity_check"
+          }
+        ],
+        "events": [
+          {
+            "event": "snapshot-captured",
+            "utc": "2026-10-05T15:26:32.468149+00:00",
+            "writerOpen": true,
+            "sourceRows": [
+              1,
+              2
+            ],
+            "mainAfterRow1Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "mainAfterRow2Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "walSha256": "668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d"
+          },
+          {
+            "event": "backup-api-completed",
+            "startedUtc": "2026-10-05T15:26:32.468911+00:00",
+            "endedUtc": "2026-10-05T15:26:32.469391+00:00",
+            "progress": [
+              {
+                "status": 101,
+                "remaining": 0,
+                "total": 2,
+                "utc": "2026-10-05T15:26:32.469363+00:00"
+              }
+            ]
+          },
+          {
+            "event": "source-files-still-stable",
+            "utc": "2026-10-05T15:26:32.470285+00:00",
+            "before": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d"
+            },
+            "after": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d"
+            },
+            "writerOpen": true
+          },
+          {
+            "event": "writer-closed",
+            "utc": "2026-10-05T15:26:32.471863+00:00"
+          },
+          {
+            "event": "owned-temp-cleaned",
+            "utc": "2026-10-05T15:26:32.472802+00:00",
+            "removed": true
+          }
+        ],
+        "files": {
+          "backup.sqlite": {
+            "sha256": "6983f960c2344a272e16da0abf5ddfb45ddaa9a94f8133b8642c3c3d17baba21",
+            "bytes": 8192
+          },
+          "source.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "source.sqlite-shm": {
+            "sha256": "c96bfb41a7c453702416438ca48cb760b1fd93c5c3d4e244d987a6e0cc1dd0a2",
+            "bytes": 32768
+          },
+          "source.sqlite-wal": {
+            "sha256": "668b4ec94e60ec8964b59bc42b02531bbeebfff137b5a1ef0894ac8855f89f3d",
+            "bytes": 4152
+          },
+          "checkpoint-main.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          }
+        },
+        "tempCreated": true,
+        "tempCleaned": true
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "main-only",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.477595+00:00",
+      "endedUtc": "2026-10-05T15:26:32.560181+00:00",
+      "inputSha256": "1f4a2429dc821c82843445df794241024fcb9a3d6c16dba3f2c47dd70059f77e",
+      "exitCode": 0,
+      "stdout": "{\"journalMode\": \"wal\", \"pageSize\": 4096, \"checkpoint\": [0, 0, 0], \"observed\": true, \"reason\": null, \"failure\": null, \"summary\": {\"sourceRows\": [1, 2], \"checkpointMainRows\": [1], \"sourceMainRows\": [1], \"backupRows\": null, \"copyRows\": [1], \"backupMissing\": null, \"copyMissing\": [2], \"fileCopySucceeded\": true}, \"failedSourceRows\": null, \"sql\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\", \"startedUtc\": \"2026-10-05T15:26:32.539315+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.540009+00:00\", \"result\": [[\"wal\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\", \"startedUtc\": \"2026-10-05T15:26:32.540015+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.540025+00:00\", \"result\": [[0]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\", \"startedUtc\": \"2026-10-05T15:26:32.540027+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.540031+00:00\", \"result\": [[4096]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\", \"startedUtc\": \"2026-10-05T15:26:32.540032+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.542697+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.542699+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.542705+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\", \"startedUtc\": \"2026-10-05T15:26:32.542707+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.542768+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.542769+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.542781+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\", \"startedUtc\": \"2026-10-05T15:26:32.542782+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.544061+00:00\", \"result\": [[0, 0, 0]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.546639+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.546661+00:00\", \"result\": [], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.546663+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.546695+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.546697+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.546717+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.547165+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.547187+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\", \"startedUtc\": \"2026-10-05T15:26:32.547190+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.547201+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.547203+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.547809+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.547988+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.547997+00:00\", \"result\": [], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.547999+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.549027+00:00\", \"result\": [[1], [2]], \"error\": null}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.549029+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.549051+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.551222+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.551227+00:00\", \"result\": [], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.551229+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.551251+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.551253+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.551265+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.553040+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.553045+00:00\", \"result\": [], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.553046+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.553065+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.553067+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.553076+00:00\", \"result\": [[\"ok\"]], \"error\": null}], \"trace\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\"}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (2)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"source-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"source-new-connection\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"captured-main-only-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"copy-new-connection\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"copy-new-connection\", \"sql\": \"PRAGMA integrity_check\"}], \"events\": [{\"event\": \"snapshot-captured\", \"utc\": \"2026-10-05T15:26:32.550859+00:00\", \"writerOpen\": true, \"sourceRows\": [1, 2], \"mainAfterRow1Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"mainAfterRow2Sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"walSha256\": \"e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02\"}, {\"event\": \"main-only-copy-completed\", \"startedUtc\": \"2026-10-05T15:26:32.551289+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.551717+00:00\", \"sourceSha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"copySha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\"}, {\"event\": \"source-files-still-stable\", \"utc\": \"2026-10-05T15:26:32.553234+00:00\", \"before\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02\"}, \"after\": {\"main\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"wal\": \"e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02\"}, \"writerOpen\": true}, {\"event\": \"writer-closed\", \"utc\": \"2026-10-05T15:26:32.554803+00:00\"}, {\"event\": \"owned-temp-cleaned\", \"utc\": \"2026-10-05T15:26:32.555624+00:00\", \"removed\": true}], \"files\": {\"main-only.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"source.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"source.sqlite-shm\": {\"sha256\": \"dde04d75871473c7ef72ba409f81ac0319ba48814907ece21845603d49a29291\", \"bytes\": 32768}, \"source.sqlite-wal\": {\"sha256\": \"e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02\", \"bytes\": 4152}, \"checkpoint-main.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}}, \"tempCreated\": true, \"tempCleaned\": true}\n",
+      "stderr": "",
+      "observation": {
+        "journalMode": "wal",
+        "pageSize": 4096,
+        "checkpoint": [
+          0,
+          0,
+          0
+        ],
+        "observed": true,
+        "reason": null,
+        "failure": null,
+        "summary": {
+          "sourceRows": [
+            1,
+            2
+          ],
+          "checkpointMainRows": [
+            1
+          ],
+          "sourceMainRows": [
+            1
+          ],
+          "backupRows": null,
+          "copyRows": [
+            1
+          ],
+          "backupMissing": null,
+          "copyMissing": [
+            2
+          ],
+          "fileCopySucceeded": true
+        },
+        "failedSourceRows": null,
+        "sql": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL",
+            "startedUtc": "2026-10-05T15:26:32.539315+00:00",
+            "endedUtc": "2026-10-05T15:26:32.540009+00:00",
+            "result": [
+              [
+                "wal"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0",
+            "startedUtc": "2026-10-05T15:26:32.540015+00:00",
+            "endedUtc": "2026-10-05T15:26:32.540025+00:00",
+            "result": [
+              [
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size",
+            "startedUtc": "2026-10-05T15:26:32.540027+00:00",
+            "endedUtc": "2026-10-05T15:26:32.540031+00:00",
+            "result": [
+              [
+                4096
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)",
+            "startedUtc": "2026-10-05T15:26:32.540032+00:00",
+            "endedUtc": "2026-10-05T15:26:32.542697+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.542699+00:00",
+            "endedUtc": "2026-10-05T15:26:32.542705+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)",
+            "startedUtc": "2026-10-05T15:26:32.542707+00:00",
+            "endedUtc": "2026-10-05T15:26:32.542768+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.542769+00:00",
+            "endedUtc": "2026-10-05T15:26:32.542781+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)",
+            "startedUtc": "2026-10-05T15:26:32.542782+00:00",
+            "endedUtc": "2026-10-05T15:26:32.544061+00:00",
+            "result": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.546639+00:00",
+            "endedUtc": "2026-10-05T15:26:32.546661+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.546663+00:00",
+            "endedUtc": "2026-10-05T15:26:32.546695+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.546697+00:00",
+            "endedUtc": "2026-10-05T15:26:32.546717+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.547165+00:00",
+            "endedUtc": "2026-10-05T15:26:32.547187+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)",
+            "startedUtc": "2026-10-05T15:26:32.547190+00:00",
+            "endedUtc": "2026-10-05T15:26:32.547201+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.547203+00:00",
+            "endedUtc": "2026-10-05T15:26:32.547809+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.547988+00:00",
+            "endedUtc": "2026-10-05T15:26:32.547997+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.547999+00:00",
+            "endedUtc": "2026-10-05T15:26:32.549027+00:00",
+            "result": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.549029+00:00",
+            "endedUtc": "2026-10-05T15:26:32.549051+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.551222+00:00",
+            "endedUtc": "2026-10-05T15:26:32.551227+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.551229+00:00",
+            "endedUtc": "2026-10-05T15:26:32.551251+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.551253+00:00",
+            "endedUtc": "2026-10-05T15:26:32.551265+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.553040+00:00",
+            "endedUtc": "2026-10-05T15:26:32.553045+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.553046+00:00",
+            "endedUtc": "2026-10-05T15:26:32.553065+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.553067+00:00",
+            "endedUtc": "2026-10-05T15:26:32.553076+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "trace": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size"
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (2)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "source-new-connection",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "captured-main-only-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "copy-new-connection",
+            "sql": "PRAGMA integrity_check"
+          }
+        ],
+        "events": [
+          {
+            "event": "snapshot-captured",
+            "utc": "2026-10-05T15:26:32.550859+00:00",
+            "writerOpen": true,
+            "sourceRows": [
+              1,
+              2
+            ],
+            "mainAfterRow1Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "mainAfterRow2Sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "walSha256": "e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02"
+          },
+          {
+            "event": "main-only-copy-completed",
+            "startedUtc": "2026-10-05T15:26:32.551289+00:00",
+            "endedUtc": "2026-10-05T15:26:32.551717+00:00",
+            "sourceSha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "copySha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43"
+          },
+          {
+            "event": "source-files-still-stable",
+            "utc": "2026-10-05T15:26:32.553234+00:00",
+            "before": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02"
+            },
+            "after": {
+              "main": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+              "wal": "e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02"
+            },
+            "writerOpen": true
+          },
+          {
+            "event": "writer-closed",
+            "utc": "2026-10-05T15:26:32.554803+00:00"
+          },
+          {
+            "event": "owned-temp-cleaned",
+            "utc": "2026-10-05T15:26:32.555624+00:00",
+            "removed": true
+          }
+        ],
+        "files": {
+          "main-only.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "source.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "source.sqlite-shm": {
+            "sha256": "dde04d75871473c7ef72ba409f81ac0319ba48814907ece21845603d49a29291",
+            "bytes": 32768
+          },
+          "source.sqlite-wal": {
+            "sha256": "e67249590fac245f0b9ca27f07c1f7defb0b2813d953c79f117375be4fc51a02",
+            "bytes": 4152
+          },
+          "checkpoint-main.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          }
+        },
+        "tempCreated": true,
+        "tempCleaned": true
+      },
+      "outcome": "OBSERVED"
+    },
+    {
+      "id": "refused-mode",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.560803+00:00",
+      "endedUtc": "2026-10-05T15:26:32.624106+00:00",
+      "inputSha256": "7a00308e547e1dfd03bde441b0c46464609ad5b5112aa7e3e8eaebe0341ebe6b",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"unknown mode\", \"failure\": null, \"summary\": null, \"sql\": [], \"trace\": [], \"events\": [], \"files\": {}, \"tempCreated\": false, \"tempCleaned\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "unknown mode",
+        "failure": null,
+        "summary": null,
+        "sql": [],
+        "trace": [],
+        "events": [],
+        "files": {},
+        "tempCreated": false,
+        "tempCleaned": null
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "refused-external-path",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.624532+00:00",
+      "endedUtc": "2026-10-05T15:26:32.685803+00:00",
+      "inputSha256": "6802b390879ad46258468e2c5de21ca7ecc423b66fbce6514cec352c79fe2e30",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"external paths or extra keys forbidden\", \"failure\": null, \"summary\": null, \"sql\": [], \"trace\": [], \"events\": [], \"files\": {}, \"tempCreated\": false, \"tempCleaned\": null}\n",
+      "stderr": "",
+      "observation": {
+        "observed": false,
+        "reason": "external paths or extra keys forbidden",
+        "failure": null,
+        "summary": null,
+        "sql": [],
+        "trace": [],
+        "events": [],
+        "files": {},
+        "tempCreated": false,
+        "tempCleaned": null
+      },
+      "outcome": "REFUSED"
+    },
+    {
+      "id": "wal-unavailable",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.686226+00:00",
+      "endedUtc": "2026-10-05T15:26:32.753421+00:00",
+      "inputSha256": "574dd2caf3968c4658080b2fedb790b02428b1fd80b5061fd91d5b0d0beb7266",
+      "exitCode": 4,
+      "stdout": "{\"journalMode\": \"memory\", \"observed\": false, \"reason\": null, \"failure\": {\"phase\": \"activateWAL\", \"type\": \"WALUnavailable\", \"message\": \"journal_mode result memory; WAL required\"}, \"summary\": null, \"failedSourceRows\": null, \"sql\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\", \"startedUtc\": \"2026-10-05T15:26:32.749544+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.749753+00:00\", \"result\": [[\"memory\"]], \"error\": null}], \"trace\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\"}], \"events\": [{\"event\": \"writer-closed\", \"utc\": \"2026-10-05T15:26:32.749775+00:00\"}, {\"event\": \"owned-temp-cleaned\", \"utc\": \"2026-10-05T15:26:32.749995+00:00\", \"removed\": true}], \"files\": {}, \"tempCreated\": true, \"tempCleaned\": true}\n",
+      "stderr": "WALUnavailable: journal_mode result memory; WAL required\n",
+      "observation": {
+        "journalMode": "memory",
+        "observed": false,
+        "reason": null,
+        "failure": {
+          "phase": "activateWAL",
+          "type": "WALUnavailable",
+          "message": "journal_mode result memory; WAL required"
+        },
+        "summary": null,
+        "failedSourceRows": null,
+        "sql": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL",
+            "startedUtc": "2026-10-05T15:26:32.749544+00:00",
+            "endedUtc": "2026-10-05T15:26:32.749753+00:00",
+            "result": [
+              [
+                "memory"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "trace": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL"
+          }
+        ],
+        "events": [
+          {
+            "event": "writer-closed",
+            "utc": "2026-10-05T15:26:32.749775+00:00"
+          },
+          {
+            "event": "owned-temp-cleaned",
+            "utc": "2026-10-05T15:26:32.749995+00:00",
+            "removed": true
+          }
+        ],
+        "files": {},
+        "tempCreated": true,
+        "tempCleaned": true
+      },
+      "outcome": "EXECUTION_FAILURE"
+    },
+    {
+      "id": "sql-error",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.753909+00:00",
+      "endedUtc": "2026-10-05T15:26:32.831671+00:00",
+      "inputSha256": "5f89385fb7a0ce6b255aa6aa20967461f7ff71b6ff1c98f2263d30dd9af5e5af",
+      "exitCode": 4,
+      "stdout": "{\"journalMode\": \"wal\", \"pageSize\": 4096, \"checkpoint\": [0, 0, 0], \"observed\": false, \"reason\": null, \"failure\": {\"phase\": \"row2Write\", \"type\": \"OperationalError\", \"message\": \"no such table: missing_table\"}, \"summary\": null, \"failedSourceRows\": [1], \"sql\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\", \"startedUtc\": \"2026-10-05T15:26:32.816749+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.817436+00:00\", \"result\": [[\"wal\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\", \"startedUtc\": \"2026-10-05T15:26:32.817440+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.817448+00:00\", \"result\": [[0]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\", \"startedUtc\": \"2026-10-05T15:26:32.817450+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.817454+00:00\", \"result\": [[4096]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\", \"startedUtc\": \"2026-10-05T15:26:32.817455+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.820732+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.820735+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.820744+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\", \"startedUtc\": \"2026-10-05T15:26:32.820746+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.820805+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"COMMIT\", \"startedUtc\": \"2026-10-05T15:26:32.820806+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.820820+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\", \"startedUtc\": \"2026-10-05T15:26:32.820822+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.822279+00:00\", \"result\": [[0, 0, 0]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.825256+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.825303+00:00\", \"result\": [], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.825305+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.825366+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.825367+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.825388+00:00\", \"result\": [[\"ok\"]], \"error\": null}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\", \"startedUtc\": \"2026-10-05T15:26:32.825551+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.825560+00:00\", \"result\": [], \"error\": null}, {\"role\": \"writer\", \"sql\": \"INSERT INTO missing_table VALUES (2)\", \"startedUtc\": \"2026-10-05T15:26:32.825562+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.825567+00:00\", \"result\": null, \"error\": {\"type\": \"OperationalError\", \"message\": \"no such table: missing_table\"}}, {\"role\": \"failed-source-read\", \"sql\": \"PRAGMA query_only=ON\", \"startedUtc\": \"2026-10-05T15:26:32.827438+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.827444+00:00\", \"result\": [], \"error\": null}, {\"role\": \"failed-source-read\", \"sql\": \"SELECT id FROM records ORDER BY id\", \"startedUtc\": \"2026-10-05T15:26:32.827445+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.827467+00:00\", \"result\": [[1]], \"error\": null}, {\"role\": \"failed-source-read\", \"sql\": \"PRAGMA integrity_check\", \"startedUtc\": \"2026-10-05T15:26:32.827468+00:00\", \"endedUtc\": \"2026-10-05T15:26:32.827479+00:00\", \"result\": [[\"ok\"]], \"error\": null}], \"trace\": [{\"role\": \"writer\", \"sql\": \"PRAGMA journal_mode=WAL\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_autocheckpoint=0\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA page_size\"}, {\"role\": \"writer\", \"sql\": \"CREATE TABLE records(id INTEGER PRIMARY KEY)\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"writer\", \"sql\": \"INSERT INTO records VALUES (1)\"}, {\"role\": \"writer\", \"sql\": \"COMMIT\"}, {\"role\": \"writer\", \"sql\": \"PRAGMA wal_checkpoint(TRUNCATE)\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"checkpoint-main-read\", \"sql\": \"PRAGMA integrity_check\"}, {\"role\": \"writer\", \"sql\": \"BEGIN IMMEDIATE\"}, {\"role\": \"failed-source-read\", \"sql\": \"PRAGMA query_only=ON\"}, {\"role\": \"failed-source-read\", \"sql\": \"SELECT id FROM records ORDER BY id\"}, {\"role\": \"failed-source-read\", \"sql\": \"PRAGMA integrity_check\"}], \"events\": [{\"event\": \"writer-closed\", \"utc\": \"2026-10-05T15:26:32.825662+00:00\"}, {\"event\": \"owned-temp-cleaned\", \"utc\": \"2026-10-05T15:26:32.827969+00:00\", \"removed\": true}], \"files\": {\"failed-source.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}, \"checkpoint-main.sqlite\": {\"sha256\": \"6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43\", \"bytes\": 8192}}, \"tempCreated\": true, \"tempCleaned\": true}\n",
+      "stderr": "OperationalError: no such table: missing_table\n",
+      "observation": {
+        "journalMode": "wal",
+        "pageSize": 4096,
+        "checkpoint": [
+          0,
+          0,
+          0
+        ],
+        "observed": false,
+        "reason": null,
+        "failure": {
+          "phase": "row2Write",
+          "type": "OperationalError",
+          "message": "no such table: missing_table"
+        },
+        "summary": null,
+        "failedSourceRows": [
+          1
+        ],
+        "sql": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL",
+            "startedUtc": "2026-10-05T15:26:32.816749+00:00",
+            "endedUtc": "2026-10-05T15:26:32.817436+00:00",
+            "result": [
+              [
+                "wal"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0",
+            "startedUtc": "2026-10-05T15:26:32.817440+00:00",
+            "endedUtc": "2026-10-05T15:26:32.817448+00:00",
+            "result": [
+              [
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size",
+            "startedUtc": "2026-10-05T15:26:32.817450+00:00",
+            "endedUtc": "2026-10-05T15:26:32.817454+00:00",
+            "result": [
+              [
+                4096
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)",
+            "startedUtc": "2026-10-05T15:26:32.817455+00:00",
+            "endedUtc": "2026-10-05T15:26:32.820732+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.820735+00:00",
+            "endedUtc": "2026-10-05T15:26:32.820744+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)",
+            "startedUtc": "2026-10-05T15:26:32.820746+00:00",
+            "endedUtc": "2026-10-05T15:26:32.820805+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT",
+            "startedUtc": "2026-10-05T15:26:32.820806+00:00",
+            "endedUtc": "2026-10-05T15:26:32.820820+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)",
+            "startedUtc": "2026-10-05T15:26:32.820822+00:00",
+            "endedUtc": "2026-10-05T15:26:32.822279+00:00",
+            "result": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.825256+00:00",
+            "endedUtc": "2026-10-05T15:26:32.825303+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.825305+00:00",
+            "endedUtc": "2026-10-05T15:26:32.825366+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.825367+00:00",
+            "endedUtc": "2026-10-05T15:26:32.825388+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE",
+            "startedUtc": "2026-10-05T15:26:32.825551+00:00",
+            "endedUtc": "2026-10-05T15:26:32.825560+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO missing_table VALUES (2)",
+            "startedUtc": "2026-10-05T15:26:32.825562+00:00",
+            "endedUtc": "2026-10-05T15:26:32.825567+00:00",
+            "result": null,
+            "error": {
+              "type": "OperationalError",
+              "message": "no such table: missing_table"
+            }
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "PRAGMA query_only=ON",
+            "startedUtc": "2026-10-05T15:26:32.827438+00:00",
+            "endedUtc": "2026-10-05T15:26:32.827444+00:00",
+            "result": [],
+            "error": null
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "SELECT id FROM records ORDER BY id",
+            "startedUtc": "2026-10-05T15:26:32.827445+00:00",
+            "endedUtc": "2026-10-05T15:26:32.827467+00:00",
+            "result": [
+              [
+                1
+              ]
+            ],
+            "error": null
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "PRAGMA integrity_check",
+            "startedUtc": "2026-10-05T15:26:32.827468+00:00",
+            "endedUtc": "2026-10-05T15:26:32.827479+00:00",
+            "result": [
+              [
+                "ok"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "trace": [
+          {
+            "role": "writer",
+            "sql": "PRAGMA journal_mode=WAL"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_autocheckpoint=0"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA page_size"
+          },
+          {
+            "role": "writer",
+            "sql": "CREATE TABLE records(id INTEGER PRIMARY KEY)"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "writer",
+            "sql": "INSERT INTO records VALUES (1)"
+          },
+          {
+            "role": "writer",
+            "sql": "COMMIT"
+          },
+          {
+            "role": "writer",
+            "sql": "PRAGMA wal_checkpoint(TRUNCATE)"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "checkpoint-main-read",
+            "sql": "PRAGMA integrity_check"
+          },
+          {
+            "role": "writer",
+            "sql": "BEGIN IMMEDIATE"
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "PRAGMA query_only=ON"
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "SELECT id FROM records ORDER BY id"
+          },
+          {
+            "role": "failed-source-read",
+            "sql": "PRAGMA integrity_check"
+          }
+        ],
+        "events": [
+          {
+            "event": "writer-closed",
+            "utc": "2026-10-05T15:26:32.825662+00:00"
+          },
+          {
+            "event": "owned-temp-cleaned",
+            "utc": "2026-10-05T15:26:32.827969+00:00",
+            "removed": true
+          }
+        ],
+        "files": {
+          "failed-source.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          },
+          "checkpoint-main.sqlite": {
+            "sha256": "6d365bbbf684686cb83e3633e1ed813564938ede7442e8bd5832a5cfcbe41a43",
+            "bytes": 8192
+          }
+        },
+        "tempCreated": true,
+        "tempCleaned": true
+      },
+      "outcome": "EXECUTION_FAILURE"
+    },
+    {
+      "id": "execution-failure",
+      "argv": [
+        "python3",
+        "-B",
+        "../worker.py"
+      ],
+      "startedUtc": "2026-10-05T15:26:32.832262+00:00",
+      "endedUtc": "2026-10-05T15:26:32.899648+00:00",
+      "inputSha256": "ebc3d23e7c788c4fdcf960aa4844183d5439299a1d5d3de9a26f060c1c7afce0",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 9 (char 8)\n",
+      "observation": null,
+      "outcome": "EXECUTION_FAILURE"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "title": "Atlas idle候補分類の実行前期待",
+  "cases": [
+    {"condition":"no browser/JVM candidates","blocking":false},
+    {"condition":"exact pid/ppid/start/comm, cpu=0","blocking":false},
+    {"condition":"exact identity, cpu=1","blocking":false},
+    {"condition":"same PID but different start time","blocking":true},
+    {"condition":"same PID but different executable","blocking":true},
+    {"condition":"same identity, cpu=1.1","blocking":true},
+    {"condition":"other Java PID, cpu=0","blocking":true},
+    {"condition":"browser candidate","blocking":true},
+    {"condition":"unread identity or malformed ps","blocking":true}
+  ],
+  "additional_invariants": ["load<8", "aggregate CPU<600%", "memory free>=20%", "root exclusive slot", "same child priority set/get=10", "5s observation +2s recovery"],
+  "actual_check_executed": false,
+  "no_process_stopped_or_modified": true
+}

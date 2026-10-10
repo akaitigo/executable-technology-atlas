@@ -1,0 +1,698 @@
+{
+  "contract": {
+    "originalId": "m1",
+    "originalPayload": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+    "originalAttemptTicks": [
+      0,
+      1,
+      3
+    ],
+    "seedCommitTick": -1,
+    "redriveTicks": [
+      4,
+      5,
+      7
+    ],
+    "attemptLimit": 3,
+    "validationBeforeInbox": true,
+    "inboxIdentity": "canonical full JSON id+delta, strict mode compares payload; id-only intentionally omits comparison",
+    "transaction": "inbox/effect/account same SQLite transaction; driver ack and DLQ are model",
+    "history": "append-only DLQ rows; redrive source_dlq links new generation/attempts; conflict stops immediately",
+    "finite": "one original + at most one redrive; no sleep, broker, external effect or durability claim"
+  },
+  "specs": {
+    "poison-only": {
+      "seed": false,
+      "redrive": null,
+      "ticks": [],
+      "outcomes": [],
+      "terminal": "NONE",
+      "effectTick": null,
+      "balance": 0
+    },
+    "poison-corrected": {
+      "seed": false,
+      "redrive": "{\"delta\":7,\"id\":\"m1\"}",
+      "ticks": [
+        4
+      ],
+      "outcomes": [
+        "COMMITTED"
+      ],
+      "terminal": "COMMITTED",
+      "effectTick": 4,
+      "balance": 7
+    },
+    "poison-unchanged": {
+      "seed": false,
+      "redrive": "{\"delta\":\"poison\",\"id\":\"m1\"}",
+      "ticks": [
+        4,
+        5,
+        7
+      ],
+      "outcomes": [
+        "POISON",
+        "POISON",
+        "POISON"
+      ],
+      "terminal": "POISON_EXHAUSTED",
+      "effectTick": null,
+      "balance": 0
+    },
+    "committed-same": {
+      "seed": true,
+      "redrive": "{\"delta\":7,\"id\":\"m1\"}",
+      "ticks": [
+        4
+      ],
+      "outcomes": [
+        "DUPLICATE"
+      ],
+      "terminal": "DUPLICATE",
+      "effectTick": -1,
+      "balance": 7
+    },
+    "committed-changed": {
+      "seed": true,
+      "redrive": "{\"delta\":9,\"id\":\"m1\"}",
+      "ticks": [
+        4
+      ],
+      "outcomes": [
+        "CONFLICT"
+      ],
+      "terminal": "CONFLICT",
+      "effectTick": -1,
+      "balance": 7
+    },
+    "committed-changed-id-only": {
+      "seed": true,
+      "redrive": "{\"delta\":9,\"id\":\"m1\"}",
+      "ticks": [
+        4
+      ],
+      "outcomes": [
+        "DUPLICATE_ID_ONLY"
+      ],
+      "terminal": "DUPLICATE_ID_ONLY",
+      "effectTick": -1,
+      "balance": 7
+    }
+  },
+  "tables": {
+    "poison-only": {
+      "inbox": [],
+      "effects": [],
+      "account": [
+        [
+          1,
+          0
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          2,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[1,2,3]",
+          null
+        ]
+      ],
+      "redrive": []
+    },
+    "poison-corrected": {
+      "inbox": [
+        [
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}"
+        ]
+      ],
+      "effects": [
+        [
+          1,
+          "m1",
+          7,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          4,
+          1
+        ]
+      ],
+      "account": [
+        [
+          1,
+          7
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          2,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          4,
+          4,
+          1,
+          1,
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "COMMITTED",
+          0,
+          1
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[1,2,3]",
+          null
+        ]
+      ],
+      "redrive": [
+        [
+          1,
+          1,
+          1,
+          4,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "[4]",
+          null,
+          "COMMITTED"
+        ]
+      ]
+    },
+    "poison-unchanged": {
+      "inbox": [],
+      "effects": [],
+      "account": [
+        [
+          1,
+          0
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          2,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          4,
+          4,
+          1,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          1
+        ],
+        [
+          5,
+          5,
+          1,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          1
+        ],
+        [
+          6,
+          7,
+          1,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          1
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[1,2,3]",
+          null
+        ],
+        [
+          2,
+          1,
+          7,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[4,5,6]",
+          1
+        ]
+      ],
+      "redrive": [
+        [
+          1,
+          1,
+          1,
+          4,
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "[4,5,6]",
+          2,
+          "POISON_EXHAUSTED"
+        ]
+      ]
+    },
+    "committed-same": {
+      "inbox": [
+        [
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}"
+        ]
+      ],
+      "effects": [
+        [
+          1,
+          "m1",
+          7,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          -1,
+          -1
+        ]
+      ],
+      "account": [
+        [
+          1,
+          7
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          -1,
+          -1,
+          1,
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "COMMITTED",
+          0,
+          null
+        ],
+        [
+          2,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          4,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          5,
+          4,
+          1,
+          1,
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "DUPLICATE",
+          0,
+          1
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[2,3,4]",
+          null
+        ]
+      ],
+      "redrive": [
+        [
+          1,
+          1,
+          1,
+          4,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "[5]",
+          null,
+          "DUPLICATE"
+        ]
+      ]
+    },
+    "committed-changed": {
+      "inbox": [
+        [
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}"
+        ]
+      ],
+      "effects": [
+        [
+          1,
+          "m1",
+          7,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          -1,
+          -1
+        ]
+      ],
+      "account": [
+        [
+          1,
+          7
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          -1,
+          -1,
+          1,
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "COMMITTED",
+          0,
+          null
+        ],
+        [
+          2,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          4,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          5,
+          4,
+          1,
+          1,
+          "m1",
+          "{\"delta\":9,\"id\":\"m1\"}",
+          "CONFLICT",
+          66,
+          1
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[2,3,4]",
+          null
+        ],
+        [
+          2,
+          1,
+          4,
+          "m1",
+          "{\"delta\":9,\"id\":\"m1\"}",
+          "identity-conflict",
+          "[5]",
+          1
+        ]
+      ],
+      "redrive": [
+        [
+          1,
+          1,
+          1,
+          4,
+          "{\"delta\":9,\"id\":\"m1\"}",
+          "[5]",
+          2,
+          "CONFLICT"
+        ]
+      ]
+    },
+    "committed-changed-id-only": {
+      "inbox": [
+        [
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}"
+        ]
+      ],
+      "effects": [
+        [
+          1,
+          "m1",
+          7,
+          "{\"delta\":7,\"id\":\"m1\"}",
+          -1,
+          -1
+        ]
+      ],
+      "account": [
+        [
+          1,
+          7
+        ]
+      ],
+      "attempts": [
+        [
+          1,
+          -1,
+          -1,
+          1,
+          "m1",
+          "{\"delta\":7,\"id\":\"m1\"}",
+          "COMMITTED",
+          0,
+          null
+        ],
+        [
+          2,
+          0,
+          0,
+          1,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          3,
+          1,
+          0,
+          2,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          4,
+          3,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "POISON",
+          65,
+          null
+        ],
+        [
+          5,
+          4,
+          1,
+          1,
+          "m1",
+          "{\"delta\":9,\"id\":\"m1\"}",
+          "DUPLICATE_ID_ONLY",
+          0,
+          1
+        ]
+      ],
+      "dlq": [
+        [
+          1,
+          0,
+          3,
+          "m1",
+          "{\"delta\":\"poison\",\"id\":\"m1\"}",
+          "poison-exhausted",
+          "[2,3,4]",
+          null
+        ]
+      ],
+      "redrive": [
+        [
+          1,
+          1,
+          1,
+          4,
+          "{\"delta\":9,\"id\":\"m1\"}",
+          "[5]",
+          null,
+          "DUPLICATE_ID_ONLY"
+        ]
+      ]
+    }
+  },
+  "refusals": {
+    "refused-new-id": "same-ID redrive required",
+    "refused-mode": "invalid mode"
+  }
+}

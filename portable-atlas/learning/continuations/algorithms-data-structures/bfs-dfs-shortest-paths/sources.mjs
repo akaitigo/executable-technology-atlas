@@ -1,0 +1,1 @@
+export const SOURCES=['cases.json','search.mjs','oracle.mjs','sources.mjs','verify.mjs','check.mjs','serve.mjs','lesson.mjs','index.html','styles.css','scope.json','skills/atlas-bfs-dfs-paths/SKILL.md'];

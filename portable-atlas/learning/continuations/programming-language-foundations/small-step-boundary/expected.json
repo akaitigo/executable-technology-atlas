@@ -1,0 +1,333 @@
+{
+  "project": "Atlas",
+  "kind": "hand-derived-before-producer",
+  "cases": [
+    {
+      "id": "zero-value",
+      "status": "value",
+      "states": [
+        {
+          "kind": "Int",
+          "value": 0
+        }
+      ],
+      "rules": [],
+      "redex_paths": [],
+      "value": 0,
+      "next_rule": null,
+      "big_step": {
+        "status": "passed",
+        "value": 0,
+        "error": null
+      }
+    },
+    {
+      "id": "arithmetic-complete",
+      "status": "value",
+      "states": [
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 1
+            },
+            "right": {
+              "kind": "Int",
+              "value": 2
+            }
+          },
+          "right": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 3
+            },
+            "right": {
+              "kind": "Int",
+              "value": 4
+            }
+          }
+        },
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 3
+            },
+            "right": {
+              "kind": "Int",
+              "value": 4
+            }
+          }
+        },
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Int",
+            "value": 7
+          }
+        },
+        {
+          "kind": "Int",
+          "value": 10
+        }
+      ],
+      "rules": [
+        [
+          "AddLeft",
+          "AddInts"
+        ],
+        [
+          "AddRight",
+          "AddInts"
+        ],
+        [
+          "AddInts"
+        ]
+      ],
+      "redex_paths": [
+        "$.left",
+        "$.right",
+        "$"
+      ],
+      "value": 10,
+      "next_rule": null,
+      "big_step": {
+        "status": "passed",
+        "value": 10,
+        "error": null
+      }
+    },
+    {
+      "id": "arithmetic-budget",
+      "status": "budget_exhausted",
+      "states": [
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 1
+            },
+            "right": {
+              "kind": "Int",
+              "value": 2
+            }
+          },
+          "right": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 3
+            },
+            "right": {
+              "kind": "Int",
+              "value": 4
+            }
+          }
+        },
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 3
+            },
+            "right": {
+              "kind": "Int",
+              "value": 4
+            }
+          }
+        },
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 3
+          },
+          "right": {
+            "kind": "Int",
+            "value": 7
+          }
+        }
+      ],
+      "rules": [
+        [
+          "AddLeft",
+          "AddInts"
+        ],
+        [
+          "AddRight",
+          "AddInts"
+        ]
+      ],
+      "redex_paths": [
+        "$.left",
+        "$.right"
+      ],
+      "value": null,
+      "next_rule": [
+        "AddInts"
+      ],
+      "big_step": {
+        "status": "passed",
+        "value": 10,
+        "error": null
+      }
+    },
+    {
+      "id": "application-value",
+      "status": "value",
+      "states": [
+        {
+          "kind": "Call",
+          "fn": {
+            "kind": "Fn",
+            "param": "x",
+            "body": {
+              "kind": "Add",
+              "left": {
+                "kind": "Var",
+                "name": "x"
+              },
+              "right": {
+                "kind": "Int",
+                "value": 1
+              }
+            }
+          },
+          "arg": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 2
+            },
+            "right": {
+              "kind": "Int",
+              "value": 3
+            }
+          }
+        },
+        {
+          "kind": "Call",
+          "fn": {
+            "kind": "Fn",
+            "param": "x",
+            "body": {
+              "kind": "Add",
+              "left": {
+                "kind": "Var",
+                "name": "x"
+              },
+              "right": {
+                "kind": "Int",
+                "value": 1
+              }
+            }
+          },
+          "arg": {
+            "kind": "Int",
+            "value": 5
+          }
+        },
+        {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 5
+          },
+          "right": {
+            "kind": "Int",
+            "value": 1
+          }
+        },
+        {
+          "kind": "Int",
+          "value": 6
+        }
+      ],
+      "rules": [
+        [
+          "CallArg",
+          "AddInts"
+        ],
+        [
+          "Beta"
+        ],
+        [
+          "AddInts"
+        ]
+      ],
+      "redex_paths": [
+        "$.arg",
+        "$",
+        "$"
+      ],
+      "value": 6,
+      "next_rule": null,
+      "big_step": {
+        "status": "passed",
+        "value": 6,
+        "error": null
+      }
+    },
+    {
+      "id": "not-callable-stuck",
+      "status": "stuck",
+      "states": [
+        {
+          "kind": "Call",
+          "fn": {
+            "kind": "Int",
+            "value": 0
+          },
+          "arg": {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 1
+            },
+            "right": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        }
+      ],
+      "rules": [],
+      "redex_paths": [],
+      "value": null,
+      "next_rule": null,
+      "reason": "not-callable",
+      "big_step": {
+        "status": "error",
+        "value": null,
+        "error": "not-callable"
+      },
+      "argument_unchanged": true
+    }
+  ],
+  "limits": [
+    "No all-term equivalence proof",
+    "Budget exhaustion is not evidence of divergence",
+    "Big-step instrumentation events are not small-step transitions"
+  ]
+}

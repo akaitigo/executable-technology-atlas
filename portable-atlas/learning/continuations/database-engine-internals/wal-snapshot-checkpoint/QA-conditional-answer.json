@@ -1,0 +1,85 @@
+{
+  "utc": "2026-10-05T10:53:52.822Z",
+  "change": "Conditional answer: COMMIT20/30, ROLLBACK10, BEGIN-first-read20; relative implementation links",
+  "checks": [
+    {
+      "check": "checker",
+      "exitCode": 0,
+      "output": "PASS 6 fixed sequences, literal snapshot/checkpoint oracle, closed DB, hashes\n"
+    },
+    {
+      "check": "negative/read-only",
+      "exitCode": 0,
+      "output": "[\n  {\n    \"test\": \"read-only SHA256 + mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"snapshot\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"snapshot literal\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"checkpoint-complete\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"held checkpoint literal\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"busy-flag\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"held checkpoint literal\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"connection\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"connection\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"sequence\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"sequence\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"sql\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"exact SQL\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  },\n  {\n    \"test\": \"fresh\",\n    \"passed\": true,\n    \"independentOracleRejected\": \"fresh literal\",\n    \"rawAndDerivedAndArtifactHashesConsistent\": true\n  }\n]\n"
+    },
+    {
+      "check": "own-port-closed",
+      "exitCode": 1,
+      "output": ""
+    },
+    {
+      "check": "protected-Node",
+      "exitCode": 0,
+      "output": "3901\n"
+    },
+    {
+      "check": "capture-dimensions",
+      "exitCode": 0,
+      "output": "<module>/media/conditional-rollback-fresh.jpg\n  pixelWidth: 1280\n  pixelHeight: 3086\n"
+    }
+  ],
+  "preview": {
+    "normalFailure": {
+      "exitCode": 1,
+      "output": "Traceback (most recent call last):\n  File \"<module>/preview.py\", line 11, in <module>\n    with http.server.ThreadingHTTPServer(('127.0.0.1',0),Handler) as s:\n  File \"<python-runtime>/socketserver.py\", line 452, in __init__\n    self.server_bind()\n  File \"<python-runtime>/http/server.py\", line 138, in server_bind\n    socketserver.TCPServer.server_bind(self)\n  File \"<python-runtime>/socketserver.py\", line 466, in server_bind\n    self.socket.bind(self.server_address)\nPermissionError: [Errno 1] Operation not permitted\n",
+      "pathsOnlyNormalized": true
+    },
+    "oneSameCommandEscalated": {
+      "chunk_id": "796ccc",
+      "wall_time_seconds": 1.001403917,
+      "original_token_count": 6,
+      "output": "http://127.0.0.1:58169/\n"
+    },
+    "stop": {
+      "chunk_id": "0cf890",
+      "wall_time_seconds": 0.00529075,
+      "exit_code": 0,
+      "original_token_count": 48,
+      "output": "\"GET / HTTP/1.1\" 200 -\n\"GET /CURRENT HTTP/1.1\" 200 -\n\"GET /observations/20261005T105129565041Z/result.json HTTP/1.1\" 200 -\ncode 404, message File not found\n\"GET /favicon.ico HTTP/1.1\" 404 -\n"
+    },
+    "tab11Closed": true
+  },
+  "iab": {
+    "conditionalFreshValues": {
+      "rollback": 10,
+      "passive": 20,
+      "two-commits": 30,
+      "begin-only": 20
+    },
+    "relativeLinks": {
+      "runner": "runner.py",
+      "checker": "checker.py"
+    },
+    "screenshot": {
+      "path": "media/conditional-rollback-fresh.jpg",
+      "width": 1280,
+      "height": 3086
+    }
+  },
+  "scope": "WAL repair only; former raw/QA/captures historical, not re-sealed as current-source success; no root gate",
+  "run": "observations/20261005T105129565041Z",
+  "historicalArchive": "revisions/before-conditional-answer-20261005T105129Z",
+  "oldRawFilesUnchanged": 198,
+  "sourceHashes": {
+    "runner.py": "3bf74dcd18aaaabb9b5ceb9b0e4ebb773447335e3cfa81c145334441ecb599ca",
+    "checker.py": "c07c76e0b38c8a985276a9636081c383a39f2f1e9baa46b3710050ebd7242332",
+    "index.html": "ac86bc211fb149ad2d71da81bec4527caa40c313eb89187bf282d2c8a314452e",
+    "preview.py": "dde85511a6b867617463778c6875375b7821609f3a072b98d28c1a0af72bd229",
+    "route.py": "1d85443fc191ea52fedb225cca628b973d19a28322fc3b2fe59234df75cdc38c",
+    "test_negative.py": "57dc047bc512b2cf6dd4216c9d93ab123ef46e4706396d495d93738d578c89a0",
+    "README.md": "3bf4a9ee1ee21548749a090a52b89aaf965754d29f5479fb8772c1fd848930a7",
+    "COVERAGE.md": "d49a5907b3456f8d90a2f0592d4193a2335d1f3901c1417de095a0fac34f5eb5",
+    "skills/wal-snapshot-checkpoint/SKILL.md": "054f345d04acbf0aefc67253bbac96089b2c0228a22b2b82870493a959fe2f3d"
+  },
+  "actualStdoutMatches": true
+}

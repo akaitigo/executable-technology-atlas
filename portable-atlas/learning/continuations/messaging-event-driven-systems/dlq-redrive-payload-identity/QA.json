@@ -1,0 +1,549 @@
+{
+  "finishedUtc": "2026-10-05T14:00:47.741327+00:00",
+  "scope": "sole module; finite SQLite/toy retry DLQ redrive; no Core/fullGate/commit/push",
+  "current": "observations/20261005T135718857669Z",
+  "cases": {
+    "observed": 6,
+    "refused": 2,
+    "executionFailure": 1,
+    "sqliteDatabases": 6,
+    "realConsumerAttempts": 28
+  },
+  "validation": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "runner.py"
+      ],
+      "exitCode": 0,
+      "stdout": "Saved evidence observations/20261005T135718857669Z; checker.py is read-only\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS 9 cases; independent literal ticks/DLQ history/inbox/effects/balance via read-only SQL; consumer not imported\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "test_negative.py"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"test\": \"read-only SHA256+mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"extra-effect\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"changed-inbox-payload\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"overwrite-original-dlq\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"delete-original-history\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"wrong-backoff-tick\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"conflict-acknowledged\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"wrong-added-effects\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  },\n  {\n    \"test\": \"failure-old-answer\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"independentLiteralSQLOracleRejected\": true\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "inspect"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS 9 cases; independent literal ticks/DLQ history/inbox/effects/balance via read-only SQL; consumer not imported\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "lesson"
+      ],
+      "exitCode": 0,
+      "stdout": "index.html; evidence observations/20261005T135718857669Z\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "unsupported"
+      ],
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "unsupported route\n"
+    }
+  ],
+  "defaultReadOnlySHA256AndMtimeNs": true,
+  "negativeTests": [
+    {
+      "test": "read-only SHA256+mtime_ns",
+      "passed": true
+    },
+    {
+      "test": "extra-effect",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "changed-inbox-payload",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "overwrite-original-dlq",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "delete-original-history",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "wrong-backoff-tick",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "conflict-acknowledged",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "wrong-added-effects",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    },
+    {
+      "test": "failure-old-answer",
+      "passed": true,
+      "rawDerivedHashesConsistent": true,
+      "independentLiteralSQLOracleRejected": true
+    }
+  ],
+  "runnerStdoutExact": true,
+  "historicalRawPreserved": {
+    "files": 192,
+    "sha256AndMtimeNs": true
+  },
+  "independentOracle": "fixed literal ticks, DLQ rows and inbox/effect/balance; checker imports no consumer/driver; direct read-only SQL",
+  "iab": {
+    "tabId": "20",
+    "conditions": [
+      {
+        "case": "poison-only",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "redriveはまだ行っていない。未適用poisonにはinbox markerもeffectもない。",
+          "counts": "baseline effect 0 → total 0 / 追加 0 / 残高 0",
+          "feedback": "予測一致",
+          "rows": 3,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "poison-corrected",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "未適用poisonの修正payloadを同じIDで初めてcommit。追加effectは1。元DLQは変更しない。",
+          "counts": "baseline effect 0 → total 1 / 追加 1 / 残高 7",
+          "feedback": "予測一致",
+          "rows": 4,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "poison-unchanged",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "未修正poisonはtick4,5,7でも失敗。元DLQ #1を保持し、source_dlq=1で新DLQ #2へ。",
+          "counts": "baseline effect 0 → total 0 / 追加 0 / 残高 0",
+          "feedback": "予測一致",
+          "rows": 6,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "committed-same",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "すでにcommit済みの同一payload。追加effectは0。inboxのdelta7を保持する。",
+          "counts": "baseline effect 1 → total 1 / 追加 0 / 残高 7",
+          "feedback": "予測一致",
+          "rows": 5,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "committed-changed",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "同じIDのdelta9はcommit済みdelta7と異なる。ACKせずidentity-conflictで新DLQへ。元markerとeffectは保持する。",
+          "counts": "baseline effect 1 → total 1 / 追加 0 / 残高 7",
+          "feedback": "予測一致",
+          "rows": 5,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "committed-changed-id-only",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "故障版はIDだけを見て変更payload delta9をACKした。残高7・effect1でも、payload identity検査は失敗している。",
+          "counts": "baseline effect 1 → total 1 / 追加 0 / 残高 7",
+          "feedback": "予測一致",
+          "rows": 5,
+          "status": "OBSERVED / parent exit 0"
+        }
+      },
+      {
+        "case": "refused-new-id",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "scope検査で実行前に拒否。正常系の回答は表示しない。",
+          "counts": "DB・effect・残高は未観測。0として補完しない。",
+          "feedback": "予測一致",
+          "rows": 0,
+          "status": "REFUSED / parent exit 2 / same-ID redrive required"
+        }
+      },
+      {
+        "case": "refused-mode",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "scope検査で実行前に拒否。正常系の回答は表示しない。",
+          "counts": "DB・effect・残高は未観測。0として補完しない。",
+          "feedback": "予測一致",
+          "rows": 0,
+          "status": "REFUSED / parent exit 2 / invalid mode"
+        }
+      },
+      {
+        "case": "execution-failure",
+        "reset": {
+          "answer": "",
+          "hidden": true,
+          "raw": "",
+          "values": [
+            "",
+            "",
+            ""
+          ]
+        },
+        "state": {
+          "answer": "実JSON decodeがexit3で失敗。正常系の観測・回答はない。",
+          "counts": "DB・effect・残高は未観測。0として補完しない。",
+          "feedback": "予測一致",
+          "rows": 0,
+          "status": "EXECUTION_FAILURE / parent exit 3"
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "case": "poison-corrected",
+        "control": "redrive終端予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "NONE",
+            "1",
+            "7"
+          ]
+        }
+      },
+      {
+        "case": "poison-corrected",
+        "control": "追加effect予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "COMMITTED",
+            "1",
+            "7"
+          ]
+        }
+      },
+      {
+        "case": "poison-corrected",
+        "control": "残高予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "COMMITTED",
+            "1",
+            "0"
+          ]
+        }
+      },
+      {
+        "case": "committed-changed-id-only",
+        "control": "redrive終端予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "NONE",
+            "0",
+            "7"
+          ]
+        }
+      },
+      {
+        "case": "committed-changed-id-only",
+        "control": "追加effect予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "DUPLICATE_ID_ONLY",
+            "1",
+            "7"
+          ]
+        }
+      },
+      {
+        "case": "committed-changed-id-only",
+        "control": "残高予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "DUPLICATE_ID_ONLY",
+            "0",
+            "0"
+          ]
+        }
+      },
+      {
+        "case": "refused-new-id",
+        "control": "redrive終端予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "NONE",
+            "not-observed",
+            "not-observed"
+          ]
+        }
+      },
+      {
+        "case": "refused-new-id",
+        "control": "追加effect予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "REFUSED",
+            "1",
+            "not-observed"
+          ]
+        }
+      },
+      {
+        "case": "refused-new-id",
+        "control": "残高予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "REFUSED",
+            "not-observed",
+            "0"
+          ]
+        }
+      },
+      {
+        "case": "execution-failure",
+        "control": "redrive終端予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "NONE",
+            "not-observed",
+            "not-observed"
+          ]
+        }
+      },
+      {
+        "case": "execution-failure",
+        "control": "追加effect予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "EXECUTION_FAILURE",
+            "1",
+            "not-observed"
+          ]
+        }
+      },
+      {
+        "case": "execution-failure",
+        "control": "残高予測",
+        "state": {
+          "empty": true,
+          "feedback": "予測が変わりました。もう一度比較してください。",
+          "hidden": true,
+          "open": false,
+          "values": [
+            "EXECUTION_FAILURE",
+            "not-observed",
+            "0"
+          ]
+        }
+      }
+    ],
+    "references": [
+      {
+        "label": "元Subject：inboxとACK、実験3",
+        "exactOriginalBody": true
+      },
+      {
+        "label": "修正batchとpayload identity",
+        "exactOriginalBody": true
+      }
+    ],
+    "logs": []
+  },
+  "captures": [
+    "media/execution-failure.jpg",
+    "media/committed-changed.jpg",
+    "media/poison-unchanged.jpg",
+    "media/committed-same.jpg",
+    "media/poison-corrected.jpg",
+    "media/committed-changed-id-only.jpg"
+  ],
+  "captureInspection": "actual JPG bytes; 1280 wide; id-only image visually inspected",
+  "skillValidation": "PASS",
+  "relativeLinksChecked": 13,
+  "resourceCleanup": {
+    "ownedPreviewPort": 61798,
+    "session": 64621,
+    "exitCode": 0,
+    "ownedTab": "20 closed",
+    "protectedInitially": {
+      "53478": 3901,
+      "60285": 25713
+    },
+    "protectedFinally": {
+      "53478": 3901,
+      "60285": 49275
+    },
+    "protected60285ExternallyChanged": true,
+    "agentDidNotStopProtectedResources": true
+  },
+  "previewPermission": "Private execution context omitted from migration copy.",
+  "limitations": [
+    "no actual broker/durability/external effect guarantee",
+    "no guarantee ID changes prevent business duplicates",
+    "virtual fixed ticks; no sleeps; one original and one redrive"
+  ]
+}

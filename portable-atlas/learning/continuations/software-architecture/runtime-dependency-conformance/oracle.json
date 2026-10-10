@@ -1,0 +1,405 @@
+{
+  "contract": {
+    "allowedBusinessEdge": "core.perform -> adapter.Adapter.add",
+    "selectionAndConstructionOwner": "root",
+    "ASTScope": "Import/ImportFrom only, root/core/adapter source files; no dynamic target extraction",
+    "traceScope": "dedicated child sys.setprofile Python call/return for fixed fixture functions and importlib.import_module",
+    "missingTrace": "INDETERMINATE, never infer from identical business edge or output",
+    "allowedFixtureNames": [
+      "root-static",
+      "root-dynamic",
+      "core-static",
+      "core-dynamic"
+    ],
+    "allowedDynamicModule": "adapter"
+  },
+  "sources": {
+    "root-static": {
+      "root.py": "import adapter\nimport core\ndef run():\n    port = adapter.Adapter()\n    return core.perform(port)\n",
+      "core.py": "def perform(port):\n    return port.add(2, 3)\n",
+      "adapter.py": "class Adapter:\n    def __init__(self):\n        self.calls = 0\n    def add(self, x, y):\n        self.calls += 1\n        return x + y\n"
+    },
+    "root-dynamic": {
+      "root.py": "import importlib\nimport core\ndef run():\n    selected = importlib.import_module('adapter')\n    port = selected.Adapter()\n    return core.perform(port)\n",
+      "core.py": "def perform(port):\n    return port.add(2, 3)\n",
+      "adapter.py": "class Adapter:\n    def __init__(self):\n        self.calls = 0\n    def add(self, x, y):\n        self.calls += 1\n        return x + y\n"
+    },
+    "core-static": {
+      "root.py": "import core\ndef run():\n    return core.perform()\n",
+      "core.py": "import adapter\ndef perform():\n    port = adapter.Adapter()\n    return port.add(2, 3)\n",
+      "adapter.py": "class Adapter:\n    def __init__(self):\n        self.calls = 0\n    def add(self, x, y):\n        self.calls += 1\n        return x + y\n"
+    },
+    "core-dynamic": {
+      "root.py": "import core\ndef run():\n    return core.perform()\n",
+      "core.py": "import importlib\ndef perform():\n    selected = importlib.import_module('adapter')\n    port = selected.Adapter()\n    return port.add(2, 3)\n",
+      "adapter.py": "class Adapter:\n    def __init__(self):\n        self.calls = 0\n    def add(self, x, y):\n        self.calls += 1\n        return x + y\n"
+    }
+  },
+  "edges": {
+    "root-static": [
+      {
+        "from": "root",
+        "to": "adapter",
+        "syntax": "Import",
+        "line": 1
+      },
+      {
+        "from": "root",
+        "to": "core",
+        "syntax": "Import",
+        "line": 2
+      }
+    ],
+    "root-dynamic": [
+      {
+        "from": "root",
+        "to": "importlib",
+        "syntax": "Import",
+        "line": 1
+      },
+      {
+        "from": "root",
+        "to": "core",
+        "syntax": "Import",
+        "line": 2
+      }
+    ],
+    "core-static": [
+      {
+        "from": "root",
+        "to": "core",
+        "syntax": "Import",
+        "line": 1
+      },
+      {
+        "from": "core",
+        "to": "adapter",
+        "syntax": "Import",
+        "line": 1
+      }
+    ],
+    "core-dynamic": [
+      {
+        "from": "root",
+        "to": "core",
+        "syntax": "Import",
+        "line": 1
+      },
+      {
+        "from": "core",
+        "to": "importlib",
+        "syntax": "Import",
+        "line": 1
+      }
+    ]
+  },
+  "traces": {
+    "root-static": [
+      {
+        "event": "call",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run"
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__"
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__",
+        "returnValue": null
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform"
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "arguments": [
+          2,
+          3
+        ]
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run",
+        "returnValue": 5
+      }
+    ],
+    "root-dynamic": [
+      {
+        "event": "call",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run"
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "importlib",
+        "calleeFunction": "import_module",
+        "requested": "adapter"
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "importlib",
+        "calleeFunction": "import_module",
+        "returnValue": null,
+        "requested": "adapter",
+        "resolvedModule": "adapter"
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__"
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__",
+        "returnValue": null
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform"
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "arguments": [
+          2,
+          3
+        ]
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run",
+        "returnValue": 5
+      }
+    ],
+    "core-static": [
+      {
+        "event": "call",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run"
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform"
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__"
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__",
+        "returnValue": null
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "arguments": [
+          2,
+          3
+        ]
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run",
+        "returnValue": 5
+      }
+    ],
+    "core-dynamic": [
+      {
+        "event": "call",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run"
+      },
+      {
+        "event": "call",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform"
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "importlib",
+        "calleeFunction": "import_module",
+        "requested": "adapter"
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "importlib",
+        "calleeFunction": "import_module",
+        "returnValue": null,
+        "requested": "adapter",
+        "resolvedModule": "adapter"
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__"
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.__init__",
+        "returnValue": null
+      },
+      {
+        "event": "call",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "arguments": [
+          2,
+          3
+        ]
+      },
+      {
+        "event": "return",
+        "callerModule": "core",
+        "callerFunction": "perform",
+        "calleeModule": "adapter",
+        "calleeFunction": "Adapter.add",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "root",
+        "callerFunction": "run",
+        "calleeModule": "core",
+        "calleeFunction": "perform",
+        "returnValue": 5
+      },
+      {
+        "event": "return",
+        "callerModule": "__main__",
+        "callerFunction": "execute",
+        "calleeModule": "root",
+        "calleeFunction": "run",
+        "returnValue": 5
+      }
+    ]
+  },
+  "output": 5,
+  "verdicts": {
+    "root-static": "CONFORMING",
+    "root-dynamic": "CONFORMING",
+    "core-static": "RESPONSIBILITY_VIOLATION",
+    "core-dynamic": "RESPONSIBILITY_VIOLATION"
+  }
+}

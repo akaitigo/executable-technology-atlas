@@ -1,0 +1,22 @@
+{
+  "title":"Atlas 実装前の独立手計算",
+  "schema":1,
+  "N":4,"total_tokens":16,"avgdl":4,
+  "document_order":["d1","d2","d3","d4"],
+  "document_counts":[
+    {"id":"d1","length":4,"alpha_positions":[0],"beta_positions":[]},
+    {"id":"d2","length":4,"alpha_positions":[],"beta_positions":[0]},
+    {"id":"d3","length":4,"alpha_positions":[0],"beta_positions":[1]},
+    {"id":"d4","length":4,"alpha_positions":[0],"beta_positions":[]}
+  ],
+  "terms":{"alpha":{"df":3,"idf_log_argument":"4/3"},"beta":{"df":2,"idf_log_argument":"2"}},
+  "query_cases":[
+    {"id":"alpha-only","canonical_terms":["alpha"],"removed_duplicates":0,"products":["4/3","1","4/3","4/3"],"unit_scores":[1,0,1,1],"matches":["d1","d3","d4"],"weighted_order":["d1","d3","d4"],"weighted_ties":[["d1","d3","d4"]],"unit_order":["d1","d3","d4"],"unit_ties":[["d1","d3","d4"]]},
+    {"id":"beta-only","canonical_terms":["beta"],"removed_duplicates":0,"products":["1","2","2","1"],"unit_scores":[0,1,1,0],"matches":["d2","d3"],"weighted_order":["d2","d3"],"weighted_ties":[["d2","d3"]],"unit_order":["d2","d3"],"unit_ties":[["d2","d3"]]},
+    {"id":"two-terms","canonical_terms":["alpha","beta"],"removed_duplicates":0,"products":["4/3","2","8/3","4/3"],"unit_scores":[1,1,2,1],"matches":["d1","d2","d3","d4"],"weighted_order":["d3","d2","d1","d4"],"weighted_ties":[["d1","d4"]],"unit_order":["d3","d1","d2","d4"],"unit_ties":[["d1","d2","d4"]]},
+    {"id":"reversed-terms","canonical_terms":["alpha","beta"],"removed_duplicates":0,"products":["4/3","2","8/3","4/3"],"unit_scores":[1,1,2,1],"matches":["d1","d2","d3","d4"],"weighted_order":["d3","d2","d1","d4"],"weighted_ties":[["d1","d4"]],"unit_order":["d3","d1","d2","d4"],"unit_ties":[["d1","d2","d4"]]},
+    {"id":"repeated-terms","canonical_terms":["alpha","beta"],"removed_duplicates":1,"products":["4/3","2","8/3","4/3"],"unit_scores":[1,1,2,1],"matches":["d1","d2","d3","d4"],"weighted_order":["d3","d2","d1","d4"],"weighted_ties":[["d1","d4"]],"unit_order":["d3","d1","d2","d4"],"unit_ties":[["d1","d2","d4"]]}
+  ],
+  "expected_refusal":{"id":"unknown-term","query":"alpha gamma","code":"unknown_query_term","missing_terms":["gamma"],"rows":null,"scores_returned":false},
+  "independent_order_proof":"Compare fixed Fraction products because ln is strictly increasing; do not call the producer. Unit-weight order is a separate integer comparison. No float values generated before implementation."
+}

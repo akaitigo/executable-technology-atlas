@@ -1,0 +1,93 @@
+{
+  "checked_utc": "2026-10-05T11:53:14.673145+00:00",
+  "change": "reset predictions/results/trace/raw/answer on case changes; generation token rejects stale responses",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "check.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"well_formed_histories\": 8, \"linearizable\": 6, \"not_linearizable\": 2, \"expected_input_refusals\": 6, \"mutants_rejected\": 5, \"recorded_runs\": 1, \"oracle\": \"all permutations + separate last-write specification\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-register-history/route.py",
+        "register-history"
+      ],
+      "exit": 0,
+      "stdout": "{\"supported\": true, \"checker\": {\"well_formed_histories\": 8, \"linearizable\": 6, \"not_linearizable\": 2, \"expected_input_refusals\": 6, \"mutants_rejected\": 5, \"recorded_runs\": 1, \"oracle\": \"all permutations + separate last-write specification\"}, \"overlap_read_one\": {\"status\": \"LINEARIZABLE\", \"reason\": null, \"edges\": [], \"witnesses\": [[\"w1\", \"r1\"]], \"trace\": [{\"event\": \"available\", \"prefix\": [], \"state\": 0, \"choices\": [\"w1\", \"r1\"]}, {\"event\": \"apply\", \"prefix\": [\"w1\"], \"before\": 0, \"after\": 1}, {\"event\": \"available\", \"prefix\": [\"w1\"], \"state\": 1, \"choices\": [\"r1\"]}, {\"event\": \"apply\", \"prefix\": [\"w1\", \"r1\"], \"before\": 1, \"after\": 1}, {\"event\": \"legal_candidate\", \"order\": [\"w1\", \"r1\"], \"state\": 1}, {\"event\": \"read_mismatch\", \"prefix\": [\"r1\"], \"expected\": 0, \"returned\": 1}], \"response_sort\": {\"order\": [\"r1\", \"w1\"], \"accepted\": false, \"failure\": {\"operation\": \"r1\", \"expected\": 0, \"returned\": 1}}}, \"scope\": \"synthetic complete histories only\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-register-history/route.py",
+        "real-db"
+      ],
+      "exit": 2,
+      "stdout": "{\"supported\": false, \"route\": \"README unimplemented real-DB/pending/multi-object boundary\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "installed quick_validate.py",
+        "skills/atlas-register-history"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    }
+  ],
+  "readonly": {
+    "files": 18,
+    "hash_and_mtime_equal": true
+  },
+  "ui_source_binding": {
+    "index_sha256": "f6befb7fa3d18d6c93668fc0a060a3cd6adc6a127e9848d7f864d5d0b127d473",
+    "server_sha256": "86eed0c29f62b864ed30c2c7dc1dd084f7febf14501f496e20f2e82826911907"
+  },
+  "preserved": {
+    "old_index": "index-before.html",
+    "old_verification": "baseline-verification.json",
+    "old_raw_and_qa_unchanged": true
+  },
+  "cleanup": {
+    "owned_tab": 15,
+    "closed": true,
+    "preview_session": 3694,
+    "exit": 0,
+    "port": 64920,
+    "lsof_exit": 1,
+    "other_resources_touched": false
+  },
+  "scope": "local finite UI fix only; no Gate/commit/push",
+  "source_artifact_sha256": {
+    "sources.json": "7a52494b6879635f71bda1909841802ce3959580029c08b4bfbc7faed1509207",
+    "runner.py": "6f91b22ac69130e3568e127b55dc953aaf14c68c3289feb028b6d7da43e03a80",
+    "server.py": "86eed0c29f62b864ed30c2c7dc1dd084f7febf14501f496e20f2e82826911907",
+    "index.html": "f6befb7fa3d18d6c93668fc0a060a3cd6adc6a127e9848d7f864d5d0b127d473",
+    "check.py": "7c4aebe32a2d8144ca3a5adc0e49caac92ac239a2e25fcfd67cf6388552a83d4",
+    "oracle.json": "2c92b4e29ceb9127f25eb23afc385c712d613dee3c9315fb84de90ba086cf3b0",
+    "model.py": "7f4b0366173b68f811157b4baa947f2a49cfe20bf847dc66aeebc5a8df27ae18",
+    "README.md": "bb489b1f55a9d619b6bcb38b5f0566e97a1d1bef749a76a440e120e05d48693b",
+    "COVERAGE.md": "8f3721a4a18a690bcbb9baef48086fa42486b35bb3bb947e1e59ebec2e73e77e",
+    "histories.json": "a7b10a8c5380bd51536420d7441a0446669dd7fdd85a31726af7782952994bf1",
+    "skills/atlas-register-history/route.py": "71698534ab496d8da1dbdcf66b4684b01987ebe8e9f03d2f0b72eec5cd7250ae",
+    "skills/atlas-register-history/SKILL.md": "372dd942e7d8f78261da8988c01758e68280d363ffb6913fee5fa28590222d7e",
+    "observations/sandbox-preview-failure.txt": "210a38d05a55d49d2d80526c08def48aef36724389d81bbe0c2bcc2493f19b93",
+    "observations/qa.json": "ec959e96444d67bca6d48b1699f81dcc540399670727728e657dde57b079400e",
+    "observations/verification.json": "f9278226720684789177385944296a451e91501b6e111ff3ba2dbcae1a17913d",
+    "observations/20261005T112523779101Z/raw.json": "5d9df37f5cf98f4d902066abb8b61552508bd795eaacfb448915506c90167f46",
+    "observations/20261005T115045603902Z-ui-reset/qa.json": "b6d24f677ea333607feb937cf9d5f62568e027463391391ee13ce7a2a1688886",
+    "observations/20261005T115045603902Z-ui-reset/baseline-verification.json": "f9278226720684789177385944296a451e91501b6e111ff3ba2dbcae1a17913d",
+    "observations/20261005T115045603902Z-ui-reset/index-before.html": "86dfd4d8fe55db5430cc080c9180ddf8b9443a3527a7db24b55886b0a72e0ff4"
+  }
+}

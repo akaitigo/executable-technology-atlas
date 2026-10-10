@@ -1,0 +1,117 @@
+{
+  "rows": [
+    {
+      "id": "shock",
+      "label": "shock",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[20],\"specification\":[0,20]}",
+      "expected": {
+        "status": "calculated",
+        "category": "masked",
+        "hand_case": "shock"
+      }
+    },
+    {
+      "id": "boundary",
+      "label": "boundary",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[1,19],\"specification\":[0,20]}",
+      "expected": {
+        "status": "calculated",
+        "category": "quiet",
+        "hand_case": "boundary"
+      }
+    },
+    {
+      "id": "spec-only",
+      "label": "spec-only",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[13],\"specification\":[9,11]}",
+      "expected": {
+        "status": "calculated",
+        "category": "spec-only",
+        "hand_case": "spec-only"
+      }
+    },
+    {
+      "id": "lower",
+      "label": "lower",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[0],\"specification\":[0,20]}",
+      "expected": {
+        "status": "calculated",
+        "category": "masked",
+        "hand_case": "lower"
+      }
+    },
+    {
+      "id": "run-uncovered",
+      "label": "run-uncovered",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[14,14,14],\"specification\":[0,20]}",
+      "expected": {
+        "status": "calculated",
+        "category": "quiet",
+        "hand_case": "run-uncovered"
+      }
+    },
+    {
+      "id": "zero-baseline",
+      "label": "zero-baseline",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[10,10,10,10,10],\"monitoring\":[20],\"specification\":[0,20]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "zero-variation"
+      }
+    },
+    {
+      "id": "short-baseline",
+      "label": "short-baseline",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[10],\"monitoring\":[20],\"specification\":[0,20]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "baseline-count"
+      }
+    },
+    {
+      "id": "bool-value",
+      "label": "bool-value",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[true],\"specification\":[0,20]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "values"
+      }
+    },
+    {
+      "id": "float-value",
+      "label": "float-value",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[20.0],\"specification\":[0,20]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "values"
+      }
+    },
+    {
+      "id": "bad-spec",
+      "label": "bad-spec",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[20],\"specification\":[20,0]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "specification"
+      }
+    },
+    {
+      "id": "extra-field",
+      "label": "extra-field",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[20],\"specification\":[0,20],\"path\":\"arbitrary\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape"
+      }
+    },
+    {
+      "id": "nan",
+      "label": "nan",
+      "input_json": "{\"unit\":\"arb\",\"baseline\":[7,7,10,13,13],\"monitoring\":[NaN],\"specification\":[0,20]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax"
+      }
+    }
+  ]
+}

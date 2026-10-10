@@ -1,0 +1,1832 @@
+{
+  "Atlas": "DAGと容量の有限仮想時刻の計算結果",
+  "kind": "python_virtual_time_not_real_workers",
+  "startedAt": "2026-10-06T20:57:47.900182+00:00",
+  "python": "3.9.6",
+  "actualNice": 10,
+  "graphlib": {
+    "moduleFile": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/graphlib.py",
+    "sha256": "8e4a6bd03c8fa34116c7f3192c6dd9bb2fc30f70ecf502d5cdd9911682b82f56"
+  },
+  "sourceSha256": {
+    "CONTRACT.md": "02898089896a5bc2086638fc6f3c5eb847b64cd3d1a49adad48449be38c62ca6",
+    "expected.json": "401c057cebab076cebb63260a55e1f9db0380815f44a19613157a4c875709fc2",
+    "cases.json": "c6687c4d4aab3b150ac8e5e1b0d88c5840d8bbb5762a70f593ceda010fe50a8e",
+    "scheduler.py": "9ab9ae89433f6a2609c6b1ce41e0f7627c923166ef37edb485298ccd25db4939",
+    "verify.py": "b718c43f6ee8640b67fdd78d971352c4e78300b63dffb205619d845f48e6e293",
+    "run.py": "55e98fcb85b4cae244ad8e81a0d6e324e311ea4d93db60e38600aa103e0bf90a",
+    "execute_once.py": "cbf02755c09386f8b32431191906625d073a288da258a080fc3c2d6d10fa0d5c"
+  },
+  "cases": [
+    {
+      "id": "capacity-one",
+      "requestBefore": {
+        "capacity": 1,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 1,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": true,
+        "reason": null,
+        "payload": {
+          "schedule": {
+            "A": [
+              0,
+              1
+            ],
+            "B": [
+              1,
+              5
+            ],
+            "C": [
+              5,
+              7
+            ],
+            "D": [
+              7,
+              8
+            ]
+          },
+          "events": [
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "A"
+            },
+            {
+              "time": 0,
+              "kind": "start",
+              "task": "A",
+              "end": 1,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "finish",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "done",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "B"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "C"
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "B",
+              "end": 5,
+              "unfinishedParents": []
+            },
+            {
+              "time": 5,
+              "kind": "finish",
+              "task": "B"
+            },
+            {
+              "time": 5,
+              "kind": "done",
+              "task": "B"
+            },
+            {
+              "time": 5,
+              "kind": "start",
+              "task": "C",
+              "end": 7,
+              "unfinishedParents": []
+            },
+            {
+              "time": 7,
+              "kind": "finish",
+              "task": "C"
+            },
+            {
+              "time": 7,
+              "kind": "done",
+              "task": "C"
+            },
+            {
+              "time": 7,
+              "kind": "ready",
+              "task": "D"
+            },
+            {
+              "time": 7,
+              "kind": "start",
+              "task": "D",
+              "end": 8,
+              "unfinishedParents": []
+            },
+            {
+              "time": 8,
+              "kind": "finish",
+              "task": "D"
+            },
+            {
+              "time": 8,
+              "kind": "done",
+              "task": "D"
+            }
+          ],
+          "snapshots": [
+            {
+              "time": 0,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "C",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "A"
+              ],
+              "completed": [],
+              "schedulerProcessed": [],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 0
+            },
+            {
+              "time": 1,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "ready-capacity",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [
+                "C"
+              ],
+              "running": [
+                "B"
+              ],
+              "completed": [
+                "A"
+              ],
+              "schedulerProcessed": [
+                "A"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 0
+            },
+            {
+              "time": 5,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 5,
+                  "end": 7
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "C"
+              ],
+              "completed": [
+                "A",
+                "B"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 0
+            },
+            {
+              "time": 7,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 5,
+                  "end": 7
+                },
+                {
+                  "task": "D",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 7,
+                  "start": 7,
+                  "end": 8
+                }
+              ],
+              "ready": [],
+              "running": [
+                "D"
+              ],
+              "completed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 0
+            },
+            {
+              "time": 8,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 5,
+                  "end": 7
+                },
+                {
+                  "task": "D",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 7,
+                  "start": 7,
+                  "end": 8
+                }
+              ],
+              "ready": [],
+              "running": [],
+              "completed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "graphlibActive": false,
+              "occupied": 0,
+              "freeSlots": 1
+            }
+          ],
+          "dependencyViolations": [],
+          "makespan": 8,
+          "dependenciesRespected": true,
+          "allPhysicallyCompleted": true
+        }
+      }
+    },
+    {
+      "id": "capacity-two",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": true,
+        "reason": null,
+        "payload": {
+          "schedule": {
+            "A": [
+              0,
+              1
+            ],
+            "B": [
+              1,
+              5
+            ],
+            "C": [
+              1,
+              3
+            ],
+            "D": [
+              5,
+              6
+            ]
+          },
+          "events": [
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "A"
+            },
+            {
+              "time": 0,
+              "kind": "start",
+              "task": "A",
+              "end": 1,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "finish",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "done",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "B"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "C"
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "B",
+              "end": 5,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "C",
+              "end": 3,
+              "unfinishedParents": []
+            },
+            {
+              "time": 3,
+              "kind": "finish",
+              "task": "C"
+            },
+            {
+              "time": 3,
+              "kind": "done",
+              "task": "C"
+            },
+            {
+              "time": 5,
+              "kind": "finish",
+              "task": "B"
+            },
+            {
+              "time": 5,
+              "kind": "done",
+              "task": "B"
+            },
+            {
+              "time": 5,
+              "kind": "ready",
+              "task": "D"
+            },
+            {
+              "time": 5,
+              "kind": "start",
+              "task": "D",
+              "end": 6,
+              "unfinishedParents": []
+            },
+            {
+              "time": 6,
+              "kind": "finish",
+              "task": "D"
+            },
+            {
+              "time": 6,
+              "kind": "done",
+              "task": "D"
+            }
+          ],
+          "snapshots": [
+            {
+              "time": 0,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "C",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "A"
+              ],
+              "completed": [],
+              "schedulerProcessed": [],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 1
+            },
+            {
+              "time": 1,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "B",
+                "C"
+              ],
+              "completed": [
+                "A"
+              ],
+              "schedulerProcessed": [
+                "A"
+              ],
+              "graphlibActive": true,
+              "occupied": 2,
+              "freeSlots": 0
+            },
+            {
+              "time": 3,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "B"
+              ],
+              "completed": [
+                "A",
+                "C"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "C"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 1
+            },
+            {
+              "time": 5,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 5,
+                  "start": 5,
+                  "end": 6
+                }
+              ],
+              "ready": [],
+              "running": [
+                "D"
+              ],
+              "completed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 1
+            },
+            {
+              "time": 6,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 5
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 5,
+                  "start": 5,
+                  "end": 6
+                }
+              ],
+              "ready": [],
+              "running": [],
+              "completed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "graphlibActive": false,
+              "occupied": 0,
+              "freeSlots": 2
+            }
+          ],
+          "dependencyViolations": [],
+          "makespan": 6,
+          "dependenciesRespected": true,
+          "allPhysicallyCompleted": true
+        }
+      }
+    },
+    {
+      "id": "done-on-start",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-start"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-start"
+      },
+      "response": {
+        "accepted": true,
+        "reason": null,
+        "payload": {
+          "schedule": {
+            "A": [
+              0,
+              1
+            ],
+            "B": [
+              0,
+              4
+            ],
+            "C": [
+              1,
+              3
+            ],
+            "D": [
+              3,
+              4
+            ]
+          },
+          "events": [
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "A"
+            },
+            {
+              "time": 0,
+              "kind": "start",
+              "task": "A",
+              "end": 1,
+              "unfinishedParents": []
+            },
+            {
+              "time": 0,
+              "kind": "done",
+              "task": "A"
+            },
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "B"
+            },
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "C"
+            },
+            {
+              "time": 0,
+              "kind": "start",
+              "task": "B",
+              "end": 4,
+              "unfinishedParents": [
+                "A"
+              ]
+            },
+            {
+              "time": 0,
+              "kind": "done",
+              "task": "B"
+            },
+            {
+              "time": 1,
+              "kind": "finish",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "C",
+              "end": 3,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "done",
+              "task": "C"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "D"
+            },
+            {
+              "time": 3,
+              "kind": "finish",
+              "task": "C"
+            },
+            {
+              "time": 3,
+              "kind": "start",
+              "task": "D",
+              "end": 4,
+              "unfinishedParents": [
+                "B"
+              ]
+            },
+            {
+              "time": 3,
+              "kind": "done",
+              "task": "D"
+            },
+            {
+              "time": 4,
+              "kind": "finish",
+              "task": "B"
+            },
+            {
+              "time": 4,
+              "kind": "finish",
+              "task": "D"
+            }
+          ],
+          "snapshots": [
+            {
+              "time": 0,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 4
+                },
+                {
+                  "task": "C",
+                  "state": "ready-capacity",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": 0,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [
+                "C"
+              ],
+              "running": [
+                "A",
+                "B"
+              ],
+              "completed": [],
+              "schedulerProcessed": [
+                "A",
+                "B"
+              ],
+              "graphlibActive": true,
+              "occupied": 2,
+              "freeSlots": 0
+            },
+            {
+              "time": 1,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 4
+                },
+                {
+                  "task": "C",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "ready-capacity",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": 1,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [
+                "D"
+              ],
+              "running": [
+                "B",
+                "C"
+              ],
+              "completed": [
+                "A"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "graphlibActive": true,
+              "occupied": 2,
+              "freeSlots": 0
+            },
+            {
+              "time": 3,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 4
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "running",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B"
+                  ],
+                  "releasedAt": 1,
+                  "start": 3,
+                  "end": 4
+                }
+              ],
+              "ready": [],
+              "running": [
+                "B",
+                "D"
+              ],
+              "completed": [
+                "A",
+                "C"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "graphlibActive": false,
+              "occupied": 2,
+              "freeSlots": 0
+            },
+            {
+              "time": 4,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 4
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 3,
+                  "end": 4
+                }
+              ],
+              "ready": [],
+              "running": [],
+              "completed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "graphlibActive": false,
+              "occupied": 0,
+              "freeSlots": 2
+            }
+          ],
+          "dependencyViolations": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "B",
+              "D"
+            ]
+          ],
+          "makespan": 4,
+          "dependenciesRespected": false,
+          "allPhysicallyCompleted": true
+        }
+      }
+    },
+    {
+      "id": "simultaneous-finish",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 2,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 2,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": true,
+        "reason": null,
+        "payload": {
+          "schedule": {
+            "A": [
+              0,
+              1
+            ],
+            "B": [
+              1,
+              3
+            ],
+            "C": [
+              1,
+              3
+            ],
+            "D": [
+              3,
+              4
+            ]
+          },
+          "events": [
+            {
+              "time": 0,
+              "kind": "ready",
+              "task": "A"
+            },
+            {
+              "time": 0,
+              "kind": "start",
+              "task": "A",
+              "end": 1,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "finish",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "done",
+              "task": "A"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "B"
+            },
+            {
+              "time": 1,
+              "kind": "ready",
+              "task": "C"
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "B",
+              "end": 3,
+              "unfinishedParents": []
+            },
+            {
+              "time": 1,
+              "kind": "start",
+              "task": "C",
+              "end": 3,
+              "unfinishedParents": []
+            },
+            {
+              "time": 3,
+              "kind": "finish",
+              "task": "B"
+            },
+            {
+              "time": 3,
+              "kind": "done",
+              "task": "B"
+            },
+            {
+              "time": 3,
+              "kind": "finish",
+              "task": "C"
+            },
+            {
+              "time": 3,
+              "kind": "done",
+              "task": "C"
+            },
+            {
+              "time": 3,
+              "kind": "ready",
+              "task": "D"
+            },
+            {
+              "time": 3,
+              "kind": "start",
+              "task": "D",
+              "end": 4,
+              "unfinishedParents": []
+            },
+            {
+              "time": 4,
+              "kind": "finish",
+              "task": "D"
+            },
+            {
+              "time": 4,
+              "kind": "done",
+              "task": "D"
+            }
+          ],
+          "snapshots": [
+            {
+              "time": 0,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "C",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "A"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "A"
+              ],
+              "completed": [],
+              "schedulerProcessed": [],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 1
+            },
+            {
+              "time": 1,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "C",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "dependency-wait",
+                  "dependenciesComplete": false,
+                  "unfinishedParents": [
+                    "B",
+                    "C"
+                  ],
+                  "releasedAt": null,
+                  "start": null,
+                  "end": null
+                }
+              ],
+              "ready": [],
+              "running": [
+                "B",
+                "C"
+              ],
+              "completed": [
+                "A"
+              ],
+              "schedulerProcessed": [
+                "A"
+              ],
+              "graphlibActive": true,
+              "occupied": 2,
+              "freeSlots": 0
+            },
+            {
+              "time": 3,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "running",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 3,
+                  "start": 3,
+                  "end": 4
+                }
+              ],
+              "ready": [],
+              "running": [
+                "D"
+              ],
+              "completed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C"
+              ],
+              "graphlibActive": true,
+              "occupied": 1,
+              "freeSlots": 1
+            },
+            {
+              "time": 4,
+              "rows": [
+                {
+                  "task": "A",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 0,
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "task": "B",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "C",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 1,
+                  "start": 1,
+                  "end": 3
+                },
+                {
+                  "task": "D",
+                  "state": "completed",
+                  "dependenciesComplete": true,
+                  "unfinishedParents": [],
+                  "releasedAt": 3,
+                  "start": 3,
+                  "end": 4
+                }
+              ],
+              "ready": [],
+              "running": [],
+              "completed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "schedulerProcessed": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "graphlibActive": false,
+              "occupied": 0,
+              "freeSlots": 2
+            }
+          ],
+          "dependencyViolations": [],
+          "makespan": 4,
+          "dependenciesRespected": true,
+          "allPhysicallyCompleted": true
+        }
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "capacity-zero",
+      "requestBefore": {
+        "capacity": 0,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 0,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": false,
+        "reason": "capacity-invalid",
+        "payload": null
+      }
+    },
+    {
+      "id": "capacity-bool",
+      "requestBefore": {
+        "capacity": true,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": true,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": false,
+        "reason": "capacity-invalid",
+        "payload": null
+      }
+    },
+    {
+      "id": "duration-zero",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 0,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 0,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": false,
+        "reason": "durations-invalid",
+        "payload": null
+      }
+    },
+    {
+      "id": "missing-task",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2
+        },
+        "release": "on-complete"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2
+        },
+        "release": "on-complete"
+      },
+      "response": {
+        "accepted": false,
+        "reason": "durations-invalid",
+        "payload": null
+      }
+    },
+    {
+      "id": "unknown-key",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete",
+        "workers": 2
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "on-complete",
+        "workers": 2
+      },
+      "response": {
+        "accepted": false,
+        "reason": "request-invalid",
+        "payload": null
+      }
+    },
+    {
+      "id": "unknown-release",
+      "requestBefore": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "automatic"
+      },
+      "requestAfter": {
+        "capacity": 2,
+        "durations": {
+          "A": 1,
+          "B": 4,
+          "C": 2,
+          "D": 1
+        },
+        "release": "automatic"
+      },
+      "response": {
+        "accepted": false,
+        "reason": "release-invalid",
+        "payload": null
+      }
+    }
+  ],
+  "calculationSeconds": 0.00027029100000000583
+}

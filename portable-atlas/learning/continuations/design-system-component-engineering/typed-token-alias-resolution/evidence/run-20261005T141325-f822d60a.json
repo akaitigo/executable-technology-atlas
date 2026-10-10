@@ -1,0 +1,2652 @@
+{
+  "utc": "2026-10-05T14:13:25.210257+00:00",
+  "command": "python3 -B runner.py --record",
+  "source_sha256": {
+    "fixture.json": "b266d00c9c580f051e445c944c9c2d900f2e1f444a00077eea57eba52156251a",
+    "oracle.json": "0797ed8bb24bf723a34f4cc54b3e3e2558605db6fec038697941a5eb80366ecc",
+    "EXPECTATIONS.md": "b599aab3ea4f73391ad2b8c27147ea16fa58202ea02ad71630b679d28270cac5",
+    "producer.py": "cf6a14b795a02862e593f5ca609e90d86c24c8d927b80db7ed547ed6e17f4f4c",
+    "runner.py": "475b719859bf47bf6055b0174991e47f90a511b25c7f2b250fd3dc8fda9b8875",
+    "server.py": "f256b4e086bd45731a693abd24d1a4f9782a05de1d6ed26afc28ca66f13d6237",
+    "index.html": "e22afc6df931bc758ad72b3ff677c7706807ba672ecfa918c7adaf4e24d22c6c",
+    "ui.js": "355f7653b55c8147d4ea31598500f3e54becffee204aee6263d58f9da3bbcd2d"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "blue",
+        "label": "正常blue",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "blue"
+      },
+      {
+        "id": "primitive-red",
+        "label": "blueの値をredへ変更",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  0,
+                  0
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "primitive-red"
+      },
+      {
+        "id": "alias-green",
+        "label": "action参照をgreenへ変更",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alias-green"
+      },
+      {
+        "id": "alpha-omitted",
+        "label": "alpha省略は1",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ]
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alpha-omitted"
+      },
+      {
+        "id": "half-gray",
+        "label": "0.5の独自8bit丸め",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "half-gray"
+      },
+      {
+        "id": "unresolved-css",
+        "label": "故障: 未解決CSS参照",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "unresolved-css"
+      },
+      {
+        "id": "cycle",
+        "label": "cycleを生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{semantic.focus}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "cycle"
+      },
+      {
+        "id": "missing",
+        "label": "missing参照を生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.missing}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "missing"
+      },
+      {
+        "id": "type-mismatch",
+        "label": "型不一致を生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "number",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "type-mismatch"
+      },
+      {
+        "id": "bool-component",
+        "label": "component bool拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  false,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "bool-component"
+      },
+      {
+        "id": "color-space",
+        "label": "P3はsubset未対応",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "display-p3",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "color-space"
+      },
+      {
+        "id": "missing-value",
+        "label": "$value欠落拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "missing-value"
+      },
+      {
+        "id": "alias-syntax",
+        "label": "alias構文不正拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alias-syntax"
+      },
+      {
+        "id": "range",
+        "label": "component範囲外拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  2,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "range"
+      },
+      {
+        "id": "alpha-half",
+        "label": "半透明はsubset未対応",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 0.5
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alpha-half"
+      },
+      {
+        "id": "group-type",
+        "label": "group型不正拒否",
+        "tokens": {
+          "primitive": "invalid-group",
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "group-type"
+      },
+      {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "execution-failure"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "blue",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "blue",
+        "label": "正常blue",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "blue"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(0 0 255);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: rgb(0 0 255);\n  --semantic-focus: rgb(0 0 255);\n  --semantic-positive: rgb(0 255 0);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "primitive-red",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "primitive-red",
+        "label": "blueの値をredへ変更",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  0,
+                  0
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "primitive-red"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(255 0 0);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: rgb(255 0 0);\n  --semantic-focus: rgb(255 0 0);\n  --semantic-positive: rgb(0 255 0);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "alias-green",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "alias-green",
+        "label": "action参照をgreenへ変更",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alias-green"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(0 0 255);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: rgb(0 255 0);\n  --semantic-focus: rgb(0 255 0);\n  --semantic-positive: rgb(0 255 0);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "alpha-omitted",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "alpha-omitted",
+        "label": "alpha省略は1",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ]
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alpha-omitted"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(0 0 255);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: rgb(0 0 255);\n  --semantic-focus: rgb(0 0 255);\n  --semantic-positive: rgb(0 255 0);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "half-gray",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "half-gray",
+        "label": "0.5の独自8bit丸め",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "half-gray"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(128 128 128);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: rgb(128 128 128);\n  --semantic-focus: rgb(128 128 128);\n  --semantic-positive: rgb(0 255 0);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "unresolved-css",
+      "status": "FAULT_UNRESOLVED_CSS",
+      "reason": "",
+      "input": {
+        "id": "unresolved-css",
+        "label": "故障: 未解決CSS参照",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "unresolved-css"
+      },
+      "css": "#token-scope {\n  --primitive-blue: rgb(0 0 255);\n  --primitive-green: rgb(0 255 0);\n  --semantic-action: var(--unresolved-primitive-blue);\n  --semantic-focus: var(--unresolved-semantic-action);\n  --semantic-positive: var(--unresolved-primitive-green);\n}\n",
+      "resolved": {
+        "primitive.blue": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "primitive.green": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.action": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.focus": {
+          "terminal": "primitive.blue",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "semantic.positive": {
+          "terminal": "primitive.green",
+          "type": "color",
+          "value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.action",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.focus",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.positive",
+          "target": "primitive.green"
+        },
+        {
+          "action": "resolved",
+          "token": "semantic.positive",
+          "terminal": "primitive.green"
+        }
+      ]
+    },
+    {
+      "case": "cycle",
+      "status": "INPUT_REFUSED",
+      "reason": "CYCLE",
+      "input": {
+        "id": "cycle",
+        "label": "cycleを生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{semantic.focus}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "cycle"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "semantic.focus"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.focus",
+          "target": "semantic.action"
+        }
+      ]
+    },
+    {
+      "case": "missing",
+      "status": "INPUT_REFUSED",
+      "reason": "MISSING_REFERENCE",
+      "input": {
+        "id": "missing",
+        "label": "missing参照を生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.missing}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "missing"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.missing"
+        }
+      ]
+    },
+    {
+      "case": "type-mismatch",
+      "status": "INPUT_REFUSED",
+      "reason": "TYPE_MISMATCH",
+      "input": {
+        "id": "type-mismatch",
+        "label": "型不一致を生成前拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "number",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "type-mismatch"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": [
+        {
+          "action": "resolved",
+          "token": "primitive.blue",
+          "terminal": "primitive.blue"
+        },
+        {
+          "action": "resolved",
+          "token": "primitive.green",
+          "terminal": "primitive.green"
+        },
+        {
+          "action": "reference",
+          "token": "semantic.action",
+          "target": "primitive.blue"
+        }
+      ]
+    },
+    {
+      "case": "bool-component",
+      "status": "INPUT_REFUSED",
+      "reason": "COMPONENTS",
+      "input": {
+        "id": "bool-component",
+        "label": "component bool拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  false,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "bool-component"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "color-space",
+      "status": "INPUT_REFUSED",
+      "reason": "COLOR_SPACE_SUBSET",
+      "input": {
+        "id": "color-space",
+        "label": "P3はsubset未対応",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "display-p3",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "color-space"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "missing-value",
+      "status": "INPUT_REFUSED",
+      "reason": "TOKEN_FIELDS",
+      "input": {
+        "id": "missing-value",
+        "label": "$value欠落拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "missing-value"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "alias-syntax",
+      "status": "INPUT_REFUSED",
+      "reason": "ALIAS_SYNTAX",
+      "input": {
+        "id": "alias-syntax",
+        "label": "alias構文不正拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alias-syntax"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "range",
+      "status": "INPUT_REFUSED",
+      "reason": "COMPONENTS",
+      "input": {
+        "id": "range",
+        "label": "component範囲外拒否",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  2,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "range"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "alpha-half",
+      "status": "INPUT_REFUSED",
+      "reason": "ALPHA_SUBSET",
+      "input": {
+        "id": "alpha-half",
+        "label": "半透明はsubset未対応",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 0.5
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "alpha-half"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "group-type",
+      "status": "INPUT_REFUSED",
+      "reason": "GROUP_TYPE",
+      "input": {
+        "id": "group-type",
+        "label": "group型不正拒否",
+        "tokens": {
+          "primitive": "invalid-group",
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "group-type"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    },
+    {
+      "case": "execution-failure",
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected token translation failure",
+      "input": {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "tokens": {
+          "primitive": {
+            "blue": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  1
+                ],
+                "alpha": 1
+              }
+            },
+            "green": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  1,
+                  0
+                ],
+                "alpha": 1
+              }
+            }
+          },
+          "semantic": {
+            "action": {
+              "$type": "color",
+              "$value": "{primitive.blue}"
+            },
+            "focus": {
+              "$type": "color",
+              "$value": "{semantic.action}"
+            },
+            "positive": {
+              "$type": "color",
+              "$value": "{primitive.green}"
+            }
+          }
+        },
+        "variant": "execution-failure"
+      },
+      "css": null,
+      "resolved": null,
+      "trace": []
+    }
+  ],
+  "attempts": [
+    {
+      "case": "blue",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "blue"
+      ],
+      "started_utc": "2026-10-05T14:13:24.025516+00:00",
+      "ended_utc": "2026-10-05T14:13:24.103484+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"blue\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"blue\",\n    \"label\": \"正常blue\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"blue\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(0 0 255);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: rgb(0 0 255);\\n  --semantic-focus: rgb(0 0 255);\\n  --semantic-positive: rgb(0 255 0);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "primitive-red",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "primitive-red"
+      ],
+      "started_utc": "2026-10-05T14:13:24.103559+00:00",
+      "ended_utc": "2026-10-05T14:13:24.182318+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"primitive-red\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"primitive-red\",\n    \"label\": \"blueの値をredへ変更\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              1,\n              0,\n              0\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"primitive-red\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(255 0 0);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: rgb(255 0 0);\\n  --semantic-focus: rgb(255 0 0);\\n  --semantic-positive: rgb(0 255 0);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          1,\n          0,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          1,\n          0,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          1,\n          0,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "alias-green",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "alias-green"
+      ],
+      "started_utc": "2026-10-05T14:13:24.182376+00:00",
+      "ended_utc": "2026-10-05T14:13:24.258448+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"alias-green\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"alias-green\",\n    \"label\": \"action参照をgreenへ変更\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"alias-green\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(0 0 255);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: rgb(0 255 0);\\n  --semantic-focus: rgb(0 255 0);\\n  --semantic-positive: rgb(0 255 0);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "alpha-omitted",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "alpha-omitted"
+      ],
+      "started_utc": "2026-10-05T14:13:24.258549+00:00",
+      "ended_utc": "2026-10-05T14:13:24.330208+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"alpha-omitted\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"alpha-omitted\",\n    \"label\": \"alpha省略は1\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ]\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"alpha-omitted\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(0 0 255);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: rgb(0 0 255);\\n  --semantic-focus: rgb(0 0 255);\\n  --semantic-positive: rgb(0 255 0);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "half-gray",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "half-gray"
+      ],
+      "started_utc": "2026-10-05T14:13:24.330283+00:00",
+      "ended_utc": "2026-10-05T14:13:24.401763+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"half-gray\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"half-gray\",\n    \"label\": \"0.5の独自8bit丸め\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0.5,\n              0.5,\n              0.5\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"half-gray\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(128 128 128);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: rgb(128 128 128);\\n  --semantic-focus: rgb(128 128 128);\\n  --semantic-positive: rgb(0 255 0);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0.5,\n          0.5,\n          0.5\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0.5,\n          0.5,\n          0.5\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0.5,\n          0.5,\n          0.5\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "unresolved-css",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "unresolved-css"
+      ],
+      "started_utc": "2026-10-05T14:13:24.401840+00:00",
+      "ended_utc": "2026-10-05T14:13:24.467674+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"unresolved-css\",\n  \"status\": \"FAULT_UNRESOLVED_CSS\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"unresolved-css\",\n    \"label\": \"故障: 未解決CSS参照\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"unresolved-css\"\n  },\n  \"css\": \"#token-scope {\\n  --primitive-blue: rgb(0 0 255);\\n  --primitive-green: rgb(0 255 0);\\n  --semantic-action: var(--unresolved-primitive-blue);\\n  --semantic-focus: var(--unresolved-semantic-action);\\n  --semantic-positive: var(--unresolved-primitive-green);\\n}\\n\",\n  \"resolved\": {\n    \"primitive.blue\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"primitive.green\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.action\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.focus\": {\n      \"terminal\": \"primitive.blue\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          0,\n          1\n        ],\n        \"alpha\": 1\n      }\n    },\n    \"semantic.positive\": {\n      \"terminal\": \"primitive.green\",\n      \"type\": \"color\",\n      \"value\": {\n        \"colorSpace\": \"srgb\",\n        \"components\": [\n          0,\n          1,\n          0\n        ],\n        \"alpha\": 1\n      }\n    }\n  },\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.action\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.focus\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.positive\",\n      \"target\": \"primitive.green\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"semantic.positive\",\n      \"terminal\": \"primitive.green\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "cycle",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "cycle"
+      ],
+      "started_utc": "2026-10-05T14:13:24.467752+00:00",
+      "ended_utc": "2026-10-05T14:13:24.542183+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"cycle\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"CYCLE\",\n  \"input\": {\n    \"id\": \"cycle\",\n    \"label\": \"cycleを生成前拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.focus}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"cycle\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"semantic.focus\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.focus\",\n      \"target\": \"semantic.action\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "missing"
+      ],
+      "started_utc": "2026-10-05T14:13:24.542230+00:00",
+      "ended_utc": "2026-10-05T14:13:24.608161+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"missing\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"MISSING_REFERENCE\",\n  \"input\": {\n    \"id\": \"missing\",\n    \"label\": \"missing参照を生成前拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.missing}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"missing\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.missing\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "type-mismatch",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "type-mismatch"
+      ],
+      "started_utc": "2026-10-05T14:13:24.608210+00:00",
+      "ended_utc": "2026-10-05T14:13:24.673732+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"type-mismatch\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"TYPE_MISMATCH\",\n  \"input\": {\n    \"id\": \"type-mismatch\",\n    \"label\": \"型不一致を生成前拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"number\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"type-mismatch\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": [\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.blue\",\n      \"terminal\": \"primitive.blue\"\n    },\n    {\n      \"action\": \"resolved\",\n      \"token\": \"primitive.green\",\n      \"terminal\": \"primitive.green\"\n    },\n    {\n      \"action\": \"reference\",\n      \"token\": \"semantic.action\",\n      \"target\": \"primitive.blue\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "bool-component",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "bool-component"
+      ],
+      "started_utc": "2026-10-05T14:13:24.673782+00:00",
+      "ended_utc": "2026-10-05T14:13:24.739634+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"bool-component\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"COMPONENTS\",\n  \"input\": {\n    \"id\": \"bool-component\",\n    \"label\": \"component bool拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              false,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"bool-component\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "color-space",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "color-space"
+      ],
+      "started_utc": "2026-10-05T14:13:24.739696+00:00",
+      "ended_utc": "2026-10-05T14:13:24.814310+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"color-space\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"COLOR_SPACE_SUBSET\",\n  \"input\": {\n    \"id\": \"color-space\",\n    \"label\": \"P3はsubset未対応\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"display-p3\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"color-space\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing-value",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "missing-value"
+      ],
+      "started_utc": "2026-10-05T14:13:24.814368+00:00",
+      "ended_utc": "2026-10-05T14:13:24.895795+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"missing-value\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"TOKEN_FIELDS\",\n  \"input\": {\n    \"id\": \"missing-value\",\n    \"label\": \"$value欠落拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"missing-value\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "alias-syntax",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "alias-syntax"
+      ],
+      "started_utc": "2026-10-05T14:13:24.895878+00:00",
+      "ended_utc": "2026-10-05T14:13:24.960933+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"alias-syntax\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"ALIAS_SYNTAX\",\n  \"input\": {\n    \"id\": \"alias-syntax\",\n    \"label\": \"alias構文不正拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"alias-syntax\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "range",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "range"
+      ],
+      "started_utc": "2026-10-05T14:13:24.960969+00:00",
+      "ended_utc": "2026-10-05T14:13:25.023681+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"range\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"COMPONENTS\",\n  \"input\": {\n    \"id\": \"range\",\n    \"label\": \"component範囲外拒否\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              2,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"range\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "alpha-half",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "alpha-half"
+      ],
+      "started_utc": "2026-10-05T14:13:25.023736+00:00",
+      "ended_utc": "2026-10-05T14:13:25.086057+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"alpha-half\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"ALPHA_SUBSET\",\n  \"input\": {\n    \"id\": \"alpha-half\",\n    \"label\": \"半透明はsubset未対応\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 0.5\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"alpha-half\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "group-type",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "group-type"
+      ],
+      "started_utc": "2026-10-05T14:13:25.086104+00:00",
+      "ended_utc": "2026-10-05T14:13:25.148521+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"group-type\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"GROUP_TYPE\",\n  \"input\": {\n    \"id\": \"group-type\",\n    \"label\": \"group型不正拒否\",\n    \"tokens\": {\n      \"primitive\": \"invalid-group\",\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"group-type\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "execution-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "execution-failure"
+      ],
+      "started_utc": "2026-10-05T14:13:25.148570+00:00",
+      "ended_utc": "2026-10-05T14:13:25.210208+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"case\": \"execution-failure\",\n  \"status\": \"EXECUTION_FAILURE\",\n  \"reason\": \"injected token translation failure\",\n  \"input\": {\n    \"id\": \"execution-failure\",\n    \"label\": \"実Error注入 / 正常答えなし\",\n    \"tokens\": {\n      \"primitive\": {\n        \"blue\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              0,\n              1\n            ],\n            \"alpha\": 1\n          }\n        },\n        \"green\": {\n          \"$type\": \"color\",\n          \"$value\": {\n            \"colorSpace\": \"srgb\",\n            \"components\": [\n              0,\n              1,\n              0\n            ],\n            \"alpha\": 1\n          }\n        }\n      },\n      \"semantic\": {\n        \"action\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.blue}\"\n        },\n        \"focus\": {\n          \"$type\": \"color\",\n          \"$value\": \"{semantic.action}\"\n        },\n        \"positive\": {\n          \"$type\": \"color\",\n          \"$value\": \"{primitive.green}\"\n        }\n      }\n    },\n    \"variant\": \"execution-failure\"\n  },\n  \"css\": null,\n  \"resolved\": null,\n  \"trace\": []\n}\n",
+      "stderr": ""
+    }
+  ]
+}

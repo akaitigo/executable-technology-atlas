@@ -1,0 +1,47 @@
+{
+  "title": "Atlas WASI 事前に渡すディレクトリと権限",
+  "runtime": {
+    "node": "25.2.1",
+    "uvwasi": "0.0.23",
+    "wasi": "preview1"
+  },
+  "guest_directory": "/lesson",
+  "directory_fd": 3,
+  "file_name": "note.txt",
+  "fixture_hex": "41746c61730a",
+  "missing_name": "absent.txt",
+  "cases": [
+    {
+      "id": "no-preopen",
+      "preopen": false,
+      "remove_path_open": false,
+      "path": "note.txt"
+    },
+    {
+      "id": "granted",
+      "preopen": true,
+      "remove_path_open": false,
+      "path": "note.txt"
+    },
+    {
+      "id": "rights-reduced",
+      "preopen": true,
+      "remove_path_open": true,
+      "path": "note.txt"
+    },
+    {
+      "id": "missing-file",
+      "preopen": true,
+      "remove_path_open": false,
+      "path": "absent.txt"
+    }
+  ],
+  "bounds": {
+    "memory_pages": 1,
+    "max_read_calls": 8,
+    "read_capacity": 8,
+    "fixture_bytes": 6,
+    "per_case_seconds": 3,
+    "batch_seconds": 20
+  }
+}

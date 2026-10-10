@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import {expected} from './oracle.mjs';
+// Tolerance declared before execution: 1e-10 absolute in toy units. IDs, clocks, tick counts and flags are exact.
+export function checkResult(r,c){let checks=0;const compare=(a,b,key='')=>{if(typeof b==='number'&&['y','v','endpointY'].includes(key)){assert(Number.isFinite(a)&&Math.abs(a-b)<=1e-10,key);checks++;}else if(Array.isArray(b)){assert(Array.isArray(a)&&a.length===b.length);checks++;b.forEach((v,i)=>compare(a[i],v,key));}else if(b!==null&&typeof b==='object'){assert(a&&typeof a==='object');assert.deepEqual(Object.keys(a).sort(),Object.keys(b).sort());checks++;for(const k of Object.keys(b))compare(a[k],b[k],k);}else{assert.deepEqual(a,b);checks++;}};
+  assert.equal(r.id,c.id);assert.deepEqual(r.input,c);assert(Number.isFinite(Date.parse(r.started))&&Date.parse(r.completed)>=Date.parse(r.started));checks+=3;const e=expected(c);for(const k of ['stage','frames','steps','final'])compare(r[k],e[k]);assert.equal(r.error?.name??null,e.errorName);checks++;if(e.errorName){assert(typeof r.error.message==='string'&&r.error.message.length>0);checks++;}return checks;
+}

@@ -1,0 +1,609 @@
+{
+  "schema": "atlas.kotlin-captured-local-var.observation.v1",
+  "started_at": "2026-10-06T06:24:59.307658+00:00",
+  "source_sha256": {
+    "expected.json": "5ed67aa248ee88706be0179738b921921c0507deb2ddabe8d9944dc78378ed1b",
+    "sources.json": "c4e292a9a77f29e7b273fa47d127c49b72fd4785e51f733f58fff0915a308a32",
+    "run.py": "1cb24c28d07c815c60775091df777cfea13dbaea7f7d87a9c41e983b028069a2",
+    "resource_gate.py": "9a745464f70328486671f93a46245b6acf3ee7f97c09be44dc9040b8a0cc13de",
+    "verify.py": "b72cc3a0ce1ccc036c5a75ec681eb4368e340f4ed2ab1896cfac592a2b8d0daa",
+    "src/CapturedLocalVar.kt": "4b9065b64ef8362ab1f8536d0b42597fcabcb6975312014206a76f44edbcf221",
+    "src/CapturedWriteRejected.kt": "b930825cd9508b7abb71962e4e0c46ed5f41e8be1c54f0241df54c636895877f"
+  },
+  "compiles": [
+    {
+      "label": "local-control-and-snapshot",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CapturedLocalVar.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 2.153189,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58151,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "local-control-and-snapshot",
+      "artifact_created": true,
+      "artifact": "observations/20261006T062456931814Z/local-control-and-snapshot.jar",
+      "artifact_sha256": "e68af753306190fac55c55805b35af961119b289fdfcb7bb5a6eba6294622320"
+    },
+    {
+      "label": "captured-write-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CapturedWriteRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/20261006T062456931814Z/captured-write-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/CapturedWriteRejected.kt:9:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'local' is a local variable that is mutated in a capturing closure.\n        return local.length\n               ^^^^^\n",
+      "elapsed_seconds": 1.721936,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58172,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "captured-write-rejected",
+      "artifact_created": false,
+      "artifact": "observations/20261006T062456931814Z/captured-write-rejected.jar",
+      "artifact_sha256": null
+    }
+  ],
+  "runs": [
+    {
+      "label": "local-control-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "local-control",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CONTROL_INITIAL=Ada\nRESULT=3\nCONTROL_FINAL=Ada\n",
+      "stderr": "",
+      "elapsed_seconds": 0.139717,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58166,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "local-control",
+      "input": "ada"
+    },
+    {
+      "label": "local-control-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "local-control",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CONTROL_INITIAL=<null>\nRESULT=SKIPPED\nCONTROL_FINAL=<null>\n",
+      "stderr": "",
+      "elapsed_seconds": 0.128294,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58184,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "local-control",
+      "input": "null"
+    },
+    {
+      "label": "captured-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "captured-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CAPTURED_INITIAL=Ada\nSNAPSHOT=Ada\nMUTATION_APPLIED\nCAPTURED_NOW=<null>\nRESULT=3\n",
+      "stderr": "",
+      "elapsed_seconds": 0.144104,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58185,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "captured-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "captured-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "captured-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CAPTURED_INITIAL=<null>\nSNAPSHOT=<null>\nMUTATION_APPLIED\nCAPTURED_NOW=Ada\nRESULT=SKIPPED\n",
+      "stderr": "",
+      "elapsed_seconds": 0.128052,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58186,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "captured-snapshot",
+      "input": "null"
+    }
+  ],
+  "commands": [
+    {
+      "label": "compiler-version",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "-version"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "info: kotlinc-jvm 2.4.10 (JRE 17.0.17+0)\n",
+      "elapsed_seconds": 1.576415,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58131,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      }
+    },
+    {
+      "label": "java-version",
+      "command": [
+        "<java-17>",
+        "-version"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "openjdk version \"17.0.17\" 2025-10-21\nOpenJDK Runtime Environment Homebrew (build 17.0.17+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.17+0, mixed mode, sharing)\n",
+      "elapsed_seconds": 0.1063,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58150,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      }
+    },
+    {
+      "label": "local-control-and-snapshot",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CapturedLocalVar.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 2.153189,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58151,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "local-control-and-snapshot",
+      "artifact_created": true,
+      "artifact": "observations/20261006T062456931814Z/local-control-and-snapshot.jar",
+      "artifact_sha256": "e68af753306190fac55c55805b35af961119b289fdfcb7bb5a6eba6294622320"
+    },
+    {
+      "label": "local-control-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "local-control",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CONTROL_INITIAL=Ada\nRESULT=3\nCONTROL_FINAL=Ada\n",
+      "stderr": "",
+      "elapsed_seconds": 0.139717,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58166,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "local-control",
+      "input": "ada"
+    },
+    {
+      "label": "captured-write-rejected",
+      "command": [
+        "<kotlinc-2.4.10>",
+        "src/CapturedWriteRejected.kt",
+        "-language-version",
+        "2.4",
+        "-api-version",
+        "2.4",
+        "-jvm-target",
+        "17",
+        "-Xrender-internal-diagnostic-names",
+        "-d",
+        "observations/20261006T062456931814Z/captured-write-rejected.jar"
+      ],
+      "nice_increment": 10,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "src/CapturedWriteRejected.kt:9:16: error: [SMARTCAST_IMPOSSIBLE] Smart cast to 'String' is impossible, because 'local' is a local variable that is mutated in a capturing closure.\n        return local.length\n               ^^^^^\n",
+      "elapsed_seconds": 1.721936,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58172,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "id": "captured-write-rejected",
+      "artifact_created": false,
+      "artifact": "observations/20261006T062456931814Z/captured-write-rejected.jar",
+      "artifact_sha256": null
+    },
+    {
+      "label": "local-control-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "local-control",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CONTROL_INITIAL=<null>\nRESULT=SKIPPED\nCONTROL_FINAL=<null>\n",
+      "stderr": "",
+      "elapsed_seconds": 0.128294,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58184,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "local-control",
+      "input": "null"
+    },
+    {
+      "label": "captured-snapshot-ada",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "captured-snapshot",
+        "ada"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CAPTURED_INITIAL=Ada\nSNAPSHOT=Ada\nMUTATION_APPLIED\nCAPTURED_NOW=<null>\nRESULT=3\n",
+      "stderr": "",
+      "elapsed_seconds": 0.144104,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58185,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "captured-snapshot",
+      "input": "ada"
+    },
+    {
+      "label": "captured-snapshot-null",
+      "command": [
+        "<java-17>",
+        "-Xmx64m",
+        "-XX:ActiveProcessorCount=1",
+        "-cp",
+        "observations/20261006T062456931814Z/local-control-and-snapshot.jar:<kotlinc-home>/lib/kotlin-stdlib.jar",
+        "CapturedLocalVarKt",
+        "captured-snapshot",
+        "null"
+      ],
+      "nice_increment": 10,
+      "exit_code": 0,
+      "stdout": "CAPTURED_INITIAL=<null>\nSNAPSHOT=<null>\nMUTATION_APPLIED\nCAPTURED_NOW=Ada\nRESULT=SKIPPED\n",
+      "stderr": "",
+      "elapsed_seconds": 0.128052,
+      "attempt": 1,
+      "retry": 0,
+      "timed_out": false,
+      "owned_process_group_remaining_after_exit": false,
+      "priority_observation": {
+        "pgid": 58186,
+        "before": 0,
+        "after": 10,
+        "verified_before_exec": true
+      },
+      "mode": "captured-snapshot",
+      "input": "null"
+    }
+  ],
+  "errors": [],
+  "global_concurrency_guarantee": false,
+  "all_capture_cases_covered": false,
+  "execution_policy": {
+    "sequential": true,
+    "nice_increment": 10,
+    "compiler_heap_mib": 256,
+    "active_processor_count": 1,
+    "batch_budget_seconds": 45,
+    "per_command_timeout_seconds": 15,
+    "runtime_heap_mib": 64,
+    "representative_first": true,
+    "retries": 0
+  },
+  "toolchain": {
+    "tree_matches_archive": true,
+    "tree_file_count": 125,
+    "archive_sha256": "473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+    "launcher_sha256": "7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92"
+  },
+  "compiler_probe": {
+    "label": "compiler-version",
+    "command": [
+      "<kotlinc-2.4.10>",
+      "-version"
+    ],
+    "nice_increment": 10,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "info: kotlinc-jvm 2.4.10 (JRE 17.0.17+0)\n",
+    "elapsed_seconds": 1.576415,
+    "attempt": 1,
+    "retry": 0,
+    "timed_out": false,
+    "owned_process_group_remaining_after_exit": false,
+    "priority_observation": {
+      "pgid": 58131,
+      "before": 0,
+      "after": 10,
+      "verified_before_exec": true
+    }
+  },
+  "java_probe": {
+    "label": "java-version",
+    "command": [
+      "<java-17>",
+      "-version"
+    ],
+    "nice_increment": 10,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "openjdk version \"17.0.17\" 2025-10-21\nOpenJDK Runtime Environment Homebrew (build 17.0.17+0)\nOpenJDK 64-Bit Server VM Homebrew (build 17.0.17+0, mixed mode, sharing)\n",
+    "elapsed_seconds": 0.1063,
+    "attempt": 1,
+    "retry": 0,
+    "timed_out": false,
+    "owned_process_group_remaining_after_exit": false,
+    "priority_observation": {
+      "pgid": 58150,
+      "before": 0,
+      "after": 10,
+      "verified_before_exec": true
+    }
+  },
+  "representative_passed": true,
+  "collection_complete": true,
+  "resource_gate_after_representative": {
+    "observed_at": "2026-10-06T06:25:03.792596+00:00",
+    "policy": "aggregate-headroom-for-one-limited-child-v2",
+    "cpu_count": 12,
+    "limits": {
+      "minimum_cpu_idle_percent": 30,
+      "maximum_load_per_cpu": 0.75,
+      "minimum_memory_free_percent": 15,
+      "minimum_available_estimate_bytes": 2147483648
+    },
+    "reads": {
+      "cpu": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "memory-pressure-query": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "vm-stat": {
+        "exit_code": 0,
+        "stderr": ""
+      },
+      "physical-memory": {
+        "exit_code": 0,
+        "stderr": ""
+      }
+    },
+    "allowed": true,
+    "compiler_started": false,
+    "browser_started": false,
+    "blockers": [],
+    "known_work_context": "Parent reports all GUI closed; Kotlin compiler slot is coordinated before execution; Flutter next probe is being prepared.",
+    "protected_deepseek_ui": {
+      "cpu_limit": 0.5,
+      "ram_mib": 768,
+      "modified": false
+    },
+    "observation_limit": "Instantaneous OS readings. Free + speculative + inactive is a reclaimable-memory estimate, not an allocation guarantee. Process names cannot prove absence of all unknown workloads.",
+    "cpu_samples": [
+      {
+        "user_percent": 18.35,
+        "system_percent": 22.13,
+        "idle_percent": 59.5
+      },
+      {
+        "user_percent": 14.31,
+        "system_percent": 21.18,
+        "idle_percent": 64.5
+      }
+    ],
+    "memory_pressure_query": "The system has 25769803776 (1572864 pages with a page size of 16384).\nSystem-wide memory free percentage: 42%",
+    "memory_free_percent": 42,
+    "vm_memory": {
+      "page_size": 16384,
+      "free_bytes": 168837120,
+      "speculative_bytes": 29409280,
+      "inactive_bytes": 5268848640,
+      "available_estimate_bytes": 5467095040
+    },
+    "physical_memory_bytes": 25769803776,
+    "process_read_count": 685,
+    "known_heavy_workloads": [],
+    "top_cpu_diagnostics": [
+      {
+        "cpu_percent": 65.6,
+        "rss_kib": 16272,
+        "name": "StorageManagementService"
+      },
+      {
+        "cpu_percent": 62.2,
+        "rss_kib": 36880,
+        "name": "Storage"
+      },
+      {
+        "cpu_percent": 59.4,
+        "rss_kib": 18320,
+        "name": "ApplicationsStorageExtension"
+      },
+      {
+        "cpu_percent": 48.3,
+        "rss_kib": 20016,
+        "name": "com.eset.endpoint"
+      },
+      {
+        "cpu_percent": 31.2,
+        "rss_kib": 150864,
+        "name": "Google Chrome Helper"
+      },
+      {
+        "cpu_percent": 27.2,
+        "rss_kib": 741568,
+        "name": "Google Chrome Helper (Renderer)"
+      }
+    ],
+    "reason": "Observed headroom permits one nice 10, 1 active processor, 256 MiB heap child."
+  },
+  "finished_at": "2026-10-06T06:25:08.257909+00:00",
+  "batch_elapsed_seconds": 8.949149,
+  "source_unchanged": true
+}

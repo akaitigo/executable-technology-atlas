@@ -1,0 +1,168 @@
+{
+  "checked_utc": "2026-10-05T12:59:29.853065+00:00",
+  "change": "common run-start stale clear; producer setup/constructor try; safe finally if not created; UI catch clear/unconfirmed; generation on all returns",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "check.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"recorded_runs\": 9,\n  \"normal_cases\": 2,\n  \"expected_serialization_refusals\": 1,\n  \"oracle\": \"independent byte arithmetic/ownership + explicit protocol IDs/counts, hand table before runs\",\n  \"mutations_rejected\": [\n    \"transfer still owned\",\n    \"wrong worker sum\",\n    \"worker mutation leaked into sender\",\n    \"function was received\",\n    \"missing after-probe ACK\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "observations/20261005T124701826843Z-constructor-repair/check-failures.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"execution_failures\": 3, \"separate_from_normal_raw\": true, \"constructor_fault_is_synthetic_QA\": true, \"source_hashes_match\": true, \"mutants_rejected\": 3}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-worker-buffer-transfer/route.py",
+        "worker-buffer"
+      ],
+      "exit": 0,
+      "stdout": "{\"supported\": true, \"checker\": {\"recorded_runs\": 9, \"normal_cases\": 2, \"expected_serialization_refusals\": 1, \"oracle\": \"independent byte arithmetic/ownership + explicit protocol IDs/counts, hand table before runs\", \"mutations_rejected\": [\"transfer still owned\", \"wrong worker sum\", \"worker mutation leaked into sender\", \"function was received\", \"missing after-probe ACK\"]}, \"scope\": \"fixed actual Dedicated Worker buffer ownership and serialization\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "skills/atlas-worker-buffer-transfer/route.py",
+        "shared-memory"
+      ],
+      "exit": 2,
+      "stdout": "{\"supported\": false, \"route\": \"README unimplemented speed/process/SAB/Atomics/SW/security boundary\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "installed quick_validate.py",
+        "skills/atlas-worker-buffer-transfer"
+      ],
+      "exit": 0,
+      "stdout": "Skill is valid!\n",
+      "stderr": ""
+    }
+  ],
+  "readonly": {
+    "files": 61,
+    "hash_and_mtime_equal": true
+  },
+  "old_repair_and_raw_qa_unchanged": true,
+  "new_normal_records": [
+    "observations/20261005T125009807247Z/raw.json",
+    "observations/20261005T125010706665Z/raw.json",
+    "observations/20261005T125011372863Z/raw.json"
+  ],
+  "failure_collection_separate": true,
+  "source_artifact_sha256": {
+    "sources.json": "3b0d7e0faaa80ab0768b79c059ac83f0d5ea1f42da89120f2653824492027f3f",
+    "server.py": "adaa613b3b4b825b5277715279067c08620c1880f7045cf17d7363876977b2d9",
+    "index.html": "3437652a518aad732b2b5ec9910e8f23817ab2617944cefa616bc61ab16f74cc",
+    "check.py": "a2f68e2131a88ba259f693d2f94a6659f54809fc57899419cf1322b76dd73a55",
+    "worker.js": "9d3b99239e01bd3507ea1d43d4771f910d60de408ec5dc858c8e1a0d8d3289eb",
+    "oracle.json": "05f94b755f6620f0a93c0313383391c5586163057d09be224b9a3fb76d761593",
+    "README.md": "93404a02fe655de0082772d794d4e771afb7112f8a070e6dd1866e9e49491b33",
+    "COVERAGE.md": "3eb53ffb1dad554e9608e8e52e4bd20d81bc662820c00ba1c8f115e821dd9a54",
+    "fixtures.json": "8501e8a3c84a020db24075a7e1be028c348220038e5a461bf955436a38f2bacd",
+    "experiment.js": "3011734755e83c9423e26dc644b05df70e25c866a0ba7a14c6f99abd5820c875",
+    "skills/atlas-worker-buffer-transfer/route.py": "edc57f2f3495168d1d77304f6482571ada8c2ce7e28a7d5abf16b9c102fc5e96",
+    "skills/atlas-worker-buffer-transfer/SKILL.md": "052ef02337647e9556befa0105788a5fd759a08341b67413a329d28e8a22afd0",
+    "observations/sandbox-preview-failure.txt": "233a9165a98c335b2dc415830d3a10d599e56852a5a85ce9425af8b26b054542",
+    "observations/qa.json": "67d2fc7b0fec882cb74663adfcaf098c1ac7d4fd19cfe6007b22418481f4bc9e",
+    "observations/verification.json": "2c2acfc64f5a234e7037f3b33b2fe8fdb580b83a351fb0265f6932d831835f52",
+    "observations/20261005T122916804863Z-failure-repair/check-failure.py": "fa66090ae5ab8915d053793b3f91ef3b5a6de38b94b9d122460a3f0a1656e97f",
+    "observations/20261005T122916804863Z-failure-repair/qa.json": "25d255a61294d90abb666e0c1da2cfb72109bda63cc14f22f3031f74bc846e14",
+    "observations/20261005T122916804863Z-failure-repair/fault-worker.js": "f5e8afeb5d9bb9e2a620d0005cc4f293be3a1d26e5c1581ecac3206d4ba195f6",
+    "observations/20261005T122916804863Z-failure-repair/README.md.before": "b3564e2ed6d65ed6140a6f50da721289b1a97d92da261d2c026f744f3137004b",
+    "observations/20261005T122916804863Z-failure-repair/experiment.js.before": "33c193f5678111bfb1f7e47be21c2c87dc0c6ac405a5cf87ef2861838560e9fb",
+    "observations/20261005T122916804863Z-failure-repair/qa-preview.py": "244964f692302e3d098705a73ca962b1766f5cebbbb2831ef804be150cbe042b",
+    "observations/20261005T122916804863Z-failure-repair/held-worker.js": "5ca48d70d3103110c7973a9634a8a78bc742b2116a804b6c60f6dc7ccfe8b87f",
+    "observations/20261005T122916804863Z-failure-repair/check.py.before": "e0d3a27c0d960dfffdafaaba83bdb85a08832add82e63e13d535334c376fb36d",
+    "observations/20261005T122916804863Z-failure-repair/worker.js.before": "9d3b99239e01bd3507ea1d43d4771f910d60de408ec5dc858c8e1a0d8d3289eb",
+    "observations/20261005T122916804863Z-failure-repair/baseline-verification.json": "2c2acfc64f5a234e7037f3b33b2fe8fdb580b83a351fb0265f6932d831835f52",
+    "observations/20261005T122916804863Z-failure-repair/server.py.before": "3ee90f043556a5043e281427b28550a2b87e581b477b26c14b6fb10540d25155",
+    "observations/20261005T122916804863Z-failure-repair/held-experiment.js": "37df28800b54c62a8f9b8a2787db599e3eb6df2eff3b56feb620d37e06582b51",
+    "observations/20261005T122916804863Z-failure-repair/verification.json": "39f1d41d25abd9c7017a0213c908cab25c0259356b109b4d1368451f19e6d278",
+    "observations/20261005T122916804863Z-failure-repair/index.html.before": "e3444ea42d6a8e32f64b0d1cea7082ec6be1ba8ed474d2c78a769c6d27f8aad2",
+    "observations/20261005T121933512760Z/raw.json": "236c031966c38ba70bd5c1c739595218508812815646576c2cecf0c4d2a603c3",
+    "observations/failures/20261005T125114521071Z/failure.json": "4edfd20ef26d57729994e0f65b13faed724feba394fc1f06de61186823d72ad1",
+    "observations/failures/20261005T123239788754Z/failure.json": "6a9b9940a9817182d859c21bdeb4efb8a21922d5e3a90ad091c8c4ecc34490ec",
+    "observations/failures/20261005T125638485711Z/failure.json": "0172315cdb7698aadb3625d1bdb4669715e1ea826b763f50a435a96c870c61e3",
+    "observations/20261005T125011372863Z/raw.json": "cadda62fda732626b734a59b06b3c5098dadf39e3d6abbd9ed5afed4eb98af2e",
+    "observations/20261005T125010706665Z/raw.json": "7cb22766431e5218b9da038f1de0d9aecab08ae363f0b6dc0e519d5cf94a9010",
+    "observations/20261005T125009807247Z/raw.json": "81afd8cb1190dceb509032933db77f32a6609cac1ab71d6a1961f4ac9f917c9d",
+    "observations/20261005T121932771177Z/raw.json": "e52f1c86158d1a22451566f658005506812faf684f5c2c702147ddd5eb0e8ccf",
+    "observations/20261005T121934379621Z/raw.json": "2d088403be79d271cc18d55d4b276c95e4acea90808c765c2926a8a431aef2d9",
+    "observations/20261005T123129702662Z/raw.json": "8e24e79f1debdb06bfa94e415fda2cac2bd493f963244b7b20553e5f044e1030",
+    "observations/20261005T123129069227Z/raw.json": "8db6ae6cf086a5116b30a64ed8d6d3f66c0ac06910be91cba7b256dc9ed33790",
+    "observations/20261005T124701826843Z-constructor-repair/served-constructor-worker.js": "9d3b99239e01bd3507ea1d43d4771f910d60de408ec5dc858c8e1a0d8d3289eb",
+    "observations/20261005T124701826843Z-constructor-repair/served-held-worker.js": "ccd0c35269f053306ffeb404ba48a5c9ec50ff06b9766ff15162dc7fe02952db",
+    "observations/20261005T124701826843Z-constructor-repair/served-constructor-experiment.js": "3011734755e83c9423e26dc644b05df70e25c866a0ba7a14c6f99abd5820c875",
+    "observations/20261005T124701826843Z-constructor-repair/qa.json": "3ce0d1525412a29bb5dbdbbd38294ad5673ad31cd7b101ec87407815dd4cac44",
+    "observations/20261005T124701826843Z-constructor-repair/fault-worker.js": "c3870b8fc924ed58c226302213709f2d953e1617661fa52b6bed01faee06fbb6",
+    "observations/20261005T124701826843Z-constructor-repair/README.md.before": "6ac6cd2c121516a6daac07f36b65f8b12a4473077548839a4865e9f59a40458d",
+    "observations/20261005T124701826843Z-constructor-repair/experiment.js.before": "33c193f5678111bfb1f7e47be21c2c87dc0c6ac405a5cf87ef2861838560e9fb",
+    "observations/20261005T124701826843Z-constructor-repair/served-constructor.html": "07271268eda6aa7a845b47d821c56d4719c0e41e64a1fbfaec86a17d585127b0",
+    "observations/20261005T124701826843Z-constructor-repair/served-fault-experiment.js": "3011734755e83c9423e26dc644b05df70e25c866a0ba7a14c6f99abd5820c875",
+    "observations/20261005T124701826843Z-constructor-repair/qa-preview.py": "3a839cacb9292cac089d6ec67a7072b8027666e647f34a42aff8d3ee194683e8",
+    "observations/20261005T124701826843Z-constructor-repair/served-fault.html": "3437652a518aad732b2b5ec9910e8f23817ab2617944cefa616bc61ab16f74cc",
+    "observations/20261005T124701826843Z-constructor-repair/review-failures.json": "91492fdd9d8abb71815596a0bd6fd0dbe5fd4699468630efb0142f1893fffad2",
+    "observations/20261005T124701826843Z-constructor-repair/check-failures.py": "ce153d3c9177a3f4198e398c787a1ae1addf4e7991243da1b3545f1e2492754c",
+    "observations/20261005T124701826843Z-constructor-repair/served-fault-worker.js": "c3870b8fc924ed58c226302213709f2d953e1617661fa52b6bed01faee06fbb6",
+    "observations/20261005T124701826843Z-constructor-repair/check.py.before": "7249d022684eea52945cefa5066e566ff3d72972c271da20f152eb894abcbb1e",
+    "observations/20261005T124701826843Z-constructor-repair/served-held.html": "3437652a518aad732b2b5ec9910e8f23817ab2617944cefa616bc61ab16f74cc",
+    "observations/20261005T124701826843Z-constructor-repair/server.py.before": "adaa613b3b4b825b5277715279067c08620c1880f7045cf17d7363876977b2d9",
+    "observations/20261005T124701826843Z-constructor-repair/prior-repair-verification.json": "39f1d41d25abd9c7017a0213c908cab25c0259356b109b4d1368451f19e6d278",
+    "observations/20261005T124701826843Z-constructor-repair/index.html.before": "144284769f5b1d43274b6869612fbf74c6e3e463b01457650e86e2280fd036eb",
+    "observations/20261005T124701826843Z-constructor-repair/served-held-experiment.js": "3a65cc11f470e0e06ec266db6d559ed0c7f812bc62696ea9e3b68987158b0bef",
+    "observations/20261005T123128428601Z/raw.json": "bb6c66cbd550843325519860cedde283e9abbf6f90ef763cfcb6fbb286a49450"
+  },
+  "cleanup": {
+    "tabs": [
+      25,
+      26,
+      27,
+      28
+    ],
+    "closed": true,
+    "ports": [
+      54726,
+      54963,
+      55288,
+      55480
+    ],
+    "lsof_exits": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "sessions": [
+      23987,
+      98502,
+      4773,
+      67701
+    ],
+    "exits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "other_resources_touched": false
+  },
+  "scope": "second P2 Worker failure-boundary repair; synthetic constructor QA distinct from OS rejection; no other subjects/Portal/settings/gates"
+}

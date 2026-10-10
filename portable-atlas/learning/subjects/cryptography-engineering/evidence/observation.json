@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "runner_version": "hmac-replay-lesson-v1",
+  "algorithm": "HMAC-SHA256",
+  "key_notice": "公開された合成test key。本番利用禁止。secretではない。",
+  "baseline_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+  "rfc_vectors": [
+    {
+      "id": "rfc4231-1",
+      "locator": "section-4.2",
+      "key_hex": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+      "message_hex": "4869205468657265",
+      "expected_tag_hex": "b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7",
+      "actual_tag_hex": "b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7",
+      "matched": true
+    },
+    {
+      "id": "rfc4231-2",
+      "locator": "section-4.3",
+      "key_hex": "4a656665",
+      "message_hex": "7768617420646f2079612077616e7420666f72206e6f7468696e673f",
+      "expected_tag_hex": "5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843",
+      "actual_tag_hex": "5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843",
+      "matched": true
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "valid",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": true,
+        "reason": "valid"
+      },
+      "guard": {
+        "accepted": true,
+        "reason": "accepted"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": [
+        "demo-001"
+      ]
+    },
+    {
+      "id": "message-tamper",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"write\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a227772697465222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "cae4a56a03a925510f0864505f9230412d8e9b181b586a9b5fed07331be265c1",
+      "message_sha256": "540577e079d503654f8f8b6c67d8c972779bf14cb6b146fea1a213f563891cca",
+      "mac": {
+        "accepted": false,
+        "reason": "mismatch"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "mac-rejected"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": []
+    },
+    {
+      "id": "wrong-key",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3032",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "3316a9194921812559082af452e69d58829cb1e4d8ecab07f01efcd5e177d70f",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": false,
+        "reason": "mismatch"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "mac-rejected"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": []
+    },
+    {
+      "id": "tag-tamper",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "003531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": false,
+        "reason": "mismatch"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "mac-rejected"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": []
+    },
+    {
+      "id": "replay",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": true,
+        "reason": "valid"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "duplicate-id"
+      },
+      "seed_result": {
+        "accepted": true,
+        "reason": "accepted"
+      },
+      "seen_before": [
+        "demo-001"
+      ],
+      "seen_after": [
+        "demo-001"
+      ]
+    },
+    {
+      "id": "truncated-tag",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae4",
+      "recomputed_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": false,
+        "reason": "invalid-tag-format"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "mac-rejected"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": []
+    },
+    {
+      "id": "malformed-tag",
+      "key_hex": "7075626c69632d666978747572652d6b65792d6e6f742d666f722d7573652d3031",
+      "message_utf8": "{\"message_id\":\"demo-001\",\"operation\":\"read\",\"resource\":\"synthetic-report\"}",
+      "message_hex": "7b226d6573736167655f6964223a2264656d6f2d303031222c226f7065726174696f6e223a2272656164222c227265736f75726365223a2273796e7468657469632d7265706f7274227d",
+      "supplied_tag_hex": "zz3531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "recomputed_tag_hex": "803531dc855c92eacd1d7404bacb1ee50fc1585a884d3c68d56a48fba35ae48d",
+      "message_sha256": "3f83e522fa835cf3ab5eb3f7aa3254960d8726f62c6ee6b7f5627dbc97c51a29",
+      "mac": {
+        "accepted": false,
+        "reason": "invalid-tag-format"
+      },
+      "guard": {
+        "accepted": false,
+        "reason": "mac-rejected"
+      },
+      "seed_result": null,
+      "seen_before": [],
+      "seen_after": []
+    }
+  ],
+  "guard_scope": "fresh per scenario; single-process authenticated message_id set; replay seeded with one accepted request",
+  "timing_measured": false,
+  "subject_completion": "not-claimed"
+}

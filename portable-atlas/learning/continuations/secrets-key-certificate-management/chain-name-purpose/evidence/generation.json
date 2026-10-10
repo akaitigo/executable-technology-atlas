@@ -1,0 +1,231 @@
+{
+  "recordedAt": "2026-10-05T09:33:48.806312+00:00",
+  "probe": {
+    "version": {
+      "argv": [
+        "openssl3",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "OpenSSL 3.6.3 9 Jun 2026 (Library: OpenSSL 3.6.3 9 Jun 2026)\n",
+      "stderr": ""
+    },
+    "verifyHelp": {
+      "argv": [
+        "openssl3",
+        "verify",
+        "-help"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Usage: verify [options] [cert...]\n\nGeneral options:\n -help                 Display this summary\n -engine val           Use engine, possibly a hardware device\n -verbose              Print extra information about the operations being performed.\n -nameopt val          Certificate subject/issuer name printing options\n\nCertificate chain options:\n -trusted infile       A file of trusted certificates\n -CAfile infile        A file of trusted certificates\n -CApath dir           A directory of files with trusted certificates\n -CAstore uri          URI to a store of trusted certificates\n -no-CAfile            Do not load the default trusted certificates file\n -no-CApath            Do not load trusted certificates from the default directory\n -no-CAstore           Do not load trusted certificates from the default certificates store\n -untrusted infile     A file of untrusted certificates\n -CRLfile infile       File containing one or more CRL's (in PEM format) to load\n -crl_download         Try downloading CRL information for certificates via their CDP entries\n -show_chain           Display information about the certificate chain\n\nValidation options:\n -policy val           adds policy to the acceptable policy set\n -purpose val          certificate chain purpose\n -verify_name val      verification policy name\n -verify_depth int     chain depth limit\n -auth_level int       chain authentication security level\n -attime intmax        verification epoch time\n -verify_hostname val  expected peer hostname\n -verify_email val     expected peer email\n -verify_ip val        expected peer IP address\n -ignore_critical      permit unhandled critical extensions\n -issuer_checks        (deprecated)\n -crl_check            check leaf certificate revocation\n -crl_check_all        check full chain revocation\n -policy_check         perform rfc5280 policy checks\n -explicit_policy      set policy variable require-explicit-policy\n -inhibit_any          set policy variable inhibit-any-policy\n -inhibit_map          set policy variable inhibit-policy-mapping\n -x509_strict          disable certificate compatibility work-arounds\n -extended_crl         enable extended CRL features\n -use_deltas           use delta CRLs\n -policy_print         print policy processing diagnostics\n -check_ss_sig         check root CA self-signatures\n -trusted_first        search trust store first (default)\n -suiteB_128_only      Suite B 128-bit-only mode\n -suiteB_128           Suite B 128-bit mode allowing 192-bit algorithms\n -suiteB_192           Suite B 192-bit-only mode\n -partial_chain        accept chains anchored by intermediate trust-store CAs\n -no_alt_chains        (deprecated)\n -no_check_time        ignore certificate validity time\n -allow_proxy_certs    allow the use of proxy certificates\n -vfyopt val           Verification parameter in n:v form\n\nProvider options:\n -provider-path val    Provider load path (must be before 'provider' argument if required)\n -provider val         Provider to load (can be specified multiple times)\n -provparam val        Set a provider key-value parameter\n -propquery val        Property query used when fetching algorithms\n\nParameters:\n cert                  Certificate(s) to verify (optional; stdin used otherwise)\n\nRecognized certificate chain purposes:\n  sslclient        SSL client\n  sslserver        SSL server\n  nssslserver      Netscape SSL server\n  smimesign        S/MIME signing\n  smimeencrypt     S/MIME encryption\n  crlsign          CRL signing\n  any              Any Purpose\n  ocsphelper       OCSP helper\n  timestampsign    Time Stamp signing\n  codesign         Code signing\nRecognized certificate policy names:\n  code_sign\n  default\n  pkcs7\n  smime_sign\n  ssl_client\n  ssl_server\n"
+    },
+    "x509Help": {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-help"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Usage: x509 [options]\n\nGeneral options:\n -help                      Display this summary\n -in infile                 Certificate input, or CSR input file with -req (default stdin)\n -passin val                Private key and cert file pass-phrase source\n -new                       Generate a certificate from scratch\n -x509toreq                 Output a certification request (rather than a certificate)\n -req                       Input is a CSR file (rather than a certificate)\n -copy_extensions val       copy extensions when converting from CSR to x509 or vice versa\n -inform format             CSR input format to use (PEM or DER; by default try PEM first)\n -vfyopt val                CSR verification parameter in n:v form\n -key val                   Key for signing, and to include unless using -force_pubkey\n -signkey val               Same as -key\n -keyform PEM|DER|ENGINE    Key input format (ENGINE, other values ignored)\n -out outfile               Output file - default stdout\n -outform format            Output format (DER or PEM) - default PEM\n -nocert                    No cert output (except for requested printing)\n -noout                     No output (except for requested printing)\n\nCertificate printing options:\n -text                      Print the certificate in text form\n -dateopt val               Datetime format used for printing. (rfc_822/iso_8601). Default is rfc_822.\n -certopt val               Various certificate text printing options\n -fingerprint               Print the certificate fingerprint\n -alias                     Print certificate alias\n -serial                    Print serial number value\n -startdate                 Print the notBefore field\n -enddate                   Print the notAfter field\n -dates                     Print both notBefore and notAfter fields\n -subject                   Print subject DN\n -issuer                    Print issuer DN\n -nameopt val               Certificate subject/issuer name printing options\n -email                     Print email address(es)\n -hash                      Synonym for -subject_hash (for backward compat)\n -subject_hash              Print subject hash value\n -subject_hash_old          Print old-style (MD5) subject hash value\n -issuer_hash               Print issuer hash value\n -issuer_hash_old           Print old-style (MD5) issuer hash value\n -ext val                   Restrict which X.509 extensions to print and/or copy\n -ocspid                    Print OCSP hash values for the subject name and public key\n -ocsp_uri                  Print OCSP Responder URL(s)\n -purpose                   Print out certificate purposes\n -pubkey                    Print the public key in PEM format\n -modulus                   Print the RSA key modulus\n -multi                     Process multiple certificates\n\nCertificate checking options:\n -checkend intmax           Check whether cert expires in the next arg seconds\n                            Exit 1 (failure) if so, 0 if not\n -checkhost val             Check certificate matches host\n -checkemail val            Check certificate matches email\n -checkip val               Check certificate matches ipaddr\n\nCertificate output options:\n -set_serial val            Serial number to use, overrides -CAserial\n -next_serial               Increment current certificate serial number\n -not_before val            [CC]YYMMDDHHMMSSZ value for notBefore certificate field\n -not_after val             [CC]YYMMDDHHMMSSZ value for notAfter certificate field, overrides -days\n -days int                  Number of days until newly generated certificate expires - default 30\n -preserve_dates            Preserve existing validity dates\n -set_issuer val            Set or override certificate issuer\n -set_subject val           Set or override certificate subject (and issuer)\n -subj val                  Alias for -set_subject\n -force_pubkey infile       Key to be placed in new certificate or certificate request\n -clrext                    Do not take over any extensions from the source certificate or request\n -extfile infile            Config file with X509V3 extensions to add\n -extensions val            Section of extfile to use - default: unnamed section\n -sigopt val                Signature parameter, in n:v form\n -badsig                    Corrupt last byte of certificate signature (for test)\n -*                         Any supported digest, used for signing and printing\n\nMicro-CA options:\n -CA infile                 Use the given CA certificate, conflicts with -key\n -CAform PEM|DER            CA cert format (PEM/DER/P12); has no effect\n -CAkey val                 The corresponding CA key; default is -CA arg\n -CAkeyform PEM|DER|ENGINE  CA key format (ENGINE, other values ignored)\n -CAserial val              File that keeps track of CA-generated serial number\n -CAcreateserial            Create CA serial number file if it does not exist\n\nCertificate trust output options:\n -trustout                  Mark certificate PEM output as trusted\n -setalias val              Set certificate alias (nickname)\n -clrtrust                  Clear all trusted purposes\n -addtrust val              Trust certificate for a given purpose\n -clrreject                 Clears all the prohibited or rejected uses of the certificate\n -addreject val             Reject certificate for a given purpose\n\nRandom state options:\n -rand val                  Load the given file(s) into the random number generator\n -writerand outfile         Write random data to the specified file\n -engine val                Use engine, possibly a hardware device\n\nProvider options:\n -provider-path val         Provider load path (must be before 'provider' argument if required)\n -provider val              Provider to load (can be specified multiple times)\n -provparam val             Set a provider key-value parameter\n -propquery val             Property query used when fetching algorithms\n"
+    },
+    "defaultTool": "LibreSSL 3.3.6; verify help lacks -verify_hostname; not used"
+  },
+  "dummyOnly": true,
+  "privateKeysPersisted": false,
+  "privateKeyDirectoryRemoved": true,
+  "commands": [
+    {
+      "argv": [
+        "openssl3",
+        "genpkey",
+        "-algorithm",
+        "EC",
+        "-pkeyopt",
+        "ec_paramgen_curve:P-256",
+        "-out",
+        "<ephemeral-dummy>/root-a.key"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-new",
+        "-key",
+        "<ephemeral-dummy>/root-a.key",
+        "-subj",
+        "/CN=Atlas Dummy Root A",
+        "-set_serial",
+        "1",
+        "-not_before",
+        "20260101000000Z",
+        "-not_after",
+        "20300101000000Z",
+        "-extfile",
+        "profiles/ca.cnf",
+        "-out",
+        "certs/root-a.pem"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "genpkey",
+        "-algorithm",
+        "EC",
+        "-pkeyopt",
+        "ec_paramgen_curve:P-256",
+        "-out",
+        "<ephemeral-dummy>/root-b.key"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-new",
+        "-key",
+        "<ephemeral-dummy>/root-b.key",
+        "-subj",
+        "/CN=Atlas Dummy Root B",
+        "-set_serial",
+        "2",
+        "-not_before",
+        "20260101000000Z",
+        "-not_after",
+        "20300101000000Z",
+        "-extfile",
+        "profiles/ca.cnf",
+        "-out",
+        "certs/root-b.pem"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "genpkey",
+        "-algorithm",
+        "EC",
+        "-pkeyopt",
+        "ec_paramgen_curve:P-256",
+        "-out",
+        "<ephemeral-dummy>/leaf.key"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "pkey",
+        "-in",
+        "<ephemeral-dummy>/leaf.key",
+        "-pubout",
+        "-out",
+        "<ephemeral-dummy>/leaf.pub"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-new",
+        "-force_pubkey",
+        "<ephemeral-dummy>/leaf.pub",
+        "-CA",
+        "certs/root-a.pem",
+        "-CAkey",
+        "<ephemeral-dummy>/root-a.key",
+        "-subj",
+        "/CN=api.atlas.invalid",
+        "-set_serial",
+        "101",
+        "-not_before",
+        "20261005000000Z",
+        "-not_after",
+        "20261006000000Z",
+        "-extfile",
+        "profiles/good.cnf",
+        "-out",
+        "certs/leaf-good.pem"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-new",
+        "-force_pubkey",
+        "<ephemeral-dummy>/leaf.pub",
+        "-CA",
+        "certs/root-a.pem",
+        "-CAkey",
+        "<ephemeral-dummy>/root-a.key",
+        "-subj",
+        "/CN=api.atlas.invalid",
+        "-set_serial",
+        "102",
+        "-not_before",
+        "20261005000000Z",
+        "-not_after",
+        "20261006000000Z",
+        "-extfile",
+        "profiles/wrong-san.cnf",
+        "-out",
+        "certs/leaf-wrong-san.pem"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "openssl3",
+        "x509",
+        "-new",
+        "-force_pubkey",
+        "<ephemeral-dummy>/leaf.pub",
+        "-CA",
+        "certs/root-a.pem",
+        "-CAkey",
+        "<ephemeral-dummy>/root-a.key",
+        "-subj",
+        "/CN=api.atlas.invalid",
+        "-set_serial",
+        "103",
+        "-not_before",
+        "20261005000000Z",
+        "-not_after",
+        "20261006000000Z",
+        "-extfile",
+        "profiles/client.cnf",
+        "-out",
+        "certs/leaf-client.pem"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

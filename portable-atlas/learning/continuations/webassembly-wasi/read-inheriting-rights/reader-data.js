@@ -1,0 +1,786 @@
+window.AtlasWasiData = {
+  "schema": 1,
+  "run_id": "runtime-20261006T170238675687Z",
+  "result_sha256": "8d53cc049c1d644cb51af240280c45200aa3334647e8d81d6ef994afe6215070",
+  "result": {
+    "title": "Atlas actual WASI read and inheriting observations",
+    "schema": 1,
+    "started_at_utc": "2026-10-06T17:02:38.822Z",
+    "runtime": {
+      "node": "25.2.1",
+      "uvwasi": "0.0.23",
+      "wasi": "preview1"
+    },
+    "status": "observed",
+    "cases": [
+      {
+        "case_id": "granted",
+        "stage": "observed",
+        "events": [
+          {
+            "sequence": 0,
+            "op": "fd_prestat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "name_length": 7,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 1,
+            "op": "fd_prestat_dir_name",
+            "wrapper_args": [
+              3,
+              7
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "guest_name": "/lesson",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 2,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435455",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 3,
+            "op": "path_open",
+            "wrapper_args": [
+              3,
+              128,
+              8
+            ],
+            "role": "directory",
+            "phase": "first_open",
+            "errno": 0,
+            "output": {
+              "opened_fd": 4,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 4,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "2",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 5,
+            "op": "fd_read",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "read",
+            "errno": 0,
+            "output": {
+              "nread": 6,
+              "hex": "41746c61730a",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 6,
+            "op": "fd_read",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "read",
+            "errno": 0,
+            "output": {
+              "nread": 0,
+              "hex": "",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 7,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "after",
+            "errno": 0,
+            "output": {
+              "base": "2",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 8,
+            "op": "fd_close",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 9,
+            "op": "fd_close",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          }
+        ],
+        "rights": {
+          "directory_before": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "directory_after": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "file_before": {
+            "base": "2",
+            "inheriting": "0"
+          },
+          "file_after": {
+            "base": "2",
+            "inheriting": "0"
+          }
+        },
+        "outcome": {
+          "guest_name": "/lesson",
+          "open_errnos": [
+            0
+          ],
+          "read_status": "success_then_eof",
+          "read_errno": 0,
+          "hex": "41746c61730a",
+          "nread_total": 6,
+          "classification": "read_allowed"
+        },
+        "error": null,
+        "cleanup": {
+          "preopen_created": true,
+          "guest_initialized": true,
+          "file_closes": [
+            {
+              "fd": 4,
+              "errno": 0
+            }
+          ],
+          "preopen_close_errno": 0,
+          "complete": true,
+          "remaining_file_fds": [],
+          "guest_preopen_close_unconfirmed": false,
+          "recovery": "explicit guest close complete"
+        }
+      },
+      {
+        "case_id": "directory-before-open",
+        "stage": "observed",
+        "events": [
+          {
+            "sequence": 0,
+            "op": "fd_prestat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "name_length": 7,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 1,
+            "op": "fd_prestat_dir_name",
+            "wrapper_args": [
+              3,
+              7
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "guest_name": "/lesson",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 2,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435455",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 3,
+            "op": "fd_fdstat_set_rights",
+            "wrapper_args": [
+              3,
+              "264240792",
+              "268435453"
+            ],
+            "role": "directory",
+            "phase": "decrease",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 4,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "after",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435453",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 5,
+            "op": "path_open",
+            "wrapper_args": [
+              3,
+              128,
+              8
+            ],
+            "role": "directory",
+            "phase": "first_open",
+            "errno": 76,
+            "output": {
+              "opened_fd": null,
+              "output_used": false
+            }
+          },
+          {
+            "sequence": 6,
+            "op": "fd_close",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          }
+        ],
+        "rights": {
+          "directory_before": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "directory_after": {
+            "base": "264240792",
+            "inheriting": "268435453"
+          },
+          "file_before": null,
+          "file_after": null
+        },
+        "outcome": {
+          "guest_name": "/lesson",
+          "open_errnos": [
+            76
+          ],
+          "read_status": "not_reached",
+          "read_errno": null,
+          "hex": null,
+          "nread_total": null,
+          "classification": "new_open_refused"
+        },
+        "error": null,
+        "cleanup": {
+          "preopen_created": true,
+          "guest_initialized": true,
+          "file_closes": [],
+          "preopen_close_errno": 0,
+          "complete": true,
+          "remaining_file_fds": [],
+          "guest_preopen_close_unconfirmed": false,
+          "recovery": "explicit guest close complete"
+        }
+      },
+      {
+        "case_id": "file-read-reduced",
+        "stage": "observed",
+        "events": [
+          {
+            "sequence": 0,
+            "op": "fd_prestat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "name_length": 7,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 1,
+            "op": "fd_prestat_dir_name",
+            "wrapper_args": [
+              3,
+              7
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "guest_name": "/lesson",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 2,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435455",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 3,
+            "op": "path_open",
+            "wrapper_args": [
+              3,
+              128,
+              8
+            ],
+            "role": "directory",
+            "phase": "first_open",
+            "errno": 0,
+            "output": {
+              "opened_fd": 4,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 4,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "2",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 5,
+            "op": "fd_fdstat_set_rights",
+            "wrapper_args": [
+              4,
+              "0",
+              "0"
+            ],
+            "role": "file",
+            "phase": "decrease",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 6,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "after",
+            "errno": 0,
+            "output": {
+              "base": "0",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 7,
+            "op": "fd_read",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "read",
+            "errno": 76,
+            "output": {
+              "nread": null,
+              "hex": null,
+              "output_used": false
+            }
+          },
+          {
+            "sequence": 8,
+            "op": "fd_close",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 9,
+            "op": "fd_close",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          }
+        ],
+        "rights": {
+          "directory_before": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "directory_after": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "file_before": {
+            "base": "2",
+            "inheriting": "0"
+          },
+          "file_after": {
+            "base": "0",
+            "inheriting": "0"
+          }
+        },
+        "outcome": {
+          "guest_name": "/lesson",
+          "open_errnos": [
+            0
+          ],
+          "read_status": "rights_refusal",
+          "read_errno": 76,
+          "hex": null,
+          "nread_total": null,
+          "classification": "file_read_refused"
+        },
+        "error": null,
+        "cleanup": {
+          "preopen_created": true,
+          "guest_initialized": true,
+          "file_closes": [
+            {
+              "fd": 4,
+              "errno": 0
+            }
+          ],
+          "preopen_close_errno": 0,
+          "complete": true,
+          "remaining_file_fds": [],
+          "guest_preopen_close_unconfirmed": false,
+          "recovery": "explicit guest close complete"
+        }
+      },
+      {
+        "case_id": "opened-before-directory-change",
+        "stage": "observed",
+        "events": [
+          {
+            "sequence": 0,
+            "op": "fd_prestat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "name_length": 7,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 1,
+            "op": "fd_prestat_dir_name",
+            "wrapper_args": [
+              3,
+              7
+            ],
+            "role": "directory",
+            "phase": "discover",
+            "errno": 0,
+            "output": {
+              "guest_name": "/lesson",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 2,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435455",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 3,
+            "op": "path_open",
+            "wrapper_args": [
+              3,
+              128,
+              8
+            ],
+            "role": "directory",
+            "phase": "first_open",
+            "errno": 0,
+            "output": {
+              "opened_fd": 4,
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 4,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "before",
+            "errno": 0,
+            "output": {
+              "base": "2",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 5,
+            "op": "fd_fdstat_set_rights",
+            "wrapper_args": [
+              3,
+              "264240792",
+              "268435453"
+            ],
+            "role": "directory",
+            "phase": "decrease",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 6,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "after",
+            "errno": 0,
+            "output": {
+              "base": "264240792",
+              "inheriting": "268435453",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 7,
+            "op": "fd_fdstat_get",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "after",
+            "errno": 0,
+            "output": {
+              "base": "2",
+              "inheriting": "0",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 8,
+            "op": "fd_read",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "read",
+            "errno": 0,
+            "output": {
+              "nread": 6,
+              "hex": "41746c61730a",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 9,
+            "op": "fd_read",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "read",
+            "errno": 0,
+            "output": {
+              "nread": 0,
+              "hex": "",
+              "output_used": true
+            }
+          },
+          {
+            "sequence": 10,
+            "op": "path_open",
+            "wrapper_args": [
+              3,
+              128,
+              8
+            ],
+            "role": "directory",
+            "phase": "new_open_after_change",
+            "errno": 76,
+            "output": {
+              "opened_fd": null,
+              "output_used": false
+            }
+          },
+          {
+            "sequence": 11,
+            "op": "fd_close",
+            "wrapper_args": [
+              4
+            ],
+            "role": "file",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          },
+          {
+            "sequence": 12,
+            "op": "fd_close",
+            "wrapper_args": [
+              3
+            ],
+            "role": "directory",
+            "phase": "cleanup",
+            "errno": 0,
+            "output": null
+          }
+        ],
+        "rights": {
+          "directory_before": {
+            "base": "264240792",
+            "inheriting": "268435455"
+          },
+          "directory_after": {
+            "base": "264240792",
+            "inheriting": "268435453"
+          },
+          "file_before": {
+            "base": "2",
+            "inheriting": "0"
+          },
+          "file_after": {
+            "base": "2",
+            "inheriting": "0"
+          }
+        },
+        "outcome": {
+          "guest_name": "/lesson",
+          "open_errnos": [
+            0,
+            76
+          ],
+          "read_status": "success_then_eof",
+          "read_errno": 0,
+          "hex": "41746c61730a",
+          "nread_total": 6,
+          "classification": "old_read_allowed_new_open_refused"
+        },
+        "error": null,
+        "cleanup": {
+          "preopen_created": true,
+          "guest_initialized": true,
+          "file_closes": [
+            {
+              "fd": 4,
+              "errno": 0
+            }
+          ],
+          "preopen_close_errno": 0,
+          "complete": true,
+          "remaining_file_fds": [],
+          "guest_preopen_close_unconfirmed": false,
+          "recovery": "explicit guest close complete"
+        }
+      }
+    ],
+    "host_fixture_read": false,
+    "fixture_written_by_parent": true,
+    "later_cases_not_started": [],
+    "priority_observed": 10,
+    "module_sha256": "41e5f0061be53f32aa28eb769a0527d91477a16d9e2e44fb5fbe2ada7916fadf",
+    "fixture_sha256": "79c3bc49243491c25e6c41dd5dbe67beb1049b2d04a9127d8f6c92cfa3a34cdd",
+    "finished_at_utc": "2026-10-06T17:02:38.837Z"
+  }
+};

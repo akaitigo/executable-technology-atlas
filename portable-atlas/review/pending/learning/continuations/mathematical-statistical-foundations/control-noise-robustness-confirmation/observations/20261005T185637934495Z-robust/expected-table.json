@@ -1,0 +1,124 @@
+{
+  "rows": [
+    {
+      "id": "pass",
+      "label": "pass",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "calculated",
+        "hand_case": "pass",
+        "category": "pass"
+      }
+    },
+    {
+      "id": "failed-confirmation",
+      "label": "failed-confirmation",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[13,14,15],[15,16,17]]}}",
+      "expected": {
+        "status": "calculated",
+        "hand_case": "failed-confirmation",
+        "category": "fail"
+      }
+    },
+    {
+      "id": "tie",
+      "label": "tie",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[9,10,11],[9,10,11],[9,10,11],[9,10,11]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "calculated",
+        "hand_case": "tie",
+        "category": "tie"
+      }
+    },
+    {
+      "id": "perfect-target",
+      "label": "perfect-target",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[10,10,10],[10,10,10],[11,11,11],[11,11,11]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[10,10,10],[10,10,10],[12,12,12],[12,12,12]]}}",
+      "expected": {
+        "status": "calculated",
+        "hand_case": "perfect-target",
+        "category": "pass"
+      }
+    },
+    {
+      "id": "low-variance-bias",
+      "label": "low-variance-bias",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[14,15,16],[14,15,16]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "calculated",
+        "hand_case": "low-variance-bias",
+        "category": "fail"
+      }
+    },
+    {
+      "id": "same-data",
+      "label": "拒否 same-data",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "fixture-reuse",
+        "category": "input"
+      }
+    },
+    {
+      "id": "same-id",
+      "label": "拒否 same-id",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"selection-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "fixture-id",
+        "category": "input"
+      }
+    },
+    {
+      "id": "bool-target",
+      "label": "拒否 bool-target",
+      "input_json": "{\"unit\":\"arb\",\"target\":true,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "target",
+        "category": "input"
+      }
+    },
+    {
+      "id": "float-value",
+      "label": "拒否 float-value",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6.0,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "values",
+        "category": "input"
+      }
+    },
+    {
+      "id": "replicate-missing",
+      "label": "拒否 replicate-missing",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7],[11,13,15],[9,10,11],[11,12,13]]}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "replicates",
+        "category": "input"
+      }
+    },
+    {
+      "id": "extra-field",
+      "label": "拒否 extra-field",
+      "input_json": "{\"unit\":\"arb\",\"target\":10,\"loss_limit\":3,\"selection\":{\"id\":\"selection-v1\",\"cells\":[[6,7,8],[12,13,14],[10,11,12],[10,11,12]]},\"confirmation\":{\"id\":\"confirmation-v1\",\"cells\":[[5,7,9],[11,13,15],[9,10,11],[11,12,13]]},\"path\":\"data\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape",
+        "category": "input"
+      }
+    },
+    {
+      "id": "nan",
+      "label": "拒否 nan",
+      "input_json": "{\"unit\":\"arb\",\"target\":NaN,\"loss_limit\":3,\"selection\":{},\"confirmation\":{}}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax",
+        "category": "input"
+      }
+    }
+  ]
+}

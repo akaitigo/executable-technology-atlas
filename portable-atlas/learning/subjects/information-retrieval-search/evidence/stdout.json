@@ -1,0 +1,850 @@
+{
+  "input": {
+    "initial_documents": {
+      "d1": "Blue green note",
+      "d2": "Blue red memo",
+      "d3": "Green gold note",
+      "d4": "Red blue blue log",
+      "d5": ""
+    },
+    "operators": [
+      "AND",
+      "OR"
+    ],
+    "schedule": "build -> query -> update without rebuild -> query -> rebuild -> query",
+    "tokenizer": "lowercase then ASCII [a-z0-9]+ runs; duplicate terms collapsed per query",
+    "update": {
+      "doc_id": "d1",
+      "text": "Gold green note"
+    }
+  },
+  "queries": [
+    {
+      "doc_ids": [
+        "d1"
+      ],
+      "id": "initial.and",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "blue green",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "id": "initial.or",
+      "operator": "OR",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d3",
+            "d4"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "blue green",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        },
+        {
+          "id": "d2",
+          "text": "Blue red memo"
+        },
+        {
+          "id": "d3",
+          "text": "Green gold note"
+        },
+        {
+          "id": "d4",
+          "text": "Red blue blue log"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1"
+      ],
+      "id": "initial.case-punctuation",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "BLUE, Green!",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1",
+        "d2",
+        "d4"
+      ],
+      "id": "initial.duplicate",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        }
+      ],
+      "query": "blue blue",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        },
+        {
+          "id": "d2",
+          "text": "Blue red memo"
+        },
+        {
+          "id": "d4",
+          "text": "Red blue blue log"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue"
+      ]
+    },
+    {
+      "doc_ids": [],
+      "id": "initial.empty",
+      "operator": "OR",
+      "posting_steps": [],
+      "query": "  ...  ",
+      "rows": [],
+      "stage": "initial",
+      "status": "empty-query",
+      "terms": []
+    },
+    {
+      "doc_ids": [],
+      "id": "initial.unknown",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [],
+          "before": null,
+          "posting": [],
+          "term": "violet"
+        }
+      ],
+      "query": "violet",
+      "rows": [],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "violet"
+      ]
+    },
+    {
+      "doc_ids": [],
+      "id": "initial.unknown-and",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [],
+          "term": "violet"
+        }
+      ],
+      "query": "blue violet",
+      "rows": [],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "violet"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1",
+        "d2",
+        "d4"
+      ],
+      "id": "initial.unknown-or",
+      "operator": "OR",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [],
+          "term": "violet"
+        }
+      ],
+      "query": "blue violet",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        },
+        {
+          "id": "d2",
+          "text": "Blue red memo"
+        },
+        {
+          "id": "d4",
+          "text": "Red blue blue log"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "violet"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1"
+      ],
+      "id": "initial.ascii-boundary",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "blue-green 東京",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Blue green note"
+        }
+      ],
+      "stage": "initial",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1"
+      ],
+      "id": "stale.removed-blue",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [
+            "d1"
+          ],
+          "before": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "blue green",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Gold green note"
+        }
+      ],
+      "stage": "stale",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d3"
+      ],
+      "id": "stale.added-gold",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d3"
+          ],
+          "before": null,
+          "posting": [
+            "d3"
+          ],
+          "term": "gold"
+        },
+        {
+          "after": [
+            "d3"
+          ],
+          "before": [
+            "d3"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "gold green",
+      "rows": [
+        {
+          "id": "d3",
+          "text": "Green gold note"
+        }
+      ],
+      "stage": "stale",
+      "status": "ok",
+      "terms": [
+        "gold",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [],
+      "id": "rebuilt.removed-blue",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d2",
+            "d4"
+          ],
+          "before": null,
+          "posting": [
+            "d2",
+            "d4"
+          ],
+          "term": "blue"
+        },
+        {
+          "after": [],
+          "before": [
+            "d2",
+            "d4"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "blue green",
+      "rows": [],
+      "stage": "rebuilt",
+      "status": "ok",
+      "terms": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "doc_ids": [
+        "d1",
+        "d3"
+      ],
+      "id": "rebuilt.added-gold",
+      "operator": "AND",
+      "posting_steps": [
+        {
+          "after": [
+            "d1",
+            "d3"
+          ],
+          "before": null,
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "gold"
+        },
+        {
+          "after": [
+            "d1",
+            "d3"
+          ],
+          "before": [
+            "d1",
+            "d3"
+          ],
+          "posting": [
+            "d1",
+            "d3"
+          ],
+          "term": "green"
+        }
+      ],
+      "query": "gold green",
+      "rows": [
+        {
+          "id": "d1",
+          "text": "Gold green note"
+        },
+        {
+          "id": "d3",
+          "text": "Green gold note"
+        }
+      ],
+      "stage": "rebuilt",
+      "status": "ok",
+      "terms": [
+        "gold",
+        "green"
+      ]
+    }
+  ],
+  "runtime": {
+    "architecture": "arm64",
+    "implementation": "CPython",
+    "os": "Darwin",
+    "python_version": "3.9.6"
+  },
+  "schema_version": 1,
+  "scope": {
+    "actual": "executed Python stdlib inverted index with synthetic documents",
+    "bm25": false,
+    "performance_benchmark": false,
+    "product_engine": false,
+    "ranked_retrieval": false,
+    "semantic_embedding": false,
+    "unicode_morphology": false
+  },
+  "snapshots": [
+    {
+      "corpus_hash": "sha256:4a156536ce3d295be811b6ffe9ca5933e5e9e8115da8549ffffde70b5ad32b88",
+      "document_tokens": {
+        "d1": [
+          "blue",
+          "green",
+          "note"
+        ],
+        "d2": [
+          "blue",
+          "red",
+          "memo"
+        ],
+        "d3": [
+          "green",
+          "gold",
+          "note"
+        ],
+        "d4": [
+          "red",
+          "blue",
+          "blue",
+          "log"
+        ],
+        "d5": []
+      },
+      "documents": {
+        "d1": "Blue green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      },
+      "id": "initial",
+      "index": {
+        "built_from_corpus_hash": "sha256:4a156536ce3d295be811b6ffe9ca5933e5e9e8115da8549ffffde70b5ad32b88",
+        "postings": {
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "gold": [
+            "d3"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "log": [
+            "d4"
+          ],
+          "memo": [
+            "d2"
+          ],
+          "note": [
+            "d1",
+            "d3"
+          ],
+          "red": [
+            "d2",
+            "d4"
+          ]
+        },
+        "postings_hash": "sha256:f4ae590e073f70e08dff35926b708e2bb5d61b4775139b76c1503905f91638d0"
+      },
+      "indexed_documents": {
+        "d1": "Blue green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      }
+    },
+    {
+      "corpus_hash": "sha256:cc331d6bc70d6dcb6b4c258f3b1c2611350b1852a173ff261bf96434fa6178b0",
+      "document_tokens": {
+        "d1": [
+          "gold",
+          "green",
+          "note"
+        ],
+        "d2": [
+          "blue",
+          "red",
+          "memo"
+        ],
+        "d3": [
+          "green",
+          "gold",
+          "note"
+        ],
+        "d4": [
+          "red",
+          "blue",
+          "blue",
+          "log"
+        ],
+        "d5": []
+      },
+      "documents": {
+        "d1": "Gold green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      },
+      "id": "stale",
+      "index": {
+        "built_from_corpus_hash": "sha256:4a156536ce3d295be811b6ffe9ca5933e5e9e8115da8549ffffde70b5ad32b88",
+        "postings": {
+          "blue": [
+            "d1",
+            "d2",
+            "d4"
+          ],
+          "gold": [
+            "d3"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "log": [
+            "d4"
+          ],
+          "memo": [
+            "d2"
+          ],
+          "note": [
+            "d1",
+            "d3"
+          ],
+          "red": [
+            "d2",
+            "d4"
+          ]
+        },
+        "postings_hash": "sha256:f4ae590e073f70e08dff35926b708e2bb5d61b4775139b76c1503905f91638d0"
+      },
+      "indexed_documents": {
+        "d1": "Blue green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      }
+    },
+    {
+      "corpus_hash": "sha256:cc331d6bc70d6dcb6b4c258f3b1c2611350b1852a173ff261bf96434fa6178b0",
+      "document_tokens": {
+        "d1": [
+          "gold",
+          "green",
+          "note"
+        ],
+        "d2": [
+          "blue",
+          "red",
+          "memo"
+        ],
+        "d3": [
+          "green",
+          "gold",
+          "note"
+        ],
+        "d4": [
+          "red",
+          "blue",
+          "blue",
+          "log"
+        ],
+        "d5": []
+      },
+      "documents": {
+        "d1": "Gold green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      },
+      "id": "rebuilt",
+      "index": {
+        "built_from_corpus_hash": "sha256:cc331d6bc70d6dcb6b4c258f3b1c2611350b1852a173ff261bf96434fa6178b0",
+        "postings": {
+          "blue": [
+            "d2",
+            "d4"
+          ],
+          "gold": [
+            "d1",
+            "d3"
+          ],
+          "green": [
+            "d1",
+            "d3"
+          ],
+          "log": [
+            "d4"
+          ],
+          "memo": [
+            "d2"
+          ],
+          "note": [
+            "d1",
+            "d3"
+          ],
+          "red": [
+            "d2",
+            "d4"
+          ]
+        },
+        "postings_hash": "sha256:c3ba992f4d04293d1ffa344adbaa86ce2e02a4a527225958f152e37154c59134"
+      },
+      "indexed_documents": {
+        "d1": "Gold green note",
+        "d2": "Blue red memo",
+        "d3": "Green gold note",
+        "d4": "Red blue blue log",
+        "d5": ""
+      }
+    }
+  ],
+  "subject": "information-retrieval-search"
+}

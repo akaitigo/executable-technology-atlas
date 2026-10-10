@@ -1,0 +1,754 @@
+{
+  "no-key": {
+    "case": "no-key",
+    "input": {
+      "first": {
+        "sku": "demo-seat",
+        "quantity": 1
+      },
+      "retry": {
+        "sku": "demo-seat",
+        "quantity": 1
+      }
+    },
+    "first_client": {
+      "exception": "RemoteDisconnected",
+      "outcome": "unknown"
+    },
+    "after_first": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [],
+      "integrity": "ok"
+    },
+    "retry_response": {
+      "status": 201,
+      "body": {
+        "order_id": 2,
+        "quantity": 1,
+        "sku": "demo-seat"
+      },
+      "replay": false
+    },
+    "after_retry": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ],
+        [
+          2,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [],
+      "integrity": "ok"
+    },
+    "trace": [
+      {
+        "seq": 1,
+        "utc": "2026-10-05T09:37:13.675419+00:00",
+        "elapsed_ns": 4274750,
+        "kind": "client_send",
+        "attempt": 1,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 1
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "X-Lab-Drop-Response": "once"
+        }
+      },
+      {
+        "seq": 2,
+        "utc": "2026-10-05T09:37:13.676143+00:00",
+        "elapsed_ns": 4768125,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a312c22736b75223a2264656d6f2d73656174227d",
+        "key": null
+      },
+      {
+        "seq": 3,
+        "utc": "2026-10-05T09:37:13.677262+00:00",
+        "elapsed_ns": 5887000,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 4,
+        "utc": "2026-10-05T09:37:13.677273+00:00",
+        "elapsed_ns": 5896083,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 5,
+        "utc": "2026-10-05T09:37:13.677347+00:00",
+        "elapsed_ns": 5970542,
+        "kind": "sql",
+        "statement": "INSERT INTO orders(sku,quantity) VALUES ('demo-seat',1)"
+      },
+      {
+        "seq": 6,
+        "utc": "2026-10-05T09:37:13.677522+00:00",
+        "elapsed_ns": 6145500,
+        "kind": "sql",
+        "statement": "COMMIT"
+      },
+      {
+        "seq": 7,
+        "utc": "2026-10-05T09:37:13.677850+00:00",
+        "elapsed_ns": 6473500,
+        "kind": "business_commit",
+        "order_id": 1,
+        "ledger_written": false,
+        "result": "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}"
+      },
+      {
+        "seq": 8,
+        "utc": "2026-10-05T09:37:13.677856+00:00",
+        "elapsed_ns": 6478458,
+        "kind": "close_before_response"
+      },
+      {
+        "seq": 9,
+        "utc": "2026-10-05T09:37:13.677977+00:00",
+        "elapsed_ns": 6601500,
+        "kind": "client_uncertain",
+        "exception": "RemoteDisconnected",
+        "message": "Remote end closed connection without response"
+      },
+      {
+        "seq": 10,
+        "utc": "2026-10-05T09:37:13.679131+00:00",
+        "elapsed_ns": 7754417,
+        "kind": "explicit_retry",
+        "maximum_retries": 1
+      },
+      {
+        "seq": 11,
+        "utc": "2026-10-05T09:37:13.679137+00:00",
+        "elapsed_ns": 7760292,
+        "kind": "client_send",
+        "attempt": 2,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 1
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      {
+        "seq": 12,
+        "utc": "2026-10-05T09:37:13.679513+00:00",
+        "elapsed_ns": 8136667,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a312c22736b75223a2264656d6f2d73656174227d",
+        "key": null
+      },
+      {
+        "seq": 13,
+        "utc": "2026-10-05T09:37:13.679636+00:00",
+        "elapsed_ns": 8258833,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 14,
+        "utc": "2026-10-05T09:37:13.679640+00:00",
+        "elapsed_ns": 8262917,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 15,
+        "utc": "2026-10-05T09:37:13.679675+00:00",
+        "elapsed_ns": 8298000,
+        "kind": "sql",
+        "statement": "INSERT INTO orders(sku,quantity) VALUES ('demo-seat',1)"
+      },
+      {
+        "seq": 16,
+        "utc": "2026-10-05T09:37:13.679795+00:00",
+        "elapsed_ns": 8417917,
+        "kind": "sql",
+        "statement": "COMMIT"
+      },
+      {
+        "seq": 17,
+        "utc": "2026-10-05T09:37:13.680075+00:00",
+        "elapsed_ns": 8698333,
+        "kind": "business_commit",
+        "order_id": 2,
+        "ledger_written": false,
+        "result": "{\"order_id\":2,\"quantity\":1,\"sku\":\"demo-seat\"}"
+      },
+      {
+        "seq": 18,
+        "utc": "2026-10-05T09:37:13.680079+00:00",
+        "elapsed_ns": 8701417,
+        "kind": "respond",
+        "status": 201,
+        "result": "{\"order_id\":2,\"quantity\":1,\"sku\":\"demo-seat\"}",
+        "replay": false
+      },
+      {
+        "seq": 19,
+        "utc": "2026-10-05T09:37:13.680212+00:00",
+        "elapsed_ns": 8835542,
+        "kind": "client_response",
+        "status": 201,
+        "body": {
+          "order_id": 2,
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "replay": false
+      }
+    ],
+    "environment": {
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "platform": "Darwin"
+    },
+    "cleanup": {
+      "port": 49722,
+      "server_closed": true,
+      "thread_joined": true,
+      "temporary_database_removed": true
+    }
+  },
+  "same-key": {
+    "case": "same-key",
+    "input": {
+      "first": {
+        "sku": "demo-seat",
+        "quantity": 1
+      },
+      "retry": {
+        "sku": "demo-seat",
+        "quantity": 1
+      }
+    },
+    "first_client": {
+      "exception": "RemoteDisconnected",
+      "outcome": "unknown"
+    },
+    "after_first": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [
+        [
+          "demo-request-1",
+          "4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d",
+          201,
+          "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}",
+          1
+        ]
+      ],
+      "integrity": "ok"
+    },
+    "retry_response": {
+      "status": 201,
+      "body": {
+        "order_id": 1,
+        "quantity": 1,
+        "sku": "demo-seat"
+      },
+      "replay": true
+    },
+    "after_retry": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [
+        [
+          "demo-request-1",
+          "4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d",
+          201,
+          "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}",
+          1
+        ]
+      ],
+      "integrity": "ok"
+    },
+    "trace": [
+      {
+        "seq": 1,
+        "utc": "2026-10-05T09:37:14.191257+00:00",
+        "elapsed_ns": 6974959,
+        "kind": "client_send",
+        "attempt": 1,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 1
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "Idempotency-Key": "demo-request-1",
+          "X-Lab-Drop-Response": "once"
+        }
+      },
+      {
+        "seq": 2,
+        "utc": "2026-10-05T09:37:14.192308+00:00",
+        "elapsed_ns": 8022625,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a312c22736b75223a2264656d6f2d73656174227d",
+        "key": "demo-request-1"
+      },
+      {
+        "seq": 3,
+        "utc": "2026-10-05T09:37:14.195259+00:00",
+        "elapsed_ns": 10973084,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 4,
+        "utc": "2026-10-05T09:37:14.195278+00:00",
+        "elapsed_ns": 10988542,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 5,
+        "utc": "2026-10-05T09:37:14.195429+00:00",
+        "elapsed_ns": 11140084,
+        "kind": "sql",
+        "statement": "SELECT request_hash,status,result FROM ledger WHERE key='demo-request-1'"
+      },
+      {
+        "seq": 6,
+        "utc": "2026-10-05T09:37:14.195460+00:00",
+        "elapsed_ns": 11169875,
+        "kind": "sql",
+        "statement": "INSERT INTO orders(sku,quantity) VALUES ('demo-seat',1)"
+      },
+      {
+        "seq": 7,
+        "utc": "2026-10-05T09:37:14.195941+00:00",
+        "elapsed_ns": 11651834,
+        "kind": "sql",
+        "statement": "INSERT INTO ledger VALUES ('demo-request-1','4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d',201,'{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}',1)"
+      },
+      {
+        "seq": 8,
+        "utc": "2026-10-05T09:37:14.195992+00:00",
+        "elapsed_ns": 11701875,
+        "kind": "sql",
+        "statement": "COMMIT"
+      },
+      {
+        "seq": 9,
+        "utc": "2026-10-05T09:37:14.196805+00:00",
+        "elapsed_ns": 12517500,
+        "kind": "business_commit",
+        "order_id": 1,
+        "ledger_written": true,
+        "result": "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}"
+      },
+      {
+        "seq": 10,
+        "utc": "2026-10-05T09:37:14.196819+00:00",
+        "elapsed_ns": 12529125,
+        "kind": "close_before_response"
+      },
+      {
+        "seq": 11,
+        "utc": "2026-10-05T09:37:14.197151+00:00",
+        "elapsed_ns": 12863250,
+        "kind": "client_uncertain",
+        "exception": "RemoteDisconnected",
+        "message": "Remote end closed connection without response"
+      },
+      {
+        "seq": 12,
+        "utc": "2026-10-05T09:37:14.199972+00:00",
+        "elapsed_ns": 15687584,
+        "kind": "explicit_retry",
+        "maximum_retries": 1
+      },
+      {
+        "seq": 13,
+        "utc": "2026-10-05T09:37:14.199997+00:00",
+        "elapsed_ns": 15706334,
+        "kind": "client_send",
+        "attempt": 2,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 1
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "Idempotency-Key": "demo-request-1"
+        }
+      },
+      {
+        "seq": 14,
+        "utc": "2026-10-05T09:37:14.200965+00:00",
+        "elapsed_ns": 16676334,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a312c22736b75223a2264656d6f2d73656174227d",
+        "key": "demo-request-1"
+      },
+      {
+        "seq": 15,
+        "utc": "2026-10-05T09:37:14.201312+00:00",
+        "elapsed_ns": 17025167,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 16,
+        "utc": "2026-10-05T09:37:14.201326+00:00",
+        "elapsed_ns": 17035625,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 17,
+        "utc": "2026-10-05T09:37:14.201692+00:00",
+        "elapsed_ns": 17440625,
+        "kind": "sql",
+        "statement": "SELECT request_hash,status,result FROM ledger WHERE key='demo-request-1'"
+      },
+      {
+        "seq": 18,
+        "utc": "2026-10-05T09:37:14.201811+00:00",
+        "elapsed_ns": 17525209,
+        "kind": "sql",
+        "statement": "ROLLBACK"
+      },
+      {
+        "seq": 19,
+        "utc": "2026-10-05T09:37:14.201920+00:00",
+        "elapsed_ns": 17633417,
+        "kind": "respond",
+        "status": 201,
+        "result": "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}",
+        "replay": true
+      },
+      {
+        "seq": 20,
+        "utc": "2026-10-05T09:37:14.202436+00:00",
+        "elapsed_ns": 18148125,
+        "kind": "client_response",
+        "status": 201,
+        "body": {
+          "order_id": 1,
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "replay": true
+      }
+    ],
+    "environment": {
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "platform": "Darwin"
+    },
+    "cleanup": {
+      "port": 49727,
+      "server_closed": true,
+      "thread_joined": true,
+      "temporary_database_removed": true
+    }
+  },
+  "key-conflict": {
+    "case": "key-conflict",
+    "input": {
+      "first": {
+        "sku": "demo-seat",
+        "quantity": 1
+      },
+      "retry": {
+        "sku": "demo-seat",
+        "quantity": 2
+      }
+    },
+    "first_client": {
+      "exception": "RemoteDisconnected",
+      "outcome": "unknown"
+    },
+    "after_first": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [
+        [
+          "demo-request-1",
+          "4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d",
+          201,
+          "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}",
+          1
+        ]
+      ],
+      "integrity": "ok"
+    },
+    "retry_response": {
+      "status": 409,
+      "body": {
+        "error": "idempotency_key_body_conflict"
+      },
+      "replay": false
+    },
+    "after_retry": {
+      "orders": [
+        [
+          1,
+          "demo-seat",
+          1
+        ]
+      ],
+      "ledger": [
+        [
+          "demo-request-1",
+          "4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d",
+          201,
+          "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}",
+          1
+        ]
+      ],
+      "integrity": "ok"
+    },
+    "trace": [
+      {
+        "seq": 1,
+        "utc": "2026-10-05T09:37:14.710520+00:00",
+        "elapsed_ns": 5707042,
+        "kind": "client_send",
+        "attempt": 1,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 1
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "Idempotency-Key": "demo-request-1",
+          "X-Lab-Drop-Response": "once"
+        }
+      },
+      {
+        "seq": 2,
+        "utc": "2026-10-05T09:37:14.711324+00:00",
+        "elapsed_ns": 6504792,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 1,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a312c22736b75223a2264656d6f2d73656174227d",
+        "key": "demo-request-1"
+      },
+      {
+        "seq": 3,
+        "utc": "2026-10-05T09:37:14.713296+00:00",
+        "elapsed_ns": 8476958,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 4,
+        "utc": "2026-10-05T09:37:14.713307+00:00",
+        "elapsed_ns": 8485500,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 5,
+        "utc": "2026-10-05T09:37:14.713388+00:00",
+        "elapsed_ns": 8567042,
+        "kind": "sql",
+        "statement": "SELECT request_hash,status,result FROM ledger WHERE key='demo-request-1'"
+      },
+      {
+        "seq": 6,
+        "utc": "2026-10-05T09:37:14.713407+00:00",
+        "elapsed_ns": 8586375,
+        "kind": "sql",
+        "statement": "INSERT INTO orders(sku,quantity) VALUES ('demo-seat',1)"
+      },
+      {
+        "seq": 7,
+        "utc": "2026-10-05T09:37:14.713710+00:00",
+        "elapsed_ns": 8891417,
+        "kind": "sql",
+        "statement": "INSERT INTO ledger VALUES ('demo-request-1','4f4935fc2d31a9b966a964d821c6e50c3019975f651f82d150fe1390e4e5d82d',201,'{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}',1)"
+      },
+      {
+        "seq": 8,
+        "utc": "2026-10-05T09:37:14.713746+00:00",
+        "elapsed_ns": 8925417,
+        "kind": "sql",
+        "statement": "COMMIT"
+      },
+      {
+        "seq": 9,
+        "utc": "2026-10-05T09:37:14.714143+00:00",
+        "elapsed_ns": 9322708,
+        "kind": "business_commit",
+        "order_id": 1,
+        "ledger_written": true,
+        "result": "{\"order_id\":1,\"quantity\":1,\"sku\":\"demo-seat\"}"
+      },
+      {
+        "seq": 10,
+        "utc": "2026-10-05T09:37:14.714152+00:00",
+        "elapsed_ns": 9330708,
+        "kind": "close_before_response"
+      },
+      {
+        "seq": 11,
+        "utc": "2026-10-05T09:37:14.714324+00:00",
+        "elapsed_ns": 9502958,
+        "kind": "client_uncertain",
+        "exception": "RemoteDisconnected",
+        "message": "Remote end closed connection without response"
+      },
+      {
+        "seq": 12,
+        "utc": "2026-10-05T09:37:14.716183+00:00",
+        "elapsed_ns": 11363292,
+        "kind": "explicit_retry",
+        "maximum_retries": 1
+      },
+      {
+        "seq": 13,
+        "utc": "2026-10-05T09:37:14.716194+00:00",
+        "elapsed_ns": 11372250,
+        "kind": "client_send",
+        "attempt": 2,
+        "body": {
+          "sku": "demo-seat",
+          "quantity": 2
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "Idempotency-Key": "demo-request-1"
+        }
+      },
+      {
+        "seq": 14,
+        "utc": "2026-10-05T09:37:14.716958+00:00",
+        "elapsed_ns": 12142042,
+        "kind": "receive",
+        "method": "POST",
+        "path": "/orders",
+        "body": {
+          "quantity": 2,
+          "sku": "demo-seat"
+        },
+        "bytes_hex": "7b227175616e74697479223a322c22736b75223a2264656d6f2d73656174227d",
+        "key": "demo-request-1"
+      },
+      {
+        "seq": 15,
+        "utc": "2026-10-05T09:37:14.717192+00:00",
+        "elapsed_ns": 12372042,
+        "kind": "sql",
+        "statement": "PRAGMA foreign_keys=ON"
+      },
+      {
+        "seq": 16,
+        "utc": "2026-10-05T09:37:14.717202+00:00",
+        "elapsed_ns": 12381208,
+        "kind": "sql",
+        "statement": "BEGIN IMMEDIATE"
+      },
+      {
+        "seq": 17,
+        "utc": "2026-10-05T09:37:14.717257+00:00",
+        "elapsed_ns": 12436125,
+        "kind": "sql",
+        "statement": "SELECT request_hash,status,result FROM ledger WHERE key='demo-request-1'"
+      },
+      {
+        "seq": 18,
+        "utc": "2026-10-05T09:37:14.717290+00:00",
+        "elapsed_ns": 12471208,
+        "kind": "sql",
+        "statement": "ROLLBACK"
+      },
+      {
+        "seq": 19,
+        "utc": "2026-10-05T09:37:14.717315+00:00",
+        "elapsed_ns": 12494375,
+        "kind": "respond",
+        "status": 409,
+        "result": "{\"error\":\"idempotency_key_body_conflict\"}",
+        "replay": false
+      },
+      {
+        "seq": 20,
+        "utc": "2026-10-05T09:37:14.717576+00:00",
+        "elapsed_ns": 12755917,
+        "kind": "client_response",
+        "status": 409,
+        "body": {
+          "error": "idempotency_key_body_conflict"
+        },
+        "replay": false
+      }
+    ],
+    "environment": {
+      "python": "3.9.6",
+      "sqlite": "3.51.0",
+      "platform": "Darwin"
+    },
+    "cleanup": {
+      "port": 49735,
+      "server_closed": true,
+      "thread_joined": true,
+      "temporary_database_removed": true
+    }
+  }
+}

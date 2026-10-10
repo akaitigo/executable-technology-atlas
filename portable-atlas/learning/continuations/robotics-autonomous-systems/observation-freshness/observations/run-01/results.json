@@ -1,0 +1,1662 @@
+{
+  "title": "Atlas 観測鮮度の有限計算",
+  "mode": "synthetic_map_knowledge",
+  "ttl": 4,
+  "position": [
+    0,
+    0
+  ],
+  "targetCell": [
+    1,
+    0
+  ],
+  "initial": {
+    "state": "unknown",
+    "observedAt": null,
+    "arrivedAt": null,
+    "adoptedVersion": 0,
+    "mapRevision": 0
+  },
+  "cases": [
+    {
+      "id": "ordered",
+      "label": "正順の観測",
+      "inputBefore": [
+        {
+          "now": 0,
+          "arrival": {
+            "version": 1,
+            "observedAt": 0,
+            "arrivedAt": 0,
+            "state": "free"
+          }
+        },
+        {
+          "now": 2,
+          "arrival": {
+            "version": 2,
+            "observedAt": 2,
+            "arrivedAt": 2,
+            "state": "occupied"
+          }
+        },
+        {
+          "now": 4,
+          "arrival": {
+            "version": 3,
+            "observedAt": 4,
+            "arrivedAt": 4,
+            "state": "free"
+          }
+        }
+      ],
+      "inputAfter": [
+        {
+          "now": 0,
+          "arrival": {
+            "version": 1,
+            "observedAt": 0,
+            "arrivedAt": 0,
+            "state": "free"
+          }
+        },
+        {
+          "now": 2,
+          "arrival": {
+            "version": 2,
+            "observedAt": 2,
+            "arrivedAt": 2,
+            "state": "occupied"
+          }
+        },
+        {
+          "now": 4,
+          "arrival": {
+            "version": 3,
+            "observedAt": 4,
+            "arrivedAt": 4,
+            "state": "free"
+          }
+        }
+      ],
+      "policies": {
+        "guarded": [
+          {
+            "now": 0,
+            "arrival": {
+              "version": 1,
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 2,
+            "arrival": {
+              "version": 2,
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 4,
+            "arrival": {
+              "version": 3,
+              "observedAt": 4,
+              "arrivedAt": 4,
+              "state": "free"
+            },
+            "before": {
+              "state": "occupied",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 4,
+              "adoptedVersion": 3,
+              "mapRevision": 3
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ],
+        "arrival-only": [
+          {
+            "now": 0,
+            "arrival": {
+              "version": 1,
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 2,
+            "arrival": {
+              "version": 2,
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 4,
+            "arrival": {
+              "version": 3,
+              "observedAt": 4,
+              "arrivedAt": 4,
+              "state": "free"
+            },
+            "before": {
+              "state": "occupied",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 4,
+              "adoptedVersion": 3,
+              "mapRevision": 3
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "reversed-clear",
+      "label": "古いclearが後から到着",
+      "inputBefore": [
+        {
+          "now": 6,
+          "arrival": {
+            "version": 2,
+            "observedAt": 6,
+            "arrivedAt": 6,
+            "state": "occupied"
+          }
+        },
+        {
+          "now": 7,
+          "arrival": {
+            "version": 1,
+            "observedAt": 4,
+            "arrivedAt": 7,
+            "state": "free"
+          }
+        },
+        {
+          "now": 10,
+          "arrival": null
+        },
+        {
+          "now": 11,
+          "arrival": null
+        }
+      ],
+      "inputAfter": [
+        {
+          "now": 6,
+          "arrival": {
+            "version": 2,
+            "observedAt": 6,
+            "arrivedAt": 6,
+            "state": "occupied"
+          }
+        },
+        {
+          "now": 7,
+          "arrival": {
+            "version": 1,
+            "observedAt": 4,
+            "arrivedAt": 7,
+            "state": "free"
+          }
+        },
+        {
+          "now": 10,
+          "arrival": null
+        },
+        {
+          "now": 11,
+          "arrival": null
+        }
+      ],
+      "policies": {
+        "guarded": [
+          {
+            "now": 6,
+            "arrival": {
+              "version": 2,
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 7,
+            "arrival": {
+              "version": 1,
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "state": "free"
+            },
+            "before": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "reject",
+              "reason": "stale-version",
+              "incomingAge": 3
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 1,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 10,
+            "arrival": null,
+            "before": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 4,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 11,
+            "arrival": null,
+            "before": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 5,
+              "fresh": false,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ],
+        "arrival-only": [
+          {
+            "now": 6,
+            "arrival": {
+              "version": 2,
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 7,
+            "arrival": {
+              "version": 1,
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "state": "free"
+            },
+            "before": {
+              "state": "occupied",
+              "observedAt": 6,
+              "arrivedAt": 6,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 3
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "adoptedVersion": 1,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 3,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 10,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "adoptedVersion": 1,
+              "mapRevision": 2
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "adoptedVersion": 1,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 6,
+              "fresh": false,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 11,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "adoptedVersion": 1,
+              "mapRevision": 2
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 4,
+              "arrivedAt": 7,
+              "adoptedVersion": 1,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 7,
+              "fresh": false,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "expiry-boundary",
+      "label": "期限ちょうどと超過",
+      "inputBefore": [
+        {
+          "now": 0,
+          "arrival": {
+            "version": 1,
+            "observedAt": 0,
+            "arrivedAt": 0,
+            "state": "free"
+          }
+        },
+        {
+          "now": 4,
+          "arrival": null
+        },
+        {
+          "now": 5,
+          "arrival": null
+        }
+      ],
+      "inputAfter": [
+        {
+          "now": 0,
+          "arrival": {
+            "version": 1,
+            "observedAt": 0,
+            "arrivedAt": 0,
+            "state": "free"
+          }
+        },
+        {
+          "now": 4,
+          "arrival": null
+        },
+        {
+          "now": 5,
+          "arrival": null
+        }
+      ],
+      "policies": {
+        "guarded": [
+          {
+            "now": 0,
+            "arrival": {
+              "version": 1,
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 4,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 4,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 5,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 5,
+              "fresh": false,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ],
+        "arrival-only": [
+          {
+            "now": 0,
+            "arrival": {
+              "version": 1,
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 4,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 4,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 5,
+            "arrival": null,
+            "before": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 0,
+              "arrivedAt": 0,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 5,
+              "fresh": false,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "expired-arrival",
+      "label": "到着時点で期限超過",
+      "inputBefore": [
+        {
+          "now": 10,
+          "arrival": {
+            "version": 1,
+            "observedAt": 5,
+            "arrivedAt": 10,
+            "state": "free"
+          }
+        },
+        {
+          "now": 11,
+          "arrival": {
+            "version": 2,
+            "observedAt": 11,
+            "arrivedAt": 11,
+            "state": "occupied"
+          }
+        }
+      ],
+      "inputAfter": [
+        {
+          "now": 10,
+          "arrival": {
+            "version": 1,
+            "observedAt": 5,
+            "arrivedAt": 10,
+            "state": "free"
+          }
+        },
+        {
+          "now": 11,
+          "arrival": {
+            "version": 2,
+            "observedAt": 11,
+            "arrivedAt": 11,
+            "state": "occupied"
+          }
+        }
+      ],
+      "policies": {
+        "guarded": [
+          {
+            "now": 10,
+            "arrival": {
+              "version": 1,
+              "observedAt": 5,
+              "arrivedAt": 10,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "reject",
+              "reason": "expired-at-arrival",
+              "incomingAge": 5
+            },
+            "after": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "knowledge": {
+              "age": null,
+              "fresh": null,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 11,
+            "arrival": {
+              "version": 2,
+              "observedAt": 11,
+              "arrivedAt": 11,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 11,
+              "arrivedAt": 11,
+              "adoptedVersion": 2,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ],
+        "arrival-only": [
+          {
+            "now": 10,
+            "arrival": {
+              "version": 1,
+              "observedAt": 5,
+              "arrivedAt": 10,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 5
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 5,
+              "arrivedAt": 10,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 5,
+              "fresh": false,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 11,
+            "arrival": {
+              "version": 2,
+              "observedAt": 11,
+              "arrivedAt": 11,
+              "state": "occupied"
+            },
+            "before": {
+              "state": "free",
+              "observedAt": 5,
+              "arrivedAt": 10,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "occupied",
+              "observedAt": 11,
+              "arrivedAt": 11,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "occupied"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_OCCUPIED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "explicit-unknown",
+      "label": "未観測と明示unknown",
+      "inputBefore": [
+        {
+          "now": 0,
+          "arrival": null
+        },
+        {
+          "now": 1,
+          "arrival": {
+            "version": 1,
+            "observedAt": 1,
+            "arrivedAt": 1,
+            "state": "unknown"
+          }
+        },
+        {
+          "now": 2,
+          "arrival": {
+            "version": 2,
+            "observedAt": 2,
+            "arrivedAt": 2,
+            "state": "free"
+          }
+        }
+      ],
+      "inputAfter": [
+        {
+          "now": 0,
+          "arrival": null
+        },
+        {
+          "now": 1,
+          "arrival": {
+            "version": 1,
+            "observedAt": 1,
+            "arrivedAt": 1,
+            "state": "unknown"
+          }
+        },
+        {
+          "now": 2,
+          "arrival": {
+            "version": 2,
+            "observedAt": 2,
+            "arrivedAt": 2,
+            "state": "free"
+          }
+        }
+      ],
+      "policies": {
+        "guarded": [
+          {
+            "now": 0,
+            "arrival": null,
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "knowledge": {
+              "age": null,
+              "fresh": null,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 1,
+            "arrival": {
+              "version": 1,
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "state": "unknown"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "unknown",
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 2,
+            "arrival": {
+              "version": 2,
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "accepted",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ],
+        "arrival-only": [
+          {
+            "now": 0,
+            "arrival": null,
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "none",
+              "reason": "no-arrival",
+              "incomingAge": null
+            },
+            "after": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "knowledge": {
+              "age": null,
+              "fresh": null,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 1,
+            "arrival": {
+              "version": 1,
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "state": "unknown"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": null,
+              "arrivedAt": null,
+              "adoptedVersion": 0,
+              "mapRevision": 0
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "unknown",
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "unknown"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "STOP_UNKNOWN",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          },
+          {
+            "now": 2,
+            "arrival": {
+              "version": 2,
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "state": "free"
+            },
+            "before": {
+              "state": "unknown",
+              "observedAt": 1,
+              "arrivedAt": 1,
+              "adoptedVersion": 1,
+              "mapRevision": 1
+            },
+            "update": {
+              "action": "accept",
+              "reason": "arrival-overwrite",
+              "incomingAge": 0
+            },
+            "after": {
+              "state": "free",
+              "observedAt": 2,
+              "arrivedAt": 2,
+              "adoptedVersion": 2,
+              "mapRevision": 2
+            },
+            "knowledge": {
+              "age": 0,
+              "fresh": true,
+              "effectiveState": "free"
+            },
+            "nextEdge": {
+              "from": [
+                0,
+                0
+              ],
+              "to": [
+                1,
+                0
+              ],
+              "decision": "MOVE_ALLOWED",
+              "actualMovement": false,
+              "worldState": "not-observed"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "toolchain": {
+    "python": "3.9.6",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3"
+  },
+  "execution": {
+    "actualNice": 10,
+    "startedUTC": "2026-10-07T07:56:48.030521+00:00",
+    "endedUTC": "2026-10-07T07:56:48.031516+00:00",
+    "elapsedSeconds": 0.0009915000000000063
+  },
+  "inputs": {
+    "CONTRACT.md": "3e73ad41f1f0f0ba534458eb4732620278bb7da85dbf07614ec3d3eaca0d7290",
+    "cases.json": "b8a620447fe0a34795efcde2cb5c3bd495de6d3626a25e697da68afd66489ee3",
+    "expected.json": "e5b112f6998563c860b502ad6b519aaa42953ab8d32f2053a0ab6d9829be12ad",
+    "freshness.py": "42f1be157bb44bf5f333936179116f84ed042431c75e137312b50f78e99302ca",
+    "verify.py": "0ffbf269cedc86f2df800404040cdcedb3c694873d898e4e4709886ce150c10d",
+    "run.py": "b96710cf982d21b235c58d2ac4acdb522088416b8f4cdb3e1ff1b619e9d10e14",
+    "SOURCES.md": "cc005ae2944b56946321ff43b5811e9e8dda05758f90811c3fc43dd180f0b37b",
+    "reuse-and-scope.md": "203a97809f33d98cdc6fbe84b223f5d8eedb892829ce4800cf5b1b714f0f5550"
+  }
+}

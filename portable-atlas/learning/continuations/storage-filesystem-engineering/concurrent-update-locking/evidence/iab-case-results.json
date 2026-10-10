@@ -1,0 +1,36 @@
+{
+  "observed_utc": "2026-10-05T09:39:53.512Z",
+  "surface": "actual IAB DOM observations after final UI edits",
+  "cases": [
+    {
+      "A": "PID 99025\nlock: 未取得\nread: 0 / 最後のwrite: 1",
+      "B": "PID 99026\nlock: 未取得\nread: 0 / 最後のwrite: 1",
+      "case": "replace-only",
+      "comparison": "実測 \"1\\n\" / 手固定期待 \"1\\n\" — 一致 / atomic replacement does not isolate read-modify-write",
+      "nextDisabled": true,
+      "progress": "replace-only: 10 / 10 event（保存した実process観測）",
+      "rows": 10,
+      "visible": "\"1\\n\""
+    },
+    {
+      "A": "PID 99027\nlock: 解放済み\nread: 0 / 最後のwrite: 1",
+      "B": "PID 99029\nlock: 解放済み\nread: 1 / 最後のwrite: 2",
+      "case": "stable-lock",
+      "comparison": "実測 \"2\\n\" / 手固定期待 \"2\\n\" — 一致 / cooperating writers serialize the complete update",
+      "nextDisabled": true,
+      "progress": "stable-lock: 15 / 15 event（保存した実process観測）",
+      "rows": 15,
+      "visible": "\"2\\n\""
+    },
+    {
+      "A": "PID 99031\nlock: 解放済み\nread: 0 / 最後のwrite: 1",
+      "B": "PID 99032\nlock: 解放済み\nread: 0 / 最後のwrite: 1",
+      "case": "abort-before-commit",
+      "comparison": "実測 \"1\\n\" / 手固定期待 \"1\\n\" — 一致 / aborted update is not committed; release permits B to continue",
+      "nextDisabled": true,
+      "progress": "abort-before-commit: 15 / 15 event（保存した実process観測）",
+      "rows": 15,
+      "visible": "\"1\\n\""
+    }
+  ]
+}

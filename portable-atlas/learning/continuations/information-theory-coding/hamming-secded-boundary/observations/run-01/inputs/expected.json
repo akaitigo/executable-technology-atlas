@@ -1,0 +1,34 @@
+{
+  "kind": "handwritten_before_execution",
+  "runtimeObserved": false,
+  "positionOrder": ["p1", "p2", "d1", "p4", "d2", "d3", "d4", "p8"],
+  "parity": "even",
+  "syndromeValue": "s1 + 2*s2 + 4*s4",
+  "syndromeDisplayOrder": "s4 s2 s1",
+  "overallCheck": "XOR of all 8 received bits",
+  "decisionTable": [
+    {"syndrome": "zero", "overall": 0, "action": "pass_checks", "flip": null},
+    {"syndrome": "nonzero", "overall": 1, "action": "correct_1to7", "flip": "syndrome"},
+    {"syndrome": "zero", "overall": 1, "action": "correct_p8", "flip": 8},
+    {"syndrome": "nonzero", "overall": 0, "action": "reject_double", "flip": null, "decoded": null}
+  ],
+  "assumption": "At most two distinct bit positions are inverted. Three or more errors are outside the correction/detection guarantee.",
+  "expectedTotals": {
+    "secded8": {"rows": 592, "pass_checks": 16, "correct_1to7": 112, "correct_p8": 16, "reject_double": 448, "sameMessage": 144, "wrongMessage": 0, "withheldMessage": 448},
+    "hamming7": {"rows": 464, "pass_checks": 16, "correct_1to7": 448, "sameMessage": 128, "wrongMessage": 336, "withheldMessage": 0}
+  },
+  "minimumDistances": {"hamming7": 3, "secded8": 4},
+  "fixedExamples": [
+    {"scheme": "secded8", "message": "1011", "errors": [], "sent": "01100110", "received": "01100110", "syndrome": 0, "overall": 0, "action": "pass_checks", "flip": null, "decoded": "1011", "matchesOriginal": true},
+    {"scheme": "secded8", "message": "1011", "errors": [6], "sent": "01100110", "received": "01100010", "syndrome": 6, "overall": 1, "action": "correct_1to7", "flip": 6, "decoded": "1011", "matchesOriginal": true},
+    {"scheme": "secded8", "message": "1011", "errors": [1], "sent": "01100110", "received": "11100110", "syndrome": 1, "overall": 1, "action": "correct_1to7", "flip": 1, "decoded": "1011", "matchesOriginal": true},
+    {"scheme": "secded8", "message": "1011", "errors": [8], "sent": "01100110", "received": "01100111", "syndrome": 0, "overall": 1, "action": "correct_p8", "flip": 8, "decoded": "1011", "matchesOriginal": true},
+    {"scheme": "secded8", "message": "0000", "errors": [1,2], "sent": "00000000", "received": "11000000", "syndrome": 3, "overall": 0, "action": "reject_double", "flip": null, "decoded": null, "matchesOriginal": null},
+    {"scheme": "secded8", "message": "0000", "errors": [3,8], "sent": "00000000", "received": "00100001", "syndrome": 3, "overall": 0, "action": "reject_double", "flip": null, "decoded": null, "matchesOriginal": null},
+    {"scheme": "hamming7", "message": "0000", "errors": [1,2], "sent": "0000000", "received": "1100000", "syndrome": 3, "overall": null, "action": "correct_1to7", "flip": 3, "decoded": "1000", "matchesOriginal": false}
+  ],
+  "outsideGuaranteeExamples": [
+    {"scheme": "secded8", "message": "0000", "errors": [1,2,3], "received": "11100000", "syndrome": 0, "overall": 1, "action": "correct_p8", "flip": 8, "decoded": "1000", "matchesOriginal": false},
+    {"scheme": "secded8", "message": "0000", "errors": [1,2,3,8], "received": "11100001", "syndrome": 0, "overall": 0, "action": "pass_checks", "flip": null, "decoded": "1000", "matchesOriginal": false}
+  ]
+}

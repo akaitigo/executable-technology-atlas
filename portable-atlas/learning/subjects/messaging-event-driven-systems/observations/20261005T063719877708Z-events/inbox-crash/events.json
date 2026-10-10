@@ -1,0 +1,128 @@
+[
+  {
+    "at": "2026-10-05T06:37:20.191662Z",
+    "attempt": 1,
+    "delivery": 1,
+    "event": "model-deliver",
+    "event_id": "event-a",
+    "message_index": 0,
+    "redelivered": false
+  },
+  {
+    "at": "2026-10-05T06:37:20.243135Z",
+    "delivery": 1,
+    "event": "consumer-start",
+    "fault": "crash-after-commit",
+    "policy": "inbox",
+    "sqlite_version": "3.51.0"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245012Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "BEGIN IMMEDIATE"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245050Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245075Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "INSERT INTO inbox VALUES('event-a','sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c','{\"account\":\"demo\",\"delta\":7}\n')"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245244Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "INSERT INTO effects(event_id,delta) VALUES('event-a',7)"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245290Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "UPDATE account SET balance=balance+7 WHERE id='demo'"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245314Z",
+    "delivery": 1,
+    "event": "sqlite-sql",
+    "sql": "COMMIT"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245715Z",
+    "delivery": 1,
+    "event": "transaction-committed",
+    "event_id": "event-a",
+    "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c"
+  },
+  {
+    "at": "2026-10-05T06:37:20.245730Z",
+    "delivery": 1,
+    "event": "injected-process-crash-before-ack",
+    "event_id": "event-a",
+    "exit_code": 70
+  },
+  {
+    "at": "2026-10-05T06:37:20.248047Z",
+    "delivery": 1,
+    "event": "model-requeue",
+    "next_attempt": 2
+  },
+  {
+    "at": "2026-10-05T06:37:20.249431Z",
+    "attempt": 2,
+    "delivery": 2,
+    "event": "model-deliver",
+    "event_id": "event-a",
+    "message_index": 0,
+    "redelivered": true
+  },
+  {
+    "at": "2026-10-05T06:37:20.306614Z",
+    "delivery": 2,
+    "event": "consumer-start",
+    "fault": "none",
+    "policy": "inbox",
+    "sqlite_version": "3.51.0"
+  },
+  {
+    "at": "2026-10-05T06:37:20.308957Z",
+    "delivery": 2,
+    "event": "sqlite-sql",
+    "sql": "BEGIN IMMEDIATE"
+  },
+  {
+    "at": "2026-10-05T06:37:20.308997Z",
+    "delivery": 2,
+    "event": "sqlite-sql",
+    "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+  },
+  {
+    "at": "2026-10-05T06:37:20.309018Z",
+    "delivery": 2,
+    "event": "sqlite-sql",
+    "sql": "ROLLBACK"
+  },
+  {
+    "at": "2026-10-05T06:37:20.309069Z",
+    "delivery": 2,
+    "event": "duplicate-no-effect",
+    "event_id": "event-a",
+    "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c"
+  },
+  {
+    "at": "2026-10-05T06:37:20.309076Z",
+    "delivery": 2,
+    "event": "ack-eligible",
+    "event_id": "event-a"
+  },
+  {
+    "at": "2026-10-05T06:37:20.312342Z",
+    "delivery": 2,
+    "event": "model-ack"
+  }
+]

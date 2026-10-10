@@ -1,0 +1,1443 @@
+{
+  "arrival": {
+    "input": {
+      "mode": "arrival",
+      "delivery_order": [
+        "A2",
+        "A1",
+        "B1"
+      ],
+      "duplicate_delayed_A1": false,
+      "writes": [
+        {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        },
+        {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        },
+        {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        }
+      ]
+    },
+    "events": [
+      {
+        "step": 0,
+        "action": "start",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 1,
+        "action": "local-write-and-enqueue",
+        "node": "A",
+        "value": "alpha",
+        "version": [
+          1,
+          "A"
+        ],
+        "message_id": "A1",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 1,
+            "register": {
+              "value": "alpha",
+              "version": [
+                1,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 2,
+        "action": "local-write-and-enqueue",
+        "node": "A",
+        "value": "alpha-2",
+        "version": [
+          2,
+          "A"
+        ],
+        "message_id": "A2",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 3,
+        "action": "local-write-and-enqueue",
+        "node": "B",
+        "value": "beta",
+        "version": [
+          1,
+          "B"
+        ],
+        "message_id": "B1",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 1,
+            "register": {
+              "value": "beta",
+              "version": [
+                1,
+                "B"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 4,
+        "action": "heal-model-link",
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 1,
+            "register": {
+              "value": "beta",
+              "version": [
+                1,
+                "B"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 5,
+        "action": "deliver",
+        "message_id": "A2",
+        "target": "B",
+        "incoming": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        },
+        "accepted": true,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 3,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 6,
+        "action": "deliver",
+        "message_id": "A1",
+        "target": "B",
+        "incoming": {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        },
+        "accepted": true,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 4,
+            "register": {
+              "value": "alpha",
+              "version": [
+                1,
+                "A"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 7,
+        "action": "deliver",
+        "message_id": "B1",
+        "target": "A",
+        "incoming": {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        },
+        "accepted": true,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 3,
+            "register": {
+              "value": "beta",
+              "version": [
+                1,
+                "B"
+              ]
+            }
+          },
+          "B": {
+            "clock": 4,
+            "register": {
+              "value": "alpha",
+              "version": [
+                1,
+                "A"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "A1",
+        "from": "A",
+        "to": "B",
+        "register": {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        }
+      },
+      {
+        "id": "A2",
+        "from": "A",
+        "to": "B",
+        "register": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        }
+      },
+      {
+        "id": "B1",
+        "from": "B",
+        "to": "A",
+        "register": {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        }
+      }
+    ],
+    "final_state": {
+      "A": {
+        "clock": 3,
+        "register": {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        }
+      },
+      "B": {
+        "clock": 4,
+        "register": {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        }
+      }
+    },
+    "summary": {
+      "converged": false,
+      "independent_max_oracle": {
+        "value": "alpha-2",
+        "version": [
+          2,
+          "A"
+        ]
+      },
+      "all_match_max_oracle": false,
+      "discarded_values_under_max": [
+        "alpha",
+        "beta"
+      ],
+      "all_unique_messages_delivered": true,
+      "total_deliveries": 3
+    },
+    "boundary": "2 replica/1 registerのCPU simulation。実通信、実時計、consensus、CAP theoremの検証ではない。",
+    "permutation_check": {
+      "permutations": [
+        {
+          "order": [
+            "A1",
+            "A2",
+            "B1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A1",
+            "B1",
+            "A2"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A2",
+            "A1",
+            "B1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A2",
+            "B1",
+            "A1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "B1",
+            "A1",
+            "A2"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "B1",
+            "A2",
+            "A1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "count": 6,
+      "max_passed": 6,
+      "arrival_converged": 0,
+      "oracle_method": "sort all writes by (counter,replica_id), independent of deliver()"
+    },
+    "execution": {
+      "observed_at": "2026-10-05T04:52:30.596988+00:00",
+      "python": "3.9.6",
+      "platform": "Darwin arm64",
+      "source_sha256": "567a1a1213c6e2d6913481d7bbd31c09ec172855d2b9dd25e45ab12d312283c2",
+      "command": [
+        "HTTP GET",
+        "/api/run?order=A2%2CA1%2CB1&duplicate=0"
+      ],
+      "simulation": true,
+      "real_network": false,
+      "logical_labels_are_wall_clock": false
+    }
+  },
+  "version-max": {
+    "input": {
+      "mode": "version-max",
+      "delivery_order": [
+        "A2",
+        "A1",
+        "B1"
+      ],
+      "duplicate_delayed_A1": false,
+      "writes": [
+        {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        },
+        {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        },
+        {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        }
+      ]
+    },
+    "events": [
+      {
+        "step": 0,
+        "action": "start",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 1,
+        "action": "local-write-and-enqueue",
+        "node": "A",
+        "value": "alpha",
+        "version": [
+          1,
+          "A"
+        ],
+        "message_id": "A1",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 1,
+            "register": {
+              "value": "alpha",
+              "version": [
+                1,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 2,
+        "action": "local-write-and-enqueue",
+        "node": "A",
+        "value": "alpha-2",
+        "version": [
+          2,
+          "A"
+        ],
+        "message_id": "A2",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 0,
+            "register": {
+              "value": "∅",
+              "version": [
+                0,
+                ""
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 3,
+        "action": "local-write-and-enqueue",
+        "node": "B",
+        "value": "beta",
+        "version": [
+          1,
+          "B"
+        ],
+        "message_id": "B1",
+        "partition": true,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 1,
+            "register": {
+              "value": "beta",
+              "version": [
+                1,
+                "B"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 4,
+        "action": "heal-model-link",
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 1,
+            "register": {
+              "value": "beta",
+              "version": [
+                1,
+                "B"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 5,
+        "action": "deliver",
+        "message_id": "A2",
+        "target": "B",
+        "incoming": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        },
+        "accepted": true,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 3,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 6,
+        "action": "deliver",
+        "message_id": "A1",
+        "target": "B",
+        "incoming": {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        },
+        "accepted": false,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 2,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 4,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "step": 7,
+        "action": "deliver",
+        "message_id": "B1",
+        "target": "A",
+        "incoming": {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        },
+        "accepted": false,
+        "partition": false,
+        "state": {
+          "A": {
+            "clock": 3,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          },
+          "B": {
+            "clock": 4,
+            "register": {
+              "value": "alpha-2",
+              "version": [
+                2,
+                "A"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "messages": [
+      {
+        "id": "A1",
+        "from": "A",
+        "to": "B",
+        "register": {
+          "value": "alpha",
+          "version": [
+            1,
+            "A"
+          ]
+        }
+      },
+      {
+        "id": "A2",
+        "from": "A",
+        "to": "B",
+        "register": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        }
+      },
+      {
+        "id": "B1",
+        "from": "B",
+        "to": "A",
+        "register": {
+          "value": "beta",
+          "version": [
+            1,
+            "B"
+          ]
+        }
+      }
+    ],
+    "final_state": {
+      "A": {
+        "clock": 3,
+        "register": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        }
+      },
+      "B": {
+        "clock": 4,
+        "register": {
+          "value": "alpha-2",
+          "version": [
+            2,
+            "A"
+          ]
+        }
+      }
+    },
+    "summary": {
+      "converged": true,
+      "independent_max_oracle": {
+        "value": "alpha-2",
+        "version": [
+          2,
+          "A"
+        ]
+      },
+      "all_match_max_oracle": true,
+      "discarded_values_under_max": [
+        "alpha",
+        "beta"
+      ],
+      "all_unique_messages_delivered": true,
+      "total_deliveries": 3
+    },
+    "boundary": "2 replica/1 registerのCPU simulation。実通信、実時計、consensus、CAP theoremの検証ではない。",
+    "permutation_check": {
+      "permutations": [
+        {
+          "order": [
+            "A1",
+            "A2",
+            "B1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A1",
+            "B1",
+            "A2"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A2",
+            "A1",
+            "B1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "A2",
+            "B1",
+            "A1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "B1",
+            "A1",
+            "A2"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "order": [
+            "B1",
+            "A2",
+            "A1"
+          ],
+          "arrival_converged": false,
+          "version_max_matches_oracle": true,
+          "arrival_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "beta",
+                "version": [
+                  1,
+                  "B"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha",
+                "version": [
+                  1,
+                  "A"
+                ]
+              }
+            }
+          },
+          "max_final": {
+            "A": {
+              "clock": 3,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            },
+            "B": {
+              "clock": 4,
+              "register": {
+                "value": "alpha-2",
+                "version": [
+                  2,
+                  "A"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "count": 6,
+      "max_passed": 6,
+      "arrival_converged": 0,
+      "oracle_method": "sort all writes by (counter,replica_id), independent of deliver()"
+    },
+    "execution": {
+      "observed_at": "2026-10-05T04:52:30.599317+00:00",
+      "python": "3.9.6",
+      "platform": "Darwin arm64",
+      "source_sha256": "567a1a1213c6e2d6913481d7bbd31c09ec172855d2b9dd25e45ab12d312283c2",
+      "command": [
+        "HTTP GET",
+        "/api/run?order=A2%2CA1%2CB1&duplicate=0"
+      ],
+      "simulation": true,
+      "real_network": false,
+      "logical_labels_are_wall_clock": false
+    }
+  },
+  "raw_path": "observations/ui-4f42ca6cf82a4fe0ad7da0c0af11acfe.json"
+}

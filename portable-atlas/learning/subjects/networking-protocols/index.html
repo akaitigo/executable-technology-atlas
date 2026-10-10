@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TCPの境界をほどく — Stream / Framing Lab</title><link rel="stylesheet" href="styles.css"><script defer src="observation-data.js"></script><script defer src="app.js"></script></head>
+<body>
+<header class="hero">
+  <div class="eyebrow">NETWORKING PROTOCOLS <span>FINITE LESSON 01</span></div>
+  <div class="hero-grid"><div><p class="kicker">TCP STREAM / APPLICATION FRAMING</p><h1>送った区切りは、<br><em>どこへ行く？</em></h1><p class="intro">2件のメッセージを送った。<br>受け取るのも、きっちり2回？</p></div>
+  <aside class="hero-note"><span class="status" id="runtime-status">観測データを確認中</span><p>同じ13 bytes。<br>違う読み出し幅。<br>違うアプリの結果。</p><div class="legend"><i class="header-dot"></i>長さ2 bytes <i class="payload-dot"></i>本文</div><small>Mac loopback / Python標準socket<br>画面操作は保存済み実観測の再生</small></aside></div>
+</header>
+<main>
+<section class="concept" aria-labelledby="concept-title"><div><p class="step-label">00 / 何を比べる？</p><h2 id="concept-title">TCPが届けるのは、<br>順序のあるbytes。</h2><p>本文の前に「本文のbyte数」を2-byte big-endian整数で付ける、この教材のアプリ独自形式です。TCPが付けるヘッダーではありません。</p></div>
+<div class="format"><div id="input-bytes" class="input-stream" aria-label="送信する13-byte stream"></div><p class="quiet">sendall成功は相手のアプリ処理完了通知ではありません。ここではrecvの生bytesを照合します。</p></div></section>
+
+<section class="lab" aria-labelledby="lab-title">
+<div class="section-heading"><div><p class="step-label">01 / 予想 → 操作</p><h2 id="lab-title">recvの区切りを見てみる。</h2></div><button id="reset" class="text-button">最初から</button></div>
+<div class="prediction"><div><strong>2回のsendallに対して、recvの回数は？</strong><p id="prediction-feedback">予想を選ぶと、実観測を1回ずつ進められます。</p></div><div class="prediction-buttons" role="group" aria-label="予想"><button data-prediction="two">必ず2回</button><button data-prediction="variable">回数は決まらない</button></div></div>
+<div class="control-bar"><div class="variant-switch" role="group" aria-label="実観測の読み出し幅"><button data-cap="3" class="selected" aria-pressed="true">recv(3)<small>小さく読む</small></button><button data-cap="64" aria-pressed="false">recv(64)<small>大きく読む</small></button></div><div class="play-actions"><button id="next" class="primary" disabled>recvを1回進める <span>→</span></button><button id="finish" disabled>EOFまで進める</button></div></div>
+<p class="replay-note">実socketの再実行ではなく、<span id="run-window">保存済み観測</span>の再生です。recv引数は最大幅であり、必ずそのbyte数が返る指定ではありません。</p>
+<div class="stream-panel"><div class="panel-title"><span>BYTE STREAM / 受信位置</span><strong id="progress">0 / 13 bytes</strong></div><div id="stream-bytes" class="bytes" aria-label="受信したbytes"></div><div id="receive-slices" class="receive-slices" aria-label="実際のrecv境界"></div></div>
+<div class="sequence" aria-label="アプリAPIのSequence図"><div class="actor">送信アプリ<code>sendall × 2</code></div><div class="connector">6 + 7 bytes →</div><div class="actor middle">TCP byte stream<code>00 04 P I N G 00 05 H E L L O</code></div><div class="connector">recv →</div><div class="actor">受信アプリ<code id="sequence-recv">まだ読んでいない</code></div></div>
+<p class="quiet">矢印はアプリAPIとbytesの関係です。TCP packetの個数・転送時刻・再送を示していません。観測器は2回のsendallとSHUT_WR完了後に受信を始めています。</p>
+
+<div class="comparison"><article class="good"><div class="card-label"><span>正常 / LENGTH FRAMING</span><span id="good-state" class="pill">待機</span></div><h3>足りないbytesは、残す。</h3><p>長さを確認し、本文が揃うまでbufferに保持。1回で複数frameが揃えば、すべて取り出します。</p><div class="result-label">復元したメッセージ</div><div id="good-messages" class="messages">まだなし</div><div class="buffer"><span>未完了buffer</span><code id="buffer-value">0 bytes</code></div></article>
+<article class="bad"><div class="card-label"><span>異常 / 1 RECV = 1 FRAME</span><span id="bad-state" class="pill">待機</span></div><h3>1回で1件、と決める。</h3><p>recvの結果を1 frameとして即判定。途中で切れた本文も、複数frameの連結も扱えません。</p><div class="result-label">復元したメッセージ</div><div id="bad-messages" class="messages">まだなし</div><div class="buffer"><span>直前の判定</span><code id="bad-reason">未実行</code></div></article></div>
+<details class="trace" open><summary>今回のrecv生出力を照合する <span id="trace-count">0 calls</span></summary><div id="trace-rows" class="trace-rows"><p class="quiet">操作すると、要求幅・返却長・hex・時刻がここに並びます。</p></div></details>
+</section>
+
+<section aria-labelledby="sources-title"><p class="step-label">02 / 一次資料・実装へ戻る</p><h2 id="sources-title">どこに境界を持たせる？</h2><div class="source-grid">
+<a class="source" href="https://www.rfc-editor.org/rfc/rfc9293.html#section-2.2" target="_blank" rel="noreferrer"><small>仕様 / RFC 9293 · AUG 2022</small><h3>TCPのbyte stream</h3><p>§2.2 Key TCP Concepts。TCPのサービスとアプリ独自のmessage形式を分ける。</p><span>公式仕様を読む ↗</span></a>
+<a class="source" href="https://docs.python.org/3.9/library/socket.html#socket.socket.recv" target="_blank" rel="noreferrer"><small>API / PYTHON DOCS 3.9.25</small><h3>recv / sendall</h3><p>最大受信幅、戻りbytes、送信のAPI契約。観測環境のPythonは下の記録に表示。</p><span>公式APIを読む ↗</span></a>
+<a class="source" href="https://docs.python.org/3.9/howto/sockets.html#using-a-socket" target="_blank" rel="noreferrer"><small>HOWTO / PYTHON DOCS 3.9.25</small><h3>アプリのframing</h3><p>長さ・区切り・固定長などでmessageを切り出す。長さ自体も分割され得る。</p><span>公式HOWTOを読む ↗</span></a>
+</div><div class="implementation-links"><a href="framing.py">2つのparser実装</a><a href="observe_tcp.py">TCP観測器</a><a href="test_lesson.py">分割・不完全EOFの検査</a><a href="sources.json">Source / 未教材Coverage</a><a href="skills/atlas-networking-protocols/SKILL.md">この教材のSkill</a></div></section>
+
+<section class="answer" aria-labelledby="answer-title" aria-live="polite"><p class="step-label">03 / 答え</p><h2 id="answer-title">最後まで進めて、答えを確かめよう。</h2><p id="answer-text">TCPの区切りとアプリの区切り。今回の実観測で何が一致し、何が一致しなかったかを見ます。</p><div id="answer-metrics"></div></section>
+
+<section class="evidence" aria-labelledby="evidence-title"><div class="section-heading"><div><p class="step-label">04 / 実行と範囲</p><h2 id="evidence-title">この結果の観測条件。</h2></div><span class="scope-badge">STREAM API OBSERVATION</span></div><dl id="metadata"></dl><div id="artifact-links" class="implementation-links"></div><details><summary>実command・exit・生stdout/stderr</summary><pre id="raw-command">観測ファイルを確認中</pre></details><details><summary>未教材Coverageと制限</summary><p>実測は同じMacの127.0.0.1で標準Python socketを使った2接続、合成入力13 bytesに限ります。図は保存済みAPI観測を説明用に配置したものです。</p><p>packet、TCP handshake、packet loss、再送、輻輳、WAN、IPv6、UDP、DNS、L2、routing、TLS、HTTP、負荷分散、production backpressureは未教材・未実測です。今回のrecv幅や回数は一般保証ではありません。</p><p>TCPそのもののfailureではなく、アプリparserの境界仮定のfailureを比較しています。ブラウザ操作は理解度試験でも、分野の全知識完成の証明でもありません。</p></details></section>
+</main><footer>LOCAL LEARNING / networking-protocols <span>TCP STREAM / FRAMING</span></footer>
+</body></html>

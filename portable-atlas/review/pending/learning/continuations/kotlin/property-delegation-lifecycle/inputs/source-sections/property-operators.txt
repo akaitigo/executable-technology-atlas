@@ -1,0 +1,55 @@
+
+For a *read-only* property (`val`), a delegate should provide an operator function `getValue()` with the following parameters:
+
+* `thisRef` must be the same type as, or a supertype of, the *property owner* (for extension properties, it should be the type being extended).
+* `property`  must be of type `KProperty<*>` or its supertype.
+
+`getValue()` must return the same type as the property (or its subtype).
+
+```kotlin
+class Resource
+
+class Owner {
+    val valResource: Resource by ResourceDelegate()
+}
+
+class ResourceDelegate {
+    operator fun getValue(thisRef: Owner, property: KProperty<*>): Resource {
+        return Resource()
+    }
+}
+```
+
+For a *mutable* property (`var`), a delegate has to additionally provide an operator function `setValue()`
+with the following parameters:
+
+* `thisRef` must be the same type as, or a supertype of, the *property owner* (for extension properties, it should be the type being extended).
+* `property` must be of type `KProperty<*>` or its supertype.
+* `value` must be of the same type as the property (or its supertype).
+ 
+```kotlin
+class Resource
+
+class Owner {
+    var varResource: Resource by ResourceDelegate()
+}
+
+class ResourceDelegate(private var resource: Resource = Resource()) {
+    operator fun getValue(thisRef: Owner, property: KProperty<*>): Resource {
+        return resource
+    }
+    operator fun setValue(thisRef: Owner, property: KProperty<*>, value: Any?) {
+        if (value is Resource) {
+            resource = value
+        }
+    }
+}
+```
+
+`getValue()` and/or `setValue()` functions can be provided either as member functions of the delegate class or as extension functions.
+The latter is handy when you need to delegate a property to an object that doesn't originally provide these functions.
+Both of the functions need to be marked with the `operator` keyword.
+
+You can create delegates as anonymous objects without creating new classes, by using the interfaces `ReadOnlyProperty` and `ReadWriteProperty` from the Kotlin standard library.
+They provide the required methods: `getValue()` is declared in `ReadOnlyProperty`; `ReadWriteProperty`
+extends it and adds `setValue()`. This means you can pass a `ReadWriteProperty` whenever a `ReadOnlyProperty` is expected.

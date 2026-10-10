@@ -1,0 +1,287 @@
+{
+  "title": "Atlas PID識別の有限入力確認",
+  "passed": true,
+  "cases": [
+    {
+      "case": "no_candidates",
+      "synthetic_rows": [],
+      "expected_blocking": [],
+      "actual": [],
+      "passed": true
+    },
+    {
+      "case": "exact_idle",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        }
+      ],
+      "expected_blocking": [
+        false
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": false,
+          "classification": "既存・現在idle、所有不明、操作しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "exact_cpu_one",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 1.0
+        }
+      ],
+      "expected_blocking": [
+        false
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 1.0,
+          "blocking": false,
+          "classification": "既存・現在idle、所有不明、操作しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "cpu_above_one",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 1.1
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 1.1,
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "reused_pid_non_candidate_comm",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/usr/bin/python3",
+          "cpu": 0.0
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/usr/bin/python3",
+          "cpu": 0.0,
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "reused_pid_new_start",
+      "synthetic_rows": [
+        {
+          "lstart": "different start",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "different start",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "changed_parent",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "missing_start",
+      "synthetic_rows": [
+        {
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "other_java",
+      "synthetic_rows": [
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/usr/bin/java"
+        }
+      ],
+      "expected_blocking": [
+        true
+      ],
+      "actual": [
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/usr/bin/java",
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "known_plus_other_java",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        },
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/usr/bin/java"
+        }
+      ],
+      "expected_blocking": [
+        false,
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": false,
+          "classification": "既存・現在idle、所有不明、操作しない"
+        },
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/usr/bin/java",
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "known_plus_browser",
+      "synthetic_rows": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0
+        },
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/owned-test/chrome-headless-shell"
+        }
+      ],
+      "expected_blocking": [
+        false,
+        true
+      ],
+      "actual": [
+        {
+          "lstart": "Tue Oct 6 20:59:10 2026",
+          "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+          "cpu": 0.0,
+          "blocking": false,
+          "classification": "既存・現在idle、所有不明、操作しない"
+        },
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/owned-test/chrome-headless-shell",
+          "blocking": true,
+          "classification": "未確認または稼働候補。開始しない"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "unrelated_process",
+      "synthetic_rows": [
+        {
+          "cpu": 0.0,
+          "lstart": "other",
+          "comm": "/usr/bin/python3"
+        }
+      ],
+      "expected_blocking": [],
+      "actual": [],
+      "passed": true
+    }
+  ],
+  "source_sha256": "b80060254f5b4fbd8296ffc81f5b5cdc0437f17268d501c38d67ea2c662c4ee6",
+  "policy_sha256": "c0811dae97426c51552ef649f18eab96a9ea9772a457974b7b590e2d40002e04",
+  "process_read": false,
+  "child_spawned": false,
+  "priority_changed": false,
+  "producer_executed": false,
+  "browser_executed": false
+}

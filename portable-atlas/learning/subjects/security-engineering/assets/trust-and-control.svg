@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="450" viewBox="0 0 1120 450" role="img" aria-labelledby="title desc">
+<title id="title">Object IDは権限ではない</title><desc id="desc">合成requestと認証済みactorの仮定を分離。lookup-onlyはobjectを返す。control版はtenantとoperation/resource grantを検査し、拒否時payloadを返さない。</desc>
+<rect width="1120" height="450" rx="24" fill="#f6f5ee"/>
+<g font-family="sans-serif" fill="#293e48"><text x="35" y="48" font-size="26" font-weight="700">object_idを変えられる側と、policyを決める側を分ける。</text>
+<g fill="#fff" stroke="#bdcbc6"><rect x="35" y="80" width="320" height="255" rx="18"/><rect x="398" y="80" width="320" height="255" rx="18"/><rect x="761" y="80" width="320" height="255" rx="18"/></g>
+<g font-size="21" font-weight="700"><text x="57" y="121">合成入力</text><text x="420" y="121">server側のcontrol</text><text x="783" y="121">結果</text></g>
+<g font-size="17"><text x="57" y="169">request: object_id + operation</text><text x="57" y="209">actor context: 認証済みと仮定</text><text x="57" y="249">client tenantを採用しない</text><text x="57" y="300" fill="#9b4b44">認証そのものは未実装</text>
+<text x="420" y="169">① schema / context / lookup</text><text x="420" y="209">② actor tenant = record tenant</text><text x="420" y="249">③ operation + resource grant</text><text x="420" y="300" fill="#9b4b44">lookup-onlyは②③を省略</text>
+<text x="783" y="169" fill="#327366">全control通過 → 架空payload</text><text x="783" y="209" fill="#9b4b44">拒否 → payloadなし</text><text x="783" y="249">decision traceは別の原票</text><text x="783" y="300">pure memoryだけ。外部APIなし。</text></g>
+<g stroke="#7e9891" stroke-width="3" fill="none"><path d="M356 205h39l-8-6m8 6l-8 6"/><path d="M720 205h38l-8-6m8 6l-8 6"/></g><path d="M379 74v273" stroke="#b48b4c" stroke-dasharray="6 6"/>
+<text x="35" y="394" font-size="18">original threat/dataflow説明図。実traceへ対応。実製品・網羅security・ASVS適合は未検証。</text></g></svg>

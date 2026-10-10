@@ -1,0 +1,373 @@
+{
+  "oracle": "literal bytes/hash/ledger decisions fixed before evaluator; hashes independently obtained using shasum, no hashlib/evaluator in oracle",
+  "rows": [
+    {
+      "id": "clean",
+      "label": "同bytes・整合台帳",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [],
+        "ledger_consistent": true,
+        "normal": {
+          "pass": true,
+          "decision": "integrity-match",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "one-byte",
+      "label": "コピー先頭1byteだけ変更",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":true,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "QUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "2e1bb914a2a8837fd44fe174a6736f48bf1659b32c97514214ec2c82125f7f74",
+        "original_unchanged": true,
+        "changed_bytes": 1,
+        "integrity_match": false,
+        "ledger_errors": [],
+        "ledger_consistent": true,
+        "normal": {
+          "pass": false,
+          "decision": "mismatch",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": false,
+          "decision": "mismatch",
+          "claim": "hash不一致"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "actor",
+      "label": "未承認actorでもhash一致",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"outsider\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [
+          "handoff[0].actor",
+          "handoff[0].from_link"
+        ],
+        "ledger_consistent": false,
+        "normal": {
+          "pass": false,
+          "decision": "ledger_refusal",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "seq-gap",
+      "label": "seq 2欠落",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":3,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [
+          "handoff[1].seq"
+        ],
+        "ledger_consistent": false,
+        "normal": {
+          "pass": false,
+          "decision": "ledger_refusal",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "other-id",
+      "label": "別evidenceIDの引渡し",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-002\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [
+          "handoff[1].evidenceID"
+        ],
+        "ledger_consistent": false,
+        "normal": {
+          "pass": false,
+          "decision": "ledger_refusal",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "recorded-hash",
+      "label": "台帳hashだけ相違",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"0000000000000000000000000000000000000000000000000000000000000000\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [
+          "handoff[1].recordedHash"
+        ],
+        "ledger_consistent": false,
+        "normal": {
+          "pass": false,
+          "decision": "ledger_refusal",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "broken-link",
+      "label": "引渡し元の連続性が切れる",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+        "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [
+          "handoff[1].from_link"
+        ],
+        "ledger_consistent": false,
+        "normal": {
+          "pass": false,
+          "decision": "ledger_refusal",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "abc",
+      "label": "3byteの独立対照",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"abc\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "abc",
+        "copy_before_ascii": "abc",
+        "copy_after_ascii": "abc",
+        "original_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "copy_before_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "copy_after_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "original_unchanged": true,
+        "changed_bytes": 0,
+        "integrity_match": true,
+        "ledger_errors": [],
+        "ledger_consistent": true,
+        "normal": {
+          "pass": true,
+          "decision": "integrity-match",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": true,
+          "decision": "provenance-approved",
+          "claim": "由来も承認済"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "abc-byte",
+      "label": "abc→bbc 1byte対照",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"abc\",\"mutate\":true,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\"}]}",
+      "expected": {
+        "status": "observed",
+        "evidenceID": "E-001",
+        "original_ascii": "abc",
+        "copy_before_ascii": "abc",
+        "copy_after_ascii": "bbc",
+        "original_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "copy_before_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+        "copy_after_sha256": "77e6f78af45f649c5f3b8ebe484a91a144eb203a34a89c8dc5b1c4ca87bc6f71",
+        "original_unchanged": true,
+        "changed_bytes": 1,
+        "integrity_match": false,
+        "ledger_errors": [],
+        "ledger_consistent": true,
+        "normal": {
+          "pass": false,
+          "decision": "mismatch",
+          "claim": "synthetic copy and ledger only"
+        },
+        "faulty": {
+          "pass": false,
+          "decision": "mismatch",
+          "claim": "hash不一致"
+        },
+        "authenticity_proven": false,
+        "legal_custody_proven": false,
+        "temporary_cleanup": true
+      }
+    },
+    {
+      "id": "non-ascii",
+      "label": "非ASCII: 入力契約拒否",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"\\u975eASCII\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "payload_ascii",
+        "normal": null,
+        "faulty": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "bool-seq",
+      "label": "bool seq: 入力契約拒否",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":true,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "seq_type",
+        "normal": null,
+        "faulty": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "missing-seq",
+      "label": "seq field欠落: 入力拒否",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "handoff_shape",
+        "normal": null,
+        "faulty": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "path-field",
+      "label": "任意path field: 入口なし",
+      "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"custodian\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}],\"path\":\"/device\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "input_shape",
+        "normal": null,
+        "faulty": null,
+        "temporary_cleanup": "not-created"
+      }
+    },
+    {
+      "id": "malformed",
+      "label": "壊れたJSON",
+      "input_json": "{",
+      "expected": {
+        "status": "input_refusal",
+        "code": "json_syntax",
+        "normal": null,
+        "faulty": null,
+        "temporary_cleanup": "not-created"
+      }
+    }
+  ]
+}

@@ -1,0 +1,682 @@
+{
+  "project": "Atlas",
+  "kind": "hand-derived-before-producer",
+  "cases": [
+    {
+      "id": "function-value",
+      "typing": {
+        "path": "$",
+        "rule": "T_Fn",
+        "context": {},
+        "status": "accepted",
+        "type": {
+          "arrow": [
+            "Int",
+            "Int"
+          ]
+        },
+        "premises": [
+          {
+            "path": "$.body",
+            "rule": "T_Add",
+            "context": {
+              "x": "Int"
+            },
+            "status": "accepted",
+            "type": "Int",
+            "premises": [
+              {
+                "path": "$.body.left",
+                "rule": "T_Var",
+                "context": {
+                  "x": "Int"
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [],
+                "rejection": null,
+                "unvisited": []
+              },
+              {
+                "path": "$.body.right",
+                "rule": "T_Int",
+                "context": {
+                  "x": "Int"
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [],
+                "rejection": null,
+                "unvisited": []
+              }
+            ],
+            "rejection": null,
+            "unvisited": []
+          }
+        ],
+        "rejection": null,
+        "unvisited": []
+      },
+      "erased_term": {
+        "kind": "Fn",
+        "param": "x",
+        "body": {
+          "kind": "Add",
+          "left": {
+            "kind": "Var",
+            "name": "x"
+          },
+          "right": {
+            "kind": "Int",
+            "value": 1
+          }
+        }
+      },
+      "strict_evaluator_calls": 1,
+      "strict_status": "evaluated",
+      "diagnostic_evaluator_calls": 1,
+      "diagnostic": {
+        "status": "value",
+        "value": null,
+        "function_value": {
+          "kind": "Fn",
+          "param": "x",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "Int",
+              "value": 1
+            }
+          }
+        },
+        "states": [
+          {
+            "kind": "Fn",
+            "param": "x",
+            "body": {
+              "kind": "Add",
+              "left": {
+                "kind": "Var",
+                "name": "x"
+              },
+              "right": {
+                "kind": "Int",
+                "value": 1
+              }
+            }
+          }
+        ],
+        "rules": [],
+        "reason": null
+      }
+    },
+    {
+      "id": "higher-order",
+      "typing": {
+        "path": "$",
+        "rule": "T_Call",
+        "context": {},
+        "status": "accepted",
+        "type": "Int",
+        "premises": [
+          {
+            "path": "$.fn",
+            "rule": "T_Fn",
+            "context": {},
+            "status": "accepted",
+            "type": {
+              "arrow": [
+                {
+                  "arrow": [
+                    "Int",
+                    "Int"
+                  ]
+                },
+                "Int"
+              ]
+            },
+            "premises": [
+              {
+                "path": "$.fn.body",
+                "rule": "T_Call",
+                "context": {
+                  "f": {
+                    "arrow": [
+                      "Int",
+                      "Int"
+                    ]
+                  }
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [
+                  {
+                    "path": "$.fn.body.fn",
+                    "rule": "T_Var",
+                    "context": {
+                      "f": {
+                        "arrow": [
+                          "Int",
+                          "Int"
+                        ]
+                      }
+                    },
+                    "status": "accepted",
+                    "type": {
+                      "arrow": [
+                        "Int",
+                        "Int"
+                      ]
+                    },
+                    "premises": [],
+                    "rejection": null,
+                    "unvisited": []
+                  },
+                  {
+                    "path": "$.fn.body.arg",
+                    "rule": "T_Int",
+                    "context": {
+                      "f": {
+                        "arrow": [
+                          "Int",
+                          "Int"
+                        ]
+                      }
+                    },
+                    "status": "accepted",
+                    "type": "Int",
+                    "premises": [],
+                    "rejection": null,
+                    "unvisited": []
+                  }
+                ],
+                "rejection": null,
+                "unvisited": []
+              }
+            ],
+            "rejection": null,
+            "unvisited": []
+          },
+          {
+            "path": "$.arg",
+            "rule": "T_Fn",
+            "context": {},
+            "status": "accepted",
+            "type": {
+              "arrow": [
+                "Int",
+                "Int"
+              ]
+            },
+            "premises": [
+              {
+                "path": "$.arg.body",
+                "rule": "T_Add",
+                "context": {
+                  "x": "Int"
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [
+                  {
+                    "path": "$.arg.body.left",
+                    "rule": "T_Var",
+                    "context": {
+                      "x": "Int"
+                    },
+                    "status": "accepted",
+                    "type": "Int",
+                    "premises": [],
+                    "rejection": null,
+                    "unvisited": []
+                  },
+                  {
+                    "path": "$.arg.body.right",
+                    "rule": "T_Int",
+                    "context": {
+                      "x": "Int"
+                    },
+                    "status": "accepted",
+                    "type": "Int",
+                    "premises": [],
+                    "rejection": null,
+                    "unvisited": []
+                  }
+                ],
+                "rejection": null,
+                "unvisited": []
+              }
+            ],
+            "rejection": null,
+            "unvisited": []
+          }
+        ],
+        "rejection": null,
+        "unvisited": []
+      },
+      "erased_term": {
+        "kind": "Call",
+        "fn": {
+          "kind": "Fn",
+          "param": "f",
+          "body": {
+            "kind": "Call",
+            "fn": {
+              "kind": "Var",
+              "name": "f"
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "arg": {
+          "kind": "Fn",
+          "param": "x",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "Int",
+              "value": 1
+            }
+          }
+        }
+      },
+      "strict_evaluator_calls": 1,
+      "strict_status": "evaluated",
+      "diagnostic_evaluator_calls": 1,
+      "diagnostic": {
+        "status": "value",
+        "value": 3,
+        "function_value": null,
+        "states": [
+          {
+            "kind": "Call",
+            "fn": {
+              "kind": "Fn",
+              "param": "f",
+              "body": {
+                "kind": "Call",
+                "fn": {
+                  "kind": "Var",
+                  "name": "f"
+                },
+                "arg": {
+                  "kind": "Int",
+                  "value": 2
+                }
+              }
+            },
+            "arg": {
+              "kind": "Fn",
+              "param": "x",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "x"
+                },
+                "right": {
+                  "kind": "Int",
+                  "value": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "Call",
+            "fn": {
+              "kind": "Fn",
+              "param": "x",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "x"
+                },
+                "right": {
+                  "kind": "Int",
+                  "value": 1
+                }
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          },
+          {
+            "kind": "Add",
+            "left": {
+              "kind": "Int",
+              "value": 2
+            },
+            "right": {
+              "kind": "Int",
+              "value": 1
+            }
+          },
+          {
+            "kind": "Int",
+            "value": 3
+          }
+        ],
+        "rules": [
+          [
+            "Beta"
+          ],
+          [
+            "Beta"
+          ],
+          [
+            "AddInts"
+          ]
+        ],
+        "reason": null
+      }
+    },
+    {
+      "id": "integer-call",
+      "typing": {
+        "path": "$",
+        "rule": "T_Call",
+        "context": {},
+        "status": "rejected",
+        "type": null,
+        "premises": [
+          {
+            "path": "$.fn",
+            "rule": "T_Int",
+            "context": {},
+            "status": "accepted",
+            "type": "Int",
+            "premises": [],
+            "rejection": null,
+            "unvisited": []
+          }
+        ],
+        "rejection": {
+          "code": "not-arrow",
+          "path": "$.fn",
+          "expected": "Arrow",
+          "actual": "Int"
+        },
+        "unvisited": [
+          "$.arg"
+        ]
+      },
+      "erased_term": {
+        "kind": "Call",
+        "fn": {
+          "kind": "Int",
+          "value": 0
+        },
+        "arg": {
+          "kind": "Add",
+          "left": {
+            "kind": "Int",
+            "value": 1
+          },
+          "right": {
+            "kind": "Int",
+            "value": 2
+          }
+        }
+      },
+      "strict_evaluator_calls": 0,
+      "strict_status": "type-rejected",
+      "diagnostic_evaluator_calls": 1,
+      "diagnostic": {
+        "status": "stuck",
+        "value": null,
+        "function_value": null,
+        "states": [
+          {
+            "kind": "Call",
+            "fn": {
+              "kind": "Int",
+              "value": 0
+            },
+            "arg": {
+              "kind": "Add",
+              "left": {
+                "kind": "Int",
+                "value": 1
+              },
+              "right": {
+                "kind": "Int",
+                "value": 2
+              }
+            }
+          }
+        ],
+        "rules": [],
+        "reason": {
+          "code": "not-callable",
+          "path": "$"
+        }
+      }
+    },
+    {
+      "id": "function-add",
+      "typing": {
+        "path": "$",
+        "rule": "T_Add",
+        "context": {},
+        "status": "rejected",
+        "type": null,
+        "premises": [
+          {
+            "path": "$.left",
+            "rule": "T_Fn",
+            "context": {},
+            "status": "accepted",
+            "type": {
+              "arrow": [
+                "Int",
+                "Int"
+              ]
+            },
+            "premises": [
+              {
+                "path": "$.left.body",
+                "rule": "T_Var",
+                "context": {
+                  "x": "Int"
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [],
+                "rejection": null,
+                "unvisited": []
+              }
+            ],
+            "rejection": null,
+            "unvisited": []
+          }
+        ],
+        "rejection": {
+          "code": "int-required",
+          "path": "$.left",
+          "expected": "Int",
+          "actual": {
+            "arrow": [
+              "Int",
+              "Int"
+            ]
+          }
+        },
+        "unvisited": [
+          "$.right"
+        ]
+      },
+      "erased_term": {
+        "kind": "Add",
+        "left": {
+          "kind": "Fn",
+          "param": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "right": {
+          "kind": "Int",
+          "value": 1
+        }
+      },
+      "strict_evaluator_calls": 0,
+      "strict_status": "type-rejected",
+      "diagnostic_evaluator_calls": 1,
+      "diagnostic": {
+        "status": "stuck",
+        "value": null,
+        "function_value": null,
+        "states": [
+          {
+            "kind": "Add",
+            "left": {
+              "kind": "Fn",
+              "param": "x",
+              "body": {
+                "kind": "Var",
+                "name": "x"
+              }
+            },
+            "right": {
+              "kind": "Int",
+              "value": 1
+            }
+          }
+        ],
+        "rules": [],
+        "reason": {
+          "code": "addition-type",
+          "path": "$"
+        }
+      }
+    },
+    {
+      "id": "latent-invalid-function",
+      "typing": {
+        "path": "$",
+        "rule": "T_Fn",
+        "context": {},
+        "status": "rejected",
+        "type": null,
+        "premises": [
+          {
+            "path": "$.body",
+            "rule": "T_Call",
+            "context": {
+              "x": "Int"
+            },
+            "status": "rejected",
+            "type": null,
+            "premises": [
+              {
+                "path": "$.body.fn",
+                "rule": "T_Var",
+                "context": {
+                  "x": "Int"
+                },
+                "status": "accepted",
+                "type": "Int",
+                "premises": [],
+                "rejection": null,
+                "unvisited": []
+              }
+            ],
+            "rejection": {
+              "code": "not-arrow",
+              "path": "$.body.fn",
+              "expected": "Arrow",
+              "actual": "Int"
+            },
+            "unvisited": [
+              "$.body.arg"
+            ]
+          }
+        ],
+        "rejection": {
+          "code": "not-arrow",
+          "path": "$.body.fn",
+          "expected": "Arrow",
+          "actual": "Int"
+        },
+        "unvisited": []
+      },
+      "erased_term": {
+        "kind": "Fn",
+        "param": "x",
+        "body": {
+          "kind": "Call",
+          "fn": {
+            "kind": "Var",
+            "name": "x"
+          },
+          "arg": {
+            "kind": "Int",
+            "value": 1
+          }
+        }
+      },
+      "strict_evaluator_calls": 0,
+      "strict_status": "type-rejected",
+      "diagnostic_evaluator_calls": 1,
+      "diagnostic": {
+        "status": "value",
+        "value": null,
+        "function_value": {
+          "kind": "Fn",
+          "param": "x",
+          "body": {
+            "kind": "Call",
+            "fn": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 1
+            }
+          }
+        },
+        "states": [
+          {
+            "kind": "Fn",
+            "param": "x",
+            "body": {
+              "kind": "Call",
+              "fn": {
+                "kind": "Var",
+                "name": "x"
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 1
+              }
+            }
+          }
+        ],
+        "rules": [],
+        "reason": null
+      }
+    }
+  ],
+  "totals": {
+    "accepted": 2,
+    "type_rejected": 3,
+    "strict_evaluator_calls": 2,
+    "diagnostic_evaluator_calls": 5
+  }
+}

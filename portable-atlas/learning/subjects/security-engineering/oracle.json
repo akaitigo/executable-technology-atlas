@@ -1,0 +1,32 @@
+{
+  "schema_version":1,
+  "provenance":"Actor/resource/operationの期待権限をrunner出力とは独立に列挙したoriginal matrix。人によるAuthority Reviewではない。",
+  "matrix":[
+    {"actor":"actor-a","resource":"red-report","operation":"read","status":200,"reason":"allowed"},
+    {"actor":"actor-a","resource":"red-report","operation":"export","status":403,"reason":"no-grant"},
+    {"actor":"actor-a","resource":"red-archive","operation":"read","status":403,"reason":"no-grant"},
+    {"actor":"actor-a","resource":"red-archive","operation":"export","status":403,"reason":"no-grant"},
+    {"actor":"actor-a","resource":"blue-report","operation":"read","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-a","resource":"blue-report","operation":"export","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-a","resource":"blue-archive","operation":"read","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-a","resource":"blue-archive","operation":"export","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-b","resource":"red-report","operation":"read","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-b","resource":"red-report","operation":"export","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-b","resource":"red-archive","operation":"read","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-b","resource":"red-archive","operation":"export","status":403,"reason":"tenant-mismatch"},
+    {"actor":"actor-b","resource":"blue-report","operation":"read","status":200,"reason":"allowed"},
+    {"actor":"actor-b","resource":"blue-report","operation":"export","status":200,"reason":"allowed"},
+    {"actor":"actor-b","resource":"blue-archive","operation":"read","status":403,"reason":"no-grant"},
+    {"actor":"actor-b","resource":"blue-archive","operation":"export","status":403,"reason":"no-grant"}
+  ],
+  "allowed_payloads":{"red-report":"FICTIONAL RED REPORT","blue-report":"FICTIONAL BLUE REPORT"},
+  "boundary_expected":{
+    "unauthenticated":{"status":401,"reason":"unauthenticated"},
+    "unknown-actor":{"status":401,"reason":"unknown-actor"},
+    "unknown-record":{"status":404,"reason":"unknown-record"},
+    "invalid-object-type":{"status":400,"reason":"invalid-request"},
+    "invalid-operation-type":{"status":400,"reason":"invalid-request"},
+    "unsupported-operation":{"status":403,"reason":"unsupported-operation"},
+    "tenant-in-request":{"status":400,"reason":"invalid-request"}
+  }
+}

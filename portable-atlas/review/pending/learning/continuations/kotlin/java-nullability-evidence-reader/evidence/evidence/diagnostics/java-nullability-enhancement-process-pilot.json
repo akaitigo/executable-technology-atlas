@@ -1,0 +1,363 @@
+{
+  "attempts": 1,
+  "behavior_id": "compiler.java-nullability-enhancement",
+  "bytecode_oracle": {
+    "attempts": 1,
+    "direct_string_length_after_enhanced_return": true,
+    "enhanced_return_invocation": true,
+    "exit_code": 0,
+    "intrinsics_check_not_null_expression_value": false,
+    "matches": true,
+    "output_digest": "sha256:6667fb4102d1bb15359a97ba30c190544d6aefa702d8ac7f292e57fa8bf3805c",
+    "retries": 0
+  },
+  "classification": "behavior-specific-jvm-java-interop-process-pilot-not-surface-scenario-closure-or-authority-promotion",
+  "command": "python3 scripts/run_java_nullability_enhancement_process_pilot.py --compiler <task-cache-kotlinc> --distribution <task-cache-distribution> --require-locked",
+  "compile": {
+    "java": {
+      "attempts": 1,
+      "exit_code": 0,
+      "retries": 0,
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "java_class_digests": {
+      "org/jetbrains/annotations/NotNull.class": "sha256:7385678f3c772254d554ad102d9475b01f0a0de905467675468db748f03b6b68",
+      "pilot/JavaNulls.class": "sha256:f0bcb64d469b14800d7c93b0f97bb084de75bd2e4633b1a0a54680b7122b604c"
+    },
+    "kotlin": {
+      "artifact_digest": "sha256:0e135eaae874fae9da1ff51170d712caf9be5322d086d4e9b608b7a54e8d77e7",
+      "attempts": 1,
+      "exit_code": 0,
+      "retries": 0,
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rejection": {
+      "attempts": 1,
+      "diagnostic_id": "NULL_FOR_NONNULL_TYPE",
+      "diagnostic_id_matches": true,
+      "exit_code": 1,
+      "output_artifact_created": false,
+      "retries": 0,
+      "stderr_digest": "sha256:c01dd17162868ab5c862f93151c57d987a237f62f5db4aa7df980e5b6c8178ff",
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "completion_boundary": {
+    "authority_promotion_generated": false,
+    "completion_credit": false,
+    "dedicated_surface_scenario_cell_closed": false,
+    "human_decision_generated": false,
+    "reason": "This pilot exercises one real JVM Java-consumer variant, but has no human-reviewed Authority atomic binding and does not satisfy every Surface×Scenario closure cell."
+  },
+  "harness": {
+    "digest": "sha256:8d6826f5daa78d11e3a883eb22776c1d5e2d4dabbccc793d68df2b08dd8b5e9f",
+    "path": "scripts/run_java_nullability_enhancement_process_pilot.py"
+  },
+  "id": "java-nullability-enhancement-process-pilot-v1",
+  "inputs": {
+    "expected": {
+      "digest": "sha256:911575bc4a18d2ba045d1c963459ee9c01aa028aeb6253576d71a5e7012e8110",
+      "path": "labs/java-nullability-enhancement-process-pilot/expected.json"
+    }
+  },
+  "oracle": {
+    "compiler_probe_succeeded": true,
+    "compiler_tree_matches_locked_archive": true,
+    "compiler_tree_stable_during_run": true,
+    "expected_input_digest_bound": true,
+    "generated_program_runtime_executed": true,
+    "java_17_probe_succeeded": true,
+    "java_not_null_enhancement_rejection": true,
+    "javac_17_probe_succeeded": true,
+    "javap_17_probe_succeeded": true,
+    "locked_compiler": true,
+    "locked_distribution": true,
+    "matches": true,
+    "normal_boundary_failure_observed": true,
+    "runtime_contract_violation_observed_as_direct_jvm_npe": true
+  },
+  "process_contract": {
+    "cleanup_on_normal_parent_exit": true,
+    "cleanup_on_sigint": true,
+    "cleanup_on_sigterm": true,
+    "cleanup_on_timeout": true,
+    "commands": [
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "probe-kotlinc-version",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "probe-java-version",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "probe-javac-version",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "probe-javap-version",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "compile-java-fixture",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "compile-kotlin-consumer",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "compile-rejected-null-argument",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "inspect-enhanced-bytecode",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "runtime-normal",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "runtime-boundary",
+        "outcome": "completed"
+      },
+      {
+        "cleanup": {
+          "sigkill_sent": false,
+          "sigterm_sent": false,
+          "survivors_detected": false
+        },
+        "label": "runtime-failure",
+        "outcome": "completed"
+      }
+    ],
+    "new_process_group_per_command": true,
+    "per_command_timeout_seconds": 20.0,
+    "termination_grace_seconds": 1.0,
+    "total_budget_seconds": 90.0
+  },
+  "retries": 0,
+  "runtime_cases": [
+    {
+      "arguments": [
+        "normal"
+      ],
+      "attempts": 1,
+      "exit_code": 0,
+      "exit_code_matches": true,
+      "name": "normal",
+      "oracle_matches": true,
+      "retries": 0,
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_matches": true,
+      "stdout_digest": "sha256:a7df313a2698feb46a4a98705604c743c537ec4e254f684104545c9d1da6eab8",
+      "stdout_matches": true
+    },
+    {
+      "arguments": [
+        "boundary"
+      ],
+      "attempts": 1,
+      "exit_code": 0,
+      "exit_code_matches": true,
+      "name": "boundary",
+      "oracle_matches": true,
+      "retries": 0,
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_matches": true,
+      "stdout_digest": "sha256:6d13fa7bcc52b4da8c68863a93e8c437fdebb84fd910a4324af9d59c5d798efa",
+      "stdout_matches": true
+    },
+    {
+      "arguments": [
+        "failure"
+      ],
+      "attempts": 1,
+      "exit_code": 1,
+      "exit_code_matches": true,
+      "name": "failure",
+      "oracle_matches": true,
+      "retries": 0,
+      "stderr_digest": "sha256:c0c00a2d64d38dfbb90059d7ee4399d9c2e2ddeb7c879e49e94da1e28c390247",
+      "stderr_matches": true,
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_matches": true
+    }
+  ],
+  "schema_version": 1,
+  "sources": [
+    {
+      "digest": "sha256:a8b2c5a7050e51b516b221f23f3949a08ee61470af6660bdab43134f6a8d4352",
+      "license": "Apache-2.0",
+      "path": "labs/java-nullability-enhancement-process-pilot/java/org/jetbrains/annotations/NotNull.java"
+    },
+    {
+      "digest": "sha256:07f50d48cbaa891f3c9a7350b556277ba9030e1ad02c8abfb8ef0515b8afb459",
+      "license": "Apache-2.0",
+      "path": "labs/java-nullability-enhancement-process-pilot/java/pilot/JavaNulls.java"
+    },
+    {
+      "digest": "sha256:9c90f89d481ee5e6609945b83b5183d9d59b3830ff89f733ec506af9dee6a807",
+      "license": "Apache-2.0",
+      "path": "labs/java-nullability-enhancement-process-pilot/kotlin/JavaNullabilityBoundary.kt"
+    },
+    {
+      "digest": "sha256:b809483a368c0e46eabd3dbd81eca448f9f10580a257e3f142abde495558e21c",
+      "license": "Apache-2.0",
+      "path": "labs/java-nullability-enhancement-process-pilot/kotlin/RejectedNullArgument.kt"
+    }
+  ],
+  "status": "observed-locked-java-nullability-compiler-and-runtime-pending-authority-review",
+  "toolchain": {
+    "compiler": {
+      "exit_code": 0,
+      "identity": "task-cache:kotlin-compiler-2.4.10/bin/kotlinc",
+      "stderr_digest": "sha256:c02ce086a35d7419777587ce753807d5d22dd896d63313ccb31d66a3af9dd87d",
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "2.4.10"
+    },
+    "compiler_distribution_binding": {
+      "archive_digest": "sha256:473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+      "archive_entry_count": 125,
+      "archive_manifest_digest": "sha256:a45c9bc3f35be196cbd9adb5568e3fc2e63c0e5d121a000f3666325f4dab904b",
+      "build_identity_digest": "sha256:fc7824eb585c2095b988b71bdc820fadb2385088c3499d4dd327f8882d7be219",
+      "compiler_jar_digest": "sha256:db12b1af0db0e10eeedfc15d5dac0316604e5c556321f60e3bcd73075a66f0a3",
+      "launcher_digest": "sha256:7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92",
+      "launcher_executable": true,
+      "tree_file_count": 125,
+      "tree_manifest_digest": "sha256:a45c9bc3f35be196cbd9adb5568e3fc2e63c0e5d121a000f3666325f4dab904b",
+      "tree_matches_archive": true
+    },
+    "compiler_distribution_binding_after_run": {
+      "archive_digest": "sha256:473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+      "archive_entry_count": 125,
+      "archive_manifest_digest": "sha256:a45c9bc3f35be196cbd9adb5568e3fc2e63c0e5d121a000f3666325f4dab904b",
+      "build_identity_digest": "sha256:fc7824eb585c2095b988b71bdc820fadb2385088c3499d4dd327f8882d7be219",
+      "compiler_jar_digest": "sha256:db12b1af0db0e10eeedfc15d5dac0316604e5c556321f60e3bcd73075a66f0a3",
+      "launcher_digest": "sha256:7082c4cdf466d4a8c0879eccd2bbd0011204ff10267a7eba921c08982201ec92",
+      "launcher_executable": true,
+      "tree_file_count": 125,
+      "tree_manifest_digest": "sha256:a45c9bc3f35be196cbd9adb5568e3fc2e63c0e5d121a000f3666325f4dab904b",
+      "tree_matches_archive": true
+    },
+    "compiler_distribution_digest": "sha256:473dd66c7a3ef4b182065b3da670466c1bf2773a9dbb0ed8b33a39fe9d4f876d",
+    "compiler_distribution_digest_matches": true,
+    "compiler_java_command": "PATH:java",
+    "compiler_launcher_invoked": true,
+    "compiler_override_environment_removed": [
+      "CLASSPATH",
+      "JAVA_OPTS",
+      "JAVA_TOOL_OPTIONS",
+      "JDK_JAVA_OPTIONS",
+      "KOTLIN_COMPILER",
+      "KOTLIN_HOME",
+      "KOTLIN_RUNNER",
+      "KOTLIN_TOOL",
+      "_JAVA_OPTIONS"
+    ],
+    "compiler_tree_stable_during_run": true,
+    "host": {
+      "architecture": "arm64",
+      "os": "Darwin"
+    },
+    "java": {
+      "exit_code": 0,
+      "identity": "PATH:java",
+      "stderr_digest": "sha256:4bd08cff8229372d0c989bc74c06410e6ecd7d28c633c1d81b9ac750b66cfdc8",
+      "stdout_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "17.0.17"
+    },
+    "javac": {
+      "exit_code": 0,
+      "identity": "PATH:javac",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_digest": "sha256:2763e3c8e34852f5f3fa8de3538303eb354f359293b8bc931bcadc70200cd0af",
+      "version": "17.0.17"
+    },
+    "javap": {
+      "exit_code": 0,
+      "identity": "PATH:javap",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_digest": "sha256:70ae2021ef65464abeddb3bfd68c9cbc00a98e4127a8a861c6a676c9c442701e",
+      "version": "17.0.17"
+    }
+  },
+  "trace": {
+    "action_stream": [
+      "compile-java-annotations-and-api",
+      "compile-kotlin-consumer",
+      "compile-rejected-null-argument",
+      "inspect-null-check-bytecode",
+      "launch-normal",
+      "launch-boundary",
+      "launch-failure"
+    ],
+    "network_stream": {
+      "expected_calls": 0,
+      "observed_application_calls": 0,
+      "os_level_isolation_proved": false
+    },
+    "resource_stream": {
+      "generated_java_classes": {
+        "org/jetbrains/annotations/NotNull.class": "sha256:7385678f3c772254d554ad102d9475b01f0a0de905467675468db748f03b6b68",
+        "pilot/JavaNulls.class": "sha256:f0bcb64d469b14800d7c93b0f97bb084de75bd2e4633b1a0a54680b7122b604c"
+      },
+      "generated_kotlin_jar_digest": "sha256:0e135eaae874fae9da1ff51170d712caf9be5322d086d4e9b608b7a54e8d77e7",
+      "temporary_artifacts_retained": false
+    }
+  },
+  "variant_id": "kotlin-2.4.10-jvm-openjdk17-java-consumer"
+}

@@ -5,7 +5,8 @@ import nextTs from 'eslint-config-next/typescript';
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
+  // The independent teaching distribution has its own manifest and runtime tests.
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', 'portable-atlas/**']),
 ]);
 
 export default eslintConfig;

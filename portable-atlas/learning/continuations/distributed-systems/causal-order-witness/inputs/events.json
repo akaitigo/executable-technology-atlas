@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-causal-fixture-v1",
+  "events": [
+    {"id":"a","process":"P","kind":"send","message":"m","clock":1},
+    {"id":"b","process":"P","kind":"local","message":null,"clock":2},
+    {"id":"c","process":"P","kind":"receive","message":"n","clock":4},
+    {"id":"d","process":"Q","kind":"local","message":null,"clock":1},
+    {"id":"e","process":"Q","kind":"receive","message":"m","clock":2},
+    {"id":"f","process":"Q","kind":"send","message":"n","clock":3}
+  ],
+  "process_order":{"P":["a","b","c"],"Q":["d","e","f"]},
+  "messages":[{"id":"m","send":"a","receive":"e"},{"id":"n","send":"f","receive":"c"}],
+  "replays":{"R1":["a","b","d","e","f","c"],"R2":["d","a","e","f","b","c"]},
+  "cases":[
+    {"id":"causal-r1","rule":"causal","replay":"R1"},
+    {"id":"causal-r2","rule":"causal","replay":"R2"},
+    {"id":"scalar-inverse","rule":"scalar-inverse","replay":"R1"},
+    {"id":"display-edges","rule":"display-edges","replay":"R1"}
+  ]
+}

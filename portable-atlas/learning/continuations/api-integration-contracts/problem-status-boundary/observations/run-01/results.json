@@ -1,0 +1,308 @@
+{
+  "Atlas": "固定応答のstatus解釈",
+  "kind": "fixed_response_consumer",
+  "transportMeasured": false,
+  "uriFetches": 0,
+  "businessOperations": 0,
+  "cases": [
+    {
+      "id": "custom-error",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/json",
+        "bodyUtf8": "{\n  \"error\": {\n    \"code\": \"invalid_quantity\",\n    \"message\": \"\\u6570\\u91cf\\u3092\\u78ba\\u8a8d\\u3057\\u3066\\u304f\\u3060\\u3055\\u3044\\u3002\"\n  }\n}\n",
+        "bodyHex": "7b226572726f72223a7b22636f6465223a22696e76616c69645f7175616e74697479222c226d657373616765223a22e695b0e9878fe38292e7a2bae8aa8de38197e381a6e3818fe381a0e38195e38184e38082227d7d0a"
+      },
+      "bodySha256": "b51465aabca8b6017b4d92f8f1c86ff0b9e4332e9ee7242f3c0d48841a584e25",
+      "strict": {
+        "format": "custom",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "not-applicable",
+        "chosenStatus": 422,
+        "problemType": null,
+        "title": "数量を確認してください。",
+        "customCode": "invalid_quantity",
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "custom",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "not-applicable",
+        "chosenStatus": 422,
+        "problemType": null,
+        "title": "数量を確認してください。",
+        "customCode": "invalid_quantity",
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/json",
+        "bodyUtf8": "{\n  \"error\": {\n    \"code\": \"invalid_quantity\",\n    \"message\": \"\\u6570\\u91cf\\u3092\\u78ba\\u8a8d\\u3057\\u3066\\u304f\\u3060\\u3055\\u3044\\u3002\"\n  }\n}\n",
+        "bodyHex": "7b226572726f72223a7b22636f6465223a22696e76616c69645f7175616e74697479222c226d657373616765223a22e695b0e9878fe38292e7a2bae8aa8de38197e381a6e3818fe381a0e38195e38184e38082227d7d0a"
+      }
+    },
+    {
+      "id": "problem-matching",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": 422\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a3432327d0a"
+      },
+      "bodySha256": "e4b5b28fd4eb96efec7f1f454ea8bf2a12f22c4f4060c5277e6168e4269b4951",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": 422\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a3432327d0a"
+      }
+    },
+    {
+      "id": "problem-omitted",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479227d0a"
+      },
+      "bodySha256": "78f04a76538053dd76358e818e890fee08d25527c1c7cf5460c458a2a7702bbb",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "absent",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "absent",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479227d0a"
+      }
+    },
+    {
+      "id": "problem-mismatch",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": 200\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a3230307d0a"
+      },
+      "bodySha256": "6e43a53ba1fd31d850e9b7391a9a5d160c26af79ed7dc4705f7f12d3631716f5",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 200,
+        "statusRelation": "mismatch",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "hold",
+        "reason": "local-status-mismatch-policy"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 200,
+        "statusRelation": "mismatch",
+        "chosenStatus": 200,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [],
+        "decision": "success",
+        "reason": "body-status-overrode-transport"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": 200\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a3230307d0a"
+      }
+    },
+    {
+      "id": "problem-status-string",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": \"422\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a22343232227d0a"
+      },
+      "bodySha256": "d2bc54186f26edcb8bebe437e9be43498ec8cf60c108408c11c9950aa067dd33",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "ignored-type",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [
+          "status"
+        ],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": null,
+        "statusRelation": "ignored-type",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "customCode": null,
+        "ignoredMembers": [
+          "status"
+        ],
+        "ignoredExtensions": [],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"Invalid quantity\",\n  \"status\": \"422\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22496e76616c6964207175616e74697479222c22737461747573223a22343232227d0a"
+      }
+    },
+    {
+      "id": "problem-title-extension",
+      "input_before": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"\\u6570\\u91cf\\u304c\\u6b63\\u3057\\u304f\\u3042\\u308a\\u307e\\u305b\\u3093\",\n  \"status\": 422,\n  \"traceHint\": \"synthetic-only\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22e695b0e9878fe3818ce6ada3e38197e3818fe38182e3828ae381bee3819be38293222c22737461747573223a3432322c22747261636548696e74223a2273796e7468657469632d6f6e6c79227d0a"
+      },
+      "bodySha256": "d22bd8912961e4995e3012244de5a77ed456232a12f39ac8e2059d6352f5f3b8",
+      "strict": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "数量が正しくありません",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [
+          "traceHint"
+        ],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "fault": {
+        "format": "problem",
+        "transportStatus": 422,
+        "bodyStatus": 422,
+        "statusRelation": "match",
+        "chosenStatus": 422,
+        "problemType": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "数量が正しくありません",
+        "customCode": null,
+        "ignoredMembers": [],
+        "ignoredExtensions": [
+          "traceHint"
+        ],
+        "decision": "business-error",
+        "reason": "transport-error-status"
+      },
+      "input_after": {
+        "transportStatus": 422,
+        "mediaType": "application/problem+json",
+        "bodyUtf8": "{\n  \"type\": \"https://api.example.invalid/problems/invalid-quantity\",\n  \"title\": \"\\u6570\\u91cf\\u304c\\u6b63\\u3057\\u304f\\u3042\\u308a\\u307e\\u305b\\u3093\",\n  \"status\": 422,\n  \"traceHint\": \"synthetic-only\"\n}\n",
+        "bodyHex": "7b2274797065223a2268747470733a2f2f6170692e6578616d706c652e696e76616c69642f70726f626c656d732f696e76616c69642d7175616e74697479222c227469746c65223a22e695b0e9878fe3818ce6ada3e38197e3818fe38182e3828ae381bee3819be38293222c22737461747573223a3432322c22747261636548696e74223a2273796e7468657469632d6f6e6c79227d0a"
+      }
+    }
+  ],
+  "startedAt": "2026-10-07T01:00:17.513809+00:00",
+  "calculationSeconds": 0.0007129999999999984,
+  "toolchain": {
+    "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "platform": "macOS-26.1-arm64-arm-64bit"
+  },
+  "actualNice": 10,
+  "sourceSha256": {
+    "CONTRACT.md": "13e905031fb8b8240506a4cbf1c4f343f90c1650b65dce46fdc3ba82e35e3678",
+    "SOURCES.md": "01f4ec995a2e7c2d79c3b09ead65338ce1c0b9ad15e39f5cdae17169c37e39df",
+    "cases.json": "312e5ba826682b7f78cff185577c41cb0f5b36e37342d76dd56c3c8a0903910d",
+    "expected.json": "dc4b21949db387fb94b98e31a0dfdb9ede92a2933c43c0761cc3649358e5353e",
+    "consumer.py": "1387a13815dfdc4596b40728172d0c2443aa9ac85ca8a89f60140cb8a4c1d053",
+    "produce.py": "fb244895acef283c00578fae5d3cb3a0e33dbe1259c3f9fd08288b5f7124e8b5",
+    "verify.py": "00ac58ad361612625d691cf1cb5269d4520a9815f048177b1c269c264c7ab2bb",
+    "run.py": "77f7ed358e96a33d38bbe935a9dbe6da82cf41696e8df26d7ce6e09ac950560a",
+    "execute_once.py": "fba44bff3acda441a8d0b4cefddc6fda52711127b8c8d04d8cdc7cbcfffde52c",
+    "resource_parse.py": "cee0eeb080c4987b6195a389f9b70e272b4c029164f47ea26a1cbcae15ddaea4",
+    "resource_observe.py": "56d2c9431b6b0c61856e50278cf6e19981c41bab81f81c1216cd0a03572cba43",
+    "fixtures/custom-error.json": "b51465aabca8b6017b4d92f8f1c86ff0b9e4332e9ee7242f3c0d48841a584e25",
+    "fixtures/problem-matching.json": "e4b5b28fd4eb96efec7f1f454ea8bf2a12f22c4f4060c5277e6168e4269b4951",
+    "fixtures/problem-omitted.json": "78f04a76538053dd76358e818e890fee08d25527c1c7cf5460c458a2a7702bbb",
+    "fixtures/problem-mismatch.json": "6e43a53ba1fd31d850e9b7391a9a5d160c26af79ed7dc4705f7f12d3631716f5",
+    "fixtures/problem-status-string.json": "d2bc54186f26edcb8bebe437e9be43498ec8cf60c108408c11c9950aa067dd33",
+    "fixtures/problem-title-extension.json": "d22bd8912961e4995e3012244de5a77ed456232a12f39ac8e2059d6352f5f3b8"
+  }
+}

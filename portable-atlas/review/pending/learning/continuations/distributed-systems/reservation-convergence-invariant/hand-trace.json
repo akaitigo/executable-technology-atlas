@@ -1,0 +1,241 @@
+{
+  "optimistic": [
+    [
+      "init",
+      [],
+      [],
+      {},
+      [],
+      [],
+      true
+    ],
+    [
+      "request:a",
+      [
+        "a"
+      ],
+      [],
+      {
+        "a": "accepted"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "request:b",
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      {
+        "a": "accepted",
+        "b": "accepted"
+      },
+      [],
+      [],
+      false
+    ],
+    [
+      "recover",
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      {
+        "a": "accepted",
+        "b": "accepted"
+      },
+      [],
+      [],
+      false
+    ],
+    [
+      "publish",
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      {
+        "a": "accepted",
+        "b": "accepted"
+      },
+      [],
+      [],
+      false
+    ],
+    [
+      "deliver:A>B",
+      [
+        "a"
+      ],
+      [
+        "a",
+        "b"
+      ],
+      {
+        "a": "accepted",
+        "b": "accepted"
+      },
+      [],
+      [
+        "A>B"
+      ],
+      false
+    ],
+    [
+      "deliver:B>A",
+      [
+        "a",
+        "b"
+      ],
+      [
+        "a",
+        "b"
+      ],
+      {
+        "a": "accepted",
+        "b": "accepted"
+      },
+      [
+        "B>A"
+      ],
+      [
+        "A>B"
+      ],
+      false
+    ]
+  ],
+  "deferred": [
+    [
+      "init",
+      [],
+      [],
+      {},
+      [],
+      [],
+      true
+    ],
+    [
+      "request:a",
+      [],
+      [],
+      {
+        "a": "pending"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "request:b",
+      [],
+      [],
+      {
+        "a": "pending",
+        "b": "pending"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "recover",
+      [],
+      [],
+      {
+        "a": "pending",
+        "b": "pending"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "adjudicate:a",
+      [
+        "a"
+      ],
+      [],
+      {
+        "a": "accepted",
+        "b": "pending"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "adjudicate:b",
+      [
+        "a"
+      ],
+      [],
+      {
+        "a": "accepted",
+        "b": "rejected"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "publish",
+      [
+        "a"
+      ],
+      [],
+      {
+        "a": "accepted",
+        "b": "rejected"
+      },
+      [],
+      [],
+      true
+    ],
+    [
+      "deliver:A>B",
+      [
+        "a"
+      ],
+      [
+        "a"
+      ],
+      {
+        "a": "accepted",
+        "b": "rejected"
+      },
+      [],
+      [
+        "A>B"
+      ],
+      true
+    ],
+    [
+      "deliver:B>A",
+      [
+        "a"
+      ],
+      [
+        "a"
+      ],
+      {
+        "a": "accepted",
+        "b": "rejected"
+      },
+      [
+        "B>A"
+      ],
+      [
+        "A>B"
+      ],
+      true
+    ]
+  ]
+}

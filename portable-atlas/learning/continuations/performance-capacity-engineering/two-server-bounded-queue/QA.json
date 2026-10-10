@@ -1,0 +1,276 @@
+{
+  "unit": "two-server-bounded-queue",
+  "utc": "2026-10-05T12:57:22.426Z",
+  "scope": "Finite abstract integer-tick model only; no fullGate/Core or production capacity claim",
+  "checks": [
+    {
+      "check": "checker",
+      "exitCode": 0,
+      "output": "PASS 9 fixtures; hand timeline + independent unit-tick states/events/cohorts/latency\n"
+    },
+    {
+      "check": "negative",
+      "exitCode": 0,
+      "output": "[\n  {\n    \"test\": \"read-only SHA256+mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"hide-producer-wait\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"queue-includes-active\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"change-FIFO\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"wrong-finish\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"wrong-denominator\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  },\n  {\n    \"test\": \"false-refusal-success\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejected\": true\n  }\n]\n"
+    },
+    {
+      "check": "skill-validator",
+      "exitCode": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "check": "capture-dimensions",
+      "exitCode": 0,
+      "output": "<module>/media/backpressure-producer-wait.jpg\n  pixelWidth: 1280\n  pixelHeight: 2845\n<module>/media/drop-cohort-denominator.jpg\n  pixelWidth: 1280\n  pixelHeight: 2807\n<module>/media/invalid-service-refusal.jpg\n  pixelWidth: 1280\n  pixelHeight: 1930\n"
+    },
+    {
+      "check": "protected-53478",
+      "exitCode": 0,
+      "output": "3901\n"
+    },
+    {
+      "check": "protected-60285",
+      "exitCode": 0,
+      "output": "80282\n"
+    },
+    {
+      "check": "owned-port-closed",
+      "exitCode": 1,
+      "output": ""
+    }
+  ],
+  "ui": {
+    "fixtureComparisons": 9,
+    "conditionResetChecks": 9,
+    "predictionOnlyChecks": 4,
+    "newPredictionGroupRetained": true,
+    "previousComparisonFieldsCleared": true,
+    "refusalRawReadable": true,
+    "originalRelatedREADMEBodiesVerified": 2,
+    "implementationRelativeHrefs": 3,
+    "consoleErrors": 0,
+    "captures": [
+      {
+        "path": "media/backpressure-producer-wait.jpg",
+        "width": 1280,
+        "height": 2845
+      },
+      {
+        "path": "media/drop-cohort-denominator.jpg",
+        "width": 1280,
+        "height": 2807
+      },
+      {
+        "path": "media/invalid-service-refusal.jpg",
+        "width": 1280,
+        "height": 1930
+      }
+    ],
+    "evidence": [
+      "media/iab-nine-fixtures.json",
+      "media/iab-resets.json",
+      "media/iab-prediction-resets.json",
+      "media/iab-captures.json",
+      "media/iab-refusal-raw.txt",
+      "media/iab-links.json",
+      "media/iab-console.json"
+    ]
+  },
+  "outcomes": {
+    "normal": 4,
+    "inputRefusal": 5,
+    "oneServerFinish": [
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "twoServerFinish": [
+      2,
+      2,
+      4,
+      4,
+      6
+    ],
+    "boundedDrop": {
+      "admitted": 3,
+      "dropped": 2,
+      "finishedPerOffered": "3/5",
+      "latencyDenominator": 3,
+      "allOfferedMeanCompletionLatency": null
+    },
+    "backpressure": {
+      "admitted": 5,
+      "dropped": 0,
+      "producerWaitMean": "4/5",
+      "queueWaitMean": "4/5",
+      "admittedToFinishMean": "14/5",
+      "offeredToFinishMean": "18/5"
+    }
+  },
+  "preview": {
+    "command": "python3 -B preview.py",
+    "normalAttempt": {
+      "exitCode": 1,
+      "output": "Traceback (most recent call last):\n  File \"<module>/preview.py\", line 10, in <module>\n    s=ThreadingHTTPServer(('127.0.0.1',0),Handler);print('http://127.0.0.1:'+str(s.server_port)+'/',flush=True)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 452, in __init__\n    self.server_bind()\n  File \"<python-runtime>/lib/python3.9/http/server.py\", line 138, in server_bind\n    socketserver.TCPServer.server_bind(self)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 466, in server_bind\n    self.socket.bind(self.server_address)\nPermissionError: [Errno 1] Operation not permitted\n"
+    },
+    "ownedSessionsStopped": [
+      80973,
+      31130,
+      53060,
+      94729
+    ],
+    "ownedTabsClosed": [
+      15,
+      17
+    ],
+    "finalServerExitCode": 0,
+    "protectedListeners": {
+      "53478": 3901,
+      "60285": 80282
+    },
+    "cleanupAllOwnedPorts": [
+      53151,
+      53797,
+      54818,
+      55125
+    ]
+  },
+  "repairsDuringIteration": [
+    "runner newline literal fixed before any raw produced",
+    "README links in IAB triggered download; final UI loads exact original README text in read-only reference panel",
+    "capacity paused for separately authorized SRE prediction-only repair, then resumed"
+  ],
+  "sources": [
+    {
+      "url": "https://sre.google/sre-book/handling-overload/",
+      "locator": "The Pitfalls of Queries per Second; Client-Side Throttling",
+      "use": "Resource cost and offered/accepted distinction; no adaptive throttling reproduction"
+    }
+  ],
+  "limitations": [
+    "Fixed 5-job FIFO batch with constant service and 1/2 servers",
+    "No real server performance, TCP, production capacity, autoscaling, retries, deadlines, stochastic steady state or multi-producer fairness claim"
+  ],
+  "frozenAfterQA": true,
+  "currentRun": "observations/20261005T125418374697Z",
+  "runtime": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "modelTime": "abstract integer ticks, not elapsed real time"
+  },
+  "sourceHashes": {
+    "worker.py": "e373c52965efcf2b451513c691c123edb57a01d3cbe27ded4d0539d9b8fcbed0",
+    "preview.py": "e4f07365eb5c7257d8f0e9efb6f940ddb14750311737fcfc98f48c71b8425505",
+    "test_negative.py": "bc2a8fc61903f21682a5382af8f4ba52d38fc190f69e0effda2231301ad98a14",
+    "runner.py": "7f9612434afbfaa97de4613a6163dcf83f443a37d1831811098d158f6670b00f",
+    "index.html": "06f1237ed466d47153d40f3270a0d9974239e084a1ce47c103380f1c333e4fb2",
+    "route.py": "e76f09edf42859cfeaec6f04a86461355ab14ba051f1e519d4a0ed666b741a25",
+    "oracle.json": "49fe323fcce8eb7a81091511c5f21594e4ed6136bad2f4d6449191477b972fcc",
+    "README.md": "4d65d2d4b56f4d3010b3cc766355957cd4674107b8b75ac39207ea4591231ede",
+    "COVERAGE.md": "8b08b07f218062304aff9050e54c40c36f6b645d80c2c215eee23a8841c92d39",
+    "fixtures.json": "0854904f776fc4be1dd9e8038677c4e2e4e258245b001e1431076ec88c7cb123",
+    "checker.py": "c69e3b7af67f2711ec58bedc796bcca804dfd132d3d0cb6d89513ba4ba52f6fc",
+    "REVISION": "d4dbb8396421b5a115f486e60295fc9bcffe688094d60f814df77d9c834f9888",
+    "skills/two-server-bounded-queue/SKILL.md": "5ce02b06be4d18ca7b49e0e369d65e417a438755917cc1ed2cada046f3da65ed"
+  },
+  "actualStdoutMatchesSavedBytes": true,
+  "handOracleFixedBeforeRun": true,
+  "historicalRaw": {
+    "files": 132,
+    "receipts": [
+      {
+        "manifest": "revisions/before-readable-input/old-raw-fingerprint.json",
+        "files": 33,
+        "hashAndMtimeUnchanged": true
+      },
+      {
+        "manifest": "revisions/prediction-clear/old-raw-fingerprint.json",
+        "files": 33,
+        "hashAndMtimeUnchanged": true
+      },
+      {
+        "manifest": "revisions/readme-content-type/old-raw-fingerprint.json",
+        "files": 33,
+        "hashAndMtimeUnchanged": true
+      },
+      {
+        "manifest": "revisions/readme-inline-view/old-raw-fingerprint.json",
+        "files": 33,
+        "hashAndMtimeUnchanged": true
+      }
+    ],
+    "oldSourceBindingsHistoricalOnly": true
+  },
+  "linkedReadmeBytes": [
+    {
+      "path": "../../../subjects/performance-capacity-engineering/README.md",
+      "sha256": "6a7c02b8b593953f076b3df2ef1b6c4bcbfaf7933fbb791b4fd15279e81b1dd6",
+      "iabTextMatches": true
+    },
+    {
+      "path": "../../sre-incident-operations/multiwindow-burn-alert/README.md",
+      "sha256": "a1f5f7ba252c831fba6c1889b317df2973a3d615eae9fa0198a374141fdc4248",
+      "iabTextMatches": true
+    }
+  ],
+  "localMarkdownLinks": {
+    "count": 13,
+    "allExist": true,
+    "links": [
+      {
+        "source": "README.md",
+        "href": "../../../subjects/performance-capacity-engineering/README.md"
+      },
+      {
+        "source": "README.md",
+        "href": "oracle.json"
+      },
+      {
+        "source": "README.md",
+        "href": "index.html"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "README.md",
+        "href": "../../sre-incident-operations/multiwindow-burn-alert/README.md"
+      },
+      {
+        "source": "README.md",
+        "href": "CURRENT"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "QA.json"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "COVERAGE.md",
+        "href": "../../../subjects/performance-capacity-engineering/README.md"
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "nodes": [
+    {
+      "id": "R-CAP",
+      "type": "requirement",
+      "text": "容量要求"
+    },
+    {
+      "id": "D-CAP",
+      "type": "design",
+      "text": "容量設計"
+    },
+    {
+      "id": "T-CAP",
+      "type": "test",
+      "text": "容量test"
+    },
+    {
+      "id": "R-FIFO",
+      "type": "requirement",
+      "text": "FIFO要求"
+    },
+    {
+      "id": "D-FIFO",
+      "type": "design",
+      "text": "FIFO設計"
+    },
+    {
+      "id": "T-FIFO",
+      "type": "test",
+      "text": "FIFOtest"
+    }
+  ],
+  "forward": [
+    [
+      "R-CAP",
+      "D-CAP"
+    ],
+    [
+      "D-CAP",
+      "T-CAP"
+    ],
+    [
+      "R-FIFO",
+      "D-FIFO"
+    ],
+    [
+      "D-FIFO",
+      "T-FIFO"
+    ]
+  ],
+  "reverse": [
+    [
+      "D-CAP",
+      "R-CAP"
+    ],
+    [
+      "T-CAP",
+      "D-CAP"
+    ],
+    [
+      "D-FIFO",
+      "R-FIFO"
+    ],
+    [
+      "T-FIFO",
+      "D-FIFO"
+    ]
+  ],
+  "cases": [
+    {
+      "id": "cap-change",
+      "label": "容量要求変更 / 正常",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "normal"
+    },
+    {
+      "id": "cap-test-back",
+      "label": "容量testから逆追跡 / 正常",
+      "direction": "reverse",
+      "start": "T-CAP",
+      "variant": "normal"
+    },
+    {
+      "id": "fifo-change",
+      "label": "FIFO要求変更 / 正常",
+      "direction": "forward",
+      "start": "R-FIFO",
+      "variant": "normal"
+    },
+    {
+      "id": "fifo-test-back",
+      "label": "FIFO testから逆追跡 / 正常",
+      "direction": "reverse",
+      "start": "T-FIFO",
+      "variant": "normal"
+    },
+    {
+      "id": "missing-back-forward",
+      "label": "逆link欠落 / 容量変更",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "missing-back"
+    },
+    {
+      "id": "missing-back-reverse",
+      "label": "逆link欠落 / 容量test逆追跡",
+      "direction": "reverse",
+      "start": "T-CAP",
+      "variant": "missing-back"
+    },
+    {
+      "id": "unknown-id",
+      "label": "未知start ID / 拒否",
+      "direction": "forward",
+      "start": "R-UNKNOWN",
+      "variant": "normal"
+    },
+    {
+      "id": "wrong-start-type",
+      "label": "testをforward起点 / 拒否",
+      "direction": "forward",
+      "start": "T-CAP",
+      "variant": "normal"
+    },
+    {
+      "id": "missing-field",
+      "label": "reverse field欠落 / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "missing-field"
+    },
+    {
+      "id": "unknown-endpoint",
+      "label": "edgeの未知ID / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "unknown-endpoint"
+    },
+    {
+      "id": "invalid-edge",
+      "label": "同type edge / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "invalid-edge"
+    },
+    {
+      "id": "duplicate-edge",
+      "label": "edge重複 / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "duplicate-edge"
+    },
+    {
+      "id": "wrong-field-type",
+      "label": "forward型不正 / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "wrong-field-type"
+    },
+    {
+      "id": "edge-shape",
+      "label": "edge形不正 / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "edge-shape"
+    },
+    {
+      "id": "cross-branch",
+      "label": "容量→FIFOの不正edge / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "cross-branch"
+    },
+    {
+      "id": "wrong-node-type",
+      "label": "node type改変 / 拒否",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "wrong-node-type"
+    },
+    {
+      "id": "empty-forward",
+      "label": "forward空 / trace不完全",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "empty-forward"
+    },
+    {
+      "id": "execution-failure",
+      "label": "実Error注入 / 正常答えなし",
+      "direction": "forward",
+      "start": "R-CAP",
+      "variant": "execution-failure"
+    }
+  ]
+}

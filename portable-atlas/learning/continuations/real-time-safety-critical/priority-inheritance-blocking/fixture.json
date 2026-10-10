@@ -1,0 +1,54 @@
+{
+  "cpu": 1,
+  "locks": [
+    "K"
+  ],
+  "tick": 1,
+  "priority_order": [
+    "H",
+    "M",
+    "L"
+  ],
+  "tasks": [
+    {
+      "id": "L",
+      "arrival": 0,
+      "work": 3,
+      "lock": "K",
+      "base": 1,
+      "deadline": 8
+    },
+    {
+      "id": "H",
+      "arrival": 1,
+      "work": 1,
+      "lock": "K",
+      "base": 3,
+      "deadline": 4
+    },
+    {
+      "id": "M",
+      "arrival": 1,
+      "work": 4,
+      "lock": null,
+      "base": 2,
+      "deadline": 8
+    }
+  ],
+  "deadline_cases": [
+    4,
+    2
+  ],
+  "contract": [
+    "boundary completion/release from previous tick",
+    "arrivals",
+    "lock attempts in priority order; block if occupied",
+    "ready waiter acquisition after release",
+    "effective priorities reset to base, then inherit highest blocked waiter",
+    "dispatch highest effective; ID tie-break",
+    "execute one tick [t,t+1)",
+    "finish/release at t+1 before deadline evaluation"
+  ],
+  "deadline_rule": "finish <= absolute deadline is on time; due unfinished is miss; latched",
+  "scope": "fixed fictional finite model, not Linux or actual WCET"
+}

@@ -1,0 +1,3015 @@
+{
+  "project": "Atlas",
+  "lesson": "analytics-dimension-policy",
+  "kind": "targeted-viewport-and-P3-supplement",
+  "started_at": "2026-10-06T19:10:35.952Z",
+  "passed": true,
+  "budget_ms": 35000,
+  "full_report": {
+    "path": "ATLAS_WORKSPACE/independent-learning/browser-qa/nine-lessons-2026-10-06/session-2026-10-06T185545132Z/analytics-dimension-policy-2026-10-06T190134165Z/report.json",
+    "sha256": "0d63a7b6f179551196ea8efa9d237f0cd536a42de995bd9638193509ee90b670"
+  },
+  "source_before": {
+    "index.html": "702fc4de501e18f3183232801473f45cc099692ada8b5bbb58c0da432162472f",
+    "reader.css": "9d55e821333ee52d7ef7b1d77f145ebf8dd3ceb64571d734dc4a9dcedb71434d",
+    "reader-app.js": "eebcf4d0ce7fc3657bb050956ef81546da08f57a6b918a6bc98110904fc51721",
+    "reader-state.js": "237137eebddde7ca7c185329c4b4f7f4c5935168582ddf95d3ed8850027ca192",
+    "reader-data.js": "7878ae6519aff1c24a98dd708f3306a94332c2094a3388bf31b5c62bbd11f9c4"
+  },
+  "source_after": {
+    "index.html": "702fc4de501e18f3183232801473f45cc099692ada8b5bbb58c0da432162472f",
+    "reader.css": "9d55e821333ee52d7ef7b1d77f145ebf8dd3ceb64571d734dc4a9dcedb71434d",
+    "reader-app.js": "eebcf4d0ce7fc3657bb050956ef81546da08f57a6b918a6bc98110904fc51721",
+    "reader-state.js": "237137eebddde7ca7c185329c4b4f7f4c5935168582ddf95d3ed8850027ca192",
+    "reader-data.js": "7878ae6519aff1c24a98dd708f3306a94332c2094a3388bf31b5c62bbd11f9c4"
+  },
+  "checks": [
+    {
+      "name": "entry-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "prediction-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "result-1280",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "entry-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "prediction-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "result-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "right-columns-by-horizontal-wheel",
+      "passed": true,
+      "detail": {
+        "before": {
+          "left": 0,
+          "width": 328,
+          "total": 496
+        },
+        "after": {
+          "left": 168,
+          "width": 328,
+          "total": 496
+        }
+      }
+    },
+    {
+      "name": "right-columns-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "scope-footer-390",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "details-physically-opened",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "open-details-cleared-by-prediction",
+      "passed": true,
+      "detail": true
+    }
+  ],
+  "dom": [
+    {
+      "label": "entry-1280",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、\nどの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": []
+        },
+        {
+          "id": "fk-rows",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "prediction-1280",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、\nどの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 8
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": []
+        },
+        {
+          "id": "fk-rows",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "loaded-1280",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、\nどの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 2675
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "result-1280",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、\nどの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 911
+      },
+      "document_width": 1280,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 962,
+          "scroll_width": 962
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "entry-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": []
+        },
+        {
+          "id": "fk-rows",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 436
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 328
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "prediction-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 504
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": []
+        },
+        {
+          "id": "fk-rows",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 436
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 328
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "loaded-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 3662
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 496
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 381
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "result-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1472
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 496
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 381
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "right-columns-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1823
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 168,
+          "client_width": 328,
+          "scroll_width": 496
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 381
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "scope-footer-390",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 4115
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 168,
+          "client_width": 328,
+          "scroll_width": 496
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 381
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "details-opened",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n受け入れた注文1, 2, 4, 5, 6\n隔離した注文3\n拒否した注文なし\n既知金額の合計\n200\n対象 / 金額あり / 金額欠損\n4 / 3 / 1\n金額欠損割合\n1/4\n集計対象の注文\n1, 2, 4, 6\n元の候補5件に対する採用\n4/5\n受入済みだが明細なし\n5\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n1\t10\t既知の顧客\t100\t2\t受入\t対象\n2\t10\t既知の顧客\t100\t1\t受入\t対象\n3\t999\t存在しない顧客\t80\t1\t隔離\t対象外\n4\tNULL\tNULL（未指定）\tNULL\t1\t受入\t対象\n5\t20\t既知の顧客\t50\t0\t受入\t対象外\n6\t20\t既知の顧客\t0\t1\t受入\t対象\n\n金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。\n\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\nPRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n1\t10\t挿入成功\t1\n2\t10\t挿入成功\t1, 2\n3\t999\t外部キー制約で拒否\t1, 2\n4\tNULL\t挿入成功\t1, 2, 4\n5\t20\t挿入成功\t1, 2, 4, 5\n6\t20\t挿入成功\t1, 2, 4, 5, 6\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n5. 答えと実務判断\n予想と照合する\n\n予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "受け入れた注文1, 2, 4, 5, 6隔離した注文3拒否した注文なし",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "既知金額の合計200対象 / 金額あり / 金額欠損4 / 3 / 1金額欠損割合1/4集計対象の注文1, 2, 4, 6元の候補5件に対する採用4/5受入済みだが明細なし5",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "110既知の顧客1002受入対象210既知の顧客1001受入対象3999存在しない顧客801隔離対象外4NULLNULL（未指定）NULL1受入対象520既知の顧客500受入対象外620既知の顧客01受入対象",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "金額欠損の1件は注文4です。顧客キーの未知分類と、金額欠損を混ぜないでください。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "PRAGMA読戻し 1、設定時はトランザクション外。違反検査：違反なし。自動の隔離行 0件。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "110挿入成功1210挿入成功1, 23999外部キー制約で拒否1, 24NULL挿入成功1, 2, 4520挿入成功1, 2, 4, 5620挿入成功1, 2, 4, 5, 6",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}",
+          "visible": true,
+          "disabled": null,
+          "open": true,
+          "data": {}
+        },
+        "raw": {
+          "text": "{\n  \"policy\": {\n    \"policy\": \"quarantine-row\",\n    \"batch_status\": \"accepted_with_quarantine\",\n    \"accepted_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"quarantined_ids\": [\n      3\n    ],\n    \"rejected_ids\": [],\n    \"metric_ids\": [\n      1,\n      2,\n      4,\n      6\n    ],\n    \"accepted_but_no_line_ids\": [\n      5\n    ],\n    \"sum_amount\": 200,\n    \"input_rows\": 4,\n    \"known_rows\": 3,\n    \"missing_rows\": 1,\n    \"missing_fraction\": {\n      \"numerator\": 1,\n      \"denominator\": 4\n    },\n    \"candidate_coverage\": {\n      \"numerator\": 4,\n      \"denominator\": 5\n    },\n    \"candidate_ids\": [\n      1,\n      2,\n      3,\n      4,\n      6\n    ],\n    \"classification_rows\": [\n      [\n        1,\n        \"known\",\n        2\n      ],\n      [\n        2,\n        \"known\",\n        1\n      ],\n      [\n        3,\n        \"unknown\",\n        1\n      ],\n      [\n        4,\n        \"null_key\",\n        1\n      ],\n      [\n        5,\n        \"known\",\n        0\n      ],\n      [\n        6,\n        \"known\",\n        1\n      ]\n    ],\n    \"unknown_ids\": [\n      3\n    ],\n    \"null_key_ids\": [\n      4\n    ],\n    \"decisions\": [\n      [\n        1,\n        \"accepted\",\n        1\n      ],\n      [\n        2,\n        \"accepted\",\n        1\n      ],\n      [\n        3,\n        \"quarantined\",\n        0\n      ],\n      [\n        4,\n        \"accepted\",\n        1\n      ],\n      [\n        5,\n        \"accepted\",\n        0\n      ],\n      [\n        6,\n        \"accepted\",\n        1\n      ]\n    ],\n    \"quarantine_records\": [\n      [\n        3,\n        \"unknown_customer_key\"\n      ]\n    ],\n    \"rejection_records\": [],\n    \"foreign_keys_readback\": 1,\n    \"database\": \":memory:\",\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\",\n    \"publish_performed\": false\n  },\n  \"foreign_key_probe\": {\n    \"foreign_keys\": 1,\n    \"pragma_in_transaction\": false,\n    \"outcomes\": [\n      \"inserted\",\n      \"inserted\",\n      \"foreign_key_constraint\",\n      \"inserted\",\n      \"inserted\",\n      \"inserted\"\n    ],\n    \"ids_after_each\": [\n      [\n        1\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2\n      ],\n      [\n        1,\n        2,\n        4\n      ],\n      [\n        1,\n        2,\n        4,\n        5\n      ],\n      [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    ],\n    \"saved_ids\": [\n      1,\n      2,\n      4,\n      5,\n      6\n    ],\n    \"violations\": [],\n    \"quarantine_rows_created\": 0,\n    \"events\": [\n      {\n        \"order_id\": 1,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 2,\n        \"customer_id\": 10,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 3,\n        \"customer_id\": 999,\n        \"outcome\": \"foreign_key_constraint\",\n        \"error\": {\n          \"type\": \"IntegrityError\",\n          \"message\": \"FOREIGN KEY constraint failed\"\n        },\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 4,\n        \"customer_id\": null,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 5,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5\n        ],\n        \"in_transaction_after\": false\n      },\n      {\n        \"order_id\": 6,\n        \"customer_id\": 20,\n        \"outcome\": \"inserted\",\n        \"error\": null,\n        \"in_transaction_before\": false,\n        \"saved_ids\": [\n          1,\n          2,\n          4,\n          5,\n          6\n        ],\n        \"in_transaction_after\": false\n      }\n    ],\n    \"schema_sql\": \"CREATE TABLE customers(customer_id INTEGER PRIMARY KEY, region TEXT NOT NULL); CREATE TABLE fk_orders(order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customers(customer_id), amount INTEGER);\",\n    \"rowid_order_id_pairs\": [\n      [\n        1,\n        1\n      ],\n      [\n        2,\n        2\n      ],\n      [\n        4,\n        4\n      ],\n      [\n        5,\n        5\n      ],\n      [\n        6,\n        6\n      ]\n    ],\n    \"database\": \":memory:\",\n    \"isolation_level\": null,\n    \"source_id\": \"2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl\"\n  }\n}\n",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "予想と一致しました。 未知の行だけ隔離では金額欠損割合は1/4。NULLキーの注文4は受け入れられ、金額欠損の1件として残ります。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 3493
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "既知の顧客",
+              "100",
+              "2",
+              "受入",
+              "対象"
+            ],
+            [
+              "2",
+              "10",
+              "既知の顧客",
+              "100",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "3",
+              "999",
+              "存在しない顧客",
+              "80",
+              "1",
+              "隔離",
+              "対象外"
+            ],
+            [
+              "4",
+              "NULL",
+              "NULL（未指定）",
+              "NULL",
+              "1",
+              "受入",
+              "対象"
+            ],
+            [
+              "5",
+              "20",
+              "既知の顧客",
+              "50",
+              "0",
+              "受入",
+              "対象外"
+            ],
+            [
+              "6",
+              "20",
+              "既知の顧客",
+              "0",
+              "1",
+              "受入",
+              "対象"
+            ]
+          ]
+        },
+        {
+          "id": "fk-rows",
+          "rows": [
+            [
+              "1",
+              "10",
+              "挿入成功",
+              "1"
+            ],
+            [
+              "2",
+              "10",
+              "挿入成功",
+              "1, 2"
+            ],
+            [
+              "3",
+              "999",
+              "外部キー制約で拒否",
+              "1, 2"
+            ],
+            [
+              "4",
+              "NULL",
+              "挿入成功",
+              "1, 2, 4"
+            ],
+            [
+              "5",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5"
+            ],
+            [
+              "6",
+              "20",
+              "挿入成功",
+              "1, 2, 4, 5, 6"
+            ]
+          ]
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 168,
+          "client_width": 328,
+          "scroll_width": 496
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 381
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    },
+    {
+      "label": "open-details-cleared-by-prediction",
+      "url": "http://127.0.0.1:57896/index.html",
+      "title": "Atlas：未知キーの受入方針と分母",
+      "body_text": "Atlas / 分析データ基盤\n\n未知のキーを見つけたら、どの行を残す？\n\n同じ6注文を「全件拒否・行隔離・保持」で比べます。NULLキーの許可と、金額の欠損は別の規約です。保存したSQLiteメモリー内実行の読取画面で、実際の分析基盤や本番品質の保証ではありません。\n\n保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。\n\n1. まず予想する\n\n注文3は顧客999を参照しますが、その顧客は存在しません。注文4は顧客キーも金額もNULL。今回は3方針ともNULLキーを許可します。\n\n全件拒否\n未知の行だけ隔離\n全行を保持\n選んだ方針で、集計対象の金額欠損割合は？\n分母0で未定義1/41/5\n保存結果を比較する\n最初へ戻す\n\n2. 行の行き先と分母を比べる\n\n指標の対象は、受け入れた注文のうち明細が1件以上あるもの。注文5は受け入れても集計対象外です。\n\n表は横にスクロールできます。\n\n6注文の分類・受入判断・集計対象\n注文ID\t顧客キー\tキーの分類\t金額\t明細数\t判断\t集計\n3. 外部キー制約は同じ方針か\n\nこちらは別の接続で、同じREFERENCES付き表へ1行ずつINSERTした記録です。ONでもNULLキーは通り、未知キーの1文だけが拒否されます。自動隔離や全件拒否にはなりません。\n\n制約 OFF\n制約 ON\n\n表は横にスクロールできます。\n\n各INSERTの結果と、その直後の保存ID\n注文ID\t顧客キー\t結果\t保存ID\n4. 原典と実装へ戻る\n\n3方針と分母の契約 → 実装前の手計算 → 実行したSQL → 計測の実装 → 別方式の保存値検査。SQLiteの公式資料と既存学習経路も確認できます。\n\n選択中の保存記録\n5. 答えと実務判断\n予想と照合する\n\n未知キーの注文3を隔離すると、金額欠損は1件のままで、分母は5件から4件へ減ります。品質方針を変えても、すべての指標が改善するとは限りません。NULLを許可するか、隔離後に直して再投入するかは、別途決める必要があります。\n\n保存記録が使えない場合\n読取条件 \n保存した正常記録\n記録が欠落\n合計が改変\n別の方針の古い記録\n\n拒否された記録から、以前の表や答えを表示し続けないことを確認するための条件です。SQLite実行時の制約エラーとは別です。\n\nAtlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態",
+      "ids": {
+        "record-time": {
+          "text": "保存した計測：2026-10-06T18:24:07.604493+00:00 / SQLite 3.51.0。画面でSQLを再実行しません。",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "policies": {
+          "text": "全件拒否未知の行だけ隔離全行を保持",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "load": {
+          "text": "保存結果を比較する",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "reset": {
+          "text": "最初へ戻す",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "error": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "flow": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "metrics": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "diagnostic": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-off": {
+          "text": "制約 OFF",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-on": {
+          "text": "制約 ON",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        },
+        "fk-summary": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "fk-rows": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "details": {
+          "text": "選択中の保存記録",
+          "visible": true,
+          "disabled": null,
+          "open": false,
+          "data": {}
+        },
+        "raw": {
+          "text": "",
+          "visible": true,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "answer-button": {
+          "text": "予想と照合する",
+          "visible": true,
+          "disabled": true,
+          "open": null,
+          "data": {}
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "open": null,
+          "data": {}
+        },
+        "record-mode": {
+          "text": "保存した正常記録記録が欠落合計が改変別の方針の古い記録",
+          "visible": true,
+          "disabled": false,
+          "open": null,
+          "data": {}
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 529
+      },
+      "document_width": 390,
+      "tables": [
+        {
+          "id": "rows",
+          "rows": []
+        },
+        {
+          "id": "fk-rows",
+          "rows": []
+        }
+      ],
+      "table_scrollers": [
+        {
+          "scroll_left": 108,
+          "client_width": 328,
+          "scroll_width": 436
+        },
+        {
+          "scroll_left": 0,
+          "client_width": 328,
+          "scroll_width": 328
+        }
+      ],
+      "footer": "Atlas の有限教材。画面確認の範囲と保存した記録を確認できます。一般DWH・会計・本番品質・性能は未検証です。\n\n説明と再現 / 学習範囲 / Skill / 確認状態"
+    }
+  ],
+  "captures": [
+    {
+      "file": "entry-1280.png",
+      "sha256": "8302161ad534668512f62b873ba30ae7be45cc73378ab1d44747f0e375517f7c",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "file": "prediction-1280.png",
+      "sha256": "26abbd976005c39f2d950982993c407b56a741f2b84a966edfa4932c23b7ebbf",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "file": "result-1280.png",
+      "sha256": "a5682fd6d4ae138ca33f125983cf29b8ae87c030d07928aaca9b1f5123fed97f",
+      "width": 1280,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 911
+      }
+    },
+    {
+      "file": "entry-390.png",
+      "sha256": "99d617737399e1a01b1dbea6b019952fbd27b0b877ffaaa739c3cfbec3ee0e80",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "file": "prediction-390.png",
+      "sha256": "5f5bc70bd07777a5127ca382a53eb60dccdab94261f7599161b79fdfdd6ef251",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 504
+      }
+    },
+    {
+      "file": "result-390.png",
+      "sha256": "e8b7c1dbcd6593f89c142eecd9d3691a71b4cc61f03248ae3193d49481ea303b",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1472
+      }
+    },
+    {
+      "file": "right-columns-390.png",
+      "sha256": "d5162be6ca80b9dee185e78b2e8ca4dc8a351dd4c2ca4e93111c338d68334fb8",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1823
+      }
+    },
+    {
+      "file": "scope-footer-390.png",
+      "sha256": "6a6ac9a9f940cd722501965def1b10a4f0950dbd246e0762af386ba0c4599592",
+      "width": 390,
+      "height": 800,
+      "actual_capture": true,
+      "viewport": {
+        "width": 390,
+        "height": 800
+      },
+      "scroll": {
+        "x": 0,
+        "y": 4115
+      }
+    }
+  ],
+  "pointer_actions": [
+    {
+      "kind": "mouse-click",
+      "selector": "#reset",
+      "completed": true,
+      "x": 403,
+      "y": 400.3125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "[data-policy=quarantine-row]",
+      "completed": true,
+      "x": 347,
+      "y": 674.71875
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=prediction][value=\"1/4\"]",
+      "completed": true,
+      "x": 327.265625,
+      "y": 768.8125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#load",
+      "completed": true,
+      "x": 247,
+      "y": 400.3125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#answer-button",
+      "completed": true,
+      "x": 231,
+      "y": 400
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#reset",
+      "completed": true,
+      "x": 275,
+      "y": 90.625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "[data-policy=quarantine-row]",
+      "completed": true,
+      "x": 219,
+      "y": 241.03125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=prediction][value=\"1/4\"]",
+      "completed": true,
+      "x": 199.265625,
+      "y": 425.125
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#load",
+      "completed": true,
+      "x": 119,
+      "y": 497.625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#answer-button",
+      "completed": true,
+      "x": 103,
+      "y": 399.6875
+    },
+    {
+      "kind": "mouse-wheel-horizontal",
+      "deltaX": 700,
+      "deltaY": 0,
+      "selector": ".table-scroll:first",
+      "completed": true
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "#details > summary",
+      "completed": true,
+      "x": 195,
+      "y": 400.0625
+    },
+    {
+      "kind": "mouse-click",
+      "selector": "input[name=\"prediction\"][value=\"1/5\"]",
+      "completed": true,
+      "x": 256.609375,
+      "y": 400.125
+    }
+  ],
+  "keyboard_actions": [],
+  "api_actions": [
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:57896/index.html"
+    },
+    {
+      "kind": "viewport",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "kind": "scrollTo",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "fieldset"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "#metrics"
+    },
+    {
+      "kind": "viewport",
+      "width": 390,
+      "height": 800
+    },
+    {
+      "kind": "scrollTo",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "fieldset"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "#metrics"
+    },
+    {
+      "kind": "scrollIntoViewIfNeeded",
+      "selector": "footer"
+    }
+  ],
+  "errors": [],
+  "new_browser": 0,
+  "new_context": 0,
+  "new_tab": 0,
+  "new_server": 0,
+  "new_target_execution": 0,
+  "cleanup": {
+    "routes_installed": 0,
+    "routes_removed": true,
+    "viewport_restored": true,
+    "page_left_open": true
+  },
+  "limits": [
+    "Full condition comparison is covered by the linked first report, not rerun here.",
+    "Viewport captures require separate human visual review."
+  ],
+  "previous_checker_sha256": "89519e58c8b386c0ce6100887622e3b2006780ef16a45a43a7b12b681c95ca5e",
+  "checker_sha256": "b6f928d5fa1d45f5f3aac0ada03889eb42fddd51985fe59e9d4dd1451edd8d32",
+  "sources_unchanged": true,
+  "finished_at": "2026-10-06T19:10:36.573Z",
+  "elapsed_ms": 621
+}

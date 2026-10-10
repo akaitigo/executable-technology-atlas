@@ -1,0 +1,62 @@
+{
+  "title": "Atlas 実装前の独立手計算表",
+  "schema": 1,
+  "method": "入力文字列を手で数えた整数表と有理数。producer/validatorはこの保存時点で未作成。",
+  "N": 4,
+  "df": 2,
+  "total_tokens": 16,
+  "avgdl": "4/1",
+  "idf_symbol": "ln(2)",
+  "idf_positive": true,
+  "match_ids": ["d1", "d2"],
+  "nonmatch_ids": ["d3", "d4"],
+  "document_counts": [
+    {"id":"d1","length":8,"term_frequency":2,"positions":[0,1]},
+    {"id":"d2","length":2,"term_frequency":1,"positions":[0]},
+    {"id":"d3","length":0,"term_frequency":0,"positions":[]},
+    {"id":"d4","length":6,"term_frequency":0,"positions":[]}
+  ],
+  "cases": [
+    {
+      "id":"raw-tfidf", "matched_order":["d1","d2"], "tie_groups":[],
+      "rows":[
+        {"id":"d1","coefficient":"2/1","numerator":"2/1","denominator":"1/1","rank":1},
+        {"id":"d2","coefficient":"1/1","numerator":"1/1","denominator":"1/1","rank":2},
+        {"id":"d3","coefficient":"0/1","numerator":null,"denominator":null,"rank":null},
+        {"id":"d4","coefficient":"0/1","numerator":null,"denominator":null,"rank":null}
+      ],
+      "reason":"文書長で割らないTF×IDFでは、出現2回のd1が1回のd2より上位。"
+    },
+    {
+      "id":"bm25-b0", "matched_order":["d1","d2"], "tie_groups":[],
+      "rows":[
+        {"id":"d1","coefficient":"4/3","numerator":"4/1","denominator":"3/1","rank":1},
+        {"id":"d2","coefficient":"1/1","numerator":"2/1","denominator":"2/1","rank":2},
+        {"id":"d3","coefficient":"0/1","numerator":null,"denominator":null,"rank":null},
+        {"id":"d4","coefficient":"0/1","numerator":null,"denominator":null,"rank":null}
+      ],
+      "reason":"長さ補正なし。2回/1回の差は2倍ではなく4/3対1に縮むが順位は同じ。"
+    },
+    {
+      "id":"bm25-bhalf", "matched_order":["d1","d2"], "tie_groups":[["d1","d2"]],
+      "rows":[
+        {"id":"d1","coefficient":"8/7","numerator":"4/1","denominator":"7/2","rank":1},
+        {"id":"d2","coefficient":"8/7","numerator":"2/1","denominator":"7/4","rank":2},
+        {"id":"d3","coefficient":"0/1","numerator":null,"denominator":null,"rank":null},
+        {"id":"d4","coefficient":"0/1","numerator":null,"denominator":null,"rank":null}
+      ],
+      "reason":"d1とd2の得点が同じ。入力順d2,d1ではなく、独自規約のID昇順でd1を先に表示。"
+    },
+    {
+      "id":"bm25-b1", "matched_order":["d2","d1"], "tie_groups":[],
+      "rows":[
+        {"id":"d1","coefficient":"1/1","numerator":"4/1","denominator":"4/1","rank":2},
+        {"id":"d2","coefficient":"4/3","numerator":"2/1","denominator":"3/2","rank":1},
+        {"id":"d3","coefficient":"0/1","numerator":null,"denominator":null,"rank":null},
+        {"id":"d4","coefficient":"0/1","numerator":null,"denominator":null,"rank":null}
+      ],
+      "reason":"一致集合は同じだが、長さ2のd2が長さ8のd1より上位。利用者に有用かは未評価。"
+    }
+  ],
+  "not_executed": true
+}

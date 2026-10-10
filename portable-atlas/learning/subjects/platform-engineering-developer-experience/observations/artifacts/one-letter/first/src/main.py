@@ -1,0 +1,2 @@
+PROJECT = "a"
+KIND = "library"

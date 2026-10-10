@@ -1,0 +1,52 @@
+[
+  {
+    "event": "validation-accepted",
+    "id": "a"
+  },
+  {
+    "event": "connection-opened",
+    "id": "a"
+  },
+  {
+    "event": "sql",
+    "sql": "PRAGMA foreign_keys=ON"
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN IMMEDIATE"
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO orders VALUES ('a', '教材', 2)"
+  },
+  {
+    "event": "order-created",
+    "in_transaction": true
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT INTO outbox VALUES ('a', 'OrderCreated', NULL)"
+  },
+  {
+    "event": "database-error",
+    "error": "NOT NULL constraint failed: outbox.payload",
+    "in_transaction": true
+  },
+  {
+    "event": "sql",
+    "sql": "ROLLBACK"
+  },
+  {
+    "event": "response",
+    "status": 500,
+    "id": "a"
+  },
+  {
+    "event": "transaction-after-request",
+    "active": false
+  },
+  {
+    "event": "connection-closed",
+    "probe": "ProgrammingError"
+  }
+]

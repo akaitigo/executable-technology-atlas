@@ -1,0 +1,1678 @@
+{
+  "pipeline_version": "tiny-inference-1",
+  "model": {
+    "artifact_format": "tiny-linear-json-v1",
+    "model_version": "manual-linear-v1",
+    "schema_version": "study-features-v1",
+    "features": [
+      "hours_studied",
+      "practice_tasks"
+    ],
+    "weights": [
+      2.0,
+      0.5
+    ],
+    "bias": 1.0,
+    "value_domain": [
+      0,
+      100
+    ],
+    "output": "synthetic_score",
+    "provenance": "Manually fixed teaching coefficients, not fitted or validated against real outcomes"
+  },
+  "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad",
+  "input_sha256": "fe16740d5fb7fd87017b3ac6584afd09ade0ca30c73da303d52f14d1ba650be9",
+  "runs": [
+    {
+      "id": "normal",
+      "input": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          3,
+          8
+        ]
+      },
+      "semantic_oracle": 11.0,
+      "schema_oracle_accepts": true,
+      "policies": {
+        "strict": {
+          "status": "predicted",
+          "output": 11.0,
+          "error": null,
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                3,
+                8
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 3,
+              "weight": 2.0,
+              "contribution": 6.0,
+              "subtotal": 7.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 8,
+              "weight": 0.5,
+              "contribution": 4.0,
+              "subtotal": 11.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 11.0,
+              "label": "synthetic_score"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 11.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                3,
+                8
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 3,
+              "weight": 2.0,
+              "contribution": 6.0,
+              "subtotal": 7.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 8,
+              "weight": 0.5,
+              "contribution": 4.0,
+              "subtotal": 11.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 11.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "reordered",
+      "input": {
+        "id": "reordered",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "practice_tasks",
+          "hours_studied"
+        ],
+        "values": [
+          8,
+          3
+        ]
+      },
+      "semantic_oracle": 11.0,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "feature names/order mismatch",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "rejected",
+              "reason": "feature names/order mismatch"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 18.5,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                8,
+                3
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 8,
+              "weight": 2.0,
+              "contribution": 16.0,
+              "subtotal": 17.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 3,
+              "weight": 0.5,
+              "contribution": 1.5,
+              "subtotal": 18.5
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 18.5,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "schema-mismatch",
+      "input": {
+        "id": "schema-mismatch",
+        "schema_version": "study-features-v2",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          3,
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "schema version mismatch",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "rejected",
+              "reason": "schema version mismatch"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 11.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                3,
+                8
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 3,
+              "weight": 2.0,
+              "contribution": 6.0,
+              "subtotal": 7.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 8,
+              "weight": 0.5,
+              "contribution": 4.0,
+              "subtotal": 11.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 11.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "model-mismatch",
+      "input": {
+        "id": "model-mismatch",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v2",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          3,
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "model version mismatch",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "rejected",
+              "reason": "model version mismatch"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 11.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                3,
+                8
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 3,
+              "weight": 2.0,
+              "contribution": 6.0,
+              "subtotal": 7.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 8,
+              "weight": 0.5,
+              "contribution": 4.0,
+              "subtotal": 11.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 11.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "missing",
+      "input": {
+        "id": "missing",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied"
+        ],
+        "values": [
+          3
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "feature names/order mismatch",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "rejected",
+              "reason": "feature names/order mismatch"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "expected exactly two values",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "expected exactly two values"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "duplicate-name",
+      "input": {
+        "id": "duplicate-name",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "hours_studied"
+        ],
+        "values": [
+          3,
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "feature names/order mismatch",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "rejected",
+              "reason": "feature names/order mismatch"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 11.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                3,
+                8
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 3,
+              "weight": 2.0,
+              "contribution": 6.0,
+              "subtotal": 7.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 8,
+              "weight": 0.5,
+              "contribution": 4.0,
+              "subtotal": 11.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 11.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "zero-boundary",
+      "input": {
+        "id": "zero-boundary",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          0,
+          0
+        ]
+      },
+      "semantic_oracle": 1.0,
+      "schema_oracle_accepts": true,
+      "policies": {
+        "strict": {
+          "status": "predicted",
+          "output": 1.0,
+          "error": null,
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                0,
+                0
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 0,
+              "weight": 2.0,
+              "contribution": 0.0,
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 0,
+              "weight": 0.5,
+              "contribution": 0.0,
+              "subtotal": 1.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 1.0,
+              "label": "synthetic_score"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 1.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                0,
+                0
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 0,
+              "weight": 2.0,
+              "contribution": 0.0,
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 0,
+              "weight": 0.5,
+              "contribution": 0.0,
+              "subtotal": 1.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 1.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "max-boundary",
+      "input": {
+        "id": "max-boundary",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          100,
+          100
+        ]
+      },
+      "semantic_oracle": 251.0,
+      "schema_oracle_accepts": true,
+      "policies": {
+        "strict": {
+          "status": "predicted",
+          "output": 251.0,
+          "error": null,
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                100,
+                100
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 100,
+              "weight": 2.0,
+              "contribution": 200.0,
+              "subtotal": 201.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 100,
+              "weight": 0.5,
+              "contribution": 50.0,
+              "subtotal": 251.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 251.0,
+              "label": "synthetic_score"
+            }
+          ]
+        },
+        "naive": {
+          "status": "predicted",
+          "output": 251.0,
+          "error": null,
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "passed",
+              "values": [
+                100,
+                100
+              ]
+            },
+            {
+              "stage": "bias",
+              "status": "computed",
+              "subtotal": 1.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "hours_studied",
+              "value": 100,
+              "weight": 2.0,
+              "contribution": 200.0,
+              "subtotal": 201.0
+            },
+            {
+              "stage": "multiply-add",
+              "status": "computed",
+              "feature_assumed": "practice_tasks",
+              "value": 100,
+              "weight": 0.5,
+              "contribution": 50.0,
+              "subtotal": 251.0
+            },
+            {
+              "stage": "output",
+              "status": "computed",
+              "output": 251.0,
+              "label": "synthetic_score"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "string-value",
+      "input": {
+        "id": "string-value",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          "3",
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "bool-value",
+      "input": {
+        "id": "bool-value",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          true,
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "out-of-domain",
+      "input": {
+        "id": "out-of-domain",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          101,
+          8
+        ]
+      },
+      "semantic_oracle": null,
+      "schema_oracle_accepts": false,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "edge_rejections": [
+    {
+      "id": "nan",
+      "input_representation": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          {
+            "nonfinite": "nan"
+          },
+          8
+        ]
+      },
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "infinity",
+      "input_representation": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          {
+            "nonfinite": "infinity"
+          },
+          8
+        ]
+      },
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values must be finite numbers; bool/string rejected",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values must be finite numbers; bool/string rejected"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "not-object",
+      "input_representation": null,
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "request must be an object",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "request",
+              "status": "rejected",
+              "reason": "request must be an object"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "request must be an object",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "request",
+              "status": "rejected",
+              "reason": "request must be an object"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "not-array",
+      "input_representation": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": 3
+      },
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "expected exactly two values",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "expected exactly two values"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "expected exactly two values",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "expected exactly two values"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "negative",
+      "input_representation": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          -1,
+          8
+        ]
+      },
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "huge-integer",
+      "input_representation": {
+        "id": "normal",
+        "schema_version": "study-features-v1",
+        "model_version": "manual-linear-v1",
+        "features": [
+          "hours_studied",
+          "practice_tasks"
+        ],
+        "values": [
+          10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          8
+        ]
+      },
+      "policies": {
+        "strict": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "strict",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "passed",
+              "features": [
+                "hours_studied",
+                "practice_tasks"
+              ]
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        },
+        "naive": {
+          "status": "rejected",
+          "output": null,
+          "error": "values outside declared domain 0..100",
+          "policy": "naive",
+          "trace": [
+            {
+              "stage": "artifact",
+              "status": "loaded",
+              "model_version": "manual-linear-v1",
+              "schema_version": "study-features-v1",
+              "model_sha256": "7066a1ec7ad13c08492f154b840dcbad1b71109905149d2943de98bf993732ad"
+            },
+            {
+              "stage": "contract",
+              "status": "skipped-intentionally",
+              "reason": "names/order and requested versions ignored"
+            },
+            {
+              "stage": "values",
+              "status": "rejected",
+              "reason": "values outside declared domain 0..100"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "option_rejection": "unsupported policy",
+  "randomized_requests": 100,
+  "batches": {
+    "reference": {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "result": {
+        "features": {
+          "hours_studied": {
+            "n": 4,
+            "mean": 2.5,
+            "population_std": 1.118033988749895,
+            "minimum": 1,
+            "maximum": 4
+          },
+          "practice_tasks": {
+            "n": 4,
+            "mean": 5.0,
+            "population_std": 2.23606797749979,
+            "minimum": 2,
+            "maximum": 8
+          }
+        },
+        "output": {
+          "n": 4,
+          "mean": 8.5,
+          "population_std": 3.3541019662496847,
+          "minimum": 4.0,
+          "maximum": 13.0
+        },
+        "predictions": [
+          4.0,
+          7.0,
+          10.0,
+          13.0
+        ],
+        "interpretation": "Descriptive statistics only; no drift detector, significance test or accuracy claim"
+      }
+    },
+    "new_input": {
+      "input": [
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          13,
+          8
+        ]
+      ],
+      "result": {
+        "features": {
+          "hours_studied": {
+            "n": 4,
+            "mean": 11.5,
+            "population_std": 1.118033988749895,
+            "minimum": 10,
+            "maximum": 13
+          },
+          "practice_tasks": {
+            "n": 4,
+            "mean": 5.0,
+            "population_std": 2.23606797749979,
+            "minimum": 2,
+            "maximum": 8
+          }
+        },
+        "output": {
+          "n": 4,
+          "mean": 26.5,
+          "population_std": 3.3541019662496847,
+          "minimum": 22.0,
+          "maximum": 31.0
+        },
+        "predictions": [
+          22.0,
+          25.0,
+          28.0,
+          31.0
+        ],
+        "interpretation": "Descriptive statistics only; no drift detector, significance test or accuracy claim"
+      }
+    }
+  },
+  "mean_deltas": {
+    "hours_studied": 9.0,
+    "practice_tasks": 0.0
+  },
+  "batch_rejections": [
+    {
+      "id": "empty",
+      "error": "batch requires 1..32 rows"
+    },
+    {
+      "id": "too-many",
+      "error": "batch requires 1..32 rows"
+    },
+    {
+      "id": "bad-row",
+      "error": "batch row rejected: expected exactly two values"
+    }
+  ],
+  "artifact_rejections": [
+    {
+      "id": "format",
+      "error": "unsupported artifact format"
+    },
+    {
+      "id": "model-version",
+      "error": "unsupported artifact version"
+    },
+    {
+      "id": "schema-version",
+      "error": "unsupported artifact version"
+    },
+    {
+      "id": "weight-shape",
+      "error": "invalid weights"
+    },
+    {
+      "id": "nonfinite-weight",
+      "error": "invalid weights"
+    },
+    {
+      "id": "output-contract",
+      "error": "unsupported output contract"
+    }
+  ],
+  "oracle": "independent literal schema contract and named Fraction hand formula; population stats by rational sums",
+  "author_routing_smoke": {
+    "schema": {
+      "status": "supported",
+      "runner": "python3 verify.py",
+      "ui": "index.html",
+      "reference": "README.md"
+    },
+    "production-deploy": {
+      "status": "unsupported",
+      "reference": "coverage.json",
+      "reason": "Fixed local inference only; no production MLOps, training, LLM or drift detection guarantee"
+    }
+  }
+}

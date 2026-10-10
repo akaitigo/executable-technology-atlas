@@ -1,0 +1,648 @@
+{
+  "environment": {
+    "utc": "2026-10-05T21:30:10.315035+00:00",
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "thread_control": "Barrier timeout=2s, Lock timeout=2s; total join budget=5s then abort+3s joins; no sleeps"
+  },
+  "rows": [
+    {
+      "fixture": "same",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "accepted"
+      },
+      "accepted_count": 2,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        },
+        {
+          "request": "A",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "same",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "replay"
+      },
+      "accepted_count": 1,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "different",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "accepted"
+      },
+      "accepted_count": 2,
+      "seen": [
+        "MSG1",
+        "MSG2"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG2"
+        },
+        {
+          "request": "A",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "different",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "accepted"
+      },
+      "accepted_count": 2,
+      "seen": [
+        "MSG1",
+        "MSG2"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG2"
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "A",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "preseen",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "replay",
+        "A": "replay"
+      },
+      "accepted_count": 0,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": false
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "preseen",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "replay",
+        "A": "replay"
+      },
+      "accepted_count": 0,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": false
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "invalid",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "invalid_mac",
+        "A": "invalid_mac"
+      },
+      "accepted_count": 0,
+      "seen": [
+        "KEEP"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": false
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": null
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": false
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": null
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "invalid",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "invalid_mac",
+        "A": "invalid_mac"
+      },
+      "accepted_count": 0,
+      "seen": [
+        "KEEP"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": false
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "mixed",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "invalid_mac"
+      },
+      "accepted_count": 1,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": false
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": null
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "mixed",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "invalid_mac"
+      },
+      "accepted_count": 1,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": false
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "payload",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "accepted"
+      },
+      "accepted_count": 2,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        },
+        {
+          "request": "A",
+          "event": "remember",
+          "id": "MSG1"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "payload",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "replay"
+      },
+      "accepted_count": 1,
+      "seen": [
+        "MSG1"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "MSG1"
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "boundary",
+      "mode": "split",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "accepted"
+      },
+      "accepted_count": 2,
+      "seen": [
+        "ABCDEFGHIJKLMNOP"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "ABCDEFGHIJKLMNOP"
+        },
+        {
+          "request": "A",
+          "event": "remember",
+          "id": "ABCDEFGHIJKLMNOP"
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    },
+    {
+      "fixture": "boundary",
+      "mode": "atomic",
+      "intentional_broken": false,
+      "status": "passed",
+      "results": {
+        "B": "accepted",
+        "A": "replay"
+      },
+      "accepted_count": 1,
+      "seen": [
+        "ABCDEFGHIJKLMNOP"
+      ],
+      "events": [
+        {
+          "request": "A",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "authenticate",
+          "valid": true
+        },
+        {
+          "request": "B",
+          "event": "check",
+          "cached_absent": true
+        },
+        {
+          "request": "B",
+          "event": "remember",
+          "id": "ABCDEFGHIJKLMNOP"
+        },
+        {
+          "request": "A",
+          "event": "check",
+          "cached_absent": false
+        }
+      ],
+      "errors": [],
+      "alive_threads": []
+    }
+  ],
+  "intentional_failure": {
+    "fixture": "same",
+    "mode": "split",
+    "intentional_broken": true,
+    "status": "failed",
+    "results": {},
+    "accepted_count": 0,
+    "seen": [],
+    "events": [
+      {
+        "request": "A",
+        "event": "authenticate",
+        "valid": true
+      },
+      {
+        "request": "A",
+        "event": "check",
+        "cached_absent": true
+      },
+      {
+        "request": "B",
+        "event": "authenticate",
+        "valid": true
+      },
+      {
+        "request": "B",
+        "event": "check",
+        "cached_absent": true
+      }
+    ],
+    "errors": [
+      {
+        "request": "A",
+        "type": "BrokenBarrierError",
+        "message": ""
+      },
+      {
+        "request": "B",
+        "type": "BrokenBarrierError",
+        "message": ""
+      }
+    ],
+    "alive_threads": []
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "project": "Atlas",
+  "basis": "handwritten before implementation; exception retry API versus fixed JVM reentry fixture",
+  "case_order": ["failure-synchronized", "failure-publication", "failure-none", "reentry-synchronized", "reentry-publication", "reentry-none"],
+  "marker": 7,
+  "failure": {
+    "modes": ["SYNCHRONIZED", "PUBLICATION", "NONE"],
+    "phase_ids": ["initial", "first-failure", "retry-success", "cached-read"],
+    "calls": [0, 1, 2, 2],
+    "initialized": [false, false, true, true],
+    "returned_ids": [null, null, 2, 2],
+    "exception_type": "PlannedInitFailure",
+    "exception_message": "Atlas planned first initialization failure",
+    "expected_exception_count": 1,
+    "successful_reads_same_reference": true,
+    "created_ids": [2]
+  },
+  "reentry": {
+    "phase_ids": ["initial", "inner-returned", "outer-getter-returned", "cached-read"],
+    "calls": [0, 2, 2, 2],
+    "initialized": [false, true, true, true],
+    "inner_id": 2,
+    "outer_created_id": 1,
+    "outer_initializer_return_id": 1,
+    "created_ids": [2, 1],
+    "calls_total": 2,
+    "max_depth": 2,
+    "final_depth": 0,
+    "inner_same_as_outer_created": false,
+    "later_same_as_first": true,
+    "SYNCHRONIZED": {"first_id": 1, "later_id": 1, "first_same_as_inner": false, "first_same_as_outer_created": true},
+    "PUBLICATION": {"first_id": 2, "later_id": 2, "first_same_as_inner": true, "first_same_as_outer_created": false},
+    "NONE": {"first_id": 1, "later_id": 1, "first_same_as_inner": false, "first_same_as_outer_created": true}
+  },
+  "runtime": {"case_count": 6, "worker_count": 0, "planned_exception_total": 3, "guard_exception_total": 0, "unexpected_errors": 0},
+  "limits": {"compile_count": 1, "jvm_count": 1, "target_retry": 0, "nice_minimum": 10, "active_processor_count": 1, "compiler_heap_mib": 256, "runtime_heap_mib": 64, "compiler_timeout_seconds": 15, "runtime_timeout_seconds": 10, "batch_timeout_seconds": 45, "term_grace_seconds": 0.5, "kill_reap_seconds": 1}
+}

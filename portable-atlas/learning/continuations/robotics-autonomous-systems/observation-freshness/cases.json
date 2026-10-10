@@ -1,0 +1,34 @@
+{
+  "title":"Atlas 単一観測源の固定到着列",
+  "ttl":4,
+  "position":[0,0],
+  "targetCell":[1,0],
+  "initial":{"state":"unknown","observedAt":null,"arrivedAt":null,"adoptedVersion":0,"mapRevision":0},
+  "cases":[
+    {"id":"ordered","label":"正順の観測","steps":[
+      {"now":0,"arrival":{"version":1,"observedAt":0,"arrivedAt":0,"state":"free"}},
+      {"now":2,"arrival":{"version":2,"observedAt":2,"arrivedAt":2,"state":"occupied"}},
+      {"now":4,"arrival":{"version":3,"observedAt":4,"arrivedAt":4,"state":"free"}}
+    ]},
+    {"id":"reversed-clear","label":"古いclearが後から到着","steps":[
+      {"now":6,"arrival":{"version":2,"observedAt":6,"arrivedAt":6,"state":"occupied"}},
+      {"now":7,"arrival":{"version":1,"observedAt":4,"arrivedAt":7,"state":"free"}},
+      {"now":10,"arrival":null},
+      {"now":11,"arrival":null}
+    ]},
+    {"id":"expiry-boundary","label":"期限ちょうどと超過","steps":[
+      {"now":0,"arrival":{"version":1,"observedAt":0,"arrivedAt":0,"state":"free"}},
+      {"now":4,"arrival":null},
+      {"now":5,"arrival":null}
+    ]},
+    {"id":"expired-arrival","label":"到着時点で期限超過","steps":[
+      {"now":10,"arrival":{"version":1,"observedAt":5,"arrivedAt":10,"state":"free"}},
+      {"now":11,"arrival":{"version":2,"observedAt":11,"arrivedAt":11,"state":"occupied"}}
+    ]},
+    {"id":"explicit-unknown","label":"未観測と明示unknown","steps":[
+      {"now":0,"arrival":null},
+      {"now":1,"arrival":{"version":1,"observedAt":1,"arrivedAt":1,"state":"unknown"}},
+      {"now":2,"arrival":{"version":2,"observedAt":2,"arrivedAt":2,"state":"free"}}
+    ]}
+  ]
+}

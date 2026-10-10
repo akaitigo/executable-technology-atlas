@@ -1,0 +1,194 @@
+Browser tab: 10, Title: "Artifact rollback ≠ data recovery", URL: "http://127.0.0.1:57745/".
+1 AXWebArea Artifact rollback ≠ data recovery, URL: 127.0.0.1:57745/
+	2 heading 旧artifactへ戻せば、DBも元に戻る？, Value: 1
+		3 text 旧artifactへ戻せば、DBも元に戻る？
+	4 text 実SQLiteと保存済みreader bytes。pointer rollback、reader互換性、data/schema復旧を別々に判断します。
+	5 container
+		6 heading 1 · 予測する, Value: 2
+			7 text 1 · 予測する
+		8 text migration
+		9 pop up button (collapsed, settable) Description: migration, Value: rename — column名変更, ID: case, Secondary Actions: Expand
+			10 menu
+				11 additive — column追加
+				12 (selected) rename — column名変更
+		13 text v2へmigration → v2 artifactへpromotion → 合成health failure(exit 42) → 保存v1 digestへpointer rollback。 戻したv1 reader
+		14 pop up button (collapsed, settable) Description: 旧readerの予測, Value: SELECT成功, ID: guess, Secondary Actions: Expand
+			15 menu
+				16 (selected) SELECT成功
+				17 SQLiteエラー
+		18 text DBは元へ戻る？
+		19 pop up button (collapsed, settable) Description: DB復旧の予測, Value: 戻る, ID: dbguess, Secondary Actions: Expand
+			20 menu
+				21 戻らない
+				22 (selected) 戻る
+		23 button 観測と比較, ID: compare
+		216 text 予測と差分あり — v1 reader exit=3、DB復旧=false、no such column: name
+	25 container
+		26 heading 2 · 互換表とrelease時点を操作, Value: 2
+			27 text 2 · 互換表とrelease時点を操作
+		28 text 事前の手書き互換表と実subprocess結果（期待されたエラーも成功件数へ混ぜません）。
+		29 table
+			30 row
+				31 cell
+					32 text schema
+				33 cell
+					34 text 固定v1 SELECT id,name
+				35 cell
+					36 text 固定v2 SELECT id,display_name
+			37 container matrix
+				38 row
+					39 cell
+						40 text v1
+					41 cell
+						42 text exit 0
+						43 text [[1,"Ada"]]
+					44 cell
+						45 text exit 3
+						46 text no such column: display_name
+				47 row
+					48 cell
+						49 text additive
+					50 cell
+						51 text exit 0
+						52 text [[1,"Ada"]]
+					53 cell
+						54 text exit 0
+						55 text [[1,"Ada-v2"]]
+				56 row
+					57 cell
+						58 text rename
+					59 cell
+						60 text exit 3
+						61 text no such column: name
+					62 cell
+						63 text exit 0
+						64 text [[1,"Ada-v2"]]
+		65 text release時点
+		66 pop up button (collapsed, settable) Description: release時点, Value: after, ID: stage, Secondary Actions: Expand
+			67 menu
+				159 before
+				160 migration
+				161 promotion
+				162 v2-read
+				163 synthetic-health-failure
+				164 artifact-rollback
+				165 v1-read
+				166 (selected) after
+		76 text artifact / 操作
+		211 text 保存v1 · 549085c74a8245ce…
+		78 text schema / data
+		212 text id, display_name / [[1,"Ada-v2"]]
+		213 text pointer 549085c74a8245…
+		214 text DB SHA256: 50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2
+		82 table
+			83 row
+				84 cell
+					85 text 時点
+				86 cell
+					87 text 観測・成否
+			88 container timeline
+				171 row
+					172 cell
+						173 text before
+					174 cell
+						175 text pointer 549085c74a8245…
+				176 row
+					177 cell
+						178 text migration
+					179 cell
+						180 text columns id, display_name
+				181 row
+					182 cell
+						183 text promotion
+					184 cell
+						185 text pointer ff8f629f1b076f…
+				186 row
+					187 cell
+						188 text v2-read
+					189 cell
+						190 text exit=0 / [[1,"Ada-v2"]]
+				191 row
+					192 cell
+						193 text synthetic-health-failure
+					194 cell
+						195 text exit=42 / fixed fixture: canary alarm; no service/provider probe
+				196 row
+					197 cell
+						198 text artifact-rollback
+					199 cell
+						200 text pointer 549085c74a8245…
+				201 row
+					202 cell
+						203 text v1-read
+					204 cell
+						205 text exit=3 / no such column: name
+				206 row
+					207 cell
+						208 text after
+					209 cell
+						210 text pointer 549085c74a8245…
+	129 container
+		130 heading 3 · 実装・raw・原典を照合, Value: 2
+			131 text 3 · 実装・raw・原典を照合
+		132 text 実行UTC 2026-10-05T10:54:40.625191+00:00 · SQLite 3.51.0 · Python 3.9.6 · Darwin。reader実エラーのcode/nameはAPIが返したときだけ保存。
+		133 button (expanded) この時点のcommand / SQL / exit / raw, Secondary Actions: Collapse
+			134 text この時点のcommand / SQL / exit / raw
+		215 text {
+  "event": "after",
+  "active": {
+    "sha256": "549085c74a8245ceb9af93fb46fbc1a0716ec0e7b53a784ee547335073319223"
+  },
+  "database": {
+    "schemaSql": "CREATE TABLE person(id INTEGER PRIMARY KEY, display_name TEXT NOT NULL)",
+    "columns": [
+      [
+        0,
+        "id",
+        "INTEGER",
+        0,
+        null,
+        1
+      ],
+      [
+        1,
+        "display_name",
+        "TEXT",
+        1,
+        null,
+        0
+      ]
+    ],
+    "rows": [
+      [
+        1,
+        "Ada-v2"
+      ]
+    ],
+    "dbSha256": "50426a6ef07fdb583bfd945affc065847c81318cfb6e406c716dcdcffc8b42b2"
+  }
+}
+		135 link Description: 再現と証拠, Value: 127.0.0.1:57745/README.md
+		136 text  · 
+		137 link Description: runner実装, Value: 127.0.0.1:57745/runner.py
+		138 text  · 
+		139 link Description: 独立checker実装, Value: 127.0.0.1:57745/checker.py
+		140 text  · 
+		141 link Description: v1 reader実装, Value: 127.0.0.1:57745/app_v1.py
+		142 text  · 
+		143 link Description: v2 reader実装, Value: 127.0.0.1:57745/app_v2.py
+		144 text  · 
+		145 link Description: 実行前の互換表, Value: 127.0.0.1:57745/compatibility.json
+		146 text  · 
+		147 link Description: 到達範囲, Value: 127.0.0.1:57745/COVERAGE.md
+		148 text  · 
+		149 link Description: SQLite ADD COLUMN §4, Value: sqlite.org/lang_altertable.html#alter_table_add_column
+		150 text  · 
+		151 link Description: RENAME COLUMN §3, Value: sqlite.org/lang_altertable.html#alter_table_rename_column
+		152 text  · 
+		153 link Description: Kubernetes rollback境界, Value: kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment
+	154 container
+		155 heading 4 · 答えと実務判断, Value: 2
+			156 text 4 · 答えと実務判断
+		157 text additiveでは保存v1 SELECTが成功します。ただしv1はAda、v2はAda-v2を読むため、実務上の意味まで同じとは限りません。renameでは旧artifactのdigestが戻っても、v1 SELECTは「no such column: name」で失敗しました。 両条件ともDBはmigration後のままです。artifactの同一bytesを証明するdigestは、schema/dataの復旧を証明しません。元DBのcopyは比較証拠として保存し、restore操作は実施していません。 KubernetesのDeployment rollbackはPod templateが対象という公式locatorへ接続します。この教材はDeployment、実service、外部CIを実行しません。 次：expand/contractの混在reader、write互換性とbackfill、専用DBでのbackup/restore照合。online migration・無停止・復旧保証は未検証。
+
+The focused UI element is 23 button 観測と比較, ID: compare

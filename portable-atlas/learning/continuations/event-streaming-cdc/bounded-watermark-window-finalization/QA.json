@@ -1,0 +1,370 @@
+{
+  "startedUtc": "2026-10-05T16:27:39.983954+00:00",
+  "finishedUtc": "2026-10-05T16:27:46.366035+00:00",
+  "scope": "Assigned finite watermark continuation only; frozen/original units unchanged; no Portal/shared DB/settings/Core/fullGate/install/commit/push/publication",
+  "current": "observations/20261005T162606251434Z",
+  "canonicalReceiptSha256": "b77f9e83c17296f6d260f0487c18b2118a0066923eb2b46002c20fa3c5dc09ea",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "dependencies": "stdlib only; no Flink runtime used"
+  },
+  "cases": {
+    "OBSERVED": 10,
+    "REFUSED": 8,
+    "EXECUTION_FAILURE": 1
+  },
+  "actualSavedModelChildren": 19,
+  "actualSavedAuditChildren": 19,
+  "sourceHashes": {
+    "preview.py": "ed950feeba071bdc4c5dc9993fcdb8efa2d12ee497a85269f67c7f644ec2b999",
+    "test_negative.py": "d8015a6c50316313dddeecb0d7322404c1b2594027842d42113db2ba30a7596f",
+    "runner.py": "2f4c80466e2e8f814ee18ad2e679eafedfe64c65e5915934f67dd41dfc31c8b7",
+    "index.html": "4508fd44e656fc6431ab42dbb5a2f360f4f3bdf7f50652fe2005a560d3b85dc6",
+    "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd",
+    "route.py": "4297ec430278914d918646704cba04d6584a3ad7ab3edc94131175c99584f773",
+    "oracle.json": "cc3f7590ab0c6760e1f931b23780d118fe7147462e2d98c07c7aef09cf758df7",
+    "model.py": "e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54",
+    "README.md": "fb07eb6246a2536aca848b9c92600aa211c80bd46e5bc99206f84ac7a485017f",
+    "requests.json": "fa57a0f3268423f1926f53fc55f68525f72855513dc90120c6a6e78ed9796e2c",
+    "COVERAGE.md": "37dd9fdc615af67990afdae7f481a8359549da4673d4e40ab1b722f7052c43ed",
+    "checker.py": "bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796",
+    "skills/bounded-watermark-window-finalization/SKILL.md": "5c2387c809eb239737212472c19d428e85c35b3f1a4bca21ece9504c92f76481"
+  },
+  "literalOracleBeforeProducer": true,
+  "independentOracle": "No model import; fixed per-arrival watermarks/IDs/window sums/fire/final steps + independent prefix maxSeen and accepted-event-set reconstruction. Counterfactual min IDs compared against max fault.",
+  "normalVersusFault": {
+    "minWindow0": {
+      "sum": 7,
+      "finalStep": 5,
+      "dropped": []
+    },
+    "maxFaultWindow0": {
+      "sum": 3,
+      "finalStep": 3,
+      "dropped": [
+        "e4"
+      ]
+    }
+  },
+  "contract": {
+    "partition": "fixed p0/p1",
+    "watermark": "maxSeen-L each partition; global monotonic min; unseen bottom",
+    "window": "width10 [start,end)",
+    "admission": "arrival-before WM <end+A, or bottom",
+    "initialFire": "post-arrival WM>=end",
+    "finalize": "post-arrival WM>=end+A",
+    "late": "eventTime<beforeWM; accepted late can update fired retained window",
+    "endFlush": false,
+    "FlinkCorrespondence": "Conceptual only, integer exclusive-end cut differs from millisecond end-1 timer and generator off-by-one. No Flink runtime used."
+  },
+  "actualTerminalStdoutExact": true,
+  "negativeTests": {
+    "readonlySHA256MtimeNs": true,
+    "negativeTests": [
+      {
+        "test": "premature-global-max",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "unseen-as-zero",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "watermark-regression",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "close-boundary-strict",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "late-grace-lost",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "end-included",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "drop-normalized",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      },
+      {
+        "test": "failure-normal-window",
+        "passed": true,
+        "rawDerivedArtifactHashesCoherent": true,
+        "independentLiteralOrPrefixOracleRejected": true
+      }
+    ]
+  },
+  "actualAuditFailures": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py",
+        "--audit"
+      ],
+      "inputRaw": "{\"inputRaw\": \"{\\n  \\\"mode\\\": \\\"min\\\",\\n  \\\"lag\\\": 2,\\n  \\\"allowedLateness\\\": 0,\\n  \\\"events\\\": [\\n    {\\n      \\\"id\\\": \\\"e1\\\",\\n      \\\"partition\\\": \\\"p0\\\",\\n      \\\"time\\\": 2,\\n      \\\"value\\\": 1\\n    },\\n    {\\n      \\\"id\\\": \\\"e2\\\",\\n      \\\"partition\\\": \\\"p1\\\",\\n      \\\"time\\\": 1,\\n      \\\"value\\\": 2\\n    },\\n    {\\n      \\\"id\\\": \\\"e3\\\",\\n      \\\"partition\\\": \\\"p0\\\",\\n      \\\"time\\\": 20,\\n      \\\"value\\\": 3\\n    },\\n    {\\n      \\\"id\\\": \\\"e4\\\",\\n      \\\"partition\\\": \\\"p1\\\",\\n      \\\"time\\\": 8,\\n      \\\"value\\\": 4\\n    },\\n    {\\n      \\\"id\\\": \\\"e5\\\",\\n      \\\"partition\\\": \\\"p1\\\",\\n      \\\"time\\\": 20,\\n      \\\"value\\\": 5\\n    }\\n  ]\\n}\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:21:14.157694+00:00\", \"endedUtc\": \"2026-10-05T16:21:14.201612+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"step\\\": 1, \\\"event\\\": {\\\"id\\\": \\\"e1\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 2, \\\"value\\\": 1}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": null}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": null}, \\\"watermark\\\": null, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 1, \\\"ids\\\": [\\\"e1\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 2, \\\"event\\\": {\\\"id\\\": \\\"e2\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 1, \\\"value\\\": 2}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": null, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 2, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 0, \\\"p1\\\": -1}, \\\"watermark\\\": -1, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 3, \\\"event\\\": {\\\"id\\\": \\\"e3\\\", \\\"partition\\\": \\\"p0\\\", \\\"time\\\": 20, \\\"value\\\": 3}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 1}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": -1}, \\\"watermark\\\": 18, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 4, \\\"event\\\": {\\\"id\\\": \\\"e4\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 8, \\\"value\\\": 4}, \\\"windowStart\\\": 0, \\\"beforeWatermark\\\": -1, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 8}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 6}, \\\"watermark\\\": 6, \\\"firedNow\\\": [], \\\"finalizedNow\\\": [], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 3, \\\"ids\\\": [\\\"e3\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}, {\\\"step\\\": 5, \\\"event\\\": {\\\"id\\\": \\\"e5\\\", \\\"partition\\\": \\\"p1\\\", \\\"time\\\": 20, \\\"value\\\": 5}, \\\"windowStart\\\": 20, \\\"beforeWatermark\\\": 6, \\\"late\\\": false, \\\"decision\\\": \\\"ACCEPT\\\", \\\"maxSeen\\\": {\\\"p0\\\": 20, \\\"p1\\\": 20}, \\\"partitionWatermarks\\\": {\\\"p0\\\": 18, \\\"p1\\\": 18}, \\\"watermark\\\": 18, \\\"firedNow\\\": [{\\\"start\\\": 0, \\\"sum\\\": 7, \\\"kind\\\": \\\"initial\\\"}], \\\"finalizedNow\\\": [0], \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}]}], \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\", \"stderr\": \"\", \"auditExitCode\": 0, \"auditStdout\": \"{\\\"outcome\\\": \\\"OBSERVED\\\", \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}, \\\"maxFaultLoss\\\": [], \\\"minReferenceSummary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"auditStderr\": \"\", \"auditCommand\": {\"argv\": [\"python3\", \"-B\", \"checker.py\", \"--audit\"], \"inputRaw\": \"{\\\"inputRaw\\\": \\\"{\\\\n  \\\\\\\"mode\\\\\\\": \\\\\\\"min\\\\\\\",\\\\n  \\\\\\\"lag\\\\\\\": 2,\\\\n  \\\\\\\"allowedLateness\\\\\\\": 0,\\\\n  \\\\\\\"events\\\\\\\": [\\\\n    {\\\\n      \\\\\\\"id\\\\\\\": \\\\\\\"e1\\\\\\\",\\\\n      \\\\\\\"partition\\\\\\\": \\\\\\\"p0\\\\\\\",\\\\n      \\\\\\\"time\\\\\\\": 2,\\\\n      \\\\\\\"value\\\\\\\": 1\\\\n    },\\\\n    {\\\\n      \\\\\\\"id\\\\\\\": \\\\\\\"e2\\\\\\\",\\\\n      \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\",\\\\n      \\\\\\\"time\\\\\\\": 1,\\\\n      \\\\\\\"value\\\\\\\": 2\\\\n    },\\\\n    {\\\\n      \\\\\\\"id\\\\\\\": \\\\\\\"e3\\\\\\\",\\\\n      \\\\\\\"partition\\\\\\\": \\\\\\\"p0\\\\\\\",\\\\n      \\\\\\\"time\\\\\\\": 20,\\\\n      \\\\\\\"value\\\\\\\": 3\\\\n    },\\\\n    {\\\\n      \\\\\\\"id\\\\\\\": \\\\\\\"e4\\\\\\\",\\\\n      \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\",\\\\n      \\\\\\\"time\\\\\\\": 8,\\\\n      \\\\\\\"value\\\\\\\": 4\\\\n    },\\\\n    {\\\\n      \\\\\\\"id\\\\\\\": \\\\\\\"e5\\\\\\\",\\\\n      \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\",\\\\n      \\\\\\\"time\\\\\\\": 20,\\\\n      \\\\\\\"value\\\\\\\": 5\\\\n    }\\\\n  ]\\\\n}\\\", \\\"argv\\\": [\\\"python3\\\", \\\"-B\\\", \\\"model.py\\\"], \\\"startedUtc\\\": \\\"2026-10-05T16:21:14.157694+00:00\\\", \\\"endedUtc\\\": \\\"2026-10-05T16:21:14.201612+00:00\\\", \\\"exitCode\\\": 0, \\\"stdout\\\": \\\"{\\\\\\\"observed\\\\\\\": true, \\\\\\\"reason\\\\\\\": null, \\\\\\\"trace\\\\\\\": [{\\\\\\\"step\\\\\\\": 1, \\\\\\\"event\\\\\\\": {\\\\\\\"id\\\\\\\": \\\\\\\"e1\\\\\\\", \\\\\\\"partition\\\\\\\": \\\\\\\"p0\\\\\\\", \\\\\\\"time\\\\\\\": 2, \\\\\\\"value\\\\\\\": 1}, \\\\\\\"windowStart\\\\\\\": 0, \\\\\\\"beforeWatermark\\\\\\\": null, \\\\\\\"late\\\\\\\": false, \\\\\\\"decision\\\\\\\": \\\\\\\"ACCEPT\\\\\\\", \\\\\\\"maxSeen\\\\\\\": {\\\\\\\"p0\\\\\\\": 2, \\\\\\\"p1\\\\\\\": null}, \\\\\\\"partitionWatermarks\\\\\\\": {\\\\\\\"p0\\\\\\\": 0, \\\\\\\"p1\\\\\\\": null}, \\\\\\\"watermark\\\\\\\": null, \\\\\\\"firedNow\\\\\\\": [], \\\\\\\"finalizedNow\\\\\\\": [], \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 1, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}]}, {\\\\\\\"step\\\\\\\": 2, \\\\\\\"event\\\\\\\": {\\\\\\\"id\\\\\\\": \\\\\\\"e2\\\\\\\", \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\", \\\\\\\"time\\\\\\\": 1, \\\\\\\"value\\\\\\\": 2}, \\\\\\\"windowStart\\\\\\\": 0, \\\\\\\"beforeWatermark\\\\\\\": null, \\\\\\\"late\\\\\\\": false, \\\\\\\"decision\\\\\\\": \\\\\\\"ACCEPT\\\\\\\", \\\\\\\"maxSeen\\\\\\\": {\\\\\\\"p0\\\\\\\": 2, \\\\\\\"p1\\\\\\\": 1}, \\\\\\\"partitionWatermarks\\\\\\\": {\\\\\\\"p0\\\\\\\": 0, \\\\\\\"p1\\\\\\\": -1}, \\\\\\\"watermark\\\\\\\": -1, \\\\\\\"firedNow\\\\\\\": [], \\\\\\\"finalizedNow\\\\\\\": [], \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 3, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}]}, {\\\\\\\"step\\\\\\\": 3, \\\\\\\"event\\\\\\\": {\\\\\\\"id\\\\\\\": \\\\\\\"e3\\\\\\\", \\\\\\\"partition\\\\\\\": \\\\\\\"p0\\\\\\\", \\\\\\\"time\\\\\\\": 20, \\\\\\\"value\\\\\\\": 3}, \\\\\\\"windowStart\\\\\\\": 20, \\\\\\\"beforeWatermark\\\\\\\": -1, \\\\\\\"late\\\\\\\": false, \\\\\\\"decision\\\\\\\": \\\\\\\"ACCEPT\\\\\\\", \\\\\\\"maxSeen\\\\\\\": {\\\\\\\"p0\\\\\\\": 20, \\\\\\\"p1\\\\\\\": 1}, \\\\\\\"partitionWatermarks\\\\\\\": {\\\\\\\"p0\\\\\\\": 18, \\\\\\\"p1\\\\\\\": -1}, \\\\\\\"watermark\\\\\\\": -1, \\\\\\\"firedNow\\\\\\\": [], \\\\\\\"finalizedNow\\\\\\\": [], \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 3, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}, {\\\\\\\"start\\\\\\\": 20, \\\\\\\"end\\\\\\\": 30, \\\\\\\"sum\\\\\\\": 3, \\\\\\\"ids\\\\\\\": [\\\\\\\"e3\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}]}, {\\\\\\\"step\\\\\\\": 4, \\\\\\\"event\\\\\\\": {\\\\\\\"id\\\\\\\": \\\\\\\"e4\\\\\\\", \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\", \\\\\\\"time\\\\\\\": 8, \\\\\\\"value\\\\\\\": 4}, \\\\\\\"windowStart\\\\\\\": 0, \\\\\\\"beforeWatermark\\\\\\\": -1, \\\\\\\"late\\\\\\\": false, \\\\\\\"decision\\\\\\\": \\\\\\\"ACCEPT\\\\\\\", \\\\\\\"maxSeen\\\\\\\": {\\\\\\\"p0\\\\\\\": 20, \\\\\\\"p1\\\\\\\": 8}, \\\\\\\"partitionWatermarks\\\\\\\": {\\\\\\\"p0\\\\\\\": 18, \\\\\\\"p1\\\\\\\": 6}, \\\\\\\"watermark\\\\\\\": 6, \\\\\\\"firedNow\\\\\\\": [], \\\\\\\"finalizedNow\\\\\\\": [], \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 7, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\", \\\\\\\"e4\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}, {\\\\\\\"start\\\\\\\": 20, \\\\\\\"end\\\\\\\": 30, \\\\\\\"sum\\\\\\\": 3, \\\\\\\"ids\\\\\\\": [\\\\\\\"e3\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}]}, {\\\\\\\"step\\\\\\\": 5, \\\\\\\"event\\\\\\\": {\\\\\\\"id\\\\\\\": \\\\\\\"e5\\\\\\\", \\\\\\\"partition\\\\\\\": \\\\\\\"p1\\\\\\\", \\\\\\\"time\\\\\\\": 20, \\\\\\\"value\\\\\\\": 5}, \\\\\\\"windowStart\\\\\\\": 20, \\\\\\\"beforeWatermark\\\\\\\": 6, \\\\\\\"late\\\\\\\": false, \\\\\\\"decision\\\\\\\": \\\\\\\"ACCEPT\\\\\\\", \\\\\\\"maxSeen\\\\\\\": {\\\\\\\"p0\\\\\\\": 20, \\\\\\\"p1\\\\\\\": 20}, \\\\\\\"partitionWatermarks\\\\\\\": {\\\\\\\"p0\\\\\\\": 18, \\\\\\\"p1\\\\\\\": 18}, \\\\\\\"watermark\\\\\\\": 18, \\\\\\\"firedNow\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"sum\\\\\\\": 7, \\\\\\\"kind\\\\\\\": \\\\\\\"initial\\\\\\\"}], \\\\\\\"finalizedNow\\\\\\\": [0], \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 7, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\", \\\\\\\"e4\\\\\\\"], \\\\\\\"initialFired\\\\\\\": true, \\\\\\\"finalized\\\\\\\": true, \\\\\\\"finalizedStep\\\\\\\": 5}, {\\\\\\\"start\\\\\\\": 20, \\\\\\\"end\\\\\\\": 30, \\\\\\\"sum\\\\\\\": 8, \\\\\\\"ids\\\\\\\": [\\\\\\\"e3\\\\\\\", \\\\\\\"e5\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}]}], \\\\\\\"summary\\\\\\\": {\\\\\\\"accepted\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\", \\\\\\\"e3\\\\\\\", \\\\\\\"e4\\\\\\\", \\\\\\\"e5\\\\\\\"], \\\\\\\"dropped\\\\\\\": [], \\\\\\\"lateAccepted\\\\\\\": [], \\\\\\\"watermark\\\\\\\": 18, \\\\\\\"windows\\\\\\\": [{\\\\\\\"start\\\\\\\": 0, \\\\\\\"end\\\\\\\": 10, \\\\\\\"sum\\\\\\\": 7, \\\\\\\"ids\\\\\\\": [\\\\\\\"e1\\\\\\\", \\\\\\\"e2\\\\\\\", \\\\\\\"e4\\\\\\\"], \\\\\\\"initialFired\\\\\\\": true, \\\\\\\"finalized\\\\\\\": true, \\\\\\\"finalizedStep\\\\\\\": 5}, {\\\\\\\"start\\\\\\\": 20, \\\\\\\"end\\\\\\\": 30, \\\\\\\"sum\\\\\\\": 8, \\\\\\\"ids\\\\\\\": [\\\\\\\"e3\\\\\\\", \\\\\\\"e5\\\\\\\"], \\\\\\\"initialFired\\\\\\\": false, \\\\\\\"finalized\\\\\\\": false, \\\\\\\"finalizedStep\\\\\\\": null}], \\\\\\\"mode\\\\\\\": \\\\\\\"min\\\\\\\", \\\\\\\"lag\\\\\\\": 2, \\\\\\\"allowedLateness\\\\\\\": 0, \\\\\\\"endFlush\\\\\\\": false}}\\\\n\\\", \\\"stderr\\\": \\\"\\\"}\", \"startedUtc\": \"2026-10-05T16:21:14.201690+00:00\", \"endedUtc\": \"2026-10-05T16:21:14.242402+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"outcome\\\": \\\"OBSERVED\\\", \\\"summary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}, \\\"maxFaultLoss\\\": [], \\\"minReferenceSummary\\\": {\\\"accepted\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e3\\\", \\\"e4\\\", \\\"e5\\\"], \\\"dropped\\\": [], \\\"lateAccepted\\\": [], \\\"watermark\\\": 18, \\\"windows\\\": [{\\\"start\\\": 0, \\\"end\\\": 10, \\\"sum\\\": 7, \\\"ids\\\": [\\\"e1\\\", \\\"e2\\\", \\\"e4\\\"], \\\"initialFired\\\": true, \\\"finalized\\\": true, \\\"finalizedStep\\\": 5}, {\\\"start\\\": 20, \\\"end\\\": 30, \\\"sum\\\": 8, \\\"ids\\\": [\\\"e3\\\", \\\"e5\\\"], \\\"initialFired\\\": false, \\\"finalized\\\": false, \\\"finalizedStep\\\": null}], \\\"mode\\\": \\\"min\\\", \\\"lag\\\": 2, \\\"allowedLateness\\\": 0, \\\"endFlush\\\": false}}\\n\", \"stderr\": \"\"}, \"sourceHashes\": {\"model.py\": \"e754fffb6b5787ab10a7c7a9d1f675a99d8b0b622eb6cfb0078af4b0fcd6dc54\", \"checker.py\": \"bec80fd340fc3edaeebccb26c141a4a01cc0c27d846074cf067d8f908946e796\", \"execute.py\": \"624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd\"}, \"responseUtc\": \"2026-10-05T16:21:14.243295+00:00\"}",
+      "startedUtc": "2026-10-05T16:27:44.507632+00:00",
+      "endedUtc": "2026-10-05T16:27:44.553210+00:00",
+      "exitCode": 5,
+      "stdout": "",
+      "stderr": "AuditError: AssertionError\n"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py",
+        "--audit"
+      ],
+      "inputRaw": "{",
+      "startedUtc": "2026-10-05T16:27:44.553226+00:00",
+      "endedUtc": "2026-10-05T16:27:44.597330+00:00",
+      "exitCode": 5,
+      "stdout": "",
+      "stderr": "AuditError: JSONDecodeError\n"
+    }
+  ],
+  "defaultReadonlyCommands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "runner.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:40.073614+00:00",
+      "endedUtc": "2026-10-05T16:27:40.131795+00:00",
+      "exitCode": 0,
+      "stdout": "Saved evidence observations/20261005T162606251434Z; no mutation\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checker.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:40.131813+00:00",
+      "endedUtc": "2026-10-05T16:27:40.211392+00:00",
+      "exitCode": 0,
+      "stdout": "PASS 19 conditions; literal windows/watermarks + independent prefix oracle; no producer import\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "test_negative.py"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:40.211404+00:00",
+      "endedUtc": "2026-10-05T16:27:44.184736+00:00",
+      "exitCode": 0,
+      "stdout": "{\n  \"readonlySHA256MtimeNs\": true,\n  \"negativeTests\": [\n    {\n      \"test\": \"premature-global-max\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"unseen-as-zero\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"watermark-regression\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"close-boundary-strict\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"late-grace-lost\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"end-included\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"drop-normalized\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    },\n    {\n      \"test\": \"failure-normal-window\",\n      \"passed\": true,\n      \"rawDerivedArtifactHashesCoherent\": true,\n      \"independentLiteralOrPrefixOracleRejected\": true\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "inspect"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:44.184757+00:00",
+      "endedUtc": "2026-10-05T16:27:44.293207+00:00",
+      "exitCode": 0,
+      "stdout": "PASS 19 conditions; literal windows/watermarks + independent prefix oracle; no producer import\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "lesson"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:44.293222+00:00",
+      "endedUtc": "2026-10-05T16:27:44.333598+00:00",
+      "exitCode": 0,
+      "stdout": "index.html; evidence observations/20261005T162606251434Z\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "route.py",
+        "unknown"
+      ],
+      "inputRaw": null,
+      "startedUtc": "2026-10-05T16:27:44.333611+00:00",
+      "endedUtc": "2026-10-05T16:27:44.374023+00:00",
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "unsupported route\n"
+    }
+  ],
+  "allModuleSHA256MtimeNsUnchanged": true,
+  "oldRaw": [
+    {
+      "fingerprint": "revisions/before-lesson/old-raw-fingerprint.json",
+      "files": 136,
+      "sha256MtimeNsPreserved": true
+    },
+    {
+      "fingerprint": "revisions/before-environment-label/old-raw-fingerprint.json",
+      "files": 272,
+      "sha256MtimeNsPreserved": true
+    }
+  ],
+  "iab": {
+    "conditions": 19,
+    "predictionChangesAfterAnswerRawOpened": 57,
+    "newValuesRetainedOldFieldsEmptyDetailsClosed": true,
+    "variableInputs": [
+      "e4 time8->18: moves to[10,20), window0sum3 finalstep4",
+      "A0->20: window0sum7 fired retained, no final",
+      "Event order edited: e4 before e3, finalsum7",
+      "L2->5: globalWM15, finalsum7"
+    ],
+    "actualCurrentCoreReceiptsRetained": 85,
+    "retainedReceiptsIndependentlyRechecked": true,
+    "stale": "HTTP response held2sec; A0->20 during pending, old response discarded; new retained-window answer shown only after actual fresh processing",
+    "staleReceiptScope": "One discarded response observed by UI; not included in retained85 raw receipts",
+    "httpFailure": "Actual30001byte request HTTP413 before children, old fields empty and details closed",
+    "originalReferenceBodyMatches": true,
+    "console": [],
+    "tab": "28 closed",
+    "images": [
+      {
+        "path": "media/allowed20.jpg",
+        "width": 1280,
+        "height": 2375,
+        "sha256": "01c277012c50afa7658c4926f7b97d76992a3e6a952071d34ecd31ba5118a378",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/deadline-boundary.jpg",
+        "width": 1280,
+        "height": 2458,
+        "sha256": "0bb92f136dd1823b1113fc8c118e7008fc61a75bec850a910e3d351925e6744d",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/edited-input-cleared.jpg",
+        "width": 1280,
+        "height": 1663,
+        "sha256": "d09c1093e1401e51fb52b7ea1edcc3e2e2304a3459477c9774dfdb2c58e5dcbc",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/execution-failure.jpg",
+        "width": 1280,
+        "height": 2011,
+        "sha256": "5e8c2234ad5b341059a2ef429ff241dc327a166818877e99edb27748a59e112d",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/grace-late-update.jpg",
+        "width": 1280,
+        "height": 2437,
+        "sha256": "0d2f1b6091c1402ee78ee341014778b5f4e154c57959a5a7a488bb04338e1c9d",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/max-fault.jpg",
+        "width": 1280,
+        "height": 2375,
+        "sha256": "c88c52a3f65870faca03e80e231b694dabd80151881d43fe18098010b682d228",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/min-complete.jpg",
+        "width": 1280,
+        "height": 2375,
+        "sha256": "59cf617dd7b40421b5acf0df2165860e21bd03c2b6bcec10e7804e63480bbe8e",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/refused-nonfinite.jpg",
+        "width": 1280,
+        "height": 2011,
+        "sha256": "dec25ab3e47a96d1448bb99a53e1c99df2a515355eec5b1cc1d21e3af52b08fe",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/stale-discarded.jpg",
+        "width": 1280,
+        "height": 1663,
+        "sha256": "3d5abfab370f7d0cc7352420c3d5b092f3ea12bf851b03ec97caac8361c55420",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/stalled-partition.jpg",
+        "width": 1280,
+        "height": 2312,
+        "sha256": "ae870c162b2432df478751a451379ebc53c78e0f41dd53bc1847cc7cf595a11e",
+        "actualIABUnedited": true
+      },
+      {
+        "path": "media/time18.jpg",
+        "width": 1280,
+        "height": 2417,
+        "sha256": "988f28091f00a6cc4a4b6cef56fe1e854fa2395a1cb2f125beb2e97c3009b507",
+        "actualIABUnedited": true
+      }
+    ],
+    "maxFaultScreenshotVisuallyInspected": true
+  },
+  "resources": {
+    "ownPort": 60564,
+    "ownSession": 38922,
+    "ownPreviewStopped": true,
+    "protectedListeners": {
+      "53478": 3901,
+      "60285": 83318
+    },
+    "protectedListenersStillPresent": true,
+    "noProtectedResourcesTouched": true,
+    "externalPIDChange": "60285 changed externally from previous task69836 to83318 before this preview; no action on it",
+    "sandboxBind": "Actual EPERM in normal sandbox, identical loopback command launched after host permission review"
+  },
+  "preservedIterationIssues": [
+    "First runner/checker invocation used repo root and failed before execution; corrected to owned module.",
+    "Temporary lesson helper mkdir lacked parents and failed before document writes; corrected, initial raw preserved.",
+    "Environment-only runner label changed from copied generic sklearn exclusion to no Flink runtime used; fresh run, old raw preserved."
+  ],
+  "limits": [
+    "No real Flink or idle auto-detection/periodic emit/infinite stream",
+    "No join/keyed state/checkpoint/savepoint/backpressure/CDC transport",
+    "No production completeness/durability/exactly-once guarantee or whole-Subject completion"
+  ],
+  "primarySources": [
+    "https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/",
+    "https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/datastream/event-time/generating_watermarks/",
+    "https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/datastream/operators/windows/"
+  ],
+  "primaryDocsVersionAtRead": "v2.3.0",
+  "skillValidation": "PASS"
+}

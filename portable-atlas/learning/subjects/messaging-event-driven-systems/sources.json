@@ -1,0 +1,16 @@
+{
+  "field_id":"messaging-event-driven-systems",
+  "accessed_at":"2026-10-05",
+  "third_party_body_saved":false,
+  "sources":[
+    {"id":"consumer-acks","url":"https://www.rabbitmq.com/docs/confirms#automatic-requeueing","version_displayed":"4.3","locator":"Automatic requeueing on connection loss or channel closure / Consumer acknowledgements","binding":"concept only: unacked delivery replay; no broker/channel/AMQP ack executed"},
+    {"id":"publisher-confirms","url":"https://www.rabbitmq.com/docs/confirms#publisher-confirms","version_displayed":"4.3","locator":"Publisher confirms / relation to consumer acknowledgements","binding":"next experiment only; broker acceptance differs from application effect"},
+    {"id":"dlx","url":"https://www.rabbitmq.com/docs/dlx","version_displayed":"4.3","locator":"Dead Letter Exchanges / Safety / Dead-lettering and at-least-once guarantees","binding":"our DLQ is a driver JSON list, not actual broker routing/durability; total delivery limit is custom"},
+    {"id":"sqlite-transaction","url":"https://docs.python.org/3.9/library/sqlite3.html#controlling-transactions","version_displayed":"3.9.25 documentation; observed runtime 3.9.6","locator":"Controlling Transactions / Connection / uri read-only","binding":"actual stdlib sqlite3 BEGIN IMMEDIATE/COMMIT/ROLLBACK; parameterized queries; checker mode=ro"},
+    {"id":"sqlite-atomic","url":"https://www.sqlite.org/atomiccommit.html","locator":"Single File Commit / Recovery / Things That Can Go Wrong","binding":"same SQLite DB inbox/effect transaction; observed process exit after commit, not OS/power/device fault verification"},
+    {"id":"reliability","url":"https://www.rabbitmq.com/docs/reliability","version_displayed":"4.3","locator":"Acknowledgements and Confirms / Data Safety on the Publisher Side / Data Safety on the Consumer Side","binding":"next experiment only: outbox/confirm uncertainty and duplicate processing"},
+    {"id":"streams","url":"https://www.rabbitmq.com/docs/streams","version_displayed":"4.3","locator":"Streams / Stream retention / Super Streams","binding":"next experiment only: stream offsets/retention/partitioned ordering not queue delivery model"}
+  ],
+  "implemented_subset":["single consumer process per delivery", "synthetic event-[a-z] key", "demo delta integer -10..10", "actual task-owned SQLite inbox/effect/balance", "BEGIN IMMEDIATE", "same-ID exact payload comparison plus SHA-256", "os._exit(70) after commit before model ack", "duplicate no-effect", "same-ID different-payload conflict", "actual rollback injection", "custom total delivery limit 1..3", "model requeue/ack/DLQ JSON", "read-only SQL hand oracle"],
+  "not_taught":["real broker/protocol/client ack", "producer confirms/outbox", "queue routing/durability/HA/partition", "concurrent consumers/prefetch/order", "external HTTP/payment/email effects", "end-to-end exactly once", "dedup key retention/cleanup", "backoff/jitter/retry-time budgets", "DLX routing/durability/redrive", "schemas/versioning/causality/sagas", "streams/offsets/retention/partitions", "security/TLS/authZ", "observability/throughput/capacity", "OS/power/disk failure durability"]
+}

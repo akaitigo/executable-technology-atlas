@@ -1,0 +1,57 @@
+{
+  "scope": "fixed local synthetic graph/material/build contract; unsigned, no resolver/download",
+  "artifact_recipe": "sorted reachable IDs; UTF-8 ID + colon + decimal byte length + colon + exact file bytes; concatenation",
+  "baseline": "independent expected digest map fixture, not generated from received declaration",
+  "policy": "declared set == actual reachable set == fixed expected set; then each declared/actual/baseline digest equal",
+  "fault": "same graph/build validation, consumer only checks direct names == [A]",
+  "cases": [
+    {
+      "id": "baseline",
+      "label": "root→A→B 全material一致",
+      "graph": "graph-base.json",
+      "declared": "declared-base.json"
+    },
+    {
+      "id": "B-changed",
+      "label": "B bytesだけ変更、直接名Aは同じ",
+      "graph": "graph-changed.json",
+      "declared": "declared-new.json"
+    },
+    {
+      "id": "B-undeclared",
+      "label": "B bytesは使用、申告だけ欠落",
+      "graph": "graph-base.json",
+      "declared": "declared-omit-B.json"
+    },
+    {
+      "id": "changed-undeclared",
+      "label": "B変更と申告欠落",
+      "graph": "graph-changed.json",
+      "declared": "declared-omit-B.json"
+    },
+    {
+      "id": "B-unreachable",
+      "label": "A→B edge欠落、期待集合との差",
+      "graph": "graph-unused-B.json",
+      "declared": "declared-omit-B.json"
+    },
+    {
+      "id": "unknown-node",
+      "label": "B→未知Xを拒否",
+      "graph": "graph-unknown.json",
+      "declared": "declared-base.json"
+    },
+    {
+      "id": "cycle",
+      "label": "B→root cycleを拒否",
+      "graph": "graph-cycle.json",
+      "declared": "declared-base.json"
+    },
+    {
+      "id": "read-failure",
+      "label": "B material読取失敗",
+      "graph": "graph-absent.json",
+      "declared": "declared-base.json"
+    }
+  ]
+}

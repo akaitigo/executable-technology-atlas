@@ -1,0 +1,504 @@
+{
+  "project": "Atlas",
+  "basis": "handwritten finite lasso states and fairness booleans before implementation",
+  "states": {
+    "I": [
+      "idle",
+      "idle",
+      null
+    ],
+    "E": [
+      "waiting",
+      "idle",
+      null
+    ],
+    "A": [
+      "idle",
+      "waiting",
+      null
+    ],
+    "F": [
+      "critical",
+      "idle",
+      0
+    ],
+    "B": [
+      "waiting",
+      "waiting",
+      null
+    ],
+    "G": [
+      "idle",
+      "critical",
+      1
+    ],
+    "C": [
+      "critical",
+      "waiting",
+      0
+    ],
+    "H": [
+      "waiting",
+      "critical",
+      1
+    ]
+  },
+  "nonstutter_edges": [
+    [
+      "I",
+      "P0.request",
+      "E"
+    ],
+    [
+      "I",
+      "P1.request",
+      "A"
+    ],
+    [
+      "E",
+      "P0.enter",
+      "F"
+    ],
+    [
+      "E",
+      "P1.request",
+      "B"
+    ],
+    [
+      "A",
+      "P0.request",
+      "B"
+    ],
+    [
+      "A",
+      "P1.enter",
+      "G"
+    ],
+    [
+      "F",
+      "P0.release",
+      "I"
+    ],
+    [
+      "F",
+      "P1.request",
+      "C"
+    ],
+    [
+      "B",
+      "P0.enter",
+      "C"
+    ],
+    [
+      "B",
+      "P1.enter",
+      "H"
+    ],
+    [
+      "G",
+      "P0.request",
+      "H"
+    ],
+    [
+      "G",
+      "P1.release",
+      "I"
+    ],
+    [
+      "C",
+      "P0.release",
+      "A"
+    ],
+    [
+      "H",
+      "P1.release",
+      "E"
+    ]
+  ],
+  "graph_counts": {
+    "states": 8,
+    "nonstutter_edges": 14,
+    "added_stutter_edges": 8,
+    "total_edges": 22
+  },
+  "fairness_order": [
+    "none",
+    "weak-processes",
+    "strong-enter1-only",
+    "weak-processes-plus-strong-enter1"
+  ],
+  "cases": [
+    {
+      "id": "idle-wait-stutter",
+      "prefix": [
+        "P1.request"
+      ],
+      "prefix_states": [
+        "I",
+        "A"
+      ],
+      "cycle": [
+        "stutter"
+      ],
+      "cycle_states": [
+        "A",
+        "A"
+      ],
+      "enabled": {
+        "Next0": [
+          true
+        ],
+        "Next1": [
+          true
+        ],
+        "Enter1": [
+          true
+        ]
+      },
+      "executed": {
+        "Next0": [
+          false
+        ],
+        "Next1": [
+          false
+        ],
+        "Enter1": [
+          false
+        ]
+      },
+      "fair": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "p1_starves": true,
+      "valid": true,
+      "safety_holds": true
+    },
+    {
+      "id": "both-wait-stutter",
+      "prefix": [
+        "P1.request",
+        "P0.request"
+      ],
+      "prefix_states": [
+        "I",
+        "A",
+        "B"
+      ],
+      "cycle": [
+        "stutter"
+      ],
+      "cycle_states": [
+        "B",
+        "B"
+      ],
+      "enabled": {
+        "Next0": [
+          true
+        ],
+        "Next1": [
+          true
+        ],
+        "Enter1": [
+          true
+        ]
+      },
+      "executed": {
+        "Next0": [
+          false
+        ],
+        "Next1": [
+          false
+        ],
+        "Enter1": [
+          false
+        ]
+      },
+      "fair": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "p1_starves": true,
+      "valid": true,
+      "safety_holds": true
+    },
+    {
+      "id": "holder-stutter",
+      "prefix": [
+        "P1.request",
+        "P0.request",
+        "P0.enter"
+      ],
+      "prefix_states": [
+        "I",
+        "A",
+        "B",
+        "C"
+      ],
+      "cycle": [
+        "stutter"
+      ],
+      "cycle_states": [
+        "C",
+        "C"
+      ],
+      "enabled": {
+        "Next0": [
+          true
+        ],
+        "Next1": [
+          false
+        ],
+        "Enter1": [
+          false
+        ]
+      },
+      "executed": {
+        "Next0": [
+          false
+        ],
+        "Next1": [
+          false
+        ],
+        "Enter1": [
+          false
+        ]
+      },
+      "fair": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "p1_starves": true,
+      "valid": true,
+      "safety_holds": true
+    },
+    {
+      "id": "p0-keeps-winning",
+      "prefix": [
+        "P1.request"
+      ],
+      "prefix_states": [
+        "I",
+        "A"
+      ],
+      "cycle": [
+        "P0.request",
+        "P0.enter",
+        "P0.release"
+      ],
+      "cycle_states": [
+        "A",
+        "B",
+        "C",
+        "A"
+      ],
+      "enabled": {
+        "Next0": [
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          true,
+          true,
+          false
+        ],
+        "Enter1": [
+          true,
+          true,
+          false
+        ]
+      },
+      "executed": {
+        "Next0": [
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          false,
+          false,
+          false
+        ],
+        "Enter1": [
+          false,
+          false,
+          false
+        ]
+      },
+      "fair": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "p1_starves": true,
+      "valid": true,
+      "safety_holds": true
+    },
+    {
+      "id": "both-progress",
+      "prefix": [],
+      "prefix_states": [
+        "I"
+      ],
+      "cycle": [
+        "P1.request",
+        "P1.enter",
+        "P1.release",
+        "P0.request",
+        "P0.enter",
+        "P0.release"
+      ],
+      "cycle_states": [
+        "I",
+        "A",
+        "G",
+        "I",
+        "E",
+        "F",
+        "I"
+      ],
+      "enabled": {
+        "Next0": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "Enter1": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "executed": {
+        "Next0": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "Enter1": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "fair": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "p1_starves": false,
+      "valid": true,
+      "safety_holds": true
+    },
+    {
+      "id": "earlier-entry-does-not-satisfy-later-request",
+      "prefix": [
+        "P1.request",
+        "P1.enter",
+        "P1.release",
+        "P1.request"
+      ],
+      "prefix_states": [
+        "I",
+        "A",
+        "G",
+        "I",
+        "A"
+      ],
+      "cycle": [
+        "P0.request",
+        "P0.enter",
+        "P0.release"
+      ],
+      "cycle_states": [
+        "A",
+        "B",
+        "C",
+        "A"
+      ],
+      "enabled": {
+        "Next0": [
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          true,
+          true,
+          false
+        ],
+        "Enter1": [
+          true,
+          true,
+          false
+        ]
+      },
+      "executed": {
+        "Next0": [
+          true,
+          true,
+          true
+        ],
+        "Next1": [
+          false,
+          false,
+          false
+        ],
+        "Enter1": [
+          false,
+          false,
+          false
+        ]
+      },
+      "fair": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "p1_starves": true,
+      "valid": true,
+      "safety_holds": true
+    }
+  ],
+  "new_computation": false,
+  "arbitrary_cycle_exhaustiveness_claim": false,
+  "formal_proof_or_TLC": false
+}

@@ -1,0 +1,390 @@
+{
+  "utc": "2026-10-05T12:28:16.301590+00:00",
+  "command": "python3 -B runner.py --record",
+  "environment": {
+    "node": "v25.2.1",
+    "system": "Darwin",
+    "release": "25.1.0"
+  },
+  "fixture": {
+    "initial_value": 0,
+    "updated_value": 1,
+    "assert_expected": 1,
+    "cases": [
+      {
+        "id": "unawaited-before",
+        "variant": "unawaited",
+        "schedule": "assert-before-update"
+      },
+      {
+        "id": "unawaited-after",
+        "variant": "unawaited",
+        "schedule": "update-before-assert"
+      },
+      {
+        "id": "awaited-before",
+        "variant": "await-completion",
+        "schedule": "assert-before-update"
+      },
+      {
+        "id": "awaited-after",
+        "variant": "await-completion",
+        "schedule": "update-before-assert"
+      },
+      {
+        "id": "invalid-schedule",
+        "variant": "unawaited",
+        "schedule": "unknown"
+      }
+    ]
+  },
+  "source_sha256": {
+    "fixture.json": "7bc89d9fdd1041e39082d429cff73063cf1ba5fcea0bbdac79c67617f15ec4a2",
+    "oracle.json": "dcf1aff1aa30e1066cd54d9ed6d216524d71020ee5530912126f54953bd00beb",
+    "EXPECTATIONS.md": "404db66d9971ee3c7d60caecb026d2f0c631fd4e62fe1c11e5addba9253fd329",
+    "case.test.mjs": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+    "runner.py": "b14530c5b2dd9fd9066dcff06576269101c814351c9a1dd4f8e36880a61f2693"
+  },
+  "cases": [
+    {
+      "id": "unawaited-before",
+      "input": {
+        "id": "unawaited-before",
+        "variant": "unawaited",
+        "schedule": "assert-before-update"
+      },
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "case.test.mjs"
+      ],
+      "env": {
+        "ATLAS_SCHEDULE": "assert-before-update",
+        "ATLAS_VARIANT": "unawaited"
+      },
+      "copied_source_sha256": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+      "test_runner_pid": 76821,
+      "stdout": "TAP version 13\n# ATLAS_EVENT {\"event\":\"update_waiting\",\"seq\":0,\"pid\":76822,\"value\":0}\n# ATLAS_EVENT {\"event\":\"test_entered\",\"seq\":1,\"pid\":76822,\"value\":0}\n# ATLAS_EVENT {\"event\":\"assert_read\",\"seq\":2,\"pid\":76822,\"value\":0,\"expected\":1}\n# ATLAS_EVENT {\"event\":\"assert_failed\",\"seq\":3,\"pid\":76822,\"value\":0,\"code\":\"ERR_ASSERTION\",\"actual\":0,\"expected\":1}\n# ATLAS_EVENT {\"event\":\"gate_released\",\"seq\":4,\"pid\":76822}\n# ATLAS_EVENT {\"event\":\"value_updated\",\"seq\":5,\"pid\":76822,\"value\":1}\n# ATLAS_EVENT {\"event\":\"work_settled\",\"seq\":6,\"pid\":76822,\"value\":1}\n# ATLAS_EVENT {\"event\":\"cleanup_complete\",\"seq\":7,\"pid\":76822,\"value\":1,\"work_settled\":true,\"gate_released\":true}\n# Subtest: same assertion body\nnot ok 1 - same assertion body\n  ---\n  duration_ms: 1.120125\n  type: 'test'\n  location: '/private/tmp/atlas-async-jom_z3a2/case.test.mjs:21:13'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    assertBody (file:///private/tmp/atlas-async-jom_z3a2/case.test.mjs:16:13)\n    TestContext.<anonymous> (file:///private/tmp/atlas-async-jom_z3a2/case.test.mjs:24:3)\n    Test.runInAsyncScope (node:async_hooks:213:14)\n    Test.run (node:internal/test_runner/test:1106:25)\n    Test.start (node:internal/test_runner/test:1003:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 100.53525\n",
+      "stderr": "",
+      "exit_code": 1,
+      "child_reaped": true,
+      "streams_closed": true,
+      "events": [
+        {
+          "event": "update_waiting",
+          "seq": 0,
+          "value": 0
+        },
+        {
+          "event": "test_entered",
+          "seq": 1,
+          "value": 0
+        },
+        {
+          "event": "assert_read",
+          "seq": 2,
+          "value": 0,
+          "expected": 1
+        },
+        {
+          "event": "assert_failed",
+          "seq": 3,
+          "value": 0,
+          "code": "ERR_ASSERTION",
+          "actual": 0,
+          "expected": 1
+        },
+        {
+          "event": "gate_released",
+          "seq": 4
+        },
+        {
+          "event": "value_updated",
+          "seq": 5,
+          "value": 1
+        },
+        {
+          "event": "work_settled",
+          "seq": 6,
+          "value": 1
+        },
+        {
+          "event": "cleanup_complete",
+          "seq": 7,
+          "value": 1,
+          "work_settled": true,
+          "gate_released": true
+        }
+      ],
+      "test_file_pid": 76822,
+      "temp_removed": true
+    },
+    {
+      "id": "unawaited-after",
+      "input": {
+        "id": "unawaited-after",
+        "variant": "unawaited",
+        "schedule": "update-before-assert"
+      },
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "case.test.mjs"
+      ],
+      "env": {
+        "ATLAS_SCHEDULE": "update-before-assert",
+        "ATLAS_VARIANT": "unawaited"
+      },
+      "copied_source_sha256": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+      "test_runner_pid": 76823,
+      "stdout": "TAP version 13\n# ATLAS_EVENT {\"event\":\"update_waiting\",\"seq\":0,\"pid\":76828,\"value\":0}\n# ATLAS_EVENT {\"event\":\"gate_released\",\"seq\":1,\"pid\":76828}\n# ATLAS_EVENT {\"event\":\"value_updated\",\"seq\":2,\"pid\":76828,\"value\":1}\n# ATLAS_EVENT {\"event\":\"work_settled\",\"seq\":3,\"pid\":76828,\"value\":1}\n# ATLAS_EVENT {\"event\":\"test_entered\",\"seq\":4,\"pid\":76828,\"value\":1}\n# ATLAS_EVENT {\"event\":\"assert_read\",\"seq\":5,\"pid\":76828,\"value\":1,\"expected\":1}\n# ATLAS_EVENT {\"event\":\"assert_passed\",\"seq\":6,\"pid\":76828,\"value\":1}\n# ATLAS_EVENT {\"event\":\"cleanup_complete\",\"seq\":7,\"pid\":76828,\"value\":1,\"work_settled\":true,\"gate_released\":true}\n# Subtest: same assertion body\nok 1 - same assertion body\n  ---\n  duration_ms: 0.600334\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 101.361125\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child_reaped": true,
+      "streams_closed": true,
+      "events": [
+        {
+          "event": "update_waiting",
+          "seq": 0,
+          "value": 0
+        },
+        {
+          "event": "gate_released",
+          "seq": 1
+        },
+        {
+          "event": "value_updated",
+          "seq": 2,
+          "value": 1
+        },
+        {
+          "event": "work_settled",
+          "seq": 3,
+          "value": 1
+        },
+        {
+          "event": "test_entered",
+          "seq": 4,
+          "value": 1
+        },
+        {
+          "event": "assert_read",
+          "seq": 5,
+          "value": 1,
+          "expected": 1
+        },
+        {
+          "event": "assert_passed",
+          "seq": 6,
+          "value": 1
+        },
+        {
+          "event": "cleanup_complete",
+          "seq": 7,
+          "value": 1,
+          "work_settled": true,
+          "gate_released": true
+        }
+      ],
+      "test_file_pid": 76828,
+      "temp_removed": true
+    },
+    {
+      "id": "awaited-before",
+      "input": {
+        "id": "awaited-before",
+        "variant": "await-completion",
+        "schedule": "assert-before-update"
+      },
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "case.test.mjs"
+      ],
+      "env": {
+        "ATLAS_SCHEDULE": "assert-before-update",
+        "ATLAS_VARIANT": "await-completion"
+      },
+      "copied_source_sha256": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+      "test_runner_pid": 76832,
+      "stdout": "TAP version 13\n# ATLAS_EVENT {\"event\":\"update_waiting\",\"seq\":0,\"pid\":76833,\"value\":0}\n# ATLAS_EVENT {\"event\":\"test_entered\",\"seq\":1,\"pid\":76833,\"value\":0}\n# ATLAS_EVENT {\"event\":\"completion_await_started\",\"seq\":2,\"pid\":76833}\n# ATLAS_EVENT {\"event\":\"gate_released\",\"seq\":3,\"pid\":76833}\n# ATLAS_EVENT {\"event\":\"value_updated\",\"seq\":4,\"pid\":76833,\"value\":1}\n# ATLAS_EVENT {\"event\":\"work_settled\",\"seq\":5,\"pid\":76833,\"value\":1}\n# ATLAS_EVENT {\"event\":\"completion_await_finished\",\"seq\":6,\"pid\":76833,\"value\":1}\n# ATLAS_EVENT {\"event\":\"assert_read\",\"seq\":7,\"pid\":76833,\"value\":1,\"expected\":1}\n# ATLAS_EVENT {\"event\":\"assert_passed\",\"seq\":8,\"pid\":76833,\"value\":1}\n# ATLAS_EVENT {\"event\":\"cleanup_complete\",\"seq\":9,\"pid\":76833,\"value\":1,\"work_settled\":true,\"gate_released\":true}\n# Subtest: same assertion body\nok 1 - same assertion body\n  ---\n  duration_ms: 0.696542\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 101.618958\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child_reaped": true,
+      "streams_closed": true,
+      "events": [
+        {
+          "event": "update_waiting",
+          "seq": 0,
+          "value": 0
+        },
+        {
+          "event": "test_entered",
+          "seq": 1,
+          "value": 0
+        },
+        {
+          "event": "completion_await_started",
+          "seq": 2
+        },
+        {
+          "event": "gate_released",
+          "seq": 3
+        },
+        {
+          "event": "value_updated",
+          "seq": 4,
+          "value": 1
+        },
+        {
+          "event": "work_settled",
+          "seq": 5,
+          "value": 1
+        },
+        {
+          "event": "completion_await_finished",
+          "seq": 6,
+          "value": 1
+        },
+        {
+          "event": "assert_read",
+          "seq": 7,
+          "value": 1,
+          "expected": 1
+        },
+        {
+          "event": "assert_passed",
+          "seq": 8,
+          "value": 1
+        },
+        {
+          "event": "cleanup_complete",
+          "seq": 9,
+          "value": 1,
+          "work_settled": true,
+          "gate_released": true
+        }
+      ],
+      "test_file_pid": 76833,
+      "temp_removed": true
+    },
+    {
+      "id": "awaited-after",
+      "input": {
+        "id": "awaited-after",
+        "variant": "await-completion",
+        "schedule": "update-before-assert"
+      },
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "case.test.mjs"
+      ],
+      "env": {
+        "ATLAS_SCHEDULE": "update-before-assert",
+        "ATLAS_VARIANT": "await-completion"
+      },
+      "copied_source_sha256": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+      "test_runner_pid": 76834,
+      "stdout": "TAP version 13\n# ATLAS_EVENT {\"event\":\"update_waiting\",\"seq\":0,\"pid\":76835,\"value\":0}\n# ATLAS_EVENT {\"event\":\"gate_released\",\"seq\":1,\"pid\":76835}\n# ATLAS_EVENT {\"event\":\"value_updated\",\"seq\":2,\"pid\":76835,\"value\":1}\n# ATLAS_EVENT {\"event\":\"work_settled\",\"seq\":3,\"pid\":76835,\"value\":1}\n# ATLAS_EVENT {\"event\":\"test_entered\",\"seq\":4,\"pid\":76835,\"value\":1}\n# ATLAS_EVENT {\"event\":\"completion_await_started\",\"seq\":5,\"pid\":76835}\n# ATLAS_EVENT {\"event\":\"completion_await_finished\",\"seq\":6,\"pid\":76835,\"value\":1}\n# ATLAS_EVENT {\"event\":\"assert_read\",\"seq\":7,\"pid\":76835,\"value\":1,\"expected\":1}\n# ATLAS_EVENT {\"event\":\"assert_passed\",\"seq\":8,\"pid\":76835,\"value\":1}\n# ATLAS_EVENT {\"event\":\"cleanup_complete\",\"seq\":9,\"pid\":76835,\"value\":1,\"work_settled\":true,\"gate_released\":true}\n# Subtest: same assertion body\nok 1 - same assertion body\n  ---\n  duration_ms: 0.650583\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 101.885417\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child_reaped": true,
+      "streams_closed": true,
+      "events": [
+        {
+          "event": "update_waiting",
+          "seq": 0,
+          "value": 0
+        },
+        {
+          "event": "gate_released",
+          "seq": 1
+        },
+        {
+          "event": "value_updated",
+          "seq": 2,
+          "value": 1
+        },
+        {
+          "event": "work_settled",
+          "seq": 3,
+          "value": 1
+        },
+        {
+          "event": "test_entered",
+          "seq": 4,
+          "value": 1
+        },
+        {
+          "event": "completion_await_started",
+          "seq": 5
+        },
+        {
+          "event": "completion_await_finished",
+          "seq": 6,
+          "value": 1
+        },
+        {
+          "event": "assert_read",
+          "seq": 7,
+          "value": 1,
+          "expected": 1
+        },
+        {
+          "event": "assert_passed",
+          "seq": 8,
+          "value": 1
+        },
+        {
+          "event": "cleanup_complete",
+          "seq": 9,
+          "value": 1,
+          "work_settled": true,
+          "gate_released": true
+        }
+      ],
+      "test_file_pid": 76835,
+      "temp_removed": true
+    },
+    {
+      "id": "invalid-schedule",
+      "input": {
+        "id": "invalid-schedule",
+        "variant": "unawaited",
+        "schedule": "unknown"
+      },
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "case.test.mjs"
+      ],
+      "env": {
+        "ATLAS_SCHEDULE": "unknown",
+        "ATLAS_VARIANT": "unawaited"
+      },
+      "copied_source_sha256": "53759fafffec0874149e93a791ba391d185b86950c9128d0f924613f435bc926",
+      "test_runner_pid": 76836,
+      "stdout": "TAP version 13\n# ATLAS_EVENT {\"event\":\"input_refused\",\"seq\":0,\"pid\":76837,\"reason\":\"unsupported schedule or variant\"}\n# Subtest: case.test.mjs\nnot ok 1 - case.test.mjs\n  ---\n  duration_ms: 88.425292\n  type: 'test'\n  location: '/private/tmp/atlas-async-mre03wig/case.test.mjs:1:1'\n  failureType: 'testCodeFailure'\n  exitCode: 2\n  signal: ~\n  error: 'test failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 93.017541\n",
+      "stderr": "",
+      "exit_code": 1,
+      "child_reaped": true,
+      "streams_closed": true,
+      "events": [
+        {
+          "event": "input_refused",
+          "seq": 0,
+          "reason": "unsupported schedule or variant"
+        }
+      ],
+      "test_file_pid": 76837,
+      "temp_removed": true
+    }
+  ],
+  "execution_failures": 0
+}

@@ -1,0 +1,9 @@
+{
+  "subject":"game-engine-interactive-simulation","status":"incomplete","unit":"fixed-step-accumulator-vs-variable-explicit-euler","runtime":"Browser JavaScript toy point motion; supplied two-frame schedules, not measured rAF/engine physics","unverified":["real engine products","CCD","rigid bodies/joints/contacts","scene/ECS/assets","input/audio/render loop","native devices","network/replay determinism","engine lifecycle/performance/release"],
+  "unmadeCoverage":[
+    {"experiment":"E1","coverage":["real engine physics","CCD","rigid bodies/joints/contacts","step size vs speed"],"plan":"固定versionのengineでthin-wall/high-speed/body contactsを実行し、discreteとCCDの衝突時刻・penetrationを比較。toy oracleからengine精度を推定しない。","sources":["https://box2d.org/documentation/md_simulation.html","https://docs.godotengine.org/en/stable/tutorials/physics/physics_introduction.html"]},
+    {"experiment":"E2","coverage":["scene/ECS/assets","engine lifecycle","native devices"],"plan":"実engine sceneをload/unloadし、entity所有権・asset参照・破棄後callbackを測定。明示的欠損assetも入力にする。","sources":["https://docs.godotengine.org/en/stable/tutorials/scripting/scene_tree.html"]},
+    {"experiment":"E3","coverage":["input/audio/render loop","performance","release"],"plan":"input→physics tick→renderの遅延、interpolation、audio pause、slow-frame backlogをtrace。固定budget超過とrelease buildを実測する。","sources":["https://docs.godotengine.org/en/stable/tutorials/inputs/inputevent.html","https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames"]},
+    {"experiment":"E4","coverage":["network/replay determinism","compatibility","operations"],"plan":"2 processで入力replay/state hashを比較、packet遅延・loss・reconnectを注入。浮動小数点・engine/version差も比較し同期範囲を限定する。","sources":["https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html","https://docs.godotengine.org/en/stable/tutorials/physics/physics_introduction.html"]}
+  ]
+}

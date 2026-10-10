@@ -1,0 +1,2407 @@
+{
+  "startedUtc": "2026-10-05T11:33:50.090239+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "sqlite": "3.51.0",
+    "platform": "Darwin",
+    "connectTimeoutSeconds": 0.1
+  },
+  "sourceHashes": {
+    "runner.py": "65a32a0a487a8c4eb9096d26c38a803c2351b77d93a01dc599cf6e486408caa6",
+    "worker.py": "e5409192f9c7d09fb7271a68c37477b5402ad6cd837da03ef5c942afd497609f",
+    "checker.py": "f72352d108995520bd5d68257284ed62d20d42bfab5c5505c9ee8d1794529fba",
+    "expectations.json": "3665e704f753c419e44293910b9c2a4c5df62fc54e4fa91cd1618cc908678f0d",
+    "index.html": "95735b6733415e0087fc717786587312bd9f92f817d713e548de79433dfd5d22",
+    "preview.py": "ded5802ffca92a2bc3726aa2fff8920ea2f64b3a68de5e254e4c4c4ad5c4c935",
+    "route.py": "fd4fc127ca5e3a7878cac14317d07a4ca46099eeec5323ca6eb7804b5704853b",
+    "test_negative.py": "80870a4eee636da6b9685f59bdb4520efce4a48a3cdfaa53f392e78c5148d029",
+    "README.md": "64a729a428a76c22b055ae18fcea83e5afefe98657b139b4f50b6d598f9d8041",
+    "COVERAGE.md": "aafc338d73bcf4f97d299210005036b574781f1ae15df77641395744d3289a7c",
+    "skills/incremental-corrected-batch/SKILL.md": "b01a492a08e055f4071e75d4cb55f95352a1b6b4ae65193a0a28932879631f1e"
+  },
+  "cases": [
+    {
+      "id": "replace",
+      "strategy": "replace",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "48b7c7e7c1116e758ff0db9d89b30f8b88ae3c8155d603544ea76df557b723bf",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "replace/data.sqlite",
+            "--input",
+            "replace/batch-0.json",
+            "--strategy",
+            "replace"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.097856+00:00",
+          "endedUtc": "2026-10-05T11:33:50.153579+00:00",
+          "exitCode": 0,
+          "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+          "beforeDbSha256": "48b7c7e7c1116e758ff0db9d89b30f8b88ae3c8155d603544ea76df557b723bf",
+          "afterDbSha256": "24e3e1dd85392d7972f4ebc8b5efa0c28e49d9fe4141878801c41c5f6e8c7953",
+          "stdout": "{\"strategy\": \"replace\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"d\", 400]], \"count\": 2, \"sum\": 510, \"ledger\": [], \"actions\": [{\"eventId\": \"e1\", \"action\": \"insert\"}, {\"eventId\": \"e2\", \"action\": \"delete-ignored-by-snapshot-strategy\"}, {\"eventId\": \"e3\", \"action\": \"insert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"DELETE FROM items\", \"params\": [], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?)\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?)\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": []}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "replace",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 2,
+            "sum": 510,
+            "ledger": [],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "insert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete-ignored-by-snapshot-strategy"
+              },
+              {
+                "eventId": "e3",
+                "action": "insert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "DELETE FROM items",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?)",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?)",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "append",
+      "strategy": "append",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "48b7c7e7c1116e758ff0db9d89b30f8b88ae3c8155d603544ea76df557b723bf",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "append/data.sqlite",
+            "--input",
+            "append/batch-0.json",
+            "--strategy",
+            "append"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.159485+00:00",
+          "endedUtc": "2026-10-05T11:33:50.214010+00:00",
+          "exitCode": 0,
+          "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+          "beforeDbSha256": "48b7c7e7c1116e758ff0db9d89b30f8b88ae3c8155d603544ea76df557b723bf",
+          "afterDbSha256": "3088a2403ac746efae1177c428227949b0c9af10c21fae95956cea021a6b2ed6",
+          "stdout": "{\"strategy\": \"append\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 100], [\"a\", 110], [\"b\", 200], [\"c\", 300], [\"d\", 400]], \"count\": 5, \"sum\": 1110, \"ledger\": [], \"actions\": [{\"eventId\": \"e1\", \"action\": \"insert\"}, {\"eventId\": \"e2\", \"action\": \"delete-ignored-by-snapshot-strategy\"}, {\"eventId\": \"e3\", \"action\": \"insert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?)\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?)\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"a\", 110], [\"b\", 200], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": []}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "append",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                100
+              ],
+              [
+                "a",
+                110
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 5,
+            "sum": 1110,
+            "ledger": [],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "insert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete-ignored-by-snapshot-strategy"
+              },
+              {
+                "eventId": "e3",
+                "action": "insert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?)",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?)",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "keyed",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "keyed/data.sqlite",
+            "--input",
+            "keyed/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.219644+00:00",
+          "endedUtc": "2026-10-05T11:33:50.277482+00:00",
+          "exitCode": 0,
+          "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]], \"actions\": [{\"eventId\": \"e1\", \"action\": \"upsert\"}, {\"eventId\": \"e2\", \"action\": \"delete\"}, {\"eventId\": \"e3\", \"action\": \"upsert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": []}, {\"sql\": \"SELECT key FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": [[\"b\"]]}, {\"sql\": \"DELETE FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 810,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ]
+            ],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete"
+              },
+              {
+                "eventId": "e3",
+                "action": "upsert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e1",
+                  "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e2"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": [
+                  [
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "sql": "DELETE FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e2",
+                  "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e3"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e3",
+                  "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "keyed/data.sqlite",
+            "--input",
+            "keyed/batch-1.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.280194+00:00",
+          "endedUtc": "2026-10-05T11:33:50.334974+00:00",
+          "exitCode": 0,
+          "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+          "beforeDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "afterDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]], \"actions\": [{\"eventId\": \"e1\", \"action\": \"already-applied\"}, {\"eventId\": \"e2\", \"action\": \"already-applied\"}, {\"eventId\": \"e3\", \"action\": \"already-applied\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": [[\"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"]]}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": [[\"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"]]}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": [[\"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 810,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ]
+            ],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "already-applied"
+              },
+              {
+                "eventId": "e2",
+                "action": "already-applied"
+              },
+              {
+                "eventId": "e3",
+                "action": "already-applied"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": [
+                  [
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e2"
+                ],
+                "rows": [
+                  [
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e3"
+                ],
+                "rows": [
+                  [
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ]
+                ]
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "unknown-delete",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "unknown-delete/data.sqlite",
+            "--input",
+            "unknown-delete/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.339472+00:00",
+          "endedUtc": "2026-10-05T11:33:50.394262+00:00",
+          "exitCode": 2,
+          "inputSha256": "1297d96c2e4a64cf1b21e453e842f1c6beb335e5cd7e648478d569c342121dd8",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e5\", \"op\": \"delete\", \"key\": \"z\", \"sourceVersion\": 1}], \"order\": [\"e1\", \"e5\"], \"after\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"count\": 3, \"sum\": 600, \"ledger\": [], \"actions\": [{\"eventId\": \"e1\", \"action\": \"upsert\"}], \"reason\": \"unknown-delete:z\", \"exitCode\": 2, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e5\"], \"rows\": []}, {\"sql\": \"SELECT key FROM items WHERE key=?\", \"params\": [\"z\"], \"rows\": []}, {\"sql\": \"ROLLBACK\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": []}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e5",
+                "op": "delete",
+                "key": "z",
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e5"
+            ],
+            "after": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "count": 3,
+            "sum": 600,
+            "ledger": [],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "upsert"
+              }
+            ],
+            "reason": "unknown-delete:z",
+            "exitCode": 2,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e1",
+                  "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e5"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key FROM items WHERE key=?",
+                "params": [
+                  "z"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "ROLLBACK",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "duplicate-id",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "duplicate-id/data.sqlite",
+            "--input",
+            "duplicate-id/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.399115+00:00",
+          "endedUtc": "2026-10-05T11:33:50.455288+00:00",
+          "exitCode": 2,
+          "inputSha256": "9bd5e4f9a1884f90f8b0e9b34eafd1a65a7a53ca8ab7e33ec5b4b88347965756",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}], \"order\": [\"e1\", \"e1\"], \"after\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"count\": 3, \"sum\": 600, \"ledger\": [], \"actions\": [], \"reason\": \"duplicate-event-id:e1\", \"exitCode\": 2, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": []}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              }
+            ],
+            "order": [
+              "e1",
+              "e1"
+            ],
+            "after": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "count": 3,
+            "sum": 600,
+            "ledger": [],
+            "actions": [],
+            "reason": "duplicate-event-id:e1",
+            "exitCode": 2,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "id-collision",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "id-collision/data.sqlite",
+            "--input",
+            "id-collision/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.460676+00:00",
+          "endedUtc": "2026-10-05T11:33:50.518464+00:00",
+          "exitCode": 0,
+          "inputSha256": "e7cc483a9e92f8ace324ad3cbe4185686d4f43ae1090b8bd1aa66397555f05f3",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]], \"actions\": [{\"eventId\": \"e1\", \"action\": \"upsert\"}, {\"eventId\": \"e2\", \"action\": \"delete\"}, {\"eventId\": \"e3\", \"action\": \"upsert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": []}, {\"sql\": \"SELECT key FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": [[\"b\"]]}, {\"sql\": \"DELETE FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 810,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ]
+            ],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete"
+              },
+              {
+                "eventId": "e3",
+                "action": "upsert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e1",
+                  "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e2"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": [
+                  [
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "sql": "DELETE FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e2",
+                  "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e3"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e3",
+                  "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "id-collision/data.sqlite",
+            "--input",
+            "id-collision/batch-1.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.520759+00:00",
+          "endedUtc": "2026-10-05T11:33:50.577434+00:00",
+          "exitCode": 2,
+          "inputSha256": "33f1ccf5f90e892f3f3f76bfe005ea0f9d8f50d33ccd59eda8d16254efe8c64e",
+          "beforeDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "afterDbSha256": "2daacf8c7a0bb81d8eba7d4cdaafb45ab20f5ba6b13fbef41da3adfc9fd375f6",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 999, \"sourceVersion\": 2}], \"order\": [\"e1\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]], \"actions\": [], \"reason\": \"event-id-payload-conflict:e1\", \"exitCode\": 2, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": [[\"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"]]}, {\"sql\": \"ROLLBACK\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 999,
+                "sourceVersion": 2
+              }
+            ],
+            "order": [
+              "e1"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 810,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ]
+            ],
+            "actions": [],
+            "reason": "event-id-payload-conflict:e1",
+            "exitCode": 2,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": [
+                  [
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ]
+                ]
+              },
+              {
+                "sql": "ROLLBACK",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-key-order",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "same-key-order/data.sqlite",
+            "--input",
+            "same-key-order/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.582173+00:00",
+          "endedUtc": "2026-10-05T11:33:50.638020+00:00",
+          "exitCode": 0,
+          "inputSha256": "596d3eca85a026dc0bf260ba2e057a51460be16fd9bdb85d90622e6a2083cd97",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "7eba282b0b1a6ae551c106f55dd08d4b547c968de86c612720b52c5ed7ed2ae0",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}, {\"eventId\": \"e4\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 120, \"sourceVersion\": 3}], \"order\": [\"e1\", \"e2\", \"e3\", \"e4\"], \"after\": [[\"a\", 120], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 820, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"]], \"actions\": [{\"eventId\": \"e1\", \"action\": \"upsert\"}, {\"eventId\": \"e2\", \"action\": \"delete\"}, {\"eventId\": \"e3\", \"action\": \"upsert\"}, {\"eventId\": \"e4\", \"action\": \"upsert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": []}, {\"sql\": \"SELECT key FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": [[\"b\"]]}, {\"sql\": \"DELETE FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e4\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 120], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 120], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              },
+              {
+                "eventId": "e4",
+                "op": "upsert",
+                "key": "a",
+                "price": 120,
+                "sourceVersion": 3
+              }
+            ],
+            "order": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "after": [
+              [
+                "a",
+                120
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 820,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ],
+              [
+                "e4",
+                "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+              ]
+            ],
+            "actions": [
+              {
+                "eventId": "e1",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete"
+              },
+              {
+                "eventId": "e3",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e4",
+                "action": "upsert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e1",
+                  "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e2"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": [
+                  [
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "sql": "DELETE FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e2",
+                  "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e3"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e3",
+                  "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e4"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  120
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e4",
+                  "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    120
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ],
+                  [
+                    "e4",
+                    "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "same-key-reverse",
+      "strategy": "keyed",
+      "initial": [
+        [
+          "a",
+          100
+        ],
+        [
+          "b",
+          200
+        ],
+        [
+          "c",
+          300
+        ]
+      ],
+      "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+      "attempts": [
+        {
+          "index": 0,
+          "argv": [
+            "python3",
+            "-B",
+            "worker.py",
+            "--db",
+            "same-key-reverse/data.sqlite",
+            "--input",
+            "same-key-reverse/batch-0.json",
+            "--strategy",
+            "keyed"
+          ],
+          "executablePathNormalized": true,
+          "startedUtc": "2026-10-05T11:33:50.644486+00:00",
+          "endedUtc": "2026-10-05T11:33:50.701272+00:00",
+          "exitCode": 0,
+          "inputSha256": "641bb55e79d7400ea0270ed867c7612689273cc261f937023e0c826c2d92b8dc",
+          "beforeDbSha256": "c091eca76f6e7c73a517802c66d2ae496e235ea021eb9361554caa49cf97c82d",
+          "afterDbSha256": "0707584a60766d68b46a8b8d5c28447904b94eaa96382182965ee50ceb5ac517",
+          "stdout": "{\"strategy\": \"keyed\", \"before\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]], \"events\": [{\"eventId\": \"e4\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 120, \"sourceVersion\": 3}, {\"eventId\": \"e1\", \"op\": \"upsert\", \"key\": \"a\", \"price\": 110, \"sourceVersion\": 2}, {\"eventId\": \"e2\", \"op\": \"delete\", \"key\": \"b\", \"sourceVersion\": 2}, {\"eventId\": \"e3\", \"op\": \"upsert\", \"key\": \"d\", \"price\": 400, \"sourceVersion\": 1}], \"order\": [\"e4\", \"e1\", \"e2\", \"e3\"], \"after\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]], \"count\": 3, \"sum\": 810, \"ledger\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"]], \"actions\": [{\"eventId\": \"e4\", \"action\": \"upsert\"}, {\"eventId\": \"e1\", \"action\": \"upsert\"}, {\"eventId\": \"e2\", \"action\": \"delete\"}, {\"eventId\": \"e3\", \"action\": \"upsert\"}], \"reason\": null, \"exitCode\": 0, \"sqlTrace\": [{\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 100], [\"b\", 200], [\"c\", 300]]}, {\"sql\": \"BEGIN IMMEDIATE\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e4\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 120], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e1\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"a\", 110], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e2\"], \"rows\": []}, {\"sql\": \"SELECT key FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": [[\"b\"]]}, {\"sql\": \"DELETE FROM items WHERE key=?\", \"params\": [\"b\"], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], \"rows\": []}, {\"sql\": \"SELECT payload_sha FROM applied WHERE event_id=?\", \"params\": [\"e3\"], \"rows\": []}, {\"sql\": \"INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price\", \"params\": [\"d\", 400], \"rows\": []}, {\"sql\": \"INSERT INTO applied(event_id,payload_sha) VALUES(?,?)\", \"params\": [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], \"rows\": []}, {\"sql\": \"COMMIT\", \"params\": [], \"rows\": []}, {\"sql\": \"SELECT key,price FROM items ORDER BY key,price\", \"params\": [], \"rows\": [[\"a\", 110], [\"c\", 300], [\"d\", 400]]}, {\"sql\": \"SELECT event_id,payload_sha FROM applied ORDER BY event_id\", \"params\": [], \"rows\": [[\"e1\", \"bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911\"], [\"e2\", \"90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629\"], [\"e3\", \"075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442\"], [\"e4\", \"5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477\"]]}]}\n",
+          "stderr": "",
+          "observation": {
+            "strategy": "keyed",
+            "before": [
+              [
+                "a",
+                100
+              ],
+              [
+                "b",
+                200
+              ],
+              [
+                "c",
+                300
+              ]
+            ],
+            "events": [
+              {
+                "eventId": "e4",
+                "op": "upsert",
+                "key": "a",
+                "price": 120,
+                "sourceVersion": 3
+              },
+              {
+                "eventId": "e1",
+                "op": "upsert",
+                "key": "a",
+                "price": 110,
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e2",
+                "op": "delete",
+                "key": "b",
+                "sourceVersion": 2
+              },
+              {
+                "eventId": "e3",
+                "op": "upsert",
+                "key": "d",
+                "price": 400,
+                "sourceVersion": 1
+              }
+            ],
+            "order": [
+              "e4",
+              "e1",
+              "e2",
+              "e3"
+            ],
+            "after": [
+              [
+                "a",
+                110
+              ],
+              [
+                "c",
+                300
+              ],
+              [
+                "d",
+                400
+              ]
+            ],
+            "count": 3,
+            "sum": 810,
+            "ledger": [
+              [
+                "e1",
+                "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+              ],
+              [
+                "e2",
+                "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+              ],
+              [
+                "e3",
+                "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+              ],
+              [
+                "e4",
+                "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+              ]
+            ],
+            "actions": [
+              {
+                "eventId": "e4",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e1",
+                "action": "upsert"
+              },
+              {
+                "eventId": "e2",
+                "action": "delete"
+              },
+              {
+                "eventId": "e3",
+                "action": "upsert"
+              }
+            ],
+            "reason": null,
+            "exitCode": 0,
+            "sqlTrace": [
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    100
+                  ],
+                  [
+                    "b",
+                    200
+                  ],
+                  [
+                    "c",
+                    300
+                  ]
+                ]
+              },
+              {
+                "sql": "BEGIN IMMEDIATE",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e4"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  120
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e4",
+                  "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e1"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "a",
+                  110
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e1",
+                  "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e2"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": [
+                  [
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "sql": "DELETE FROM items WHERE key=?",
+                "params": [
+                  "b"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e2",
+                  "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "SELECT payload_sha FROM applied WHERE event_id=?",
+                "params": [
+                  "e3"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO items(key,price) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET price=excluded.price",
+                "params": [
+                  "d",
+                  400
+                ],
+                "rows": []
+              },
+              {
+                "sql": "INSERT INTO applied(event_id,payload_sha) VALUES(?,?)",
+                "params": [
+                  "e3",
+                  "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                ],
+                "rows": []
+              },
+              {
+                "sql": "COMMIT",
+                "params": [],
+                "rows": []
+              },
+              {
+                "sql": "SELECT key,price FROM items ORDER BY key,price",
+                "params": [],
+                "rows": [
+                  [
+                    "a",
+                    110
+                  ],
+                  [
+                    "c",
+                    300
+                  ],
+                  [
+                    "d",
+                    400
+                  ]
+                ]
+              },
+              {
+                "sql": "SELECT event_id,payload_sha FROM applied ORDER BY event_id",
+                "params": [],
+                "rows": [
+                  [
+                    "e1",
+                    "bc3dea885a2bf6b41620a4c5be42fad0576a5605fdf477e592ec3844a3099911"
+                  ],
+                  [
+                    "e2",
+                    "90da7e668adaad8175cffdb357f30183be11425701822559b5ef4a78f3fb2629"
+                  ],
+                  [
+                    "e3",
+                    "075503a0492b0da490922e4af1a4e4fa9502eb94151e699d3e2f587bd6d51442"
+                  ],
+                  [
+                    "e4",
+                    "5979c497bd1a880fa241b3c62e54da94530acce3bc922f7d92973bf171f57477"
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "compileOptions": [
+    "ATOMIC_INTRINSICS=1",
+    "BUG_COMPATIBLE_20160819",
+    "CCCRYPT256",
+    "CODEC=see-cccrypt",
+    "COMPILER=clang-17.0.0",
+    "DEFAULT_AUTOVACUUM",
+    "DEFAULT_CACHE_SIZE=2000",
+    "DEFAULT_CKPTFULLFSYNC",
+    "DEFAULT_FILE_FORMAT=4",
+    "DEFAULT_JOURNAL_SIZE_LIMIT=32768",
+    "DEFAULT_LOOKASIDE=1200,102",
+    "DEFAULT_MEMSTATUS=0",
+    "DEFAULT_MMAP_SIZE=0",
+    "DEFAULT_PAGE_SIZE=4096",
+    "DEFAULT_PCACHE_INITSZ=20",
+    "DEFAULT_RECURSIVE_TRIGGERS",
+    "DEFAULT_SECTOR_SIZE=4096",
+    "DEFAULT_SYNCHRONOUS=2",
+    "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+    "DEFAULT_WAL_SYNCHRONOUS=1",
+    "DEFAULT_WORKER_THREADS=0",
+    "DIRECT_OVERFLOW_READ",
+    "DQS=3",
+    "ENABLE_API_ARMOR",
+    "ENABLE_BYTECODE_VTAB",
+    "ENABLE_COLUMN_METADATA",
+    "ENABLE_DBSTAT_VTAB",
+    "ENABLE_FTS3",
+    "ENABLE_FTS3_PARENTHESIS",
+    "ENABLE_FTS3_TOKENIZER",
+    "ENABLE_FTS4",
+    "ENABLE_FTS5",
+    "ENABLE_LOCKING_STYLE=1",
+    "ENABLE_MATH_FUNCTIONS",
+    "ENABLE_NORMALIZE",
+    "ENABLE_PREUPDATE_HOOK",
+    "ENABLE_RTREE",
+    "ENABLE_SESSION",
+    "ENABLE_SETLK_TIMEOUT",
+    "ENABLE_SNAPSHOT",
+    "ENABLE_SQLLOG",
+    "ENABLE_STMT_SCANSTATUS",
+    "ENABLE_UNKNOWN_SQL_FUNCTION",
+    "ENABLE_UPDATE_DELETE_LIMIT",
+    "HAS_CODEC_RESTRICTED",
+    "HAVE_ISNAN",
+    "MALLOC_SOFT_LIMIT=1024",
+    "MAX_ATTACHED=10",
+    "MAX_COLUMN=2000",
+    "MAX_COMPOUND_SELECT=500",
+    "MAX_DEFAULT_PAGE_SIZE=8192",
+    "MAX_EXPR_DEPTH=1000",
+    "MAX_FUNCTION_ARG=127",
+    "MAX_LENGTH=2147483645",
+    "MAX_LIKE_PATTERN_LENGTH=50000",
+    "MAX_MMAP_SIZE=1073741824",
+    "MAX_PAGE_COUNT=1073741823",
+    "MAX_PAGE_SIZE=65536",
+    "MAX_SQL_LENGTH=1000000000",
+    "MAX_TRIGGER_DEPTH=1000",
+    "MAX_VARIABLE_NUMBER=500000",
+    "MAX_VDBE_OP=250000000",
+    "MAX_WORKER_THREADS=8",
+    "MUTEX_UNFAIR",
+    "OMIT_AUTORESET",
+    "OMIT_LOAD_EXTENSION",
+    "STMTJRNL_SPILL=131072",
+    "SYSTEM_MALLOC",
+    "TEMP_STORE=1",
+    "THREADSAFE=2",
+    "USE_URI"
+  ],
+  "sqliteSourceId": "2025-06-12 13:14:41 f0ca7bba1c5e232e5d279fad6338121ab55af0c8c68c84cdfb18ba5114dcaapl",
+  "endedUtc": "2026-10-05T11:33:50.703761+00:00"
+}

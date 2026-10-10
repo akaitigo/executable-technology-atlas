@@ -1,0 +1,229 @@
+{
+  "finiteUnit": "riff-chunk-padding",
+  "scope": "Fixed classic RIFF/WAVE mono 16-bit PCM; no fullGate/Core claim",
+  "checks": [
+    {
+      "check": "checker",
+      "exitCode": 0,
+      "output": "PASS 7 hand byte/offset cases; strict/refusal and actual wave outcomes kept separate\n"
+    },
+    {
+      "check": "negative",
+      "exitCode": 0,
+      "output": "[\n  {\n    \"test\": \"read-only SHA256+mtime_ns\",\n    \"passed\": true\n  },\n  {\n    \"test\": \"omit-pad-next\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"hand offset table\"\n  },\n  {\n    \"test\": \"wrong-pcm\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"PCM literal\"\n  },\n  {\n    \"test\": \"declared-as-actual\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"\"\n  },\n  {\n    \"test\": \"false-refusal-success\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"strict acceptance literal\"\n  },\n  {\n    \"test\": \"wrong-wave-complete\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"\"\n  },\n  {\n    \"test\": \"wrong-bug-size\",\n    \"passed\": true,\n    \"rawDerivedHashesConsistent\": true,\n    \"oracleRejection\": \"omitted pad fault\"\n  }\n]\n"
+    },
+    {
+      "check": "route-inspect",
+      "exitCode": 0,
+      "output": "PASS saved evidence read-only\n"
+    },
+    {
+      "check": "route-lesson",
+      "exitCode": 0,
+      "output": "index.html; evidence observations/20261005T121906434210Z\n"
+    },
+    {
+      "check": "route-unsupported",
+      "exitCode": 2,
+      "output": "unsupported route\n"
+    },
+    {
+      "check": "skill-validator",
+      "exitCode": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "check": "owned-port-closed",
+      "exitCode": 1,
+      "output": ""
+    },
+    {
+      "check": "protected-port-53478",
+      "exitCode": 0,
+      "output": "3901\n"
+    },
+    {
+      "check": "protected-port-60285",
+      "exitCode": 0,
+      "output": "64319\n"
+    },
+    {
+      "check": "capture-dimensions",
+      "exitCode": 0,
+      "output": "<module>/media/odd-junk-pad48.jpg\n  pixelWidth: 1280\n  pixelHeight: 2010\n<module>/media/odd-junk-bug47.jpg\n  pixelWidth: 1280\n  pixelHeight: 2010\n<module>/media/short-data-refusal-wave-read.jpg\n  pixelWidth: 1280\n  pixelHeight: 1982\n"
+    }
+  ],
+  "preview": {
+    "command": "python3 preview.py",
+    "normalAttempt": {
+      "exitCode": 1,
+      "output": "Traceback (most recent call last):\n  File \"<module>/preview.py\", line 10, in <module>\n    with http.server.ThreadingHTTPServer(('127.0.0.1',0),Handler) as s:\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 452, in __init__\n    self.server_bind()\n  File \"<python-runtime>/lib/python3.9/http/server.py\", line 138, in server_bind\n    socketserver.TCPServer.server_bind(self)\n  File \"<python-runtime>/lib/python3.9/socketserver.py\", line 466, in server_bind\n    self.socket.bind(self.server_address)\nPermissionError: [Errno 1] Operation not permitted\n"
+    },
+    "sameCommandPermissionAttempt": {
+      "port": 50765,
+      "ownedSession": 60378
+    },
+    "cleanup": {
+      "tab14Closed": true,
+      "serverExitCode": 0,
+      "ownedPortClosed": true,
+      "protectedListeners": {
+        "53478": 3901,
+        "60285": 64319
+      }
+    }
+  },
+  "ui": {
+    "fixtureComparisons": 7,
+    "resetChecks": 20,
+    "predictionChange": "Changed prediction retained; preceding results hidden and answer cleared",
+    "captures": [
+      {
+        "path": "media/odd-junk-pad48.jpg",
+        "width": 1280,
+        "height": 2010
+      },
+      {
+        "path": "media/odd-junk-bug47.jpg",
+        "width": 1280,
+        "height": 2010
+      },
+      {
+        "path": "media/short-data-refusal-wave-read.jpg",
+        "width": 1280,
+        "height": 1982
+      }
+    ],
+    "evidence": [
+      "media/iab-seven-fixtures.json",
+      "media/iab-resets.json",
+      "media/iab-refusal-raw.txt",
+      "media/iab-wrong-prediction.txt",
+      "media/iab-implementation-links.json",
+      "media/iab-console.json"
+    ]
+  },
+  "outcomes": {
+    "strictAccepted": 3,
+    "strictRefused": 4,
+    "waveRead": 6,
+    "waveCompleteDeclaredFrames": 4,
+    "waveShortRead": 2,
+    "waveException": 1,
+    "missingPadException": {
+      "type": "RuntimeError",
+      "message": ""
+    },
+    "oddJunk": {
+      "strictNextOffset": 48,
+      "faultyNextOffset": 47,
+      "pcmUnchanged": true
+    }
+  },
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/xaudio2/resource-interchange-file-format--riff-",
+      "claim": "chunkSize excludes header and padding; WORD-boundary padding"
+    },
+    {
+      "url": "https://docs.python.org/3.9/library/wave.html#wave.Wave_read.readframes",
+      "claim": "readframes reads at most requested frames"
+    }
+  ],
+  "limitations": [
+    "No RF64, codec, playback-quality or streaming guarantee",
+    "Actual wave outcome is reported separately from strict local contract"
+  ],
+  "frozenAfterQA": true,
+  "currentRun": "observations/20261005T121906434210Z",
+  "runtime": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "library": "stdlib wave",
+    "readframesCap": 16,
+    "fixtureReadCapBytes": 1025
+  },
+  "sourceHashes": {
+    "runner.py": "448273c334c594bfbb6cdd792e6045dcb6b1b842ce9d92ed89b63ae085e760ce",
+    "worker.py": "54ef0fe88b04e3bf02a247ead761a8553f25c8866e2aa7560997e66979aeda83",
+    "checker.py": "6fcda3a3621814ca5c1e7e9cb2a03a2ca38894b9464da0617b7c6a01d1cc27bb",
+    "oracle.json": "6535e5d716f1a4d633240220bdeb980b28afc5df8728db600b9ff377f0619bee",
+    "index.html": "ff320d5778a3f870899fece1243ad15028439290c70c943bac8a30230e033340",
+    "preview.py": "ded5802ffca92a2bc3726aa2fff8920ea2f64b3a68de5e254e4c4c4ad5c4c935",
+    "route.py": "fd4fc127ca5e3a7878cac14317d07a4ca46099eeec5323ca6eb7804b5704853b",
+    "test_negative.py": "d1e0eac7ba38d0242f135d4c7bd0442cc200c332b80d7d7be3623e256613ba3b",
+    "README.md": "9025166224dff815d4643e29c7d4a9e6eb9a0e5f6867fa6a72925859eb269802",
+    "COVERAGE.md": "cce9cb1260b1c38849eede97e42445cfad3371095ac285f2c7d6c9f1396bf798",
+    "skills/riff-chunk-padding/SKILL.md": "9b0678aa4590168a2a24e74e3b045058ad4bfa35da81d98c11f71f0f42eb144a"
+  },
+  "actualRunnerStdoutMatchesSavedBytes": true,
+  "oracleFixedBeforeLatestRun": true,
+  "historicalRawPreserved": {
+    "count": 27,
+    "sha256AndMtimeNsUnchanged": true,
+    "archive": "revisions/reading-order-20261005T121906Z",
+    "historicalSourceBindingOnly": true
+  },
+  "localMarkdownLinks": {
+    "count": 14,
+    "allExist": true,
+    "links": [
+      {
+        "source": "README.md",
+        "href": "../../../subjects/media-codec-streaming/coverage.json"
+      },
+      {
+        "source": "README.md",
+        "href": "../../../subjects/media-codec-streaming/README.md"
+      },
+      {
+        "source": "README.md",
+        "href": "oracle.json"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "README.md",
+        "href": "oracle.json"
+      },
+      {
+        "source": "README.md",
+        "href": "worker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "runner.py"
+      },
+      {
+        "source": "README.md",
+        "href": "checker.py"
+      },
+      {
+        "source": "README.md",
+        "href": "CURRENT"
+      },
+      {
+        "source": "README.md",
+        "href": "QA.json"
+      },
+      {
+        "source": "README.md",
+        "href": "COVERAGE.md"
+      },
+      {
+        "source": "README.md",
+        "href": "skills/riff-chunk-padding/SKILL.md"
+      }
+    ]
+  }
+}

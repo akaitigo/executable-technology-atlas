@@ -1,0 +1,9 @@
+import {readFile,mkdir,writeFile} from 'node:fs/promises';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {SOURCES} from './sources.mjs';import {runCase} from './experiment.mjs';import {expected,expectedHex} from './oracle.mjs';
+const args=process.argv.slice(2),root=new URL('./',import.meta.url),hash=b=>createHash('sha256').update(b).digest('hex');
+if(args.length)assert(args.length===2&&args[0]==='--record'&&/^observations\/[a-z0-9-]+$/.test(args[1]));
+if(args.length){try{await readFile(new URL(args[1]+'/raw.json',root));throw Error('record directory already exists');}catch(e){if(e.code!=='ENOENT')throw e;}}
+const started=new Date().toISOString(),cases=JSON.parse(await readFile(new URL('cases.json',root))),results=[];let checks=0;
+for(const c of cases){const r=await runCase(c),e=expected(c);for(const k of ['validated','stage','result','jsNumberSum']){assert.deepEqual(r[k],e[k],c.id+' '+k);checks++;}assert.equal(r.error?.name??null,e.errorName);assert.equal(r.bytesHex,expectedHex(c.kind));assert.equal(r.bytesDigest,hash(Buffer.from(r.bytesHex,'hex')));checks+=3;results.push(r);}
+const sourceHashes=Object.fromEntries(await Promise.all(SOURCES.map(async f=>[f,hash(await readFile(new URL(f,root)))])));
+const raw={kind:'actual-node-webassembly',started,completed:new Date().toISOString(),command:'node verify.mjs'+(args.length?' --record '+args[1]:''),attempt:1,retries:0,environment:{node:process.versions.node,v8:process.versions.v8,platform:process.platform,arch:process.arch},sourceHashes,inputDigest:sourceHashes['cases.json'],results,checks};
+if(args.length){const d=new URL(args[1]+'/',root);await mkdir(new URL('observations/',root),{recursive:true});await mkdir(d);await writeFile(new URL('raw.json',d),JSON.stringify(raw,null,2)+'\n',{flag:'wx'});}console.log(JSON.stringify(raw));

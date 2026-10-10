@@ -1,0 +1,285 @@
+{
+  "fixed_before_implementation": true,
+  "initial_capacity": 2,
+  "grow_condition": "new insert then n > capacity; equality does not grow",
+  "rehash_order": "old bucket ascending, chain insertion order; direct append without key comparisons",
+  "comparison_definition": "one visited chain key == requested key; hash, allocation, sorting, list shifting not counted",
+  "movement_definition": "one existing key/value appended to rebuilt table; inserted key included",
+  "fixtures": [
+    {
+      "id": "collision",
+      "operations": [
+        [
+          "put",
+          0,
+          "A"
+        ],
+        [
+          "put",
+          2,
+          "B"
+        ],
+        [
+          "put",
+          4,
+          "C"
+        ],
+        [
+          "find",
+          2
+        ],
+        [
+          "put",
+          2,
+          "BB"
+        ],
+        [
+          "delete",
+          2
+        ],
+        [
+          "find",
+          0
+        ],
+        [
+          "find",
+          2
+        ],
+        [
+          "find",
+          4
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 14,
+        "doubling": 9
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 3
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 4
+      }
+    },
+    {
+      "id": "distributed",
+      "operations": [
+        [
+          "put",
+          0,
+          "A"
+        ],
+        [
+          "put",
+          1,
+          "B"
+        ],
+        [
+          "put",
+          2,
+          "C"
+        ],
+        [
+          "put",
+          3,
+          "D"
+        ],
+        [
+          "put",
+          4,
+          "E"
+        ],
+        [
+          "put",
+          5,
+          "F"
+        ],
+        [
+          "find",
+          5
+        ],
+        [
+          "delete",
+          1
+        ],
+        [
+          "find",
+          1
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 12,
+        "doubling": 4
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 8
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 8
+      }
+    },
+    {
+      "id": "persistent",
+      "operations": [
+        [
+          "put",
+          0,
+          "A"
+        ],
+        [
+          "put",
+          8,
+          "B"
+        ],
+        [
+          "put",
+          16,
+          "C"
+        ],
+        [
+          "put",
+          24,
+          "D"
+        ],
+        [
+          "put",
+          32,
+          "E"
+        ],
+        [
+          "put",
+          40,
+          "F"
+        ],
+        [
+          "find",
+          40
+        ],
+        [
+          "find",
+          48
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 27,
+        "doubling": 27
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 8
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 8
+      }
+    },
+    {
+      "id": "threshold",
+      "operations": [
+        [
+          "put",
+          0,
+          "A"
+        ],
+        [
+          "put",
+          2,
+          "B"
+        ],
+        [
+          "put",
+          2,
+          "BB"
+        ],
+        [
+          "find",
+          2
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 5,
+        "doubling": 5
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 0
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 2
+      }
+    },
+    {
+      "id": "negative",
+      "operations": [
+        [
+          "put",
+          -1,
+          "N"
+        ],
+        [
+          "put",
+          1,
+          "P"
+        ],
+        [
+          "find",
+          -1
+        ],
+        [
+          "delete",
+          1
+        ],
+        [
+          "find",
+          -1
+        ],
+        [
+          "find",
+          1
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 6,
+        "doubling": 6
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 0
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 2
+      }
+    },
+    {
+      "id": "empty",
+      "operations": [
+        [
+          "find",
+          0
+        ],
+        [
+          "delete",
+          0
+        ]
+      ],
+      "normal_comparisons": {
+        "fixed": 0,
+        "doubling": 0
+      },
+      "normal_moves": {
+        "fixed": 0,
+        "doubling": 0
+      },
+      "normal_final_capacity": {
+        "fixed": 2,
+        "doubling": 2
+      }
+    }
+  ]
+}

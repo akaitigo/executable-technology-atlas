@@ -1,0 +1,1804 @@
+{
+  "utc": "2026-10-05T13:27:52.471248+00:00",
+  "command": "python3 -B runner.py --record",
+  "source_sha256": {
+    "fixture.json": "fdde5390e823561c9108645fef37898a1cb297b21fb3aabc6b0daa27ad0f8213",
+    "oracle.json": "092211e7410c457be109ff7c229f5c5f88c6a175645ea1cdd297fdf83863c964",
+    "EXPECTATIONS.md": "2858f9f6daf3d5a4513ecec25982e4e0548027653478325a2861d6a269a50183",
+    "producer.py": "e606812903cab5f69038010e06d904738d436b8308590a84dac4fe1a1d35df85",
+    "runner.py": "85a5a3dbbbc0dec4ceac3715470b2cdffbb2386b13d1d8e3b4540fd3dd7053a6",
+    "server.py": "7f7482b8c638212908562972e1cd29e0a70035bea58c52455b9a1a06d5cdef0b",
+    "index.html": "191cd03f49a4c8d04cb74c92aa492e9fbc0411747ce13b6080a11416d185fead",
+    "ui.js": "ba0dbb9bb9c3c6c03d37d61c5ad24d42194abd428ec8fe456545567bc5746b2a"
+  },
+  "fixture": {
+    "nodes": [
+      {
+        "id": "R-CAP",
+        "type": "requirement",
+        "text": "容量要求"
+      },
+      {
+        "id": "D-CAP",
+        "type": "design",
+        "text": "容量設計"
+      },
+      {
+        "id": "T-CAP",
+        "type": "test",
+        "text": "容量test"
+      },
+      {
+        "id": "R-FIFO",
+        "type": "requirement",
+        "text": "FIFO要求"
+      },
+      {
+        "id": "D-FIFO",
+        "type": "design",
+        "text": "FIFO設計"
+      },
+      {
+        "id": "T-FIFO",
+        "type": "test",
+        "text": "FIFOtest"
+      }
+    ],
+    "forward": [
+      [
+        "R-CAP",
+        "D-CAP"
+      ],
+      [
+        "D-CAP",
+        "T-CAP"
+      ],
+      [
+        "R-FIFO",
+        "D-FIFO"
+      ],
+      [
+        "D-FIFO",
+        "T-FIFO"
+      ]
+    ],
+    "reverse": [
+      [
+        "D-CAP",
+        "R-CAP"
+      ],
+      [
+        "T-CAP",
+        "D-CAP"
+      ],
+      [
+        "D-FIFO",
+        "R-FIFO"
+      ],
+      [
+        "T-FIFO",
+        "D-FIFO"
+      ]
+    ],
+    "cases": [
+      {
+        "id": "cap-change",
+        "label": "容量要求変更 / 正常",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "normal"
+      },
+      {
+        "id": "cap-test-back",
+        "label": "容量testから逆追跡 / 正常",
+        "direction": "reverse",
+        "start": "T-CAP",
+        "variant": "normal"
+      },
+      {
+        "id": "fifo-change",
+        "label": "FIFO要求変更 / 正常",
+        "direction": "forward",
+        "start": "R-FIFO",
+        "variant": "normal"
+      },
+      {
+        "id": "fifo-test-back",
+        "label": "FIFO testから逆追跡 / 正常",
+        "direction": "reverse",
+        "start": "T-FIFO",
+        "variant": "normal"
+      },
+      {
+        "id": "missing-back-forward",
+        "label": "逆link欠落 / 容量変更",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "missing-back"
+      },
+      {
+        "id": "missing-back-reverse",
+        "label": "逆link欠落 / 容量test逆追跡",
+        "direction": "reverse",
+        "start": "T-CAP",
+        "variant": "missing-back"
+      },
+      {
+        "id": "unknown-id",
+        "label": "未知start ID / 拒否",
+        "direction": "forward",
+        "start": "R-UNKNOWN",
+        "variant": "normal"
+      },
+      {
+        "id": "wrong-start-type",
+        "label": "testをforward起点 / 拒否",
+        "direction": "forward",
+        "start": "T-CAP",
+        "variant": "normal"
+      },
+      {
+        "id": "missing-field",
+        "label": "reverse field欠落 / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "missing-field"
+      },
+      {
+        "id": "unknown-endpoint",
+        "label": "edgeの未知ID / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "unknown-endpoint"
+      },
+      {
+        "id": "invalid-edge",
+        "label": "同type edge / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "invalid-edge"
+      },
+      {
+        "id": "duplicate-edge",
+        "label": "edge重複 / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "duplicate-edge"
+      },
+      {
+        "id": "wrong-field-type",
+        "label": "forward型不正 / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "wrong-field-type"
+      },
+      {
+        "id": "edge-shape",
+        "label": "edge形不正 / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "edge-shape"
+      },
+      {
+        "id": "cross-branch",
+        "label": "容量→FIFOの不正edge / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "cross-branch"
+      },
+      {
+        "id": "wrong-node-type",
+        "label": "node type改変 / 拒否",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "wrong-node-type"
+      },
+      {
+        "id": "empty-forward",
+        "label": "forward空 / trace不完全",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "empty-forward"
+      },
+      {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "direction": "forward",
+        "start": "R-CAP",
+        "variant": "execution-failure"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "cap-change",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "reachable": [
+        "D-CAP",
+        "R-CAP",
+        "T-CAP"
+      ],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "R-CAP",
+          "neighbors": [
+            "D-CAP"
+          ]
+        },
+        {
+          "visit": "D-CAP",
+          "neighbors": [
+            "T-CAP"
+          ]
+        },
+        {
+          "visit": "T-CAP",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "cap-test-back",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "reverse",
+        "start": "T-CAP"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "reachable": [
+        "D-CAP",
+        "R-CAP",
+        "T-CAP"
+      ],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "T-CAP",
+          "neighbors": [
+            "D-CAP"
+          ]
+        },
+        {
+          "visit": "D-CAP",
+          "neighbors": [
+            "R-CAP"
+          ]
+        },
+        {
+          "visit": "R-CAP",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "fifo-change",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-FIFO"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "reachable": [
+        "D-FIFO",
+        "R-FIFO",
+        "T-FIFO"
+      ],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "R-FIFO",
+          "neighbors": [
+            "D-FIFO"
+          ]
+        },
+        {
+          "visit": "D-FIFO",
+          "neighbors": [
+            "T-FIFO"
+          ]
+        },
+        {
+          "visit": "T-FIFO",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "fifo-test-back",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "reverse",
+        "start": "T-FIFO"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "reachable": [
+        "D-FIFO",
+        "R-FIFO",
+        "T-FIFO"
+      ],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "T-FIFO",
+          "neighbors": [
+            "D-FIFO"
+          ]
+        },
+        {
+          "visit": "D-FIFO",
+          "neighbors": [
+            "R-FIFO"
+          ]
+        },
+        {
+          "visit": "R-FIFO",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "missing-back-forward",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "TRACE_INCOMPLETE",
+      "reason": "",
+      "reachable": [
+        "D-CAP",
+        "R-CAP",
+        "T-CAP"
+      ],
+      "missing_reverse": [
+        [
+          "D-CAP",
+          "R-CAP"
+        ]
+      ],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "R-CAP",
+          "neighbors": [
+            "D-CAP"
+          ]
+        },
+        {
+          "visit": "D-CAP",
+          "neighbors": [
+            "T-CAP"
+          ]
+        },
+        {
+          "visit": "T-CAP",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "missing-back-reverse",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "reverse",
+        "start": "T-CAP"
+      },
+      "status": "TRACE_INCOMPLETE",
+      "reason": "",
+      "reachable": [
+        "D-CAP",
+        "T-CAP"
+      ],
+      "missing_reverse": [
+        [
+          "D-CAP",
+          "R-CAP"
+        ]
+      ],
+      "missing_forward": [],
+      "trace": [
+        {
+          "visit": "T-CAP",
+          "neighbors": [
+            "D-CAP"
+          ]
+        },
+        {
+          "visit": "D-CAP",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "unknown-id",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-UNKNOWN"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "UNKNOWN_ID",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "wrong-start-type",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "T-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "START_TYPE",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "missing-field",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "MISSING_FIELD",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "unknown-endpoint",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-UNKNOWN"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "UNKNOWN_ENDPOINT",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "invalid-edge",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "R-FIFO"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EDGE_TYPE",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "duplicate-edge",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ],
+            [
+              "R-CAP",
+              "D-CAP"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "DUPLICATE_EDGE",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "wrong-field-type",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": {},
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "FIELD_TYPE",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "edge-shape",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EDGE_SHAPE",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "cross-branch",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-FIFO"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "CROSS_BRANCH",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "wrong-node-type",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "design",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "NODE_IDENTITY",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    },
+    {
+      "case": "empty-forward",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "TRACE_INCOMPLETE",
+      "reason": "",
+      "reachable": [
+        "R-CAP"
+      ],
+      "missing_reverse": [],
+      "missing_forward": [
+        [
+          "D-CAP",
+          "T-CAP"
+        ],
+        [
+          "D-FIFO",
+          "T-FIFO"
+        ],
+        [
+          "R-CAP",
+          "D-CAP"
+        ],
+        [
+          "R-FIFO",
+          "D-FIFO"
+        ]
+      ],
+      "trace": [
+        {
+          "visit": "R-CAP",
+          "neighbors": []
+        }
+      ]
+    },
+    {
+      "case": "execution-failure",
+      "input": {
+        "graph": {
+          "nodes": [
+            {
+              "id": "R-CAP",
+              "type": "requirement",
+              "text": "容量要求"
+            },
+            {
+              "id": "D-CAP",
+              "type": "design",
+              "text": "容量設計"
+            },
+            {
+              "id": "T-CAP",
+              "type": "test",
+              "text": "容量test"
+            },
+            {
+              "id": "R-FIFO",
+              "type": "requirement",
+              "text": "FIFO要求"
+            },
+            {
+              "id": "D-FIFO",
+              "type": "design",
+              "text": "FIFO設計"
+            },
+            {
+              "id": "T-FIFO",
+              "type": "test",
+              "text": "FIFOtest"
+            }
+          ],
+          "forward": [
+            [
+              "R-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-CAP",
+              "T-CAP"
+            ],
+            [
+              "R-FIFO",
+              "D-FIFO"
+            ],
+            [
+              "D-FIFO",
+              "T-FIFO"
+            ]
+          ],
+          "reverse": [
+            [
+              "D-CAP",
+              "R-CAP"
+            ],
+            [
+              "T-CAP",
+              "D-CAP"
+            ],
+            [
+              "D-FIFO",
+              "R-FIFO"
+            ],
+            [
+              "T-FIFO",
+              "D-FIFO"
+            ]
+          ]
+        },
+        "direction": "forward",
+        "start": "R-CAP"
+      },
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected traversal failure",
+      "reachable": [],
+      "missing_reverse": [],
+      "missing_forward": [],
+      "trace": []
+    }
+  ]
+}

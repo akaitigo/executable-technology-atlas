@@ -1,0 +1,13 @@
+{"authorship":"literal HTTP status/body, SQL rows and request connection counts fixed before real HTTP; no adapter/runner import","cases":{
+"normal-json":{"status":201,"body":{"order_id":1,"amount":200},"orders":[[1,2]],"outbox":[[1,"order.created"]],"acquired":1,"closed":1},
+"invalid-json":{"status":400,"body":{"error":"invalid JSON"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"bool-units":{"status":400,"body":{"error":"units must be integer 1..3"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"body-too-large":{"status":413,"body":{"error":"body exceeds 128 bytes"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"missing-length":{"status":411,"body":{"error":"Content-Length required"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"bad-length":{"status":400,"body":{"error":"invalid Content-Length"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"wrong-type":{"status":415,"body":{"error":"Content-Type must be application/json"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"wrong-route":{"status":404,"body":{"error":"route not found"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"wrong-method":{"status":405,"body":{"error":"method must be POST"},"orders":[],"outbox":[],"acquired":0,"closed":0},
+"second-sql-fault":{"status":500,"body":{"error":"storage failure"},"orders":[],"outbox":[],"acquired":1,"closed":1},
+"after-failure":{"status":201,"body":{"order_id":1,"amount":200},"orders":[[1,2]],"outbox":[[1,"order.created"]],"acquired":1,"closed":1}
+},"queries":["SELECT id,units FROM orders ORDER BY id","SELECT order_id,event FROM outbox ORDER BY order_id"],"event_success":["request_received","input_read","input_validated","connection_acquired","transaction_begin","orders_inserted","outbox_inserted","transaction_commit","connection_closed","closed_probe_refused","response_start"],"event_fault":["request_received","input_read","input_validated","connection_acquired","transaction_begin","orders_inserted","fault_before_second_sql","sql_exception","transaction_rollback","connection_closed","closed_probe_refused","response_start"]}

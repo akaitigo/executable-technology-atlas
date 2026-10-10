@@ -1,0 +1,1 @@
+export const SOURCES=['contract.json','cases.json','crc.mjs','oracle.mjs','sources.mjs','verify.mjs','check.mjs','serve.mjs','lesson.mjs','index.html','styles.css','scope.json','skills/atlas-crc-undetected-errors/SKILL.md'];

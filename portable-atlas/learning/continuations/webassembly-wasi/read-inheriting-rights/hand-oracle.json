@@ -1,0 +1,130 @@
+{
+  "title": "Atlas 実装前の権限比較の手表",
+  "schema": 1,
+  "kind": "symbolic bit relations and explicit errno expectations, not measurements",
+  "common": {
+    "fixture_hex": "41746c61730a",
+    "guest_name": "/lesson",
+    "prestat_errno": 0,
+    "directory_PATH_OPEN_preserved": true,
+    "opened_fd_rule": "use successful returned FD; never assume 4",
+    "denied_output_rule": "opened_fd/nread/hex are null and output_used=false",
+    "read_success_rule": "successful chunks concatenate to 6 bytes then successful nread=0; at most 8 reads",
+    "set_rights_errno": 0,
+    "cleanup_rule": "guest close only allocated file and preopen; stop later cases if unconfirmed",
+    "runtime_isolation_guaranteed": false
+  },
+  "cases": [
+    {
+      "id": "granted",
+      "directory": {
+        "base": "D_base",
+        "inheriting": "D_inheriting",
+        "changed": false
+      },
+      "file": {
+        "before": {
+          "base": "2",
+          "inheriting": "0"
+        },
+        "after": {
+          "base": "2",
+          "inheriting": "0"
+        }
+      },
+      "open_errnos": [
+        0
+      ],
+      "read_status": "success_then_eof",
+      "read_errno": 0,
+      "hex": "41746c61730a",
+      "nread_total": 6,
+      "close_roles": [
+        "file",
+        "directory"
+      ],
+      "classification": "read_allowed"
+    },
+    {
+      "id": "directory-before-open",
+      "directory": {
+        "base": "D_base",
+        "inheriting": "D_inheriting & ~2",
+        "changed": true
+      },
+      "file": null,
+      "open_errnos": [
+        76
+      ],
+      "read_status": "not_reached",
+      "read_errno": null,
+      "hex": null,
+      "nread_total": null,
+      "close_roles": [
+        "directory"
+      ],
+      "classification": "new_open_refused"
+    },
+    {
+      "id": "file-read-reduced",
+      "directory": {
+        "base": "D_base",
+        "inheriting": "D_inheriting",
+        "changed": false
+      },
+      "file": {
+        "before": {
+          "base": "2",
+          "inheriting": "0"
+        },
+        "after": {
+          "base": "0",
+          "inheriting": "0"
+        }
+      },
+      "open_errnos": [
+        0
+      ],
+      "read_status": "rights_refusal",
+      "read_errno": 76,
+      "hex": null,
+      "nread_total": null,
+      "close_roles": [
+        "file",
+        "directory"
+      ],
+      "classification": "file_read_refused"
+    },
+    {
+      "id": "opened-before-directory-change",
+      "directory": {
+        "base": "D_base",
+        "inheriting": "D_inheriting & ~2",
+        "changed": true
+      },
+      "file": {
+        "before": {
+          "base": "2",
+          "inheriting": "0"
+        },
+        "after": {
+          "base": "2",
+          "inheriting": "0"
+        }
+      },
+      "open_errnos": [
+        0,
+        76
+      ],
+      "read_status": "success_then_eof",
+      "read_errno": 0,
+      "hex": "41746c61730a",
+      "nread_total": 6,
+      "close_roles": [
+        "file",
+        "directory"
+      ],
+      "classification": "old_read_allowed_new_open_refused"
+    }
+  ]
+}

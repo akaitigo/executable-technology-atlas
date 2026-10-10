@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" role="img" aria-labelledby="title desc">
+  <title id="title">位置、読める範囲、EOFを分ける</title>
+  <desc id="desc">seekだけでは長さ0。位置65535にXを書くと、位置0から65534はゼロとして読め、65535がXになる。先頭から同じ内容を全て書いた対照も読取り内容は同じ。位置65536はEOF。図は模式図で、実画面や物理配置ではない。</desc>
+  <rect width="1000" height="420" rx="16" fill="#f1f5f9"/>
+  <g font-family="system-ui, sans-serif" fill="#182639">
+    <text x="32" y="45" font-size="24" font-weight="700">論理的に読める範囲を見る</text>
+    <text x="32" y="75" font-size="16">模式図：横幅はバイト数に比例しません。物理ブロックの配置も示しません。</text>
+    <text x="32" y="123" font-size="17" font-weight="600">① seekだけ</text>
+    <rect x="255" y="98" width="575" height="43" rx="6" fill="none" stroke="#64748b" stroke-dasharray="6 4"/>
+    <text x="278" y="125" font-size="17">長さ0 → どこを読んでも空の結果（EOF）</text>
+    <text x="32" y="190" font-size="17" font-weight="600">② 末尾にXを書く</text>
+    <rect x="255" y="164" width="495" height="50" rx="6" fill="#bddaf6"/>
+    <rect x="758" y="164" width="72" height="50" rx="6" fill="#f7ce76"/>
+    <text x="275" y="195" font-size="17">位置0〜65,534：ゼロを65,535個読む</text>
+    <text x="782" y="195" font-size="20" font-weight="700">X</text>
+    <text x="845" y="195" font-size="16">長さ65,536</text>
+    <text x="32" y="263" font-size="17" font-weight="600">③ 先頭から全部書く</text>
+    <rect x="255" y="237" width="495" height="50" rx="6" fill="#bddaf6"/>
+    <rect x="758" y="237" width="72" height="50" rx="6" fill="#f7ce76"/>
+    <text x="275" y="268" font-size="17">同じゼロ65,535個を実際に書く</text>
+    <text x="782" y="268" font-size="20" font-weight="700">X</text>
+    <text x="845" y="268" font-size="16">長さ65,536</text>
+    <text x="255" y="320" font-size="16">②と③：全読取りバイトが一致。割当量の一致は条件にしない。</text>
+    <rect x="32" y="343" width="936" height="51" rx="8" fill="#dce8e1"/>
+    <text x="50" y="375" font-size="17">ファイル内のゼロ1バイト b'\x00' ≠ EOFで返る空のバイト列 b''</text>
+  </g>
+</svg>

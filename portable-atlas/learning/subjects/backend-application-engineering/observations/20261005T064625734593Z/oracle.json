@@ -1,0 +1,408 @@
+{
+  "execution_id": "20261005T064625734593Z",
+  "method": "independent-hand-rows/read-only-SQL",
+  "rows": [
+    {
+      "id": "atomic-normal",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "nonatomic-normal",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "atomic-second-failure",
+      "expected": [
+        [],
+        [],
+        [
+          500
+        ]
+      ],
+      "actual": [
+        [],
+        [],
+        [
+          500
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "nonatomic-second-failure",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [],
+        [
+          500
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [],
+        [
+          500
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [
+        "a"
+      ],
+      "integrity": "ok"
+    },
+    {
+      "id": "quantity-one",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            1
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 1}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            1
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 1}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "quantity-hundred",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            100
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 100}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            100
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 100}"
+          ]
+        ],
+        [
+          201
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "quantity-zero",
+      "expected": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "actual": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "quantity-over",
+      "expected": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "actual": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "quantity-bool",
+      "expected": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "actual": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "blank-name",
+      "expected": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "actual": [
+        [],
+        [],
+        [
+          422
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "duplicate-id",
+      "expected": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201,
+          409
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "a",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "a",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          201,
+          409
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    },
+    {
+      "id": "failure-then-next-request",
+      "expected": [
+        [
+          [
+            "b",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "b",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          500,
+          201
+        ]
+      ],
+      "actual": [
+        [
+          [
+            "b",
+            "教材",
+            2
+          ]
+        ],
+        [
+          [
+            "b",
+            "OrderCreated",
+            "{\"quantity\": 2}"
+          ]
+        ],
+        [
+          500,
+          201
+        ]
+      ],
+      "match": true,
+      "order_without_outbox": [],
+      "integrity": "ok"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "title": "Atlas FD_READ の有限比較入力",
+  "schema": 1,
+  "runtime": {
+    "node": "25.2.1",
+    "uvwasi": "0.0.23",
+    "wasi": "preview1"
+  },
+  "fixture": {
+    "guest_preopen": "/lesson",
+    "filename": "note.txt",
+    "hex": "41746c61730a",
+    "bytes": 6
+  },
+  "rights": {
+    "FD_READ": 2,
+    "PATH_OPEN": 8192
+  },
+  "requested_file_rights": {
+    "base": "2",
+    "inheriting": "0"
+  },
+  "read_limit": {
+    "bytes_per_call": 8,
+    "calls_per_case": 8
+  },
+  "cases": [
+    {
+      "id": "granted",
+      "change": "none"
+    },
+    {
+      "id": "directory-before-open",
+      "change": "remove FD_READ from directory inheriting before first open"
+    },
+    {
+      "id": "file-read-reduced",
+      "change": "remove FD_READ from opened file base before read"
+    },
+    {
+      "id": "opened-before-directory-change",
+      "change": "open file first, then remove FD_READ from directory inheriting, read old file and attempt new open"
+    }
+  ]
+}

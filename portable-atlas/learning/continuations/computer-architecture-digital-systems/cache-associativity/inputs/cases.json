@@ -1,0 +1,63 @@
+{
+  "project": "Atlas",
+  "capacity_bytes": 16,
+  "line_bytes": 4,
+  "memory_bytes": 256,
+  "memory_rule": "(17*address+3)%256",
+  "cases": [
+    {
+      "id": "conflict",
+      "addresses": [
+        0,
+        16,
+        0,
+        16
+      ]
+    },
+    {
+      "id": "overfull-set",
+      "addresses": [
+        0,
+        8,
+        16,
+        0,
+        8
+      ]
+    },
+    {
+      "id": "hit-recency",
+      "addresses": [
+        0,
+        8,
+        0,
+        16,
+        0,
+        8
+      ]
+    },
+    {
+      "id": "offsets",
+      "addresses": [
+        3,
+        0,
+        4,
+        7,
+        255,
+        252
+      ]
+    },
+    {
+      "id": "empty",
+      "addresses": []
+    }
+  ],
+  "normal_modes": [
+    "direct",
+    "two-way-lru"
+  ],
+  "fault": {
+    "case": "hit-recency",
+    "mode": "two-way-no-hit-touch",
+    "change": "skip recency touch on hits only"
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas｜同じ内容、同じファイル？</title>
+<link rel="stylesheet" href="style.css">
+<script src="lesson.js" defer></script>
+</head>
+<body><main>
+<header><p class="eyebrow">Atlas / ストレージ・ファイルシステム工学</p>
+<h1>同じ内容、<br>同じファイル？</h1>
+<p class="lead">hardlink は同じ実体を指す別名。copy は、読んだ内容を新しいファイルへ書いたもの。この違いを 6 バイトの書換えで確かめます。</p>
+<p class="notice">この画面は保存した測定結果を読みます。ボタンで OS の実験を再実行しません。</p></header>
+
+<section aria-labelledby="predict-heading"><h2 id="predict-heading">1. 結果を予想する</h2>
+<p><code>original</code> と <code>alias</code> は hardlink、<code>copy</code> は内容のコピーです。入力はすべて改行を含む 6 バイトです。</p>
+<fieldset id="conditions"><legend>見る時点を選ぶ</legend>
+<label><input type="radio" name="phase" value="created" checked>① original を作成</label>
+<label><input type="radio" name="phase" value="linked_and_copied">② hardlink と copy を追加</label>
+<label><input type="radio" name="phase" value="duplicate_link_rejected">③ 同じ宛先へ再び link</label>
+<label><input type="radio" name="phase" value="alias_overwritten">④ alias を BRAVO に書換え</label>
+<label><input type="radio" name="phase" value="copy_overwritten">⑤ copy を COPY! に書換え</label>
+<label><input type="radio" name="phase" value="original_unlinked">⑥ original の名前を削除</label>
+</fieldset>
+<label for="prediction">どの名前から、どの内容が読めると思いますか？</label>
+<textarea id="prediction" rows="3" placeholder="同じ実体を指す名前と、別の実体を指す名前も考えてみる"></textarea>
+<p class="small">自由記述の予想です。自動採点はせず、下の測定結果と自分で比べます。</p>
+<div class="actions"><button id="load" type="button">この時点の測定結果を見る</button><button id="reset" type="button" class="secondary">予想と結果をリセット</button></div>
+<p id="status" role="status" aria-live="polite">予想を書いて、見る時点を選んでください。</p>
+</section>
+
+<section aria-labelledby="compare-heading"><h2 id="compare-heading">2. 操作と対照を比べる</h2>
+<p>inode はファイル実体を識別する番号です。デバイス番号 <code>st_dev</code> と組にして今回の実行内だけで比べます。<code>nlink</code> は同じ実体を指す名前の数です。</p>
+<div id="result" hidden><h3 id="phase-title"></h3><p id="operation"></p><p id="result-kind" class="badge"></p>
+<p id="measured-at" class="small"></p>
+<div id="diagram" class="diagram" aria-label="測定結果をもとにした名前と実体の模式図"></div>
+<p class="small">上は測定結果から描く模式図です。ディスクの物理配置や実画面の撮影画像ではありません。A/B はこの実行内だけの説明用記号です。</p>
+<div class="table-wrap"><table><caption>固定の予想と、実際に読めた全 6 バイト</caption><thead><tr><th>名前</th><th>予想した内容</th><th>測定した内容</th><th>nlink</th><th>実体</th></tr></thead><tbody id="comparison"></tbody></table></div>
+<details id="raw-details"><summary>この時点の測定値を読む</summary><pre id="raw"></pre></details>
+</div>
+</section>
+
+<section aria-labelledby="source-heading"><h2 id="source-heading">3. 原典と実装を読む</h2>
+<p>Apple の <a href="https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/link.2.html">保存版 link(2)</a> は、別名の追加とリンク数の増減、既存の宛先に対する EEXIST を説明しています。古い資料なので、今回の Mac の測定結果と分けて読みます。</p>
+<p>Python 3.9 の <a href="https://docs.python.org/3.9/library/os.html#os.link">os.link</a> と <a href="https://docs.python.org/3.9/library/os.html#os.stat_result">stat の返り値</a> も確認できます。</p>
+<p><a href="experiment.py">実験コード</a> · <a href="HAND_TRACE.md">実行前の手計算</a> · <a href="expected.json">固定の期待値</a> · <a href="SOURCES.md">参照資料と既存教材との違い</a></p>
+<p>copy は <code>rb</code> で読んだ内容を <code>xb</code> で新規ファイルへ書きます。書換えは <code>r+b</code> で先頭から同じ長さだけ行い、置換や切詰めをしません。</p>
+</section>
+
+<section aria-labelledby="answer-heading"><h2 id="answer-heading">4. 答えと実務での判断</h2>
+<button id="answer-button" type="button" disabled>この時点の答えを開く</button>
+<div id="answer" hidden><p id="answer-text"></p><p>内容の一致だけでは、更新を共有するか判断できません。別名として使うなら hardlink の共有更新を考慮し、独立した内容を残したいならコピー後の読取りと更新の対照を確認します。バックアップの復元性や耐久性は、さらに別の検証が必要です。</p></div>
+</section>
+
+<section class="limits"><h2>5. この測定で分からないこと</h2>
+<p>物理ブロックの共有・非共有、すべての属性の独立、速さ、電源断後の永続性は測っていません。ファイルシステムの種類も特定していません。名前を消す前に開いた参照を残す実験は、既存の OS 教材で扱います。</p>
+<p>実験準備中に sandbox で停止した記録と、link の宛先が既にあるため意図どおり失敗する EEXIST は別です。削除後の original に対する ENOENT は「名前がない」という観測です。<a href="README.md">実行状況と読み方</a> · <a href="COVERAGE.md">扱った範囲と残る範囲</a></p>
+</section>
+<footer>Atlas の有限な学習単元です。画面の確認状況と独立した受入の記録は <a href="README.md">README</a> を参照してください。</footer>
+</main></body></html>

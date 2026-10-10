@@ -1,0 +1,19 @@
+'use strict';
+const $=id=>document.getElementById(id),data=window.INTERVAL_OBSERVATION;
+const labels={'fresh-day1':'新規 day1/v1 → 5','repeat-day1':'同じ day1/v1 を再利用','new-version':'day1/v2 → 10','new-interval':'day2/v1 → 7','same-input-new-interval':'day2/v2 同じ入力、別区間','same-label-changed-input':'同じv1 label、内容は[2,8]','latest-changed-explicit-v1':'latest更新後、明示v1 → 5','latest-query':'latest指定 → v2/10','format-only':'空白変更、同じ正規化入力','unknown-interval':'拒否 · 未知区間','unknown-version':'拒否 · 未知版','bad-input':'拒否 · bool入力','bad-json':'拒否 · JSON構文','corrupt-cache':'拒否 · cache内容digest不一致','read-failure':'実行失敗 · 入力ファイルなし'};
+const modes={'normal':'正常 · 区間+input digest','drop-interval':'故障 · 区間を欠落','drop-digest':'故障 · input digestを欠落','latest-lookup':'故障 · 常にlatest参照'};
+for(const row of data.rows){const o=document.createElement('option');o.value=row.id;o.textContent=labels[row.id];$('scenario').appendChild(o);}
+for(const [mode,label] of Object.entries(modes)){const card=document.createElement('article'),h=document.createElement('h3'),p=document.createElement('pre');h.textContent=label;p.id=mode+'-result';card.append(h,p);$('cards').append(card);}
+$('run').textContent=`保存run: ${data.run_id} / Python ${data.environment.python} / 9成功条件・5拒否・1読取失敗 × 4版`;
+$('raw').href=`observations/${data.run_id}/raw.json`;$('command').href=`observations/${data.run_id}/command.json`;
+function clear(message){$('results').hidden=true;$('answer').hidden=true;$('answer').open=false;$('trace-disclosure').open=false;$('prediction-result').textContent=message;}
+$('scenario').addEventListener('change',()=>{$('prediction').value='';clear('予想してから比較する。');});
+$('prediction').addEventListener('change',()=>clear('予想を変更しました。比較するで照合してください。'));
+const explain={stable:'この条件では4版が一致する。day2/v1はinput digestも異なるため、区間欠落でも誤hitしない。1条件の一致からkey欠落の安全性を推定しない。','digest-collision':'正常版は内容digest変更で再計算する。digest欠落版はday1の旧合計5をhitし、新しい[2,8]の合計10と一致しない。','interval-binding':'正常版はday2として計算。区間欠落版はday1のartifactをhitする。合計5が一致しても区間bindingは誤り。','latest-drift':'正常の明示v1は5を保持。latest故障は入力参照をv2に変えて10を計算する。旧結果hitとは異なる故障。',refused:'入力/保存内容を拒否し、value=null・task呼出し0で旧cacheを保持する。誤った正常答えを合計として表示しない。',error:'読取失敗。入力拒否と分け、正常結果・答えを表示しない。'};
+function modeText(v){const r=v.resolved_input,a=v.artifact,b=a?.body.binding;return `状態: ${v.status}\n理由: ${v.reason??'なし'}\n選択版: ${r?.version_label??'なし'}\n入力: ${r?JSON.stringify(r.values):'未解決'}\ninput digest: ${r?r.input_sha.slice(0,12):'なし'}\ncache hit: ${v.cache_hit===null?'未照合':v.cache_hit}\ntask呼出し: ${v.task_calls}\n合計: ${v.value===null?'結果なし':v.value}\nartifact区間: ${b?.interval??'なし'}\nartifact input digest: ${b?b.input_sha.slice(0,12):'なし'}\nartifact内容digest: ${a?a.artifact_sha.slice(0,12):'なし'}\n要求binding一致: ${v.reused_binding_matches_request===null?'未照合':v.reused_binding_matches_request}`;}
+$('compare').addEventListener('click',()=>{const r=data.rows.find(x=>x.id===$('scenario').value),m=r.modes,n=m.normal;
+ const category=n.status==='execution-error'?'error':n.status==='expected-refusal'?'refused':m['latest-lookup'].resolved_input.version_label!==n.resolved_input.version_label?'latest-drift':m['drop-digest'].value!==n.value?'digest-collision':m['drop-interval'].reused_binding_matches_request===false?'interval-binding':'stable';
+ $('prediction-result').textContent=$('prediction').value===''?'予想未選択。選んで結果と照合する。':$('prediction').value===category?'予想と一致。合計だけでなく選択版とbindingを照合しよう。':'予想と不一致。選択入力・hit・artifact区間を読み直そう。';
+ $('request').textContent=`要求区間: ${n.request.interval} / 入力参照: ${n.request.selector}`;for(const mode of Object.keys(modes))$(mode+'-result').textContent=modeText(m[mode]);
+ $('classification').textContent=explain[category];$('trace').textContent=JSON.stringify(m,null,2);$('results').hidden=false;$('answer').hidden=category==='error';$('answer').open=false;$('trace-disclosure').open=false;$('answer-text').textContent=explain[category];
+});

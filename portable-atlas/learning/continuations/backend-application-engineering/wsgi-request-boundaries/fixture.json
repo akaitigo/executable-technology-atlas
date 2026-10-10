@@ -1,0 +1,14 @@
+{"max_body_bytes":128,"groups":[
+{"id":"normal","cases":[{"id":"normal-json","method":"POST","path":"/orders","body":"{\"units\":2}","headers":{"Content-Type":"application/json","Content-Length":"11"}}]},
+{"id":"rejections","cases":[
+{"id":"invalid-json","method":"POST","path":"/orders","body":"{","headers":{"Content-Type":"application/json","Content-Length":"1"}},
+{"id":"bool-units","method":"POST","path":"/orders","body":"{\"units\":true}","headers":{"Content-Type":"application/json","Content-Length":"14"}},
+{"id":"body-too-large","method":"POST","path":"/orders","body":"","headers":{"Content-Type":"application/json","Content-Length":"129"}},
+{"id":"missing-length","method":"POST","path":"/orders","body":"","headers":{"Content-Type":"application/json"}},
+{"id":"bad-length","method":"POST","path":"/orders","body":"","headers":{"Content-Type":"application/json","Content-Length":"oops"}},
+{"id":"wrong-type","method":"POST","path":"/orders","body":"{\"units\":2}","headers":{"Content-Type":"text/plain","Content-Length":"11"}},
+{"id":"wrong-route","method":"POST","path":"/other","body":"{\"units\":2}","headers":{"Content-Type":"application/json","Content-Length":"11"}},
+{"id":"wrong-method","method":"GET","path":"/orders","body":"","headers":{"Content-Type":"application/json","Content-Length":"0"}}
+]},
+{"id":"recovery","cases":[{"id":"second-sql-fault","method":"POST","path":"/orders","body":"{\"units\":2}","headers":{"Content-Type":"application/json","Content-Length":"11","X-Lesson-Fault":"second-sql"}},{"id":"after-failure","method":"POST","path":"/orders","body":"{\"units\":2}","headers":{"Content-Type":"application/json","Content-Length":"11"}}]}
+]}

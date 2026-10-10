@@ -1,0 +1,326 @@
+[
+  {
+    "id": "rotation-restore",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "destroy_rotate",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "process-death-with-snapshot",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "process_death",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "process-death-no-snapshot",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "process_death",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "snapshot-unavailable",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "process_death",
+        "drop_saved",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "stale-snapshot",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "restart",
+        "start",
+        "resume",
+        "tap",
+        "pause",
+        "stop",
+        "process_death",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "finish-cold-launch",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "finish",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "same-instance-restart",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "restart",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "counter9-restore",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "pause",
+        "stop",
+        "save",
+        "destroy_rotate",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "counter10-refused",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap",
+        "tap"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "paused-save-rotation",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "start",
+        "resume",
+        "tap",
+        "pause",
+        "save",
+        "stop",
+        "destroy_rotate",
+        "create",
+        "start",
+        "resume"
+      ]
+    },
+    "expect": "accepted"
+  },
+  {
+    "id": "invalid-transition",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "resume"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "invalid-saved-json",
+    "input": {
+      "saved": "{broken",
+      "events": [
+        "create"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "invalid-saved-bool",
+    "input": {
+      "saved": "{\"version\":1,\"counter\":true}",
+      "events": [
+        "create"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "invalid-saved-version",
+    "input": {
+      "saved": "{\"version\":2,\"counter\":3}",
+      "events": [
+        "create"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "invalid-saved-duplicate",
+    "input": {
+      "saved": "{\"version\":1,\"counter\":2,\"counter\":3}",
+      "events": [
+        "create"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-unknown-event",
+    "input": {
+      "saved": null,
+      "events": [
+        "launch_sdk"
+      ]
+    },
+    "expect": "rejected"
+  },
+  {
+    "id": "input-too-many-events",
+    "input": {
+      "saved": null,
+      "events": [
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create",
+        "create"
+      ]
+    },
+    "expect": "rejected"
+  }
+]

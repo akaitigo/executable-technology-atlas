@@ -1,0 +1,40 @@
+{
+  "observed_revision": 0,
+  "actions": [
+    {
+      "operation": "create",
+      "resource": {
+        "id": "base",
+        "depends_on": [],
+        "value": {
+          "zone": "task-local"
+        }
+      }
+    },
+    {
+      "operation": "create",
+      "resource": {
+        "id": "config",
+        "depends_on": [
+          "base"
+        ],
+        "value": {
+          "text": "v2"
+        }
+      }
+    },
+    {
+      "operation": "create",
+      "resource": {
+        "id": "service",
+        "depends_on": [
+          "config"
+        ],
+        "value": {
+          "replicas": 2
+        }
+      }
+    }
+  ],
+  "scope": "synthetic create-only ordered plan"
+}

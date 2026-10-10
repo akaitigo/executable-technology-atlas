@@ -1,0 +1,2943 @@
+{
+  "utc": "2026-10-05T13:48:03.744101+00:00",
+  "command": "python3 -B runner.py --record",
+  "source_sha256": {
+    "fixture.json": "4143aba479acd5fef3aec71dba0429cdc0dce1b270e789c39bb226bd9e460675",
+    "oracle.json": "3575aed0fc4b8f4200f58438439ffca7a45f55fb0fd8009b73968bf9a8c52140",
+    "EXPECTATIONS.md": "0c4d3f84e60b0e4993de8454ce161c6005baafd6c47cd840777ab3770bcdb377",
+    "producer.py": "6bdca00d010163dd3fc7d7a9989d5e9b91481456d04897302fefe7239c46a776",
+    "runner.py": "471c8adea94ecdfc782e37730e65e5dee7d5fd6f7fead1587de36af6b258c6ea",
+    "server.py": "823be7e4745b267c097e2c79720e59836dbf35df39879c26eee035396b23c05a",
+    "index.html": "003caa6671d272cceada87eed007a8578fb0291996489a4fd0965a9b31c68506",
+    "ui.js": "529e1f844c4ca8ad3807b3af7529e43865404b166bc979405ac619c2aa07cb78"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "capture",
+        "label": "捕獲: 10対3",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "same-binder",
+        "label": "同名binderで停止",
+        "term": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "no-collision",
+        "label": "衝突なし: 同値",
+        "term": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "fresh-free-collision",
+        "label": "free v0衝突を避ける",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10,
+          "v0": 5
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "fresh-bound-collision",
+        "label": "bound v0衝突を避ける",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "x"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3,
+          4
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "nested-shadow",
+        "label": "内側同名binderのrename停止",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "target-absent",
+        "label": "target不在: rename不要",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "closed-replacement",
+        "label": "closed置換: 同値",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Int",
+          "value": 9
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "replacement-lambda",
+        "label": "open lambdaを置換",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "z"
+            }
+          }
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "two-fresh",
+        "label": "fresh2回を重複させない",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "y",
+            "body": {
+              "kind": "Var",
+              "name": "x"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3,
+          4
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "invalid-binder",
+        "label": "binder型不正",
+        "term": {
+          "kind": "Lam",
+          "name": true,
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "unknown-kind",
+        "label": "未知AST kind",
+        "term": {
+          "kind": "Whatever"
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "bool-literal",
+        "label": "boolを整数扱いしない",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": true
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "extra-field",
+        "label": "余分AST field",
+        "term": {
+          "kind": "Var",
+          "name": "x",
+          "extra": 1
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "invalid-environment",
+        "label": "env bool不正",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": true
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "depth-limit",
+        "label": "深さ17で拒否",
+        "term": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Lam",
+            "name": "z",
+            "body": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Lam",
+                "name": "z",
+                "body": {
+                  "kind": "Lam",
+                  "name": "z",
+                  "body": {
+                    "kind": "Lam",
+                    "name": "z",
+                    "body": {
+                      "kind": "Lam",
+                      "name": "z",
+                      "body": {
+                        "kind": "Lam",
+                        "name": "z",
+                        "body": {
+                          "kind": "Lam",
+                          "name": "z",
+                          "body": {
+                            "kind": "Lam",
+                            "name": "z",
+                            "body": {
+                              "kind": "Lam",
+                              "name": "z",
+                              "body": {
+                                "kind": "Lam",
+                                "name": "z",
+                                "body": {
+                                  "kind": "Lam",
+                                  "name": "z",
+                                  "body": {
+                                    "kind": "Lam",
+                                    "name": "z",
+                                    "body": {
+                                      "kind": "Lam",
+                                      "name": "z",
+                                      "body": {
+                                        "kind": "Lam",
+                                        "name": "z",
+                                        "body": {
+                                          "kind": "Lam",
+                                          "name": "z",
+                                          "body": {
+                                            "kind": "Var",
+                                            "name": "x"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "node-limit",
+        "label": "node65超で拒否",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "right": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "execution-failure"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "capture",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "capture",
+        "label": "捕獲: 10対3",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v0"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "same-binder",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "same-binder",
+        "label": "同名binderで停止",
+        "term": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "stop-binder",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "stop-binder",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "no-collision",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "no-collision",
+        "label": "衝突なし: 同値",
+        "term": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "fresh-free-collision",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "fresh-free-collision",
+        "label": "free v0衝突を避ける",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10,
+          "v0": 5
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v1",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "free": [
+          "v0",
+          "y"
+        ],
+        "value": 15,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v1"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "free": [
+          "v0"
+        ],
+        "value": 8,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "v0",
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "fresh-bound-collision",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "fresh-bound-collision",
+        "label": "bound v0衝突を避ける",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "x"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3,
+          4
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v1",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v1"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "nested-shadow",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "nested-shadow",
+        "label": "内側同名binderのrename停止",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 14,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v0"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          },
+          {
+            "action": "target-absent",
+            "name": "y"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "free": [],
+        "value": 7,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          },
+          {
+            "action": "target-absent",
+            "name": "y"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "target-absent",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "target-absent",
+        "label": "target不在: rename不要",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "target-absent",
+            "name": "y"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3,
+        "events": [
+          {
+            "action": "target-absent",
+            "name": "y"
+          }
+        ]
+      },
+      "term_free": [],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "closed-replacement",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "closed-replacement",
+        "label": "closed置換: 同値",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Int",
+          "value": 9
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": 9
+          }
+        },
+        "free": [],
+        "value": 9,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": 9
+          }
+        },
+        "free": [],
+        "value": 9,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": []
+    },
+    {
+      "case": "replacement-lambda",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "replacement-lambda",
+        "label": "open lambdaを置換",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Var",
+              "name": "x"
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "z"
+            }
+          }
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "y"
+                },
+                "right": {
+                  "kind": "Var",
+                  "name": "z"
+                }
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 12,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v0"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "y"
+                },
+                "right": {
+                  "kind": "Var",
+                  "name": "z"
+                }
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "free": [],
+        "value": 5,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "two-fresh",
+      "status": "NORMAL",
+      "reason": "",
+      "input": {
+        "id": "two-fresh",
+        "label": "fresh2回を重複させない",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "y",
+            "body": {
+              "kind": "Var",
+              "name": "x"
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3,
+          4
+        ],
+        "variant": "normal"
+      },
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Lam",
+            "name": "v1",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10,
+        "events": [
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v0"
+          },
+          {
+            "action": "alpha-rename",
+            "old": "y",
+            "fresh": "v1"
+          },
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "y",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [],
+        "value": 4,
+        "events": [
+          {
+            "action": "replace",
+            "name": "x"
+          }
+        ]
+      },
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ]
+    },
+    {
+      "case": "invalid-binder",
+      "status": "INPUT_REFUSED",
+      "reason": "NAME",
+      "input": {
+        "id": "invalid-binder",
+        "label": "binder型不正",
+        "term": {
+          "kind": "Lam",
+          "name": true,
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "unknown-kind",
+      "status": "INPUT_REFUSED",
+      "reason": "AST_KIND",
+      "input": {
+        "id": "unknown-kind",
+        "label": "未知AST kind",
+        "term": {
+          "kind": "Whatever"
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "bool-literal",
+      "status": "INPUT_REFUSED",
+      "reason": "INT",
+      "input": {
+        "id": "bool-literal",
+        "label": "boolを整数扱いしない",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": true
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "extra-field",
+      "status": "INPUT_REFUSED",
+      "reason": "AST_FIELDS",
+      "input": {
+        "id": "extra-field",
+        "label": "余分AST field",
+        "term": {
+          "kind": "Var",
+          "name": "x",
+          "extra": 1
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "invalid-environment",
+      "status": "INPUT_REFUSED",
+      "reason": "ENVIRONMENT",
+      "input": {
+        "id": "invalid-environment",
+        "label": "env bool不正",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": true
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "depth-limit",
+      "status": "INPUT_REFUSED",
+      "reason": "AST_LIMIT",
+      "input": {
+        "id": "depth-limit",
+        "label": "深さ17で拒否",
+        "term": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Lam",
+            "name": "z",
+            "body": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Lam",
+                "name": "z",
+                "body": {
+                  "kind": "Lam",
+                  "name": "z",
+                  "body": {
+                    "kind": "Lam",
+                    "name": "z",
+                    "body": {
+                      "kind": "Lam",
+                      "name": "z",
+                      "body": {
+                        "kind": "Lam",
+                        "name": "z",
+                        "body": {
+                          "kind": "Lam",
+                          "name": "z",
+                          "body": {
+                            "kind": "Lam",
+                            "name": "z",
+                            "body": {
+                              "kind": "Lam",
+                              "name": "z",
+                              "body": {
+                                "kind": "Lam",
+                                "name": "z",
+                                "body": {
+                                  "kind": "Lam",
+                                  "name": "z",
+                                  "body": {
+                                    "kind": "Lam",
+                                    "name": "z",
+                                    "body": {
+                                      "kind": "Lam",
+                                      "name": "z",
+                                      "body": {
+                                        "kind": "Lam",
+                                        "name": "z",
+                                        "body": {
+                                          "kind": "Lam",
+                                          "name": "z",
+                                          "body": {
+                                            "kind": "Var",
+                                            "name": "x"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "node-limit",
+      "status": "INPUT_REFUSED",
+      "reason": "AST_LIMIT",
+      "input": {
+        "id": "node-limit",
+        "label": "node65超で拒否",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "right": {
+              "kind": "Add",
+              "left": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "kind": "Add",
+                  "left": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "kind": "Add",
+                    "left": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    },
+                    "right": {
+                      "kind": "Add",
+                      "left": {
+                        "kind": "Int",
+                        "value": 1
+                      },
+                      "right": {
+                        "kind": "Int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "normal"
+      },
+      "safe": null,
+      "naive": null
+    },
+    {
+      "case": "execution-failure",
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected substitution failure",
+      "input": {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "term": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "target": "x",
+        "replacement": {
+          "kind": "Var",
+          "name": "y"
+        },
+        "environment": {
+          "y": 10
+        },
+        "arguments": [
+          3
+        ],
+        "variant": "execution-failure"
+      },
+      "safe": null,
+      "naive": null
+    }
+  ],
+  "attempts": [
+    {
+      "case": "capture",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "capture"
+      ],
+      "started_utc": "2026-10-05T13:48:02.522840+00:00",
+      "ended_utc": "2026-10-05T13:48:02.584395+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"capture\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"capture\",\n    \"label\": \"捕獲: 10対3\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v0\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 10,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v0\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "same-binder",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "same-binder"
+      ],
+      "started_utc": "2026-10-05T13:48:02.584499+00:00",
+      "ended_utc": "2026-10-05T13:48:02.647133+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"same-binder\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"same-binder\",\n    \"label\": \"同名binderで停止\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"x\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"x\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"stop-binder\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"x\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"stop-binder\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "no-collision",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "no-collision"
+      ],
+      "started_utc": "2026-10-05T13:48:02.647188+00:00",
+      "ended_utc": "2026-10-05T13:48:02.712826+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"no-collision\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"no-collision\",\n    \"label\": \"衝突なし: 同値\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"z\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"z\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 10,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"z\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 10,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "fresh-free-collision",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "fresh-free-collision"
+      ],
+      "started_utc": "2026-10-05T13:48:02.712875+00:00",
+      "ended_utc": "2026-10-05T13:48:02.791010+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"fresh-free-collision\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"fresh-free-collision\",\n    \"label\": \"free v0衝突を避ける\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"x\"\n        },\n        \"right\": {\n          \"kind\": \"Var\",\n          \"name\": \"v0\"\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10,\n      \"v0\": 5\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v1\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        },\n        \"right\": {\n          \"kind\": \"Var\",\n          \"name\": \"v0\"\n        }\n      }\n    },\n    \"free\": [\n      \"v0\",\n      \"y\"\n    ],\n    \"value\": 15,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v1\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        },\n        \"right\": {\n          \"kind\": \"Var\",\n          \"name\": \"v0\"\n        }\n      }\n    },\n    \"free\": [\n      \"v0\"\n    ],\n    \"value\": 8,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"v0\",\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "fresh-bound-collision",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "fresh-bound-collision"
+      ],
+      "started_utc": "2026-10-05T13:48:02.791058+00:00",
+      "ended_utc": "2026-10-05T13:48:02.867550+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"fresh-bound-collision\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"fresh-bound-collision\",\n    \"label\": \"bound v0衝突を避ける\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"v0\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"x\"\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3,\n      4\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v1\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"v0\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        }\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 10,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v1\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"v0\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        }\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "nested-shadow",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "nested-shadow"
+      ],
+      "started_utc": "2026-10-05T13:48:02.867609+00:00",
+      "ended_utc": "2026-10-05T13:48:02.936278+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"nested-shadow\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"nested-shadow\",\n    \"label\": \"内側同名binderのrename停止\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"x\"\n        },\n        \"right\": {\n          \"kind\": \"App\",\n          \"fn\": {\n            \"kind\": \"Lam\",\n            \"name\": \"y\",\n            \"body\": {\n              \"kind\": \"Var\",\n              \"name\": \"y\"\n            }\n          },\n          \"arg\": {\n            \"kind\": \"Int\",\n            \"value\": 4\n          }\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v0\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        },\n        \"right\": {\n          \"kind\": \"App\",\n          \"fn\": {\n            \"kind\": \"Lam\",\n            \"name\": \"y\",\n            \"body\": {\n              \"kind\": \"Var\",\n              \"name\": \"y\"\n            }\n          },\n          \"arg\": {\n            \"kind\": \"Int\",\n            \"value\": 4\n          }\n        }\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 14,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v0\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      },\n      {\n        \"action\": \"target-absent\",\n        \"name\": \"y\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        },\n        \"right\": {\n          \"kind\": \"App\",\n          \"fn\": {\n            \"kind\": \"Lam\",\n            \"name\": \"y\",\n            \"body\": {\n              \"kind\": \"Var\",\n              \"name\": \"y\"\n            }\n          },\n          \"arg\": {\n            \"kind\": \"Int\",\n            \"value\": 4\n          }\n        }\n      }\n    },\n    \"free\": [],\n    \"value\": 7,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      },\n      {\n        \"action\": \"target-absent\",\n        \"name\": \"y\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "target-absent",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "target-absent"
+      ],
+      "started_utc": "2026-10-05T13:48:02.936338+00:00",
+      "ended_utc": "2026-10-05T13:48:03.018251+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"target-absent\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"target-absent\",\n    \"label\": \"target不在: rename不要\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"target-absent\",\n        \"name\": \"y\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"y\"\n      }\n    },\n    \"free\": [],\n    \"value\": 3,\n    \"events\": [\n      {\n        \"action\": \"target-absent\",\n        \"name\": \"y\"\n      }\n    ]\n  },\n  \"term_free\": [],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "closed-replacement",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "closed-replacement"
+      ],
+      "started_utc": "2026-10-05T13:48:03.018293+00:00",
+      "ended_utc": "2026-10-05T13:48:03.081742+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"closed-replacement\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"closed-replacement\",\n    \"label\": \"closed置換: 同値\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Int\",\n      \"value\": 9\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Int\",\n        \"value\": 9\n      }\n    },\n    \"free\": [],\n    \"value\": 9,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Int\",\n        \"value\": 9\n      }\n    },\n    \"free\": [],\n    \"value\": 9,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "replacement-lambda",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "replacement-lambda"
+      ],
+      "started_utc": "2026-10-05T13:48:03.081781+00:00",
+      "ended_utc": "2026-10-05T13:48:03.144592+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"replacement-lambda\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"replacement-lambda\",\n    \"label\": \"open lambdaを置換\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"App\",\n        \"fn\": {\n          \"kind\": \"Var\",\n          \"name\": \"x\"\n        },\n        \"arg\": {\n          \"kind\": \"Int\",\n          \"value\": 2\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Lam\",\n      \"name\": \"z\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        },\n        \"right\": {\n          \"kind\": \"Var\",\n          \"name\": \"z\"\n        }\n      }\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v0\",\n      \"body\": {\n        \"kind\": \"App\",\n        \"fn\": {\n          \"kind\": \"Lam\",\n          \"name\": \"z\",\n          \"body\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Var\",\n              \"name\": \"y\"\n            },\n            \"right\": {\n              \"kind\": \"Var\",\n              \"name\": \"z\"\n            }\n          }\n        },\n        \"arg\": {\n          \"kind\": \"Int\",\n          \"value\": 2\n        }\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 12,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v0\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"App\",\n        \"fn\": {\n          \"kind\": \"Lam\",\n          \"name\": \"z\",\n          \"body\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Var\",\n              \"name\": \"y\"\n            },\n            \"right\": {\n              \"kind\": \"Var\",\n              \"name\": \"z\"\n            }\n          }\n        },\n        \"arg\": {\n          \"kind\": \"Int\",\n          \"value\": 2\n        }\n      }\n    },\n    \"free\": [],\n    \"value\": 5,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "two-fresh",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "two-fresh"
+      ],
+      "started_utc": "2026-10-05T13:48:03.144643+00:00",
+      "ended_utc": "2026-10-05T13:48:03.210248+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"two-fresh\",\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"input\": {\n    \"id\": \"two-fresh\",\n    \"label\": \"fresh2回を重複させない\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"y\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"x\"\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3,\n      4\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"v0\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"v1\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        }\n      }\n    },\n    \"free\": [\n      \"y\"\n    ],\n    \"value\": 10,\n    \"events\": [\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v0\"\n      },\n      {\n        \"action\": \"alpha-rename\",\n        \"old\": \"y\",\n        \"fresh\": \"v1\"\n      },\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"naive\": {\n    \"ast\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"y\",\n        \"body\": {\n          \"kind\": \"Var\",\n          \"name\": \"y\"\n        }\n      }\n    },\n    \"free\": [],\n    \"value\": 4,\n    \"events\": [\n      {\n        \"action\": \"replace\",\n        \"name\": \"x\"\n      }\n    ]\n  },\n  \"term_free\": [\n    \"x\"\n  ],\n  \"replacement_free\": [\n    \"y\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "invalid-binder",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "invalid-binder"
+      ],
+      "started_utc": "2026-10-05T13:48:03.210309+00:00",
+      "ended_utc": "2026-10-05T13:48:03.272841+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"invalid-binder\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"NAME\",\n  \"input\": {\n    \"id\": \"invalid-binder\",\n    \"label\": \"binder型不正\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": true,\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "unknown-kind",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "unknown-kind"
+      ],
+      "started_utc": "2026-10-05T13:48:03.272877+00:00",
+      "ended_utc": "2026-10-05T13:48:03.335950+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"unknown-kind\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"AST_KIND\",\n  \"input\": {\n    \"id\": \"unknown-kind\",\n    \"label\": \"未知AST kind\",\n    \"term\": {\n      \"kind\": \"Whatever\"\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "bool-literal",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "bool-literal"
+      ],
+      "started_utc": "2026-10-05T13:48:03.335991+00:00",
+      "ended_utc": "2026-10-05T13:48:03.398933+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"bool-literal\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"INT\",\n  \"input\": {\n    \"id\": \"bool-literal\",\n    \"label\": \"boolを整数扱いしない\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Int\",\n        \"value\": true\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "extra-field",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "extra-field"
+      ],
+      "started_utc": "2026-10-05T13:48:03.398982+00:00",
+      "ended_utc": "2026-10-05T13:48:03.467570+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"extra-field\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"AST_FIELDS\",\n  \"input\": {\n    \"id\": \"extra-field\",\n    \"label\": \"余分AST field\",\n    \"term\": {\n      \"kind\": \"Var\",\n      \"name\": \"x\",\n      \"extra\": 1\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "invalid-environment",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "invalid-environment"
+      ],
+      "started_utc": "2026-10-05T13:48:03.467619+00:00",
+      "ended_utc": "2026-10-05T13:48:03.543272+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"invalid-environment\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"ENVIRONMENT\",\n  \"input\": {\n    \"id\": \"invalid-environment\",\n    \"label\": \"env bool不正\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": true\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "depth-limit",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "depth-limit"
+      ],
+      "started_utc": "2026-10-05T13:48:03.543332+00:00",
+      "ended_utc": "2026-10-05T13:48:03.609387+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"depth-limit\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"AST_LIMIT\",\n  \"input\": {\n    \"id\": \"depth-limit\",\n    \"label\": \"深さ17で拒否\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"z\",\n      \"body\": {\n        \"kind\": \"Lam\",\n        \"name\": \"z\",\n        \"body\": {\n          \"kind\": \"Lam\",\n          \"name\": \"z\",\n          \"body\": {\n            \"kind\": \"Lam\",\n            \"name\": \"z\",\n            \"body\": {\n              \"kind\": \"Lam\",\n              \"name\": \"z\",\n              \"body\": {\n                \"kind\": \"Lam\",\n                \"name\": \"z\",\n                \"body\": {\n                  \"kind\": \"Lam\",\n                  \"name\": \"z\",\n                  \"body\": {\n                    \"kind\": \"Lam\",\n                    \"name\": \"z\",\n                    \"body\": {\n                      \"kind\": \"Lam\",\n                      \"name\": \"z\",\n                      \"body\": {\n                        \"kind\": \"Lam\",\n                        \"name\": \"z\",\n                        \"body\": {\n                          \"kind\": \"Lam\",\n                          \"name\": \"z\",\n                          \"body\": {\n                            \"kind\": \"Lam\",\n                            \"name\": \"z\",\n                            \"body\": {\n                              \"kind\": \"Lam\",\n                              \"name\": \"z\",\n                              \"body\": {\n                                \"kind\": \"Lam\",\n                                \"name\": \"z\",\n                                \"body\": {\n                                  \"kind\": \"Lam\",\n                                  \"name\": \"z\",\n                                  \"body\": {\n                                    \"kind\": \"Lam\",\n                                    \"name\": \"z\",\n                                    \"body\": {\n                                      \"kind\": \"Lam\",\n                                      \"name\": \"z\",\n                                      \"body\": {\n                                        \"kind\": \"Var\",\n                                        \"name\": \"x\"\n                                      }\n                                    }\n                                  }\n                                }\n                              }\n                            }\n                          }\n                        }\n                      }\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "node-limit",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "node-limit"
+      ],
+      "started_utc": "2026-10-05T13:48:03.609442+00:00",
+      "ended_utc": "2026-10-05T13:48:03.677367+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"node-limit\",\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"AST_LIMIT\",\n  \"input\": {\n    \"id\": \"node-limit\",\n    \"label\": \"node65超で拒否\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Add\",\n        \"left\": {\n          \"kind\": \"Add\",\n          \"left\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            },\n            \"right\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            }\n          },\n          \"right\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            },\n            \"right\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"right\": {\n          \"kind\": \"Add\",\n          \"left\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            },\n            \"right\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            }\n          },\n          \"right\": {\n            \"kind\": \"Add\",\n            \"left\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            },\n            \"right\": {\n              \"kind\": \"Add\",\n              \"left\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              },\n              \"right\": {\n                \"kind\": \"Add\",\n                \"left\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                },\n                \"right\": {\n                  \"kind\": \"Add\",\n                  \"left\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  },\n                  \"right\": {\n                    \"kind\": \"Int\",\n                    \"value\": 1\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"normal\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "execution-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "execution-failure"
+      ],
+      "started_utc": "2026-10-05T13:48:03.677442+00:00",
+      "ended_utc": "2026-10-05T13:48:03.744051+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"case\": \"execution-failure\",\n  \"status\": \"EXECUTION_FAILURE\",\n  \"reason\": \"injected substitution failure\",\n  \"input\": {\n    \"id\": \"execution-failure\",\n    \"label\": \"実Error注入 / 正常答えなし\",\n    \"term\": {\n      \"kind\": \"Lam\",\n      \"name\": \"y\",\n      \"body\": {\n        \"kind\": \"Var\",\n        \"name\": \"x\"\n      }\n    },\n    \"target\": \"x\",\n    \"replacement\": {\n      \"kind\": \"Var\",\n      \"name\": \"y\"\n    },\n    \"environment\": {\n      \"y\": 10\n    },\n    \"arguments\": [\n      3\n    ],\n    \"variant\": \"execution-failure\"\n  },\n  \"safe\": null,\n  \"naive\": null\n}\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "classification": "actual-background-IAB-interaction-not-a-new-model-run",
+  "observed_at": "2026-10-05T13:39:05+09:00",
+  "model_observation_at": "2026-10-05T13:34:09+09:00",
+  "browser": "Codex In-app Browser",
+  "target": "http://127.0.0.1:8796/",
+  "viewport": {"width": 1280, "height": 720, "device_pixel_ratio": 2},
+  "bindings": {
+    "evidence/run.json": "sha256:85e229e126207f86fd6fa5abfda1aa77c72226d98bea27bbe08ac7d36a900a04",
+    "index.html": "sha256:ab8cac2b41d0c0d4e547899336dabb471ce997c1ecd110e122aa6ec459c84415",
+    "app.js": "sha256:bb20c53b4e2d3b3bfce57d49c0fd21097951233e822b10955ea95bffb5ed680a",
+    "style.css": "sha256:410195bfd97e9773c3876f5ead07548de49d182b380c7268468881ac7428bc41",
+    "data.js": "sha256:e4d97932c699f61912948401fa75341f89fcd628554394f280d01a8332360a32"
+  },
+  "checks": [
+    {"input": "正常モデル: P0 request → atomic enter → P1 request", "observed": "P0 critical / P1 waiting / owner P0; critical数1; enabled操作はP0 releaseのみ", "passed": true},
+    {"input": "守れると思う", "observed": "予想の応答を表示し、split guard反例step0へ移動", "passed": true},
+    {"input": "次の反例stepを6回", "observed_states": [["waiting", "idle"], ["ready", "idle"], ["ready", "waiting"], ["ready", "ready"], ["critical", "ready"], ["critical", "critical"]], "observed": "step6/6で違反、次へdisabled、前へenabled", "passed": true},
+    {"input": "一次資料・実装・答えをDOMで確認", "observed": "source/model/raw links、8/14/0と23/44/2、atomic/refinement境界、liveness未検査を表示", "passed": true},
+    {"input": "実探索traceから生成した図を開く", "observed": "SVGの7状態、最終VIOLATION、観測時刻と再描画の表示を実画面で確認", "passed": true}
+  ],
+  "console": {"queried_levels": ["warn", "error"], "limit": 30, "observed_entries": [], "scope": "このtabでcapture時に取得できた記録のみ"},
+  "capture": {"actual_UI_captured": true, "format": "JPEG", "viewport_capture_bytes": 67748, "displayed_in_conversation": true, "saved_capture_file": null, "limitation": "capture bytesは会話内表示のみ。repositoryに実画面画像は保存していない。counterexample.svgは実探索traceの再描画でありcaptureではない。"},
+  "cleanup": {"completed_at": "2026-10-05T13:40:29+09:00", "owned_server_command": "python3 -m http.server 8796 --bind 127.0.0.1", "server_result": "Keyboard interrupt received, exiting; exit_code=0", "owned_IAB_tab_closed": true, "other_task_resources_touched": false},
+  "network_note": "専用serverにfavicon.icoの404を1件観測。教材HTML/CSS/JS/data/SVGは200。console warning/error記録は空。",
+  "limits": ["1280x720 viewportのみ。mobile QAではない。", "保存graphのUI操作でありPython再実行ではない。", "理解度、liveness、実mutex refinement、分野全体の完成は未評価。"]
+}

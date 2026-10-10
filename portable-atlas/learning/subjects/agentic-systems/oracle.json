@@ -1,0 +1,29 @@
+{
+  "allowed_edges": {
+    "START":["PLAN"],
+    "PLAN":["VALIDATE","BUDGET_EXHAUSTED","LOOP_REJECTED","MISSING_END"],
+    "VALIDATE":["EXECUTE","PLAN","REJECTED","ENDED"],
+    "EXECUTE":["OBSERVE","TOOL_ERROR"],
+    "OBSERVE":["PLAN"]
+  },
+  "hand_cases": {
+    "normal":{"status":"ENDED","steps":3,"output":7,"calls":2,"pcs":[0,1,2]},
+    "tainted-result":{"status":"ENDED","steps":3,"output":7,"calls":2,"pcs":[0,1,2],"bad_override":{"status":"ENDED","steps":3,"output":104,"calls":2,"pcs":[0,0,1]}},
+    "unknown-tool":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "bool-arg":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "missing-arg":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "extra-arg":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "unknown-key":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "loop":{"status":"LOOP_REJECTED","steps":3,"output":4,"calls":2,"pcs":[0,1,0]},
+    "budget-tight":{"status":"BUDGET_EXHAUSTED","steps":2,"output":7,"calls":2,"pcs":[0,1]},
+    "budget-zero":{"status":"BUDGET_EXHAUSTED","steps":0,"output":null,"calls":0,"pcs":[]},
+    "end-alone":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "after-end":{"status":"REJECTED","steps":2,"output":4,"calls":1,"pcs":[0,1]},
+    "missing-end":{"status":"MISSING_END","steps":1,"output":4,"calls":1,"pcs":[0]},
+    "tool-error":{"status":"TOOL_ERROR","steps":1,"output":null,"calls":1,"pcs":[0]},
+    "jump-outside":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "malformed-command":{"status":"REJECTED","steps":1,"output":null,"calls":0,"pcs":[0]},
+    "upper-bound":{"status":"ENDED","steps":2,"output":200,"calls":1,"pcs":[0,1]},
+    "lower-bound":{"status":"ENDED","steps":2,"output":-200,"calls":1,"pcs":[0,1]}
+  }
+}

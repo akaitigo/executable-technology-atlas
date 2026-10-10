@@ -1,0 +1,72 @@
+{
+  "cases": [
+    {
+      "id": "gzip7",
+      "case": "gzip8",
+      "input": {
+        "encoding": "gzip",
+        "budget": 7,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      "expected": {
+        "status": "NORMAL",
+        "encoded": 23,
+        "decoded": 3,
+        "used": 23,
+        "accepted": false
+      }
+    },
+    {
+      "id": "plain5",
+      "case": "gzip8",
+      "input": {
+        "encoding": "plain",
+        "budget": 5,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      "expected": {
+        "status": "NORMAL",
+        "encoded": 3,
+        "decoded": 3,
+        "used": 3,
+        "accepted": true
+      }
+    },
+    {
+      "id": "fault23-match",
+      "case": "gzip-decoded-fault",
+      "input": {
+        "encoding": "gzip",
+        "budget": 23,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      "expected": {
+        "status": "FAULT_DECODED_BUDGET",
+        "encoded": 23,
+        "decoded": 3,
+        "used": 3,
+        "accepted": true
+      }
+    },
+    {
+      "id": "fault2-match",
+      "case": "gzip-decoded-fault",
+      "input": {
+        "encoding": "gzip",
+        "budget": 2,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      "expected": {
+        "status": "FAULT_DECODED_BUDGET",
+        "encoded": 23,
+        "decoded": 3,
+        "used": 3,
+        "accepted": false
+      }
+    }
+  ]
+}

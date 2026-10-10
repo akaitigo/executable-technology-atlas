@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "python3",
+    "migration.py",
+    "observations/20261005T074958579237Z/lossy-forced-roundtrip/working.sqlite"
+  ],
+  "started_at": "2026-10-05T07:49:58.945800+00:00",
+  "completed_at": "2026-10-05T07:49:58.991924+00:00",
+  "stdin": "{\"direction\": \"up\", \"policy\": \"lossy\", \"inject\": \"none\"}",
+  "stdout": "{\"event\": \"sql\", \"sql\": \"PRAGMA user_version\"}\n{\"event\": \"sql\", \"sql\": \"SELECT sql FROM sqlite_schema WHERE type='table' AND name='orders'\"}\n{\"event\": \"sql\", \"sql\": \"SELECT name FROM sqlite_schema WHERE name NOT IN ('orders','sqlite_autoindex_orders_1')\"}\n{\"event\": \"sql\", \"sql\": \"SELECT id,amount_text,state FROM orders ORDER BY id\"}\n{\"event\": \"lossy-conversion\", \"id\": \"a\", \"original\": \"1.005\", \"cents\": 100}\n{\"event\": \"preflight-accepted\", \"direction\": \"up\", \"policy\": \"lossy\", \"rows\": 1}\n{\"event\": \"sql\", \"sql\": \"BEGIN IMMEDIATE\"}\n{\"event\": \"sql\", \"sql\": \"SELECT id,amount_text,state FROM orders ORDER BY id\"}\n{\"event\": \"sql\", \"sql\": \"CREATE TABLE \\\"orders_staged\\\" (id TEXT PRIMARY KEY, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0), state_code INTEGER NOT NULL)\"}\n{\"event\": \"sql\", \"sql\": \"INSERT INTO orders_staged VALUES ('a', 100, 10)\"}\n{\"event\": \"staged-copy\", \"mapped_rows\": [[\"a\", 100, 10]]}\n{\"event\": \"sql\", \"sql\": \"DROP TABLE orders\"}\n{\"event\": \"old-table-dropped\"}\n{\"event\": \"sql\", \"sql\": \"ALTER TABLE orders_staged RENAME TO \\\"orders\\\"\"}\n{\"event\": \"sql\", \"sql\": \"PRAGMA user_version=2\"}\n{\"event\": \"sql\", \"sql\": \"PRAGMA integrity_check\"}\n{\"event\": \"sql\", \"sql\": \"COMMIT\"}\n{\"event\": \"migrated\", \"version\": 2}\n{\"event\": \"transaction-after-step\", \"active\": false}\n{\"event\": \"connection-closed\", \"probe\": \"ProgrammingError\"}\n",
+  "stderr": "",
+  "exit_code": 0,
+  "stdin_digest": "sha256:c92b6a58188f15cfcb1d2353699ed98b2d6ccd23ded9d43b6441e8afac86f246",
+  "stdout_digest": "sha256:29bd799465df92e761f75f4d1b47c7567ba97ff5acaf0e64365acebd3d16be2e",
+  "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

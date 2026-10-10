@@ -1,0 +1,542 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-05T08:51:22.411586+00:00",
+  "method": "actual IAB 10case button execution and 6 configuration/matrix selector bindings; values transcribed from rendered raw/oracle and path panel",
+  "title": "2zoneと共通依存 | Cloud architecture",
+  "prediction": "sharedは共通dep-a故障で両経路が止まる",
+  "sourceArtifactDigests": {
+    "fixture.json": "1a176f4acc37e7585763bd96fadd0931a6bcfb4877caab686eb05483fd68ab34",
+    "architectures.json": "31efabad6be239201be48549632d844ad70e19620c0740dbd3ecb82e911dc65b",
+    "runner.py": "9ac7faeb54601f2e598d5c6da282c3189b0849e43e9a05266d90f76cdf477058",
+    "oracle.py": "b98a6e46a67e795dd0b9ef36bfa81f7d35b2ffa278d6a0bd4722d1c05ca9351b",
+    "checker.py": "ec4ef633d080dffa7dd8d5dffd5befa4d0245131fa1577fa7866987372107792",
+    "server.py": "b8e39f772dddff0e504ab73c01b13baf33577ffbf0b973f5647f532ef779b7a6",
+    "index.html": "ae9c7b06cb1eb86e90c90b6e654139ac5edeeb362339d61137096b73c4c902f8",
+    "app.js": "bc3e2415773177c5d166f1fefb2505381ce5beacc9987c0d1385c29e74d7c3f5",
+    "README.md": "14afc68821deb28a6a45fabe135d1cbadc7e6de068a6b82b9a3ba2b08453b0a3",
+    "sources.json": "f48072760dc2771f8b47ce5965f4e3ff75582620f508418dd1993847321ca765",
+    "skills/atlas-cloud-architecture/SKILL.md": "0420f81ff6aaaea76557136988ae9d125208be0926d5feb6ba05a621a928316f"
+  },
+  "cases": [
+    {
+      "case": "healthy",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": true,
+          "local": true,
+          "replicated": true
+        },
+        "latencySyntheticUnits": {
+          "shared": 7,
+          "local": 7,
+          "replicated": 7
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "dep-a",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": false,
+          "local": true,
+          "replicated": true
+        },
+        "latencySyntheticUnits": {
+          "shared": null,
+          "local": 7,
+          "replicated": 7
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "zone-a",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": false,
+          "local": true,
+          "replicated": true
+        },
+        "latencySyntheticUnits": {
+          "shared": null,
+          "local": 7,
+          "replicated": 7
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "app-a",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": true,
+          "local": true,
+          "replicated": true
+        },
+        "latencySyntheticUnits": {
+          "shared": 12,
+          "local": 7,
+          "replicated": 7
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "router",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": false,
+          "local": false,
+          "replicated": false
+        },
+        "latencySyntheticUnits": {
+          "shared": null,
+          "local": null,
+          "replicated": null
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "both-zones",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": false,
+          "local": false,
+          "replicated": false
+        },
+        "latencySyntheticUnits": {
+          "shared": null,
+          "local": null,
+          "replicated": null
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "split-fault",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": true,
+          "local": false,
+          "replicated": true
+        },
+        "latencySyntheticUnits": {
+          "shared": 12,
+          "local": null,
+          "replicated": 12
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "all-failed",
+      "oracle": {
+        "validScenario": true,
+        "status": "modeled",
+        "serviceUp": {
+          "shared": false,
+          "local": false,
+          "replicated": false
+        },
+        "latencySyntheticUnits": {
+          "shared": null,
+          "local": null,
+          "replicated": null
+        },
+        "reason": null
+      }
+    },
+    {
+      "case": "unknown-fault",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "serviceUp": {},
+        "latencySyntheticUnits": {},
+        "reason": "unknown-fault"
+      }
+    },
+    {
+      "case": "duplicate-fault",
+      "oracle": {
+        "validScenario": true,
+        "status": "rejected",
+        "serviceUp": {},
+        "latencySyntheticUnits": {},
+        "reason": "duplicate-fault"
+      }
+    }
+  ],
+  "matrixRowCount": 128,
+  "matrixOracle": {
+    "states": 128,
+    "modeChecks": 384,
+    "counts": {
+      "shared": 10,
+      "local": 15,
+      "replicated": 17
+    },
+    "modeledFractions": {
+      "shared": "970105910499/1000000000000",
+      "local": "98912667209301/100000000000000",
+      "replicated": "98931687010299/100000000000000"
+    }
+  },
+  "bindings": [
+    {
+      "case": "dep-a",
+      "mode": "shared",
+      "mask": "case",
+      "observed": {
+        "mode": "shared",
+        "selectedPath": null,
+        "nodeHealth": {
+          "router": true,
+          "app-a": true,
+          "app-b": true,
+          "dep-a": false,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 12
+          }
+        ]
+      }
+    },
+    {
+      "case": "dep-a",
+      "mode": "local",
+      "mask": "case",
+      "observed": {
+        "mode": "local",
+        "selectedPath": [
+          "router",
+          "app-b",
+          "dep-b"
+        ],
+        "nodeHealth": {
+          "router": true,
+          "app-a": true,
+          "app-b": true,
+          "dep-a": false,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-b"
+            ],
+            "blockedNodes": [],
+            "usable": true,
+            "latencySyntheticUnits": 7
+          }
+        ]
+      }
+    },
+    {
+      "case": "dep-a",
+      "mode": "replicated",
+      "mask": "case",
+      "observed": {
+        "mode": "replicated",
+        "selectedPath": [
+          "router",
+          "app-b",
+          "dep-b"
+        ],
+        "nodeHealth": {
+          "router": true,
+          "app-a": true,
+          "app-b": true,
+          "dep-a": false,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-b"
+            ],
+            "blockedNodes": [],
+            "usable": true,
+            "latencySyntheticUnits": 12
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 12
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-b"
+            ],
+            "blockedNodes": [],
+            "usable": true,
+            "latencySyntheticUnits": 7
+          }
+        ]
+      }
+    },
+    {
+      "case": "dep-a",
+      "mode": "shared",
+      "mask": "1000000",
+      "observed": {
+        "mode": "shared",
+        "selectedPath": null,
+        "nodeHealth": {
+          "router": true,
+          "app-a": false,
+          "app-b": true,
+          "dep-a": false,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "app-a",
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 12
+          }
+        ]
+      }
+    },
+    {
+      "case": "dep-a",
+      "mode": "local",
+      "mask": "1000000",
+      "observed": {
+        "mode": "local",
+        "selectedPath": [
+          "router",
+          "app-b",
+          "dep-b"
+        ],
+        "nodeHealth": {
+          "router": true,
+          "app-a": false,
+          "app-b": true,
+          "dep-a": false,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "app-a",
+              "dep-a"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-b"
+            ],
+            "blockedNodes": [],
+            "usable": true,
+            "latencySyntheticUnits": 7
+          }
+        ]
+      }
+    },
+    {
+      "case": "dep-a",
+      "mode": "replicated",
+      "mask": "0000001",
+      "observed": {
+        "mode": "replicated",
+        "selectedPath": null,
+        "nodeHealth": {
+          "router": false,
+          "app-a": true,
+          "app-b": true,
+          "dep-a": true,
+          "dep-b": true
+        },
+        "paths": [
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "router"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          },
+          {
+            "nodes": [
+              "router",
+              "app-a",
+              "dep-b"
+            ],
+            "blockedNodes": [
+              "router"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 12
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-a"
+            ],
+            "blockedNodes": [
+              "router"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 12
+          },
+          {
+            "nodes": [
+              "router",
+              "app-b",
+              "dep-b"
+            ],
+            "blockedNodes": [
+              "router"
+            ],
+            "usable": false,
+            "latencySyntheticUnits": 7
+          }
+        ]
+      }
+    }
+  ],
+  "rawExpanded": true,
+  "answerExpanded": true,
+  "roadmapTopics": [
+    "Reliability / data",
+    "Performance / cost / sustainability",
+    "Security / networking",
+    "Operations / validation"
+  ],
+  "capture": {
+    "format": "JPEG",
+    "displayedInTool": true,
+    "saved": false,
+    "reason": "documented IAB screenshot API supplies tool image bytes; no supported local export used; no reconstruction",
+    "views": [
+      "dep-a input and comparison",
+      "shared two-zone graph with common dep-a failed"
+    ]
+  },
+  "cleanup": {
+    "serverClosed": true,
+    "serverExit": 0,
+    "port": 61677,
+    "listenerCheck": "exact-port lsof empty output exit1",
+    "tabClosed": true
+  },
+  "skillRouting": {
+    "quickValidate": "PASS",
+    "supportedCase": "dep-a",
+    "unsupportedCase": "real-cloud",
+    "unsupportedExit": 2,
+    "forwardAgentEvaluation": false
+  },
+  "qaDigest": "7b450f712d2c863e1eed432d5062d13e0ea4d3d4214f6a52e49e3dd47e648f99"
+}

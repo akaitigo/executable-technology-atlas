@@ -1,0 +1,105 @@
+{
+  "request_id": "1cd93d818bb245b290f7fad00faa86bc",
+  "revision": 102,
+  "input_json": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+  "run": {
+    "argv": [
+      "python3",
+      "-B",
+      "evaluator.py"
+    ],
+    "stdin": "{\"evidenceID\":\"E-001\",\"payload\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"mutate\":false,\"handoffs\":[{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"}]}",
+    "stdout": "{\"status\":\"observed\",\"evidenceID\":\"E-001\",\"original_ascii\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"copy_before_ascii\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"copy_after_ascii\":\"PUBLIC MOCK EVIDENCE\\nid=E-001\\nstatus=ready\\n\",\"original_sha256\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\",\"copy_before_sha256\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\",\"copy_after_sha256\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\",\"original_unchanged\":true,\"changed_bytes\":0,\"integrity_match\":true,\"ledger_errors\":[\"handoff[1].from_link\"],\"ledger_consistent\":false,\"normal\":{\"pass\":false,\"decision\":\"ledger_refusal\",\"claim\":\"synthetic copy and ledger only\"},\"faulty\":{\"pass\":true,\"decision\":\"provenance-approved\",\"claim\":\"由来も承認済\"},\"authenticity_proven\":false,\"legal_custody_proven\":false,\"ledger_trace\":[{\"input\":{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"custodian\",\"seq\":1,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},\"checks\":{\"evidenceID\":true,\"actor\":true,\"seq\":true,\"from_link\":true,\"recordedHash\":true}},{\"input\":{\"evidenceID\":\"E-001\",\"from\":\"collector\",\"to\":\"analyst\",\"seq\":2,\"recordedHash\":\"c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430\"},\"checks\":{\"evidenceID\":true,\"actor\":true,\"seq\":true,\"from_link\":false,\"recordedHash\":true}}],\"file_trace\":[\"write owned original.txt\",\"shutil.copyfile original.txt -> copy.txt\",\"hash original and copy before mutation\",\"read and hash copy.txt after mutation\",\"re-read original unchanged\",\"evaluate synthetic handoff ledger\"],\"temporary_cleanup\":true}\n",
+    "stderr": "",
+    "exit": 0,
+    "result": {
+      "status": "observed",
+      "evidenceID": "E-001",
+      "original_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+      "copy_before_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+      "copy_after_ascii": "PUBLIC MOCK EVIDENCE\nid=E-001\nstatus=ready\n",
+      "original_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+      "copy_before_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+      "copy_after_sha256": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430",
+      "original_unchanged": true,
+      "changed_bytes": 0,
+      "integrity_match": true,
+      "ledger_errors": [
+        "handoff[1].from_link"
+      ],
+      "ledger_consistent": false,
+      "normal": {
+        "pass": false,
+        "decision": "ledger_refusal",
+        "claim": "synthetic copy and ledger only"
+      },
+      "faulty": {
+        "pass": true,
+        "decision": "provenance-approved",
+        "claim": "由来も承認済"
+      },
+      "authenticity_proven": false,
+      "legal_custody_proven": false,
+      "ledger_trace": [
+        {
+          "input": {
+            "evidenceID": "E-001",
+            "from": "collector",
+            "to": "custodian",
+            "seq": 1,
+            "recordedHash": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430"
+          },
+          "checks": {
+            "evidenceID": true,
+            "actor": true,
+            "seq": true,
+            "from_link": true,
+            "recordedHash": true
+          }
+        },
+        {
+          "input": {
+            "evidenceID": "E-001",
+            "from": "collector",
+            "to": "analyst",
+            "seq": 2,
+            "recordedHash": "c3e3ac285dc508cbcc0eb503af054bd89c5c9c363ab482f99b3a6438c1860430"
+          },
+          "checks": {
+            "evidenceID": true,
+            "actor": true,
+            "seq": true,
+            "from_link": false,
+            "recordedHash": true
+          }
+        }
+      ],
+      "file_trace": [
+        "write owned original.txt",
+        "shutil.copyfile original.txt -> copy.txt",
+        "hash original and copy before mutation",
+        "read and hash copy.txt after mutation",
+        "re-read original unchanged",
+        "evaluate synthetic handoff ledger"
+      ],
+      "temporary_cleanup": true
+    }
+  },
+  "source_digests": {
+    "evaluator.py": "7de35d10f00370b01acd09d7120f35cb46646ece27300888b966208a705f1541",
+    "runner.py": "262ab0abbc41f88f50327f9283784d2026d3a001675481c4e23a75fdc95017cb",
+    "checker.py": "f189f414f60be121e77ff606096ff76bca90488bf984127174249bd0157c38ca",
+    "server.py": "b133ae0fed7ba7b83a8499f7246738893717e8cf4b9c2684b9aa2d4df0398b97",
+    "contracts.json": "3fa5580a91a6437433cb9a2c33b48363850d937e8ef90dc2c464ffcdaf8023df",
+    "expected-table.json": "c10c66bdb7d78ef9ee5939917bc6c490a2e453831c10995a5d0e1cf35600f4bc",
+    "sources.json": "992c85d4938acf0d537ed72fcb4d2450a8e8b1181dd39c3b717ff7978bfb1c6a",
+    "coverage.json": "45b7c6264e5ef69a7973d4601262d6cbc5b041ff181dcc5239e1e06bffa42604",
+    "route.py": "37eab12deafd457bfc650bc2832d6aee8f8cdf096e9f6d2ab1200224894d3aa2",
+    "README.md": "4432922591cbafbcae4e8c2df95da5914684ccddf446a13d56167d50f3728490",
+    "index.html": "ba88d18793e1171807393c75c2eff710fadbb263838e7db564f4300c0bb1dfeb",
+    "app.js": "119507a29066182603f4c104ae38b530df23ab5c9b9fff0bdc250df41c596757",
+    "styles.css": "4df4932b82faed36fe9e4bc28a4f1ca4f361b6c71a5a3d3d718454fdfd20c22b",
+    "skills/atlas-evidence-copy-hash-custody-boundary/SKILL.md": "f884a74614d13dec69746113d228d00883004a8b36af75feb15cbc499748ffa3"
+  },
+  "engine": "Python synthetic evidence copy and ledger"
+}

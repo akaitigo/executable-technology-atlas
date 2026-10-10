@@ -1,0 +1,682 @@
+{
+  "project": "Atlas",
+  "lesson": "compiler-ast-stack",
+  "started_at": "2026-10-06T19:11:24.969Z",
+  "passed": true,
+  "budget_ms": 15000,
+  "base_url": "http://127.0.0.1:57736/",
+  "source_before": {
+    "index.html": "879bb134f53a6abfcfaa03efc5ab3b2780b71058a8b9c799cd59a94dea44d972",
+    "style.css": "c1da62fd8d8281b2851bf6a6a6c6f1ec142f528c22351aac0ad86bb2d964059f",
+    "lesson.js": "e51641fcc0c16e683ab18b424d825e90e0e5a4aada48e2c5614e77fe2de16ee0",
+    "README.md": "2b49473fe7bd3749fe4a24d31199f83e6e50eb88749c88958b3f0786abaef910",
+    "COVERAGE.md": "464301c86b1b1bd7ac3ad859ff91e3ff8b193f5c2334c2b584592ecfb6bbb864",
+    "GUI_VERIFICATION.md": "784ddae8fe031a767550f230f929162d62534a1234448316f1d58f95a2ec0908"
+  },
+  "source_after": {
+    "index.html": "879bb134f53a6abfcfaa03efc5ab3b2780b71058a8b9c799cd59a94dea44d972",
+    "style.css": "c1da62fd8d8281b2851bf6a6a6c6f1ec142f528c22351aac0ad86bb2d964059f",
+    "lesson.js": "e51641fcc0c16e683ab18b424d825e90e0e5a4aada48e2c5614e77fe2de16ee0",
+    "README.md": "2b49473fe7bd3749fe4a24d31199f83e6e50eb88749c88958b3f0786abaef910",
+    "COVERAGE.md": "464301c86b1b1bd7ac3ad859ff91e3ff8b193f5c2334c2b584592ecfb6bbb864",
+    "GUI_VERIFICATION.md": "784ddae8fe031a767550f230f929162d62534a1234448316f1d58f95a2ec0908"
+  },
+  "checks": [
+    {
+      "name": "1280 entry wording/current scope/layout",
+      "passed": true,
+      "detail": true
+    },
+    {
+      "name": "390 entry wording/current scope/layout",
+      "passed": true,
+      "detail": true
+    }
+  ],
+  "dom": [
+    {
+      "label": "1280 entry after wording revision",
+      "viewport": 1280,
+      "primary": true,
+      "url": "http://127.0.0.1:57736/index.html",
+      "body_text": "Atlas · コンパイラの小さな一歩\n\n木の順序を、命令の順序へ\n\nAST の各まとまりを、定数表と CONST / ADD / MUL へ写す。\n\n保存した CLI の測定結果を読む画面です。 Python の実行は正常5式・意図した拒否7条件で完了しています。画面の操作記録・画像と別担当の受入範囲は、状態記録で確認できます。このページから実験は起動しません。\n1　条件を選び、予想する\n\n最終値だけでなく、先に積む値と途中の stack（値を後入れ先出しで保持する列）を書いてください。右端が頂点です。自由記述の予想は自動採点しません。\n\n2 + 3 * 4\n(2 + 3) * 4\n2 * 3 + 4 * 5\n0\n2 + 2 * 2\n上限外の index\n負の index\nADD の値不足\nMUL の値不足\n空の終端\n余分な値の終端\n未知の命令\n\n2 + 3 * 4 — 正常対照。加算と乗算のどちらが先に完了するか。\n\nあなたの予想\n保存結果を読む\nリセット\n\n予想を書いてから保存結果を読めます。条件・予想の変更で前の結果を消します。\n\n3　原典と実装へ戻る\n\n左、右、親の後順と一時値の stack、定数表の index を、著者本文と今回の独自契約で区別します。命令の index と値は別物です。\n\nAtlas の原典対応と独自部分 · 固定した契約\nAST 変換と VM のコード · 前提の解析器と木評価器\n実装前の手計算 · 固定期待値\n完全な実行記録 · 保存値の検査\n4　答え合わせ\n最後まで追って答えを見る\n5　限界と実務での判断\n\n今回の命令は JSON の配列で、バイトコードの符号化や機械語ではありません。木評価器は命令列を読まず、VM は AST を読みません。ただし共通の Python や入力まで独立しているわけではありません。加算と乗算は左右を入れ替えても値が同じなので、値だけでなく出所・命令順・各 stack を確認します。\n\n文字列の解析拒否、任意 AST、変数・関数・型検査、制御の分岐、最適化、機械整数の桁あふれ、性能、GC 連携は今回の新しい実測範囲外です。不正命令の拒否は VM の境界であり、資料の読込み失敗や Python 実行失敗とは区別します。\n\nAtlas の利用手順 · 前提・今回の範囲・次の問い · 保存結果を案内する Skill · 現在の確認状態\n\nAtlas｜保存結果を読む静的画面。画面確認・受入の範囲は状態記録へ。元リポジトリ統合は未実施。",
+      "ids": {
+        "predict-title": {
+          "text": "1　条件を選び、予想する",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "choices": {
+          "text": "2 + 3 * 4(2 + 3) * 42 * 3 + 4 * 502 + 2 * 2上限外の index負の indexADD の値不足MUL の値不足空の終端余分な値の終端未知の命令",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "case-description": {
+          "text": "2 + 3 * 4 — 正常対照。加算と乗算のどちらが先に完了するか。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "prediction": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "read": {
+          "text": "保存結果を読む",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "load-state": {
+          "text": "予想を書いてから保存結果を読めます。条件・予想の変更で前の結果を消します。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "result": {
+          "text": "2　命令を一つずつ追い、対照する前の時点次の時点矢印は対応関係を示す模型です。実画面の画像や CPU の内部動作を記録したものではありません。AST と命令の対応命令番号 pc命令出所の node式の範囲全 node の対応範囲pc は0始まりの命令番号です。文字の範囲・命令範囲は [始点, 終点) で、終点を含みません。括弧の Group は子の範囲に対応し、自身の命令を増やしません。この時点の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "measurement": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "phase-title": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "previous": {
+          "text": "前の時点",
+          "visible": false,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "next": {
+          "text": "次の時点",
+          "visible": false,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "phase-note": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "diagram": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "current-step": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "ast": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "constants": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "code-table": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "mapping-details": {
+          "text": "全 node の対応範囲",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "mapping": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "comparison": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "raw-details": {
+          "text": "この時点の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "raw": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer-button": {
+          "text": "最後まで追って答えを見る",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        }
+      },
+      "tables": {
+        "code-table": []
+      },
+      "svg": [],
+      "raw_text": "",
+      "raw_parsed": null,
+      "heading_order": [
+        "1　条件を選び、予想する",
+        "2　命令を一つずつ追い、対照する",
+        "3　原典と実装へ戻る",
+        "4　答え合わせ",
+        "5　限界と実務での判断"
+      ],
+      "choices": [
+        {
+          "case": "precedence",
+          "checked": null,
+          "pressed": "true"
+        },
+        {
+          "case": "parentheses",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "two-products",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "zero",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "reuse-constant",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "index-upper",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "index-negative",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "add-empty",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "mul-one",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "final-empty",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "final-extra",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "unknown-opcode",
+          "checked": null,
+          "pressed": "false"
+        }
+      ],
+      "width": 1280
+    },
+    {
+      "label": "390 entry after wording revision",
+      "viewport": 390,
+      "primary": true,
+      "url": "http://127.0.0.1:57736/index.html",
+      "body_text": "Atlas · コンパイラの小さな一歩\n\n木の順序を、命令の順序へ\n\nAST の各まとまりを、定数表と CONST / ADD / MUL へ写す。\n\n保存した CLI の測定結果を読む画面です。 Python の実行は正常5式・意図した拒否7条件で完了しています。画面の操作記録・画像と別担当の受入範囲は、状態記録で確認できます。このページから実験は起動しません。\n1　条件を選び、予想する\n\n最終値だけでなく、先に積む値と途中の stack（値を後入れ先出しで保持する列）を書いてください。右端が頂点です。自由記述の予想は自動採点しません。\n\n2 + 3 * 4\n(2 + 3) * 4\n2 * 3 + 4 * 5\n0\n2 + 2 * 2\n上限外の index\n負の index\nADD の値不足\nMUL の値不足\n空の終端\n余分な値の終端\n未知の命令\n\n2 + 3 * 4 — 正常対照。加算と乗算のどちらが先に完了するか。\n\nあなたの予想\n保存結果を読む\nリセット\n\n予想を書いてから保存結果を読めます。条件・予想の変更で前の結果を消します。\n\n3　原典と実装へ戻る\n\n左、右、親の後順と一時値の stack、定数表の index を、著者本文と今回の独自契約で区別します。命令の index と値は別物です。\n\nAtlas の原典対応と独自部分 · 固定した契約\nAST 変換と VM のコード · 前提の解析器と木評価器\n実装前の手計算 · 固定期待値\n完全な実行記録 · 保存値の検査\n4　答え合わせ\n最後まで追って答えを見る\n5　限界と実務での判断\n\n今回の命令は JSON の配列で、バイトコードの符号化や機械語ではありません。木評価器は命令列を読まず、VM は AST を読みません。ただし共通の Python や入力まで独立しているわけではありません。加算と乗算は左右を入れ替えても値が同じなので、値だけでなく出所・命令順・各 stack を確認します。\n\n文字列の解析拒否、任意 AST、変数・関数・型検査、制御の分岐、最適化、機械整数の桁あふれ、性能、GC 連携は今回の新しい実測範囲外です。不正命令の拒否は VM の境界であり、資料の読込み失敗や Python 実行失敗とは区別します。\n\nAtlas の利用手順 · 前提・今回の範囲・次の問い · 保存結果を案内する Skill · 現在の確認状態\n\nAtlas｜保存結果を読む静的画面。画面確認・受入の範囲は状態記録へ。元リポジトリ統合は未実施。",
+      "ids": {
+        "predict-title": {
+          "text": "1　条件を選び、予想する",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "choices": {
+          "text": "2 + 3 * 4(2 + 3) * 42 * 3 + 4 * 502 + 2 * 2上限外の index負の indexADD の値不足MUL の値不足空の終端余分な値の終端未知の命令",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "case-description": {
+          "text": "2 + 3 * 4 — 正常対照。加算と乗算のどちらが先に完了するか。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "prediction": {
+          "text": "",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "read": {
+          "text": "保存結果を読む",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "reset": {
+          "text": "リセット",
+          "visible": true,
+          "disabled": false,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "load-state": {
+          "text": "予想を書いてから保存結果を読めます。条件・予想の変更で前の結果を消します。",
+          "visible": true,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "result": {
+          "text": "2　命令を一つずつ追い、対照する前の時点次の時点矢印は対応関係を示す模型です。実画面の画像や CPU の内部動作を記録したものではありません。AST と命令の対応命令番号 pc命令出所の node式の範囲全 node の対応範囲pc は0始まりの命令番号です。文字の範囲・命令範囲は [始点, 終点) で、終点を含みません。括弧の Group は子の範囲に対応し、自身の命令を増やしません。この時点の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "measurement": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "phase-title": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "previous": {
+          "text": "前の時点",
+          "visible": false,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "next": {
+          "text": "次の時点",
+          "visible": false,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "phase-note": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "diagram": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "current-step": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "ast": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "constants": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "code-table": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "mapping-details": {
+          "text": "全 node の対応範囲",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "mapping": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "comparison": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "raw-details": {
+          "text": "この時点の保存した記録",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": false,
+          "aria_pressed": null
+        },
+        "raw": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer-button": {
+          "text": "最後まで追って答えを見る",
+          "visible": true,
+          "disabled": true,
+          "value": "",
+          "open": null,
+          "aria_pressed": null
+        },
+        "answer": {
+          "text": "",
+          "visible": false,
+          "disabled": null,
+          "value": null,
+          "open": null,
+          "aria_pressed": null
+        }
+      },
+      "tables": {
+        "code-table": []
+      },
+      "svg": [],
+      "raw_text": "",
+      "raw_parsed": null,
+      "heading_order": [
+        "1　条件を選び、予想する",
+        "2　命令を一つずつ追い、対照する",
+        "3　原典と実装へ戻る",
+        "4　答え合わせ",
+        "5　限界と実務での判断"
+      ],
+      "choices": [
+        {
+          "case": "precedence",
+          "checked": null,
+          "pressed": "true"
+        },
+        {
+          "case": "parentheses",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "two-products",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "zero",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "reuse-constant",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "index-upper",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "index-negative",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "add-empty",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "mul-one",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "final-empty",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "final-extra",
+          "checked": null,
+          "pressed": "false"
+        },
+        {
+          "case": "unknown-opcode",
+          "checked": null,
+          "pressed": "false"
+        }
+      ],
+      "width": 390
+    }
+  ],
+  "pointer_actions": [],
+  "keyboard_actions": [],
+  "api_actions": [
+    {
+      "kind": "viewport",
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:57736/index.html"
+    },
+    {
+      "kind": "viewport",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "kind": "same-page-navigation",
+      "url": "http://127.0.0.1:57736/index.html"
+    }
+  ],
+  "faults": [],
+  "captures": [
+    {
+      "file": "1280-entry-revised.png",
+      "sha256": "7ff3e6418a6af77dcab80eb44a8d16e1222e8c43831468c06c8f7a7c6a4e10e5",
+      "width": 1280,
+      "height": 900,
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "actual_capture": true
+    },
+    {
+      "file": "390-entry-revised.png",
+      "sha256": "171e8a16cdaf4c825beca3e4325f9237b39bd2ecdb98af792eac7eae50be89c1",
+      "width": 390,
+      "height": 844,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actual_capture": true
+    }
+  ],
+  "references": [],
+  "errors": [],
+  "new_browser": 0,
+  "new_context": 0,
+  "new_tab": 0,
+  "new_server": 0,
+  "new_target_execution": 0,
+  "cleanup": {
+    "routes_removed": true,
+    "hooks_restored": true,
+    "viewport_restored": true,
+    "page_left_open": true
+  },
+  "scope": "Atlas entry wording follow-up and optional metric-table CSS only; full GUI not repeated",
+  "full_gui_repeated": false,
+  "previous_full_report": {
+    "path": "../browser-qa/nine-lessons-2026-10-06/session-2026-10-06T185545132Z/compiler-ast-stack-2026-10-06T190250965Z/report.json",
+    "sha256": "3f0444109f4d16326d4187363df3d4635a5002f6196821bd3c6cc4859127ef37",
+    "passed": true,
+    "dom_count": 167,
+    "captures": 8
+  },
+  "checker_sha256": "93c871059cb1b3c47cd5465a61e87b8ca1a81d6c1e686dc0b19f7602fe7c3efe",
+  "sources_unchanged": true,
+  "finished_at": "2026-10-06T19:11:25.111Z",
+  "elapsed_ms": 142,
+  "select_option_calls": 0
+}

@@ -1,0 +1,162 @@
+{
+  "acknowledgements": [],
+  "deliveries": 2,
+  "dlq": [
+    {
+      "attempts": 2,
+      "delivery": 2,
+      "last_exit": 75,
+      "message": {
+        "id": "event-a",
+        "payload": {
+          "account": "demo",
+          "delta": 7
+        }
+      },
+      "message_index": 0,
+      "reason": "max-deliveries-exhausted"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-05T06:37:21.253318Z",
+      "attempt": 1,
+      "delivery": 1,
+      "event": "model-deliver",
+      "event_id": "event-a",
+      "message_index": 0,
+      "redelivered": false
+    },
+    {
+      "at": "2026-10-05T06:37:21.314881Z",
+      "delivery": 1,
+      "event": "consumer-start",
+      "fault": "rollback-before-commit",
+      "policy": "inbox",
+      "sqlite_version": "3.51.0"
+    },
+    {
+      "at": "2026-10-05T06:37:21.316915Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "BEGIN IMMEDIATE"
+    },
+    {
+      "at": "2026-10-05T06:37:21.316953Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+    },
+    {
+      "at": "2026-10-05T06:37:21.316980Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "INSERT INTO inbox VALUES('event-a','sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c','{\"account\":\"demo\",\"delta\":7}\n')"
+    },
+    {
+      "at": "2026-10-05T06:37:21.317175Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "INSERT INTO effects(event_id,delta) VALUES('event-a',7)"
+    },
+    {
+      "at": "2026-10-05T06:37:21.317218Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "UPDATE account SET balance=balance+7 WHERE id='demo'"
+    },
+    {
+      "at": "2026-10-05T06:37:21.317242Z",
+      "delivery": 1,
+      "event": "sqlite-sql",
+      "sql": "ROLLBACK"
+    },
+    {
+      "at": "2026-10-05T06:37:21.317471Z",
+      "delivery": 1,
+      "event": "transaction-rolled-back",
+      "event_id": "event-a",
+      "reason": "injected-transient"
+    },
+    {
+      "at": "2026-10-05T06:37:21.321223Z",
+      "delivery": 1,
+      "event": "model-requeue",
+      "next_attempt": 2
+    },
+    {
+      "at": "2026-10-05T06:37:21.322921Z",
+      "attempt": 2,
+      "delivery": 2,
+      "event": "model-deliver",
+      "event_id": "event-a",
+      "message_index": 0,
+      "redelivered": true
+    },
+    {
+      "at": "2026-10-05T06:37:21.381972Z",
+      "delivery": 2,
+      "event": "consumer-start",
+      "fault": "rollback-before-commit",
+      "policy": "inbox",
+      "sqlite_version": "3.51.0"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387086Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "BEGIN IMMEDIATE"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387159Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387186Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "INSERT INTO inbox VALUES('event-a','sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c','{\"account\":\"demo\",\"delta\":7}\n')"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387382Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "INSERT INTO effects(event_id,delta) VALUES('event-a',7)"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387420Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "UPDATE account SET balance=balance+7 WHERE id='demo'"
+    },
+    {
+      "at": "2026-10-05T06:37:21.387441Z",
+      "delivery": 2,
+      "event": "sqlite-sql",
+      "sql": "ROLLBACK"
+    },
+    {
+      "at": "2026-10-05T06:37:21.388095Z",
+      "delivery": 2,
+      "event": "transaction-rolled-back",
+      "event_id": "event-a",
+      "reason": "injected-transient"
+    },
+    {
+      "at": "2026-10-05T06:37:21.392359Z",
+      "delivery": 2,
+      "event": "model-dlq",
+      "reason": "max-deliveries-exhausted"
+    }
+  ],
+  "model_retries": 1,
+  "outcome": "dlq",
+  "reason": null,
+  "state": {
+    "balance": 0,
+    "effects": [],
+    "inbox": []
+  }
+}

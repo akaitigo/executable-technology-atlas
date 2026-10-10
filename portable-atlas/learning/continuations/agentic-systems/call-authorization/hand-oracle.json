@@ -1,0 +1,226 @@
+{
+  "title": "Atlas implementation-before hand expectations",
+  "method": "literal eleven-row decision table; hashes derived only from fixed canonical input bytes, no executor exists",
+  "counts": {
+    "cases": 11,
+    "normal": 1,
+    "expected_refusal": 9,
+    "bad_comparison": 1
+  },
+  "rows": [
+    {
+      "id": "normal",
+      "status": "COMPLETED",
+      "reason": null,
+      "stopped_at": "dispatch",
+      "read_calls": 1,
+      "add_calls": 1,
+      "final": 7,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "49308d08a6adfcb91a00325534e2c0733badac2e359f40a7574781aafe341dfc",
+      "consumed_before": false,
+      "consumed_after": true,
+      "authorized": true,
+      "authority_breach": false
+    },
+    {
+      "id": "args-changed",
+      "status": "REJECTED",
+      "reason": "ARGS_MISMATCH",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 100,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 100,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "186e4cf03861e60acf73e54c03df66f595c941fa59dee97fdcaf66a47ec46550",
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "plan-changed",
+      "status": "REJECTED",
+      "reason": "PLAN_MISMATCH",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "631949b4fd60bef1f28cf946dac4b81b14a4492b27a8e78ce4dba4e0bf48d3d5",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"631949b4fd60bef1f28cf946dac4b81b14a4492b27a8e78ce4dba4e0bf48d3d5\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "80588c1472c97bd8b018498e4e57298c46c589c8f993af42454f6b92fa911609",
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "call-changed",
+      "status": "REJECTED",
+      "reason": "CALL_MISMATCH",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "49308d08a6adfcb91a00325534e2c0733badac2e359f40a7574781aafe341dfc",
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "expiry-at",
+      "status": "REJECTED",
+      "reason": "EXPIRED",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "49308d08a6adfcb91a00325534e2c0733badac2e359f40a7574781aafe341dfc",
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "missing-grant",
+      "status": "REJECTED",
+      "reason": "NO_APPROVAL",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 100,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 100,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "186e4cf03861e60acf73e54c03df66f595c941fa59dee97fdcaf66a47ec46550",
+      "consumed_before": null,
+      "consumed_after": null,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "bad-data-approval",
+      "status": "BAD_COMPLETED",
+      "reason": null,
+      "stopped_at": "dispatch",
+      "read_calls": 1,
+      "add_calls": 1,
+      "final": 103,
+      "resolved_args": {
+        "a": 100,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 100,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "186e4cf03861e60acf73e54c03df66f595c941fa59dee97fdcaf66a47ec46550",
+      "consumed_before": false,
+      "consumed_after": true,
+      "authorized": false,
+      "authority_breach": true
+    },
+    {
+      "id": "binding-type",
+      "status": "REJECTED",
+      "reason": "TYPED_INT",
+      "stopped_at": "binding",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": null,
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": null,
+      "actual_call_sha256": null,
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "stale-observation",
+      "status": "REJECTED",
+      "reason": "STALE_OBSERVATION",
+      "stopped_at": "binding",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": null,
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": null,
+      "actual_call_sha256": null,
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "consumed-grant",
+      "status": "REJECTED",
+      "reason": "CONSUMED",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"alice\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "49308d08a6adfcb91a00325534e2c0733badac2e359f40a7574781aafe341dfc",
+      "consumed_before": true,
+      "consumed_after": true,
+      "authorized": false,
+      "authority_breach": false
+    },
+    {
+      "id": "actor-changed",
+      "status": "REJECTED",
+      "reason": "ACTOR_MISMATCH",
+      "stopped_at": "authorize",
+      "read_calls": 1,
+      "add_calls": 0,
+      "final": null,
+      "resolved_args": {
+        "a": 4,
+        "b": 3
+      },
+      "plan_sha256": "943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b",
+      "actual_call_canonical": "{\n  \"actor\": \"bob\",\n  \"args\": {\n    \"a\": 4,\n    \"b\": 3\n  },\n  \"call_id\": \"add-a\",\n  \"plan_sha256\": \"943539c3af1791d38bfe887ea76df41d0b95e615eb72ddf24323b655bb83509b\",\n  \"tool\": \"add\"\n}\n",
+      "actual_call_sha256": "8f0799d5b136ce428c7b09a5821748c08725d0487cd9cd234e20ed92cf477a56",
+      "consumed_before": false,
+      "consumed_after": false,
+      "authorized": false,
+      "authority_breach": false
+    }
+  ]
+}

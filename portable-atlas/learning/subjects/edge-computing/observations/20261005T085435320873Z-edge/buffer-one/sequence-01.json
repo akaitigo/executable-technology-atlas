@@ -1,0 +1,641 @@
+{
+  "sequence": 1,
+  "delivery_order": [
+    "B1",
+    "A1"
+  ],
+  "operations": [
+    {
+      "op": "disconnect"
+    },
+    {
+      "op": "edit",
+      "node": "A",
+      "value": 20,
+      "wall_ms": 100
+    },
+    {
+      "op": "edit",
+      "node": "A",
+      "value": 21,
+      "wall_ms": 90
+    },
+    {
+      "op": "edit",
+      "node": "B",
+      "value": 30,
+      "wall_ms": 80
+    },
+    {
+      "op": "reconnect"
+    },
+    {
+      "op": "deliver",
+      "id": "B1"
+    },
+    {
+      "op": "deliver",
+      "id": "A1"
+    }
+  ],
+  "result": {
+    "config_valid": true,
+    "state": {
+      "A": {
+        "online": true,
+        "clock": [
+          1,
+          1
+        ],
+        "heads": [
+          {
+            "id": "A1",
+            "origin": "A",
+            "value": 20,
+            "version": [
+              1,
+              0
+            ],
+            "wall_ms": 100
+          },
+          {
+            "id": "B1",
+            "origin": "B",
+            "value": 30,
+            "version": [
+              0,
+              1
+            ],
+            "wall_ms": 80
+          }
+        ],
+        "seen": {
+          "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5",
+          "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+        },
+        "outbox": []
+      },
+      "B": {
+        "online": true,
+        "clock": [
+          1,
+          1
+        ],
+        "heads": [
+          {
+            "id": "A1",
+            "origin": "A",
+            "value": 20,
+            "version": [
+              1,
+              0
+            ],
+            "wall_ms": 100
+          },
+          {
+            "id": "B1",
+            "origin": "B",
+            "value": 30,
+            "version": [
+              0,
+              1
+            ],
+            "wall_ms": 80
+          }
+        ],
+        "seen": {
+          "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff",
+          "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+        },
+        "outbox": []
+      }
+    },
+    "events": {
+      "A1": {
+        "id": "A1",
+        "origin": "A",
+        "value": 20,
+        "version": [
+          1,
+          0
+        ],
+        "wall_ms": 100
+      },
+      "B1": {
+        "id": "B1",
+        "origin": "B",
+        "value": 30,
+        "version": [
+          0,
+          1
+        ],
+        "wall_ms": 80
+      }
+    },
+    "counts": {
+      "accepted": 2,
+      "rejected": 1,
+      "delivered": 2,
+      "duplicate": 0,
+      "conflict": 0
+    },
+    "modeled_ms": 174,
+    "raw": [
+      {
+        "at": "2026-10-05T08:54:35.336788+00:00",
+        "step": 1,
+        "action": {
+          "op": "disconnect"
+        },
+        "disposition": "disconnect",
+        "state": {
+          "A": {
+            "online": false,
+            "clock": [
+              0,
+              0
+            ],
+            "heads": [],
+            "seen": {},
+            "outbox": []
+          },
+          "B": {
+            "online": false,
+            "clock": [
+              0,
+              0
+            ],
+            "heads": [],
+            "seen": {},
+            "outbox": []
+          }
+        },
+        "counts": {
+          "accepted": 0,
+          "rejected": 0,
+          "delivered": 0,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336815+00:00",
+        "step": 2,
+        "action": {
+          "op": "edit",
+          "node": "A",
+          "value": 20,
+          "wall_ms": 100
+        },
+        "disposition": "local-accepted",
+        "event": {
+          "id": "A1",
+          "origin": "A",
+          "value": 20,
+          "version": [
+            1,
+            0
+          ],
+          "wall_ms": 100
+        },
+        "modeled_ms": 2,
+        "state": {
+          "A": {
+            "online": false,
+            "clock": [
+              1,
+              0
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+            },
+            "outbox": [
+              "A1"
+            ]
+          },
+          "B": {
+            "online": false,
+            "clock": [
+              0,
+              0
+            ],
+            "heads": [],
+            "seen": {},
+            "outbox": []
+          }
+        },
+        "counts": {
+          "accepted": 1,
+          "rejected": 0,
+          "delivered": 0,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336827+00:00",
+        "step": 3,
+        "action": {
+          "op": "edit",
+          "node": "A",
+          "value": 21,
+          "wall_ms": 90
+        },
+        "disposition": "buffer-full-rejected",
+        "modeled_ms": null,
+        "state": {
+          "A": {
+            "online": false,
+            "clock": [
+              1,
+              0
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+            },
+            "outbox": [
+              "A1"
+            ]
+          },
+          "B": {
+            "online": false,
+            "clock": [
+              0,
+              0
+            ],
+            "heads": [],
+            "seen": {},
+            "outbox": []
+          }
+        },
+        "counts": {
+          "accepted": 1,
+          "rejected": 1,
+          "delivered": 0,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336850+00:00",
+        "step": 4,
+        "action": {
+          "op": "edit",
+          "node": "B",
+          "value": 30,
+          "wall_ms": 80
+        },
+        "disposition": "local-accepted",
+        "event": {
+          "id": "B1",
+          "origin": "B",
+          "value": 30,
+          "version": [
+            0,
+            1
+          ],
+          "wall_ms": 80
+        },
+        "modeled_ms": 2,
+        "state": {
+          "A": {
+            "online": false,
+            "clock": [
+              1,
+              0
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+            },
+            "outbox": [
+              "A1"
+            ]
+          },
+          "B": {
+            "online": false,
+            "clock": [
+              0,
+              1
+            ],
+            "heads": [
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+            },
+            "outbox": [
+              "B1"
+            ]
+          }
+        },
+        "counts": {
+          "accepted": 2,
+          "rejected": 1,
+          "delivered": 0,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336865+00:00",
+        "step": 5,
+        "action": {
+          "op": "reconnect"
+        },
+        "disposition": "reconnect",
+        "state": {
+          "A": {
+            "online": true,
+            "clock": [
+              1,
+              0
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+            },
+            "outbox": [
+              "A1"
+            ]
+          },
+          "B": {
+            "online": true,
+            "clock": [
+              0,
+              1
+            ],
+            "heads": [
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+            },
+            "outbox": [
+              "B1"
+            ]
+          }
+        },
+        "counts": {
+          "accepted": 2,
+          "rejected": 1,
+          "delivered": 0,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336914+00:00",
+        "step": 6,
+        "action": {
+          "op": "deliver",
+          "id": "B1"
+        },
+        "disposition": "applied",
+        "event": {
+          "id": "B1",
+          "origin": "B",
+          "value": 30,
+          "version": [
+            0,
+            1
+          ],
+          "wall_ms": 80
+        },
+        "target": "A",
+        "modeled_ms": 85,
+        "state": {
+          "A": {
+            "online": true,
+            "clock": [
+              1,
+              1
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              },
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5",
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+            },
+            "outbox": [
+              "A1"
+            ]
+          },
+          "B": {
+            "online": true,
+            "clock": [
+              0,
+              1
+            ],
+            "heads": [
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+            },
+            "outbox": []
+          }
+        },
+        "counts": {
+          "accepted": 2,
+          "rejected": 1,
+          "delivered": 1,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      },
+      {
+        "at": "2026-10-05T08:54:35.336946+00:00",
+        "step": 7,
+        "action": {
+          "op": "deliver",
+          "id": "A1"
+        },
+        "disposition": "applied",
+        "event": {
+          "id": "A1",
+          "origin": "A",
+          "value": 20,
+          "version": [
+            1,
+            0
+          ],
+          "wall_ms": 100
+        },
+        "target": "B",
+        "modeled_ms": 85,
+        "state": {
+          "A": {
+            "online": true,
+            "clock": [
+              1,
+              1
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              },
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5",
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff"
+            },
+            "outbox": []
+          },
+          "B": {
+            "online": true,
+            "clock": [
+              1,
+              1
+            ],
+            "heads": [
+              {
+                "id": "A1",
+                "origin": "A",
+                "value": 20,
+                "version": [
+                  1,
+                  0
+                ],
+                "wall_ms": 100
+              },
+              {
+                "id": "B1",
+                "origin": "B",
+                "value": 30,
+                "version": [
+                  0,
+                  1
+                ],
+                "wall_ms": 80
+              }
+            ],
+            "seen": {
+              "B1": "192458bb6958bf2d958c5071ee7cf6f7b1567b9cf2971b6d47abac780a1e0aff",
+              "A1": "36cfc389f08af25580b54e8eadf65e00b37ee3b9a128523390edd3a858fd12c5"
+            },
+            "outbox": []
+          }
+        },
+        "counts": {
+          "accepted": 2,
+          "rejected": 1,
+          "delivered": 2,
+          "duplicate": 0,
+          "conflict": 0
+        }
+      }
+    ],
+    "scope": "deterministic two-node cost/sync model; no network/hardware latency measured"
+  }
+}

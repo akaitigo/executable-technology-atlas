@@ -1,0 +1,46 @@
+{"at": "2026-10-05T07:21:04.145897+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "PRAGMA journal_mode=DELETE;"}
+{"at": "2026-10-05T07:21:04.147920+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "\n    CREATE TABLE source(version INTEGER PRIMARY KEY, balance INTEGER NOT NULL);"}
+{"at": "2026-10-05T07:21:04.149524+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "\n    CREATE TABLE outbox(seq INTEGER PRIMARY KEY AUTOINCREMENT,event_id TEXT UNIQUE NOT NULL,\n      version INTEGER NOT NULL,delta INTEGER NOT NULL,schema_version INTEGER NOT NULL CHECK(schema_version=1),payload TEXT NOT NULL);"}
+{"at": "2026-10-05T07:21:04.151179+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "BEGIN IMMEDIATE"}
+{"at": "2026-10-05T07:21:04.152305+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "INSERT INTO source VALUES(1,7)"}
+{"at": "2026-10-05T07:21:04.153688+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "INSERT INTO outbox(event_id,version,delta,schema_version,payload) VALUES('event-1',1,7,1,'{\"schema_version\": 1, \"version\": 1, \"delta\": 7, \"event_id\": \"event-1\"}')"}
+{"at": "2026-10-05T07:21:04.155128+00:00", "pid": 70640, "kind": "before-commit-other-connection", "visible": {"source": [], "outbox": []}}
+{"at": "2026-10-05T07:21:04.156442+00:00", "pid": 70640, "kind": "sql", "database": "source.sqlite", "sql": "COMMIT"}
+{"at": "2026-10-05T07:21:04.158235+00:00", "pid": 70640, "kind": "after-transaction", "visible": {"source": [[1, 7]], "outbox": [[1, "event-1", 1, 7, 1]]}}
+{"at": "2026-10-05T07:21:04.159625+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "PRAGMA journal_mode=DELETE;"}
+{"at": "2026-10-05T07:21:04.160720+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      CREATE TABLE checkpoint(id INTEGER PRIMARY KEY CHECK(id=1), offset INTEGER NOT NULL);"}
+{"at": "2026-10-05T07:21:04.162241+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      INSERT INTO checkpoint VALUES(1,0);"}
+{"at": "2026-10-05T07:21:04.163917+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      CREATE TABLE effects(sequence INTEGER PRIMARY KEY,event_id TEXT NOT NULL,delta INTEGER NOT NULL);"}
+{"at": "2026-10-05T07:21:04.165778+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      CREATE TABLE inbox(event_id TEXT PRIMARY KEY,payload TEXT NOT NULL);"}
+{"at": "2026-10-05T07:21:04.167136+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      CREATE TABLE materialized(id INTEGER PRIMARY KEY CHECK(id=1),balance INTEGER NOT NULL);"}
+{"at": "2026-10-05T07:21:04.168498+00:00", "pid": 70640, "kind": "sql", "database": "consumer.sqlite", "sql": "\n      INSERT INTO materialized VALUES(1,0);"}
+{"at": "2026-10-05T07:21:04.229957+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT offset FROM checkpoint WHERE id=1"}
+{"at": "2026-10-05T07:21:04.232138+00:00", "pid": 70641, "kind": "consumer-start", "offset": 0, "highwater": 1}
+{"at": "2026-10-05T07:21:04.233885+00:00", "pid": 70641, "kind": "delivery", "seq": 1, "event": {"schema_version": 1, "version": 1, "delta": 7, "event_id": "event-1"}}
+{"at": "2026-10-05T07:21:04.235448+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "BEGIN IMMEDIATE"}
+{"at": "2026-10-05T07:21:04.237078+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT payload FROM inbox WHERE event_id='event-1'"}
+{"at": "2026-10-05T07:21:04.238252+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "INSERT INTO effects(event_id,delta) VALUES('event-1',7)"}
+{"at": "2026-10-05T07:21:04.240776+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "UPDATE materialized SET balance=balance+7 WHERE id=1"}
+{"at": "2026-10-05T07:21:04.242201+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "INSERT INTO inbox VALUES('event-1','{\"schema_version\": 1, \"version\": 1, \"delta\": 7, \"event_id\": \"event-1\"}')"}
+{"at": "2026-10-05T07:21:04.243640+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "COMMIT"}
+{"at": "2026-10-05T07:21:04.244910+00:00", "pid": 70641, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT balance FROM materialized"}
+{"at": "2026-10-05T07:21:04.246212+00:00", "pid": 70641, "kind": "effect-committed", "seq": 1, "offset": 0, "balance": 7}
+{"at": "2026-10-05T07:21:04.248010+00:00", "pid": 70641, "kind": "crash-before-checkpoint", "seq": 1, "offset": 0}
+{"at": "2026-10-05T07:21:04.250675+00:00", "pid": 70640, "kind": "child-exit", "code": 70, "stdout": "", "stderr": ""}
+{"at": "2026-10-05T07:21:04.251902+00:00", "pid": 70640, "kind": "child-state", "offset": 0, "balance": 7, "effects": 1}
+{"at": "2026-10-05T07:21:04.308766+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT offset FROM checkpoint WHERE id=1"}
+{"at": "2026-10-05T07:21:04.311098+00:00", "pid": 70642, "kind": "consumer-start", "offset": 0, "highwater": 1}
+{"at": "2026-10-05T07:21:04.312468+00:00", "pid": 70642, "kind": "delivery", "seq": 1, "event": {"schema_version": 1, "version": 1, "delta": 7, "event_id": "event-1"}}
+{"at": "2026-10-05T07:21:04.313698+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "BEGIN IMMEDIATE"}
+{"at": "2026-10-05T07:21:04.315081+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT payload FROM inbox WHERE event_id='event-1'"}
+{"at": "2026-10-05T07:21:04.316764+00:00", "pid": 70642, "kind": "duplicate-no-effect", "seq": 1}
+{"at": "2026-10-05T07:21:04.318004+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "COMMIT"}
+{"at": "2026-10-05T07:21:04.319432+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "SELECT balance FROM materialized"}
+{"at": "2026-10-05T07:21:04.320795+00:00", "pid": 70642, "kind": "effect-committed", "seq": 1, "offset": 0, "balance": 7}
+{"at": "2026-10-05T07:21:04.322148+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "BEGIN IMMEDIATE"}
+{"at": "2026-10-05T07:21:04.323405+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "UPDATE checkpoint SET offset=1 WHERE id=1"}
+{"at": "2026-10-05T07:21:04.325073+00:00", "pid": 70642, "kind": "sql", "database": "consumer.sqlite", "sql": "COMMIT"}
+{"at": "2026-10-05T07:21:04.326546+00:00", "pid": 70642, "kind": "checkpoint-saved", "offset": 1}
+{"at": "2026-10-05T07:21:04.327885+00:00", "pid": 70642, "kind": "finite-consumer-end", "offset": 1, "highwater": 1}
+{"at": "2026-10-05T07:21:04.332591+00:00", "pid": 70640, "kind": "child-exit", "code": 0, "stdout": "", "stderr": ""}
+{"at": "2026-10-05T07:21:04.334126+00:00", "pid": 70640, "kind": "child-state", "offset": 1, "balance": 7, "effects": 1}

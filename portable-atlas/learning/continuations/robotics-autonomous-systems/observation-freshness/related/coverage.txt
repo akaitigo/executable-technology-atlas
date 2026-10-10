@@ -1,0 +1,22 @@
+{
+ "subject_status":"部分教材: 2D point robot、固定binary gridと一回の観測更新。実ロボット・実センサー・ROS・安全保証は未実行。",
+ "implemented":["4近傍BFS最短経路","閉cell線分衝突と直線反例","固定stale map観測→停止/再計画","予算と到達不能","実行traceと独立幾何/BFSoracle"],
+ "areas":[
+  {"area":"幾何・座標・robot model","status":"部分教材","concepts":["cell center","座標系/transform","configuration space","footprint/clearance","剛体/関節"],"question":"点の経路が通れても、幅や姿勢を持つrobotは通れるか？","source":"costmap"},
+  {"area":"知覚・センサー","status":"未教材","concepts":["lidar/camera","calibration","occlusion","noise","detection","latency"],"question":"障害物追加を何の観測からいつ知れるか？","source":"observation"},
+  {"area":"状態推定・localization・SLAM","status":"未教材","concepts":["odometry","pose uncertainty","Kalman/particle filter","loop closure","map alignment"],"question":"位置推定がずれたとき同じgridの安全判定は成立するか？","source":"robotics-map"},
+  {"area":"環境表現・map更新","status":"部分教材","concepts":["occupancy/cost map","unknown cell","marking/clearing","timestamp/version","map fusion"],"question":"経路のmap versionと現在の観測は一致しているか？","source":"observation"},
+  {"area":"global path planning","status":"部分教材","concepts":["graph search","BFS/A*/Dijkstra","reachability","sampling/RRT/PRM","optimization"],"question":"最短とはどの状態・cost・制約に対してか？","source":"planning"},
+  {"area":"local planning・trajectory・control","status":"未教材","concepts":["velocity/acceleration","nonholonomic constraint","tracking","feedback","MPC","braking"],"question":"経路を実際の速度で追跡し、障害物前で止まれるか？","source":"robotics-map"},
+  {"area":"衝突・risk・運用安全","status":"部分教材","concepts":["closed-cell contact","clearance","uncertainty margin","stop distance","failure mode","emergency stop"],"question":"geometryの非衝突は実機安全のどこまでを保証するか？","source":"costmap"},
+  {"area":"動的環境・再計画・task実行","status":"部分教材","concepts":["replan","stale observation","moving obstacles","mission state","recovery","cancel"],"question":"新観測で経路が失効したとき停止/再計画/引継ぎをどう選ぶか？","source":"observation"},
+  {"area":"multi-robot・manipulation","status":"未教材","concepts":["coordination","space-time reservation","joint limits","IK","grasp","contact"],"question":"他robotや関節の制約を同じ2D点gridで表現できるか？","source":"robotics-map"},
+  {"area":"middleware・実機・評価","status":"未教材","concepts":["ROS/TF/messages","simulation-to-real","logs","hardware timing","success/collision/latency metrics"],"question":"同じ入力と実行条件で追試し、実機の失敗を残せるか？","source":"observation"}
+ ],
+ "next_experiments":[
+  {"id":"footprint-inflation","question":"robotの幅と安全余裕を加えると通れる経路は変わるか？","experiment":"固定radiusでcellを膨張させ、狭い通路の可否を独立Minkowski/距離oracleで比較する。点モデルとの差を示す。","source":"costmap"},
+  {"id":"timestamp-unknown","question":"遅れた観測やunknown cellをどう拒否/扱うか？","experiment":"固定timestamp/versionの遅延・順序逆転・期限切れ・unknownを加え、保守停止とnaive更新を比較する。実センサーや通信は使わない。","source":"observation"},
+  {"id":"braking-toy","question":"速度がある場合に障害物前で停止できるか？","experiment":"1D速度/減速度の離散toyで制動距離と観測遅延を手計算と比較。瞬時停止の本教材との差を確認し、実機保証へ拡大しない。","source":"robotics-map"},
+  {"id":"weighted-grid","question":"距離最短とrisk/cost最小は同じ経路か？","experiment":"固定weighted cost mapのDijkstraとunit-cost BFSを比較し、全小graphの独立最小cost oracleで確認する。","source":"planning"}
+ ]
+}

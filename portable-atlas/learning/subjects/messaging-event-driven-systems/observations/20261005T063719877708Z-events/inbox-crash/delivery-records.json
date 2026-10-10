@@ -1,0 +1,217 @@
+[
+  {
+    "attempt": 1,
+    "command": [
+      "python3",
+      "consumer.py",
+      "--db",
+      "observations/20261005T063719877708Z-events/inbox-crash/consumer.sqlite"
+    ],
+    "completed_at": "2026-10-05T06:37:20.246461Z",
+    "db_after": {
+      "balance": 7,
+      "effects": [
+        {
+          "delta": 7,
+          "event_id": "event-a",
+          "sequence": 1
+        }
+      ],
+      "inbox": [
+        {
+          "event_id": "event-a",
+          "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c",
+          "payload": {
+            "account": "demo",
+            "delta": 7
+          }
+        }
+      ]
+    },
+    "db_before": {
+      "balance": 0,
+      "effects": [],
+      "inbox": []
+    },
+    "db_post_digest": "sha256:f072d6afc3e7b4556ee56a71dd4fe4b856187ccfa1599f8b37e9ac58323f0391",
+    "db_pre_digest": "sha256:8cd9606bc97a8437c23533018352c1aadd8e2b02738218c195813175ad66e4ff",
+    "delivery": 1,
+    "exit_code": 70,
+    "message_index": 0,
+    "request": {
+      "fault": "crash-after-commit",
+      "message": {
+        "id": "event-a",
+        "payload": {
+          "account": "demo",
+          "delta": 7
+        }
+      },
+      "policy": "inbox"
+    },
+    "started_at": "2026-10-05T06:37:20.191673Z",
+    "stderr": "",
+    "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdin_digest": "sha256:0288c85a3a82c286fa5097d7bf129d309099b0fc277299d72027b7f6d970343f",
+    "stdout": "{\"event\": \"consumer-start\", \"at\": \"2026-10-05T06:37:20.243135Z\", \"pid\": 56738, \"sqlite_version\": \"3.51.0\", \"policy\": \"inbox\", \"fault\": \"crash-after-commit\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245012Z\", \"sql\": \"BEGIN IMMEDIATE\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245050Z\", \"sql\": \"SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245075Z\", \"sql\": \"INSERT INTO inbox VALUES('event-a','sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c','{\\\"account\\\":\\\"demo\\\",\\\"delta\\\":7}\\n')\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245244Z\", \"sql\": \"INSERT INTO effects(event_id,delta) VALUES('event-a',7)\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245290Z\", \"sql\": \"UPDATE account SET balance=balance+7 WHERE id='demo'\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.245314Z\", \"sql\": \"COMMIT\"}\n{\"event\": \"transaction-committed\", \"at\": \"2026-10-05T06:37:20.245715Z\", \"event_id\": \"event-a\", \"fingerprint\": \"sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c\"}\n{\"event\": \"injected-process-crash-before-ack\", \"at\": \"2026-10-05T06:37:20.245730Z\", \"event_id\": \"event-a\", \"exit_code\": 70}\n",
+    "stdout_digest": "sha256:a19b910ccf05a2b2521324e307739dfee6ff3e34ff9bfb68f9a0ef803d49d482",
+    "trace": [
+      {
+        "at": "2026-10-05T06:37:20.243135Z",
+        "event": "consumer-start",
+        "fault": "crash-after-commit",
+        "policy": "inbox",
+        "sqlite_version": "3.51.0"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245012Z",
+        "event": "sqlite-sql",
+        "sql": "BEGIN IMMEDIATE"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245050Z",
+        "event": "sqlite-sql",
+        "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245075Z",
+        "event": "sqlite-sql",
+        "sql": "INSERT INTO inbox VALUES('event-a','sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c','{\"account\":\"demo\",\"delta\":7}\n')"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245244Z",
+        "event": "sqlite-sql",
+        "sql": "INSERT INTO effects(event_id,delta) VALUES('event-a',7)"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245290Z",
+        "event": "sqlite-sql",
+        "sql": "UPDATE account SET balance=balance+7 WHERE id='demo'"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245314Z",
+        "event": "sqlite-sql",
+        "sql": "COMMIT"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245715Z",
+        "event": "transaction-committed",
+        "event_id": "event-a",
+        "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c"
+      },
+      {
+        "at": "2026-10-05T06:37:20.245730Z",
+        "event": "injected-process-crash-before-ack",
+        "event_id": "event-a",
+        "exit_code": 70
+      }
+    ]
+  },
+  {
+    "attempt": 2,
+    "command": [
+      "python3",
+      "consumer.py",
+      "--db",
+      "observations/20261005T063719877708Z-events/inbox-crash/consumer.sqlite"
+    ],
+    "completed_at": "2026-10-05T06:37:20.311521Z",
+    "db_after": {
+      "balance": 7,
+      "effects": [
+        {
+          "delta": 7,
+          "event_id": "event-a",
+          "sequence": 1
+        }
+      ],
+      "inbox": [
+        {
+          "event_id": "event-a",
+          "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c",
+          "payload": {
+            "account": "demo",
+            "delta": 7
+          }
+        }
+      ]
+    },
+    "db_before": {
+      "balance": 7,
+      "effects": [
+        {
+          "delta": 7,
+          "event_id": "event-a",
+          "sequence": 1
+        }
+      ],
+      "inbox": [
+        {
+          "event_id": "event-a",
+          "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c",
+          "payload": {
+            "account": "demo",
+            "delta": 7
+          }
+        }
+      ]
+    },
+    "db_post_digest": "sha256:f072d6afc3e7b4556ee56a71dd4fe4b856187ccfa1599f8b37e9ac58323f0391",
+    "db_pre_digest": "sha256:f072d6afc3e7b4556ee56a71dd4fe4b856187ccfa1599f8b37e9ac58323f0391",
+    "delivery": 2,
+    "exit_code": 0,
+    "message_index": 0,
+    "request": {
+      "fault": "none",
+      "message": {
+        "id": "event-a",
+        "payload": {
+          "account": "demo",
+          "delta": 7
+        }
+      },
+      "policy": "inbox"
+    },
+    "started_at": "2026-10-05T06:37:20.249441Z",
+    "stderr": "",
+    "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdin_digest": "sha256:4ed833fe12de5c0b669745a63483798a725e6ed12a3c5312d2f769d50c64745e",
+    "stdout": "{\"event\": \"consumer-start\", \"at\": \"2026-10-05T06:37:20.306614Z\", \"pid\": 56739, \"sqlite_version\": \"3.51.0\", \"policy\": \"inbox\", \"fault\": \"none\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.308957Z\", \"sql\": \"BEGIN IMMEDIATE\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.308997Z\", \"sql\": \"SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'\"}\n{\"event\": \"sqlite-sql\", \"at\": \"2026-10-05T06:37:20.309018Z\", \"sql\": \"ROLLBACK\"}\n{\"event\": \"duplicate-no-effect\", \"at\": \"2026-10-05T06:37:20.309069Z\", \"event_id\": \"event-a\", \"fingerprint\": \"sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c\"}\n{\"event\": \"ack-eligible\", \"at\": \"2026-10-05T06:37:20.309076Z\", \"event_id\": \"event-a\"}\n",
+    "stdout_digest": "sha256:ce8fe507c39e69c4dad211b4bf5dc499de7352633f3acaa95959f23177906802",
+    "trace": [
+      {
+        "at": "2026-10-05T06:37:20.306614Z",
+        "event": "consumer-start",
+        "fault": "none",
+        "policy": "inbox",
+        "sqlite_version": "3.51.0"
+      },
+      {
+        "at": "2026-10-05T06:37:20.308957Z",
+        "event": "sqlite-sql",
+        "sql": "BEGIN IMMEDIATE"
+      },
+      {
+        "at": "2026-10-05T06:37:20.308997Z",
+        "event": "sqlite-sql",
+        "sql": "SELECT fingerprint,payload FROM inbox WHERE event_id='event-a'"
+      },
+      {
+        "at": "2026-10-05T06:37:20.309018Z",
+        "event": "sqlite-sql",
+        "sql": "ROLLBACK"
+      },
+      {
+        "at": "2026-10-05T06:37:20.309069Z",
+        "event": "duplicate-no-effect",
+        "event_id": "event-a",
+        "fingerprint": "sha256:a8d44fea3dd158b2a06164efa209e871b8626e3d0566a3b028f50c2c1040157c"
+      },
+      {
+        "at": "2026-10-05T06:37:20.309076Z",
+        "event": "ack-eligible",
+        "event_id": "event-a"
+      }
+    ]
+  }
+]

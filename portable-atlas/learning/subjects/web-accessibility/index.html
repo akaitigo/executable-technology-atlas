@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ボタンは見た目だけではない | Web Accessibility Lab</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#172a36;background:#eef3f3;line-height:1.65}*{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:24px}h1{font-size:30px;line-height:1.3;margin:8px 0}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:0 0 8px}p{margin:8px 0}.eyebrow{font-size:12px;letter-spacing:.12em;color:#235d5b}.panel{background:white;border:1px solid #becdce;border-radius:12px;padding:20px;margin:16px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.sample{border:1px solid #94b0b1;background:#f6fafa;border-radius:8px;padding:16px}.action{font:inherit;display:inline-block;border:2px solid #235d5b;border-radius:6px;padding:9px 18px;background:#235d5b;color:white;cursor:pointer;min-height:44px}.action:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #b64b00;outline-offset:4px}.action[aria-disabled=true],.action:disabled{background:#566b6e;cursor:not-allowed}button,select{font:inherit}button:not(.action){padding:6px 12px}select{max-width:100%;padding:5px}label{display:inline-block;margin:6px 10px 6px 0}output{font-variant-numeric:tabular-nums;font-size:24px;font-weight:700}.muted{color:#475f69;font-size:13px}.warning{border-left:4px solid #b64b00;padding-left:12px}.focusread{font-size:13px;background:#e3eeee;padding:6px 10px;border-radius:5px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#122e38;color:#e4f4f5;padding:14px;border-radius:6px;font-size:12px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid #ccdada;text-align:left;padding:8px}a{color:#175853}summary{cursor:pointer}#feedback,#prediction-result{font-weight:600}#events{max-height:185px;overflow:auto}#raw{display:none}@media(max-width:680px){.grid{grid-template-columns:1fr}main{padding:14px}h1{font-size:24px}}
+</style>
+<main>
+<header><div class="eyebrow">WEB ACCESSIBILITY / 01</div><h1>同じ見た目、違う操作</h1><p>「カウントを増やす」だけのUIで、クリック・キーボード・role/nameを切り分ける。</p><p class="muted">これは単一ボタンの教材です。WCAG適合、全支援技術での動作、Subject全体の完成を保証しません。</p></header>
+<section class="panel"><h2>1. 先に予想する</h2><label for="prediction">click-only divはTab → Enterで増える？</label><select id="prediction"><option value="">予想を選ぶ</option><option value="yes">buttonと同じように増える</option><option value="no">Tabで到達できず、増えない</option></select><button id="predict">予想を保存</button><span id="prediction-result" role="status"></span></section>
+<section class="panel" aria-labelledby="lab-title"><h2 id="lab-title">2. 操作して比べる</h2>
+<label for="mode">右側の実装</label><select id="mode"><option value="click-only">不良: click-only div</option><option value="role-only">不良: role + tabindexだけ</option><option value="repaired">修正: role + tabindex + keyboard</option></select>
+<label><input id="disabled" type="checkbox">操作を無効にする（境界）</label><button id="reset">カウントと記録をリセット</button>
+<p class="muted">「Tabの出発点」をクリックし、Tabを1回ずつ。Enter・Spaceで増えるか、フォーカス枠があるか確認する。マウスでも比較できる。</p>
+<button id="start">Tabの出発点</button>
+<div class="grid" style="margin:14px 0">
+<article class="sample" aria-labelledby="native-title"><h3 id="native-title">左: native button</h3><button class="action" id="native" type="button">カウントを増やす</button><p>カウント <output id="native-count">0</output></p></article>
+<article class="sample" aria-labelledby="custom-title"><h3 id="custom-title">右: 比較する実装</h3><div id="mount"></div><p>カウント <output id="custom-count">0</output></p></article>
+</div><button id="end">Tabの到着点</button><p class="focusread" id="focusread">フォーカス: 未操作</p>
+<table><thead><tr><th>DOMの宣言（実computed nameではない）</th><th>左</th><th>右</th></tr></thead><tbody><tr><td>要素 / role属性 / tabindex</td><td id="native-declaration"></td><td id="custom-declaration"></td></tr></tbody></table>
+<p id="mode-note" class="warning"></p><details><summary>実イベントを見る（最終60件）</summary><pre id="events">まだイベントはありません。</pre></details></section>
+<section class="panel"><h2>3. 文字は見えるのに、名前がない</h2><p>下のボタンは最初、唯一の文字を <code>aria-hidden="true"</code> にしている。見える文字とaccessible nameは同一ではない。</p><button class="action" id="unnamed" type="button"><span id="name-text" aria-hidden="true">カウントを増やす</span></button><p>別カウント <output id="name-count">0</output></p><label><input id="name-fix" type="checkbox">文字を名前計算へ戻す（aria-hiddenを除去）</label><p class="muted">ページ内JSはcomputed nameを推測表示しません。ブラウザのAccessibility treeでrole「button」・name空 →「カウントを増やす」を観察します。読み上げ音声の実測とは別です。</p></section>
+<section class="panel"><h2>4. 実装と一次資料で理由を確認する</h2><pre id="implementation"></pre><p>このカウント操作では、可能ならnative buttonを選ぶ。カスタムroleを付けても、キーボード操作は自動追加されない。修正版divはSpaceのkeydownでスクロールを防ぎ、keyupで1回動作し、blurで保留中の操作を取消す。フォーカスは同じ場所に残る。</p><p class="muted">無効時: native disabledはTab順から外れる。修正版のaria-disabledはTabで到達可能なまま、クリックとキーの動作をコードで拒否する。この違いは不具合と決めつけず、設計条件として扱う。</p><ul><li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/">W3C APG Button Pattern</a> — role/name・Enter/Space・動作後フォーカスの設計指針。</li><li><a href="https://www.w3.org/TR/accname-1.2/#computation-steps">Accessible Name Computation 1.2 §4.3.2</a> — 名前計算におけるhiddenと参照の扱い。この例にはaria-labelledby参照はない。</li><li><a href="https://www.w3.org/TR/html-aria/">ARIA in HTML</a> — native HTMLの暗黙roleとARIA利用条件。</li></ul><p class="muted">APGは実装の指針であり、教材の試験結果だけでWCAG適合を判定しない。</p></section>
+<section class="panel"><h2>5. 修正を選んで説明する</h2><label for="answer">この単純なアクションを作るなら？</label><select id="answer"><option value="">選ぶ</option><option value="role">divへroleだけ足す</option><option value="tab">divへtabindexだけ足す</option><option value="complete">カスタムdivへrole/name・Tab・Enter/Space・focus・disabled処理をそろえる</option><option value="native">名前付きnative buttonを使う</option></select><button id="check-answer">回答を確認</button><p id="feedback" role="status"></p><p class="muted">次の問い: Tabで到達できること、操作できること、名前が伝わることは、それぞれ何で確認する？</p></section>
+<footer><p><a href="scope.json">制作範囲と未制作領域</a> / <a href="README.md">再現手順</a></p></footer>
+<pre id="raw" aria-hidden="true"></pre>
+</main>
+<script src="keyboard.js"></script><script src="lesson.js"></script>
+</html>

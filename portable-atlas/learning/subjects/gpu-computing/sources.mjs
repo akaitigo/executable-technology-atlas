@@ -1,0 +1,1 @@
+export const SOURCES=['sources.mjs','serve.mjs','probe.html','probe.mjs','cases.json','add.wgsl','experiment.mjs','oracle.mjs','verify.mjs','check.mjs','index.html','styles.css','lesson.mjs','scope.json','skills/atlas-gpu-computing/SKILL.md'];

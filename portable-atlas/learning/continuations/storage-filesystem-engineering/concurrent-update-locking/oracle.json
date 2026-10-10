@@ -1,0 +1,9 @@
+{
+  "authorship": "hand-fixed before execution; arithmetic and controller schedule, no worker import",
+  "cases": [
+    {"id":"replace-only", "schedule":[["A","read","read"],["B","read","read"],["A","write","write"],["B","write","write"],["A","replace","rename"],["B","replace","rename"]], "reads":[0,0], "visible":[0,1,1], "finalbytes":"1\n", "meaning":"atomic replacement does not isolate read-modify-write"},
+    {"id":"stable-lock", "schedule":[["A","lock","acquired"],["B","lock","would_block"],["A","read","read"],["A","write","write"],["A","replace","rename"],["A","unlock","released"],["B","lock","acquired"],["B","read","read"],["B","write","write"],["B","replace","rename"],["B","unlock","released"]], "reads":[0,1], "visible":[0,1,2], "finalbytes":"2\n", "meaning":"cooperating writers serialize the complete update"},
+    {"id":"abort-before-commit", "schedule":[["A","lock","acquired"],["B","lock","would_block"],["A","read","read"],["A","write","write"],["A","abort","abort_before_replace"],["A","unlock","released"],["B","lock","acquired"],["B","read","read"],["B","write","write"],["B","replace","rename"],["B","unlock","released"]], "reads":[0,0], "visible":[0,0,1], "finalbytes":"1\n", "meaning":"aborted update is not committed; release permits B to continue"}
+  ],
+  "timeout": "owned child waiting for command is terminated and reaped within controller bound"
+}

@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-05T07:50:53.819432+00:00",
+  "surface": "real Codex IAB via cua_repl",
+  "url": "http://127.0.0.1:56203/index.html",
+  "title": "成功したrequestと切れたtrace | Observability",
+  "sourceArtifactDigests": {
+    "fixture.json": "8d842e937723ae50def43d22120957e02554b2fb6c1512a7d2bfb094d5240fc8",
+    "runner.py": "fd1d5bfc827f4e79d4efeaa9d0a7ba9a2c6432a0ce992542ffa21e0ec372380d",
+    "oracle.py": "334779924a83f8b8830cf87cc4ff5742d213cff117d9e05db689fc409c4bb327",
+    "checker.py": "6d0d9506f29b398241cf084a5baa4f7496eb29145f25cf29e818498954f6c76d",
+    "server.py": "5b0a2c4e24fe173520ee286b62a55377da67b84cdbdf7f7ab6f0c9648f2fdd8b",
+    "index.html": "bdaba968bcf911bc39b89c0083fc931e1d6ce7462ed61ba267714523f2952d10",
+    "app.js": "85e1b621a533caef0f255492d51801f9b45b1b3d0c4b972c031c4d89837e03b2",
+    "README.md": "583eededf17422e53b9301ce7180fd7735dea8bb9665303a7cc1f15ee74102b6",
+    "sources.json": "29e15327fedccfb1f30068db061a7cb5ec61f51d19b935f2da2c826bc47f26c6",
+    "skills/atlas-observability-engineering/SKILL.md": "c004800bbb33060b28bf90da83b0b04c72f22a1db97615f768741c6fb505e699"
+  },
+  "cases": [
+    {
+      "case": "success",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 1,
+        "logs": 6,
+        "spans": 2,
+        "metricSeries": 1,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "error",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 1,
+        "logs": 6,
+        "spans": 2,
+        "metricSeries": 1,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "missing-propagation",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": false,
+        "findings": [
+          {
+            "kind": "orphan-span",
+            "span_id": "000000000000000c",
+            "actual_parent": null,
+            "root_span_id": "000000000000000b",
+            "child_trace": "000000000000000000000000000003e9",
+            "request_trace": "00000000000000000000000000000001"
+          }
+        ],
+        "requests": 1,
+        "logs": 6,
+        "spans": 2,
+        "metricSeries": 1,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "error-orphan",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": false,
+        "findings": [
+          {
+            "kind": "orphan-span",
+            "span_id": "000000000000000c",
+            "actual_parent": null,
+            "root_span_id": "000000000000000b",
+            "child_trace": "000000000000000000000000000003e9",
+            "request_trace": "00000000000000000000000000000001"
+          }
+        ],
+        "requests": 1,
+        "logs": 6,
+        "spans": 2,
+        "metricSeries": 1,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "batch",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": false,
+        "findings": [
+          {
+            "kind": "orphan-span",
+            "span_id": "0000000000000020",
+            "actual_parent": null,
+            "root_span_id": "000000000000001f",
+            "child_trace": "000000000000000000000000000003eb",
+            "request_trace": "00000000000000000000000000000003"
+          }
+        ],
+        "requests": 3,
+        "logs": 18,
+        "spans": 6,
+        "metricSeries": 2,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "upper-bound",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 1,
+        "logs": 6,
+        "spans": 2,
+        "metricSeries": 1,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "zero-units",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 0,
+        "logs": 0,
+        "spans": 0,
+        "metricSeries": 0,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "unexpected-key",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 0,
+        "logs": 0,
+        "spans": 0,
+        "metricSeries": 0,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    },
+    {
+      "case": "unexpected-value",
+      "oracle": {
+        "validScenario": true,
+        "bindingComplete": true,
+        "findings": [],
+        "requests": 0,
+        "logs": 0,
+        "spans": 0,
+        "metricSeries": 0,
+        "durationChecks": "monotonic + containment + arithmetic, exact timings not fixed"
+      }
+    }
+  ],
+  "eventChecks": 5,
+  "eventObservations": [
+    {
+      "case": "success",
+      "sequence": 1,
+      "monotonic_ns": 171829060208,
+      "timestampUTC": "2026-10-05T07:48:50.844490+00:00",
+      "event": "request.begin",
+      "trace_id": "00000000000000000000000000000001",
+      "span_id": "000000000000000b",
+      "severity": "INFO",
+      "attributes": {
+        "route": "quote"
+      }
+    },
+    {
+      "case": "success",
+      "sequence": 3,
+      "monotonic_ns": 171829089833,
+      "timestampUTC": "2026-10-05T07:48:50.844516+00:00",
+      "event": "lookup.result",
+      "trace_id": "00000000000000000000000000000001",
+      "span_id": "000000000000000c",
+      "severity": "INFO",
+      "attributes": {
+        "amount": 200
+      }
+    },
+    {
+      "case": "success",
+      "sequence": 5,
+      "monotonic_ns": 171829093750,
+      "timestampUTC": "2026-10-05T07:48:50.844520+00:00",
+      "event": "request.response",
+      "trace_id": "00000000000000000000000000000001",
+      "span_id": "000000000000000b",
+      "severity": "INFO",
+      "attributes": {
+        "status": 200
+      }
+    },
+    {
+      "case": "error",
+      "sequence": 3,
+      "monotonic_ns": 172414634875,
+      "timestampUTC": "2026-10-05T07:48:51.430068+00:00",
+      "event": "lookup.error",
+      "trace_id": "00000000000000000000000000000001",
+      "span_id": "000000000000000c",
+      "severity": "ERROR",
+      "attributes": {
+        "error_type": "LookupError"
+      }
+    },
+    {
+      "case": "missing-propagation",
+      "sequence": 2,
+      "monotonic_ns": 172963902500,
+      "timestampUTC": "2026-10-05T07:48:51.979343+00:00",
+      "event": "lookup.begin",
+      "trace_id": "000000000000000000000000000003e9",
+      "span_id": "000000000000000c",
+      "severity": "INFO",
+      "attributes": {}
+    }
+  ],
+  "rawExpanded": true,
+  "answerExpanded": true,
+  "timelineObservation": {
+    "case": "missing-propagation",
+    "rootDurationNs": 24083,
+    "childDurationNs": 4916,
+    "childLabel": "orphan：parentなし",
+    "source": "actual IAB SVG text and JPEG view"
+  },
+  "roadmapTopics": [
+    "分散context",
+    "metricsとSLO",
+    "収集pipeline",
+    "診断とprivacy"
+  ],
+  "capture": {
+    "format": "JPEG",
+    "displayed": true,
+    "saved": false,
+    "views": [
+      "orphan timeline with span ID table",
+      "structured event and success counter"
+    ],
+    "reason": "documented cua_repl APIs provide screenshot bytes/tool images, no documented local file export; no reconstruction claimed"
+  },
+  "cleanup": {
+    "serverClosed": true,
+    "serverExitCode": 0,
+    "tabClosed": true,
+    "port": 56203,
+    "listenerInventory": "lsof exact port no listener exit1"
+  },
+  "skill": {
+    "quickValidate": "PASS",
+    "normalRouting": "missing-propagation runner exit0 -> checker/UI",
+    "unsupportedRouting": "install-otel-backend CLI exit2 -> README coverage",
+    "kind": "main-agent author routing smoke, not independent forwardAgentEval"
+  },
+  "notes": [
+    "rejected request0 shows binding検査対象なし; raw bindingComplete true is vacuous no-orphan predicate, not complete-observation proof",
+    "oracle timing values vary; browser event timestamps are separate runs from saved execution receipt",
+    "checker-only metadata/input binding checks strengthened after UI QA, runtime/server/UI unchanged",
+    "favicon404 preserved; all case API requests200"
+  ],
+  "qaDigest": "31c3652eea0621580d8d8c440d9d34654d2d34b3b11dcc6fb8bad06958770c2d"
+}

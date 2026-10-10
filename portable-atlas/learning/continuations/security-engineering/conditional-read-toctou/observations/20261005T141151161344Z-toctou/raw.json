@@ -1,0 +1,1074 @@
+{
+  "rows": [
+    {
+      "id": "unchanged",
+      "status": "observed",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "doc1"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": true,
+      "normal": {
+        "decision": "allow",
+        "reason": "conditional-match",
+        "payload": "ALPHA SYNTHETIC",
+        "row_tenant": "alpha",
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "old-check-then-id",
+        "payload": "ALPHA SYNTHETIC",
+        "row_tenant": "alpha",
+        "attempts": 1
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "alpha",
+          "check_allowed": true,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "no-change"
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "alpha"
+          ],
+          "rows": [
+            [
+              "alpha",
+              "ALPHA SYNTHETIC"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha",
+              "ALPHA SYNTHETIC"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "transaction_after": false
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "move-after-check",
+      "status": "observed",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "doc1"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": true,
+      "normal": {
+        "decision": "deny",
+        "reason": "conditional-no-row",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "old-check-then-id",
+        "payload": "BETA SYNTHETIC",
+        "row_tenant": "beta",
+        "attempts": 1
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "alpha",
+          "check_allowed": true,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "mutation",
+          "connection": "writer",
+          "transaction_during": true,
+          "new_values": [
+            "beta",
+            "BETA SYNTHETIC",
+            2
+          ]
+        },
+        {
+          "event": "commit",
+          "connection": "writer",
+          "phase": "change",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "alpha"
+          ],
+          "rows": [],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "beta",
+              "BETA SYNTHETIC"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "transaction_after": false
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "payload-after-check",
+      "status": "observed",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "doc1"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": true,
+      "normal": {
+        "decision": "allow",
+        "reason": "conditional-match",
+        "payload": "ALPHA VERSION TWO",
+        "row_tenant": "alpha",
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "allow",
+        "reason": "old-check-then-id",
+        "payload": "ALPHA VERSION TWO",
+        "row_tenant": "alpha",
+        "attempts": 1
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA VERSION TWO",
+          2
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "alpha",
+          "check_allowed": true,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "mutation",
+          "connection": "writer",
+          "transaction_during": true,
+          "new_values": [
+            "alpha",
+            "ALPHA VERSION TWO",
+            2
+          ]
+        },
+        {
+          "event": "commit",
+          "connection": "writer",
+          "phase": "change",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "alpha"
+          ],
+          "rows": [
+            [
+              "alpha",
+              "ALPHA VERSION TWO"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha",
+              "ALPHA VERSION TWO"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "transaction_after": false
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "move-before-check",
+      "status": "observed",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "doc1"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": false,
+      "normal": {
+        "decision": "deny",
+        "reason": "conditional-no-row",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "precheck-deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "mutation",
+          "connection": "writer",
+          "transaction_during": true,
+          "new_values": [
+            "beta",
+            "BETA SYNTHETIC",
+            2
+          ]
+        },
+        {
+          "event": "commit",
+          "connection": "writer",
+          "phase": "change",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "beta"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "beta",
+          "check_allowed": false,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "alpha"
+          ],
+          "rows": [],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "faulty-read-skipped",
+          "reason": "precheck-deny"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "beta-after-check",
+      "status": "observed",
+      "request": {
+        "actor": "actor-beta",
+        "resource": "doc1"
+      },
+      "actor_tenant": "beta",
+      "check_allowed": false,
+      "normal": {
+        "decision": "allow",
+        "reason": "conditional-match",
+        "payload": "BETA SYNTHETIC",
+        "row_tenant": "beta",
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "precheck-deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "beta",
+          "BETA SYNTHETIC",
+          2
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "alpha",
+          "check_allowed": false,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "mutation",
+          "connection": "writer",
+          "transaction_during": true,
+          "new_values": [
+            "beta",
+            "BETA SYNTHETIC",
+            2
+          ]
+        },
+        {
+          "event": "commit",
+          "connection": "writer",
+          "phase": "change",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "beta"
+          ],
+          "rows": [
+            [
+              "beta",
+              "BETA SYNTHETIC"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "faulty-read-skipped",
+          "reason": "precheck-deny"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "unknown-resource",
+      "status": "observed",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "missing"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": false,
+      "normal": {
+        "decision": "deny",
+        "reason": "conditional-no-row",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1
+      },
+      "faulty": {
+        "decision": "deny",
+        "reason": "precheck-deny",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "missing"
+          ],
+          "rows": [],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": null,
+          "check_allowed": false,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "no-change"
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "missing",
+            "alpha"
+          ],
+          "rows": [],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "faulty-read-skipped",
+          "reason": "precheck-deny"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "unknown-actor",
+      "status": "expected-refusal",
+      "request": {
+        "actor": "actor-unknown",
+        "resource": "doc1"
+      },
+      "actor_tenant": null,
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "reason": "unknown-actor",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "unknown-actor",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "input-refused",
+          "reason": "unknown-actor"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "actor-type",
+      "status": "expected-refusal",
+      "request": {
+        "actor": 7,
+        "resource": "doc1"
+      },
+      "actor_tenant": null,
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "reason": "actor-type",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "actor-type",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "input-refused",
+          "reason": "actor-type"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "resource-type",
+      "status": "expected-refusal",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": true
+      },
+      "actor_tenant": null,
+      "check_allowed": null,
+      "normal": {
+        "decision": "refuse",
+        "reason": "resource-type",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "faulty": {
+        "decision": "refuse",
+        "reason": "resource-type",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 0
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "input-refused",
+          "reason": "resource-type"
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    },
+    {
+      "id": "sql-error",
+      "status": "execution-error",
+      "request": {
+        "actor": "actor-alpha",
+        "resource": "doc1"
+      },
+      "actor_tenant": "alpha",
+      "check_allowed": true,
+      "normal": {
+        "decision": "error",
+        "reason": "sqlite-read-error",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "error": "no such column: missing_payload"
+      },
+      "faulty": {
+        "decision": "error",
+        "reason": "sqlite-read-error",
+        "payload": null,
+        "row_tenant": null,
+        "attempts": 1,
+        "error": "no such column: missing_payload"
+      },
+      "before_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "after_rows": [
+        [
+          "doc1",
+          "alpha",
+          "ALPHA SYNTHETIC",
+          1
+        ]
+      ],
+      "trace": [
+        {
+          "event": "observation-start",
+          "state": "initial committed fixture",
+          "reader_transaction": false,
+          "writer_transaction": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "check",
+          "sql": "SELECT tenant FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": [
+            [
+              "alpha"
+            ]
+          ],
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 0
+        },
+        {
+          "event": "commit",
+          "connection": "reader",
+          "phase": "check",
+          "transaction_after": false
+        },
+        {
+          "event": "check-result",
+          "tenant": "alpha",
+          "check_allowed": true,
+          "diagnostic_only_for_normal": true
+        },
+        {
+          "event": "no-change"
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "sql": "SELECT tenant,missing_payload FROM resources WHERE id=? AND tenant=?",
+          "params": [
+            "doc1",
+            "alpha"
+          ],
+          "rows": null,
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 1,
+          "error": "no such column: missing_payload"
+        },
+        {
+          "event": "rollback",
+          "connection": "reader",
+          "phase": "conditional-read",
+          "transaction_after": false
+        },
+        {
+          "event": "sql",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "sql": "SELECT tenant,missing_payload FROM resources WHERE id=?",
+          "params": [
+            "doc1"
+          ],
+          "rows": null,
+          "transaction_before": false,
+          "transaction_during": true,
+          "exit": 1,
+          "error": "no such column: missing_payload"
+        },
+        {
+          "event": "rollback",
+          "connection": "reader",
+          "phase": "id-only-read",
+          "transaction_after": false
+        }
+      ],
+      "sqlite_version": "3.51.0",
+      "owned_tmp_cleaned": true
+    }
+  ],
+  "run_id": "20261005T141151161344Z-toctou",
+  "environment": {
+    "python": "3.9.6",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "dependencies": "stdlib"
+  },
+  "source_digests": {
+    "experiment.py": "9b3c180cc0540bc4a77bfc965b6b1a8ffc33afdddb540dfa7b7fa1d2b5c099e1",
+    "runner.py": "0fb3d66c8d9b0bedf9d08052441d7a88fd9899afbae5da107b863c8f64a11b58",
+    "checker.py": "e0a453027f49ca95e18bdf0ae5906c4704a0319c0dad747d395a84d4fc92c7f2",
+    "fixture.json": "5f35855eaf47ae84754d6c017bbe28afc6d6953f5a35a9931131bbd176f4a646",
+    "contracts.json": "f54f0d3cd8d63cc0e70f1396ef559feaaeeab0af4c1761fe23d4df9fb73f3955",
+    "expected-table.json": "b20ab604b1838749b0169756728b5efa8b0015f1039679bb9c4458c7014be78f",
+    "sources.json": "fa153dbea875058eb553847108826278d60918e66eb27a36e3fd02d8cb17ef69",
+    "coverage.json": "599e02e9820455f56116593a8ecadf473b1928aa39b3a3710211a58aa787a632",
+    "route.py": "daf0f7f859e7f2f3118a4985cb6594377742b2bfc49e41aa263efcee98490a87",
+    "README.md": "d172c5d6588b65a3b2d9d26a59e9920d731579961179f5182be41f2f4c7beee6",
+    "index.html": "25faa1da82ca00b81e7f33c4fc1b9870eac1cacc05c024ec63dacaa63ef99fe9",
+    "app.js": "3f28788fc91526621d8af05d464a80c0ef7f44bc89b1786e10f50a149405335d",
+    "styles.css": "29ffa0ac2a18b95d7cc5f17901875783d2fba5bad615059e68ab343c2cbab8d9",
+    "skills/atlas-conditional-read-toctou/SKILL.md": "2bc32e758a0a823d77bce2c011e69633b4de444b041f044c69f6d41d9b2539a1"
+  }
+}

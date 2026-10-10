@@ -1,0 +1,24 @@
+{
+  "subject": "backend-application-engineering",
+  "scope": "有限1教材: SQLite transactional request handler; Subject全体は未教材",
+  "areas": [
+    {"concept": "入力契約・境界・型", "status": "今回限定実測", "question": "boolを整数と誤認せず、DB資源取得前に拒否できるか", "source": "python-sqlite"},
+    {"concept": "アプリケーションサービス・業務不変条件", "status": "今回限定実測", "question": "注文と送信予定を同時に保存する境界はどこか", "source": "sqlite-transaction"},
+    {"concept": "トランザクション・rollback・資源寿命", "status": "今回限定実測", "question": "第二SQL失敗後、次の要求に未完了transactionを渡していないか", "source": "python-sqlite"},
+    {"concept": "HTTP API・エラー契約・framework lifecycle", "status": "未教材", "question": "例外を誰がHTTP応答へ変換し、接続をいつ閉じるか", "source": "wsgi"},
+    {"concept": "DI・repository境界・domain設計", "status": "未教材", "question": "接続やunit of workを注入する場合、所有者とcleanup責任を維持できるか", "source": "di"},
+    {"concept": "認証・認可・session・秘密管理", "status": "未教材", "question": "入力検証と利用者の操作権限を別にどう検査するか", "source": "security"},
+    {"concept": "idempotency・再試行・重複要求", "status": "重複IDの409のみ実測; 再送契約は未教材", "question": "成功直後に応答が失われた場合、再送で同じ結果を返せるか", "source": "http"},
+    {"concept": "outbox配信・ack・重複排除・saga", "status": "送信予定保存のみ実測; 配信は未教材", "question": "broker送信後ack前の停止でも副作用を一度にできるか", "source": "sqlite-atomic"},
+    {"concept": "並行要求・isolation・lock・deadlock", "status": "未教材", "question": "二接続のBEGIN IMMEDIATEと読み取りがどう競合するか", "source": "sqlite-isolation"},
+    {"concept": "query設計・index・migration・ORM", "status": "固定schemaのみ; 未教材", "question": "schema変更とindex選択が旧clientとquery計画へ何を起こすか", "source": "query-plan"},
+    {"concept": "cache・性能・backpressure・可用性", "status": "未教材", "question": "遅い依存先をtimeoutや同時実行上限でどう隔離するか", "source": "http"},
+    {"concept": "observability・production運用・契約test", "status": "raw SQL traceのみ; 未教材", "question": "要求から依存先までspanを結び、障害と遅延を識別できるか", "source": "traces"}
+  ],
+  "next_experiments": [
+    {"id": "N1", "title": "HTTP adapter と DI の資源所有", "experiment": "WSGI adapterに同じhandlerを接続し、正常・不正JSON・例外を実HTTP送信。requestごとの接続生成/closeと応答statusを比較し、fake repositoryのみのtestとの差を調べる。次に実framework DIのyield cleanupと比較する。", "source": ["wsgi", "http", "python-sqlite", "di"]},
+    {"id": "N2", "title": "二接続のlock と visibility", "experiment": "二processで一方のBEGIN IMMEDIATEを保持し、他方のwrite/readとtimeoutを観測。rollback journalとWALを別DBで比較し、retryが二重注文を生まないか確認する。性能結論は負荷測定後だけにする。", "source": ["sqlite-isolation", "sqlite-transaction"]},
+    {"id": "N3", "title": "再送契約とoutbox配信", "experiment": "commit後応答前の停止→同一id同一payload再送→異なるpayload再送を比較。次に配信workerのsend後ack前停止を注入し、inbox重複排除とorder/outbox対応を別oracleで確認する。", "source": ["http", "sqlite-atomic"]},
+    {"id": "N4", "title": "運用境界・安全な変更", "experiment": "認可拒否の無変更、migration中の旧queryとEXPLAIN QUERY PLAN、遅い依存先timeoutを各小実験に分け、trace contextとerror契約を採取。実framework・DI production・cache性能は測定環境と成功基準を先に固定する。", "source": ["security", "query-plan", "http", "traces", "wsgi"]}
+  ]
+}

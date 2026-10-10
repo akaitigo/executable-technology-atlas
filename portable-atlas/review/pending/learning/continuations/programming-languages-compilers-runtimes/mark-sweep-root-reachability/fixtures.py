@@ -1,0 +1,15 @@
+BASE=[dict(id='A',refs=['B']),dict(id='B',refs=['C']),dict(id='C',refs=['B']),
+      dict(id='D',refs=['E']),dict(id='E',refs=['D']),dict(id='F',refs=['C']),dict(id='G',refs=[])]
+FIXTURES=[
+ dict(id='rooted-cycle',objects=BASE,roots=['A'],expected=list('ABC'),fault_expected=[],steps=[14,11]),
+ dict(id='unrooted-cycles',objects=BASE,roots=['G'],expected=['G'],fault_expected=[],steps=[12,11]),
+ dict(id='move-before',objects=BASE,roots=['A','D'],expected=list('ABCDE'),fault_expected=list('DE'),steps=[17,14]),
+ dict(id='move-after',objects=BASE,roots=['F','D'],expected=list('BCDEF'),fault_expected=list('DE'),steps=[17,14]),
+ dict(id='empty-roots',objects=BASE,roots=[],expected=[],fault_expected=[],steps=[10,10]),
+ dict(id='all-roots',objects=BASE,roots=list('ABCDEFG'),expected=list('ABCDEFG'),fault_expected=list('BCDEFG'),steps=[24,23]),
+ dict(id='masked-root',objects=BASE,roots=['B','C'],expected=list('BC'),fault_expected=list('BC'),steps=[14,14]),
+ dict(id='self-cycle',objects=[dict(id='H',refs=['H']),dict(id='I',refs=[])],roots=['H'],expected=['H'],fault_expected=[],steps=[7,6]),
+ dict(id='empty-heap',objects=[],roots=[],expected=[],fault_expected=[],steps=[3,3]),
+]
+ROOTED_MARK_HAND=[dict(queue=['A'],black=[]),dict(queue=['B'],black=['A']),
+                  dict(queue=['C'],black=['A','B']),dict(queue=[],black=['A','B','C'])]

@@ -1,0 +1,10 @@
+import http from 'node:http';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {SOURCES} from './sources.mjs';
+const root=new URL('./',import.meta.url),hash=b=>createHash('sha256').update(b).digest('hex');
+const manifest={kind:'local-served-source-digests',sourceHashes:Object.fromEntries(await Promise.all(SOURCES.map(async f=>[f,hash(await readFile(new URL(f,root)))])))};
+const allowed=new Set([...SOURCES,'README.md','VERIFICATION.md']);
+const server=http.createServer(async(req,res)=>{const u=new URL(req.url,'http://127.0.0.1');let f=u.pathname==='/'?'index.html':u.pathname.slice(1);const queryAllowed=!u.search||(f==='failed-case.html'&&['?case=loading','?case=syntax'].includes(u.search));if(req.method!=='GET'||!queryAllowed){res.writeHead(404);res.end('Not found');return;}if(f==='sources.json'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(manifest));return;}if(!allowed.has(f)){res.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'});res.end('Not found');return;}try{const bytes=await readFile(new URL(f,root));res.writeHead(200,{'Content-Type':f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.mjs')?'text/javascript; charset=utf-8':f.endsWith('.json')?'application/json; charset=utf-8':'text/plain; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(bytes);}catch{res.writeHead(404);res.end('Not found');}});
+server.listen(0,'127.0.0.1',()=>console.log(`http://127.0.0.1:${server.address().port}/`));
+process.on('SIGINT',()=>server.close(()=>process.exit(130)));

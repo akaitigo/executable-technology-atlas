@@ -1,0 +1,98 @@
+window.SPARSE_OBSERVATION = {
+  "schema": "atlas.sparse-file.observation.v1",
+  "started_at": "2026-10-06T02:06:40.398456+00:00",
+  "attempt": 1,
+  "retry": 0,
+  "toolchain": {
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64",
+    "python": "3.9.6"
+  },
+  "source_bindings": {
+    "expected.json": "d408c30c177929439a00d9136f10b4acf7f5d69cfe8ee5c4bf661881892ae5de",
+    "experiment.py": "2dc8cba94a608411a5ab7ac3b1c18adabc3893d75120a6af3dcd3f417e73803a"
+  },
+  "limits": {
+    "files": 2,
+    "max_file_bytes": 65536,
+    "external_path_input": false
+  },
+  "fsync_called": false,
+  "durability_proven": false,
+  "performance_comparison": false,
+  "filesystem_type": "未調査（OS名から推定しない）",
+  "seek_only": {
+    "offset": 65535,
+    "stat": {
+      "logical_bytes": 0,
+      "blocks_512": 0,
+      "reported_allocated_bytes": 0,
+      "sample_point": "seek後・書込み前"
+    },
+    "read_at_zero_hex": "",
+    "read_at_cursor_hex": ""
+  },
+  "sparse_written": {
+    "write_returns": [
+      1
+    ],
+    "offset_after_write": 65536,
+    "stat": {
+      "logical_bytes": 65536,
+      "blocks_512": 8,
+      "reported_allocated_bytes": 4096,
+      "sample_point": "書込み後・close前（fsyncなし）"
+    },
+    "contents": {
+      "uncompressed_bytes": 65536,
+      "zlib_base64": "eJztwYEAAAAAw6Bh3p/kIlUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAOwBnAFk=",
+      "sha256": "1ab788487e8faa09c850b2ec9849247077066957d7ebd704173684bc33902fea",
+      "read_calls": [
+        {
+          "offset": 0,
+          "requested": 65536,
+          "returned": 65536
+        }
+      ]
+    },
+    "read_first_16_hex": "00000000000000000000000000000000",
+    "read_tail_2_hex": "0058",
+    "read_at_eof_hex": ""
+  },
+  "dense_written": {
+    "write_returns": [
+      65536
+    ],
+    "offset_after_write": 65536,
+    "stat": {
+      "logical_bytes": 65536,
+      "blocks_512": 128,
+      "reported_allocated_bytes": 65536,
+      "sample_point": "書込み後・close前（fsyncなし）"
+    },
+    "contents": {
+      "uncompressed_bytes": 65536,
+      "zlib_base64": "eJztwYEAAAAAw6Bh3p/kIlUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAOwBnAFk=",
+      "sha256": "1ab788487e8faa09c850b2ec9849247077066957d7ebd704173684bc33902fea",
+      "read_calls": [
+        {
+          "offset": 0,
+          "requested": 65536,
+          "returned": 65536
+        }
+      ]
+    },
+    "read_first_16_hex": "00000000000000000000000000000000",
+    "read_tail_2_hex": "0058",
+    "read_at_eof_hex": ""
+  },
+  "contents_equal": true,
+  "owned_files_before_cleanup": [
+    "dense.bin",
+    "sparse.bin"
+  ],
+  "cleanup_complete": true,
+  "finished_at": "2026-10-06T02:06:40.401254+00:00",
+  "elapsed_seconds": 0.002803
+};

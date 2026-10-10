@@ -1,0 +1,9 @@
+# 検証と証拠の範囲
+
+hand-oracle.jsonは実装前に固定した16subset・48条件と境界期待値です。oracle.pyはmodelをimportせず、この手表、集合仕様、literal fault結果に照合します。候補traceも独立の和集合とFractionで確認。verify.pyは48条件、型を含む17入力拒否、8種類の意図的誤実装を検査します。最適/greedy取り違え、重複加算、予算超過、critical無視、未実施のpass化、差なしの検出化、同点規約、scoreの確率化を拒否します。
+
+observations/attempt-01.jsonは最初のCLI実行の全結果、UTC、環境、source hashです。initial-receipt.jsonは最初のreceiptを保存し、receipt.jsonはUI後のsourceと証拠を封印します。read-only-proof.jsonは最終再検証の前後SHA256とmtime_nsを記録し、封印対象から除外します。
+
+実IABでは48条件のAPI応答を通常HTML UIから読み、選択・16subset・候補・境界結果・UTCを観測します。browser-cases.jsonは実ツール出力と一致を確認した圧縮投影の転記で、ブラウザrawの全文ダウンロードではありません。UI QAは予想変更、3条件変更、explicit reset、保留旧応答の拒否、入力拒否、source 9リンク、停止後transport failureを確認します。captureの保存可否はui-qa.jsonへ正直に記録します。
+
+ローカルbindがsandboxで拒否された場合、所有モジュールのpathだけを置換したエラー抜粋を保存し、元出力は制作chatのtool履歴に残します。既存listenerは停止せず、自身のserverとtabだけを終了します。全repository/Core gateはこの有限教材の検証では実施しません。

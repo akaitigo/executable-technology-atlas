@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "kind": "finite-current-wave-confirmation-gate",
+  "started_at_utc": "2026-10-06T06:52:01.505855+00:00",
+  "artifact_sha256": {
+    "fixtures.json": "af7759404beb4471e0402e5e05aa17d3dbe9ff0c7815ba396edab9cfe02112f3",
+    "hand-oracle.json": "15efe128f9f65e66c890244067c9c1a6f1aac8cec3eaaf2f02c5afab43f640e3",
+    "hand-oracle-lock.json": "74c704ac95a938b5b1a27367723dca703489f6d2e5c5c19d37267e7c1ce13495",
+    "model.py": "a2e4b462cb9597fb4b4da549faa385924dd725c6c995365bffcdd16749d1085d",
+    "verify.py": "1b4e8fc83d230e642be140ed6e544ac611c8dcd585d3fe2b6b00820a12cf6d89",
+    "source-review.json": "c6fd5686fc6f4c4c3e5fcda4117011ef647a1ab6e44a54a110c23f38c9096102"
+  },
+  "python": "3.9.6",
+  "machine": "arm64",
+  "attempt": 1,
+  "retry": 0,
+  "upstream_executed": false,
+  "live_executed": false,
+  "predicate_helper_executed": false,
+  "browser_executed": false,
+  "image_qa_executed": false,
+  "api_calls": 0,
+  "model_check_seconds": 0.000844,
+  "status": "pass",
+  "cases": 4,
+  "input_resources": 16,
+  "gate_scan_visits": 6,
+  "outcomes": {
+    "no-confirmation-needed": {
+      "gate": "pass",
+      "checked_current_ids": [
+        "old-a",
+        "old-b"
+      ],
+      "first_blocker": null,
+      "continue_to_prune_loop": true,
+      "later_prunes_checked": [],
+      "current_prunes_started": [],
+      "current_apply_started": [],
+      "api_calls": 0
+    },
+    "needs-confirmation": {
+      "gate": "pending",
+      "checked_current_ids": [
+        "old-a",
+        "old-b"
+      ],
+      "first_blocker": "old-b",
+      "continue_to_prune_loop": false,
+      "later_prunes_checked": [],
+      "current_prunes_started": [],
+      "current_apply_started": [],
+      "api_calls": 0
+    },
+    "already-confirmed": {
+      "gate": "pass",
+      "checked_current_ids": [],
+      "first_blocker": null,
+      "continue_to_prune_loop": true,
+      "later_prunes_checked": [],
+      "current_prunes_started": [],
+      "current_apply_started": [],
+      "api_calls": 0
+    },
+    "later-wave-only": {
+      "gate": "pass",
+      "checked_current_ids": [
+        "old-a",
+        "old-b"
+      ],
+      "first_blocker": null,
+      "continue_to_prune_loop": true,
+      "later_prunes_checked": [],
+      "current_prunes_started": [],
+      "current_apply_started": [],
+      "api_calls": 0
+    }
+  },
+  "expected_refusals": [
+    "confirmed-string",
+    "predicate-string",
+    "current-wave-bool",
+    "later-wave-not-later",
+    "duplicate-resource-id",
+    "empty-current-prunes",
+    "api-execution",
+    "unresolved-predicate",
+    "unsupported-phase",
+    "prune-disabled"
+  ],
+  "altered_output_detections": [
+    "wrong-blocker",
+    "later-wave-blocks-current",
+    "confirmed-still-scanned",
+    "partially-prune-before-confirmation",
+    "gate-pass-claimed-operation-success"
+  ],
+  "cli_checks": [
+    {
+      "label": "input",
+      "arguments": [
+        "--case",
+        "needs-confirmation",
+        "--view",
+        "input"
+      ],
+      "exit_code": 0,
+      "pass": true,
+      "stdout": "予想 | 現在waveのold-bが未確認\n現在wave: 0 / 確認済みflag: False\n  現在prune old-a: 確認必要 False\n  現在prune old-b: 確認必要 True\n  同wave apply: new-config\n  後続wave 1 の old-later: 確認必要 False\nゲートは通る？ どの資源でpendingを返す？\n",
+      "stderr": ""
+    },
+    {
+      "label": "pending-readable",
+      "arguments": [
+        "--case",
+        "needs-confirmation",
+        "--predict",
+        "pending",
+        "--predict-blocker",
+        "old-b"
+      ],
+      "exit_code": 0,
+      "pass": true,
+      "stdout": "対照 | 現在waveのold-bが未確認\nhelperの判定結果は仮定入力。API・Health・実削除は未実行です。\nゲート判定で走査した現在prune: old-a → old-b\n最初の確認待ち: old-b\nゲート: pending。prune処理の手前で戻る\n後続waveの確認判定: 今回のゲートでは調べない\n模型はゲートで終了。prune/apply/API呼出しは0、成功・失敗・消滅は未観測。\n予想照合 gate_matches: 一致\n予想照合 blocker_matches: 一致\n原典・答え・確認と権限の違い・限界: README.mdへ\n",
+      "stderr": ""
+    },
+    {
+      "label": "later-wave-pass",
+      "arguments": [
+        "--case",
+        "later-wave-only",
+        "--predict",
+        "pass",
+        "--predict-blocker",
+        "none",
+        "--json"
+      ],
+      "exit_code": 0,
+      "pass": true,
+      "stdout": "{\n  \"case\": \"later-wave-only\",\n  \"outcome\": {\n    \"gate\": \"pass\",\n    \"checked_current_ids\": [\n      \"old-a\",\n      \"old-b\"\n    ],\n    \"first_blocker\": null,\n    \"continue_to_prune_loop\": true,\n    \"later_prunes_checked\": [],\n    \"current_prunes_started\": [],\n    \"current_apply_started\": [],\n    \"api_calls\": 0\n  },\n  \"prediction\": {\n    \"gate_matches\": true,\n    \"blocker_matches\": true\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "confirmed-wrong-prediction",
+      "arguments": [
+        "--case",
+        "already-confirmed",
+        "--predict",
+        "pending",
+        "--predict-blocker",
+        "old-b",
+        "--json"
+      ],
+      "exit_code": 0,
+      "pass": true,
+      "stdout": "{\n  \"case\": \"already-confirmed\",\n  \"outcome\": {\n    \"gate\": \"pass\",\n    \"checked_current_ids\": [],\n    \"first_blocker\": null,\n    \"continue_to_prune_loop\": true,\n    \"later_prunes_checked\": [],\n    \"current_prunes_started\": [],\n    \"current_apply_started\": [],\n    \"api_calls\": 0\n  },\n  \"prediction\": {\n    \"gate_matches\": false,\n    \"blocker_matches\": false\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "invalid-id",
+      "arguments": [
+        "--predict-blocker",
+        "ghost"
+      ],
+      "exit_code": 2,
+      "pass": true,
+      "stdout": "",
+      "stderr": "usage: model.py [-h]\n                [--case {no-confirmation-needed,needs-confirmation,already-confirmed,later-wave-only}]\n                [--view {input,compare}] [--predict {pass,pending}]\n                [--predict-blocker PREDICT_BLOCKER] [--json]\nmodel.py: error: 予想した資源IDがありません\n"
+    }
+  ],
+  "finished_at_utc": "2026-10-06T06:52:01.763198+00:00",
+  "total_seconds": 0.257366
+}

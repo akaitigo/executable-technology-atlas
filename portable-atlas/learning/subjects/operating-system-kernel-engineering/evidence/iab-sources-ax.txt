@@ -1,0 +1,85 @@
+Browser tab: 2, Title: "pipe EOFとFDの寿命 — OS教材", URL: "http://127.0.0.1:53091/index.html".
+0 AXWebArea pipe EOFとFDの寿命 — OS教材, URL: 127.0.0.1:53091/index.html
+	1 container
+		2 text 有限1教材 / 実OSのowned child・pipe・signal / kernel改造・VM・host設定は未実施
+		3 heading writeを止めたのに、readerが終わらない？, Value: 1
+			4 text writeを止めたのに、readerが終わらない？
+		5 text 元のwrite FDを閉じても、duplicateが残ればpipeはEOFになりません。実parent/childの観測でresourceの寿命を追います。
+		6 heading 前提 → 主要概念・仕組み, Value: 2
+			7 text 前提 → 主要概念・仕組み
+		8 text FDはprocess内の番号、open file descriptionへの参照。pipeのbufferを読み切り、全write-endをcloseした時にreadは0bytes（EOF）を返します。ready handshakeで起動と同期し、waitでchildを回収。SIGTERM終了はEOF正常完了とは別です。
+		9 text 実務: 全writerの所有者とclose順を確認する。限界: timeoutは有限観測で、kernel内部・scheduler性能・全OS互換性の証明ではありません。
+		10 link Description: 契約と再現, Value: 127.0.0.1:53091/README.md
+		11 text  · 
+		12 link Description: 全Subjectの道筋と次の4実験, Value: 127.0.0.1:53091/COVERAGE.md
+		13 heading 1. 予想, Value: 2
+			14 text 1. 予想
+		15 text 元のwrite FDをcloseし、dupだけ残すとreaderはEOFで終了する？
+		16 text field (settable) 元のwrite FDをcloseし、dupだけ残すとreaderはEOFで終了する？, Value: 終了しない。dupがwriter参照を保持する, ID: prediction
+		86 text 予想を入力済み。比較してから答えへ。
+		18 heading 2. 操作 → 3. 正常・境界・意図異常を比較, Value: 2
+			19 text 2. 操作 → 3. 正常・境界・意図異常を比較
+		20 text 実験case
+		21 pop up button (collapsed, settable) 実験case, Value: invalid-extra-pid, ID: case, Secondary Actions: Expand
+			22 menu
+				23 normal-close
+				24 empty-eof
+				25 max-payload
+				26 leak-release
+				27 leak-signal
+				28 invalid-mode
+				29 invalid-timeout
+				30 (selected) invalid-extra-pid
+		31 button (disabled) 次のevent, ID: next
+		32 button (disabled) 全event, ID: all
+		33 button 最初に戻す, ID: reset
+		87 text 入力拒否: mode/payload/timeout_msだけを持つobjectが必要
+		88 text childは起動していません。
+		89 text 結果なし。empty payloadの正常EOFとは区別。
+		41 text FD図は渡したdata pipeだけ。stdout/stderrのlog pipeとは別です。event表示はwall timestampの参考順、process間のmono値を大小比較しません。
+		42 table
+			43 row
+				44 cell
+					45 text actor / PID
+				46 cell
+					47 text event
+				48 cell
+					49 text wall時刻UTC
+				50 cell
+					51 text actor内mono差 ms
+				52 cell
+					53 text 観測fields
+		54 button (collapsed) 入力 / 実raw / child stdout, Secondary Actions: Expand
+			55 text 入力 / 実raw / child stdout
+		56 heading 4. 原典 / 実装, Value: 2
+			57 text 4. 原典 / 実装
+		58 container
+			59 link Description: 一次資料locatorと確認状態, Value: 127.0.0.1:53091/SOURCES.md
+			60 text  · 
+			61 link Description: parent実験, Value: 127.0.0.1:53091/experiment.py
+			62 text  · 
+			63 link Description: childのread, Value: 127.0.0.1:53091/child.py
+			64 text  · 
+			65 link Description: 独立expected lifecycle, Value: 127.0.0.1:53091/oracle.py
+		66 container
+			67 link Description: 実行時刻・環境・digest, Value: 127.0.0.1:53091/evidence/run.json
+			68 text  · 
+			69 link Description: 実input/output, Value: 127.0.0.1:53091/evidence/raw.json
+			70 text  · 
+			71 link Description: FD図（生成図）, Value: 127.0.0.1:53091/evidence/fd-lifecycle.svg
+			72 text  · 
+			73 link Description: process間mono時計の発見, Value: 127.0.0.1:53091/evidence/clock-discovery.json
+			74 text  · 
+			75 link Description: 実IAB QA / cleanup, Value: 127.0.0.1:53091/evidence/ui-qa.json
+		76 heading 5. 答え, Value: 2
+			77 text 5. 答え
+		78 button 答えを表示, ID: reveal
+		79 heading 次の学習と限界, Value: 2
+			80 text 次の学習と限界
+		81 container
+			82 text 前提→仕組み→今回の実装/異常→実務判断→限界→原典を辿ったら、次1: FD継承・IPC、次2: 同期/scheduler、次3: VM、次4: filesystem/driver/kernelへ。
+			83 link Description: 具体的な問い・次実験・公式locator, Value: 127.0.0.1:53091/COVERAGE.md
+			84 text で全Subjectの未教材範囲を確認できます。今回の有限unitは分野全体の完成ではありません。
+		85 text 保存観測 2026-10-05T07:01:53.677584+00:00 / Darwin arm64 / Python 3.9.6。現在の再実行・kernel tracing・性能測定ではありません。
+
+The focused UI element is 59 link Description: 一次資料locatorと確認状態, URL: 127.0.0.1:53091/SOURCES.md

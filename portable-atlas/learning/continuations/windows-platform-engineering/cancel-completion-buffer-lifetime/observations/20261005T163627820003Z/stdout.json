@@ -1,0 +1,654 @@
+{
+  "startedUtc": "2026-10-05T16:36:27.820003+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "dependencies": "stdlib only; no Win32 runtime used"
+  },
+  "sourceHashes": {
+    "preview.py": "dff13f11871946a54a6eb6b7cab8edc7a2cfa32d3dbdc629d89efc32b0234f93",
+    "test_negative.py": "6773fc02614c759763cda72106900b21f96cc2a6d42b54052bad81fba055ea3f",
+    "runner.py": "4635f2b25d166b623ad43aad336681cb933ee201d41e4a87526d66337390b93a",
+    "index.html": "0aa3ab054b99074d11e8973af305e05b1663d94e088fc4ceb530529323e9308c",
+    "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd",
+    "route.py": "4297ec430278914d918646704cba04d6584a3ad7ab3edc94131175c99584f773",
+    "oracle.json": "ef3c4c8d70adfafabe016b1a5e5b2447164ce1cff06c9168511b58d482ed75e7",
+    "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+    "README.md": "3a0539de31317dfc93cdfe66bc28fc27e80487649eda9ed832b3cf4319ec9460",
+    "requests.json": "7321e5668ce624aa62026329545ce959a77edf0f226fc21bc259a6b2bf8397d6",
+    "COVERAGE.md": "7a521b471f4d76fde3fb8d2525b243966efdc0139d000df31a11aa17bf65e438",
+    "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+    "skills/cancel-completion-buffer-lifetime/SKILL.md": "411d5e53c6716b65c6b1a23de50fec95de3c56f2235f329f741fd8891d57637d"
+  },
+  "cases": [
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:27.827923+00:00",
+      "endedUtc": "2026-10-05T16:36:27.859195+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_REJECTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": false}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}], \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:27.827923+00:00\", \"endedUtc\": \"2026-10-05T16:36:27.859195+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_REJECTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:27.859231+00:00",
+        "endedUtc": "2026-10-05T16:36:27.898260+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:27.898667+00:00",
+      "id": "guarded-success"
+    },
+    {
+      "inputRaw": "{\"completion\": \"aborted\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:27.899949+00:00",
+      "endedUtc": "2026-10-05T16:36:27.930216+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_REJECTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": false}}, {\"action\": \"complete\", \"result\": \"COMPLETED_ABORTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"aborted\", \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": false, \"reuseAllowed\": false}}], \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"aborted\", \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"aborted\", \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"aborted\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:27.899949+00:00\", \"endedUtc\": \"2026-10-05T16:36:27.930216+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_REJECTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_ABORTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"aborted\\\", \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"aborted\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"aborted\\\", \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"aborted\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:27.930265+00:00",
+        "endedUtc": "2026-10-05T16:36:27.969160+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"aborted\", \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:27.969501+00:00",
+      "id": "guarded-aborted"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:27.970567+00:00",
+      "endedUtc": "2026-10-05T16:36:28.004316+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": true}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:27.970567+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.004316+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.004373+00:00",
+        "endedUtc": "2026-10-05T16:36:28.049006+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.049358+00:00",
+      "id": "fault-success"
+    },
+    {
+      "inputRaw": "{\"completion\": \"aborted\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.050703+00:00",
+      "endedUtc": "2026-10-05T16:36:28.082255+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": true}}, {\"action\": \"complete\", \"result\": \"COMPLETED_ABORTED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"aborted\", \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": true, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"aborted\", \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"aborted\", \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"aborted\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.050703+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.082255+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_ABORTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": null, \\\"status\\\": \\\"aborted\\\", \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"aborted\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": null, \\\"status\\\": \\\"aborted\\\", \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"aborted\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.082308+00:00",
+        "endedUtc": "2026-10-05T16:36:28.119974+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": null, \"status\": \"aborted\", \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"aborted\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.120307+00:00",
+      "id": "fault-aborted"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"complete\", \"reuse\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.121380+00:00",
+      "endedUtc": "2026-10-05T16:36:28.153192+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"complete\\\", \\\"reuse\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.121380+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.153192+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.153241+00:00",
+        "endedUtc": "2026-10-05T16:36:28.191855+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.192191+00:00",
+      "id": "complete-before-reuse"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"complete\", \"reuse\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.193320+00:00",
+      "endedUtc": "2026-10-05T16:36:28.225002+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"complete\\\", \\\"reuse\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.193320+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.225002+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.225052+00:00",
+        "endedUtc": "2026-10-05T16:36:28.264681+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.265031+00:00",
+      "id": "fault-complete-before-reuse"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"complete\", \"cancel\", \"reuse\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.266207+00:00",
+      "endedUtc": "2026-10-05T16:36:28.298442+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"NOT_PENDING\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"complete\\\", \\\"cancel\\\", \\\"reuse\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.266207+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.298442+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"NOT_PENDING\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.298496+00:00",
+        "endedUtc": "2026-10-05T16:36:28.336164+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.336499+00:00",
+      "id": "cancel-after-complete"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"complete\", \"cancel\", \"reuse\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.337588+00:00",
+      "endedUtc": "2026-10-05T16:36:28.368804+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"NOT_PENDING\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"complete\\\", \\\"cancel\\\", \\\"reuse\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.337588+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.368804+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"NOT_PENDING\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 2, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"B-data\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": false, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.368846+00:00",
+        "endedUtc": "2026-10-05T16:36:28.405807+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 2, \"owner\": \"application\", \"status\": null, \"payload\": \"B-data\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": false, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.406209+00:00",
+      "id": "fault-cancel-after-complete"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"reuse\", \"cancel\", \"complete\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.407637+00:00",
+      "endedUtc": "2026-10-05T16:36:28.438782+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_REJECTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": false}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": false}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}], \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"reuse\\\", \\\"cancel\\\", \\\"complete\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.407637+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.438782+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_REJECTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 1, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"A-result\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 1, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": false, \\\"reuseAllowed\\\": false}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.438833+00:00",
+        "endedUtc": "2026-10-05T16:36:28.478742+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 1, \"owner\": null, \"status\": \"success\", \"payload\": \"A-result\"}, \"operationA\": {\"submittedGeneration\": 1, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": false, \"reuseAllowed\": false}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.479029+00:00",
+      "id": "reuse-before-cancel"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 4, \"newPayload\": \"new-five\", \"oldPayload\": \"old-four\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"cancel-release-fault\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.480302+00:00",
+      "endedUtc": "2026-10-05T16:36:28.511583+00:00",
+      "exitCode": 0,
+      "stdout": "{\"observed\": true, \"reason\": null, \"trace\": [{\"action\": \"submit\", \"result\": \"SUBMITTED\", \"state\": {\"buffer\": {\"generation\": 4, \"owner\": \"A\", \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": true, \"cancelRequested\": false, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"cancel\", \"result\": \"REQUESTED\", \"state\": {\"buffer\": {\"generation\": 4, \"owner\": null, \"status\": null, \"payload\": \"empty\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": null}}, {\"action\": \"reuse\", \"result\": \"REUSE_ALLOWED\", \"state\": {\"buffer\": {\"generation\": 5, \"owner\": \"application\", \"status\": null, \"payload\": \"new-five\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": true, \"cancelRequested\": true, \"status\": null}, \"interference\": false, \"reuseAllowed\": true}}, {\"action\": \"complete\", \"result\": \"COMPLETED_SUCCESS\", \"state\": {\"buffer\": {\"generation\": 5, \"owner\": null, \"status\": \"success\", \"payload\": \"old-four\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}], \"summary\": {\"buffer\": {\"generation\": 5, \"owner\": null, \"status\": \"success\", \"payload\": \"old-four\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 5, \"owner\": null, \"status\": \"success\", \"payload\": \"old-four\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 4, \\\"newPayload\\\": \\\"new-five\\\", \\\"oldPayload\\\": \\\"old-four\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"cancel-release-fault\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.480302+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.511583+00:00\", \"exitCode\": 0, \"stdout\": \"{\\\"observed\\\": true, \\\"reason\\\": null, \\\"trace\\\": [{\\\"action\\\": \\\"submit\\\", \\\"result\\\": \\\"SUBMITTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 4, \\\"owner\\\": \\\"A\\\", \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 4, \\\"pending\\\": true, \\\"cancelRequested\\\": false, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"cancel\\\", \\\"result\\\": \\\"REQUESTED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 4, \\\"owner\\\": null, \\\"status\\\": null, \\\"payload\\\": \\\"empty\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 4, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": null}}, {\\\"action\\\": \\\"reuse\\\", \\\"result\\\": \\\"REUSE_ALLOWED\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 5, \\\"owner\\\": \\\"application\\\", \\\"status\\\": null, \\\"payload\\\": \\\"new-five\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 4, \\\"pending\\\": true, \\\"cancelRequested\\\": true, \\\"status\\\": null}, \\\"interference\\\": false, \\\"reuseAllowed\\\": true}}, {\\\"action\\\": \\\"complete\\\", \\\"result\\\": \\\"COMPLETED_SUCCESS\\\", \\\"state\\\": {\\\"buffer\\\": {\\\"generation\\\": 5, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"old-four\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 4, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}], \\\"summary\\\": {\\\"buffer\\\": {\\\"generation\\\": 5, \\\"owner\\\": null, \\\"status\\\": \\\"success\\\", \\\"payload\\\": \\\"old-four\\\"}, \\\"operationA\\\": {\\\"submittedGeneration\\\": 4, \\\"pending\\\": false, \\\"cancelRequested\\\": true, \\\"status\\\": \\\"success\\\"}, \\\"interference\\\": true, \\\"reuseAllowed\\\": true}}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.511630+00:00",
+        "endedUtc": "2026-10-05T16:36:28.549796+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"OBSERVED\", \"summary\": {\"buffer\": {\"generation\": 5, \"owner\": null, \"status\": \"success\", \"payload\": \"old-four\"}, \"operationA\": {\"submittedGeneration\": 4, \"pending\": false, \"cancelRequested\": true, \"status\": \"success\"}, \"interference\": true, \"reuseAllowed\": true}}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.550123+00:00",
+      "id": "variable-generation4"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"cancel\", \"submit\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.551240+00:00",
+      "endedUtc": "2026-10-05T16:36:28.581624+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"submit first then one cancel/reuse/complete each\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"cancel\\\", \\\"submit\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.551240+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.581624+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"submit first then one cancel/reuse/complete each\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.581668+00:00",
+        "endedUtc": "2026-10-05T16:36:28.623173+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.623529+00:00",
+      "id": "refused-order"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"reuse\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.624572+00:00",
+      "endedUtc": "2026-10-05T16:36:28.655971+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"submit first then one cancel/reuse/complete each\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"reuse\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.624572+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.655971+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"submit first then one cancel/reuse/complete each\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.656018+00:00",
+        "endedUtc": "2026-10-05T16:36:28.694271+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.694598+00:00",
+      "id": "refused-duplicate"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": true, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.695569+00:00",
+      "endedUtc": "2026-10-05T16:36:28.727778+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"generation integer1..9; bool forbidden\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": true, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.695569+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.727778+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"generation integer1..9; bool forbidden\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.727818+00:00",
+        "endedUtc": "2026-10-05T16:36:28.765906+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.766293+00:00",
+      "id": "refused-bool-generation"
+    },
+    {
+      "inputRaw": "{\"completion\": \"unknown\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.767285+00:00",
+      "endedUtc": "2026-10-05T16:36:28.800296+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"completion success/aborted only\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"unknown\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.767285+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.800296+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"completion success/aborted only\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.800337+00:00",
+        "endedUtc": "2026-10-05T16:36:28.840451+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.840763+00:00",
+      "id": "refused-status"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": 7, \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"guarded\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.841727+00:00",
+      "endedUtc": "2026-10-05T16:36:28.873361+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"payload printable ASCII1..40\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": 7, \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"guarded\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.841727+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.873361+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"payload printable ASCII1..40\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.873404+00:00",
+        "endedUtc": "2026-10-05T16:36:28.912191+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.912554+00:00",
+      "id": "refused-payload"
+    },
+    {
+      "inputRaw": "{\"completion\": \"success\", \"generation\": 1, \"newPayload\": \"B-data\", \"oldPayload\": \"A-result\", \"order\": [\"submit\", \"cancel\", \"reuse\", \"complete\"], \"policy\": \"native-win32\"}\n",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.914082+00:00",
+      "endedUtc": "2026-10-05T16:36:28.944785+00:00",
+      "exitCode": 2,
+      "stdout": "{\"observed\": false, \"reason\": \"schema/policy; native API not supported\", \"summary\": null, \"trace\": []}\n",
+      "stderr": "",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"completion\\\": \\\"success\\\", \\\"generation\\\": 1, \\\"newPayload\\\": \\\"B-data\\\", \\\"oldPayload\\\": \\\"A-result\\\", \\\"order\\\": [\\\"submit\\\", \\\"cancel\\\", \\\"reuse\\\", \\\"complete\\\"], \\\"policy\\\": \\\"native-win32\\\"}\\n\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.914082+00:00\", \"endedUtc\": \"2026-10-05T16:36:28.944785+00:00\", \"exitCode\": 2, \"stdout\": \"{\\\"observed\\\": false, \\\"reason\\\": \\\"schema/policy; native API not supported\\\", \\\"summary\\\": null, \\\"trace\\\": []}\\n\", \"stderr\": \"\"}",
+        "startedUtc": "2026-10-05T16:36:28.944822+00:00",
+        "endedUtc": "2026-10-05T16:36:28.983861+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"REFUSED\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:28.984165+00:00",
+      "id": "refused-schema"
+    },
+    {
+      "inputRaw": "{\"policy\":",
+      "argv": [
+        "python3",
+        "-B",
+        "model.py"
+      ],
+      "startedUtc": "2026-10-05T16:36:28.985260+00:00",
+      "endedUtc": "2026-10-05T16:36:29.018816+00:00",
+      "exitCode": 3,
+      "stdout": "",
+      "stderr": "JSONDecodeError: Expecting value: line 1 column 11 (char 10)\n",
+      "auditExitCode": 0,
+      "auditStdout": "{\"outcome\": \"EXECUTION_FAILURE\", \"summary\": null}\n",
+      "auditStderr": "",
+      "auditCommand": {
+        "argv": [
+          "python3",
+          "-B",
+          "checker.py",
+          "--audit"
+        ],
+        "inputRaw": "{\"inputRaw\": \"{\\\"policy\\\":\", \"argv\": [\"python3\", \"-B\", \"model.py\"], \"startedUtc\": \"2026-10-05T16:36:28.985260+00:00\", \"endedUtc\": \"2026-10-05T16:36:29.018816+00:00\", \"exitCode\": 3, \"stdout\": \"\", \"stderr\": \"JSONDecodeError: Expecting value: line 1 column 11 (char 10)\\n\"}",
+        "startedUtc": "2026-10-05T16:36:29.018867+00:00",
+        "endedUtc": "2026-10-05T16:36:29.058710+00:00",
+        "exitCode": 0,
+        "stdout": "{\"outcome\": \"EXECUTION_FAILURE\", \"summary\": null}\n",
+        "stderr": ""
+      },
+      "sourceHashes": {
+        "model.py": "e793a42dfbdba836f98702856dfa386e8052db2168c4beb64c3318f59a61bd78",
+        "checker.py": "0ebe4066591c829ac4c9e2cb1cdb6673db1b041eb9124626588a6f758aa748a3",
+        "execute.py": "624025ff0bcdd0074fa841faf1cff28e29320e1fdc882660755d5b67c2e645dd"
+      },
+      "responseUtc": "2026-10-05T16:36:29.059061+00:00",
+      "id": "execution-failure"
+    }
+  ]
+}

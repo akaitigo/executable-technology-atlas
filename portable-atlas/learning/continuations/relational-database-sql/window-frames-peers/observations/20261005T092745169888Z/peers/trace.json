@@ -1,0 +1,411 @@
+[
+  {
+    "event": "database-opened",
+    "sqlite_version": "3.51.0",
+    "query_only": 1,
+    "db_digest": "sha256:149c377b0f8aead1b7718c5871842df4a71bdc8f44d0246386c6acefbbb6940d"
+  },
+  {
+    "event": "query-observed",
+    "mode": "range-default",
+    "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key) ORDER BY part,sort_key,id",
+    "params": [],
+    "started_at": "2026-10-05T09:27:45.225936+00:00",
+    "completed_at": "2026-10-05T09:27:45.226208+00:00",
+    "outcome": "rows",
+    "columns": [
+      "id",
+      "part",
+      "sort_key",
+      "amount",
+      "total",
+      "known_values",
+      "frame_ids_raw"
+    ],
+    "raw_rows": [
+      [
+        1,
+        "A",
+        1,
+        10,
+        30,
+        2,
+        "2,1"
+      ],
+      [
+        2,
+        "A",
+        1,
+        20,
+        30,
+        2,
+        "2,1"
+      ],
+      [
+        3,
+        "A",
+        2,
+        5,
+        35,
+        3,
+        "2,1,3"
+      ],
+      [
+        4,
+        "B",
+        1,
+        7,
+        7,
+        1,
+        "4"
+      ],
+      [
+        5,
+        "B",
+        2,
+        null,
+        7,
+        1,
+        "4,5"
+      ]
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 10,
+        "total": 30,
+        "known_values": 2,
+        "frame_ids_raw": "2,1",
+        "frame_ids": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": 2,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 20,
+        "total": 30,
+        "known_values": 2,
+        "frame_ids_raw": "2,1",
+        "frame_ids": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": 3,
+        "part": "A",
+        "sort_key": 2,
+        "amount": 5,
+        "total": 35,
+        "known_values": 3,
+        "frame_ids_raw": "2,1,3",
+        "frame_ids": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": 4,
+        "part": "B",
+        "sort_key": 1,
+        "amount": 7,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4",
+        "frame_ids": [
+          4
+        ]
+      },
+      {
+        "id": 5,
+        "part": "B",
+        "sort_key": 2,
+        "amount": null,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4,5",
+        "frame_ids": [
+          4,
+          5
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "event": "query-observed",
+    "mode": "rows-explicit",
+    "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key,id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ORDER BY part,sort_key,id",
+    "params": [],
+    "started_at": "2026-10-05T09:27:45.226238+00:00",
+    "completed_at": "2026-10-05T09:27:45.226289+00:00",
+    "outcome": "rows",
+    "columns": [
+      "id",
+      "part",
+      "sort_key",
+      "amount",
+      "total",
+      "known_values",
+      "frame_ids_raw"
+    ],
+    "raw_rows": [
+      [
+        1,
+        "A",
+        1,
+        10,
+        10,
+        1,
+        "1"
+      ],
+      [
+        2,
+        "A",
+        1,
+        20,
+        30,
+        2,
+        "1,2"
+      ],
+      [
+        3,
+        "A",
+        2,
+        5,
+        35,
+        3,
+        "1,2,3"
+      ],
+      [
+        4,
+        "B",
+        1,
+        7,
+        7,
+        1,
+        "4"
+      ],
+      [
+        5,
+        "B",
+        2,
+        null,
+        7,
+        1,
+        "4,5"
+      ]
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 10,
+        "total": 10,
+        "known_values": 1,
+        "frame_ids_raw": "1",
+        "frame_ids": [
+          1
+        ]
+      },
+      {
+        "id": 2,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 20,
+        "total": 30,
+        "known_values": 2,
+        "frame_ids_raw": "1,2",
+        "frame_ids": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": 3,
+        "part": "A",
+        "sort_key": 2,
+        "amount": 5,
+        "total": 35,
+        "known_values": 3,
+        "frame_ids_raw": "1,2,3",
+        "frame_ids": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": 4,
+        "part": "B",
+        "sort_key": 1,
+        "amount": 7,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4",
+        "frame_ids": [
+          4
+        ]
+      },
+      {
+        "id": 5,
+        "part": "B",
+        "sort_key": 2,
+        "amount": null,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4,5",
+        "frame_ids": [
+          4,
+          5
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "event": "query-observed",
+    "mode": "range-explicit",
+    "sql": "SELECT id,part,sort_key,amount,SUM(amount) OVER w AS total,COUNT(amount) OVER w AS known_values,GROUP_CONCAT(id) OVER w AS frame_ids_raw FROM samples WINDOW w AS (PARTITION BY part ORDER BY sort_key RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ORDER BY part,sort_key,id",
+    "params": [],
+    "started_at": "2026-10-05T09:27:45.226311+00:00",
+    "completed_at": "2026-10-05T09:27:45.226351+00:00",
+    "outcome": "rows",
+    "columns": [
+      "id",
+      "part",
+      "sort_key",
+      "amount",
+      "total",
+      "known_values",
+      "frame_ids_raw"
+    ],
+    "raw_rows": [
+      [
+        1,
+        "A",
+        1,
+        10,
+        30,
+        2,
+        "2,1"
+      ],
+      [
+        2,
+        "A",
+        1,
+        20,
+        30,
+        2,
+        "2,1"
+      ],
+      [
+        3,
+        "A",
+        2,
+        5,
+        35,
+        3,
+        "2,1,3"
+      ],
+      [
+        4,
+        "B",
+        1,
+        7,
+        7,
+        1,
+        "4"
+      ],
+      [
+        5,
+        "B",
+        2,
+        null,
+        7,
+        1,
+        "4,5"
+      ]
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 10,
+        "total": 30,
+        "known_values": 2,
+        "frame_ids_raw": "2,1",
+        "frame_ids": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": 2,
+        "part": "A",
+        "sort_key": 1,
+        "amount": 20,
+        "total": 30,
+        "known_values": 2,
+        "frame_ids_raw": "2,1",
+        "frame_ids": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": 3,
+        "part": "A",
+        "sort_key": 2,
+        "amount": 5,
+        "total": 35,
+        "known_values": 3,
+        "frame_ids_raw": "2,1,3",
+        "frame_ids": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": 4,
+        "part": "B",
+        "sort_key": 1,
+        "amount": 7,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4",
+        "frame_ids": [
+          4
+        ]
+      },
+      {
+        "id": 5,
+        "part": "B",
+        "sort_key": 2,
+        "amount": null,
+        "total": 7,
+        "known_values": 1,
+        "frame_ids_raw": "4,5",
+        "frame_ids": [
+          4,
+          5
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "event": "database-closed",
+    "db_digest": "sha256:149c377b0f8aead1b7718c5871842df4a71bdc8f44d0246386c6acefbbb6940d",
+    "unchanged": true
+  }
+]

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>閾値と混同行列 — AI Evaluation / Safety</title>
+  <style>
+    :root{--ink:#17363e;--muted:#536b67;--paper:#f5f8f3;--line:#c8d8ce;--tp:#238063;--tn:#466276;--fn:#ab4568;--fp:#a46a20;--navy:#16353d}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7}
+    a{color:#176c57}header{padding:64px max(24px,calc((100vw - 1160px)/2));background:radial-gradient(ellipse at 85% 10%,#476c5c,transparent 42%),var(--navy);color:#f4faf4}
+    .eyebrow{font-size:12px;letter-spacing:.16em;font-weight:750;color:#bfd8ca}h1{font-size:clamp(34px,5vw,62px);line-height:1.14;letter-spacing:-.04em;margin:15px 0 20px;max-width:900px}header p{max-width:790px;color:#d7e8dd;font-size:17px;margin:0}
+    main{max-width:1160px;margin:auto;padding:36px 24px 68px}section{margin:38px 0}h2{font-size:28px;line-height:1.4;margin:0 0 12px}h3{margin:0 0 12px}.lead{color:var(--muted);max-width:850px}.card{padding:22px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 8px 28px #153d3010}
+    .workspace{display:grid;grid-template-columns:.8fr 1.25fr 1fr;gap:16px;align-items:start}.pill{display:inline-block;padding:4px 9px;background:#e3efe8;color:#285f4e;border-radius:30px;font-size:12px;font-weight:750}.warm{background:#fff0d3;color:#795921}
+    label{display:block;font-weight:750;margin:15px 0 8px}select{width:100%;font:inherit;padding:11px;background:#f8faf5;border:1px solid #8da89a;border-radius:10px;color:var(--ink)}select:focus-visible{outline:3px solid #41927460}
+    .composition{display:flex;gap:3px;margin:14px 0}.composition span{height:17px;flex:1;background:#466276;border-radius:3px}.composition span.positive{background:#238063}.small{font-size:13px;color:var(--muted)}.subtle{font-size:14px;background:#f2f7f2;padding:12px;border-radius:10px;margin-top:16px}
+    .matrix{display:grid;grid-template-columns:1fr 1fr;gap:9px}.cell{border-radius:14px;padding:15px;border:1px solid #0001}.cell b{font-size:34px;display:block;line-height:1.2}.cell small{display:block;font-size:13px}.TP{background:#e2f2e9;color:var(--tp)}.FN{background:#f8e6ed;color:var(--fn)}.FP{background:#fcf0d9;color:var(--fp)}.TN{background:#e7eef4;color:var(--tn)}
+    .axis{font-size:12px;color:var(--muted);display:flex;justify-content:space-around;margin:12px 0 8px}.matrix-note{font-size:12px;color:var(--muted);margin:12px 0 0}
+    .metric{border-bottom:1px solid var(--line);padding:11px 0}.metric:last-child{border-bottom:0}.metric strong{font-size:26px;display:block}.metric .fraction{font-size:13px;color:var(--muted)}.metric.undefined{color:var(--fn)}
+    .summary{background:#fff0d7;border-left:4px solid #b98735;border-radius:0 12px 12px 0;padding:15px 20px;margin-top:20px}.summary p{margin:0}
+    svg.score{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:16px;background:#fff}.score text{font-family:inherit;font-size:13px;fill:var(--muted)}.score .threshold{stroke:#a43f61;stroke-width:3;stroke-dasharray:7 5}.score .rowline{stroke:#d3dfd7;stroke-width:1}.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:14px 0}.legend span{padding:4px 9px;border-radius:8px}
+    .table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#edf4ee}.outcome{font-weight:750;padding:3px 7px;border-radius:7px}
+    .diagram{display:block;width:100%;margin:18px 0;border:1px solid var(--line);border-radius:18px}.links{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.boundary{background:#edf3ee;padding:20px;border-radius:16px;font-size:14px}footer{text-align:center;font-size:13px;color:var(--muted);padding:10px 24px 35px}
+    @media(max-width:900px){.workspace{grid-template-columns:1fr 1fr}.controls{grid-column:1/-1}.links{grid-template-columns:1fr}}
+    @media(max-width:560px){.workspace{grid-template-columns:1fr}.controls{grid-column:auto}header{padding-top:44px}.card{padding:18px}h2{font-size:23px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">AI EVALUATION / SAFETY · 01 · SYNTHETIC BINARY FIXTURE</div>
+    <h1>90%の正解率。<br>見逃しは何件？</h1>
+    <p>閾値を動かして、同じAccuracyの内訳を読む。固定した20件のscoreをPythonで分類・集計し、見逃しと誤警報を比較します。</p>
+  </header>
+  <main>
+    <section>
+      <h2>まず予想：閾値を上げると何が変わる？</h2>
+      <p class="lead">実陽性は2件、実陰性は18件。閾値0.90では全件が陰性予測になっても、18件の正解が残ります。Accuracyだけで陽性を検出できたか判断できるでしょうか。</p>
+      <div class="workspace">
+        <div class="card controls">
+          <span class="pill warm">操作画面は説明モデル</span>
+          <label for="threshold">分類閾値を選ぶ</label>
+          <select id="threshold"><option value="0.3">0.30 — 見逃し0件</option><option value="0.5" selected>0.50 — 中間</option><option value="0.8">0.80 — scoreと同値</option><option value="0.9">0.90 — 陽性予測0件</option></select>
+          <p class="small">score ≥ 閾値 → 陽性予測（1）</p>
+          <div class="composition" aria-label="実陽性2件、実陰性18件"><span class="positive"></span><span class="positive"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="small">実陽性 2 / 実陰性 18</p>
+          <div class="subtle">保存済みPython原票を表示<br><span id="capturedAt"></span><br>scoreは作者が固定した合成値</div>
+        </div>
+        <div class="card" aria-live="polite">
+          <span class="pill">Python実計算</span><h3>混同行列 <span id="thresholdLabel">0.50</span></h3>
+          <div class="axis"><span>予測：陽性 1</span><span>予測：陰性 0</span></div>
+          <div class="matrix">
+            <div class="cell TP"><small>実陽性 → 陽性 / TP</small><b id="tp">—</b><span>検出</span></div>
+            <div class="cell FN"><small>実陽性 → 陰性 / FN</small><b id="fn">—</b><span>見逃し</span></div>
+            <div class="cell FP"><small>実陰性 → 陽性 / FP</small><b id="fp">—</b><span>誤警報</span></div>
+            <div class="cell TN"><small>実陰性 → 陰性 / TN</small><b id="tn">—</b><span>正しい陰性</span></div>
+          </div><p class="matrix-note">上段：実陽性2件 / 下段：実陰性18件</p>
+        </div>
+        <div class="card metrics" aria-live="polite">
+          <h3>割合と分母</h3>
+          <div class="metric" id="accuracy"><span>Accuracy / 正解率</span><strong>—</strong><span class="fraction"></span></div>
+          <div class="metric" id="precision"><span>Precision / 陽性予測の正確さ</span><strong>—</strong><span class="fraction"></span></div>
+          <div class="metric" id="recall"><span>Recall / 実陽性の検出率</span><strong>—</strong><span class="fraction"></span></div>
+          <div class="metric" id="fpr"><span>FPR / 実陰性の誤警報率</span><strong>—</strong><span class="fraction"></span></div>
+        </div>
+      </div>
+      <div class="summary" aria-live="polite"><p id="interpretation"></p></div>
+    </section>
+    <section>
+      <h2>scoreと閾値の位置を読む</h2>
+      <p class="lead">横軸は固定score。破線より右側（同値を含む）が陽性予測です。色だけに頼らず、下の表でもsampleごとの分類を確認できます。</p>
+      <svg class="score" viewBox="0 0 1060 280" role="img" aria-label="保存済みscoreと選択閾値による分類の説明図">
+        <text x="20" y="97">実陽性</text><text x="20" y="174">実陰性</text>
+        <line class="rowline" x1="130" y1="92" x2="1000" y2="92"/><line class="rowline" x1="130" y1="170" x2="1000" y2="170"/>
+        <line id="thresholdLine" class="threshold" x1="565" y1="45" x2="565" y2="210"/>
+        <text id="thresholdCaption" x="570" y="30">閾値 0.50</text>
+        <g id="sampleDots"></g>
+        <line class="rowline" x1="130" y1="229" x2="1000" y2="229"/>
+        <text x="130" y="256" text-anchor="middle">0.0</text><text x="347.5" y="256" text-anchor="middle">0.25</text><text x="565" y="256" text-anchor="middle">0.50</text><text x="782.5" y="256" text-anchor="middle">0.75</text><text x="1000" y="256" text-anchor="middle">1.0</text>
+      </svg>
+      <div class="legend"><span class="TP">TP 検出</span><span class="FN">FN 見逃し</span><span class="FP">FP 誤警報</span><span class="TN">TN 正しい陰性</span></div>
+      <div class="card table-scroll"><table><caption>原票のsampleごとの分類</caption><thead><tr><th>Sample</th><th>実label</th><th>固定score</th><th>予測</th><th>分類</th></tr></thead><tbody id="decisions"></tbody></table></div>
+    </section>
+    <section><h2>分母と反例を図で確認</h2><img class="diagram" src="assets/metric-denominators.svg" alt="Accuracy、Precision、Recall、FPRの分母の違い"><img class="diagram" src="assets/threshold-tradeoff.svg" alt="Accuracyが90%でもFNとFPが違う3設定"></section>
+    <section>
+      <h2>資料 → 実装 → 答え合わせ</h2>
+      <div class="links">
+        <div class="card"><h3>定義・一次資料</h3><p><a href="sources.json">公式資料のURLとlocator</a></p><p><a href="README.md">学習手順・答え合わせ・制限</a></p></div>
+        <div class="card"><h3>実装・独立Oracle</h3><p><a href="evaluate.py">Python集計</a> · <a href="predictions.json">入力20件</a></p><p><a href="hand-count.json">sample IDからの手集計</a> · <a href="verify.py">checker</a></p></div>
+        <div class="card"><h3>保存済み実観測</h3><p><a href="evidence/observation.json">実行原票</a> · <a href="evidence/verification.json">日時・環境・digest</a></p><p><a href="skills/atlas-ai-evaluation-safety/SKILL.md">限定Skill</a></p></div>
+      </div>
+    </section>
+    <section class="boundary">この教材は合成binary fixtureの計算だけを扱います。モデル学習・外部AI API・LLM safety・現実属性の公平性・運用の安全合格条件は検証していません。未教材範囲はREADMEに列挙しています。</section>
+  </main>
+  <footer>AI Evaluation / Safety · Local lesson · Apache-2.0</footer>
+  <script src="evidence/data.js"></script>
+  <script>
+    const colors={TP:'#238063',FN:'#ab4568',FP:'#a46a20',TN:'#466276'};
+    const meanings={TP:'検出',FN:'見逃し',FP:'誤警報',TN:'正しい陰性'};
+    function showThreshold(){
+      const threshold=Number(document.getElementById('threshold').value);
+      const row=OBSERVED.observation.results.find(value=>value.threshold===threshold);
+      if(!row)throw new Error('Saved observation for threshold is missing');
+      document.getElementById('thresholdLabel').textContent=threshold.toFixed(2);
+      document.getElementById('capturedAt').textContent=OBSERVED.captured_at_utc;
+      for(const key of ['TP','FN','FP','TN'])document.getElementById(key.toLowerCase()).textContent=row.counts[key];
+      for(const key of ['accuracy','precision','recall','fpr']){
+        const metric=row.metrics[key], box=document.getElementById(key);
+        box.querySelector('strong').textContent=metric.value===null?'未定義':(metric.value*100).toFixed(1)+'%';
+        box.querySelector('.fraction').textContent=metric.numerator+' / '+metric.denominator+(metric.value===null?' — 分母0':'');
+        box.classList.toggle('undefined',metric.value===null);
+      }
+      const interpretations={
+        '0.3':'実陽性2件を検出し、実陰性2件へ誤警報。Accuracyは90%。',
+        '0.5':'実陽性1件を見逃し、実陰性1件へ誤警報。Accuracyは同じ90%。',
+        '0.8':'scoreが閾値と等しいp01は陽性予測。誤警報0件でも、見逃し1件が残る。',
+        '0.9':'陽性予測0件。実陽性2件をすべて見逃してもAccuracyは90%。Precisionは0/0で未定義。'
+      };
+      document.getElementById('interpretation').textContent=interpretations[String(threshold)];
+      const x=130+870*threshold;
+      const line=document.getElementById('thresholdLine');line.setAttribute('x1',x);line.setAttribute('x2',x);
+      const caption=document.getElementById('thresholdCaption');caption.setAttribute('x',Math.min(x+6,910));caption.textContent='閾値 '+threshold.toFixed(2);
+      const dots=document.getElementById('sampleDots');dots.replaceChildren();
+      const body=document.getElementById('decisions');body.replaceChildren();
+      row.decisions.forEach((sample,index)=>{
+        const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        circle.setAttribute('cx',130+870*sample.score);circle.setAttribute('cy',sample.label?92:160+(index%2)*20);circle.setAttribute('r',7);circle.setAttribute('fill',colors[sample.outcome]);circle.setAttribute('stroke','#fff');circle.setAttribute('stroke-width',1);
+        const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=sample.id+': score '+sample.score+' / '+sample.outcome;circle.append(title);dots.append(circle);
+        const tr=document.createElement('tr');
+        for(const value of [sample.id,sample.label,sample.score.toFixed(2),sample.prediction]){const td=document.createElement('td');td.textContent=value;tr.append(td);}
+        const td=document.createElement('td'), label=document.createElement('span');label.className='outcome '+sample.outcome;label.textContent=sample.outcome+' '+meanings[sample.outcome];td.append(label);tr.append(td);body.append(tr);
+      });
+    }
+    document.getElementById('threshold').addEventListener('change',showThreshold);
+    showThreshold();
+  </script>
+</body>
+</html>

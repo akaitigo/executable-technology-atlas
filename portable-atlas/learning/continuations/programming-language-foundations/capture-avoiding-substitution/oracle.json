@@ -1,0 +1,552 @@
+{
+  "expected": {
+    "capture": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "renames": [
+        [
+          "y",
+          "v0"
+        ]
+      ]
+    },
+    "same-binder": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "x",
+          "body": {
+            "kind": "Var",
+            "name": "x"
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "renames": []
+    },
+    "no-collision": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "z",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10
+      },
+      "renames": []
+    },
+    "fresh-free-collision": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "v0",
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v1",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "free": [
+          "v0",
+          "y"
+        ],
+        "value": 15
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "Var",
+              "name": "v0"
+            }
+          }
+        },
+        "free": [
+          "v0"
+        ],
+        "value": 8
+      },
+      "renames": [
+        [
+          "y",
+          "v1"
+        ]
+      ]
+    },
+    "fresh-bound-collision": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v1",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "v0",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "renames": [
+        [
+          "y",
+          "v1"
+        ]
+      ]
+    },
+    "nested-shadow": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 14
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Add",
+            "left": {
+              "kind": "Var",
+              "name": "y"
+            },
+            "right": {
+              "kind": "App",
+              "fn": {
+                "kind": "Lam",
+                "name": "y",
+                "body": {
+                  "kind": "Var",
+                  "name": "y"
+                }
+              },
+              "arg": {
+                "kind": "Int",
+                "value": 4
+              }
+            }
+          }
+        },
+        "free": [],
+        "value": 7
+      },
+      "renames": [
+        [
+          "y",
+          "v0"
+        ]
+      ]
+    },
+    "target-absent": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Var",
+            "name": "y"
+          }
+        },
+        "free": [],
+        "value": 3
+      },
+      "renames": []
+    },
+    "closed-replacement": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": 9
+          }
+        },
+        "free": [],
+        "value": 9
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Int",
+            "value": 9
+          }
+        },
+        "free": [],
+        "value": 9
+      },
+      "renames": []
+    },
+    "replacement-lambda": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "y"
+                },
+                "right": {
+                  "kind": "Var",
+                  "name": "z"
+                }
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 12
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "App",
+            "fn": {
+              "kind": "Lam",
+              "name": "z",
+              "body": {
+                "kind": "Add",
+                "left": {
+                  "kind": "Var",
+                  "name": "y"
+                },
+                "right": {
+                  "kind": "Var",
+                  "name": "z"
+                }
+              }
+            },
+            "arg": {
+              "kind": "Int",
+              "value": 2
+            }
+          }
+        },
+        "free": [],
+        "value": 5
+      },
+      "renames": [
+        [
+          "y",
+          "v0"
+        ]
+      ]
+    },
+    "two-fresh": {
+      "status": "NORMAL",
+      "reason": "",
+      "term_free": [
+        "x"
+      ],
+      "replacement_free": [
+        "y"
+      ],
+      "safe": {
+        "ast": {
+          "kind": "Lam",
+          "name": "v0",
+          "body": {
+            "kind": "Lam",
+            "name": "v1",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [
+          "y"
+        ],
+        "value": 10
+      },
+      "naive": {
+        "ast": {
+          "kind": "Lam",
+          "name": "y",
+          "body": {
+            "kind": "Lam",
+            "name": "y",
+            "body": {
+              "kind": "Var",
+              "name": "y"
+            }
+          }
+        },
+        "free": [],
+        "value": 4
+      },
+      "renames": [
+        [
+          "y",
+          "v0"
+        ],
+        [
+          "y",
+          "v1"
+        ]
+      ]
+    },
+    "invalid-binder": {
+      "status": "INPUT_REFUSED",
+      "reason": "NAME",
+      "safe": null,
+      "naive": null
+    },
+    "unknown-kind": {
+      "status": "INPUT_REFUSED",
+      "reason": "AST_KIND",
+      "safe": null,
+      "naive": null
+    },
+    "bool-literal": {
+      "status": "INPUT_REFUSED",
+      "reason": "INT",
+      "safe": null,
+      "naive": null
+    },
+    "extra-field": {
+      "status": "INPUT_REFUSED",
+      "reason": "AST_FIELDS",
+      "safe": null,
+      "naive": null
+    },
+    "invalid-environment": {
+      "status": "INPUT_REFUSED",
+      "reason": "ENVIRONMENT",
+      "safe": null,
+      "naive": null
+    },
+    "depth-limit": {
+      "status": "INPUT_REFUSED",
+      "reason": "AST_LIMIT",
+      "safe": null,
+      "naive": null
+    },
+    "node-limit": {
+      "status": "INPUT_REFUSED",
+      "reason": "AST_LIMIT",
+      "safe": null,
+      "naive": null
+    },
+    "execution-failure": {
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected substitution failure",
+      "safe": null,
+      "naive": null
+    }
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "title": "Atlas current scoped idle classification",
+  "passed": true,
+  "synthetic_cases": 12,
+  "results": [
+    {
+      "case": "all_match",
+      "expected": true,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:20:51 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:27:44 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:30:05 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:39:34 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          57708,
+          59528,
+          59883,
+          62499
+        ],
+        "known_absent": []
+      },
+      "passed": true
+    },
+    {
+      "case": "all_absent",
+      "expected": true,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          57708,
+          59528,
+          59883,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "some_absent",
+      "expected": true,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:20:51 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:27:44 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          57708,
+          59528
+        ],
+        "known_absent": [
+          59883,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "reused_nonruntime_comm",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:20:51 2026",
+            "comm": "/usr/bin/python3",
+            "cpu": 0.0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          59528,
+          59883,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "changed_start",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "different",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          57708,
+          59883,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "changed_parent",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:30:05 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          57708,
+          59528,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "cpu_at_limit",
+      "expected": true,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": true,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:39:34 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 1.0,
+            "blocking": false
+          }
+        ],
+        "scoped_idle_exemptions": [
+          62499
+        ],
+        "known_absent": [
+          57708,
+          59528,
+          59883
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "cpu_above_limit",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:39:34 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 1.1,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          57708,
+          59528,
+          59883
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "unknown_java",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "Wed Oct 7 00:20:51 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:27:44 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:30:05 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "Wed Oct 7 00:39:34 2026",
+            "comm": "/opt/homebrew/Cellar/openjdk@21/21.0.10/libexec/openjdk.jdk/Contents/Home/bin/java",
+            "cpu": 0.0,
+            "blocking": false
+          },
+          {
+            "lstart": "other",
+            "comm": "/unknown/java",
+            "cpu": 0.0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [
+          57708,
+          59528,
+          59883,
+          62499
+        ],
+        "known_absent": []
+      },
+      "passed": true
+    },
+    {
+      "case": "unknown_browser",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": true,
+        "process_condition_passed": false,
+        "runtime_candidates": [
+          {
+            "lstart": "other",
+            "comm": "/unknown/chrome-headless-shell",
+            "cpu": 0.0,
+            "blocking": true
+          }
+        ],
+        "scoped_idle_exemptions": [],
+        "known_absent": [
+          57708,
+          59528,
+          59883,
+          62499
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "incomplete",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": false,
+        "process_condition_passed": false,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": null
+      },
+      "passed": true
+    },
+    {
+      "case": "empty",
+      "expected": false,
+      "observed": {
+        "process_snapshot_complete": false,
+        "process_condition_passed": false,
+        "runtime_candidates": [],
+        "scoped_idle_exemptions": [],
+        "known_absent": null
+      },
+      "passed": true
+    }
+  ],
+  "actual_process_observations": 0,
+  "processes_modified": false,
+  "source_sha256": {
+    "resource-gate.py": "031129ee9cb820f4736a5b190840234101e23a47b746ef4eddbc462e093b6f5c",
+    "gate-policy.json": "89f3fa7475d00e9ee9aedcd6b483b7030a1a1477d0e6cea02bca7549b7bc4ca2",
+    "check-gate.py": "572387dcd95d2eaa843f18b27f7d2cccfd54be0d11e3ea847b3397349d831029"
+  }
+}

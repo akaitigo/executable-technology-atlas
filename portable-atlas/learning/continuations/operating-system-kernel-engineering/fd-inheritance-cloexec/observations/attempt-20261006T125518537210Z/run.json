@@ -1,0 +1,955 @@
+{
+  "project": "Atlas",
+  "schema_version": 1,
+  "started_at": "20261006T125518537210Z",
+  "environment": {
+    "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "platform": "macOS-26.1-arm64-arm-64bit",
+    "kernel_release": "25.1.0",
+    "cpu_count": 12
+  },
+  "input_hashes": {
+    "CONTRACT.md": "b3fe3f824fc1b10d812db3ea1d6a4194f355e8db7d65abb380182de9a9d5d6d6",
+    "expected.json": "32e8a60fbec68e1678bcfd8391771c9a36d421bee4ab997299a02e4400b78e81",
+    "sources.json": "6ff51bb47147852d3f0c1ac55c24061a9ac0b690065ac6641f1fa57705d4d51d",
+    "experiment.py": "e91545c34c5f4dd03a6e2fe624434f3a2b3d315be37f40fb0bf3d0ab9b89ede2",
+    "probe.py": "56cf67cd41439c1b9565a70b0d9910b631b8e6ef324e51fedbcb72724b5ea494",
+    "verify.py": "046b1139773dcee0405043f1731ca3a2094bca361f02024218122b2074ca9866"
+  },
+  "cases": [
+    {
+      "id": "guarded_single",
+      "phases": [
+        {
+          "phase": "parent_before_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146184"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        },
+        {
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146184"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [],
+          "fds": {
+            "original": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 4,
+              "status": "EBADF"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 6,
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ]
+        },
+        {
+          "phase": "parent_after_wait",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146184"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        }
+      ],
+      "setup": [
+        {
+          "operation": "os.open",
+          "fd": 4,
+          "initial_cloexec": true
+        },
+        {
+          "operation": "set original CLOEXEC",
+          "fd": 4,
+          "before": 1,
+          "requested": 1,
+          "observed": 1
+        }
+      ],
+      "errors": [],
+      "cleanup": {
+        "child_reaped": true,
+        "wait_grace_seconds": 1,
+        "parent_closed_fds": [
+          4,
+          5
+        ],
+        "all_parent_owned_fds_closed": true,
+        "owned_target_unlinked": true,
+        "elapsed_seconds": 0.0002131670000000141
+      },
+      "complete": true,
+      "child_pipe_utf8": "{\"fds\": {\"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": true, \"fd\": 4, \"identity\": [\"16777232\", \"121146184\"], \"status\": \"target\"}}, \"phase\": \"child_after_fork\", \"pid\": 14511, \"ppid\": 14507, \"program\": \"atlas-fd-experiment-v1\", \"target_identity\": [\"16777232\", \"121146184\"]}\n{\"explicitly_closed_target_labels\": [], \"fds\": {\"original\": {\"errno\": 9, \"error_type\": \"OSError\", \"fd\": 4, \"status\": \"EBADF\"}}, \"phase\": \"child_after_exec\", \"pid\": 14511, \"ppid\": 14507, \"program\": \"atlas-fd-probe-v1\", \"report_fd\": 6, \"target_identity\": [\"16777232\", \"121146184\"]}\n",
+      "partial_child_messages": [
+        {
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146184"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [],
+          "fds": {
+            "original": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 4,
+              "status": "EBADF"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 6,
+          "target_identity": [
+            "16777232",
+            "121146184"
+          ]
+        }
+      ],
+      "payload_written_bytes": 8,
+      "target_identity": [
+        "16777232",
+        "121146184"
+      ],
+      "control_pipe": {
+        "read_fd": 5,
+        "write_fd": 6,
+        "write_inheritable": true,
+        "not_measured_target": true,
+        "parent_write_end_closed": true
+      },
+      "exec_call": {
+        "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "argv": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-S",
+          "-c",
+          "# Atlas: executed as a new Python image by os.execve, using -I -S -c.\nimport errno\nimport fcntl\nimport json\nimport os\nimport sys\n\nrequest = json.loads(sys.argv[1])\nrows = {}\nfor label, fd in request['fds'].items():\n    row = {'fd': fd}\n    try:\n        stat = os.fstat(fd)\n        identity = [str(stat.st_dev), str(stat.st_ino)]\n        row.update(identity=identity, cloexec=bool(fcntl.fcntl(fd, fcntl.F_GETFD) & fcntl.FD_CLOEXEC))\n        if identity == request['target_identity']:\n            row.update(status='target', bytes_hex=os.pread(fd, 8, 0).hex())\n        else:\n            row.update(status='different-target')\n    except OSError as ex:\n        row.update(status='EBADF' if ex.errno == errno.EBADF else 'os-error', errno=ex.errno, error_type=type(ex).__name__)\n    rows[label] = row\nclosed = []\nfor label, row in rows.items():\n    if row['status'] == 'target':\n        os.close(row['fd'])\n        closed.append(label)\nmessage = {'phase':'child_after_exec', 'program':'atlas-fd-probe-v1', 'pid':os.getpid(), 'ppid':os.getppid(),\n           'target_identity':request['target_identity'], 'fds':rows, 'explicitly_closed_target_labels':closed,\n           'report_fd':request['report_fd']}\ndata = (json.dumps(message, sort_keys=True) + '\\n').encode()\nwhile data:\n    amount = os.write(request['report_fd'], data)\n    data = data[amount:]\nos.close(request['report_fd'])\nos._exit(0)\n",
+          "{\"fds\": {\"original\": 4}, \"report_fd\": 6, \"target_identity\": [\"16777232\", \"121146184\"]}"
+        ],
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1"
+        }
+      },
+      "fork_returned_child_pid": 14511,
+      "received_bytes": 563,
+      "wait": {
+        "raw_status": 0,
+        "exited": true,
+        "exit_code": 0,
+        "signaled": false
+      }
+    },
+    {
+      "id": "unguarded_single",
+      "phases": [
+        {
+          "phase": "parent_before_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        },
+        {
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "original"
+          ],
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 6,
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ]
+        },
+        {
+          "phase": "parent_after_wait",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        }
+      ],
+      "setup": [
+        {
+          "operation": "os.open",
+          "fd": 4,
+          "initial_cloexec": true
+        },
+        {
+          "operation": "set original CLOEXEC",
+          "fd": 4,
+          "before": 1,
+          "requested": 0,
+          "observed": 0
+        }
+      ],
+      "errors": [],
+      "cleanup": {
+        "child_reaped": true,
+        "wait_grace_seconds": 1,
+        "parent_closed_fds": [
+          4,
+          5
+        ],
+        "all_parent_owned_fds_closed": true,
+        "owned_target_unlinked": true,
+        "elapsed_seconds": 0.0002543340000000227
+      },
+      "complete": true,
+      "child_pipe_utf8": "{\"fds\": {\"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 4, \"identity\": [\"16777232\", \"121146185\"], \"status\": \"target\"}}, \"phase\": \"child_after_fork\", \"pid\": 14512, \"ppid\": 14507, \"program\": \"atlas-fd-experiment-v1\", \"target_identity\": [\"16777232\", \"121146185\"]}\n{\"explicitly_closed_target_labels\": [\"original\"], \"fds\": {\"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 4, \"identity\": [\"16777232\", \"121146185\"], \"status\": \"target\"}}, \"phase\": \"child_after_exec\", \"pid\": 14512, \"ppid\": 14507, \"program\": \"atlas-fd-probe-v1\", \"report_fd\": 6, \"target_identity\": [\"16777232\", \"121146185\"]}\n",
+      "partial_child_messages": [
+        {
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "original"
+          ],
+          "fds": {
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146185"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 6,
+          "target_identity": [
+            "16777232",
+            "121146185"
+          ]
+        }
+      ],
+      "payload_written_bytes": 8,
+      "target_identity": [
+        "16777232",
+        "121146185"
+      ],
+      "control_pipe": {
+        "read_fd": 5,
+        "write_fd": 6,
+        "write_inheritable": true,
+        "not_measured_target": true,
+        "parent_write_end_closed": true
+      },
+      "exec_call": {
+        "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "argv": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-S",
+          "-c",
+          "# Atlas: executed as a new Python image by os.execve, using -I -S -c.\nimport errno\nimport fcntl\nimport json\nimport os\nimport sys\n\nrequest = json.loads(sys.argv[1])\nrows = {}\nfor label, fd in request['fds'].items():\n    row = {'fd': fd}\n    try:\n        stat = os.fstat(fd)\n        identity = [str(stat.st_dev), str(stat.st_ino)]\n        row.update(identity=identity, cloexec=bool(fcntl.fcntl(fd, fcntl.F_GETFD) & fcntl.FD_CLOEXEC))\n        if identity == request['target_identity']:\n            row.update(status='target', bytes_hex=os.pread(fd, 8, 0).hex())\n        else:\n            row.update(status='different-target')\n    except OSError as ex:\n        row.update(status='EBADF' if ex.errno == errno.EBADF else 'os-error', errno=ex.errno, error_type=type(ex).__name__)\n    rows[label] = row\nclosed = []\nfor label, row in rows.items():\n    if row['status'] == 'target':\n        os.close(row['fd'])\n        closed.append(label)\nmessage = {'phase':'child_after_exec', 'program':'atlas-fd-probe-v1', 'pid':os.getpid(), 'ppid':os.getppid(),\n           'target_identity':request['target_identity'], 'fds':rows, 'explicitly_closed_target_labels':closed,\n           'report_fd':request['report_fd']}\ndata = (json.dumps(message, sort_keys=True) + '\\n').encode()\nwhile data:\n    amount = os.write(request['report_fd'], data)\n    data = data[amount:]\nos.close(request['report_fd'])\nos._exit(0)\n",
+          "{\"fds\": {\"original\": 4}, \"report_fd\": 6, \"target_identity\": [\"16777232\", \"121146185\"]}"
+        ],
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1"
+        }
+      },
+      "fork_returned_child_pid": 14512,
+      "received_bytes": 628,
+      "wait": {
+        "raw_status": 0,
+        "exited": true,
+        "exit_code": 0,
+        "signaled": false
+      }
+    },
+    {
+      "id": "dup_original_guarded",
+      "phases": [
+        {
+          "phase": "parent_before_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            },
+            "duplicate": {
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        },
+        {
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "duplicate"
+          ],
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 4,
+              "status": "EBADF"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 7,
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ]
+        },
+        {
+          "phase": "parent_after_wait",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            },
+            "duplicate": {
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        }
+      ],
+      "setup": [
+        {
+          "operation": "os.open",
+          "fd": 4,
+          "initial_cloexec": true
+        },
+        {
+          "operation": "set original CLOEXEC",
+          "fd": 4,
+          "before": 1,
+          "requested": 1,
+          "observed": 1
+        },
+        {
+          "operation": "os.dup",
+          "from_fd": 4,
+          "fd": 5,
+          "initial_cloexec": true,
+          "identity": [
+            "16777232",
+            "121146186"
+          ]
+        },
+        {
+          "operation": "set duplicate CLOEXEC",
+          "fd": 5,
+          "before": 1,
+          "requested": 0,
+          "observed": 0
+        }
+      ],
+      "errors": [],
+      "cleanup": {
+        "child_reaped": true,
+        "wait_grace_seconds": 1,
+        "parent_closed_fds": [
+          4,
+          5,
+          6
+        ],
+        "all_parent_owned_fds_closed": true,
+        "owned_target_unlinked": true,
+        "elapsed_seconds": 0.0002596250000000411
+      },
+      "complete": true,
+      "child_pipe_utf8": "{\"fds\": {\"duplicate\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 5, \"identity\": [\"16777232\", \"121146186\"], \"status\": \"target\"}, \"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": true, \"fd\": 4, \"identity\": [\"16777232\", \"121146186\"], \"status\": \"target\"}}, \"phase\": \"child_after_fork\", \"pid\": 14513, \"ppid\": 14507, \"program\": \"atlas-fd-experiment-v1\", \"target_identity\": [\"16777232\", \"121146186\"]}\n{\"explicitly_closed_target_labels\": [\"duplicate\"], \"fds\": {\"duplicate\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 5, \"identity\": [\"16777232\", \"121146186\"], \"status\": \"target\"}, \"original\": {\"errno\": 9, \"error_type\": \"OSError\", \"fd\": 4, \"status\": \"EBADF\"}}, \"phase\": \"child_after_exec\", \"pid\": 14513, \"ppid\": 14507, \"program\": \"atlas-fd-probe-v1\", \"report_fd\": 7, \"target_identity\": [\"16777232\", \"121146186\"]}\n",
+      "partial_child_messages": [
+        {
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "duplicate"
+          ],
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146186"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 4,
+              "status": "EBADF"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 7,
+          "target_identity": [
+            "16777232",
+            "121146186"
+          ]
+        }
+      ],
+      "payload_written_bytes": 8,
+      "target_identity": [
+        "16777232",
+        "121146186"
+      ],
+      "control_pipe": {
+        "read_fd": 6,
+        "write_fd": 7,
+        "write_inheritable": true,
+        "not_measured_target": true,
+        "parent_write_end_closed": true
+      },
+      "exec_call": {
+        "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "argv": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-S",
+          "-c",
+          "# Atlas: executed as a new Python image by os.execve, using -I -S -c.\nimport errno\nimport fcntl\nimport json\nimport os\nimport sys\n\nrequest = json.loads(sys.argv[1])\nrows = {}\nfor label, fd in request['fds'].items():\n    row = {'fd': fd}\n    try:\n        stat = os.fstat(fd)\n        identity = [str(stat.st_dev), str(stat.st_ino)]\n        row.update(identity=identity, cloexec=bool(fcntl.fcntl(fd, fcntl.F_GETFD) & fcntl.FD_CLOEXEC))\n        if identity == request['target_identity']:\n            row.update(status='target', bytes_hex=os.pread(fd, 8, 0).hex())\n        else:\n            row.update(status='different-target')\n    except OSError as ex:\n        row.update(status='EBADF' if ex.errno == errno.EBADF else 'os-error', errno=ex.errno, error_type=type(ex).__name__)\n    rows[label] = row\nclosed = []\nfor label, row in rows.items():\n    if row['status'] == 'target':\n        os.close(row['fd'])\n        closed.append(label)\nmessage = {'phase':'child_after_exec', 'program':'atlas-fd-probe-v1', 'pid':os.getpid(), 'ppid':os.getppid(),\n           'target_identity':request['target_identity'], 'fds':rows, 'explicitly_closed_target_labels':closed,\n           'report_fd':request['report_fd']}\ndata = (json.dumps(message, sort_keys=True) + '\\n').encode()\nwhile data:\n    amount = os.write(request['report_fd'], data)\n    data = data[amount:]\nos.close(request['report_fd'])\nos._exit(0)\n",
+          "{\"fds\": {\"duplicate\": 5, \"original\": 4}, \"report_fd\": 7, \"target_identity\": [\"16777232\", \"121146186\"]}"
+        ],
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1"
+        }
+      },
+      "fork_returned_child_pid": 14513,
+      "received_bytes": 842,
+      "wait": {
+        "raw_status": 0,
+        "exited": true,
+        "exit_code": 0,
+        "signaled": false
+      }
+    },
+    {
+      "id": "dup_duplicate_guarded",
+      "phases": [
+        {
+          "phase": "parent_before_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            },
+            "duplicate": {
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        },
+        {
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "original"
+          ],
+          "fds": {
+            "duplicate": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 5,
+              "status": "EBADF"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 7,
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ]
+        },
+        {
+          "phase": "parent_after_wait",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ],
+          "fds": {
+            "original": {
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "cloexec": false,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            },
+            "duplicate": {
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "cloexec": true,
+              "status": "target",
+              "bytes_hex": "41544c41532d4644"
+            }
+          }
+        }
+      ],
+      "setup": [
+        {
+          "operation": "os.open",
+          "fd": 4,
+          "initial_cloexec": true
+        },
+        {
+          "operation": "set original CLOEXEC",
+          "fd": 4,
+          "before": 1,
+          "requested": 0,
+          "observed": 0
+        },
+        {
+          "operation": "os.dup",
+          "from_fd": 4,
+          "fd": 5,
+          "initial_cloexec": true,
+          "identity": [
+            "16777232",
+            "121146188"
+          ]
+        },
+        {
+          "operation": "set duplicate CLOEXEC",
+          "fd": 5,
+          "before": 1,
+          "requested": 1,
+          "observed": 1
+        }
+      ],
+      "errors": [],
+      "cleanup": {
+        "child_reaped": true,
+        "wait_grace_seconds": 1,
+        "parent_closed_fds": [
+          4,
+          5,
+          6
+        ],
+        "all_parent_owned_fds_closed": true,
+        "owned_target_unlinked": true,
+        "elapsed_seconds": 0.000277417000000002
+      },
+      "complete": true,
+      "child_pipe_utf8": "{\"fds\": {\"duplicate\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": true, \"fd\": 5, \"identity\": [\"16777232\", \"121146188\"], \"status\": \"target\"}, \"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 4, \"identity\": [\"16777232\", \"121146188\"], \"status\": \"target\"}}, \"phase\": \"child_after_fork\", \"pid\": 14514, \"ppid\": 14507, \"program\": \"atlas-fd-experiment-v1\", \"target_identity\": [\"16777232\", \"121146188\"]}\n{\"explicitly_closed_target_labels\": [\"original\"], \"fds\": {\"duplicate\": {\"errno\": 9, \"error_type\": \"OSError\", \"fd\": 5, \"status\": \"EBADF\"}, \"original\": {\"bytes_hex\": \"41544c41532d4644\", \"cloexec\": false, \"fd\": 4, \"identity\": [\"16777232\", \"121146188\"], \"status\": \"target\"}}, \"phase\": \"child_after_exec\", \"pid\": 14514, \"ppid\": 14507, \"program\": \"atlas-fd-probe-v1\", \"report_fd\": 7, \"target_identity\": [\"16777232\", \"121146188\"]}\n",
+      "partial_child_messages": [
+        {
+          "fds": {
+            "duplicate": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": true,
+              "fd": 5,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_fork",
+          "program": "atlas-fd-experiment-v1",
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ]
+        },
+        {
+          "explicitly_closed_target_labels": [
+            "original"
+          ],
+          "fds": {
+            "duplicate": {
+              "errno": 9,
+              "error_type": "OSError",
+              "fd": 5,
+              "status": "EBADF"
+            },
+            "original": {
+              "bytes_hex": "41544c41532d4644",
+              "cloexec": false,
+              "fd": 4,
+              "identity": [
+                "16777232",
+                "121146188"
+              ],
+              "status": "target"
+            }
+          },
+          "phase": "child_after_exec",
+          "program": "atlas-fd-probe-v1",
+          "report_fd": 7,
+          "target_identity": [
+            "16777232",
+            "121146188"
+          ]
+        }
+      ],
+      "payload_written_bytes": 8,
+      "target_identity": [
+        "16777232",
+        "121146188"
+      ],
+      "control_pipe": {
+        "read_fd": 6,
+        "write_fd": 7,
+        "write_inheritable": true,
+        "not_measured_target": true,
+        "parent_write_end_closed": true
+      },
+      "exec_call": {
+        "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "argv": [
+          "/Library/Developer/CommandLineTools/usr/bin/python3",
+          "-I",
+          "-S",
+          "-c",
+          "# Atlas: executed as a new Python image by os.execve, using -I -S -c.\nimport errno\nimport fcntl\nimport json\nimport os\nimport sys\n\nrequest = json.loads(sys.argv[1])\nrows = {}\nfor label, fd in request['fds'].items():\n    row = {'fd': fd}\n    try:\n        stat = os.fstat(fd)\n        identity = [str(stat.st_dev), str(stat.st_ino)]\n        row.update(identity=identity, cloexec=bool(fcntl.fcntl(fd, fcntl.F_GETFD) & fcntl.FD_CLOEXEC))\n        if identity == request['target_identity']:\n            row.update(status='target', bytes_hex=os.pread(fd, 8, 0).hex())\n        else:\n            row.update(status='different-target')\n    except OSError as ex:\n        row.update(status='EBADF' if ex.errno == errno.EBADF else 'os-error', errno=ex.errno, error_type=type(ex).__name__)\n    rows[label] = row\nclosed = []\nfor label, row in rows.items():\n    if row['status'] == 'target':\n        os.close(row['fd'])\n        closed.append(label)\nmessage = {'phase':'child_after_exec', 'program':'atlas-fd-probe-v1', 'pid':os.getpid(), 'ppid':os.getppid(),\n           'target_identity':request['target_identity'], 'fds':rows, 'explicitly_closed_target_labels':closed,\n           'report_fd':request['report_fd']}\ndata = (json.dumps(message, sort_keys=True) + '\\n').encode()\nwhile data:\n    amount = os.write(request['report_fd'], data)\n    data = data[amount:]\nos.close(request['report_fd'])\nos._exit(0)\n",
+          "{\"fds\": {\"duplicate\": 5, \"original\": 4}, \"report_fd\": 7, \"target_identity\": [\"16777232\", \"121146188\"]}"
+        ],
+        "environment": {
+          "PYTHONDONTWRITEBYTECODE": "1"
+        }
+      },
+      "fork_returned_child_pid": 14514,
+      "received_bytes": 841,
+      "wait": {
+        "raw_status": 0,
+        "exited": true,
+        "exit_code": 0,
+        "signaled": false
+      }
+    }
+  ],
+  "errors": [],
+  "collection_complete": true,
+  "cleanup": {
+    "temporary_directory_removed": true,
+    "temporary_directory_created": true
+  },
+  "limits": {
+    "max_concurrent_children": 1,
+    "child_timeout_seconds": 2,
+    "batch_timeout_seconds": 10,
+    "cleanup_wait_grace_seconds": 1,
+    "payload_bytes_per_case": 8
+  },
+  "max_concurrent_children_observed": 1,
+  "nice": 10,
+  "elapsed_seconds": 0.317402459,
+  "finished_at": "2026-10-06T12:55:18.878880+00:00"
+}

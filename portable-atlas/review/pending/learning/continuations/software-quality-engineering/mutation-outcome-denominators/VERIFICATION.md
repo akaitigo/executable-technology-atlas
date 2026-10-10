@@ -1,0 +1,9 @@
+# 検証と証拠
+
+hand-oracle.jsonの10report・canonical/故障の6metricとexact fractionは実装前に固定しました。oracle.pyはmodelをimportせず、手表と別のstatus→group対応からIDと分類を検証します。model.pyは入力から数え、canonicalと操作後集計を両方保存します。
+
+verify.pyは20例、18拒否、7種の集計mutantを照合します。未実行/無効のSurvived化、Timeoutの非検出化、全件分母、NoCoverageのcovered混入、0分母100%、runner実行偽称、ID二重加算を拒否します。実runner mutation testingではありません。
+
+attempt-01.jsonはCLI原票とsource hash、UTC、環境です。receiptはinitialを保存してからUI証拠とsourceを封印します。ブラウザは通常HTMLの実操作から20応答を読み、独立の固定表と分類・件数・ratioを照合します。browser-cases.jsonは観測一致後にCLI原票を転記templateとした圧縮投影で、ブラウザraw全文downloadではありません。ui-qa.jsonにreset/refusal/stale/source/transport/capture保存可否を記録します。
+
+sandboxのloopback bind拒否は元tool出力をchatに残し、module pathを置換した抜粋を保持します。自身の動的port/server/tabだけを終了し、既存3 listenerには操作しません。最後にverify/route/Skill/private-path検索の前後SHA256・mtime_ns不変をread-only-proofへ記録し、proofを最後に書きます。Core全体は未検証。

@@ -1,0 +1,20 @@
+[
+  {"id":"normal","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}},{"op":"call","tool":"add","args":{"a":4,"b":3}},{"op":"end"}]},
+  {"id":"tainted-result","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"tainted"}},{"op":"call","tool":"add","args":{"a":4,"b":3}},{"op":"end"}]},
+  {"id":"unknown-tool","budget":3,"plan":[{"op":"call","tool":"erase","args":{}},{"op":"end"}]},
+  {"id":"bool-arg","budget":3,"plan":[{"op":"call","tool":"add","args":{"a":true,"b":3}},{"op":"end"}]},
+  {"id":"missing-arg","budget":3,"plan":[{"op":"call","tool":"add","args":{"a":4}},{"op":"end"}]},
+  {"id":"extra-arg","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"counter","extra":1}},{"op":"end"}]},
+  {"id":"unknown-key","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"missing"}},{"op":"end"}]},
+  {"id":"loop","budget":16,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}},{"op":"jump","target":0}]},
+  {"id":"budget-tight","budget":2,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}},{"op":"call","tool":"add","args":{"a":4,"b":3}},{"op":"end"}]},
+  {"id":"budget-zero","budget":0,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}},{"op":"end"}]},
+  {"id":"end-alone","budget":3,"plan":[{"op":"end"}]},
+  {"id":"after-end","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}},{"op":"end"},{"op":"call","tool":"add","args":{"a":4,"b":3}}]},
+  {"id":"missing-end","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"counter"}}]},
+  {"id":"tool-error","budget":3,"plan":[{"op":"call","tool":"read","args":{"key":"fault"}},{"op":"end"}]},
+  {"id":"jump-outside","budget":3,"plan":[{"op":"jump","target":99}]},
+  {"id":"malformed-command","budget":3,"plan":["not-a-command"]},
+  {"id":"upper-bound","budget":2,"plan":[{"op":"call","tool":"add","args":{"a":100,"b":100}},{"op":"end"}]},
+  {"id":"lower-bound","budget":2,"plan":[{"op":"call","tool":"add","args":{"a":-100,"b":-100}},{"op":"end"}]}
+]

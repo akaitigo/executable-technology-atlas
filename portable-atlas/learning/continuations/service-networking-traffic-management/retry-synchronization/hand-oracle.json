@@ -1,0 +1,865 @@
+{
+  "schema": "atlas-retry-concentration-hand-v1",
+  "columns": {
+    "attempts": [
+      "client",
+      "ordinal",
+      "start",
+      "finish",
+      "accepted",
+      "outcome"
+    ],
+    "budget_denials": [
+      "tick",
+      "client"
+    ],
+    "ticks": [
+      "tick",
+      "candidates",
+      "started",
+      "accepted",
+      "budget_denied",
+      "calls_used",
+      "retries_used",
+      "effects"
+    ],
+    "clients": [
+      "client",
+      "attempts",
+      "retries_used",
+      "retries_remaining",
+      "status",
+      "completion_tick",
+      "terminal_tick",
+      "effects"
+    ]
+  },
+  "client_lists": "Each string lists ordered IDs; empty string means no clients.",
+  "cases": {
+    "synchronized": {
+      "attempts": [
+        [
+          "A",
+          1,
+          0,
+          1,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "B",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "B",
+          2,
+          2,
+          3,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "C",
+          2,
+          2,
+          3,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          2,
+          2,
+          3,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          3,
+          4,
+          5,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "D",
+          3,
+          4,
+          5,
+          false,
+          "OVERLOADED"
+        ]
+      ],
+      "budget_denials": [],
+      "ticks": [
+        [
+          0,
+          "ABCD",
+          "ABCD",
+          "A",
+          "",
+          4,
+          0,
+          0
+        ],
+        [
+          1,
+          "",
+          "",
+          "",
+          "",
+          4,
+          0,
+          1
+        ],
+        [
+          2,
+          "BCD",
+          "BCD",
+          "B",
+          "",
+          7,
+          3,
+          1
+        ],
+        [
+          3,
+          "",
+          "",
+          "",
+          "",
+          7,
+          3,
+          2
+        ],
+        [
+          4,
+          "CD",
+          "CD",
+          "C",
+          "",
+          9,
+          5,
+          2
+        ],
+        [
+          5,
+          "",
+          "",
+          "",
+          "",
+          9,
+          5,
+          3
+        ],
+        [
+          6,
+          "",
+          "",
+          "",
+          "",
+          9,
+          5,
+          3
+        ],
+        [
+          7,
+          "",
+          "",
+          "",
+          "",
+          9,
+          5,
+          3
+        ]
+      ],
+      "clients": [
+        [
+          "A",
+          1,
+          0,
+          2,
+          "SUCCEEDED",
+          1,
+          1,
+          1
+        ],
+        [
+          "B",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          3,
+          3,
+          1
+        ],
+        [
+          "C",
+          3,
+          2,
+          0,
+          "SUCCEEDED",
+          5,
+          5,
+          1
+        ],
+        [
+          "D",
+          3,
+          2,
+          0,
+          "RETRY_EXHAUSTED",
+          null,
+          5,
+          0
+        ]
+      ],
+      "summary": {
+        "calls": 9,
+        "retries": 5,
+        "effects": 3,
+        "duplicate_effects": 0,
+        "succeeded": 3,
+        "not_succeeded": 1,
+        "unfinished": 0,
+        "retry_exhausted": 1,
+        "call_budget": 0,
+        "budget_remaining": 3,
+        "peak_all_starts": 4,
+        "peak_retry_starts": 3,
+        "last_terminal_tick": 5
+      }
+    },
+    "staggered": {
+      "attempts": [
+        [
+          "A",
+          1,
+          0,
+          1,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "B",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "B",
+          2,
+          2,
+          3,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "C",
+          2,
+          3,
+          4,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "D",
+          2,
+          4,
+          5,
+          true,
+          "SUCCESS"
+        ]
+      ],
+      "budget_denials": [],
+      "ticks": [
+        [
+          0,
+          "ABCD",
+          "ABCD",
+          "A",
+          "",
+          4,
+          0,
+          0
+        ],
+        [
+          1,
+          "",
+          "",
+          "",
+          "",
+          4,
+          0,
+          1
+        ],
+        [
+          2,
+          "B",
+          "B",
+          "B",
+          "",
+          5,
+          1,
+          1
+        ],
+        [
+          3,
+          "C",
+          "C",
+          "C",
+          "",
+          6,
+          2,
+          2
+        ],
+        [
+          4,
+          "D",
+          "D",
+          "D",
+          "",
+          7,
+          3,
+          3
+        ],
+        [
+          5,
+          "",
+          "",
+          "",
+          "",
+          7,
+          3,
+          4
+        ],
+        [
+          6,
+          "",
+          "",
+          "",
+          "",
+          7,
+          3,
+          4
+        ],
+        [
+          7,
+          "",
+          "",
+          "",
+          "",
+          7,
+          3,
+          4
+        ]
+      ],
+      "clients": [
+        [
+          "A",
+          1,
+          0,
+          2,
+          "SUCCEEDED",
+          1,
+          1,
+          1
+        ],
+        [
+          "B",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          3,
+          3,
+          1
+        ],
+        [
+          "C",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          4,
+          4,
+          1
+        ],
+        [
+          "D",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          5,
+          5,
+          1
+        ]
+      ],
+      "summary": {
+        "calls": 7,
+        "retries": 3,
+        "effects": 4,
+        "duplicate_effects": 0,
+        "succeeded": 4,
+        "not_succeeded": 0,
+        "unfinished": 0,
+        "retry_exhausted": 0,
+        "call_budget": 0,
+        "budget_remaining": 5,
+        "peak_all_starts": 4,
+        "peak_retry_starts": 1,
+        "last_terminal_tick": 5
+      }
+    },
+    "skewed": {
+      "attempts": [
+        [
+          "A",
+          1,
+          0,
+          1,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "B",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "B",
+          2,
+          2,
+          3,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "C",
+          2,
+          2,
+          3,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          2,
+          2,
+          3,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          3,
+          4,
+          5,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "D",
+          3,
+          6,
+          7,
+          true,
+          "SUCCESS"
+        ]
+      ],
+      "budget_denials": [],
+      "ticks": [
+        [
+          0,
+          "ABCD",
+          "ABCD",
+          "A",
+          "",
+          4,
+          0,
+          0
+        ],
+        [
+          1,
+          "",
+          "",
+          "",
+          "",
+          4,
+          0,
+          1
+        ],
+        [
+          2,
+          "BCD",
+          "BCD",
+          "B",
+          "",
+          7,
+          3,
+          1
+        ],
+        [
+          3,
+          "",
+          "",
+          "",
+          "",
+          7,
+          3,
+          2
+        ],
+        [
+          4,
+          "C",
+          "C",
+          "C",
+          "",
+          8,
+          4,
+          2
+        ],
+        [
+          5,
+          "",
+          "",
+          "",
+          "",
+          8,
+          4,
+          3
+        ],
+        [
+          6,
+          "D",
+          "D",
+          "D",
+          "",
+          9,
+          5,
+          3
+        ],
+        [
+          7,
+          "",
+          "",
+          "",
+          "",
+          9,
+          5,
+          4
+        ]
+      ],
+      "clients": [
+        [
+          "A",
+          1,
+          0,
+          2,
+          "SUCCEEDED",
+          1,
+          1,
+          1
+        ],
+        [
+          "B",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          3,
+          3,
+          1
+        ],
+        [
+          "C",
+          3,
+          2,
+          0,
+          "SUCCEEDED",
+          5,
+          5,
+          1
+        ],
+        [
+          "D",
+          3,
+          2,
+          0,
+          "SUCCEEDED",
+          7,
+          7,
+          1
+        ]
+      ],
+      "summary": {
+        "calls": 9,
+        "retries": 5,
+        "effects": 4,
+        "duplicate_effects": 0,
+        "succeeded": 4,
+        "not_succeeded": 0,
+        "unfinished": 0,
+        "retry_exhausted": 0,
+        "call_budget": 0,
+        "budget_remaining": 3,
+        "peak_all_starts": 4,
+        "peak_retry_starts": 3,
+        "last_terminal_tick": 7
+      }
+    },
+    "budget-five": {
+      "attempts": [
+        [
+          "A",
+          1,
+          0,
+          1,
+          true,
+          "SUCCESS"
+        ],
+        [
+          "B",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "C",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "D",
+          1,
+          0,
+          1,
+          false,
+          "OVERLOADED"
+        ],
+        [
+          "B",
+          2,
+          2,
+          3,
+          true,
+          "SUCCESS"
+        ]
+      ],
+      "budget_denials": [
+        [
+          2,
+          "C"
+        ],
+        [
+          2,
+          "D"
+        ]
+      ],
+      "ticks": [
+        [
+          0,
+          "ABCD",
+          "ABCD",
+          "A",
+          "",
+          4,
+          0,
+          0
+        ],
+        [
+          1,
+          "",
+          "",
+          "",
+          "",
+          4,
+          0,
+          1
+        ],
+        [
+          2,
+          "BCD",
+          "B",
+          "B",
+          "CD",
+          5,
+          1,
+          1
+        ],
+        [
+          3,
+          "",
+          "",
+          "",
+          "",
+          5,
+          1,
+          2
+        ],
+        [
+          4,
+          "",
+          "",
+          "",
+          "",
+          5,
+          1,
+          2
+        ],
+        [
+          5,
+          "",
+          "",
+          "",
+          "",
+          5,
+          1,
+          2
+        ],
+        [
+          6,
+          "",
+          "",
+          "",
+          "",
+          5,
+          1,
+          2
+        ],
+        [
+          7,
+          "",
+          "",
+          "",
+          "",
+          5,
+          1,
+          2
+        ]
+      ],
+      "clients": [
+        [
+          "A",
+          1,
+          0,
+          2,
+          "SUCCEEDED",
+          1,
+          1,
+          1
+        ],
+        [
+          "B",
+          2,
+          1,
+          1,
+          "SUCCEEDED",
+          3,
+          3,
+          1
+        ],
+        [
+          "C",
+          1,
+          0,
+          2,
+          "CALL_BUDGET",
+          null,
+          2,
+          0
+        ],
+        [
+          "D",
+          1,
+          0,
+          2,
+          "CALL_BUDGET",
+          null,
+          2,
+          0
+        ]
+      ],
+      "summary": {
+        "calls": 5,
+        "retries": 1,
+        "effects": 2,
+        "duplicate_effects": 0,
+        "succeeded": 2,
+        "not_succeeded": 2,
+        "unfinished": 0,
+        "retry_exhausted": 0,
+        "call_budget": 2,
+        "budget_remaining": 0,
+        "peak_all_starts": 4,
+        "peak_retry_starts": 1,
+        "last_terminal_tick": 3
+      }
+    }
+  }
+}

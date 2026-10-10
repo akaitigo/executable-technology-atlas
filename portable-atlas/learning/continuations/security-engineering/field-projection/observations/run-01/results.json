@@ -1,0 +1,2211 @@
+{
+  "Atlas": "架空レコードのfield開示を比較したPython実行結果",
+  "executionStatus": "executed",
+  "startedAt": "2026-10-06T14:26:52.024084+00:00",
+  "finishedAt": "2026-10-06T14:26:52.027121+00:00",
+  "elapsedSeconds": 0.003037,
+  "nice": 10,
+  "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+  "platform": "macOS-26.1-arm64-arm-64bit",
+  "physicalExperiment": false,
+  "realAuthentication": false,
+  "httpHandlerStarted": false,
+  "caseCount": 40,
+  "inputs": {
+    "CONTRACT.md": "8d446916c1ea869770aebd033c3b30004a0e89b30615e2fc08c14d5e5baa34c5",
+    "CONTRACT-ADDENDUM.md": "f044e1f20876b092a3188c426034ec6b0829b49e53c8a79db3b47bd5ff448e05",
+    "fixture.json": "40abbe90137c5db031b583a9a2156e926c849101b662d7fed7f73fdae58227f5",
+    "expected.json": "ebbff2c36f3f25c4470c7bfe3ab33c9c02d8d3c0d1fac77622c51314cc5e4f2e",
+    "expected-addendum.json": "32f9e554b757b23012ba1295562cb44d45a6716e39b8e2605cc8f0d6144218d9",
+    "handler.py": "1eee54c66020719512a28c87d27a85bfa3d0248a4c43464a598c2bd205413d87",
+    "cases.py": "49c7d9ac65bc1932634ea47967613cb6c1b211d73c326738f98152846277ffea",
+    "run.py": "85afe535f913d49f40b80c480cd5daed5a15c497333d2f747c9b543afc01c498",
+    "verify.py": "4e4149a5033b1fea892e4f4a67cb584bdc4b6041e4f6530292dfc79c82224184"
+  },
+  "cases": [
+    {
+      "id": "viewer/red-report",
+      "group": "object",
+      "label": "viewer / red-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/red-archive",
+      "group": "object",
+      "label": "viewer / red-archive / 指定省略",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-archive",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/blue-report",
+      "group": "object",
+      "label": "viewer / blue-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "blue-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/red-report",
+      "group": "object",
+      "label": "operator / red-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/red-archive",
+      "group": "object",
+      "label": "operator / red-archive / 指定省略",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-archive",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/blue-report",
+      "group": "object",
+      "label": "operator / blue-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "blue-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/red-report",
+      "group": "object",
+      "label": "auditor / red-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "internal_note": "架空の内部メモ:red-report"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/red-archive",
+      "group": "object",
+      "label": "auditor / red-archive / 指定省略",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-archive",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "no-grant",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/blue-report",
+      "group": "object",
+      "label": "auditor / blue-report / 指定省略",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "blue-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "tenant-mismatch",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/id",
+      "group": "field",
+      "label": "viewer / idだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/title",
+      "group": "field",
+      "label": "viewer / titleだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "title"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "title": "赤チームの報告"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/status",
+      "group": "field",
+      "label": "viewer / statusだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "status"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "status": "open"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/contact_email",
+      "group": "field",
+      "label": "viewer / contact_emailだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "contact_email"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/internal_note",
+      "group": "field",
+      "label": "viewer / internal_noteだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "internal_note"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "viewer/field/tenant_id",
+      "group": "field",
+      "label": "viewer / tenant_idだけ要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "tenant_id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/id",
+      "group": "field",
+      "label": "operator / idだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/title",
+      "group": "field",
+      "label": "operator / titleだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "title"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "title": "赤チームの報告"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/status",
+      "group": "field",
+      "label": "operator / statusだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "status"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "status": "open"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/contact_email",
+      "group": "field",
+      "label": "operator / contact_emailだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "contact_email"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "contact_email": "red-report@example.invalid"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/internal_note",
+      "group": "field",
+      "label": "operator / internal_noteだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "internal_note"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "operator/field/tenant_id",
+      "group": "field",
+      "label": "operator / tenant_idだけ要求",
+      "context": {
+        "actor_id": "synthetic-operator",
+        "role": "operator",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "tenant_id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/id",
+      "group": "field",
+      "label": "auditor / idだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/title",
+      "group": "field",
+      "label": "auditor / titleだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "title"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "title": "赤チームの報告"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/status",
+      "group": "field",
+      "label": "auditor / statusだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "status"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "status": "open"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/contact_email",
+      "group": "field",
+      "label": "auditor / contact_emailだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "contact_email"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/internal_note",
+      "group": "field",
+      "label": "auditor / internal_noteだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "internal_note"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "internal_note": "架空の内部メモ:red-report"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "auditor/field/tenant_id",
+      "group": "field",
+      "label": "auditor / tenant_idだけ要求",
+      "context": {
+        "actor_id": "synthetic-auditor",
+        "role": "auditor",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "tenant_id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "unknown-role",
+      "group": "boundary",
+      "label": "信頼済みcontextの不明role",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "unknown",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "role-override",
+      "group": "boundary",
+      "label": "利用者入力でroleを追加",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "role": "auditor"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "unknown-field",
+      "group": "boundary",
+      "label": "存在しない項目を要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "not_a_field"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "tenant-override",
+      "group": "boundary",
+      "label": "利用者入力でtenantを追加",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "tenant_id": "tenant-blue"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "fields-string",
+      "group": "boundary",
+      "label": "項目一覧を文字列で送る",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": "id"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "empty-fields",
+      "group": "boundary",
+      "label": "空の項目一覧",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": []
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "duplicate-fields",
+      "group": "boundary",
+      "label": "同じ項目を重複要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "id",
+          "id"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "unknown-object",
+      "group": "boundary",
+      "label": "存在しないレコード",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "missing",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 404,
+          "reason": "not-found",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 404,
+          "reason": "not-found",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "write-operation",
+      "group": "boundary",
+      "label": "未対応の書込操作",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "write"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 403,
+          "reason": "unsupported-operation",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "unsupported-operation",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "missing-object",
+      "group": "boundary",
+      "label": "object_idを省略",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 400,
+          "reason": "invalid-request",
+          "payload": null
+        },
+        "trace": [
+          "request-schema"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "no-context",
+      "group": "boundary",
+      "label": "上流contextなし",
+      "context": null,
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 401,
+          "reason": "untrusted-context",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "mixed-forbidden",
+      "group": "boundary",
+      "label": "許可idと禁止internal_noteを同時要求",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read",
+        "fields": [
+          "id",
+          "internal_note"
+        ]
+      },
+      "storeVariant": null,
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 403,
+          "reason": "field-forbidden",
+          "payload": null
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist"
+        ]
+      },
+      "inputsUnchanged": true
+    },
+    {
+      "id": "future-field",
+      "group": "future",
+      "label": "storeに将来の内部項目を追加",
+      "context": {
+        "actor_id": "synthetic-viewer",
+        "role": "viewer",
+        "tenant_id": "tenant-red",
+        "read_grants": [
+          "red-report"
+        ]
+      },
+      "request": {
+        "object_id": "red-report",
+        "operation": "read"
+      },
+      "storeVariant": {
+        "future_internal": "架空の将来追加項目"
+      },
+      "object_only": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open",
+            "contact_email": "red-report@example.invalid",
+            "internal_note": "架空の内部メモ:red-report",
+            "tenant_id": "tenant-red",
+            "future_internal": "架空の将来追加項目"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "copy-all-fields"
+        ]
+      },
+      "projected": {
+        "response": {
+          "status": 200,
+          "reason": "ok",
+          "payload": {
+            "id": "red-report",
+            "title": "赤チームの報告",
+            "status": "open"
+          }
+        },
+        "trace": [
+          "request-schema",
+          "trusted-context-shape",
+          "operation",
+          "object-lookup",
+          "tenant",
+          "read-grant",
+          "field-allowlist",
+          "build-selected-response"
+        ]
+      },
+      "inputsUnchanged": true
+    }
+  ]
+}

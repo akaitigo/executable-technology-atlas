@@ -1,0 +1,1 @@
+export const SOURCES=['cases.json','binary.mjs','oracle.mjs','experiment.mjs','verify.mjs','check.mjs','sources.mjs','serve.mjs','index.html','styles.css','lesson.mjs','scope.json','skills/atlas-webassembly-wasi/SKILL.md'];

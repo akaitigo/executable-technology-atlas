@@ -1,0 +1,21 @@
+{
+  "subject_status":"部分教材: 固定numeric modelのschema/version推論1単位",
+  "implemented":["手で固定したJSON線形model artifact","model/schema version・feature順序・数値域の拒否","naive順序無視のsilent wrong反例","入力/出力の記述統計","model/input/source/artifact digest"],
+  "areas":[
+    {"area":"データ取得・管理","status":"未教材","concepts":["batch/stream取得","lineage","dataset version","品質とラベル"],"question":"同じ実験に使ったデータをどう特定し再取得するか？","source":"lifecycle"},
+    {"area":"featureとschema","status":"部分教材","concepts":["型・名前・順序・単位","欠損処理","変換fit/transform","train/serve skew","data leakage"],"question":"モデルへの入力の意味を学習時と推論時で一致させられるか？","source":"features"},
+    {"area":"学習・実験再現","status":"未教材","concepts":["split","seedと非決定性","hyperparameter","experiment tracking","checkpoint"],"question":"同じデータ・codeでもモデルが変わる原因を切り分けられるか？","source":"lifecycle"},
+    {"area":"評価と承認","status":"未教材","concepts":["holdout","slice別評価","calibration","baseline","評価gate"],"question":"全体指標が良くても特定集団で悪くないか？","source":"lifecycle"},
+    {"area":"artifact・registry","status":"部分教材","concepts":["format/version","依存環境","registry","署名・信頼","promotion"],"question":"hash一致と安全・互換・承認済みは何が違うか？","source":"artifact"},
+    {"area":"推論serving","status":"部分教材","concepts":["batch/online","serialization","latency/throughput","concurrency","cache"],"question":"入力拒否とmodel障害を分け、負荷の下で同じ意味を保てるか？","source":"lifecycle"},
+    {"area":"観測・shift・再学習","status":"部分教材","concepts":["入力統計","drift/skew","ラベル遅延","concept drift","再学習trigger"],"question":"入力平均の差だけから予測精度低下や再学習の必要を結論できるか？","source":"data-validation"},
+    {"area":"配信・運用・復旧","status":"未教材","concepts":["CI/CD/CT","canary/shadow","rollback","SLO","監査"],"question":"新modelに問題があればデータとschemaも含めて戻せるか？","source":"lifecycle"},
+    {"area":"信頼境界・privacy・資源","status":"未教材","concepts":["artifact trust","入力保護","アクセス制御","PII","resource/cost"],"question":"読み込むartifactと推論記録を誰が信頼・参照できるか？","source":"artifact"}
+  ],
+  "next_experiments":[
+    {"id":"preprocessing","question":"変換のfit範囲が変わると同じ入力の意味は変わるか？","experiment":"固定train splitだけで平均をfitし、testを含む誤ったfitと比較。変換artifactもhashで結合する。","source":"features"},
+    {"id":"evaluation","question":"versionを通過する新modelでも品質が悪くなるか？","experiment":"小さな合成holdoutとslice別誤差を用い、model候補2つの評価gateを独立手計算と比較する。","source":"lifecycle"},
+    {"id":"monitoring","question":"平均差で見えない分布の変化はあるか？","experiment":"同平均・異分散の固定batchを加え、histogramとschema違反を別表示。検出閾値のfalse alarmも列挙する。","source":"data-validation"},
+    {"id":"rollback","question":"modelだけ戻してschemaが残ると何が起こるか？","experiment":"model/schema/変換の組を2version用意し、atomic切替と部分切替・rollbackをローカル状態機械で比較する。","source":"artifact"}
+  ]
+}

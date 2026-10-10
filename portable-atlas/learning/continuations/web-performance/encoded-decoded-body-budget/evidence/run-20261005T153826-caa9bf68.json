@@ -1,0 +1,691 @@
+{
+  "utc": "2026-10-05T15:38:26.220438+00:00",
+  "port": 55790,
+  "source_sha256": {
+    "fixture.json": "b2e2912bd6142ad0ade2d2f133dfe306b0fee0a11591b669cc98681c04f35add",
+    "oracle.json": "f41d04723e75a2cfa7e500f9f585080b92c058d177cae2ae2e90357ae064b095",
+    "EXPECTATIONS.md": "0878ae3e1b573bada212683fc2a4fa39df7870ced04d41a7000106cb8f5d0bc6",
+    "producer.py": "9e75f1d9a755d7bb4be4c6369cea7066ef9ac2a46ab2150c8e7f12b71924dae1",
+    "runner.py": "fdf6473b6567bb4601c0835364badac807f07dc969090d9373ee9b57f68b3a6f",
+    "server.py": "bae139887822b4150516bd2dde80d437db418990cee2de3fecc62b0a6a741cb3",
+    "index.html": "6dee3090c54407ef087837f5046135a0955c45b37592853f9f079c3f8c0caf38",
+    "ui.js": "c06ece7fd5f1d7ed6cf3e6c6142d41a2048ceb574e6626253791fa79192f7a93"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "plain8",
+        "label": "plain / encoded budget8",
+        "encoding": "plain",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip8",
+        "label": "gzip / encoded budget8",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip-decoded-fault",
+        "label": "故障: decoded3をencoded budget8へ流用",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip23",
+        "label": "gzip23受入境界",
+        "encoding": "gzip",
+        "budget": 23,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip22",
+        "label": "gzip22拒否境界",
+        "encoding": "gzip",
+        "budget": 22,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "plain3",
+        "label": "plain3受入境界",
+        "encoding": "plain",
+        "budget": 3,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "plain2",
+        "label": "plain2拒否境界",
+        "encoding": "plain",
+        "budget": 2,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "gzip-decoded3",
+        "label": "故障: decoded budget3でgzip誤受入",
+        "encoding": "gzip",
+        "budget": 3,
+        "policy": "decoded-fault",
+        "variant": "normal"
+      },
+      {
+        "id": "budget0",
+        "label": "budget0 / plain拒否",
+        "encoding": "plain",
+        "budget": 0,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-negative",
+        "label": "負budget入力拒否",
+        "encoding": "plain",
+        "budget": -1,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-bool",
+        "label": "bool budget入力拒否",
+        "encoding": "plain",
+        "budget": true,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "budget-large",
+        "label": "budget24は契約外",
+        "encoding": "gzip",
+        "budget": 24,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "encoding-unknown",
+        "label": "brは未対応",
+        "encoding": "br",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "normal"
+      },
+      {
+        "id": "policy-unknown",
+        "label": "未知policy拒否",
+        "encoding": "plain",
+        "budget": 8,
+        "policy": "unknown",
+        "variant": "normal"
+      },
+      {
+        "id": "timing-missing",
+        "label": "注入: timing lookup欠測 / unsupported",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "timing-missing"
+      },
+      {
+        "id": "http-failure",
+        "label": "実HTTP500 / 正常答えなし",
+        "encoding": "gzip",
+        "budget": 8,
+        "policy": "encoded",
+        "variant": "http-failure"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "case": "plain8",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain8",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:24.643583+00:00",
+      "ended_utc": "2026-10-05T15:38:24.739567+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain8\",\n    \"input\": {\n      \"id\": \"plain8\",\n      \"label\": \"plain / encoded budget8\",\n      \"encoding\": \"plain\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip8",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip8",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:24.739613+00:00",
+      "ended_utc": "2026-10-05T15:38:24.840502+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip8\",\n    \"input\": {\n      \"id\": \"gzip8\",\n      \"label\": \"gzip / encoded budget8\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip-decoded-fault",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip-decoded-fault",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:24.840572+00:00",
+      "ended_utc": "2026-10-05T15:38:24.948864+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip-decoded-fault\",\n    \"input\": {\n      \"id\": \"gzip-decoded-fault\",\n      \"label\": \"故障: decoded3をencoded budget8へ流用\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"decoded-fault\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip23",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip23",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:24.948917+00:00",
+      "ended_utc": "2026-10-05T15:38:25.047008+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip23\",\n    \"input\": {\n      \"id\": \"gzip23\",\n      \"label\": \"gzip23受入境界\",\n      \"encoding\": \"gzip\",\n      \"budget\": 23,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip22",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip22",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.047053+00:00",
+      "ended_utc": "2026-10-05T15:38:25.145337+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip22\",\n    \"input\": {\n      \"id\": \"gzip22\",\n      \"label\": \"gzip22拒否境界\",\n      \"encoding\": \"gzip\",\n      \"budget\": 22,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "plain3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain3",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.145389+00:00",
+      "ended_utc": "2026-10-05T15:38:25.240684+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain3\",\n    \"input\": {\n      \"id\": \"plain3\",\n      \"label\": \"plain3受入境界\",\n      \"encoding\": \"plain\",\n      \"budget\": 3,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "plain2",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "plain2",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.240732+00:00",
+      "ended_utc": "2026-10-05T15:38:25.342424+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"plain2\",\n    \"input\": {\n      \"id\": \"plain2\",\n      \"label\": \"plain2拒否境界\",\n      \"encoding\": \"plain\",\n      \"budget\": 2,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "gzip-decoded3",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "gzip-decoded3",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.342493+00:00",
+      "ended_utc": "2026-10-05T15:38:25.442002+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"gzip-decoded3\",\n    \"input\": {\n      \"id\": \"gzip-decoded3\",\n      \"label\": \"故障: decoded budget3でgzip誤受入\",\n      \"encoding\": \"gzip\",\n      \"budget\": 3,\n      \"policy\": \"decoded-fault\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget0",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget0",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.442048+00:00",
+      "ended_utc": "2026-10-05T15:38:25.537630+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget0\",\n    \"input\": {\n      \"id\": \"budget0\",\n      \"label\": \"budget0 / plain拒否\",\n      \"encoding\": \"plain\",\n      \"budget\": 0,\n      \"policy\": \"encoded\",\n      \"variant\": \"normal\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-negative",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-negative",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.537680+00:00",
+      "ended_utc": "2026-10-05T15:38:25.630100+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-negative\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-bool",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-bool",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.630151+00:00",
+      "ended_utc": "2026-10-05T15:38:25.722524+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-bool\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "budget-large",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "budget-large",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.722572+00:00",
+      "ended_utc": "2026-10-05T15:38:25.818805+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"budget-large\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"BUDGET\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "encoding-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "encoding-unknown",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.818904+00:00",
+      "ended_utc": "2026-10-05T15:38:25.927782+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"encoding-unknown\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"ENCODING\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "policy-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "policy-unknown",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:25.927833+00:00",
+      "ended_utc": "2026-10-05T15:38:26.019404+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"policy-unknown\",\n    \"input\": null,\n    \"status\": \"INPUT_REFUSED\",\n    \"reason\": \"POLICY\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "timing-missing",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "timing-missing",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:26.019453+00:00",
+      "ended_utc": "2026-10-05T15:38:26.122560+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"timing-missing\",\n    \"input\": {\n      \"id\": \"timing-missing\",\n      \"label\": \"注入: timing lookup欠測 / unsupported\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"timing-missing\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "http-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "http-failure",
+        "--port",
+        "55790"
+      ],
+      "started_utc": "2026-10-05T15:38:26.122624+00:00",
+      "ended_utc": "2026-10-05T15:38:26.220364+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"result\": {\n    \"case\": \"http-failure\",\n    \"input\": {\n      \"id\": \"http-failure\",\n      \"label\": \"実HTTP500 / 正常答えなし\",\n      \"encoding\": \"gzip\",\n      \"budget\": 8,\n      \"policy\": \"encoded\",\n      \"variant\": \"http-failure\"\n    },\n    \"status\": \"EXECUTION_FAILURE\",\n    \"reason\": \"PermissionError: [Errno 1] Operation not permitted\",\n    \"measurement\": null,\n    \"used\": null,\n    \"accepted\": null\n  },\n  \"wire\": null\n}\n",
+      "stderr": ""
+    }
+  ],
+  "cases": [
+    {
+      "result": {
+        "case": "plain8",
+        "input": {
+          "id": "plain8",
+          "label": "plain / encoded budget8",
+          "encoding": "plain",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "gzip8",
+        "input": {
+          "id": "gzip8",
+          "label": "gzip / encoded budget8",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "gzip-decoded-fault",
+        "input": {
+          "id": "gzip-decoded-fault",
+          "label": "故障: decoded3をencoded budget8へ流用",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "decoded-fault",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "gzip23",
+        "input": {
+          "id": "gzip23",
+          "label": "gzip23受入境界",
+          "encoding": "gzip",
+          "budget": 23,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "gzip22",
+        "input": {
+          "id": "gzip22",
+          "label": "gzip22拒否境界",
+          "encoding": "gzip",
+          "budget": 22,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "plain3",
+        "input": {
+          "id": "plain3",
+          "label": "plain3受入境界",
+          "encoding": "plain",
+          "budget": 3,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "plain2",
+        "input": {
+          "id": "plain2",
+          "label": "plain2拒否境界",
+          "encoding": "plain",
+          "budget": 2,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "gzip-decoded3",
+        "input": {
+          "id": "gzip-decoded3",
+          "label": "故障: decoded budget3でgzip誤受入",
+          "encoding": "gzip",
+          "budget": 3,
+          "policy": "decoded-fault",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget0",
+        "input": {
+          "id": "budget0",
+          "label": "budget0 / plain拒否",
+          "encoding": "plain",
+          "budget": 0,
+          "policy": "encoded",
+          "variant": "normal"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget-negative",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget-bool",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "budget-large",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "BUDGET",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "encoding-unknown",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "ENCODING",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "policy-unknown",
+        "input": null,
+        "status": "INPUT_REFUSED",
+        "reason": "POLICY",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "timing-missing",
+        "input": {
+          "id": "timing-missing",
+          "label": "注入: timing lookup欠測 / unsupported",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "timing-missing"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    },
+    {
+      "result": {
+        "case": "http-failure",
+        "input": {
+          "id": "http-failure",
+          "label": "実HTTP500 / 正常答えなし",
+          "encoding": "gzip",
+          "budget": 8,
+          "policy": "encoded",
+          "variant": "http-failure"
+        },
+        "status": "EXECUTION_FAILURE",
+        "reason": "PermissionError: [Errno 1] Operation not permitted",
+        "measurement": null,
+        "used": null,
+        "accepted": null
+      },
+      "wire": null
+    }
+  ]
+}

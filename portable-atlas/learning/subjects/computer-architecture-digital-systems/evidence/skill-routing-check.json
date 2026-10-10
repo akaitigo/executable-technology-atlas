@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "classification": "lightweight-main-agent-routing-check-not-independent-forward-eval",
+  "skill": "atlas-computer-architecture-digital-systems",
+  "skill_digest": "sha256:b429f9f551476e31fedc3d211d27baddb699fe50c916e4202c4801df3835ab61",
+  "recorded_at": "2026-10-05T05:54:14.630Z",
+  "routes": [
+    {
+      "query": "4行に2blockしかないのに0→16→0→16でmissする理由を実装とrawで確認。原票は変えない。",
+      "result": "passed",
+      "applied_route": ["README.md", "COVERAGE.md", "evidence/run.json", "evidence/stdout.json", "cache.py", "index.html"],
+      "actual_command": "python3 -B check.py --input-json '{\"capacity_bytes\":16,\"line_bytes\":4,\"address_bits\":8,\"addresses\":[0,16,0,16]}'",
+      "command_exit_code": 0,
+      "observed": "正常はblock0/tag0とblock4/tag1がindex0で交代し、0hit/4miss/3eviction。rawでは3空行を保持。tag省略版は3hit/1missだが誤byte2。論理modelで実CPU/cycle実測ではない。checkerからの原票更新なし。"
+    },
+    {
+      "query": "この教材でMac実CPUのcache cycleとwrite-back coherenceを測定してほしい。",
+      "result": "passed",
+      "applied_route": ["COVERAGE.md", "skills/atlas-computer-architecture-digital-systems/SKILL.md", "README.md"],
+      "response": "read-only論理cacheでは実CPU構成・cycle・write-back/coherenceは未実装/未実証。保存時刻はcycle値でなくprovenance。未教材のwrite実験/ordering実験候補を区別して示し、今回の有限Scopeでは新依存・設定・権限・実機測定へ拡張しない。",
+      "runtime_commands": [],
+      "evidence_updated": false
+    }
+  ],
+  "limits": "主担当によるSkill適用確認のみ。独立Agent Forward Evalや全Subject routingの完成ではない。"
+}

@@ -1,0 +1,22 @@
+'use strict';
+const data=window.CDC_OBSERVATION;
+const $=id=>document.getElementById(id);
+const descriptions={
+'coupled':['正常 · source/event 同一 commit','+7, -2 の変更と event を同じ transaction で保存。source と sink は 5、offset は2。'],
+'separate-source-only':['異常 · source だけ commit','source commit 後、event write 前で停止。source 7 でも outbox/sink は0。通知欠落は consumer の retry だけで修復できない。'],
+'separate-event-only':['異常 · event だけ commit','event commit 後、source write 前で停止。sink 7 に対応する source 変更がない。event 先行も安全ではない。'],
+'rollback':['境界 · 同一 transaction rollback','source/event を書いた後に ROLLBACK。どちらも保存されず、consumer は空集合で終了。'],
+'invalid-schema':['異常 · SQL CHECK 違反','schema_version=2 の INSERT が実 CHECK 違反。その後、明示 ROLLBACK で先行 source/event も取消。'],
+'replay-naive':['異常 · offset 保存前停止 / naive','effect commit後に exit70。saved offset は0、再起動で同じ seq を再読。effect 2行・sink 14。offset 1だけを見ても二重適用は分からない。'],
+'replay-idempotent':['回復 · offset 保存前停止 / 冪等','effect/inbox commit後に exit70。別PIDがoffset0から再読し、exact payload一致のIDを検出。追加effectなし、sink7。外部effectの保証には拡張できない。'],
+'empty':['境界 · event なし','起動時 highwater 0。rowなし・offset0のまま有限終了する。'],
+'zero-delta':['境界 · delta 0','残高は0でもevent/effect各1行。状態だけから変更記録の有無は判断できない。'],
+'consumer-invalid-schema':['異常 · consumer の schema 拒否','source/outbox はcommit済みだがpayload schema version2をconsumerが拒否。effectなし・offset0。停止/隔離/修復の方針が必要。']};
+for(const row of data.oracle.rows){const option=document.createElement('option');option.value=row.id;option.textContent=descriptions[row.id][0];$('scenario').append(option);}
+function selected(){return data.oracle.rows.find(x=>x.id===$('scenario').value);}
+function input(){const row=selected();$('result').hidden=true;$('pending').hidden=false;$('input').textContent=JSON.stringify(data.inputs[row.id],null,2);$('input-description').textContent=descriptions[row.id][0];$('answer').open=false;$('prediction').value='';}
+function timeline(){const id=selected().id;$('timeline').replaceChildren();for(const entry of data.timelines[id]){if(entry.kind==='sql'&&!$('sql-filter').checked)continue;const li=document.createElement('li');const title=document.createElement('b');title.textContent=`${entry.kind} · PID ${entry.pid}`;li.append(title);li.append(document.createTextNode(JSON.stringify(entry)));$('timeline').append(li);}}
+function compare(){const row=selected(),actual=row.actual;$('result').hidden=false;$('pending').hidden=true;$('metrics').replaceChildren();for(const [label,value] of [['source 残高',actual[1]],['outbox 行',actual[2]],['保存 offset',actual[3]],['sink 残高',actual[5]]]){const card=document.createElement('div');card.className='metric';const name=document.createElement('span');name.textContent=label;const number=document.createElement('strong');number.textContent=value;card.append(name,number);$('metrics').append(card);}
+const prediction=$('prediction').value;$('prediction-result').textContent=prediction===''?'予想未入力。実測を確認後、別の条件で予想してみましょう。':Number(prediction)===actual[5]?'予想と sink 残高が一致。次は event/effect 行と offset の根拠を確認。':`予想 ${prediction} と実測 ${actual[5]} が異なります。どの commit 境界が変わったか timeline で確認。`;
+$('oracle').textContent=`hand oracle: ${JSON.stringify(row.expected)}\nactual SQL:  ${JSON.stringify(actual)}`;$('verdict').textContent=row.matches_expected?'独立予想と実SQLが一致。意図異常の一致は、業務整合性の成功を意味しません。':'不一致：保存原票を確認してください。';$('rows').textContent=JSON.stringify(row.sql_state,null,2);$('answer-text').textContent=descriptions[row.id][1];$('artifact-links').replaceChildren();for(const [label,path] of [['input',`${row.id}/input.json`],['raw timeline',`${row.id}/timeline.jsonl`],['source.sqlite',`${row.id}/source.sqlite`],['consumer.sqlite',`${row.id}/consumer.sqlite`],['oracle report','oracle-report.json'],['run / environment / source digest','run.json'],['artifact digest','artifact-index.json'],['実行 command','commands.json']]){const a=document.createElement('a');a.href=`${data.directory}/${path}`;a.textContent=label;$('artifact-links').append(a,document.createTextNode(' · '));}timeline();}
+$('scenario').addEventListener('change',input);$('compare').addEventListener('click',compare);$('sql-filter').addEventListener('change',timeline);$('run').textContent=`Run ${data.run.execution_id} · ${data.run.started_at} → ${data.run.completed_at} · Python ${data.run.environment.python} / SQLite ${data.run.environment.sqlite} / ${data.run.environment.os} ${data.run.environment.os_release} ${data.run.environment.machine} / journal ${data.run.environment.journal_mode}`;input();

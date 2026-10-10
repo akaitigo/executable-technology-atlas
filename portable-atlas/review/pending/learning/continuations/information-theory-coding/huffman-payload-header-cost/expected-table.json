@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "id": "skew-short",
+      "label": "skew-short",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "overhead",
+        "hand_case": "skew-short"
+      }
+    },
+    {
+      "id": "skew-break-even",
+      "label": "skew-break-even",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAABBCDAAAABBCDAAAABBCDAAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "equal",
+        "hand_case": "skew-break-even"
+      }
+    },
+    {
+      "id": "skew-long",
+      "label": "skew-long",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAABBCDAAAABBCDAAAABBCDAAAABBCDAAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "saved",
+        "hand_case": "skew-long"
+      }
+    },
+    {
+      "id": "uniform",
+      "label": "uniform",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[1,1,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "overhead",
+        "hand_case": "uniform"
+      }
+    },
+    {
+      "id": "mismatch",
+      "label": "mismatch",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"CDCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "overhead",
+        "hand_case": "mismatch"
+      }
+    },
+    {
+      "id": "empty",
+      "label": "empty",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "calculated",
+        "category": "overhead",
+        "hand_case": "empty"
+      }
+    },
+    {
+      "id": "unknown",
+      "label": "unknown",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"E\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "message"
+      }
+    },
+    {
+      "id": "bool-weight",
+      "label": "bool-weight",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[true,2,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "weights"
+      }
+    },
+    {
+      "id": "zero-weight",
+      "label": "zero-weight",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[0,2,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "weights"
+      }
+    },
+    {
+      "id": "too-long",
+      "label": "too-long",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "message"
+      }
+    },
+    {
+      "id": "extra-field",
+      "label": "extra-field",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"canonical-lengths-2bit-plus-u8-count-v1\",\"path\":\"arbitrary\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "shape"
+      }
+    },
+    {
+      "id": "unsupported-header",
+      "label": "unsupported-header",
+      "input_json": "{\"alphabet\":[\"A\",\"B\",\"C\",\"D\"],\"weights\":[4,2,1,1],\"message\":\"AAAABBCD\",\"header_format\":\"gzip\"}",
+      "expected": {
+        "status": "input_refusal",
+        "code": "header"
+      }
+    }
+  ]
+}

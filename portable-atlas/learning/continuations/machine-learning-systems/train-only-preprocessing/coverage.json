@@ -1,0 +1,20 @@
+{
+ "subject_status":"ML第2単元: preprocessing/split/実fit-transform-1NNを追加した部分教材。第1単元のschema推論と接続、元moduleは変更しない。",
+ "implemented":["train-only母平均/分散/scale fit","heldout feature混入の意図異常","trainのみの1NNmodel fit/transform/predict","同query cohort不変/漏洩反例","ゼロ分散/tie/契約拒否/学習parameter digest"],
+ "areas":[
+  {"area":"データ取得・lineage","status":"有限固定splitのみ","concepts":["row ID","train/heldout disjoint","dataset version","labels","lineage"],"question":"feature/labelとfitに使った行を識別できるか？","source":"split"},
+  {"area":"feature・preprocessing","status":"今回追加","concepts":["fit/transform","population variance","zero variance","leakage","train/serve skew"],"question":"heldoutを変えてもtrain由来parameterが不変か？","source":"scaler"},
+  {"area":"学習・実験再現","status":"2D scaler/1NN fitのみ","concepts":["split","fit timestamp","memorized model","parameter artifact","seed"],"question":"どのsplitからparameterが作られたか追えるか？","source":"neighbors"},
+  {"area":"評価・承認","status":"未教材","concepts":["holdout labels","slice metrics","CV folds","calibration","quality gate"],"question":"parameterが正しくても予測品質が良いと言えるか？","source":"evaluation"},
+  {"area":"artifact・registry","status":"local JSON/digestのみ","concepts":["model/transform bundle","format/version","signature","promotion"],"question":"同一hashを安全/承認済みと混同していないか？","source":"lifecycle"},
+  {"area":"推論serving","status":"local関数のみ","concepts":["batch/online","latency/throughput","concurrency","cache"],"question":"このfit結果を配信して同じ変換を保持できるか？","source":"lifecycle"},
+  {"area":"観測・shift・再学習","status":"未教材（第1単元は記述統計）","concepts":["drift/skew","label delay","concept drift","retrain trigger"],"question":"cohort変化と品質低下を分けて判断できるか？","source":"lifecycle"},
+  {"area":"運用・復旧","status":"未教材","concepts":["CI/CD/CT","shadow/canary","rollback","SLO","audit"],"question":"modelと変換の組をどう戻すか？","source":"lifecycle"},
+  {"area":"信頼・privacy・資源","status":"未教材","concepts":["artifact trust","PII","permissions","cost","resource"],"question":"個人データや外部modelを扱う権限はどこで確認するか？","source":"lifecycle"}
+ ],
+ "next_experiments":[
+  {"id":"evaluation-gate","question":"変換が正しくてもslice品質が悪いmodelを拒否できるか？","experiment":"合成label付きholdoutと2候補の小評価gateを、独立confusion count/手計算で比較。統計的汎化の保証と分ける。","source":"evaluation"},
+  {"id":"fold-local-fit","question":"CVでもfoldごとにfit範囲を守れるか？","experiment":"固定2foldでfold-local scalerと全体fitを比較、行IDとFractionparameter oracleを保持する。","source":"split"},
+  {"id":"bundle-rollback","question":"modelだけ戻してtransformが残ったら何が変わるか？","experiment":"2つのmodel/schema/transform bundleでatomic切替と部分切替を有限状態機械にし、手計算query予測へ対応させる。","source":"lifecycle"}
+ ]
+}

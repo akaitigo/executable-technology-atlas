@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "finite_input": {
+    "exact_keys": [
+      "alphabet",
+      "weights",
+      "message",
+      "header_format"
+    ],
+    "alphabet": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "weights": "four positive integers 1..16; bool forbidden",
+    "message": "0..255 ABCD symbols only",
+    "header_format": "canonical-lengths-2bit-plus-u8-count-v1"
+  },
+  "tie": "(weight, minimum alphabet leaf index, creation id)",
+  "receiver": "codebook, payload bitstream, explicit count only; original is harness-only",
+  "shared": "alphabet/order and selected protocol out-of-band for both; weights never sent",
+  "headers": "fixed u8 count=8bits; Huffman u8 count + 4 two-bit (length-1) fields=16bits; no byte padding/container/framing counted",
+  "decoder_errors": "nonbinary, incomplete prefix, excess bits, wrong count, invalid book or length header refuse",
+  "boundaries": [
+    "synthetic bit protocol",
+    "single-symbol expected payload optimality only",
+    "no speed/capacity/physical channel/standard format claims"
+  ]
+}

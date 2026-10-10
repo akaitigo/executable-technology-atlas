@@ -1,0 +1,1747 @@
+{
+  "utc": "2026-10-05T15:00:10.435349+00:00",
+  "command": "python3 -B runner.py --record",
+  "source_sha256": {
+    "fixture.json": "488c7f631a579220e87e09ea0672ef78371c756ee6d9f5415b4d4f919cfad68f",
+    "oracle.json": "74cd980dd78f156dd9203f7d97158d9fb02a41d4ce8b76db0d10ffd5791e6980",
+    "EXPECTATIONS.md": "77c7bb7867bcd1904d8fc29c131823b36d2ee8f58a6979568eebbb6e063bfaf6",
+    "producer.py": "74cad0fbc5b72d9025b913f9097caba745ba299fb3046c8733e8ebbba3b165b2",
+    "runner.py": "9f2699ddb15af52ea34b2120ed3348597f02593df6ee5f3ca08023c122920419",
+    "server.py": "d885d9324f56de836baa43209016bac098f46493fe9e000f680b32503708f2d9",
+    "index.html": "22d1526d6906b84731b9b973ebc644cfa3de2bd05bab8e88f0d88992384d0367",
+    "ui.js": "0dd16bc68a9575a3adb97870e02306dacdeac72e84143f803b034161f54e53bd"
+  },
+  "fixture": {
+    "cases": [
+      {
+        "id": "initial",
+        "label": "A=2 / B=1 初期状態",
+        "mode": "scoped",
+        "events": [],
+        "variant": "normal"
+      },
+      {
+        "id": "rotate-b",
+        "label": "B回転 / 同owner保持",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "finish-b",
+        "label": "B終了 / owner除去",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "recreate-b",
+        "label": "B終了→新Bは0",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "process-death",
+        "label": "process death / 全in-memory消去",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "new-process-b",
+        "label": "death→新process模型→B作成",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          },
+          {
+            "op": "restart",
+            "target": null
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "rotate-a",
+        "label": "A回転 / Bは独立",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "A"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "rotate-b-twice",
+        "label": "B2回転 / view generation3",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "tap-b",
+        "label": "B増分 / Aは2のまま",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "tap",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "global-leak",
+        "label": "故障: 回転Bのglobal値をAへ漏らす",
+        "mode": "global-leak",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "dead-owner-reuse",
+        "label": "故障: 終了Bのownerを再利用",
+        "mode": "dead-owner-reuse",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "events-type",
+        "label": "event list型不正",
+        "mode": "scoped",
+        "events": {},
+        "variant": "normal"
+      },
+      {
+        "id": "event-fields",
+        "label": "event余分field拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B",
+            "extra": true
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "target-unknown",
+        "label": "owner Cは未対応",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "C"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "op-unknown",
+        "label": "未知op拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "background",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "create-existing",
+        "label": "既存Bのcreate拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "rotate-finished",
+        "label": "終了Bのrotate拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "restart-alive",
+        "label": "生きたprocessのrestart拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "restart",
+            "target": null
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "create-after-death",
+        "label": "death後create拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "too-many-events",
+        "label": "9eventは契約外",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "mode": "scoped",
+        "events": [],
+        "variant": "execution-failure"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "initial",
+      "input": {
+        "id": "initial",
+        "label": "A=2 / B=1 初期状態",
+        "mode": "scoped",
+        "events": [],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 0,
+        "event": null,
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 1,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "rotate-b",
+      "input": {
+        "id": "rotate-b",
+        "label": "B回転 / 同owner保持",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "rotate",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 2,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "rotate",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 2,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "finish-b",
+      "input": {
+        "id": "finish-b",
+        "label": "B終了 / owner除去",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "finish",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "finish",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "recreate-b",
+      "input": {
+        "id": "recreate-b",
+        "label": "B終了→新Bは0",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "finish",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            }
+          }
+        },
+        {
+          "step": 2,
+          "event": {
+            "op": "create",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:3",
+              "view_generation": 1,
+              "state": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 2,
+        "event": {
+          "op": "create",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:3",
+            "view_generation": 1,
+            "state": 0
+          }
+        }
+      }
+    },
+    {
+      "case": "process-death",
+      "input": {
+        "id": "process-death",
+        "label": "process death / 全in-memory消去",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "death",
+            "target": null
+          },
+          "process": 1,
+          "alive": false,
+          "owners": {}
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "death",
+          "target": null
+        },
+        "process": 1,
+        "alive": false,
+        "owners": {}
+      }
+    },
+    {
+      "case": "new-process-b",
+      "input": {
+        "id": "new-process-b",
+        "label": "death→新process模型→B作成",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          },
+          {
+            "op": "restart",
+            "target": null
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "death",
+            "target": null
+          },
+          "process": 1,
+          "alive": false,
+          "owners": {}
+        },
+        {
+          "step": 2,
+          "event": {
+            "op": "restart",
+            "target": null
+          },
+          "process": 2,
+          "alive": true,
+          "owners": {}
+        },
+        {
+          "step": 3,
+          "event": {
+            "op": "create",
+            "target": "B"
+          },
+          "process": 2,
+          "alive": true,
+          "owners": {
+            "B": {
+              "owner": "p2:B:1",
+              "view_generation": 1,
+              "state": 0
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 3,
+        "event": {
+          "op": "create",
+          "target": "B"
+        },
+        "process": 2,
+        "alive": true,
+        "owners": {
+          "B": {
+            "owner": "p2:B:1",
+            "view_generation": 1,
+            "state": 0
+          }
+        }
+      }
+    },
+    {
+      "case": "rotate-a",
+      "input": {
+        "id": "rotate-a",
+        "label": "A回転 / Bは独立",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "A"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "rotate",
+            "target": "A"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 2,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "rotate",
+          "target": "A"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 2,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 1,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "rotate-b-twice",
+      "input": {
+        "id": "rotate-b-twice",
+        "label": "B2回転 / view generation3",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "rotate",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 2,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 2,
+          "event": {
+            "op": "rotate",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 3,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 2,
+        "event": {
+          "op": "rotate",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 3,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "tap-b",
+      "input": {
+        "id": "tap-b",
+        "label": "B増分 / Aは2のまま",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "tap",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "NORMAL",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "tap",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 2
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "tap",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 1,
+            "state": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "global-leak",
+      "input": {
+        "id": "global-leak",
+        "label": "故障: 回転Bのglobal値をAへ漏らす",
+        "mode": "global-leak",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "FAULT_GLOBAL_LEAK",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "rotate",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 1
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 2,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 1,
+        "event": {
+          "op": "rotate",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 1
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 2,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "dead-owner-reuse",
+      "input": {
+        "id": "dead-owner-reuse",
+        "label": "故障: 終了Bのownerを再利用",
+        "mode": "dead-owner-reuse",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "FAULT_DEAD_REUSE",
+      "reason": "",
+      "timeline": [
+        {
+          "step": 0,
+          "event": null,
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 1,
+              "state": 1
+            }
+          }
+        },
+        {
+          "step": 1,
+          "event": {
+            "op": "finish",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            }
+          }
+        },
+        {
+          "step": 2,
+          "event": {
+            "op": "create",
+            "target": "B"
+          },
+          "process": 1,
+          "alive": true,
+          "owners": {
+            "A": {
+              "owner": "p1:A:1",
+              "view_generation": 1,
+              "state": 2
+            },
+            "B": {
+              "owner": "p1:B:2",
+              "view_generation": 2,
+              "state": 1
+            }
+          }
+        }
+      ],
+      "final": {
+        "step": 2,
+        "event": {
+          "op": "create",
+          "target": "B"
+        },
+        "process": 1,
+        "alive": true,
+        "owners": {
+          "A": {
+            "owner": "p1:A:1",
+            "view_generation": 1,
+            "state": 2
+          },
+          "B": {
+            "owner": "p1:B:2",
+            "view_generation": 2,
+            "state": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "events-type",
+      "input": {
+        "id": "events-type",
+        "label": "event list型不正",
+        "mode": "scoped",
+        "events": {},
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENTS_TYPE",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "event-fields",
+      "input": {
+        "id": "event-fields",
+        "label": "event余分field拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B",
+            "extra": true
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENT_FIELDS",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "target-unknown",
+      "input": {
+        "id": "target-unknown",
+        "label": "owner Cは未対応",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "C"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "TARGET",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "op-unknown",
+      "input": {
+        "id": "op-unknown",
+        "label": "未知op拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "background",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "OP",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "create-existing",
+      "input": {
+        "id": "create-existing",
+        "label": "既存Bのcreate拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "OWNER_EXISTS",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "rotate-finished",
+      "input": {
+        "id": "rotate-finished",
+        "label": "終了Bのrotate拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "finish",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "OWNER_ABSENT",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "restart-alive",
+      "input": {
+        "id": "restart-alive",
+        "label": "生きたprocessのrestart拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "restart",
+            "target": null
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "PROCESS_ALIVE",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "create-after-death",
+      "input": {
+        "id": "create-after-death",
+        "label": "death後create拒否",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "death",
+            "target": null
+          },
+          {
+            "op": "create",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "PROCESS_DEAD",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "too-many-events",
+      "input": {
+        "id": "too-many-events",
+        "label": "9eventは契約外",
+        "mode": "scoped",
+        "events": [
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          },
+          {
+            "op": "rotate",
+            "target": "B"
+          }
+        ],
+        "variant": "normal"
+      },
+      "status": "INPUT_REFUSED",
+      "reason": "EVENTS_TYPE",
+      "timeline": null,
+      "final": null
+    },
+    {
+      "case": "execution-failure",
+      "input": {
+        "id": "execution-failure",
+        "label": "実Error注入 / 正常答えなし",
+        "mode": "scoped",
+        "events": [],
+        "variant": "execution-failure"
+      },
+      "status": "EXECUTION_FAILURE",
+      "reason": "injected owner model failure",
+      "timeline": null,
+      "final": null
+    }
+  ],
+  "attempts": [
+    {
+      "case": "initial",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "initial"
+      ],
+      "started_utc": "2026-10-05T15:00:09.011238+00:00",
+      "ended_utc": "2026-10-05T15:00:09.081377+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"initial\",\n  \"input\": {\n    \"id\": \"initial\",\n    \"label\": \"A=2 / B=1 初期状態\",\n    \"mode\": \"scoped\",\n    \"events\": [],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 0,\n    \"event\": null,\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "rotate-b",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "rotate-b"
+      ],
+      "started_utc": "2026-10-05T15:00:09.081438+00:00",
+      "ended_utc": "2026-10-05T15:00:09.151251+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"rotate-b\",\n  \"input\": {\n    \"id\": \"rotate-b\",\n    \"label\": \"B回転 / 同owner保持\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 2,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"rotate\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 2,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "finish-b",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "finish-b"
+      ],
+      "started_utc": "2026-10-05T15:00:09.151305+00:00",
+      "ended_utc": "2026-10-05T15:00:09.223305+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"finish-b\",\n  \"input\": {\n    \"id\": \"finish-b\",\n    \"label\": \"B終了 / owner除去\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"finish\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "recreate-b",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "recreate-b"
+      ],
+      "started_utc": "2026-10-05T15:00:09.223378+00:00",
+      "ended_utc": "2026-10-05T15:00:09.292459+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"recreate-b\",\n  \"input\": {\n    \"id\": \"recreate-b\",\n    \"label\": \"B終了→新Bは0\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        }\n      }\n    },\n    {\n      \"step\": 2,\n      \"event\": {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:3\",\n          \"view_generation\": 1,\n          \"state\": 0\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 2,\n    \"event\": {\n      \"op\": \"create\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:3\",\n        \"view_generation\": 1,\n        \"state\": 0\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "process-death",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "process-death"
+      ],
+      "started_utc": "2026-10-05T15:00:09.292506+00:00",
+      "ended_utc": "2026-10-05T15:00:09.361585+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"process-death\",\n  \"input\": {\n    \"id\": \"process-death\",\n    \"label\": \"process death / 全in-memory消去\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"death\",\n        \"target\": null\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"death\",\n        \"target\": null\n      },\n      \"process\": 1,\n      \"alive\": false,\n      \"owners\": {}\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"death\",\n      \"target\": null\n    },\n    \"process\": 1,\n    \"alive\": false,\n    \"owners\": {}\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "new-process-b",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "new-process-b"
+      ],
+      "started_utc": "2026-10-05T15:00:09.361635+00:00",
+      "ended_utc": "2026-10-05T15:00:09.430970+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"new-process-b\",\n  \"input\": {\n    \"id\": \"new-process-b\",\n    \"label\": \"death→新process模型→B作成\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"death\",\n        \"target\": null\n      },\n      {\n        \"op\": \"restart\",\n        \"target\": null\n      },\n      {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"death\",\n        \"target\": null\n      },\n      \"process\": 1,\n      \"alive\": false,\n      \"owners\": {}\n    },\n    {\n      \"step\": 2,\n      \"event\": {\n        \"op\": \"restart\",\n        \"target\": null\n      },\n      \"process\": 2,\n      \"alive\": true,\n      \"owners\": {}\n    },\n    {\n      \"step\": 3,\n      \"event\": {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      },\n      \"process\": 2,\n      \"alive\": true,\n      \"owners\": {\n        \"B\": {\n          \"owner\": \"p2:B:1\",\n          \"view_generation\": 1,\n          \"state\": 0\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 3,\n    \"event\": {\n      \"op\": \"create\",\n      \"target\": \"B\"\n    },\n    \"process\": 2,\n    \"alive\": true,\n    \"owners\": {\n      \"B\": {\n        \"owner\": \"p2:B:1\",\n        \"view_generation\": 1,\n        \"state\": 0\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "rotate-a",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "rotate-a"
+      ],
+      "started_utc": "2026-10-05T15:00:09.431024+00:00",
+      "ended_utc": "2026-10-05T15:00:09.496451+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"rotate-a\",\n  \"input\": {\n    \"id\": \"rotate-a\",\n    \"label\": \"A回転 / Bは独立\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"A\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"rotate\",\n        \"target\": \"A\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 2,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"rotate\",\n      \"target\": \"A\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 2,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "rotate-b-twice",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "rotate-b-twice"
+      ],
+      "started_utc": "2026-10-05T15:00:09.496512+00:00",
+      "ended_utc": "2026-10-05T15:00:09.557904+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"rotate-b-twice\",\n  \"input\": {\n    \"id\": \"rotate-b-twice\",\n    \"label\": \"B2回転 / view generation3\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 2,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 2,\n      \"event\": {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 3,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 2,\n    \"event\": {\n      \"op\": \"rotate\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 3,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "tap-b",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "tap-b"
+      ],
+      "started_utc": "2026-10-05T15:00:09.557962+00:00",
+      "ended_utc": "2026-10-05T15:00:09.621577+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"tap-b\",\n  \"input\": {\n    \"id\": \"tap-b\",\n    \"label\": \"B増分 / Aは2のまま\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"tap\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"NORMAL\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"tap\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 2\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"tap\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 1,\n        \"state\": 2\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "global-leak",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "global-leak"
+      ],
+      "started_utc": "2026-10-05T15:00:09.621624+00:00",
+      "ended_utc": "2026-10-05T15:00:09.686571+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"global-leak\",\n  \"input\": {\n    \"id\": \"global-leak\",\n    \"label\": \"故障: 回転Bのglobal値をAへ漏らす\",\n    \"mode\": \"global-leak\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"FAULT_GLOBAL_LEAK\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 1\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 2,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 1,\n    \"event\": {\n      \"op\": \"rotate\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 1\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 2,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "dead-owner-reuse",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "dead-owner-reuse"
+      ],
+      "started_utc": "2026-10-05T15:00:09.686622+00:00",
+      "ended_utc": "2026-10-05T15:00:09.756564+00:00",
+      "exit": 0,
+      "stdout": "{\n  \"case\": \"dead-owner-reuse\",\n  \"input\": {\n    \"id\": \"dead-owner-reuse\",\n    \"label\": \"故障: 終了Bのownerを再利用\",\n    \"mode\": \"dead-owner-reuse\",\n    \"events\": [\n      {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"FAULT_DEAD_REUSE\",\n  \"reason\": \"\",\n  \"timeline\": [\n    {\n      \"step\": 0,\n      \"event\": null,\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 1,\n          \"state\": 1\n        }\n      }\n    },\n    {\n      \"step\": 1,\n      \"event\": {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        }\n      }\n    },\n    {\n      \"step\": 2,\n      \"event\": {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      },\n      \"process\": 1,\n      \"alive\": true,\n      \"owners\": {\n        \"A\": {\n          \"owner\": \"p1:A:1\",\n          \"view_generation\": 1,\n          \"state\": 2\n        },\n        \"B\": {\n          \"owner\": \"p1:B:2\",\n          \"view_generation\": 2,\n          \"state\": 1\n        }\n      }\n    }\n  ],\n  \"final\": {\n    \"step\": 2,\n    \"event\": {\n      \"op\": \"create\",\n      \"target\": \"B\"\n    },\n    \"process\": 1,\n    \"alive\": true,\n    \"owners\": {\n      \"A\": {\n        \"owner\": \"p1:A:1\",\n        \"view_generation\": 1,\n        \"state\": 2\n      },\n      \"B\": {\n        \"owner\": \"p1:B:2\",\n        \"view_generation\": 2,\n        \"state\": 1\n      }\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "events-type",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "events-type"
+      ],
+      "started_utc": "2026-10-05T15:00:09.756615+00:00",
+      "ended_utc": "2026-10-05T15:00:09.823191+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"events-type\",\n  \"input\": {\n    \"id\": \"events-type\",\n    \"label\": \"event list型不正\",\n    \"mode\": \"scoped\",\n    \"events\": {},\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENTS_TYPE\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "event-fields",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "event-fields"
+      ],
+      "started_utc": "2026-10-05T15:00:09.823225+00:00",
+      "ended_utc": "2026-10-05T15:00:09.888310+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"event-fields\",\n  \"input\": {\n    \"id\": \"event-fields\",\n    \"label\": \"event余分field拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\",\n        \"extra\": true\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENT_FIELDS\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "target-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "target-unknown"
+      ],
+      "started_utc": "2026-10-05T15:00:09.888354+00:00",
+      "ended_utc": "2026-10-05T15:00:09.954092+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"target-unknown\",\n  \"input\": {\n    \"id\": \"target-unknown\",\n    \"label\": \"owner Cは未対応\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"C\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"TARGET\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "op-unknown",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "op-unknown"
+      ],
+      "started_utc": "2026-10-05T15:00:09.954129+00:00",
+      "ended_utc": "2026-10-05T15:00:10.015113+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"op-unknown\",\n  \"input\": {\n    \"id\": \"op-unknown\",\n    \"label\": \"未知op拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"background\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"OP\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "create-existing",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "create-existing"
+      ],
+      "started_utc": "2026-10-05T15:00:10.015152+00:00",
+      "ended_utc": "2026-10-05T15:00:10.077662+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"create-existing\",\n  \"input\": {\n    \"id\": \"create-existing\",\n    \"label\": \"既存Bのcreate拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"OWNER_EXISTS\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "rotate-finished",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "rotate-finished"
+      ],
+      "started_utc": "2026-10-05T15:00:10.077703+00:00",
+      "ended_utc": "2026-10-05T15:00:10.138627+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"rotate-finished\",\n  \"input\": {\n    \"id\": \"rotate-finished\",\n    \"label\": \"終了Bのrotate拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"finish\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"OWNER_ABSENT\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "restart-alive",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "restart-alive"
+      ],
+      "started_utc": "2026-10-05T15:00:10.138674+00:00",
+      "ended_utc": "2026-10-05T15:00:10.202074+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"restart-alive\",\n  \"input\": {\n    \"id\": \"restart-alive\",\n    \"label\": \"生きたprocessのrestart拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"restart\",\n        \"target\": null\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"PROCESS_ALIVE\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "create-after-death",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "create-after-death"
+      ],
+      "started_utc": "2026-10-05T15:00:10.202117+00:00",
+      "ended_utc": "2026-10-05T15:00:10.283321+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"create-after-death\",\n  \"input\": {\n    \"id\": \"create-after-death\",\n    \"label\": \"death後create拒否\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"death\",\n        \"target\": null\n      },\n      {\n        \"op\": \"create\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"PROCESS_DEAD\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "too-many-events",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "too-many-events"
+      ],
+      "started_utc": "2026-10-05T15:00:10.283357+00:00",
+      "ended_utc": "2026-10-05T15:00:10.361454+00:00",
+      "exit": 2,
+      "stdout": "{\n  \"case\": \"too-many-events\",\n  \"input\": {\n    \"id\": \"too-many-events\",\n    \"label\": \"9eventは契約外\",\n    \"mode\": \"scoped\",\n    \"events\": [\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      },\n      {\n        \"op\": \"rotate\",\n        \"target\": \"B\"\n      }\n    ],\n    \"variant\": \"normal\"\n  },\n  \"status\": \"INPUT_REFUSED\",\n  \"reason\": \"EVENTS_TYPE\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "execution-failure",
+      "command": [
+        "python3",
+        "-B",
+        "runner.py",
+        "--case",
+        "execution-failure"
+      ],
+      "started_utc": "2026-10-05T15:00:10.361497+00:00",
+      "ended_utc": "2026-10-05T15:00:10.435312+00:00",
+      "exit": 1,
+      "stdout": "{\n  \"case\": \"execution-failure\",\n  \"input\": {\n    \"id\": \"execution-failure\",\n    \"label\": \"実Error注入 / 正常答えなし\",\n    \"mode\": \"scoped\",\n    \"events\": [],\n    \"variant\": \"execution-failure\"\n  },\n  \"status\": \"EXECUTION_FAILURE\",\n  \"reason\": \"injected owner model failure\",\n  \"timeline\": null,\n  \"final\": null\n}\n",
+      "stderr": ""
+    }
+  ]
+}

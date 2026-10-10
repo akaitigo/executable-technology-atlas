@@ -1,0 +1,233 @@
+{
+  "Atlas": "Author literal predictions fixed before producer",
+  "kind": "manual-finite-table-not-runtime",
+  "cases": [
+    {
+      "id": "no-constraint",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1111",
+        "B": "1110"
+      },
+      "feasibleNodes": [
+        "A"
+      ],
+      "strict": {
+        "selectionCandidates": [
+          "A"
+        ],
+        "selectedNode": "A",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [
+          "A",
+          "B"
+        ],
+        "selectedNode": "A",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      }
+    },
+    {
+      "id": "selector-only",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1101",
+        "B": "1110"
+      },
+      "feasibleNodes": [],
+      "strict": {
+        "selectionCandidates": [],
+        "selectedNode": null,
+        "outcome": "PENDING",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [
+          "B"
+        ],
+        "selectedNode": "B",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": true
+      }
+    },
+    {
+      "id": "toleration-only",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1111",
+        "B": "1111"
+      },
+      "feasibleNodes": [
+        "A",
+        "B"
+      ],
+      "strict": {
+        "selectionCandidates": [
+          "A",
+          "B"
+        ],
+        "selectedNode": "A",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [
+          "A",
+          "B"
+        ],
+        "selectedNode": "A",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      }
+    },
+    {
+      "id": "selector-and-toleration",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1101",
+        "B": "1111"
+      },
+      "feasibleNodes": [
+        "B"
+      ],
+      "strict": {
+        "selectionCandidates": [
+          "B"
+        ],
+        "selectedNode": "B",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [
+          "B"
+        ],
+        "selectedNode": "B",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": false
+      }
+    },
+    {
+      "id": "wrong-toleration-value",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1101",
+        "B": "1110"
+      },
+      "feasibleNodes": [],
+      "strict": {
+        "selectionCandidates": [],
+        "selectedNode": null,
+        "outcome": "PENDING",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [
+          "B"
+        ],
+        "selectedNode": "B",
+        "outcome": "BOUND",
+        "selectionViolatesFeasibility": true
+      }
+    },
+    {
+      "id": "capacity-block",
+      "gateMaskOrder": [
+        "cpuFits",
+        "memoryFits",
+        "selectorFits",
+        "taintFits"
+      ],
+      "nodeMasks": {
+        "A": "1101",
+        "B": "0111"
+      },
+      "feasibleNodes": [],
+      "strict": {
+        "selectionCandidates": [],
+        "selectedNode": null,
+        "outcome": "PENDING",
+        "selectionViolatesFeasibility": false
+      },
+      "ignore-taint": {
+        "selectionCandidates": [],
+        "selectedNode": null,
+        "outcome": "PENDING",
+        "selectionViolatesFeasibility": false
+      }
+    }
+  ],
+  "refusals": [
+    {
+      "id": "unknown-request-key",
+      "expected": {
+        "kind": "input-refused",
+        "reason": "invalid-request-schema",
+        "payload": null
+      }
+    },
+    {
+      "id": "boolean-resource",
+      "expected": {
+        "kind": "input-refused",
+        "reason": "invalid-available",
+        "payload": null
+      }
+    },
+    {
+      "id": "unknown-selector-key",
+      "expected": {
+        "kind": "input-refused",
+        "reason": "invalid-selector",
+        "payload": null
+      }
+    },
+    {
+      "id": "unsupported-exists",
+      "expected": {
+        "kind": "input-refused",
+        "reason": "invalid-toleration",
+        "payload": null
+      }
+    }
+  ],
+  "totals": {
+    "strict": {
+      "BOUND": 3,
+      "PENDING": 3
+    },
+    "ignore-taint": {
+      "BOUND": 5,
+      "PENDING": 1,
+      "infeasibleSelections": 2
+    }
+  }
+}

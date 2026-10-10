@@ -1,0 +1,164 @@
+{
+  "scope": "local synthetic pure integer task only; interval labels have no calendar semantics",
+  "task_version": "sum-demo-v1",
+  "input_digest": "SHA256 of compact sorted-key JSON values; label excluded",
+  "cache_artifact_digest": "SHA256 of canonical body including task/interval/input_sha/value/count, distinct from input digest",
+  "keys": {
+    "normal": [
+      "task_version",
+      "interval",
+      "input_sha"
+    ],
+    "drop-interval": [
+      "task_version",
+      "input_sha"
+    ],
+    "drop-digest": [
+      "task_version",
+      "interval"
+    ],
+    "latest-lookup": [
+      "task_version",
+      "interval",
+      "resolved_input_sha"
+    ]
+  },
+  "seed": "independent fresh cache per mode/case; optional seed day1/v1=5; no cross-case state",
+  "cases": [
+    {
+      "id": "fresh-day1",
+      "label": "新規 day1/v1 → 5",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-before.json",
+      "seed": false,
+      "corrupt_cache": false
+    },
+    {
+      "id": "repeat-day1",
+      "label": "同じ day1/v1 を再利用",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-before.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "new-version",
+      "label": "day1/v2 → 10",
+      "interval": "day1",
+      "selector": "v2",
+      "manifest": "manifest-after.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "new-interval",
+      "label": "day2/v1 → 7",
+      "interval": "day2",
+      "selector": "v1",
+      "manifest": "manifest-before.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "same-input-new-interval",
+      "label": "day2/v2 同じbytesでも区間は別",
+      "interval": "day2",
+      "selector": "v2",
+      "manifest": "manifest-after.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "same-label-changed-input",
+      "label": "同じv1 label、内容は[2,8]",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-replaced.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "latest-changed-explicit-v1",
+      "label": "latest更新後、明示v1 → 5",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-after.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "latest-query",
+      "label": "latest指定 → v2/10",
+      "interval": "day1",
+      "selector": "latest",
+      "manifest": "manifest-after.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "format-only",
+      "label": "空白変更、同じ正規化入力 → 5",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-format.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "unknown-interval",
+      "label": "未知区間",
+      "interval": "day9",
+      "selector": "v1",
+      "manifest": "manifest-before.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "unknown-version",
+      "label": "未知版",
+      "interval": "day1",
+      "selector": "v9",
+      "manifest": "manifest-before.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "bad-input",
+      "label": "bool入力拒否",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-bad-type.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "bad-json",
+      "label": "JSON構文拒否",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-bad-syntax.json",
+      "seed": true,
+      "corrupt_cache": false
+    },
+    {
+      "id": "corrupt-cache",
+      "label": "cache内容digest不一致",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-before.json",
+      "seed": true,
+      "corrupt_cache": true
+    },
+    {
+      "id": "read-failure",
+      "label": "候補ファイル読取失敗",
+      "interval": "day1",
+      "selector": "v1",
+      "manifest": "manifest-absent.json",
+      "seed": true,
+      "corrupt_cache": false
+    }
+  ]
+}

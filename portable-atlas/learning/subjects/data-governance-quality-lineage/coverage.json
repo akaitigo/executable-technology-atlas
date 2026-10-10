@@ -1,0 +1,19 @@
+{
+ "subject":"data-governance-quality-lineage",
+ "implemented":["neutral dataset nonnull/range/uniqueness/reference checks","known class labels public/internal","complete bad batch rejection and exact row/column violation list","lineage DAG cycle and node/column orphan rejection","column lineage plus graph ancestor relation","content-bound source/contract/lineage/producer cache validity","source hash change invalidates derived result","fixed hand violation and aggregation oracle"],
+ "uncovered":[
+  {"concept":"ownership / stewardship / policy lifecycle","question":"誰がcontractと例外を承認し、変更の責任と有効期間を記録するか","sources":["prov"]},
+  {"concept":"schema and contract evolution","question":"列追加・型変更・rule変更で過去batchとderived cacheをどう評価するか","sources":["csvw"]},
+  {"concept":"statistical quality / drift / thresholds","question":"分布変化、missing率、異常率をいつ警告し、いつbatch拒否するか","sources":["csvw"]},
+  {"concept":"PII / consent / retention / access enforcement","question":"実データの分類根拠と閲覧・削除の権限をどの外部policyで強制するか","sources":["prov"]},
+  {"concept":"cross-system lineage / standard interchange","question":"収集されたPROV entity/activity/agent、外部依存や複数versionをどう連結するか","sources":["prov"]},
+  {"concept":"partial lineage / semantic correctness","question":"依存関係が存在するだけでなく変換式と実行結果の対応をどう監査するか","sources":["prov","graphlib"]},
+  {"concept":"integrity versus authenticity / cache trust","question":"hashと署名、producer identity、trusted cacheの境界をどう分けるか","sources":["hashlib","prov"]}
+ ],
+ "next_experiments":[
+  {"title":"contract evolution invalidation","operation":"amount range又はversionだけ変更し、同じsourceのcacheを失効させる／新contractで再評価する比較","sources":["csvw","hashlib"]},
+  {"title":"type and null distinctions","operation":"bool、numeric text、空白ID、null category、重複categoryを追加し型/null/referenceの手計算違反を比較","sources":["csvw"]},
+  {"title":"lineage impact analysis","operation":"列edge変更とnonancestor edgeを投入し、downstream totalsの影響集合と拒否を確認","sources":["graphlib","prov"]},
+  {"title":"trusted cache boundary","operation":"cache出力を改変してdigestも再計算する場合とdigestだけ未更新の場合を比較し、hashだけでは意味的正しさを認定できない境界を観測","sources":["hashlib","prov"]}
+ ]
+}

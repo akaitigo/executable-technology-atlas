@@ -1,0 +1,775 @@
+{
+  "utc": "2026-10-05T13:03:43.478774+00:00",
+  "command": "python3 -B record.py --record --input owned-IAB-capture.json",
+  "observation_origin": "actual new owned Codex IAB tabs; native DOM and history actions",
+  "input_capture_sha256": "6be64be7c5e69f179f5e960b48f0e499cc7e346ba4266b07fc97b400ad92bd8a",
+  "source_sha256": {
+    "fixture.json": "9558cb00037d6672c3b963f74d8adc54aa98860f70ff540ecbce0442bc9320e7",
+    "oracle.json": "62be3a3f9752d8c087b1001808efc0d83ff39c9de8707828488af95efc35c4dd",
+    "EXPECTATIONS.md": "ffa2dda1615732305356e2506b34b08141c194c2504d5099f54b36dcad2ee5c9",
+    "app.js": "382207690ee2b3349944b4e9a5a03dc42aeed0aa56901582e7ff33c2a8ebcb43",
+    "index.html": "242b95992241103bb370255b6986991b7498d285352972b1f5efd3214c06696a",
+    "record.py": "1a86d98c9ee6a671d7c2e4d0ab3dda3d16f63e330e6eacc23070a00e54327e56"
+  },
+  "fixture": {
+    "canonical": {
+      "a": "Alpha",
+      "b": "Beta"
+    },
+    "edit_a": "Alpha draft",
+    "edit_b": "Beta saved",
+    "ids": [
+      "a",
+      "b"
+    ],
+    "max_utf16_units": 40,
+    "draft_policy": "retain by ID on selection; cancel removes only selected ID draft; save updates only selected canonical ID",
+    "cases": [
+      {
+        "id": "normal-cancel",
+        "mode": "normal",
+        "actions": [
+          "reset",
+          "edit",
+          "select",
+          "cancel",
+          "popstate",
+          "save"
+        ]
+      },
+      {
+        "id": "shared-cancel",
+        "mode": "shared",
+        "actions": [
+          "reset",
+          "edit",
+          "select",
+          "cancel",
+          "popstate",
+          "save"
+        ]
+      },
+      {
+        "id": "normal-save-b",
+        "mode": "normal",
+        "actions": [
+          "reset",
+          "edit",
+          "select",
+          "save"
+        ]
+      },
+      {
+        "id": "shared-save-b",
+        "mode": "shared",
+        "actions": [
+          "reset",
+          "edit",
+          "select",
+          "save"
+        ]
+      },
+      {
+        "id": "normal-url-b",
+        "mode": "normal",
+        "actions": [
+          "reset"
+        ]
+      }
+    ]
+  },
+  "browser": {
+    "cases": [
+      {
+        "id": "normal-cancel",
+        "mode": "normal",
+        "owned_new_tab": true,
+        "tab_id": "17",
+        "steps": [
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "reset",
+              "input": "normal",
+              "seq": 0,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "edit",
+              "input": "Alpha draft",
+              "seq": 1,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=b"
+            },
+            "event": {
+              "action": "select",
+              "input": "b",
+              "seq": 2,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Beta",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=normal&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=b"
+            },
+            "event": {
+              "action": "cancel",
+              "input": null,
+              "seq": 3,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Beta",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=normal&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "popstate",
+              "input": "a",
+              "seq": 4,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha draft",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "save",
+              "input": null,
+              "seq": 5,
+              "state": {
+                "canonical": {
+                  "a": "Alpha draft",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          }
+        ],
+        "tab_closed": true
+      },
+      {
+        "id": "shared-cancel",
+        "mode": "shared",
+        "owned_new_tab": true,
+        "tab_id": "18",
+        "steps": [
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "reset",
+              "input": "shared",
+              "seq": 0,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=shared&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": \"Alpha draft\"\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "edit",
+              "input": "Alpha draft",
+              "seq": 1,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "a",
+                "shared": "Alpha draft",
+                "url": "?mode=shared&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": \"Alpha draft\"\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=b"
+            },
+            "event": {
+              "action": "select",
+              "input": "b",
+              "seq": 2,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "b",
+                "shared": "Alpha draft",
+                "url": "?mode=shared&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=b"
+            },
+            "event": {
+              "action": "cancel",
+              "input": null,
+              "seq": 3,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Beta",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=shared&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "popstate",
+              "input": "a",
+              "seq": 4,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=shared&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "save",
+              "input": null,
+              "seq": 5,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "INPUT_REFUSED",
+                "mode": "shared",
+                "reason": "NO_DRAFT",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=shared&id=a"
+              }
+            }
+          }
+        ],
+        "tab_closed": true
+      },
+      {
+        "id": "normal-save-b",
+        "mode": "normal",
+        "owned_new_tab": true,
+        "tab_id": "19",
+        "steps": [
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "reset",
+              "input": "normal",
+              "seq": 0,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=a"
+            },
+            "event": {
+              "action": "edit",
+              "input": "Alpha draft",
+              "seq": 1,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=normal&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=b"
+            },
+            "event": {
+              "action": "select",
+              "input": "b",
+              "seq": 2,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Beta",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=normal&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {\n    \"a\": \"Alpha draft\"\n  },\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=b"
+            },
+            "event": {
+              "action": "save",
+              "input": null,
+              "seq": 3,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {
+                  "a": "Alpha draft"
+                },
+                "editor": "Beta",
+                "failure": null,
+                "kind": "INPUT_REFUSED",
+                "mode": "normal",
+                "reason": "NO_DRAFT",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=normal&id=b"
+              }
+            }
+          }
+        ],
+        "tab_closed": true
+      },
+      {
+        "id": "shared-save-b",
+        "mode": "shared",
+        "owned_new_tab": true,
+        "tab_id": "20",
+        "steps": [
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "reset",
+              "input": "shared",
+              "seq": 0,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "a",
+                "shared": null,
+                "url": "?mode=shared&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": \"Alpha draft\"\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: a",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=a"
+            },
+            "event": {
+              "action": "edit",
+              "input": "Alpha draft",
+              "seq": 1,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "a",
+                "shared": "Alpha draft",
+                "url": "?mode=shared&id=a"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": \"Alpha draft\"\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=b"
+            },
+            "event": {
+              "action": "select",
+              "input": "b",
+              "seq": 2,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "b",
+                "shared": "Alpha draft",
+                "url": "?mode=shared&id=b"
+              }
+            }
+          },
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Alpha draft",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Alpha draft",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=shared&id=b"
+            },
+            "event": {
+              "action": "save",
+              "input": null,
+              "seq": 3,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Alpha draft"
+                },
+                "drafts": {},
+                "editor": "Alpha draft",
+                "failure": null,
+                "kind": "OK",
+                "mode": "shared",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=shared&id=b"
+              }
+            }
+          }
+        ],
+        "tab_closed": true
+      },
+      {
+        "id": "normal-url-b",
+        "mode": "normal",
+        "owned_new_tab": true,
+        "tab_id": "21",
+        "steps": [
+          {
+            "dom": {
+              "canonical_a": "Alpha",
+              "canonical_b": "Beta",
+              "drafts": "{\n  \"byId\": {},\n  \"shared\": null\n}",
+              "editor": "Beta",
+              "selected": "選択ID: b",
+              "url": "http://127.0.0.1:55685/index.html?mode=normal&id=b"
+            },
+            "event": {
+              "action": "reset",
+              "input": "normal",
+              "seq": 0,
+              "state": {
+                "canonical": {
+                  "a": "Alpha",
+                  "b": "Beta"
+                },
+                "drafts": {},
+                "editor": "Beta",
+                "failure": null,
+                "kind": "OK",
+                "mode": "normal",
+                "reason": "",
+                "selected": "b",
+                "shared": null,
+                "url": "?mode=normal&id=b"
+              }
+            }
+          }
+        ],
+        "tab_closed": true
+      }
+    ],
+    "unexpected_execution_failure": null
+  }
+}

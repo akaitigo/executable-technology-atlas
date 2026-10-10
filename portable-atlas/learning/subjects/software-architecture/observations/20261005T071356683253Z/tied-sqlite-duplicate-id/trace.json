@@ -1,0 +1,87 @@
+[
+  {
+    "event": "composition",
+    "variant": "tied",
+    "storage": "sqlite",
+    "usecase": "TiedPlaceOrder"
+  },
+  {
+    "event": "request-start",
+    "index": 0,
+    "payload": {
+      "id": "a",
+      "sku": "book",
+      "quantity": 2
+    }
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN "
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT OR REPLACE INTO orders VALUES ('a', 'book', 2, 200)"
+  },
+  {
+    "event": "sql",
+    "sql": "COMMIT"
+  },
+  {
+    "event": "response",
+    "index": 0,
+    "status": 201,
+    "body": [
+      "a",
+      "book",
+      2,
+      200
+    ]
+  },
+  {
+    "event": "request-start",
+    "index": 1,
+    "payload": {
+      "id": "a",
+      "sku": "book",
+      "quantity": 3
+    }
+  },
+  {
+    "event": "sql",
+    "sql": "BEGIN "
+  },
+  {
+    "event": "sql",
+    "sql": "INSERT OR REPLACE INTO orders VALUES ('a', 'book', 3, 300)"
+  },
+  {
+    "event": "sql",
+    "sql": "COMMIT"
+  },
+  {
+    "event": "response",
+    "index": 1,
+    "status": 201,
+    "body": [
+      "a",
+      "book",
+      3,
+      300
+    ]
+  },
+  {
+    "event": "adapter-closed",
+    "adapter": "sqlite"
+  },
+  {
+    "event": "final-state",
+    "rows": [
+      [
+        "a",
+        "book",
+        3,
+        300
+      ]
+    ]
+  }
+]

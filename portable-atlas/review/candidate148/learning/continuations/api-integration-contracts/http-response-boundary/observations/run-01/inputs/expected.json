@@ -1,0 +1,157 @@
+{
+  "Atlas": "実装前に固定した4条件の手期待",
+  "status": "prediction_not_runtime",
+  "basis": "Literal lengths and fixed CPython v3.9.6 read/readinto source; no producer import or execution.",
+  "casesSha256": "1a7ff35c4f346616e0dc58afe63d3aa03c2a7c1ff4bd3d70a4bdd98d759b09d3",
+  "cases": [
+    {
+      "id": "complete",
+      "responseStatus": 422,
+      "declaredLength": 105,
+      "receivedLength": 105,
+      "readException": null,
+      "apiRemainingAfterRead": 0,
+      "apiIsClosedAfterRead": true,
+      "readDidNotRaise": true,
+      "completeResponse": true,
+      "withinBudget": true,
+      "exceptionOnlyComplete": true,
+      "exceptionOnlyIncorrect": false,
+      "outcome": "json-ready",
+      "stages": [
+        {
+          "gate": "framing",
+          "verdict": "pass"
+        },
+        {
+          "gate": "budget",
+          "verdict": "pass"
+        },
+        {
+          "gate": "media",
+          "verdict": "pass"
+        },
+        {
+          "gate": "json",
+          "verdict": "pass"
+        }
+      ],
+      "decodedJSON": {
+        "type": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "status": 422
+      },
+      "inputBodyIsValidJSON": true
+    },
+    {
+      "id": "short-content-length",
+      "responseStatus": 422,
+      "declaredLength": 106,
+      "receivedLength": 105,
+      "readException": null,
+      "apiRemainingAfterRead": 1,
+      "apiIsClosedAfterRead": false,
+      "readDidNotRaise": true,
+      "completeResponse": false,
+      "withinBudget": true,
+      "exceptionOnlyComplete": true,
+      "exceptionOnlyIncorrect": true,
+      "outcome": "incomplete-response",
+      "stages": [
+        {
+          "gate": "framing",
+          "verdict": "reject"
+        },
+        {
+          "gate": "budget",
+          "verdict": "not-run"
+        },
+        {
+          "gate": "media",
+          "verdict": "not-run"
+        },
+        {
+          "gate": "json",
+          "verdict": "not-run"
+        }
+      ],
+      "decodedJSON": null,
+      "inputBodyIsValidJSON": true
+    },
+    {
+      "id": "at-limit",
+      "responseStatus": 422,
+      "declaredLength": 8192,
+      "receivedLength": 8192,
+      "readException": null,
+      "apiRemainingAfterRead": 0,
+      "apiIsClosedAfterRead": true,
+      "readDidNotRaise": true,
+      "completeResponse": true,
+      "withinBudget": true,
+      "exceptionOnlyComplete": true,
+      "exceptionOnlyIncorrect": false,
+      "outcome": "json-ready",
+      "stages": [
+        {
+          "gate": "framing",
+          "verdict": "pass"
+        },
+        {
+          "gate": "budget",
+          "verdict": "pass"
+        },
+        {
+          "gate": "media",
+          "verdict": "pass"
+        },
+        {
+          "gate": "json",
+          "verdict": "pass"
+        }
+      ],
+      "decodedJSON": {
+        "type": "https://api.example.invalid/problems/invalid-quantity",
+        "title": "Invalid quantity",
+        "status": 422
+      },
+      "inputBodyIsValidJSON": true
+    },
+    {
+      "id": "over-limit",
+      "responseStatus": 422,
+      "declaredLength": 8193,
+      "receivedLength": 8193,
+      "readException": null,
+      "apiRemainingAfterRead": 0,
+      "apiIsClosedAfterRead": true,
+      "readDidNotRaise": true,
+      "completeResponse": true,
+      "withinBudget": false,
+      "exceptionOnlyComplete": true,
+      "exceptionOnlyIncorrect": false,
+      "outcome": "body-limit-exceeded",
+      "stages": [
+        {
+          "gate": "framing",
+          "verdict": "pass"
+        },
+        {
+          "gate": "budget",
+          "verdict": "reject"
+        },
+        {
+          "gate": "media",
+          "verdict": "not-run"
+        },
+        {
+          "gate": "json",
+          "verdict": "not-run"
+        }
+      ],
+      "decodedJSON": null,
+      "inputBodyIsValidJSON": true
+    }
+  ],
+  "actualRuntimeVersionStillUnobserved": true
+}

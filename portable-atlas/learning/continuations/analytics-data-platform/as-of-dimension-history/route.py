@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: Apache-2.0
+import sys
+sys.dont_write_bytecode=True
+from verify import main
+if __name__=='__main__':
+ assert len(sys.argv)==1,'route is read-only'
+ main()

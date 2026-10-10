@@ -1,0 +1,65 @@
+{
+  "title": "Atlas injected recovery check",
+  "checks": [
+    {
+      "case": "reaped",
+      "report": {
+        "child_reaped": true,
+        "output_complete": true,
+        "owned_group_kill_sent": true,
+        "exit_code": -9
+      },
+      "stdout": "complete stdout",
+      "stderr": "complete stderr",
+      "passed": true
+    },
+    {
+      "case": "kill_failed_but_reaped",
+      "report": {
+        "child_reaped": true,
+        "output_complete": true,
+        "kill_error": "kill injected",
+        "exit_code": -9
+      },
+      "stdout": "complete stdout",
+      "stderr": "complete stderr",
+      "passed": true
+    },
+    {
+      "case": "kill_and_reap_failed",
+      "report": {
+        "child_reaped": false,
+        "output_complete": false,
+        "kill_error": "kill injected",
+        "reap_error": "reap injected",
+        "remaining_owned_pid": 123456789,
+        "further_launches_allowed": false
+      },
+      "stdout": "prior stdout",
+      "stderr": "prior stderr",
+      "passed": true
+    },
+    {
+      "case": "partial_after_timeout",
+      "report": {
+        "child_reaped": false,
+        "output_complete": false,
+        "owned_group_kill_sent": true,
+        "reap_error": "Command 'fake' timed out after 2 seconds",
+        "remaining_owned_pid": 123456789,
+        "further_launches_allowed": false
+      },
+      "stdout": "partial stdout",
+      "stderr": "partial stderr",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "real_processes_started": 0,
+  "real_processes_signalled": 0,
+  "browser_executed": false,
+  "source_sha256": {
+    "run-browser.py": "d84b484b571e9a6a66b4cfa0bec6a2d41621a48a35db9a92a55411fe13bf8859",
+    "check-browser-recovery.py": "d38ce90e1fb16f3a30d72d4eeefb1dbf42c63331efdd8875fd64fdfad35bb429"
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "execution_id": "20261005T081516521273Z",
+  "started_at": "2026-10-05T08:15:16.521920+00:00",
+  "completed_at": "2026-10-05T08:15:17.758799+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "os": "Darwin",
+    "release": "25.1.0",
+    "machine": "arm64"
+  },
+  "source_bindings": {
+    "pipeline.py": "sha256:6d9910ce427592cc4d0a1b6bca39629725cffec239dc94bbb84fd79ecf611125",
+    "runner.py": "sha256:3965311d47d1be2e7905ae4e8e18c8b1a22e19e93cc3d901864d51ca76c7a487",
+    "checker.py": "sha256:05c379a357cd4556a549f12731230b7a9f1edf84c8b91ef04d6a2cab8ec6b87c",
+    "test_negative.py": "sha256:091143f1e7a10e2e2d32c8b1331197b4435ccbb59e92dddd000eb3f27889f61b",
+    "preview.py": "sha256:fdf4f1d260d4214121794b08812063f070340c004cb76d9d0aea57a0d8268d52",
+    "index.html": "sha256:6deaf0e4cec1173dba40d164b4f2dd11548193a5f4af3732b89edc95d8de7d7d",
+    "README.md": "sha256:d4252962884e07d0ea619bb8ca30fea82786d57499bb7e40f1da3719a708fde6",
+    "sources.json": "sha256:f29d5fe6cb2e0b49e6fb3104d12bbf45d324c05a0949844f758ec59fcac7fd76",
+    "coverage.json": "sha256:3665610cdb1f3f2a507c5506a1846f9ff37bb6122fa67db298f46a89de46736b",
+    "skills/atlas-data-engineering-orchestration/SKILL.md": "sha256:1eb8325b8a1d1166c04ae72af18b6c5d880671b01fb7e78417e27665e7d6e205",
+    "skills/atlas-data-engineering-orchestration/route.py": "sha256:cdf1729c1967bc848addb0b22037431518558b0b698910ff478b8af09aa9414f"
+  },
+  "runs": [
+    {
+      "id": "normal",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "replace-rerun",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        },
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        },
+        {
+          "attempt": 2,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "append-rerun",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "append",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        },
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "append",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        },
+        {
+          "attempt": 2,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "silent-skip",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "silent-skip",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "all-bad",
+      "requests": [
+        {
+          "csv": "id,quantity,price\nx,0,1.00\ny,2,1.005\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "empty",
+      "requests": [
+        {
+          "csv": "id,quantity,price\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "zero-price",
+      "requests": [
+        {
+          "csv": "id,quantity,price\nz,1,0.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "quantity-upper",
+      "requests": [
+        {
+          "csv": "id,quantity,price\nu,100,1.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "quantity-over",
+      "requests": [
+        {
+          "csv": "id,quantity,price\nu,101,1.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "conflicting-id",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\na,3,1.25\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "id": "schema-refusal-after-success",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        },
+        {
+          "csv": "id,price,quantity\na,1.25,2\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        },
+        {
+          "attempt": 2,
+          "exit_code": 2
+        }
+      ]
+    },
+    {
+      "id": "transform-failure-after-success",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        },
+        {
+          "csv": "id,quantity,price\nc,1,1.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "transform"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        },
+        {
+          "attempt": 2,
+          "exit_code": 3
+        }
+      ]
+    },
+    {
+      "id": "publish-failure-after-success",
+      "requests": [
+        {
+          "csv": "id,quantity,price\na,2,1.25\nb,1,0.10\na,2,1.25\nbad,nope,2.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "none"
+        },
+        {
+          "csv": "id,quantity,price\nc,1,1.00\n",
+          "mode": "replace",
+          "bad_rows": "quarantine",
+          "inject": "before-publish"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "exit_code": 0
+        },
+        {
+          "attempt": 2,
+          "exit_code": 3
+        }
+      ]
+    }
+  ],
+  "external_services": 0,
+  "production_scheduler": false,
+  "remote_ETL": false
+}

@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-10-05",
+  "scope": "Official source locators; paraphrases, no third-party full text retained",
+  "sources": [
+    {
+      "id": "python",
+      "url": "https://docs.python.org/3.9/library/socket.html",
+      "locators": [
+        "socket.recvfrom",
+        "socket.sendto",
+        "socket.settimeout",
+        "socket.close",
+        "socket.recvmsg"
+      ],
+      "binding": "recvfrom payload/address, send count and finite timeout; recvmsg comparison remains unrun",
+      "limit": "Documentation 3.9.25; runtime recorded separately; API can be OS-dependent"
+    },
+    {
+      "id": "apple",
+      "url": "https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/recvfrom.2.html",
+      "locators": [
+        "DESCRIPTION: excess bytes",
+        "msg_flags: MSG_TRUNC",
+        "RETURN VALUES: TCP return 0"
+      ],
+      "binding": "Read receive-width truncation and TCP zero-return meaning, compare to actual Mac recvfrom",
+      "limit": "Archived BSD manual May 15 2006, not proof of current Darwin behavior; current API observation is raw.json"
+    },
+    {
+      "id": "udp",
+      "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+      "locators": [
+        "Introduction",
+        "Fields: Length",
+        "User Interface"
+      ],
+      "binding": "Datagram mode, delivery/duplicate protection limits, minimum UDP length8 and source endpoint",
+      "limit": "Zero UDP payload has UDP/IP headers; not zero bytes on wire"
+    },
+    {
+      "id": "guidelines",
+      "url": "https://www.rfc-editor.org/rfc/rfc8085.html",
+      "locators": [
+        "§3.2 Message Size Guidelines",
+        "§3.3 Reliability Guidelines",
+        "§3.1 Congestion Control Guidelines",
+        "§6 Security Considerations"
+      ],
+      "binding": "Practical message size, reliability, ordering/duplicates, app ack and future experiment boundaries",
+      "limit": "No loss injection, retransmission, PMTU, congestion or authentication implementation in this lesson"
+    }
+  ],
+  "unavailable": [
+    {
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/recvfrom.html",
+      "result": "web tool Internal Error"
+    },
+    {
+      "url": "https://pubs.opengroup.org/onlinepubs/9699919799/functions/recvfrom.html",
+      "result": "web tool Internal Error"
+    }
+  ]
+}

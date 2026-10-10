@@ -1,0 +1,187 @@
+Browser tab: 9, Title: "WAL — snapshot と checkpoint", URL: "http://127.0.0.1:54880/".
+1 AXWebArea WAL — snapshot と checkpoint, URL: 127.0.0.1:54880/
+	2 heading 同じreaderは、COMMIT後も古い値を読む？, Value: 1
+		3 text 同じreaderは、COMMIT後も古い値を読む？
+	4 text SQLite WAL · 2接続 · 1行の専用ファイルDB。readerのsnapshotとcheckpointの進捗を別々に観察します。
+	5 container
+		6 heading 1 · 予測する, Value: 2
+			7 text 1 · 予測する
+		8 text 手順
+		9 pop up button (collapsed, settable) Description: 手順, Value: passive / PASSIVE, ID: case, Secondary Actions: Expand
+			10 menu
+				11 (selected) passive / PASSIVE
+				12 full / FULL
+				13 truncate / TRUNCATE
+				14 begin-only / PASSIVE
+				15 rollback / PASSIVE
+				16 two-commits / PASSIVE
+		157 text readerは10を確立。writer UPDATE / COMMIT後もreaderを保持。
+		18 text 保持中のreader値
+		19 pop up button (collapsed, settable) Description: reader値の予測, Value: 20, ID: guess, Secondary Actions: Expand
+			20 menu
+				21 10
+				22 (selected) 20
+				23 30
+		24 text 保持中に全frameをcheckpointできる？
+		25 pop up button (collapsed, settable) Description: checkpoint完了の予測, Value: できる, ID: complete, Secondary Actions: Expand
+			26 menu
+				27 できない
+				28 (selected) できる
+		29 button 観測と比較, ID: compare
+		158 text 予測と差分あり — reader=10、checkpoint=[0,1,0]、全frame反映=false
+	31 container
+		32 heading 2 · 時点を操作する, Value: 2
+			33 text 2 · 時点を操作する
+		34 text 時点
+		35 pop up button (collapsed, settable) Description: 時点, Value: checkpoint-held, ID: stage, Secondary Actions: Expand
+			36 menu
+				159 reader-begin
+				160 old
+				161 held
+				162 (selected) checkpoint-held
+				163 reader-end
+				164 fresh
+				165 checkpoint-ended
+				166 cleanup-truncate
+		45 text reader SELECT
+		167 text SELECTなし
+		47 text checkpoint [busy, log, checkpointed]
+		168 text [0,1,0]
+		169 text WAL: exists=true, 4152 bytes, 物理frame数=1（active log数とは別）
+		170 text 先頭busyだけでなく log と checkpointed を比較する。
+		51 table
+			52 row
+				53 cell
+					54 text 時点
+				55 cell
+					56 text 接続
+				57 cell
+					58 text SQL / 返値
+			59 container timeline
+				171 row
+					172 cell
+						173 text reader-begin
+					174 cell
+						175 text reader
+					176 cell
+						177 text BEGIN
+						178 text []
+				179 row
+					180 cell
+						181 text old
+					182 cell
+						183 text reader
+					184 cell
+						185 text SELECT value FROM item WHERE id=1
+						186 text [[10]]
+				187 row
+					188 cell
+						189 text update-0
+					190 cell
+						191 text writer
+					192 cell
+						193 text UPDATE item SET value=20 WHERE id=1
+						194 text []
+				195 row
+					196 cell
+						197 text writer-end-0
+					198 cell
+						199 text writer
+					200 cell
+						201 text COMMIT
+						202 text []
+				203 row
+					204 cell
+						205 text held
+					206 cell
+						207 text reader
+					208 cell
+						209 text SELECT value FROM item WHERE id=1
+						210 text [[10]]
+				211 row
+					212 cell
+						213 text checkpoint-held
+					214 cell
+						215 text writer
+					216 cell
+						217 text PRAGMA wal_checkpoint(PASSIVE)
+						218 text [[0,1,0]]
+				219 row
+					220 cell
+						221 text reader-end
+					222 cell
+						223 text reader
+					224 cell
+						225 text COMMIT
+						226 text []
+				227 row
+					228 cell
+						229 text fresh
+					230 cell
+						231 text reader
+					232 cell
+						233 text SELECT value FROM item WHERE id=1
+						234 text [[20]]
+				235 row
+					236 cell
+						237 text checkpoint-ended
+					238 cell
+						239 text writer
+					240 cell
+						241 text PRAGMA wal_checkpoint(PASSIVE)
+						242 text [[0,1,1]]
+				243 row
+					244 cell
+						245 text cleanup-truncate
+					246 cell
+						247 text writer
+					248 cell
+						249 text PRAGMA wal_checkpoint(TRUNCATE)
+						250 text [[0,0,0]]
+	140 container
+		141 heading 3 · raw・出典と照合する, Value: 2
+			142 text 3 · raw・出典と照合する
+		143 text 実行UTC 2026-10-05T10:34:24.393139+00:00 · SQLite 3.51.0 · Python 3.9.6 · 接続timeout 0.05s、busy_timeout=50ms、wal_autocheckpoint=0、synchronous=FULL。経過時間の性能比較は行わない。
+		144 button (expanded) この時点のSQL・transaction・WAL原記録, Secondary Actions: Collapse
+			145 text この時点のSQL・transaction・WAL原記録
+		251 text {
+  "label": "checkpoint-held",
+  "connection": "writer",
+  "sql": "PRAGMA wal_checkpoint(PASSIVE)",
+  "rows": [
+    [
+      0,
+      1,
+      0
+    ]
+  ],
+  "beforeTransaction": false,
+  "afterTransaction": false,
+  "utc": "2026-10-05T10:34:24.422869+00:00",
+  "wal": {
+    "exists": true,
+    "bytes": 4152,
+    "sha256": "c710b3c5bca0f460fb1c980e4200652653093d6b407f06ae83dbb558a789a387",
+    "pageSize": 4096,
+    "physicalFrames": [
+      {
+        "page": 2,
+        "commitDbPages": 2
+      }
+    ],
+    "capturedUtc": "2026-10-05T10:34:24.423168+00:00"
+  }
+}
+		146 link Description: 再現手順と証拠, Value: 127.0.0.1:54880/README.md
+		147 text  · 
+		148 link Description: 到達範囲, Value: 127.0.0.1:54880/COVERAGE.md
+		149 text  · 
+		150 link Description: 公式 WAL §2.2, Value: sqlite.org/wal.html#concurrency
+		151 text  · 
+		152 link Description: 公式 PRAGMA wal_checkpoint, Value: sqlite.org/pragma.html#pragma_wal_checkpoint
+	153 container
+		154 heading 4 · 答えと次の問い, Value: 2
+			155 text 4 · 答えと次の問い
+		156 text 最初のSELECTでsnapshotを確立したreaderは、writerのCOMMIT後も10を読みました。reader終了後のSELECTは20（2回COMMITでは30）。BEGINだけでSELECTを遅らせると、最初から20です。 PASSIVE保持中の[0,1,0]は、先頭0でも1 frameが未checkpoint。FULL／TRUNCATEは50msのbusy timeoutを設定した観測で[1,1,0]。終了後のPASSIVE／FULLは[0,1,1]でもWALファイルを縮めません。TRUNCATE終了後は[0,0,0]・0 bytesでした。 次：異なるreader開始位置／autocheckpoint閾値／stale readerのwriter昇格を、専用DBでそれぞれ追加比較。電源断、復旧、NFS、速度、他エンジンは未検証です。
+
+The focused UI element is 144 button (expanded) この時点のSQL・transaction・WAL原記録, Secondary Actions: Collapse

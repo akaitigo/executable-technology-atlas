@@ -1,0 +1,901 @@
+{
+  "utc": "2026-10-05T11:51:34.748127+00:00",
+  "command": "python3 -B runner.py --record",
+  "environment": {
+    "python": "3.9.6",
+    "system": "Darwin",
+    "release": "25.1.0",
+    "parent_pid": 55069
+  },
+  "fixture": {
+    "parent": {
+      "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "span_id": "bbbbbbbbbbbbbbbb"
+    },
+    "cases": [
+      {
+        "id": "propagated",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "parent_span_id": "bbbbbbbbbbbbbbbb"
+          }
+        }
+      },
+      {
+        "id": "missing",
+        "request": {
+          "units": 2
+        }
+      },
+      {
+        "id": "trace-only",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        }
+      },
+      {
+        "id": "upper-bound",
+        "request": {
+          "units": 3
+        }
+      },
+      {
+        "id": "bool-units",
+        "request": {
+          "units": true
+        }
+      },
+      {
+        "id": "missing-units",
+        "request": {
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        }
+      },
+      {
+        "id": "context-type",
+        "request": {
+          "units": 2,
+          "context": "trace"
+        }
+      },
+      {
+        "id": "bad-id",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "00000000000000000000000000000000"
+          }
+        }
+      },
+      {
+        "id": "parent-only",
+        "request": {
+          "units": 2,
+          "context": {
+            "parent_span_id": "bbbbbbbbbbbbbbbb"
+          }
+        }
+      },
+      {
+        "id": "extra-key",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "secret": "synthetic"
+          }
+        }
+      }
+    ]
+  },
+  "source_sha256": {
+    "fixture.json": "d3e67cc8a56a56f4801f33286a115a9d94f3fd94f90eb4a2e9b636bf2ef32a18",
+    "oracle.json": "dad546a8658e22860739fcd8ee960fdac641e86918acdc462f8cbb76a7f7a05a",
+    "EXPECTATIONS.md": "57042ec26ab3315def25ba0db0fa871efd927ca0f32d3360cb0f678174b1c691",
+    "child.py": "83e7370d8f7f46cf900d2c7151e77767f5076332227376304b6a2a5ac3cb899c",
+    "runner.py": "22eb91c4577c2e0101395f83d20a1fb3d2ea583e73bf659f3dece6bffabf534e"
+  },
+  "cases": [
+    {
+      "id": "propagated",
+      "request": {
+        "units": 2,
+        "context": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "parent_span_id": "bbbbbbbbbbbbbbbb"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.751321+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.751337+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.790042+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55078,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n    \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55078, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":{\\\"trace_id\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"parent_span_id\\\":\\\"bbbbbbbbbbbbbbbb\\\"}}\\n\", \"request\": {\"units\": 2, \"context\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55078, \"utc\": \"2026-10-05T11:51:34.788171+00:00\"}, {\"event\": \"childcompute\", \"seq\": 1, \"pid\": 55078, \"utc\": \"2026-10-05T11:51:34.788456+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55078, \"utc\": \"2026-10-05T11:51:34.788458+00:00\"}], \"status\": \"succeeded\", \"amount\": 200, \"span\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"span_id\": \"cccccccccccccccc\", \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"}}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55078, \"utc\": \"2026-10-05T11:51:34.788480+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n    \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"\n  }\n}\n",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "parent_span_id": "bbbbbbbbbbbbbbbb"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.788171+00:00"
+          },
+          {
+            "event": "childcompute",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.788456+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.788458+00:00"
+          }
+        ],
+        "status": "succeeded",
+        "amount": 200,
+        "span": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "span_id": "cccccccccccccccc",
+          "parent_span_id": "bbbbbbbbbbbbbbbb"
+        }
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.788480+00:00"
+      }
+    },
+    {
+      "id": "missing",
+      "request": {
+        "units": 2
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.791541+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.791557+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.835032+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55079,
+      "stdin": "{\n  \"units\": 2\n}\n",
+      "stdout": "{\"pid\": 55079, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2}\\n\", \"request\": {\"units\": 2}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55079, \"utc\": \"2026-10-05T11:51:34.832771+00:00\"}, {\"event\": \"childcompute\", \"seq\": 1, \"pid\": 55079, \"utc\": \"2026-10-05T11:51:34.832990+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55079, \"utc\": \"2026-10-05T11:51:34.832992+00:00\"}], \"status\": \"succeeded\", \"amount\": 200, \"span\": {\"trace_id\": \"dddddddddddddddddddddddddddddddd\", \"span_id\": \"cccccccccccccccc\", \"parent_span_id\": null}}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55079, \"utc\": \"2026-10-05T11:51:34.833016+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2\n}\n",
+        "request": {
+          "units": 2
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.832771+00:00"
+          },
+          {
+            "event": "childcompute",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.832990+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.832992+00:00"
+          }
+        ],
+        "status": "succeeded",
+        "amount": 200,
+        "span": {
+          "trace_id": "dddddddddddddddddddddddddddddddd",
+          "span_id": "cccccccccccccccc",
+          "parent_span_id": null
+        }
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.833016+00:00"
+      }
+    },
+    {
+      "id": "trace-only",
+      "request": {
+        "units": 2,
+        "context": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.837141+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.837163+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.881399+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55080,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55080, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":{\\\"trace_id\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\"}}\\n\", \"request\": {\"units\": 2, \"context\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55080, \"utc\": \"2026-10-05T11:51:34.879372+00:00\"}, {\"event\": \"childcompute\", \"seq\": 1, \"pid\": 55080, \"utc\": \"2026-10-05T11:51:34.879674+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55080, \"utc\": \"2026-10-05T11:51:34.879676+00:00\"}], \"status\": \"succeeded\", \"amount\": 200, \"span\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"span_id\": \"cccccccccccccccc\", \"parent_span_id\": null}}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55080, \"utc\": \"2026-10-05T11:51:34.879700+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  }\n}\n",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.879372+00:00"
+          },
+          {
+            "event": "childcompute",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.879674+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.879676+00:00"
+          }
+        ],
+        "status": "succeeded",
+        "amount": 200,
+        "span": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "span_id": "cccccccccccccccc",
+          "parent_span_id": null
+        }
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.879700+00:00"
+      }
+    },
+    {
+      "id": "upper-bound",
+      "request": {
+        "units": 3
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.883155+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.883172+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.921616+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55081,
+      "stdin": "{\n  \"units\": 3\n}\n",
+      "stdout": "{\"pid\": 55081, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":3}\\n\", \"request\": {\"units\": 3}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55081, \"utc\": \"2026-10-05T11:51:34.919686+00:00\"}, {\"event\": \"childcompute\", \"seq\": 1, \"pid\": 55081, \"utc\": \"2026-10-05T11:51:34.919912+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55081, \"utc\": \"2026-10-05T11:51:34.919915+00:00\"}], \"status\": \"succeeded\", \"amount\": 300, \"span\": {\"trace_id\": \"dddddddddddddddddddddddddddddddd\", \"span_id\": \"cccccccccccccccc\", \"parent_span_id\": null}}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55081, \"utc\": \"2026-10-05T11:51:34.919947+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "child": {
+        "received_stdin": "{\n  \"units\": 3\n}\n",
+        "request": {
+          "units": 3
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.919686+00:00"
+          },
+          {
+            "event": "childcompute",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.919912+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.919915+00:00"
+          }
+        ],
+        "status": "succeeded",
+        "amount": 300,
+        "span": {
+          "trace_id": "dddddddddddddddddddddddddddddddd",
+          "span_id": "cccccccccccccccc",
+          "parent_span_id": null
+        }
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.919947+00:00"
+      }
+    },
+    {
+      "id": "bool-units",
+      "request": {
+        "units": true
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.923261+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.923277+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.959550+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55082,
+      "stdin": "{\n  \"units\": true\n}\n",
+      "stdout": "{\"pid\": 55082, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":true}\\n\", \"request\": {\"units\": true}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55082, \"utc\": \"2026-10-05T11:51:34.957665+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55082, \"utc\": \"2026-10-05T11:51:34.957838+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55082, \"utc\": \"2026-10-05T11:51:34.957840+00:00\"}], \"status\": \"refused\", \"reason\": \"units must be integer 1..3\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55082, \"utc\": \"2026-10-05T11:51:34.957859+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"units\": true\n}\n",
+        "request": {
+          "units": true
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.957665+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.957838+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.957840+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "units must be integer 1..3",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.957859+00:00"
+      }
+    },
+    {
+      "id": "missing-units",
+      "request": {
+        "context": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.961130+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.961148+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:34.998318+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55083,
+      "stdin": "{\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55083, \"ppid\": 55069, \"received_stdin\": \"{\\\"context\\\":{\\\"trace_id\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\"}}\\n\", \"request\": {\"context\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55083, \"utc\": \"2026-10-05T11:51:34.996444+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55083, \"utc\": \"2026-10-05T11:51:34.996615+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55083, \"utc\": \"2026-10-05T11:51:34.996617+00:00\"}], \"status\": \"refused\", \"reason\": \"units must be integer 1..3\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55083, \"utc\": \"2026-10-05T11:51:34.996638+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  }\n}\n",
+        "request": {
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:34.996444+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:34.996615+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:34.996617+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "units must be integer 1..3",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:34.996638+00:00"
+      }
+    },
+    {
+      "id": "context-type",
+      "request": {
+        "units": 2,
+        "context": "trace"
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:34.999945+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:34.999954+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:35.043577+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55084,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": \"trace\"\n}\n",
+      "stdout": "{\"pid\": 55084, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":\\\"trace\\\"}\\n\", \"request\": {\"units\": 2, \"context\": \"trace\"}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55084, \"utc\": \"2026-10-05T11:51:35.041244+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55084, \"utc\": \"2026-10-05T11:51:35.041482+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55084, \"utc\": \"2026-10-05T11:51:35.041484+00:00\"}], \"status\": \"refused\", \"reason\": \"context must be object\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55084, \"utc\": \"2026-10-05T11:51:35.041520+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": \"trace\"\n}\n",
+        "request": {
+          "units": 2,
+          "context": "trace"
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:35.041244+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:35.041482+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:35.041484+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "context must be object",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:35.041520+00:00"
+      }
+    },
+    {
+      "id": "bad-id",
+      "request": {
+        "units": 2,
+        "context": {
+          "trace_id": "00000000000000000000000000000000"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:35.045762+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:35.045781+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:35.084332+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55085,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"00000000000000000000000000000000\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55085, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":{\\\"trace_id\\\":\\\"00000000000000000000000000000000\\\"}}\\n\", \"request\": {\"units\": 2, \"context\": {\"trace_id\": \"00000000000000000000000000000000\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55085, \"utc\": \"2026-10-05T11:51:35.082061+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55085, \"utc\": \"2026-10-05T11:51:35.082314+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55085, \"utc\": \"2026-10-05T11:51:35.082317+00:00\"}], \"status\": \"refused\", \"reason\": \"invalid trace_id\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55085, \"utc\": \"2026-10-05T11:51:35.082339+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"00000000000000000000000000000000\"\n  }\n}\n",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "00000000000000000000000000000000"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:35.082061+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:35.082314+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:35.082317+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "invalid trace_id",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:35.082339+00:00"
+      }
+    },
+    {
+      "id": "parent-only",
+      "request": {
+        "units": 2,
+        "context": {
+          "parent_span_id": "bbbbbbbbbbbbbbbb"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:35.086257+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:35.086277+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:35.125259+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55086,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55086, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":{\\\"parent_span_id\\\":\\\"bbbbbbbbbbbbbbbb\\\"}}\\n\", \"request\": {\"units\": 2, \"context\": {\"parent_span_id\": \"bbbbbbbbbbbbbbbb\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55086, \"utc\": \"2026-10-05T11:51:35.123432+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55086, \"utc\": \"2026-10-05T11:51:35.123637+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55086, \"utc\": \"2026-10-05T11:51:35.123639+00:00\"}], \"status\": \"refused\", \"reason\": \"context requires trace_id\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55086, \"utc\": \"2026-10-05T11:51:35.123661+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"parent_span_id\": \"bbbbbbbbbbbbbbbb\"\n  }\n}\n",
+        "request": {
+          "units": 2,
+          "context": {
+            "parent_span_id": "bbbbbbbbbbbbbbbb"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:35.123432+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:35.123637+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:35.123639+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "context requires trace_id",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:35.123661+00:00"
+      }
+    },
+    {
+      "id": "extra-key",
+      "request": {
+        "units": 2,
+        "context": {
+          "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "secret": "synthetic"
+        }
+      },
+      "parent_pid": 55069,
+      "parent": {
+        "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "span_id": "bbbbbbbbbbbbbbbb"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "child.py"
+      ],
+      "parent_events": [
+        {
+          "event": "parentwrite_start",
+          "seq": 0,
+          "utc": "2026-10-05T11:51:35.126892+00:00"
+        },
+        {
+          "event": "parentwrite_completed",
+          "seq": 1,
+          "utc": "2026-10-05T11:51:35.126910+00:00"
+        },
+        {
+          "event": "parentreceive",
+          "seq": 2,
+          "utc": "2026-10-05T11:51:35.167880+00:00"
+        }
+      ],
+      "cleanup": {
+        "child_reaped": true,
+        "owned_streams_closed": true
+      },
+      "child_pid": 55087,
+      "stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n    \"secret\": \"synthetic\"\n  }\n}\n",
+      "stdout": "{\"pid\": 55087, \"ppid\": 55069, \"received_stdin\": \"{\\\"units\\\":2,\\\"context\\\":{\\\"trace_id\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"secret\\\":\\\"synthetic\\\"}}\\n\", \"request\": {\"units\": 2, \"context\": {\"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"secret\": \"synthetic\"}}, \"events\": [{\"event\": \"childread\", \"seq\": 0, \"pid\": 55087, \"utc\": \"2026-10-05T11:51:35.165887+00:00\"}, {\"event\": \"childreject\", \"seq\": 1, \"pid\": 55087, \"utc\": \"2026-10-05T11:51:35.166119+00:00\"}, {\"event\": \"childemit_ready\", \"seq\": 2, \"pid\": 55087, \"utc\": \"2026-10-05T11:51:35.166124+00:00\"}], \"status\": \"refused\", \"reason\": \"unexpected context key\", \"amount\": null, \"span\": null}\n{\"event\": \"childemit_completed\", \"seq\": 3, \"pid\": 55087, \"utc\": \"2026-10-05T11:51:35.166149+00:00\"}\n",
+      "stderr": "",
+      "exit_code": 2,
+      "child": {
+        "received_stdin": "{\n  \"units\": 2,\n  \"context\": {\n    \"trace_id\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n    \"secret\": \"synthetic\"\n  }\n}\n",
+        "request": {
+          "units": 2,
+          "context": {
+            "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "secret": "synthetic"
+          }
+        },
+        "events": [
+          {
+            "event": "childread",
+            "seq": 0,
+            "utc": "2026-10-05T11:51:35.165887+00:00"
+          },
+          {
+            "event": "childreject",
+            "seq": 1,
+            "utc": "2026-10-05T11:51:35.166119+00:00"
+          },
+          {
+            "event": "childemit_ready",
+            "seq": 2,
+            "utc": "2026-10-05T11:51:35.166124+00:00"
+          }
+        ],
+        "status": "refused",
+        "reason": "unexpected context key",
+        "amount": null,
+        "span": null
+      },
+      "emit_ack": {
+        "event": "childemit_completed",
+        "seq": 3,
+        "utc": "2026-10-05T11:51:35.166149+00:00"
+      }
+    }
+  ],
+  "scope": "owned local subprocess; custom JSON carrier; fixed case IDs; no clock sort",
+  "execution_failures": 0
+}

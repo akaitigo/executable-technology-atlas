@@ -1,0 +1,5744 @@
+{
+  "schema": 1,
+  "executedAtUTC": "2026-10-05T07:32:46.506364+00:00",
+  "environment": {
+    "python": "3.9.6",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "command": "python3 -B checker.py --record",
+  "scope": "local model, whole subject incomplete; no Git/Argo product/cluster execution",
+  "sourceArtifactDigests": {
+    "runner.py": "ba7949fbdd57a29bd8c9437a7ff4bc3e4e800039833cd4b7fba409820e1726a6",
+    "oracle.py": "7d9d94f0938c5d0cae4ae6616acda879a694624b51ee5ca81f772ca9ea9535a1",
+    "checker.py": "12891d93ab6cf122f665254a2eb640a0d841b4abb01e5cbbd56233dbce8bbcd3",
+    "server.py": "709d4237871a9c95975c59a993b7cadd9e61e4b50ed51e8c86d696df6d3480ef",
+    "manifest.json": "44dd54e5e4291a58dc17f9efd93f9626c136f83a0ac77379ec7227592a52caa9",
+    "desired/v1.json": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+    "desired/v2.json": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+    "desired/rollback-v3.json": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+    "README.md": "f1a5ac15ce0a0eb001c8d627bf023e44f938cb303638e2ee6d9343b0aaafbb56",
+    "index.html": "6b83c1c0969493355fb5e27e380147ba1ea8a193a8e9e49f00b0fa11705081e8",
+    "app.js": "d0c1f76fe35a2f4223ed28090e990fc745b2a2a14ee50d7e7c455993ce6cdb0f",
+    "sources.json": "8beb5d5a09a3e04430c65bd6f0891ed65351a08caefb517f12c83ee0b0d8cfcf",
+    "skills/atlas-gitops-continuous-delivery/SKILL.md": "c3305b299f4fba352b2c624ea6a5143bac5cf2344af02016c41863c5cb3afbe8"
+  },
+  "inputDigest": "0362a441bcb32d31fb04c7a6a3461c89c097ec94bbed302bd7bcd0e2399c6d54",
+  "rawDigest": "c2a557b9d39e06c2017b29914138dcde67384e2d056c7c846045b8ab8f30f199",
+  "result": {
+    "inputs": [
+      {
+        "name": "v1",
+        "generation": 1,
+        "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+        "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+      },
+      {
+        "name": "v2",
+        "generation": 2,
+        "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+        "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+      },
+      {
+        "name": "rollback-v3",
+        "generation": 3,
+        "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+        "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+      }
+    ],
+    "raw": [
+      {
+        "case": "desired-change",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "finalHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "drift-restore",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "event": "manual-drift",
+            "changes": {
+              "image": "demo:manual",
+              "replicas": 5
+            },
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "liveAfter": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "action": "manual"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:manual",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 5,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "finalHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "observe-only",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "event": "manual-drift",
+            "changes": {
+              "image": "demo:manual",
+              "replicas": 5
+            },
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "liveAfter": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "action": "manual"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "observe",
+            "ignore": [],
+            "action": "observe",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:manual",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 5,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "managedEqualAfter": false,
+            "exactEqualAfter": false,
+            "beforeHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+            "afterHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "observe",
+            "ignore": [],
+            "action": "observe",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:manual",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 5,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:manual",
+              "replicas": 5,
+              "note": "declared"
+            },
+            "managedEqualAfter": false,
+            "exactEqualAfter": false,
+            "beforeHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+            "afterHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "finalHash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "stale-revision",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "refuse",
+            "reason": "stale-revision",
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "finalHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "rollback",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "rollback-v3",
+              "generation": 3,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "rollback-v3",
+              "generation": 3,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 3,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v2",
+                "desired": "demo:v1"
+              },
+              {
+                "field": "replicas",
+                "live": 3,
+                "desired": 2
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "rollback-v3",
+              "generation": 3,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 3,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "finalHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+        "latestRevision": {
+          "generation": 3,
+          "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+        }
+      },
+      {
+        "case": "ignore-note",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "event": "manual-drift",
+            "changes": {
+              "note": "operator"
+            },
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "operator"
+            },
+            "action": "manual"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "operator"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [
+              "note"
+            ],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              }
+            ],
+            "ignoredDiff": [
+              {
+                "field": "note",
+                "live": "operator",
+                "desired": "declared"
+              }
+            ],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "operator"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": false,
+            "beforeHash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c",
+            "afterHash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "operator"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [
+              "note"
+            ],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [
+              {
+                "field": "note",
+                "live": "operator",
+                "desired": "declared"
+              }
+            ],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "operator"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": false,
+            "beforeHash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925",
+            "afterHash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "finalHash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "manage-note",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "event": "manual-drift",
+            "changes": {
+              "note": "operator"
+            },
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "operator"
+            },
+            "action": "manual"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "operator"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "apply",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [
+              {
+                "field": "image",
+                "live": "demo:v1",
+                "desired": "demo:v2"
+              },
+              {
+                "field": "replicas",
+                "live": 2,
+                "desired": 3
+              },
+              {
+                "field": "note",
+                "live": "operator",
+                "desired": "declared"
+              }
+            ],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v2",
+              "replicas": 3,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "afterHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "finalHash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "tampered-bytes",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "refuse",
+            "reason": "bytes-hash-mismatch",
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "finalHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "invalid-ignore",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [
+              "image"
+            ],
+            "action": "refuse",
+            "reason": "invalid-ignore",
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "finalHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      },
+      {
+        "case": "invalid-state",
+        "model": "local file bytes + in-memory reconcile, not Git/Argo product/cluster execution",
+        "trace": [
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v1",
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe",
+              "bytes": "{\"image\":\"demo:v1\",\"replicas\":2,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 1,
+              "sha256": "4a6cff29d2f03c080d14d648cb5fadf9986c669911a3cfd8a8f3a6702cd573fe"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "in-sync",
+            "desired": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "managedEqualAfter": true,
+            "exactEqualAfter": true,
+            "beforeHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "afterHash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e",
+            "event": "tick"
+          },
+          {
+            "event": "publish",
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "action": "new-desired"
+          },
+          {
+            "event": "manual-drift",
+            "changes": {
+              "replicas": -1
+            },
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": 2,
+              "note": "declared"
+            },
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": -1,
+              "note": "declared"
+            },
+            "action": "manual"
+          },
+          {
+            "liveBefore": {
+              "image": "demo:v1",
+              "replicas": -1,
+              "note": "declared"
+            },
+            "packet": {
+              "name": "v2",
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+              "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+            },
+            "authoritative": {
+              "generation": 2,
+              "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+            },
+            "mode": "apply",
+            "ignore": [],
+            "action": "refuse",
+            "reason": "invalid-state",
+            "liveAfter": {
+              "image": "demo:v1",
+              "replicas": -1,
+              "note": "declared"
+            },
+            "diff": [],
+            "ignoredDiff": [],
+            "event": "tick"
+          }
+        ],
+        "final": {
+          "image": "demo:v1",
+          "replicas": -1,
+          "note": "declared"
+        },
+        "finalHash": "d9f6f5247a92656c4a211185e00453b8912af7f0d20aa41e6becbc34c23071a7",
+        "latestRevision": {
+          "generation": 2,
+          "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+        }
+      }
+    ],
+    "generatedTransitions": [
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "v1",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "declared"
+        },
+        "hash": "780a8198e34c2c2197192af5a75f2eceeb2a35db2de6ec409fe69b5351374c35"
+      },
+      {
+        "revision": "v2",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 3,
+          "note": "operator"
+        },
+        "hash": "fc275d90bd5f5df7591c55489d1d12a5fca548f255d1f2a1b7b29ec7a3611925"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "v2",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "apply",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "80ec53d3a2f13da5be5be86c09e88d63ea455f865c5bf38103b4207535697fdd"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "90757da41a7ea116edbc98fb6b0695103ee6601a51723ff4c1d772c8ffe2d3a4"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "7e98684642bd66e3f3a749890ff03b35dd81d4977315bef39c362cf2dc087f6e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "442d0adce6ba9dd9e52269ccdad187f67c4e7b231e16d7efddb2a5a30a7f3b6c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c63851b4db5c496c0933223c80f9d9f5374db3a26cb30d6aefd2dddd2e533c62"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v1",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "7bb63c37a15a4ad8527ae6e13ee872bdf0661a8d00f555f7d0ee8e152a532fe0"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "31541cbf5c2a3976ffe3096e523d9db97e9f866ae0ae62eccd1a4e2162334f09"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "21f42ae292c18b182a1e282fe1e58f32c66d3c89168c9503e47f8bd1d10bcc2c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "a65bf245c9de50a327fef01d962ad59b3f99dded85abca60e50b345182fde89c"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "aa9ff001fc0631ba0c9348abf136688c3456e59cf049bd559fb553bb294ccbc0"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "c22cdd82dc15ae9e1adaf2947cb8000b0d6c374be8576ed4e535939304c7035e"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:v2",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "8f1a2d746318596bb843a9f8616ac5a019f04fa5a2f0e9833d1006f5c8a369cd"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "declared"
+        },
+        "hash": "675782c55a4b1727b8d9273277ee5f926b0c3feaa537b515ea672fff8bc1da63"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 0,
+          "note": "operator"
+        },
+        "hash": "3d503996444d4fdd22825127027020733f3313d8db8ba1833ae86577cc555059"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "declared"
+        },
+        "hash": "c921147cafcabaff8bc5517123af494d8cb2309b0e1d8826c5d3ea13a6a049ce"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 2,
+          "note": "operator"
+        },
+        "hash": "bca9db19d196f6dfbecb75d8107b177d8b0fe8cf54cbcb8172376e7a19323210"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "declared"
+        },
+        "hash": "bf3fd9e6f6874ac88f45cef3d0f25cd34b78126381081b257898e1ccf1234b84"
+      },
+      {
+        "revision": "rollback-v3",
+        "mode": "observe",
+        "ignore": [
+          "note"
+        ],
+        "before": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "after": {
+          "image": "demo:manual",
+          "replicas": 5,
+          "note": "operator"
+        },
+        "hash": "1884cfeb79e2573fadc890aa0ac3626b37b68a5e5ead8eaa4c65dce727c2abe2"
+      }
+    ],
+    "rejects": [
+      {
+        "case": "stale-generation",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 1,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "stale-revision",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "wrong-hash-token",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "stale-revision",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "tamper",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n "
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "bytes-hash-mismatch",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "bad-json",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
+            "bytes": "{"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "missing-field",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "05824e929353411e54ec2c017c727ed0687af46010f0f1cf6329d0d41f19743a",
+            "bytes": "{\"image\":\"demo:v2\"}"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "05824e929353411e54ec2c017c727ed0687af46010f0f1cf6329d0d41f19743a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-state",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "bool-replicas",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": true,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-state",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": true,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "too-large",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 6,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-state",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 6,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "unknown-image",
+        "raw": {
+          "liveBefore": {
+            "image": "other",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-state",
+          "liveAfter": {
+            "image": "other",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "unknown-note",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "other"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-state",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "other"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "bad-mode",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "automatic",
+          "ignore": [],
+          "action": "refuse",
+          "reason": "invalid-mode",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "bad-ignore",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [
+            "image"
+          ],
+          "action": "refuse",
+          "reason": "invalid-ignore",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      },
+      {
+        "case": "duplicate-ignore",
+        "raw": {
+          "liveBefore": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "packet": {
+            "name": "v2",
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a",
+            "bytes": "{\"image\":\"demo:v2\",\"replicas\":3,\"note\":\"declared\"}\n"
+          },
+          "authoritative": {
+            "generation": 2,
+            "sha256": "a61061f23fe448b173e7ebbb99735c96437f1001631aee0af30ab733228b449a"
+          },
+          "mode": "apply",
+          "ignore": [
+            "note",
+            "note"
+          ],
+          "action": "refuse",
+          "reason": "invalid-ignore",
+          "liveAfter": {
+            "image": "demo:v1",
+            "replicas": 2,
+            "note": "declared"
+          },
+          "diff": [],
+          "ignoredDiff": []
+        }
+      }
+    ],
+    "mutantsDetected": [
+      "never-repair",
+      "apply-in-observe",
+      "ignore-not-respected"
+    ]
+  }
+}

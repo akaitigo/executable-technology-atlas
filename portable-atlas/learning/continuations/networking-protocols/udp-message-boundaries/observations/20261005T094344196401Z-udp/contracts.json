@@ -1,0 +1,9 @@
+{
+  "scope": "Handwritten expectation for this Mac recvfrom loopback experiment, not UDP delivery or ordering guarantee",
+  "cases": [
+    {"id":"two-datagrams","label":"正常 · 2 datagram / recv幅64","sent_hex":["50494e47","48454c4c4f"],"recv_widths":[64,64,64],"expected_hex":["50494e47","48454c4c4f",null],"answer":"PINGとHELLOが別のrecvfromで返った。第3呼出しはtimeout。send単位がstreamに吸収されるTCP原票と比較するが、UDPの到達・順序保証には一般化しない。"},
+    {"id":"empty-datagram","label":"境界 · 空datagram → NEXT","sent_hex":["","4e455854"],"recv_widths":[64,64,64],"expected_hex":["","4e455854",null],"answer":"空payloadとsender addressが返った後もNEXTを受信した。空datagramはTCPのrecv(b'')によるEOFと異なる。終了はアプリprotocolで決める。"},
+    {"id":"small-buffer","label":"異常 · 10 bytes / 初回recv幅3","sent_hex":["4142434445464748494a","4e455854"],"recv_widths":[3,64,64],"expected_hex":["414243","4e455854",null],"answer":"初回ABCだけが返り、次は残りDEFGHIJではなくNEXT。第3呼出しはtimeout。失われた7 bytesは同じdatagramの続きとしてrecvし直せない。"},
+    {"id":"exact-fit","label":"境界対照 · 3 bytes / 初回recv幅3","sent_hex":["414243","4e455854"],"recv_widths":[3,64,64],"expected_hex":["414243","4e455854",null],"answer":"返却列は幅不足条件と同じABC / NEXT / timeout。今回はABCが全文。len(payload)==bufsizeだけでは切捨てを判定できない。sent原票がある実験だから違いを確認できる。"}
+  ]
+}

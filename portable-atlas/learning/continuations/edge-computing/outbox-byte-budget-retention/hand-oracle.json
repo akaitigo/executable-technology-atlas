@@ -1,0 +1,167 @@
+{
+  "authored_before_producer_execution": true,
+  "cases": {
+    "reject-new": {
+      "status": "REJECTED",
+      "reason": "FULL",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "overwrite-oldest": {
+      "status": "EVICTED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "new",
+          "payload_hex": "616263",
+          "bytes": 3
+        }
+      ],
+      "used_bytes": 3,
+      "write_changes": 2,
+      "evicted": [
+        "old"
+      ],
+      "accepted": true
+    },
+    "bad-char-count": {
+      "status": "BAD_ACCEPTED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "616263",
+          "bytes": 3
+        }
+      ],
+      "used_bytes": 5,
+      "write_changes": 1,
+      "evicted": [],
+      "accepted": true
+    },
+    "oversize-keeps-old": {
+      "status": "REJECTED",
+      "reason": "SINGLE_PAYLOAD_EXCEEDS_BUDGET",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "exact-capacity": {
+      "status": "APPENDED",
+      "reason": null,
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        },
+        {
+          "id": "new",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 4,
+      "write_changes": 1,
+      "evicted": [],
+      "accepted": true
+    },
+    "bool-budget": {
+      "status": "INPUT_REJECTED",
+      "reason": "BUDGET_TYPE",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "negative-budget": {
+      "status": "INPUT_REJECTED",
+      "reason": "BUDGET_RANGE",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "unknown-policy": {
+      "status": "INPUT_REJECTED",
+      "reason": "POLICY",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "empty-payload": {
+      "status": "INPUT_REJECTED",
+      "reason": "EMPTY_PAYLOAD",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    },
+    "input-too-long": {
+      "status": "INPUT_REJECTED",
+      "reason": "INPUT_SIZE",
+      "rows": [
+        {
+          "id": "old",
+          "payload_hex": "c3a9",
+          "bytes": 2
+        }
+      ],
+      "used_bytes": 2,
+      "write_changes": 0,
+      "evicted": [],
+      "accepted": false
+    }
+  }
+}
